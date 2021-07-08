@@ -1,4 +1,4 @@
-from typing import Optional, List, TypedDict, Union, Any, Literal
+from typing import Optional, List, TypedDict, Union, Any, Literal, Dict
 from collections.abc import Callable, Awaitable
 from datetime import datetime
 
@@ -47,7 +47,6 @@ class PrerecordedOptions(TranscriptionOptions):
     # https://developers.deepgram.com/api-reference/speech-recognition-api#operation/transcribeAudio
     utterances: Optional[bool]
     utt_split: Optional[float]
-    mimetype: Optional[str]
 
 class LiveOptions(TranscriptionOptions):
     # References for the different meanings and values of these properties
@@ -77,7 +76,7 @@ class Search(TypedDict):
     hits: List[Hit]
 
 class Channel(TypedDict):
-    search: List[Search]
+    search: Optional[List[Search]]
     alternatives: List[TypedDict('Alternative', {
         'transcript': str,
         'confidence': float,
@@ -92,12 +91,20 @@ class Metadata(TypedDict):
     duration: float
     channels: int
 
-class TranscriptionResponse(TypedDict):
+class PrerecordedTranscriptionResponse(TypedDict):
     request_id: Optional[str]
     metadata: Optional[Metadata]
     results: Optional[TypedDict('ResultChannels', {
         'channels': List[Channel],
     })]
+
+class LiveTranscriptionResponse(TypedDict):
+    channel_index: List[int]
+    duration: float
+    start: float
+    is_final: bool
+    speech_final: bool
+    channel: Channel
 
 EventHandler = Union[Callable[[Any], None], Callable[[Any], Awaitable[None]]]
 
@@ -142,10 +149,7 @@ class UsageRequestDetail(TypedDict):
         'method': Literal['sync', 'async', 'streaming'],
         'tags': List[str],
         'features': List[str],
-        'config': TypedDict("UsageRequestDetailsConfig", {
-            'diarize': bool,
-            'multichannel': bool
-        })
+        'config': Dict[str, bool] # TODO: add all possible request options
     })
 
 class UsageRequestMessage(TypedDict):
@@ -194,7 +198,7 @@ class UsageOptions(TypedDict):
 class UsageResponseDetail(TypedDict):
     start: str
     end: str
-    hours: int
+    hours: float
     requests: int
 
 class UsageResponse(TypedDict):
@@ -202,7 +206,7 @@ class UsageResponse(TypedDict):
     end: str
     resolution: TypedDict("UsageResponseResolution", {
         'units': str,
-        'amount': float
+        'amount': int
     })
     results: List[UsageResponseDetail]
 

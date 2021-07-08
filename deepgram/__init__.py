@@ -2,6 +2,7 @@ from ._types import Options
 from .keys import Keys
 from .transcription import Transcription
 from .projects import Projects
+from .usage import Usage
 from typing import Union
 
 class Deepgram:
@@ -24,5 +25,9 @@ class Deepgram:
     @property
     def projects(self) -> Projects:
         return Projects(self.options)
+
+    @property
+    def usage(self) -> Usage:
+        return Usage(self.options)
 
 __all__ = [Deepgram]

@@ -16,9 +16,9 @@ class Keys:
         """Retrieves a specific key associated with the provided projectId."""
         return await _request(f'{self._root}/{project_id}/keys/{key}', self.options)
 
-    async def create(self, project_id: str, name: str, scopes: List[str]) -> Key:
+    async def create(self, project_id: str, comment: str, scopes: List[str]) -> Key:
         """Creates an API key with the provided scopes."""
-        return await _request(f'{self._root}/{project_id}/keys', self.options, method='POST', payload={'name': name, 'scopes': scopes})
+        return await _request(f'{self._root}/{project_id}/keys', self.options, method='POST', payload={'comment': comment, 'scope': scopes})
 
     async def delete(self, project_id: str, key: str) -> None:
         """Deletes an API key."""

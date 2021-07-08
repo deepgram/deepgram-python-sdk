@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from ._types import Options, PrerecordedOptions, LiveOptions, TranscriptionSource, TranscriptionResponse, EventHandler
+from ._types import Options, PrerecordedOptions, LiveOptions, TranscriptionSource, PrerecordedTranscriptionResponse, LiveTranscriptionResponse, Metadata, EventHandler
 from ._enums import LiveTranscriptionEvent
 from ._utils import _request, _make_query_string, _socket_connect
 from typing import Any, Union, Tuple, List
@@ -14,7 +14,7 @@ class PrerecordedTranscription:
     def __init__(self, options: Options, transcription_options: PrerecordedOptions) -> None:
         self.options = options
         self.transcription_options = transcription_options
-    async def __call__(self, source: TranscriptionSource) -> TranscriptionResponse:
+    async def __call__(self, source: TranscriptionSource) -> PrerecordedTranscriptionResponse:
         if 'buffer' in source and 'mimetype' not in source:
             raise Exception('DG: Mimetype must be provided if the source is bytes')
         payload = source.get('buffer', {'url': source.get('url')}) 
@@ -44,7 +44,8 @@ class LiveTranscription:
             incoming, body = await self._queue.get()
             if incoming:
                 try:
-                    parsed = json.loads(body)
+                    parsed: Union[LiveTranscriptionResponse, Metadata] = json.loads(body)
+                    # Stream-ending response is only a metadata object
                     self._pingHandlers(LiveTranscriptionEvent.TRANSCRIPT_RECEIVED, parsed)
                     self.received.append(parsed)
                     if 'transaction_key' in parsed:
@@ -100,7 +101,7 @@ class Transcription:
     def __init__(self, options: Options) -> None:
         self.options = options
 
-    async def prerecorded(self, source: TranscriptionSource, options: PrerecordedOptions = {}) -> TranscriptionResponse:
+    async def prerecorded(self, source: TranscriptionSource, options: PrerecordedOptions = {}) -> PrerecordedTranscriptionResponse:
         """Retrieves a transcription for an already-existing audio file, local or web-hosted."""
         return await PrerecordedTranscription(self.options, options)(source)
 

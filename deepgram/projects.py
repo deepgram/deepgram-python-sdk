@@ -2,7 +2,7 @@ from ._types import Options, Project, ProjectResponse
 from ._utils import _request
 
 class Projects:
-    _root = "/v1/projects";
+    _root = "p";
 
     def __init__(self, options: Options) -> None:
         self.options = options
@@ -14,9 +14,12 @@ class Projects:
     async def get(self, id: str) -> Project:
         """Retrieves a specific project based on the provided projectId."""
         return await _request(f'{self._root}/{id}', self.options)
-
-    # These endpoints are not yet programatically accessible.
-
-    # async def create(self, name: str) -> Project:
-    # 	"""Creates a project."""
-    # 	return await _request(self._root, self.options, method='POST', payload={'name': name})
+    
+    async def create(self, name: str) -> Project:
+    	"""Creates a project."""
+    	return await _request(self._root, self.options, method='POST', payload={'name': name})
+    
+    # `project:destroy` scope is not available through the API, so this request would always fail.
+    # async def delete(self, id: str) -> Project:
+    #     """Deletes a specific project based on the provided projectId."""
+    #     return await _request(f'{self._root}/{id}', self.options, method='DELETE')
