@@ -2,7 +2,7 @@ from ._constants import DEFAULT_ENDPOINT
 from ._types import Options
 from ._version import __version__
 from typing import Any, Union, Optional, IO, Mapping, Tuple, List
-import urllib.request, urllib.parse, json, re, platform
+import aiohttp, urllib.parse, json, re, platform
 import websockets, websockets.client
 
 Payload = Optional[Union[dict, str, bytes, IO]]
@@ -37,20 +37,20 @@ def _make_query_string(params: Mapping[str, Any] = {}) -> str:
     flattened = [item for group in unflattened for item in group] # flatten
     return ('?' if flattened else '') + urllib.parse.urlencode(flattened)
 
+
 async def _request(path: str, options: Options, method: str = 'GET', payload: Payload = None, headers: Optional[Mapping[str, str]] = {}) -> Optional[dict]:
     destination = options.get('api_url', DEFAULT_ENDPOINT) + path
     updated_headers = _prepare_headers(options, headers)
-    req = urllib.request.Request(destination, data=_normalize_payload(payload), headers=updated_headers, method=method)
     try:
-        with urllib.request.urlopen(req) as resp:
-            content = resp.read().decode('utf-8')
+        async with aiohttp.request(method, destination, data=_normalize_payload(payload), headers=updated_headers, raise_for_status=True) as resp:
+            content = await resp.text()
             body = json.loads(content)
             if body.get('error'):
                 raise Exception(f'DG: {content}')
             return body
-    except urllib.error.HTTPError as e: # 
+    except aiohttp.ClientResponseError as e:
         raise Exception(f'DG: {e}')
-    except urllib.error.URLError as e:
+    except aiohttp.ClientError as e:
         raise e
 
 async def _socket_connect(path: str, options: Options, headers: Optional[Mapping[str, str]] = {}) -> websockets.client.WebSocketClientProtocol:

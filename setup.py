@@ -27,6 +27,7 @@ setuptools.setup(
     keywords='deepgram asr transcription ai',
     packages=setuptools.find_packages(),
     install_requires=[
+        'aiohttp',
         'websockets',
     ],
 )
