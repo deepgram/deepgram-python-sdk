@@ -1,4 +1,3 @@
-from typing import Optional
 from ._types import Options, UsageField, UsageFieldOptions, UsageOptions, UsageRequest, UsageRequestList, UsageRequestListOptions, UsageResponse
 from ._utils import _request, _make_query_string
 

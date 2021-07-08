@@ -1,5 +1,6 @@
 from typing import Optional, List, TypedDict, Union, Any, Literal, Dict
-from collections.abc import Callable, Awaitable
+# from collections.abc import Callable, Awaitable
+from typing import Callable, Awaitable # pre-Py3.9 compatibility
 from datetime import datetime
 
 # Transcription

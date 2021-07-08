@@ -2,7 +2,7 @@ from ._constants import DEFAULT_ENDPOINT
 from ._types import Options
 from ._version import __version__
 from typing import Any, Union, Optional, IO, Mapping, Tuple, List
-import urllib.request, urllib.parse, base64, json, re, asyncio, platform
+import urllib.request, urllib.parse, json, re, platform
 import websockets, websockets.client
 
 Payload = Optional[Union[dict, str, bytes, IO]]
