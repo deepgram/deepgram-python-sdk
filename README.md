@@ -16,7 +16,7 @@ You can learn more about the full Deepgram API at [https://developers.deepgram.c
 ## Getting Started
 
 ```sh
-pip install deepgram
+pip install deepgram-sdk
 ```
 
 ```python
