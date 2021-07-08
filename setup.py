@@ -11,7 +11,7 @@ with open(os.path.join(os.path.abspath(os.path.dirname(__file__)), 'README.md'))
     long_description = file.read()
 
 setuptools.setup(
-    name='deepgram',
+    name='deepgram-sdk',
     version=__version__, # type: ignore
     description='The official Python SDK for the Deepgram automated speech recognition platform.',
     long_description=long_description,
