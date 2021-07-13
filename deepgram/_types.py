@@ -112,7 +112,7 @@ EventHandler = Union[Callable[[Any], None], Callable[[Any], Awaitable[None]]]
 # Keys
 
 class Key(TypedDict):
-    id: str
+    key_id: str
     key: Optional[str]
     comment: str
     created: datetime
@@ -124,7 +124,7 @@ class KeyResponse(TypedDict):
 # Projects
 
 class Project(TypedDict):
-    id: str
+    project_id: str
     name: str
 
 class ProjectResponse(TypedDict):
@@ -161,7 +161,7 @@ class UsageCallback(TypedDict):
     completed: str
 
 class UsageRequest(TypedDict):
-    id: str
+    request_id: str
     created: str
     path: str
     accessor: str

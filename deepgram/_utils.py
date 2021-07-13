@@ -8,9 +8,8 @@ import websockets, websockets.client
 Payload = Optional[Union[dict, str, bytes, IO]]
 
 def _prepare_headers(options: Options, headers: Mapping[str, str] = {}) -> dict:
-    # this could be expanded for more authentication methods later
     return {**headers,
-        'Authorization': 'Token ' + options['api_key'],
+        'Authorization': (options.get('auth_method') or 'Token') + ' ' + options['api_key'],
         'User-Agent': f'deepgram/{__version__} python/{platform.python_version()}'
     }
 

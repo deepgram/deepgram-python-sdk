@@ -18,7 +18,7 @@ class Keys:
 
     async def create(self, project_id: str, comment: str, scopes: List[str]) -> Key:
         """Creates an API key with the provided scopes."""
-        return await _request(f'{self._root}/{project_id}/keys', self.options, method='POST', payload={'comment': comment, 'scope': scopes})
+        return await _request(f'{self._root}/{project_id}/keys', self.options, method='POST', payload={'comment': comment, 'scope': scopes}, headers={'Content-Type': 'application/json'})
 
     async def delete(self, project_id: str, key: str) -> None:
         """Deletes an API key."""
