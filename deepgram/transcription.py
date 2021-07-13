@@ -9,7 +9,7 @@ from enum import Enum
 import websockets.client
 
 class PrerecordedTranscription:
-    _root = "/v1/listen"
+    _root = "/listen"
 
     def __init__(self, options: Options, transcription_options: PrerecordedOptions) -> None:
         self.options = options
@@ -21,7 +21,7 @@ class PrerecordedTranscription:
         return await _request(f'{self._root}{_make_query_string(self.transcription_options)}', self.options, method='POST', payload=payload, headers={'Content-Type': source['mimetype'] or 'audio/wav'})
 
 class LiveTranscription:
-    _root = "/v1/listen"
+    _root = "/listen"
 
     def __init__(self, options: Options, transcription_options: LiveOptions) -> None:
         self.options = options

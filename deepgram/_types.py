@@ -112,14 +112,23 @@ EventHandler = Union[Callable[[Any], None], Callable[[Any], Awaitable[None]]]
 # Keys
 
 class Key(TypedDict):
-    key_id: str
+    api_key_id: str
     key: Optional[str]
     comment: str
     created: datetime
     scopes: List[str]
 
+class Member(TypedDict):
+    email: str
+    first_name: str
+    last_name: str
+    id: str
+    scopes: Optional[List[str]]
+class KeyBundle(TypedDict):
+    api_key: Key
+    member: Member
 class KeyResponse(TypedDict):
-    api_keys: List[Key]
+    api_keys: List[KeyBundle]
 
 # Projects
 

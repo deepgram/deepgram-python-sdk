@@ -2,7 +2,7 @@ from ._types import Options, Project, ProjectResponse
 from ._utils import _request
 
 class Projects:
-    _root = "/v1/projects";
+    _root = "/projects";
 
     def __init__(self, options: Options) -> None:
         self.options = options

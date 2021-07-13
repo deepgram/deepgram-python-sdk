@@ -2,7 +2,7 @@ from ._types import Options, UsageField, UsageFieldOptions, UsageOptions, UsageR
 from ._utils import _request, _make_query_string
 
 class Usage:
-    _root = "/v1/projects";
+    _root = "/projects";
 
     def __init__(self, options: Options) -> None:
         self.options = options
