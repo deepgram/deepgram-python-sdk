@@ -17,7 +17,7 @@ class PrerecordedTranscription:
     async def __call__(self, source: TranscriptionSource) -> PrerecordedTranscriptionResponse:
         if 'buffer' in source and 'mimetype' not in source:
             raise Exception('DG: Mimetype must be provided if the source is bytes')
-        payload = source.get('buffer', source) 
+        payload = source.get('buffer', {'url': source.get('url')}) 
         return await _request(f'{self._root}{_make_query_string(self.transcription_options)}', self.options, method='POST', payload=payload, headers={'Content-Type': source.get('mimetype') or 'audio/wav'})
 
 class LiveTranscription:
