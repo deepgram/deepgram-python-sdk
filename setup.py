@@ -29,5 +29,6 @@ setuptools.setup(
     install_requires=[
         'aiohttp',
         'websockets',
+        'typing-extensions; python_version < "3.8.0"'
     ],
 )

@@ -9,9 +9,9 @@ Official Python SDK for [Deepgram](https://www.deepgram.com/)'s automated
 speech recognition APIs.
 
 To access the API you will need a Deepgram account. Sign up for free at
-[https://console.deepgram.com/](console.deepgram.com).
+[console.deepgram.com](https://console.deepgram.com/).
 
-You can learn more about the full Deepgram API at [https://developers.deepgram.com](https://developers.deepgram.com).
+You can learn more about the full Deepgram API at [developers.deepgram.com](https://developers.deepgram.com).
 
 ## Getting Started
 

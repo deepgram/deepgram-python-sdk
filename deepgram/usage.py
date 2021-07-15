@@ -8,13 +8,17 @@ class Usage:
         self.options = options
 
     async def list_requests(self, project_id: str, options: UsageRequestListOptions = {}) -> UsageRequestList:
+        """Retrieves a range of requests sent to a given project."""
         return await _request(f'{self._root}/{project_id}/requests{_make_query_string(options)}', self.options)
     
     async def get_request(self, project_id: str, request_id: str) -> UsageRequest:
+        """Retrieves a single request sent to a given project."""
         return await _request(f'{self._root}/{project_id}/requests/{request_id}', self.options)
     
     async def get_usage(self, project_id: str, options: UsageOptions = {}) -> UsageResponse:
+        """Summarizes the usage for a given project."""
         return await _request(f'{self._root}/{project_id}/usage{_make_query_string(options)}', self.options)
 
     async def get_fields(self, project_id: str, options: UsageFieldOptions = {}) -> UsageField:
+        """"Summarizes the options used in transcription for a given project."""
         return await _request(f'{self._root}/{project_id}/fields{_make_query_string(options)}', self.options)

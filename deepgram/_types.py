@@ -1,6 +1,16 @@
-from typing import Optional, List, TypedDict, Union, Any, Literal, Dict
-# from collections.abc import Callable, Awaitable
-from typing import Callable, Awaitable # pre-Py3.9 compatibility
+# We want these types to be flexible to allow for updated API responses
+# or cutting-edge options to not break the client for older SDK versions;
+# as such, everything is implemented using TypedDicts instead of, say, dataclasses.
+
+from typing import Optional, List, Union, Any, Dict
+try:
+    from typing import TypedDict, Literal
+except:
+    from typing_extensions import TypedDict, Literal # pre-Py3.8 compatibility
+try:
+    from collections.abc import Callable, Awaitable
+except:
+    from typing import Callable, Awaitable # pre-Py3.9 compatibility
 from datetime import datetime
 
 # Transcription
@@ -124,9 +134,11 @@ class Member(TypedDict):
     last_name: str
     id: str
     scopes: Optional[List[str]]
+
 class KeyBundle(TypedDict):
     api_key: Key
     member: Member
+
 class KeyResponse(TypedDict):
     api_keys: List[KeyBundle]
 
