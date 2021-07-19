@@ -2,15 +2,16 @@
 # or cutting-edge options to not break the client for older SDK versions;
 # as such, everything is implemented using TypedDicts instead of, say, dataclasses.
 
+import sys
 from typing import Optional, List, Union, Any, Dict
-try:
+if sys.version_info.major >= 3 and sys.version_info.minor >= 8:
     from typing import TypedDict, Literal
-except:
-    from typing_extensions import TypedDict, Literal # pre-Py3.8 compatibility
-try:
+else:
+    from typing_extensions import TypedDict, Literal
+if sys.version_info.major >= 3 and sys.version_info.minor >= 9:
     from collections.abc import Callable, Awaitable
-except:
-    from typing import Callable, Awaitable # pre-Py3.9 compatibility
+else:
+    from typing import Callable, Awaitable
 from datetime import datetime
 
 # Transcription
