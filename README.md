@@ -50,7 +50,7 @@ async def main():
     with open(PATH_TO_FILE, 'rb') as audio:
         # ...or replace mimetype as appropriate
         source = {'buffer': audio, 'mimetype': 'audio/wav'}
-        response = await dg_client.transcription.prerecorded(source)
+        response = await dg_client.transcription.prerecorded(source, {'punctuate': True})
         print(json.dumps(response, indent=4))
 
 asyncio.run(main())
@@ -70,7 +70,7 @@ async def main():
     dg_client = Deepgram(DEEPGRAM_API_KEY)
     # Creates a websocket connection to Deepgram
     try:
-        socket = await dg_client.transcription.live()
+        socket = await dg_client.transcription.live({'punctuate': True})
     except Exception as e:
         print(f'Could not open socket: {e}')
         return
