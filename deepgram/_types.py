@@ -14,6 +14,9 @@ else:
     from typing import Callable, Awaitable
 from datetime import datetime
 
+class UpdateResponse(TypedDict):
+    message: str
+
 # Transcription
 
 class Options(TypedDict):

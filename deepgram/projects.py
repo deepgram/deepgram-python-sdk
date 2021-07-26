@@ -1,4 +1,4 @@
-from ._types import Options, Project, ProjectResponse
+from ._types import Options, Project, ProjectResponse, UpdateResponse
 from ._utils import _request
 
 class Projects:
@@ -18,6 +18,15 @@ class Projects:
     async def create(self, name: str) -> Project:
     	"""Creates a project."""
     	return await _request(self._root, self.options, method='POST', payload={'name': name}, headers={'Content-Type': 'application/json'})
+    
+    async def update(self, id: str, name: str = None, company: str = None) -> UpdateResponse:
+        """Updates a project's information."""
+        payload = {} # there's got to be a better way to do this without non-specific kwargs
+        if name:
+            payload['name'] = name
+        if company:
+            payload['company'] = company
+        return await _request(f'{self._root}/{id}', self.options, method='PATCH', payload=payload, headers={'Content-Type': 'application/json'})
 
     async def delete(self, id: str) -> Project:
         """Deletes a specific project based on the provided projectId."""
