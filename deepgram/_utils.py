@@ -9,7 +9,7 @@ Payload = Optional[Union[dict, str, bytes, IO]]
 
 def _prepare_headers(options: Options, headers: Mapping[str, str] = {}) -> dict:
     return {**headers,
-        'Authorization': (options.get('auth_method') or 'Token') + ' ' + options['api_key'],
+        'Authorization': None if 'api_key' not in options else options.get('auth_method', 'Token') + ' ' + options['api_key'],
         'User-Agent': f'deepgram/{__version__} python/{platform.python_version()}'
     }
 
@@ -42,7 +42,9 @@ async def _request(path: str, options: Options, method: str = 'GET', payload: Pa
     updated_headers = _prepare_headers(options, headers)
     try:
         async with aiohttp.request(method, destination, data=_normalize_payload(payload), headers=updated_headers, raise_for_status=True) as resp:
-            content = await resp.text()
+            content = (await resp.text()).strip()
+            if not content:
+                return None
             body = json.loads(content)
             if body.get('error'):
                 raise Exception(f'DG: {content}')
