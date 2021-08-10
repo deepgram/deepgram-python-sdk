@@ -27,13 +27,17 @@ def _make_query_string(params: Mapping[str, Any] = {}) -> str:
         if value in [None, ""]:
             return []
         if isinstance(value, list):
-            return [elem_decomposer(key, item) for item in value] # break into multiple parameters
+            return [elem_decomposer(key, item)[0] for item in value] # break into multiple parameters
+            # just take the first element in the sublist, rather than trying to flatten recursively
+            # passing nested lists as query parameters isn't really well-defined,
+            # nor does anything in our API currently take things like that as of 2021-08-10
+            # so everything coming through this second pass should be a 1-item list
         if isinstance(value, bool):
             return [(key, str(value).lower())] # make sure False and True stay lowercased in accordance with DG convention
         return [(key, str(value))]
 
     unflattened = [elem_decomposer(k, v) for k, v in params.items()] # sublist for each original parameter
-    flattened = [item for group in unflattened for item in group] # flatten
+    flattened = sum(unflattened, []) # flatten
     return ('?' if flattened else '') + urllib.parse.urlencode(flattened)
 
 
