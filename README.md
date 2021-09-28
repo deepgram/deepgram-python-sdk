@@ -90,9 +90,9 @@ async def main():
         await connection.finish()
 
     # Listen for the connection to close
-    socket.registerHandler(socket.event.CLOSE, lambda c: print(f'Connection closed with code {c}.'))
+    socket.register_handler(socket.event.CLOSE, lambda c: print(f'Connection closed with code {c}.'))
     # Print incoming transcription objects
-    socket.registerHandler(socket.event.TRANSCRIPT_RECEIVED, print)
+    socket.register_handler(socket.event.TRANSCRIPT_RECEIVED, print)
 
     # Send the audio to the socket
     await process_audio(socket)

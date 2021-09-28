@@ -1,84 +1,100 @@
 # We want these types to be flexible to allow for updated API responses
 # or cutting-edge options to not break the client for older SDK versions;
-# as such, everything is implemented using TypedDicts instead of, say, dataclasses.
+# as such, everything is implemented using TypedDicts
+# instead of, say, dataclasses.
 
 import sys
+from datetime import datetime
 from typing import Optional, List, Union, Any, Dict
-if sys.version_info.major > 3 or (sys.version_info.major == 3 and sys.version_info.minor >= 8):
+if sys.version_info >= (3, 8):
     from typing import TypedDict, Literal
 else:
     from typing_extensions import TypedDict, Literal
-if sys.version_info.major > 3 or (sys.version_info.major == 3 and sys.version_info.minor >= 9):
+if sys.version_info >= (3, 9):
     from collections.abc import Callable, Awaitable
 else:
     from typing import Callable, Awaitable
-from datetime import datetime
+
 
 class UpdateResponse(TypedDict):
     message: str
 
+
 # Transcription
+
 
 class Options(TypedDict):
     api_key: str
-    api_url: Optional[str] # this URL should /not/ include a trailing slash
+    api_url: Optional[str]  # this URL should /not/ include a trailing slash
+
 
 class UrlSource(TypedDict):
     url: str
+
 
 class BufferSource(TypedDict):
     buffer: bytes
     mimetype: str
 
+
 TranscriptionSource = Union[UrlSource, BufferSource]
 
-Keyword = Union[str, TypedDict('Keyword', {
+
+BoostedKeyword = TypedDict('BoostedKeyword', {
     'word': str,
     'boost': float,
-})]
+})
+Keyword = Union[str, BoostedKeyword]
 
-class TranscriptionOptions(TypedDict):
+
+class TranscriptionOptions(TypedDict, total=False):
     # References for the different meanings and values of these properties
     # can be found in the Deepgram docs:
     # https://developers.deepgram.com/api-reference/speech-recognition-api#operation/transcribeAudio
     # https://developers.deepgram.com/api-reference/speech-recognition-api#operation/transcribeStreamingAudio
-    model: Optional[str]
-    version: Optional[str]
-    language: Optional[str]
-    punctuate: Optional[bool]
-    profanity_filter: Optional[bool]
-    redact: Optional[List[str]]
-    diarize: Optional[bool]
-    multichannel: Optional[bool]
-    alternatives: Optional[int]
-    numerals: Optional[bool]
-    search: Optional[List[str]]
-    callback: Optional[str]
-    keywords: Optional[List[str]]
+    model: str
+    version: str
+    language: str
+    punctuate: bool
+    profanity_filter: bool
+    redact: List[str]
+    diarize: bool
+    multichannel: bool
+    alternatives: int
+    numerals: bool
+    search: List[str]
+    callback: str
+    keywords: List[str]
 
-class PrerecordedOptions(TranscriptionOptions):
+
+class PrerecordedOptions(TranscriptionOptions, total=False):
     # References for the different meanings and values of these properties
     # can be found in the Deepgram docs:
     # https://developers.deepgram.com/api-reference/speech-recognition-api#operation/transcribeAudio
-    utterances: Optional[bool]
-    utt_split: Optional[float]
+    utterances: bool
+    utt_split: float
 
-class LiveOptions(TranscriptionOptions):
+
+class LiveOptions(TranscriptionOptions, total=False):
     # References for the different meanings and values of these properties
     # can be found in the Deepgram docs:
     # https://developers.deepgram.com/api-reference/speech-recognition-api#operation/transcribeStreamingAudio
-    interim_results: Optional[bool]
-    endpointing: Optional[bool]
-    vad_turnoff: Optional[int]
-    encoding: Optional[str]
-    channels: Optional[int]
-    sample_rate: Optional[int]
+    interim_results: bool
+    endpointing: bool
+    vad_turnoff: int
+    encoding: str
+    channels: int
+    sample_rate: int
+
 
 class WordBase(TypedDict):
     word: str
     start: float
     end: float
     confidence: float
+    speaker: Optional[int]
+    punctuated_word: Optional[str]
+
 
 class Hit(TypedDict):
     confidence: float
@@ -86,17 +102,33 @@ class Hit(TypedDict):
     end: float
     snippet: str
 
+
 class Search(TypedDict):
     query: str
     hits: List[Hit]
 
+
+class Alternative(TypedDict):
+    transcript: str
+    confidence: float
+    words: List[WordBase]
+
+
 class Channel(TypedDict):
     search: Optional[List[Search]]
-    alternatives: List[TypedDict('Alternative', {
-        'transcript': str,
-        'confidence': float,
-        'words': List[WordBase],
-    })]
+    alternatives: List[Alternative]
+
+
+class Utterance(TypedDict):
+    start: float
+    end: float
+    confidence: float
+    channel: int
+    transcript: str
+    words: List[WordBase]
+    speaker: Optional[int]
+    id: str
+
 
 class Metadata(TypedDict):
     request_id: str
@@ -105,13 +137,26 @@ class Metadata(TypedDict):
     created: str
     duration: float
     channels: int
+    models: List[str]
 
-class PrerecordedTranscriptionResponse(TypedDict):
-    request_id: Optional[str]
-    metadata: Optional[Metadata]
-    results: Optional[TypedDict('ResultChannels', {
-        'channels': List[Channel],
-    })]
+
+TranscriptionResults = TypedDict('TranscriptionResults', {
+    'channels': List[Channel],
+    'utterances': Optional[List[Utterance]]
+})
+
+
+class PrerecordedTranscriptionResponse(TypedDict, total=False):
+    request_id: str
+    metadata: Metadata
+    results: TranscriptionResults
+
+
+StreamingMetadata = TypedDict('StreamingMetadata', {
+    'request_id': str,
+    'model_uuid': str,
+})
+
 
 class LiveTranscriptionResponse(TypedDict):
     channel_index: List[int]
@@ -120,10 +165,14 @@ class LiveTranscriptionResponse(TypedDict):
     is_final: bool
     speech_final: bool
     channel: Channel
+    metadata: StreamingMetadata
+
 
 EventHandler = Union[Callable[[Any], None], Callable[[Any], Awaitable[None]]]
 
+
 # Keys
+
 
 class Key(TypedDict):
     api_key_id: str
@@ -132,6 +181,7 @@ class Key(TypedDict):
     created: datetime
     scopes: List[str]
 
+
 class Member(TypedDict):
     email: str
     first_name: str
@@ -139,23 +189,30 @@ class Member(TypedDict):
     id: str
     scopes: Optional[List[str]]
 
+
 class KeyBundle(TypedDict):
     api_key: Key
     member: Member
 
+
 class KeyResponse(TypedDict):
     api_keys: List[KeyBundle]
 
+
 # Projects
+
 
 class Project(TypedDict):
     project_id: str
     name: str
 
+
 class ProjectResponse(TypedDict):
     projects: List[Project]
 
+
 # Usage
+
 
 class UsageRequestListOptions(TypedDict):
     start: Optional[str]
@@ -164,26 +221,32 @@ class UsageRequestListOptions(TypedDict):
     limit: Optional[int]
     status: Literal['succeeded', 'failed']
 
+
+class UsageRequestDetails(TypedDict):
+    usd: float
+    dutation: float
+    total_audio: float
+    channels: int
+    streams: int
+    model: str
+    method: Literal['sync', 'async', 'streaming']
+    tags: List[str]
+    features: List[str]
+    config: Dict[str, bool]  # TODO: add all possible request options
+
+
 class UsageRequestDetail(TypedDict):
-    details: TypedDict("UsageRequestDetails", {
-        'usd': float,
-        'duration': float,
-        'total_audio': float,
-        'channels': int,
-        'streams': int,
-        'model': str,
-        'method': Literal['sync', 'async', 'streaming'],
-        'tags': List[str],
-        'features': List[str],
-        'config': Dict[str, bool] # TODO: add all possible request options
-    })
+    details: UsageRequestDetails
+
 
 class UsageRequestMessage(TypedDict):
     message: Optional[str]
 
+
 class UsageCallback(TypedDict):
     code: int
     completed: str
+
 
 class UsageRequest(TypedDict):
     request_id: str
@@ -193,33 +256,36 @@ class UsageRequest(TypedDict):
     response: Optional[Union[UsageRequestDetail, UsageRequestMessage]]
     callback: Optional[UsageCallback]
 
+
 class UsageRequestList(TypedDict):
     page: int
     limit: int
     requests: Optional[List[UsageRequest]]
 
-class UsageOptions(TypedDict):
-    start: Optional[str]
-    end: Optional[str]
-    accessor: Optional[str]
-    tag: Optional[List[str]]
-    method: Optional[Literal['sync', 'async', 'streaming']]
-    model: Optional[str]
-    multichannel: Optional[bool]
-    interim_results: Optional[bool]
-    punctuate: Optional[bool]
-    ner: Optional[bool]
-    utterances: Optional[bool]
-    replace: Optional[bool]
-    profanity_filter: Optional[bool]
-    keywords: Optional[bool]
-    sentiment: Optional[bool]
-    diarize: Optional[bool]
-    detect_language: Optional[bool]
-    search: Optional[bool]
-    redact: Optional[bool]
-    alternatives: Optional[bool]
-    numerals: Optional[bool]
+
+class UsageOptions(TypedDict, total=False):
+    start: str
+    end: str
+    accessor: str
+    tag: List[str]
+    method: Literal['sync', 'async', 'streaming']
+    model: str
+    multichannel: bool
+    interim_results: bool
+    punctuate: bool
+    ner: bool
+    utterances: bool
+    replace: bool
+    profanity_filter: bool
+    keywords: bool
+    sentiment: bool
+    diarize: bool
+    detect_language: bool
+    search: bool
+    redact: bool
+    alternatives: bool
+    numerals: bool
+
 
 class UsageResponseDetail(TypedDict):
     start: str
@@ -227,18 +293,24 @@ class UsageResponseDetail(TypedDict):
     hours: float
     requests: int
 
+
+UsageResponseResolution = TypedDict("UsageResponseResolution", {
+    'units': str,
+    'amount': int
+})
+
+
 class UsageResponse(TypedDict):
     start: str
     end: str
-    resolution: TypedDict("UsageResponseResolution", {
-        'units': str,
-        'amount': int
-    })
+    resolution: UsageResponseResolution
     results: List[UsageResponseDetail]
 
-class UsageFieldOptions(TypedDict):
-    start: Optional[str]
-    end: Optional[str]
+
+class UsageFieldOptions(TypedDict, total=False):
+    start: str
+    end: str
+
 
 class UsageField(TypedDict):
     tags: List[str]
