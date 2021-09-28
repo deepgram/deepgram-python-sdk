@@ -24,6 +24,22 @@ class UpdateResponse(TypedDict):
 
 
 class Options(TypedDict):
+    """
+    A :class:`typing.TypedDict` of options used to build a :class:`deepgram.Deepgram` client.
+
+    .. code-block::
+
+        from deepgram import Options, Deepgram
+        options = Options(api_key="my api key", api_url="https://api.deepgram.com/v1")
+        options = Options(api_key="my other api key")  # api_url is optional if using api.deepgram.com
+        client = Deepgram(options)
+
+    Attributes:
+        api_key: The `Deepgram API key`_ used for authentication.
+        api_url: The URL of the Deepgram API.
+
+    .. _Deepgram API key: https://developers.deepgram.com/getting-started/create-api-key
+    """
     api_key: str
     api_url: Optional[str]  # this URL should /not/ include a trailing slash
 

@@ -166,6 +166,8 @@ class LiveTranscription:
 
 
 class Transcription:
+    """Transcribe pre-recorded or live (streaming) audio."""
+
     def __init__(self, options: Options) -> None:
         self.options = options
 

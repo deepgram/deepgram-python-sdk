@@ -1,0 +1,23 @@
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  docs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+        with:
+          python-version: "3.9"
+      - name: Validate Documentation Builds
+        run: |
+          pip install .
+          pip install -r docs/requirements.txt
+          # At the moment there are no static assets which generates a sphinx warning
+          mkdir docs/_static
+          sphinx-build -W -b html docs docs/_build/html
