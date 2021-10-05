@@ -23,9 +23,9 @@ class UpdateResponse(TypedDict):
 # Transcription
 
 
-class Options(TypedDict):
+class Options(TypedDict, total=False):
     api_key: str
-    api_url: Optional[str]  # this URL should /not/ include a trailing slash
+    api_url: str  # this URL should /not/ include a trailing slash
 
 
 class UrlSource(TypedDict):

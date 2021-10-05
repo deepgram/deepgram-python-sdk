@@ -11,8 +11,7 @@ class Deepgram:
         if not isinstance(options, str) and not options.get('api_url'):
             raise ValueError("DG: API URL must be valid or omitted")
         t_options: Options = {
-            'api_key': options,
-            'api_url': None
+            'api_key': options
         } if isinstance(options, str) else options
         if 'api_key' not in t_options:
             raise ValueError("DG: API key is required")
