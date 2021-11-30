@@ -65,6 +65,7 @@ class TranscriptionOptions(TypedDict, total=False):
     search: List[str]
     callback: str
     keywords: List[str]
+    ner: str
 
 
 class PrerecordedOptions(TranscriptionOptions, total=False):
