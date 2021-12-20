@@ -56,6 +56,8 @@ async def main():
 asyncio.run(main())
 ```
 
+As you can tell, query parameters like `punctuate` are added as part of the TranscriptionOptions in the request. Multiple query parameters can be added like so: `response = await dg_client.transcription.prerecorded(source, {'punctuate': True, 'keywords': ['first:5', 'second']})`
+
 #### "Fake" streaming processing:
 
 ```python
