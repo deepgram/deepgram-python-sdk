@@ -2,7 +2,7 @@
 
 [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-v2.0%20adopted-ff69b4.svg?style=flat-rounded)](CODE_OF_CONDUCT.md)
 
-> This is a pre-release SDK and is very likely to have breaking changes. Feel free to provide
+> This SDK is under active development; feel free to provide
 > feedback via GitHub issues and suggest new features.
 
 Official Python SDK for [Deepgram](https://www.deepgram.com/)'s automated
