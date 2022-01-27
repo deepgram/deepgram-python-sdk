@@ -98,7 +98,7 @@ async def _request(
                     raise Exception(f'DG: {content}')
                 return body
         except aiohttp.ClientResponseError as exc:
-            raise Exception(f'DG: {exc}')
+            raise (Exception(f'DG: {exc}') if exc.status < 500 else exc)
         except aiohttp.ClientError as exc:
             raise exc
 
@@ -106,7 +106,9 @@ async def _request(
     while tries > 0:
         try:
             return await attempt()
-        except Exception as exc:
+        except aiohttp.ClientError as exc:
+            if isinstance(payload, io.IOBase):
+                raise exc # stream is now invalid as payload
             tries -= 1
             continue
     return await attempt()
