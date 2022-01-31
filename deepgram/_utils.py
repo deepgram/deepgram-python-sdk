@@ -109,10 +109,9 @@ async def _request(
             return await attempt()
         except aiohttp.ClientError as exc:
             if isinstance(payload, io.IOBase):
-                if payload.seekable():
-                    payload.seek(0) # retry stream from start
-                else:
-                    raise exc # stream is now invalid as payload
+                raise exc # stream is now invalid as payload
+                # the way aiohttp handles streaming form data
+                # means that just seeking this back still runs into issues
             tries -= 1
             continue
     return await attempt()
