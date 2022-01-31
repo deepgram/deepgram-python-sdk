@@ -1,6 +1,7 @@
 from typing import Any, Union, Optional, IO, Mapping, Tuple, List, cast
 import aiohttp
 import urllib.parse
+import io
 import json
 import re
 import platform
@@ -108,7 +109,10 @@ async def _request(
             return await attempt()
         except aiohttp.ClientError as exc:
             if isinstance(payload, io.IOBase):
-                raise exc # stream is now invalid as payload
+                if payload.seekable():
+                    payload.seek(0) # retry stream from start
+                else:
+                    raise exc # stream is now invalid as payload
             tries -= 1
             continue
     return await attempt()
