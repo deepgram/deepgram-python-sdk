@@ -1,5 +1,3 @@
-from __future__ import annotations
-
 from typing import Any, Union, Tuple, List, Dict, Awaitable, cast
 import json
 import asyncio
@@ -56,7 +54,7 @@ class LiveTranscription:
         self._socket = cast(websockets.client.WebSocketClientProtocol, None)
         self._queue: asyncio.Queue[Tuple[bool, Any]] = asyncio.Queue()
 
-    async def __call__(self) -> LiveTranscription:
+    async def __call__(self) -> 'LiveTranscription':
         self._socket = await _socket_connect(
             f'{self._root}{_make_query_string(self.transcription_options)}',
             self.options
