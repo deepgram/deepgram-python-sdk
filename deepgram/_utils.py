@@ -1,6 +1,7 @@
 from typing import Any, Union, Optional, IO, Mapping, Tuple, List, cast
 import aiohttp
 import urllib.parse
+import io
 import json
 import re
 import platform
@@ -98,7 +99,7 @@ async def _request(
                     raise Exception(f'DG: {content}')
                 return body
         except aiohttp.ClientResponseError as exc:
-            raise Exception(f'DG: {exc}')
+            raise (Exception(f'DG: {exc}') if exc.status < 500 else exc)
         except aiohttp.ClientError as exc:
             raise exc
 
@@ -106,7 +107,11 @@ async def _request(
     while tries > 0:
         try:
             return await attempt()
-        except Exception as exc:
+        except aiohttp.ClientError as exc:
+            if isinstance(payload, io.IOBase):
+                raise exc # stream is now invalid as payload
+                # the way aiohttp handles streaming form data
+                # means that just seeking this back still runs into issues
             tries -= 1
             continue
     return await attempt()
