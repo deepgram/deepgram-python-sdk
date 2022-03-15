@@ -10,7 +10,6 @@ from ._types import (Options, PrerecordedOptions, LiveOptions,
                      LiveTranscriptionResponse, Metadata, EventHandler)
 from ._enums import LiveTranscriptionEvent
 from ._utils import _request, _make_query_string, _socket_connect
-import traceback
 
 
 class PrerecordedTranscription:
@@ -43,7 +42,6 @@ class PrerecordedTranscription:
 class LiveTranscription:
     _root = "/listen"
     MESSAGE_TIMEOUT = 1.0
-    RETRY = 4
 
     def __init__(self, options: Options,
                  transcription_options: LiveOptions) -> None:
@@ -69,20 +67,14 @@ class LiveTranscription:
         asyncio.create_task(self._receiver())
         self._ping_handlers(LiveTranscriptionEvent.OPEN, self)
 
-        connection_retries = 0
-
         while not self.done:
             try:
                 incoming, body = await asyncio.wait_for(self._queue.get(), self.MESSAGE_TIMEOUT)
             except asyncio.TimeoutError:
-                print(f"Server didn't receive or send message within {self.MESSAGE_TIMEOUT} seconds")
-
-                if connection_retries < self.RETRY:
-                    connection_retries += 1
-                    continue
-
-                self.done = True
-                break
+                if self._socket.closed:
+                    self.done = True
+                    break
+                continue
 
             if incoming:
                 try:
@@ -115,7 +107,6 @@ class LiveTranscription:
                 body = await self._socket.recv()
                 self._queue.put_nowait((True, body))
             except Exception as exc:
-                traceback.print_exc()  
                 self.done = True # socket closed, will terminate on next loop
 
     def _ping_handlers(self, event_type: LiveTranscriptionEvent,
