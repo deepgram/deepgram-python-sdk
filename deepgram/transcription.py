@@ -41,6 +41,7 @@ class PrerecordedTranscription:
 
 class LiveTranscription:
     _root = "/listen"
+    MESSAGE_TIMEOUT = 1.0
 
     def __init__(self, options: Options,
                  transcription_options: LiveOptions) -> None:
@@ -65,8 +66,16 @@ class LiveTranscription:
     async def _start(self) -> None:
         asyncio.create_task(self._receiver())
         self._ping_handlers(LiveTranscriptionEvent.OPEN, self)
+
         while not self.done:
-            incoming, body = await self._queue.get()
+            try:
+                incoming, body = await asyncio.wait_for(self._queue.get(), self.MESSAGE_TIMEOUT)
+            except asyncio.TimeoutError:
+                if self._socket.closed:
+                    self.done = True
+                    break
+                continue
+
             if incoming:
                 try:
                     parsed: Union[
@@ -98,7 +107,7 @@ class LiveTranscription:
                 body = await self._socket.recv()
                 self._queue.put_nowait((True, body))
             except Exception as exc:
-                pass  # socket closed, will terminate on next loop
+                self.done = True # socket closed, will terminate on next loop
 
     def _ping_handlers(self, event_type: LiveTranscriptionEvent,
                        body: Any) -> None:
