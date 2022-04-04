@@ -19,17 +19,6 @@ You can learn more about the full Deepgram API at [developers.deepgram.com](http
 pip install deepgram-sdk
 ```
 
-```python
-from deepgram import Deepgram
-
-dg_client = Deepgram(YOUR_API_KEY)
-# or, fully specify for an alternate endpoint
-dg_client = Deepgram({
-    'api_key': YOUR_API_KEY,
-    'api_url': YOUR_API_URL
-})
-```
-
 ## Usage
 
 Basic transcription can be done like so:
