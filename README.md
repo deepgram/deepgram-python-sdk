@@ -21,9 +21,7 @@ pip install deepgram-sdk
 
 ## Usage
 
-Basic transcription can be done like so:
-
-#### Batch processing
+#### Transcribe an Existing File
 
 ```python
 from deepgram import Deepgram
@@ -45,7 +43,7 @@ async def main():
 asyncio.run(main())
 ```
 
-#### Streaming processing:
+#### Transcribe Audio in Real-Time
 
 ```python
 from deepgram import Deepgram
