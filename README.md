@@ -82,7 +82,12 @@ async def main():
   async with aiohttp.ClientSession() as session:
     async with session.get(URL) as audio:
       while True:
-        deepgramLive.send(await audio.content.readany())
+        data = await audio.content.readany()
+        deepgramLive.send(data)
+
+        # If there's no data coming from the livestream then break out of the loop
+        if not data:
+            break
 
   # Indicate that we've finished sending data by sending the customary zero-byte message to the Deepgram streaming endpoint, and wait until we get back the final summary metadata object
   await deepgramLive.finish()
