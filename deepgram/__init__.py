@@ -4,6 +4,10 @@ from .keys import Keys
 from .transcription import Transcription
 from .projects import Projects
 from .usage import Usage
+from .billing import Billing
+from .members import Members
+from .scopes import Scopes
+from .invitations import Invitations
 
 
 class Deepgram:
@@ -32,6 +36,23 @@ class Deepgram:
     @property
     def usage(self) -> Usage:
         return Usage(self.options)
+
+    @property
+    def billing(self) -> Billing:
+        return Billing(self.options)
+
+    @property
+    def members(self) -> Members:
+        return Members(self.options)
+
+    @property
+    def scopes(self) -> Scopes:
+        return Scopes(self.options)
+
+    @property
+    def invitations(self) -> Invitations:
+        return Invitations(self.options)
+
 
 
 __all__ = ["Deepgram"]

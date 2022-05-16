@@ -182,6 +182,7 @@ class Key(TypedDict):
     created: datetime
     scopes: List[str]
 
+# Members
 
 class Member(TypedDict):
     email: str
@@ -319,3 +320,32 @@ class UsageField(TypedDict):
     processing_methods: List[str]
     languages: List[str]
     features: List[str]
+
+# Billing
+
+class Balance(TypedDict):
+    balance_id: str
+    amount: float
+    units: str
+    purchase: str
+
+
+class BalanceResponse(TypedDict):
+    projects: List[Balance]
+
+
+# Scope
+
+class Scope(TypedDict):
+    scopes: List[str]
+
+
+# Invitation
+
+class Invitation(TypedDict):
+    email: str
+    scope: str
+
+
+class InvitationResponse(TypedDict):
+    message: str
