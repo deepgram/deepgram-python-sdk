@@ -24,20 +24,16 @@ class Projects:
             headers={'Content-Type': 'application/json'}
         )
 
-    async def update(self, project_id: str, name: str = None,
-                     company: str = None) -> UpdateResponse:
+    
+    async def update(self, project_id: str, **payload) -> UpdateResponse:
         """Updates a project's information."""
-        payload = {}
-        # there's got to be a better way to do this without non-specific kwargs
-        if name:
-            payload['name'] = name
-        if company:
-            payload['company'] = company
+       
         return await _request(
             f'{self._root}/{project_id}', self.options,
             method='PATCH', payload=payload,
             headers={'Content-Type': 'application/json'}
         )
+
 
     async def delete(self, project_id: str) -> None:
         """Deletes a specific project based on the provided projectId."""
