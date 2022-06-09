@@ -87,7 +87,7 @@ class LiveTranscription:
                         parsed
                     )
                     self.received.append(parsed)
-                    if 'transaction_key' in parsed:
+                    if 'sha256' in parsed: 
                         self.done = True
                 except json.decoder.JSONDecodeError:
                     self._ping_handlers(
