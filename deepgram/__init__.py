@@ -2,6 +2,7 @@ from typing import Union
 from ._types import Options
 from .keys import Keys
 from .transcription import Transcription
+from .transcription_ import Transcription as Transcription_
 from .projects import Projects
 from .usage import Usage
 from .billing import Billing
@@ -28,6 +29,10 @@ class Deepgram:
     @property
     def transcription(self) -> Transcription:
         return Transcription(self.options)
+
+    @property
+    def transcription_(self) -> Transcription_:
+        return Transcription_(self.options)
 
     @property
     def projects(self) -> Projects:
