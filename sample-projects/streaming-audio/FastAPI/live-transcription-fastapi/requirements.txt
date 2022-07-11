@@ -29,7 +29,7 @@ six==1.16.0
 sniffio==1.2.0
 starlette==0.17.1
 typing_extensions==4.1.1
-ujson==4.3.0
+ujson==5.4.0
 urllib3==1.26.8
 uvicorn==0.15.0
 uvloop==0.16.0
