@@ -21,7 +21,7 @@ pip install deepgram-sdk
 
 ## Usage
 
-#### Transcribe an Existing File
+#### Transcribe an Existing File or Pre-recorded Audio
 
 ```python
 from deepgram import Deepgram
@@ -43,7 +43,7 @@ async def main():
 asyncio.run(main())
 ```
 
-#### Transcribe Audio in Real-Time
+#### Transcribe Audio in Real-Time or Streaming Audio
 
 ```python
 from deepgram import Deepgram
@@ -106,6 +106,21 @@ Depending on your preference, you can also add parameters as named arguments, in
 ```python
 response = await dg_client.transcription.prerecorded(source, punctuate=True, keywords=['first:5', 'second'])
 ```
+
+## Code Samples
+
+To run the sample code, you may want to create a virtual environment to isolate your Python projects, but it's not required. You can learn how to make and activate these virtual environments in [this article](https://developers.deepgram.com/blog/2022/02/python-virtual-environments/) on our Deepgram blog.
+
+#### Streaming Audio Code Samples
+
+In the `sample-projects` folder, there are examples from four different Python web frameworks of how to do live streaming audio transcription with Deepgram. These include:
+
+- Flask 2.0
+- FastAPI
+- Django
+- Quart
+
+Each of the examples has a README file you can follow to set up and run your project. If you get stuck, please feel free to Tweet us! We're [@DeepgramDevs on Twitter](https://twitter.com/DeepgramDevs)
 
 ## Development and Contributing
 
