@@ -65,9 +65,9 @@ async def main():
   deepgram = Deepgram(DEEPGRAM_API_KEY)
 
   # Create a websocket connection to Deepgram
-  # In this example, punctuation is turned on, interim results are turned off, and language is set to UK English.
+  # In this example, punctuation is turned on, interim results are turned off, and language is set to US English.
   try:
-    deepgramLive = await deepgram.transcription.live({ 'punctuate': True, 'interim_results': False, 'language': 'en-GB' })
+    deepgramLive = await deepgram.transcription.live({ 'punctuate': True, 'interim_results': False, 'language': 'en-US' })
   except Exception as e:
     print(f'Could not open socket: {e}')
     return
