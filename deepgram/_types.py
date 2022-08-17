@@ -58,7 +58,7 @@ class TranscriptionOptions(TypedDict, total=False):
     punctuate: bool
     profanity_filter: bool
     redact: List[str]
-    diarize: bool
+    diarize: Literal['false', 'true']
     diarize_version: str
     version: str
     multichannel: bool
@@ -97,6 +97,7 @@ class WordBase(TypedDict):
     end: float
     confidence: float
     speaker: Optional[int]
+    speaker_confidence: Optional[float]
     punctuated_word: Optional[str]
 
 
@@ -131,6 +132,7 @@ class Utterance(TypedDict):
     transcript: str
     words: List[WordBase]
     speaker: Optional[int]
+    speaker_confidence: Optional[float]
     id: str
 
 
