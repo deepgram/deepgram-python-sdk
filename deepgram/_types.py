@@ -59,6 +59,8 @@ class TranscriptionOptions(TypedDict, total=False):
     profanity_filter: bool
     redact: List[str]
     diarize: bool
+    diarize_version: str
+    version: str
     multichannel: bool
     alternatives: int
     numerals: bool
