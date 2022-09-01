@@ -69,6 +69,7 @@ class TranscriptionOptions(TypedDict, total=False):
     keywords: List[str]
     ner: str
     tier: str
+    replace: str
 
 
 class PrerecordedOptions(TranscriptionOptions, total=False):
