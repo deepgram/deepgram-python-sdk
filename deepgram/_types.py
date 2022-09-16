@@ -78,6 +78,7 @@ class PrerecordedOptions(TranscriptionOptions, total=False):
     # https://developers.deepgram.com/api-reference/speech-recognition-api#operation/transcribeAudio
     utterances: bool
     utt_split: float
+    detect_entities: bool
 
 
 class LiveOptions(TranscriptionOptions, total=False):
