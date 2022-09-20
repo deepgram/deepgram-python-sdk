@@ -79,6 +79,7 @@ class PrerecordedOptions(TranscriptionOptions, total=False):
     utterances: bool
     utt_split: float
     paragraphs: bool
+    detect_language: bool
 
 
 class LiveOptions(TranscriptionOptions, total=False):
