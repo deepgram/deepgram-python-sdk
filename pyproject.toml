@@ -1,3 +1,17 @@
+[project.optional-dependencies]
+tests = [
+    'pytest >= 6',
+    'pytest-cov >= 4',
+    'pytest-asyncio >= 0.14',
+]
+
 [build-system]
 requires = ["setuptools", "wheel"]
 build-backend = "setuptools.build_meta"
+
+[tool.pytest.ini_options]
+minversion = "6.0"
+addopts = "-rA -q -s"
+testpaths = [
+    "tests",
+]
