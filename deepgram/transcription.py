@@ -13,16 +13,42 @@ from ._utils import _request, _make_query_string, _socket_connect
 
 
 class PrerecordedTranscription:
+    """This class provides an interface for doing transcription on prerecorded audio files."""
+
     _root = "/listen"
 
     def __init__(self, options: Options,
                  transcription_options: PrerecordedOptions) -> None:
+        """
+        This function initializes the options and transcription_options for the PrerecordedTranscription class.
+
+        :param self: Used to Refer to the object itself.
+        :param options:Options: Used to Pass in the options for the transcription.
+        :param transcription_options:PrerecordedOptions: Used to Specify the transcription options for a prerecorded audio file.
+        :return: Nothing.
+
+        """
+
         self.options = options
         self.transcription_options = transcription_options
 
     async def __call__(
         self, source: TranscriptionSource
     ) -> PrerecordedTranscriptionResponse:
+        """
+        The __call__ function is a special method that allows the class to be called
+        as a function. This is useful for creating instances of the class, where we can
+        call `PrerecordedTranscription()` and pass in arguments to set up an instance of
+        the class. For example:
+        
+            prerecorded_transcription = PrerecordedTranscription(...)
+        
+        :param self: Used to Access the class attributes.
+        :param source:TranscriptionSource: Used to Pass in the audio file.
+        :return: A `prerecordedtranscriptionresponse` object, which contains the transcription results.
+        
+        """
+
         if 'buffer' in source and 'mimetype' not in source:
             raise Exception(
                 'DG: Mimetype must be provided if the source is bytes'
@@ -40,11 +66,30 @@ class PrerecordedTranscription:
 
 
 class LiveTranscription:
+    """
+    This class allows you to perform live transcription by connecting to Deepgram's Transcribe Streaming API.
+    It takes in options for the transcription job, and a callback function to handle events.
+
+    """
+
     _root = "/listen"
     MESSAGE_TIMEOUT = 1.0
 
     def __init__(self, options: Options,
                  transcription_options: LiveOptions) -> None:
+        """
+        The __init__ function is called when an instance of the class is created.
+        It initializes all of the attributes that are part of the object, and can be
+        accessed using "self." notation. In this case, it sets up a list to store any
+        messages received from Transcribe Streaming.
+        
+        :param self: Used to Reference the object instance of the class.
+        :param options:Options: Used to Pass the options for the transcription job.
+        :param transcription_options:LiveOptions: Used to Pass in the configuration for the transcription job.
+        :return: None.
+        
+        """
+
         self.options = options
         self.transcription_options = transcription_options
         self.handlers: List[Tuple[LiveTranscriptionEvent, EventHandler]] = []
@@ -56,6 +101,16 @@ class LiveTranscription:
         self._queue: asyncio.Queue[Tuple[bool, Any]] = asyncio.Queue()
 
     async def __call__(self) -> 'LiveTranscription':
+        """
+        The __call__ function is a special method that allows the object to be called
+        as a function. In this case, it is used to connect the client and start the
+        transcription process. It returns itself after starting so that operations can
+        be chained.
+        
+        :param self: Used to Access the attributes of the class.
+        :return: The object itself.
+        
+        """
         self._socket = await _socket_connect(
             f'{self._root}{_make_query_string(self.transcription_options)}',
             self.options
@@ -64,6 +119,19 @@ class LiveTranscription:
         return self
 
     async def _start(self) -> None:
+        """
+        The _start function is the main function of the LiveTranscription class.
+        It is responsible for creating a websocket connection to Deepgram Transcribe,
+        and then listening for incoming messages from that socket. It also sends any 
+        messages that are in its queue (which is populated by other functions). The 
+        _start function will run until it receives a message with an empty transcription, 
+        at which point it will close the socket and return.
+        
+        :param self: Used to Access the class attributes.
+        :return: None.
+
+        """
+
         asyncio.create_task(self._receiver())
         self._ping_handlers(LiveTranscriptionEvent.OPEN, self)
 
@@ -102,6 +170,16 @@ class LiveTranscription:
         )
 
     async def _receiver(self) -> None:
+        """
+        The _receiver function is a coroutine that receives messages from the socket and puts them in a queue.
+        It is started by calling start_receiver() on an instance of AsyncSocket. It runs until the socket is closed,
+        or until an exception occurs.
+        
+        :param self: Used to Access the attributes of the class.
+        :return: None.
+
+        """
+
         while not self.done:
             try:
                 body = await self._socket.recv()
@@ -111,6 +189,18 @@ class LiveTranscription:
 
     def _ping_handlers(self, event_type: LiveTranscriptionEvent,
                        body: Any) -> None:
+        """
+        The _ping_handlers function is a callback that is called when the
+        transcription service sends a ping event.  It calls all of the functions
+        in self.handlers, which are registered by calling add_ping_handler().
+        
+        :param self: Used to Access the attributes and methods of the class.
+        :param event_type:LiveTranscriptionEvent: Used to Determine if the function should be called.
+        :param body:Any: Used to Pass the event data to the handler function.
+        :return: The list of handlers for the event type.
+
+        """
+        
         for handled_type, func in self.handlers:
             if handled_type is event_type:
                 if inspect.iscoroutinefunction(func):
@@ -123,6 +213,7 @@ class LiveTranscription:
     def register_handler(self, event_type: LiveTranscriptionEvent,
                          handler: EventHandler) -> None:
         """Adds an event handler to the transcription client."""
+
         self.handlers.append((event_type, handler))
 
     # alias for incorrect method name in v0.1.x
@@ -140,6 +231,7 @@ class LiveTranscription:
     def deregister_handler(self, event_type: LiveTranscriptionEvent,
                            handler: EventHandler) -> None:
         """Removes an event handler from the transcription client."""
+
         self.handlers.remove((event_type, handler))
 
     # alias for incorrect method name in v0.1.x
@@ -156,11 +248,13 @@ class LiveTranscription:
 
     def send(self, data: Union[bytes, str]) -> None:
         """Sends data to the Deepgram endpoint."""
+
         self._queue.put_nowait((False, data))
 
     async def finish(self) -> None:
         """Closes the connection to the Deepgram endpoint,
         waiting until ASR is complete on all submitted data."""
+
         self.send(b'')  # Set message for "data is finished sending"
         while not self.done:
             await asyncio.sleep(0.1)
@@ -169,10 +263,17 @@ class LiveTranscription:
     def event(self) -> Enum:
         """An enum representing different possible transcription events
         that handlers can be registered against."""
+
         return cast(Enum, LiveTranscriptionEvent)
 
 
 class Transcription:
+    """
+    This is the Transcription class. It provides two async methods, prerecorded and live, that
+    return transcription responses for audio files and live audio streams, respectively.
+
+    """
+    
     def __init__(self, options: Options) -> None:
         self.options = options
 
