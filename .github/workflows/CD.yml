@@ -1,0 +1,36 @@
+name: CD
+
+on:
+  release:
+    types: [ published ]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.10' 
+          
+      - name: Update Version in _version.py
+        run: sed -i 's/0.0.0/${{ github.event.release.tag_name }}/g' ./deepgram/_version.py
+          
+      - name: Install Dependencies
+        run: pip install .
+
+      #- name: Run Tests
+      #  run: pytest tests/
+
+      - name: Install build
+        run: python -m pip install --upgrade build
+
+      - name: Build SDK
+        run: python -m build
+
+      - name: Install twine
+        run: python -m pip install --upgrade twine
+
+      - name: Publish to PyPi
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          password: ${{ secrets.PYPI_API_TOKEN }}

@@ -1,15 +1,11 @@
 # Deepgram Python SDK
 
-[![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-v2.0%20adopted-ff69b4.svg?style=flat-rounded)](CODE_OF_CONDUCT.md)
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/deepgram/deepgram-python-sdk/ci) ![PyPI](https://img.shields.io/pypi/v/deepgram-sdk) [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-v2.0%20adopted-ff69b4.svg?style=flat-rounded)](./.github/CODE_OF_CONDUCT.md)
 
-> This SDK is under active development; feel free to provide
-> feedback via GitHub issues and suggest new features.
-
-Official Python SDK for [Deepgram](https://www.deepgram.com/)'s automated
-speech recognition APIs.
+Official Python SDK for [Deepgram](https://www.deepgram.com/?utm_medium=github&utm_source=devrel&utm_content=deepgram-python-sdk)'s automated speech recognition APIs.
 
 To access the API you will need a Deepgram account. Sign up for free at
-[console.deepgram.com](https://console.deepgram.com/signup?utm_medium=github&utm_source=DEVREL&utm_content=python-sdk).
+[console.deepgram.com](https://console.deepgram.com/signup?utm_medium=github&utm_source=devrel&utm_content=deepgram-python-sdk).
 
 You can learn more about the full Deepgram API at [developers.deepgram.com](https://developers.deepgram.com).
 
@@ -109,7 +105,7 @@ response = await dg_client.transcription.prerecorded(source, punctuate=True, key
 
 ## Code Samples
 
-To run the sample code, you may want to create a virtual environment to isolate your Python projects, but it's not required. You can learn how to make and activate these virtual environments in [this article](https://developers.deepgram.com/blog/2022/02/python-virtual-environments/) on our Deepgram blog.
+To run the sample code, you may want to create a virtual environment to isolate your Python projects, but it's not required. You can learn how to make and activate these virtual environments in [this article](https://blog.deepgram.com/python-virtual-environments/) on our Deepgram blog.
 
 #### Streaming Audio Code Samples
 
@@ -120,22 +116,22 @@ In the `sample-projects` folder, there are examples from four different Python w
 - Django
 - Quart
 
-Each of the examples has a README file you can follow to set up and run your project. If you get stuck, please feel free to Tweet us! We're [@DeepgramDevs on Twitter](https://twitter.com/DeepgramDevs)
+Each of the examples has a README file you can follow to set up and run your project. If you get stuck, please feel free to Tweet us! We're [@DeepgramAI on Twitter](https://twitter.com/DeepgramAI)
 
 ## Development and Contributing
 
 Interested in contributing? We ❤️ pull requests!
 
 To make sure our community is safe for all, be sure to review and agree to our
-[Code of Conduct](./CODE_OF_CONDUCT.md). Then see the
-[Contribution](./CONTRIBUTING.md) guidelines for more information.
+[Code of Conduct](./.github/CODE_OF_CONDUCT.md). Then see the
+[Contribution](./.github/CONTRIBUTING.md) guidelines for more information.
 
 ## Getting Help
 
 We love to hear from you so if you have questions, comments or find a bug in the
 project, let us know! You can either:
 
-- [Open an issue](https://github.com/deepgram/python-sdk/issues/new) on this repository
+- [Open an issue](https://github.com/deepgram/deepgram-python-sdk/issues/new) on this repository
 - Tweet at us! We're [@DeepgramAI on Twitter](https://twitter.com/DeepgramAI)
 
 ## Further Reading

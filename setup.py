@@ -17,14 +17,14 @@ setuptools.setup(
     long_description=long_description,
     long_description_content_type='text/markdown',
     license='MIT',
-    url='https://github.com/deepgram/python-sdk',
+    url='https://github.com/deepgram/deepgram-python-sdk',
     author='Luca Todd',
     author_email='luca.todd@deepgram.com',
     classifiers=[
         'Intended Audience :: Developers',
         'Programming Language :: Python :: 3',
     ],
-    keywords='deepgram asr transcription ai',
+    keywords='deepgram speech-to-text',
     packages=setuptools.find_packages(),
     install_requires=[
         'aiohttp',
