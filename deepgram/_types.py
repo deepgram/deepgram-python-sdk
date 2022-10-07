@@ -3,6 +3,7 @@
 # as such, everything is implemented using TypedDicts
 # instead of, say, dataclasses.
 
+import string
 import sys
 from datetime import datetime
 from typing import Optional, List, Union, Any, Dict
@@ -82,6 +83,8 @@ class PrerecordedOptions(TranscriptionOptions, total=False):
     summarize: bool
     paragraphs: bool
     detect_language: bool
+    detect_topics: bool
+    translation: List[str]
 
 
 class LiveOptions(TranscriptionOptions, total=False):
@@ -118,15 +121,65 @@ class Search(TypedDict):
     hits: List[Hit]
 
 
+class Translation(TypedDict):
+    translation: str
+    language: str
+
+
 class Alternative(TypedDict):
     transcript: str
     confidence: float
     words: List[WordBase]
+    detected_language: Optional[str]
+    translation: Optional[List[Translation]]
+
+
+class Summary(TypedDict):
+    summary: str
+    start_word: float
+    end_word: float
+
+
+class Entity(TypedDict):
+    label: str
+    value: str
+    confidence: float
+    start_word: float
+    end_word: float
+
+
+class Sentence(TypedDict):
+    text: str
+    start: float
+    end: float
+
+
+class Paragraph(TypedDict):
+    sentences: List[Sentence]
+    num_words: float
+    start: float
+    end: float
+
+
+class ParagraphGroup(TypedDict):
+    transcript: str
+    paragraphs: List[Paragraph]
+
+
+class Topic(TypedDict):
+    topics: List[str]
+    text: str
+    start_word: float
+    end_word: float
 
 
 class Channel(TypedDict):
     search: Optional[List[Search]]
     alternatives: List[Alternative]
+    summaries: Optional[List[Summary]]
+    entities: Optional[List[Entity]]
+    paragraphs: Optional[ParagraphGroup]
+    topics: Optional[List[Topic]]
 
 
 class Utterance(TypedDict):
@@ -193,6 +246,7 @@ class Key(TypedDict):
     scopes: List[str]
 
 # Members
+
 
 class Member(TypedDict):
     email: str
@@ -297,6 +351,12 @@ class UsageOptions(TypedDict, total=False):
     redact: bool
     alternatives: bool
     numerals: bool
+    detect_entities: bool
+    summarize: bool
+    paragraphs: bool
+    detect_language: bool
+    detect_topics: bool
+    translation: bool
 
 
 class UsageResponseDetail(TypedDict):
@@ -332,6 +392,7 @@ class UsageField(TypedDict):
     features: List[str]
 
 # Billing
+
 
 class Balance(TypedDict):
     balance_id: str
