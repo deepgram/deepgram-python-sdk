@@ -3,7 +3,6 @@
 # as such, everything is implemented using TypedDicts
 # instead of, say, dataclasses.
 
-import string
 import sys
 from datetime import datetime
 from typing import Optional, List, Union, Any, Dict
