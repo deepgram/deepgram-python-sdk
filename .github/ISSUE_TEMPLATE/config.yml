@@ -1,6 +1,6 @@
 blank_issues_enabled: false
 contact_links:
-  - name: Vonage Developer Community Slack
-    url: https://developer.nexmo.com/community/slack
-  - name: VonageDev on Twitter
-    url: https://twitter.com/VonageDev
+  - name: Deepgram Developer Community
+    url: https://github.com/orgs/deepgram/discussions
+  - name: Deepgram on Twitter
+    url: https://twitter.com/DeepgramAI

@@ -4,3 +4,4 @@ dist/
 .venv
 venv/
 venv.bak/
+build/

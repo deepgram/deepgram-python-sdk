@@ -10,7 +10,7 @@ if sys.version_info >= (3, 8):
     from typing import TypedDict, Literal
 else:
     from typing_extensions import TypedDict, Literal
-if sys.version_info >= (3, 9):
+if sys.version_info >= (3, 9, 2):
     from collections.abc import Callable, Awaitable
 else:
     from typing import Callable, Awaitable
@@ -79,6 +79,9 @@ class PrerecordedOptions(TranscriptionOptions, total=False):
     utterances: bool
     utt_split: float
     detect_entities: bool
+    summarize: bool
+    paragraphs: bool
+    detect_language: bool
 
 
 class LiveOptions(TranscriptionOptions, total=False):
