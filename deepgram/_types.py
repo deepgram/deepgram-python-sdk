@@ -84,6 +84,8 @@ class PrerecordedOptions(TranscriptionOptions, total=False):
     detect_language: bool
     detect_topics: bool
     translation: List[str]
+    analyze_sentiment: bool
+    sent_thresh: float
 
 
 class LiveOptions(TranscriptionOptions, total=False):
@@ -343,7 +345,6 @@ class UsageOptions(TypedDict, total=False):
     replace: bool
     profanity_filter: bool
     keywords: bool
-    sentiment: bool
     diarize: bool
     detect_language: bool
     search: bool
@@ -356,6 +357,8 @@ class UsageOptions(TypedDict, total=False):
     detect_language: bool
     detect_topics: bool
     translation: bool
+    analyze_sentiment: bool
+    sent_thresh: float
 
 
 class UsageResponseDetail(TypedDict):
