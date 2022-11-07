@@ -22,7 +22,6 @@ class PrerecordedTranscription:
         """
         This function initializes the options and transcription_options for the PrerecordedTranscription class.
 
-        :param self: Used to Refer to the object itself.
         :param options:Options: Used to Pass in the options for the transcription.
         :param transcription_options:PrerecordedOptions: Used to Specify the transcription options for a prerecorded audio file.
         :return: Nothing.
@@ -43,7 +42,6 @@ class PrerecordedTranscription:
         
             prerecorded_transcription = PrerecordedTranscription(...)
         
-        :param self: Used to Access the class attributes.
         :param source:TranscriptionSource: Used to Pass in the audio file.
         :return: A `prerecordedtranscriptionresponse` object, which contains the transcription results.
         
@@ -83,7 +81,6 @@ class LiveTranscription:
         accessed using "self." notation. In this case, it sets up a list to store any
         messages received from Transcribe Streaming.
         
-        :param self: Used to Reference the object instance of the class.
         :param options:Options: Used to Pass the options for the transcription job.
         :param transcription_options:LiveOptions: Used to Pass in the configuration for the transcription job.
         :return: None.
@@ -107,7 +104,6 @@ class LiveTranscription:
         transcription process. It returns itself after starting so that operations can
         be chained.
         
-        :param self: Used to Access the attributes of the class.
         :return: The object itself.
         
         """
@@ -127,7 +123,6 @@ class LiveTranscription:
         _start function will run until it receives a message with an empty transcription, 
         at which point it will close the socket and return.
         
-        :param self: Used to Access the class attributes.
         :return: None.
 
         """
@@ -175,7 +170,6 @@ class LiveTranscription:
         It is started by calling start_receiver() on an instance of AsyncSocket. It runs until the socket is closed,
         or until an exception occurs.
         
-        :param self: Used to Access the attributes of the class.
         :return: None.
 
         """
@@ -194,7 +188,6 @@ class LiveTranscription:
         transcription service sends a ping event.  It calls all of the functions
         in self.handlers, which are registered by calling add_ping_handler().
         
-        :param self: Used to Access the attributes and methods of the class.
         :param event_type:LiveTranscriptionEvent: Used to Determine if the function should be called.
         :param body:Any: Used to Pass the event data to the handler function.
         :return: The list of handlers for the event type.
