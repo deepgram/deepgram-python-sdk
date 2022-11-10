@@ -9,11 +9,11 @@ from ._types import (Options, PrerecordedOptions, LiveOptions,
                      TranscriptionSource, PrerecordedTranscriptionResponse,
                      LiveTranscriptionResponse, Metadata, EventHandler)
 from ._enums import LiveTranscriptionEvent
-from ._utils import _request, _make_query_string, _socket_connect
+from ._utils import _request, _sync_request, _make_query_string, _socket_connect
 
 
 class PrerecordedTranscription:
-    """This class provides an interface for doing transcription on prerecorded audio files."""
+    """This class provides an interface for doing transcription asynchronously on prerecorded audio files."""
 
     _root = "/listen"
 
@@ -57,6 +57,58 @@ class PrerecordedTranscription:
         )
         content_type = cast(str, source.get('mimetype', 'application/json'))
         return await _request(
+            f'{self._root}{_make_query_string(self.transcription_options)}',
+            self.options, method='POST', payload=payload,
+            headers={'Content-Type': content_type}
+        )
+
+
+class SyncPrerecordedTranscription:
+    """This class provides an interface for doing transcription synchronously on prerecorded audio files."""
+
+    _root = "/listen"
+
+    def __init__(self, options: Options,
+                 transcription_options: PrerecordedOptions) -> None:
+        """
+        This function initializes the options and transcription_options for the PrerecordedTranscription class.
+
+        :param options:Options: Used to Pass in the options for the transcription.
+        :param transcription_options:PrerecordedOptions: Used to Specify the transcription options for a prerecorded audio file.
+        :return: Nothing.
+
+        """
+
+        self.options = options
+        self.transcription_options = transcription_options
+
+    def __call__(
+        self, source: TranscriptionSource
+    ) -> PrerecordedTranscriptionResponse:
+
+        """
+        The __call__ function is a special method that allows the class to be called
+        as a function. This is useful for creating instances of the class, where we can
+        call `SyncPrerecordedTranscription()` and pass in arguments to set up an instance of
+        the class. For example:
+        
+            sync_prerecorded_transcription = SyncPrerecordedTranscription(...)
+        
+        :param source:TranscriptionSource: Used to Pass in the audio file.
+        :return: A `prerecordedtranscriptionresponse` object, which contains the transcription results.
+        
+        """
+    
+        if 'buffer' in source and 'mimetype' not in source:
+            raise Exception(
+                'DG: Mimetype must be provided if the source is bytes'
+            )
+        payload = cast(
+            Union[bytes, Dict],
+            source.get('buffer', {'url': source.get('url')})
+        )
+        content_type = cast(str, source.get('mimetype', 'application/json'))
+        return _sync_request(
             f'{self._root}{_make_query_string(self.transcription_options)}',
             self.options, method='POST', payload=payload,
             headers={'Content-Type': content_type}
@@ -282,6 +334,21 @@ class Transcription:
         return await PrerecordedTranscription(
             self.options, full_options
         )(source)
+
+
+    def sync_prerecorded(
+        self, source: TranscriptionSource,
+        options: PrerecordedOptions = None, **kwargs
+    ) -> PrerecordedTranscriptionResponse:
+        """Retrieves a transcription for an already-existing audio file,
+        local or web-hosted."""
+        if options is None:
+            options = {}
+        full_options = cast(PrerecordedOptions, {**options, **kwargs})
+        return SyncPrerecordedTranscription(
+            self.options, full_options
+        )(source)
+
 
     async def live(
         self, options: LiveOptions = None, **kwargs

@@ -1,6 +1,8 @@
 from typing import Any, Union, Optional, IO, Mapping, Tuple, List, cast
 import aiohttp
 import urllib.parse
+import urllib.request
+import urllib.error
 import io
 import json
 import re
@@ -115,6 +117,48 @@ async def _request(
             tries -= 1
             continue
     return await attempt()
+
+
+def _sync_request(
+    path: str, options: Options,
+    method: str = 'GET', payload: Payload = None,
+    headers: Optional[Mapping[str, str]] = None
+) -> Any:
+    if headers is None:
+        headers = {}
+    destination = cast(str, options.get('api_url', DEFAULT_ENDPOINT)) + path
+    updated_headers = _prepare_headers(options, headers)
+
+    def attempt():
+        req = urllib.request.Request(
+            destination, 
+            data=_normalize_payload(payload), 
+            headers=updated_headers, 
+            method=method)
+        try:
+            with urllib.request.urlopen(req) as resp:
+                content = resp.read().strip()
+                if not content:
+                    return None
+                body = json.loads(content)
+                if body.get('error'):
+                    raise Exception(f'DG: {content}')
+                return body
+        except urllib.error.URLError as exc:
+            raise (Exception(f'DG: {exc}') if exc.status < 500 else exc)
+
+    tries = RETRY_COUNT
+    while tries > 0:
+        try:
+            return attempt()
+        except urllib.error.URLError as exc:
+            if isinstance(payload, io.IOBase):
+                raise exc # stream is now invalid as payload
+                # the way aiohttp handles streaming form data
+                # means that just seeking this back still runs into issues
+            tries -= 1
+            continue
+    return attempt()
 
 
 async def _socket_connect(

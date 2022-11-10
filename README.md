@@ -21,6 +21,28 @@ pip install deepgram-sdk
 
 ```python
 from deepgram import Deepgram
+import json
+
+DEEPGRAM_API_KEY = 'YOUR_API_KEY'
+PATH_TO_FILE = 'some/file.wav'
+
+def main():
+    # Initializes the Deepgram SDK
+    deepgram = Deepgram(DEEPGRAM_API_KEY)
+    # Open the audio file
+    with open(PATH_TO_FILE, 'rb') as audio:
+        # ...or replace mimetype as appropriate
+        source = {'buffer': audio, 'mimetype': 'audio/wav'}
+        response = deepgram.transcription.sync_prerecorded(source, {'punctuate': True})
+        print(json.dumps(response, indent=4))
+
+main()
+```
+
+#### Transcribe an Existing File or Pre-recorded Audio Asynchronously
+
+```python
+from deepgram import Deepgram
 import asyncio, json
 
 DEEPGRAM_API_KEY = 'YOUR_API_KEY'
