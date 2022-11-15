@@ -72,11 +72,12 @@ class TranscriptionOptions(TypedDict, total=False):
     keywords: List[str]
     ner: str
     tier: str
-    dates: str
+    dates: bool
     date_format: str
-    times: str
-    dictation: str
-    measurements: str
+    times: bool
+    dictation: bool
+    measurements: bool
+    replace: str
 
 
 class PrerecordedOptions(TranscriptionOptions, total=False):
