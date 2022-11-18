@@ -63,12 +63,20 @@ class TranscriptionOptions(TypedDict, total=False):
     version: str
     multichannel: bool
     alternatives: int
+    # numerals will be deprecated in the future
     numerals: bool
+    numbers: bool
+    numbers_spaces: bool
     search: List[str]
     callback: str
     keywords: List[str]
     ner: str
     tier: str
+    dates: bool
+    date_format: str
+    times: bool
+    dictation: bool
+    measurements: bool
     replace: str
 
 
