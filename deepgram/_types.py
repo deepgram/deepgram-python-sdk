@@ -91,7 +91,7 @@ class PrerecordedOptions(TranscriptionOptions, total=False):
     paragraphs: bool
     detect_language: bool
     detect_topics: bool
-    translation: List[str]
+    translate: List[str]
     analyze_sentiment: bool
     sent_thresh: float
 
@@ -364,7 +364,7 @@ class UsageOptions(TypedDict, total=False):
     paragraphs: bool
     detect_language: bool
     detect_topics: bool
-    translation: bool
+    translate: bool
     analyze_sentiment: bool
     sent_thresh: float
 
