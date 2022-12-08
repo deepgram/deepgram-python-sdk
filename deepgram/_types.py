@@ -77,6 +77,7 @@ class TranscriptionOptions(TypedDict, total=False):
     times: bool
     dictation: bool
     measurements: bool
+    smart_format: bool
     replace: str
 
 
