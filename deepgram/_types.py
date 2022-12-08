@@ -93,7 +93,7 @@ class PrerecordedOptions(TranscriptionOptions, total=False):
     detect_topics: bool
     translate: List[str]
     analyze_sentiment: bool
-    sent_thresh: float
+    sentiment_threshold: float
 
 
 class LiveOptions(TranscriptionOptions, total=False):
@@ -366,7 +366,7 @@ class UsageOptions(TypedDict, total=False):
     detect_topics: bool
     translate: bool
     analyze_sentiment: bool
-    sent_thresh: float
+    sentiment_threshold: float
 
 
 class UsageResponseDetail(TypedDict):
