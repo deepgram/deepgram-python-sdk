@@ -4,7 +4,7 @@ anyio==3.5.0
 asgiref==3.5.0
 async-timeout==4.0.2
 attrs==21.4.0
-certifi==2021.10.8
+certifi==2022.12.7
 charset-normalizer==2.0.12
 click==8.0.4
 deepgram-sdk==0.2.4
