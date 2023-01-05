@@ -296,6 +296,15 @@ class LiveTranscription:
 
         self._queue.put_nowait((False, data))
 
+    def toggle_numerals(self, toggle: bool) -> None:
+        """Toggles whether or not numerals are included in the transcription."""
+        self._queue.put_nowait((False, json.dumps({
+            "type": "Configure",
+            "processors": {
+                "numerals": toggle
+            }
+        })))
+
     async def finish(self) -> None:
         """Closes the connection to the Deepgram endpoint,
         waiting until ASR is complete on all submitted data."""
