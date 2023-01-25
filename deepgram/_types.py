@@ -108,6 +108,8 @@ class LiveOptions(TranscriptionOptions, total=False):
     channels: int
     sample_rate: int
 
+class ToggleConfigOptions(TypedDict):
+    numerals: bool
 
 class WordBase(TypedDict):
     word: str

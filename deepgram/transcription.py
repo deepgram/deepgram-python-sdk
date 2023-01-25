@@ -5,7 +5,7 @@ import inspect
 from enum import Enum
 from warnings import warn
 import websockets.client
-from ._types import (Options, PrerecordedOptions, LiveOptions,
+from ._types import (Options, PrerecordedOptions, LiveOptions, ToggleConfigOptions,
                      TranscriptionSource, PrerecordedTranscriptionResponse,
                      LiveTranscriptionResponse, Metadata, EventHandler)
 from ._enums import LiveTranscriptionEvent
@@ -296,13 +296,11 @@ class LiveTranscription:
 
         self._queue.put_nowait((False, data))
 
-    def toggle_numerals(self, toggle: bool) -> None:
+    def configure(self, config: ToggleConfigOptions) -> None:
         """Toggles whether or not numerals are included in the transcription."""
         self._queue.put_nowait((False, json.dumps({
             "type": "Configure",
-            "processors": {
-                "numerals": toggle
-            }
+            "processors": config
         })))
 
     async def finish(self) -> None:
