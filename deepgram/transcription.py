@@ -5,7 +5,7 @@ import inspect
 from enum import Enum
 from warnings import warn
 import websockets.client
-from ._types import (Options, PrerecordedOptions, LiveOptions,
+from ._types import (Options, PrerecordedOptions, LiveOptions, ToggleConfigOptions,
                      TranscriptionSource, PrerecordedTranscriptionResponse,
                      LiveTranscriptionResponse, Metadata, EventHandler)
 from ._enums import LiveTranscriptionEvent
@@ -295,6 +295,13 @@ class LiveTranscription:
         """Sends data to the Deepgram endpoint."""
 
         self._queue.put_nowait((False, data))
+
+    def configure(self, config: ToggleConfigOptions) -> None:
+        """Sends messages to configure transcription parameters mid-stream."""
+        self._queue.put_nowait((False, json.dumps({
+            "type": "Configure",
+            "processors": config
+        })))
 
     async def finish(self) -> None:
         """Closes the connection to the Deepgram endpoint,
