@@ -297,7 +297,7 @@ class LiveTranscription:
         self._queue.put_nowait((False, data))
 
     def configure(self, config: ToggleConfigOptions) -> None:
-        """Toggles whether or not numerals are included in the transcription."""
+        """Sends messages to configure transcription parameters mid-stream."""
         self._queue.put_nowait((False, json.dumps({
             "type": "Configure",
             "processors": config
