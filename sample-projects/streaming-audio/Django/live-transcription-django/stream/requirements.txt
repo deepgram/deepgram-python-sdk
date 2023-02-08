@@ -10,7 +10,7 @@ cffi==1.15.0
 channels==3.0.4
 charset-normalizer==2.0.12
 constantly==15.1.0
-cryptography==36.0.1
+cryptography==39.0.1
 daphne==3.0.2
 deepgram-sdk==0.2.4
 Django==4.0.3
