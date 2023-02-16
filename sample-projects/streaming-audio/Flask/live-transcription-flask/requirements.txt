@@ -16,5 +16,5 @@ MarkupSafe==2.1.0
 multidict==6.0.2
 python-dotenv==0.19.2
 websockets==10.2
-Werkzeug==2.0.3
+Werkzeug==2.2.3
 yarl==1.7.2
