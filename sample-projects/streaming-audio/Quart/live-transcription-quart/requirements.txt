@@ -23,6 +23,6 @@ python-dotenv==0.19.2
 quart==0.16.3
 toml==0.10.2
 websockets==10.2
-Werkzeug==2.0.3
+Werkzeug==2.2.3
 wsproto==1.1.0
 yarl==1.7.2
