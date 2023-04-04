@@ -50,8 +50,7 @@ Keyword = Union[str, BoostedKeyword]
 class TranscriptionOptions(TypedDict, total=False):
     # References for the different meanings and values of these properties
     # can be found in the Deepgram docs:
-    # https://developers.deepgram.com/api-reference/speech-recognition-api#operation/transcribeAudio
-    # https://developers.deepgram.com/api-reference/speech-recognition-api#operation/transcribeStreamingAudio
+    # https://developers.deepgram.com/documentation/features/
     model: str
     version: str
     language: str
@@ -84,7 +83,7 @@ class TranscriptionOptions(TypedDict, total=False):
 class PrerecordedOptions(TranscriptionOptions, total=False):
     # References for the different meanings and values of these properties
     # can be found in the Deepgram docs:
-    # https://developers.deepgram.com/api-reference/speech-recognition-api#operation/transcribeAudio
+    # https://developers.deepgram.com/documentation/features/
     utterances: bool
     utt_split: float
     detect_entities: bool
@@ -100,7 +99,7 @@ class PrerecordedOptions(TranscriptionOptions, total=False):
 class LiveOptions(TranscriptionOptions, total=False):
     # References for the different meanings and values of these properties
     # can be found in the Deepgram docs:
-    # https://developers.deepgram.com/api-reference/speech-recognition-api#operation/transcribeStreamingAudio
+    # https://developers.deepgram.com/documentation/features/
     interim_results: bool
     endpointing: bool
     vad_turnoff: int
