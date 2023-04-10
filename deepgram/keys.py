@@ -1,7 +1,7 @@
 from typing import List
 from ._types import Options, Key, KeyResponse
 from ._utils import _request
-
+import datetime
 
 class Keys:
     _root = "/projects"
@@ -22,12 +22,12 @@ class Keys:
         )
 
     async def create(
-        self, project_id: str, comment: str, scopes: List[str]
+        self, project_id: str, comment: str, scopes: List[str], tags: List[str], expiration_date: datetime, time_to_live_in_seconds: int
     ) -> Key:
         """Creates an API key with the provided scopes."""
         return await _request(
             f'{self._root}/{project_id}/keys', self.options,
-            method='POST', payload={'comment': comment, 'scopes': scopes},
+            method='POST', payload={'comment': comment, 'scopes': scopes, 'tags': tags, 'expiration_date': expiration_date, 'time_to_live_in_seconds': time_to_live_in_seconds},
             headers={'Content-Type': 'application/json'}
         )
 
