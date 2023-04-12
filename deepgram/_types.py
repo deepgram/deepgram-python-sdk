@@ -78,6 +78,7 @@ class TranscriptionOptions(TypedDict, total=False):
     measurements: bool
     smart_format: bool
     replace: str
+    tag: List[str]
 
 
 class PrerecordedOptions(TranscriptionOptions, total=False):
@@ -93,6 +94,7 @@ class PrerecordedOptions(TranscriptionOptions, total=False):
     detect_topics: bool
     translate: List[str]
     analyze_sentiment: bool
+    sentiment: bool
     sentiment_threshold: float
 
 
