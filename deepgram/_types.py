@@ -69,6 +69,7 @@ class TranscriptionOptions(TypedDict, total=False):
     search: List[str]
     callback: str
     keywords: List[str]
+    keyword_boost: str
     ner: str
     tier: str
     dates: bool
