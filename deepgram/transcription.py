@@ -29,7 +29,6 @@ class PrerecordedTranscription:
         """
         self.options = options
         if endpoint is not None:
-            print(f"DG: Using custom endpoint: {endpoint}")
             self._root = endpoint
         self.transcription_options = transcription_options
 
@@ -83,7 +82,6 @@ class SyncPrerecordedTranscription:
 
         self.options = options
         if endpoint is not None:
-            print(f"DG: Using custom endpoint: {endpoint}")
             self._root = endpoint
         self.transcription_options = transcription_options
 
@@ -146,7 +144,6 @@ class LiveTranscription:
 
         self.options = options
         if endpoint is not None:
-            print(f"DG: Using custom endpoint: {endpoint}")
             self._root = endpoint
         self.transcription_options = transcription_options
         self.handlers: List[Tuple[LiveTranscriptionEvent, EventHandler]] = []
