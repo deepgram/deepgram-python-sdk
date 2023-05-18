@@ -144,8 +144,8 @@ def _sync_request(
                 if body.get('error'):
                     raise Exception(f'DG: {content}')
                 return body
-        except urllib.error.URLError as exc:
-            raise (Exception(f'DG: {exc}') if exc.status < 500 else exc)
+        except urllib.error.HTTPError as exc:
+            raise (Exception(f'DG: {exc}') if exc.code < 500 else exc)
 
     tries = RETRY_COUNT
     while tries > 0:
