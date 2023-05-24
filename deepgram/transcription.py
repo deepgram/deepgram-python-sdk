@@ -32,7 +32,7 @@ class PrerecordedTranscription:
         self.transcription_options = transcription_options
 
     async def __call__(
-        self, source: TranscriptionSource
+        self, source: TranscriptionSource, timeout: float = None
     ) -> PrerecordedTranscriptionResponse:
         """
         The __call__ function is a special method that allows the class to be called
@@ -43,7 +43,8 @@ class PrerecordedTranscription:
             prerecorded_transcription = PrerecordedTranscription(...)
         
         :param source:TranscriptionSource: Used to Pass in the audio file.
-        :return: A `prerecordedtranscriptionresponse` object, which contains the transcription results.
+        :param timeout:float: (optional) The request timeout (if not set, defaults to `aiohttp`'s default timeout)
+        :return: A `PrerecordedTranscriptionResponse` object, which contains the transcription results.
         
         """
 
@@ -59,7 +60,8 @@ class PrerecordedTranscription:
         return await _request(
             f'{self._root}{_make_query_string(self.transcription_options)}',
             self.options, method='POST', payload=payload,
-            headers={'Content-Type': content_type}
+            headers={'Content-Type': content_type},
+            timeout=timeout
         )
 
 
@@ -83,7 +85,7 @@ class SyncPrerecordedTranscription:
         self.transcription_options = transcription_options
 
     def __call__(
-        self, source: TranscriptionSource
+        self, source: TranscriptionSource, timeout: float = None
     ) -> PrerecordedTranscriptionResponse:
 
         """
@@ -95,6 +97,7 @@ class SyncPrerecordedTranscription:
             sync_prerecorded_transcription = SyncPrerecordedTranscription(...)
         
         :param source:TranscriptionSource: Used to Pass in the audio file.
+        :param timeout:float: (optional) The request timeout, excluding the upload time of the audio file.
         :return: A `prerecordedtranscriptionresponse` object, which contains the transcription results.
         
         """
@@ -111,7 +114,8 @@ class SyncPrerecordedTranscription:
         return _sync_request(
             f'{self._root}{_make_query_string(self.transcription_options)}',
             self.options, method='POST', payload=payload,
-            headers={'Content-Type': content_type}
+            headers={'Content-Type': content_type},
+            timeout=timeout
         )
 
 
@@ -331,7 +335,9 @@ class Transcription:
 
     async def prerecorded(
         self, source: TranscriptionSource,
-        options: PrerecordedOptions = None, **kwargs
+        options: PrerecordedOptions = None,
+        timeout: float = None,
+        **kwargs
     ) -> PrerecordedTranscriptionResponse:
         """Retrieves a transcription for an already-existing audio file,
         local or web-hosted."""
@@ -340,12 +346,14 @@ class Transcription:
         full_options = cast(PrerecordedOptions, {**options, **kwargs})
         return await PrerecordedTranscription(
             self.options, full_options
-        )(source)
+        )(source, timeout=timeout)
 
 
     def sync_prerecorded(
         self, source: TranscriptionSource,
-        options: PrerecordedOptions = None, **kwargs
+        options: PrerecordedOptions = None,
+        timeout: float = None,
+        **kwargs
     ) -> PrerecordedTranscriptionResponse:
         """Retrieves a transcription for an already-existing audio file,
         local or web-hosted."""
@@ -354,7 +362,7 @@ class Transcription:
         full_options = cast(PrerecordedOptions, {**options, **kwargs})
         return SyncPrerecordedTranscription(
             self.options, full_options
-        )(source)
+        )(source, timeout=timeout)
 
 
     async def live(

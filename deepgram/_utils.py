@@ -80,18 +80,24 @@ def _make_query_string(params: Mapping[str, Any] = None) -> str:
 async def _request(
     path: str, options: Options,
     method: str = 'GET', payload: Payload = None,
-    headers: Optional[Mapping[str, str]] = None
+    headers: Optional[Mapping[str, str]] = None,
+    timeout: float = None,
 ) -> Any:
     if headers is None:
         headers = {}
     destination = cast(str, options.get('api_url', DEFAULT_ENDPOINT)) + path
     updated_headers = _prepare_headers(options, headers)
 
+    if timeout is None:
+        timeout = aiohttp.client.DEFAULT_TIMEOUT
+    else:
+        timeout = aiohttp.ClientTimeout(total=timeout)
+
     async def attempt():
         try:
             async with aiohttp.request(
                 method, destination, data=_normalize_payload(payload),
-                headers=updated_headers, raise_for_status=True
+                headers=updated_headers, raise_for_status=True, timeout=timeout
             ) as resp:
                 content = (await resp.text()).strip()
                 if not content:
@@ -122,7 +128,8 @@ async def _request(
 def _sync_request(
     path: str, options: Options,
     method: str = 'GET', payload: Payload = None,
-    headers: Optional[Mapping[str, str]] = None
+    headers: Optional[Mapping[str, str]] = None,
+    timeout: float = None
 ) -> Any:
     if headers is None:
         headers = {}
@@ -136,7 +143,7 @@ def _sync_request(
             headers=updated_headers, 
             method=method)
         try:
-            with urllib.request.urlopen(req) as resp:
+            with urllib.request.urlopen(req, timeout=timeout) as resp:
                 content = resp.read().strip()
                 if not content:
                     return None
