@@ -56,6 +56,8 @@ class PrerecordedTranscription:
             source.get('buffer', {'url': source.get('url')})
         )
         content_type = cast(str, source.get('mimetype', 'application/json'))
+        if "option" in self.transcription_options:
+            self.transcription_options = self.transcription_options["option"]
         return await _request(
             f'{self._root}{_make_query_string(self.transcription_options)}',
             self.options, method='POST', payload=payload,
