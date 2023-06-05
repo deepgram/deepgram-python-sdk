@@ -18,7 +18,7 @@ class PrerecordedTranscription:
     _root = "/listen"
 
     def __init__(self, options: Options,
-                 transcription_options: PrerecordedOptions) -> None:
+                 transcription_options: PrerecordedOptions, endpoint) -> None:
         """
         This function initializes the options and transcription_options for the PrerecordedTranscription class.
 
@@ -27,8 +27,9 @@ class PrerecordedTranscription:
         :return: Nothing.
 
         """
-
         self.options = options
+        if endpoint is not None:
+            self._root = endpoint
         self.transcription_options = transcription_options
 
     async def __call__(
@@ -71,7 +72,7 @@ class SyncPrerecordedTranscription:
     _root = "/listen"
 
     def __init__(self, options: Options,
-                 transcription_options: PrerecordedOptions) -> None:
+                 transcription_options: PrerecordedOptions, endpoint) -> None:
         """
         This function initializes the options and transcription_options for the PrerecordedTranscription class.
 
@@ -82,6 +83,8 @@ class SyncPrerecordedTranscription:
         """
 
         self.options = options
+        if endpoint is not None:
+            self._root = endpoint
         self.transcription_options = transcription_options
 
     def __call__(
@@ -130,7 +133,7 @@ class LiveTranscription:
     MESSAGE_TIMEOUT = 1.0
 
     def __init__(self, options: Options,
-                 transcription_options: LiveOptions) -> None:
+                 transcription_options: LiveOptions, endpoint) -> None:
         """
         The __init__ function is called when an instance of the class is created.
         It initializes all of the attributes that are part of the object, and can be
@@ -144,6 +147,8 @@ class LiveTranscription:
         """
 
         self.options = options
+        if endpoint is not None:
+            self._root = endpoint
         self.transcription_options = transcription_options
         self.handlers: List[Tuple[LiveTranscriptionEvent, EventHandler]] = []
         # all received messages
@@ -336,6 +341,7 @@ class Transcription:
     async def prerecorded(
         self, source: TranscriptionSource,
         options: PrerecordedOptions = None,
+        endpoint = "/listen",
         timeout: float = None,
         **kwargs
     ) -> PrerecordedTranscriptionResponse:
@@ -345,13 +351,14 @@ class Transcription:
             options = {}
         full_options = cast(PrerecordedOptions, {**options, **kwargs})
         return await PrerecordedTranscription(
-            self.options, full_options
+            self.options, full_options, endpoint
         )(source, timeout=timeout)
 
 
     def sync_prerecorded(
         self, source: TranscriptionSource,
         options: PrerecordedOptions = None,
+        endpoint = "/listen",
         timeout: float = None,
         **kwargs
     ) -> PrerecordedTranscriptionResponse:
@@ -361,17 +368,17 @@ class Transcription:
             options = {}
         full_options = cast(PrerecordedOptions, {**options, **kwargs})
         return SyncPrerecordedTranscription(
-            self.options, full_options
+            self.options, full_options, endpoint
         )(source, timeout=timeout)
 
 
     async def live(
-        self, options: LiveOptions = None, **kwargs
+        self, options: LiveOptions = None, endpoint = "/listen", **kwargs
     ) -> LiveTranscription:
         """Provides a client to send raw audio data to be transcribed."""
         if options is None:
             options = {}
         full_options = cast(LiveOptions, {**options, **kwargs})
         return await LiveTranscription(
-            self.options, full_options
+            self.options, full_options, endpoint
         )()
