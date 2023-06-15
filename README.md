@@ -2,12 +2,17 @@
 
 [![GitHub Workflow Status](https://img.shields.io/github/workflow/status/deepgram/deepgram-python-sdk/CI)](https://github.com/deepgram/deepgram-python-sdk/actions/workflows/CI.yml) [![PyPI](https://img.shields.io/pypi/v/deepgram-sdk)](https://pypi.org/project/deepgram-sdk/) [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-v2.0%20adopted-ff69b4.svg?style=flat-rounded)](./.github/CODE_OF_CONDUCT.md)
 
-Official Python SDK for [Deepgram](https://www.deepgram.com/?utm_medium=github&utm_source=devrel&utm_content=deepgram-python-sdk)'s automated speech recognition APIs.
+Official Python SDK for [Deepgram](https://www.deepgram.com/). Start building with our powerful transcription & speech understanding API.
 
-To access the API you will need a Deepgram account. Sign up for free at
-[console.deepgram.com](https://console.deepgram.com/signup?utm_medium=github&utm_source=devrel&utm_content=deepgram-python-sdk).
+> This SDK only supports hosted usage of api.deepgram.com.
+## Getting an API Key
 
-You can learn more about the full Deepgram API at [developers.deepgram.com](https://developers.deepgram.com).
+🔑 To access the Deepgram API you will need a [free Deepgram API Key](https://console.deepgram.com/signup?jump=keys).
+## Documentation
+
+Complete documentation of the Python SDK can be found at [Deepgram Docs](https://developers.deepgram.com/docs/python-sdk).
+
+You can learn more about the Deepgram API at [developers.deepgram.com](https://developers.deepgram.com/docs).
 
 ## Getting Started
 
@@ -95,7 +100,7 @@ async def main():
 
   # Listen for any transcripts received from Deepgram and write them to the console
   deepgramLive.registerHandler(deepgramLive.event.TRANSCRIPT_RECEIVED, print)
-  
+
   # Listen for the connection to open and send streaming audio from the URL to Deepgram
   async with aiohttp.ClientSession() as session:
     async with session.get(URL) as audio:
@@ -138,8 +143,6 @@ In the `sample-projects` folder, there are examples from four different Python w
 - Django
 - Quart
 
-Each of the examples has a README file you can follow to set up and run your project. If you get stuck, please feel free to Tweet us! We're [@DeepgramAI on Twitter](https://twitter.com/DeepgramAI)
-
 ## Development and Contributing
 
 Interested in contributing? We ❤️ pull requests!
@@ -153,9 +156,8 @@ To make sure our community is safe for all, be sure to review and agree to our
 We love to hear from you so if you have questions, comments or find a bug in the
 project, let us know! You can either:
 
-- [Open an issue](https://github.com/deepgram/deepgram-python-sdk/issues/new) on this repository
-- Tweet at us! We're [@DeepgramAI on Twitter](https://twitter.com/DeepgramAI)
+- [Open an issue in this repository](https://github.com/deepgram/deepgram-python-sdk/issues/new)
+- [Join the Deepgram Github Discussions Community](https://github.com/orgs/deepgram/discussions)
+- [Join the Deepgram Discord Community](https://discord.gg/xWRaCDBtW4)
 
-## Further Reading
-
-Check out the Developer Documentation at [https://developers.deepgram.com/](https://developers.deepgram.com/)
+[license]: LICENSE.txt
