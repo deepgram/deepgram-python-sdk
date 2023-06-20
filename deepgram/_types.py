@@ -89,7 +89,7 @@ class PrerecordedOptions(TranscriptionOptions, total=False):
     utterances: bool
     utt_split: float
     detect_entities: bool
-    summarize: bool
+    summarize: str
     paragraphs: bool
     detect_language: bool
     detect_topics: bool
@@ -216,11 +216,13 @@ class Metadata(TypedDict):
     duration: float
     channels: int
     models: List[str]
+    model_info: Dict[str, Any]
 
 
 TranscriptionResults = TypedDict('TranscriptionResults', {
     'channels': List[Channel],
-    'utterances': Optional[List[Utterance]]
+    'utterances': Optional[List[Utterance]],
+    'summary': Optional[Dict[str, Any]]
 })
 
 
@@ -365,7 +367,7 @@ class UsageOptions(TypedDict, total=False):
     alternatives: bool
     numerals: bool
     detect_entities: bool
-    summarize: bool
+    summarize: str
     paragraphs: bool
     detect_language: bool
     detect_topics: bool
