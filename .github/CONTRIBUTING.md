@@ -33,7 +33,7 @@ We also welcome anyone to work on any existing issues with the `👋🏽 good fi
 
 For a contribution to be accepted:
 
-* The test suite must be complete and pass
+* The test suite must be complete and pass. Run `pytest --api-key <key> tests/`
 * Code must follow existing styling conventions
 * Commit messages must be descriptive. Related issues should be mentioned by number.
 
