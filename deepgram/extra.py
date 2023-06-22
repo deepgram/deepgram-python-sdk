@@ -38,7 +38,10 @@ class Extra:
             format: Caption,
             line_length: int,
         ):
-        utterances = response["results"]["utterances"]
+        if "utterances" in response["results"]:
+            utterances = response["results"]["utterances"]
+        else:
+            utterances = response["results"]["channels"][0]["alternatives"]
         captions = []
         line_counter = 1
         for utt_index, utt in enumerate(utterances):
