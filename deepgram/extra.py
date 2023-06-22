@@ -1,3 +1,5 @@
+import warnings
+
 from ._types import PrerecordedTranscriptionResponse, Options
 from ._enums import Caption
 
@@ -38,9 +40,14 @@ class Extra:
             format: Caption,
             line_length: int,
         ):
-        assert "utterances" in response["results"], \
-            "Utterances are required for captioning. Use request parameter 'utterances': True"
-        utterances = response["results"]["utterances"]
+        if "utterances" in response["results"]:
+            utterances = response["results"]["utterances"]
+        else:
+            warnings.warn(
+                "Enabling the Utterances feature is strongly recommended for captioning. Utterances allow "
+                "captions to be delimited by pauses. Add request parameter `'utterances': True`."
+            )
+            utterances = response["results"]["channels"][0]["alternatives"]
         captions = []
         line_counter = 1
         for utt_index, utt in enumerate(utterances):
