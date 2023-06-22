@@ -38,6 +38,8 @@ class Extra:
             format: Caption,
             line_length: int,
         ):
+        assert "utterances" in response["results"], \
+            "Utterances are required for captioning. Use request parameter 'utterances': True"
         utterances = response["results"]["utterances"]
         captions = []
         line_counter = 1
