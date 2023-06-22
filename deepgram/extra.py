@@ -38,25 +38,27 @@ class Extra:
             format: Caption,
             line_length: int,
         ):
-        words = response["results"]["channels"][0]["alternatives"][0]["words"]
+        utterances = response["results"]["utterances"]
         captions = []
         line_counter = 1
-        for i in range(0, len(words), line_length):
-            start_time = words[i]["start"]
-            end_index = min(len(words) - 1, i + line_length - 1)
-            end_time = words[end_index]["end"]
-            text = " ".join([w["word"] for w in words[i:end_index + 1]])
-            separator = "," if format is Caption.SRT else '.'
-            prefix = "" if format is Caption.SRT else "- "
-            caption = (
-                f"{line_counter}\n"
-                f"{self._format_timestamp(start_time, separator)} --> "
-                f"{self._format_timestamp(end_time, separator)}\n"
-                f"{prefix}{text}\n\n"
-            )
-            captions.append(caption)
-            line_counter += 1
-        return "".join(captions)
+        for utt_index, utt in enumerate(utterances):
+            words = utterances[utt_index]["words"]
+            for i in range(0, len(words), line_length):
+                start_time = words[i]["start"]
+                end_index = min(len(words) - 1, i + line_length - 1)
+                end_time = words[end_index]["end"]
+                text = " ".join([w["word"] for w in words[i:end_index + 1]])
+                separator = "," if format is Caption.SRT else '.'
+                prefix = "" if format is Caption.SRT else "- "
+                caption = (
+                    f"{line_counter}\n"
+                    f"{self._format_timestamp(start_time, separator)} --> "
+                    f"{self._format_timestamp(end_time, separator)}\n"
+                    f"{prefix}{text}"
+                )
+                captions.append(caption)
+                line_counter += 1
+        return "\n\n".join(captions)
 
     """
     Transform a Deepgram PrerecordedTranscriptionResponse into SRT captions.
