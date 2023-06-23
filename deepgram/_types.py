@@ -89,7 +89,7 @@ class PrerecordedOptions(TranscriptionOptions, total=False):
     utterances: bool
     utt_split: float
     detect_entities: bool
-    summarize: Union[int, str] 
+    summarize: Union[bool, str] 
     paragraphs: bool
     detect_language: bool
     detect_topics: bool
@@ -370,7 +370,7 @@ class UsageOptions(TypedDict, total=False):
     alternatives: bool
     numerals: bool
     detect_entities: bool
-    summarize: Union[int, str] 
+    summarize: Union[bool, str] 
     paragraphs: bool
     detect_language: bool
     detect_topics: bool
