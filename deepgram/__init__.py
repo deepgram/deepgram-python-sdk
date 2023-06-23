@@ -8,6 +8,7 @@ from .billing import Billing
 from .members import Members
 from .scopes import Scopes
 from .invitations import Invitations
+from .extra import Extra
 
 
 class Deepgram:
@@ -53,6 +54,9 @@ class Deepgram:
     def invitations(self) -> Invitations:
         return Invitations(self.options)
 
+    @property
+    def extra(self) -> Extra:
+        return Extra(self.options)
 
 
 __all__ = ["Deepgram"]

@@ -6,3 +6,7 @@ class LiveTranscriptionEvent(Enum):
     CLOSE = 'close'
     TRANSCRIPT_RECEIVED = 'transcript_received'
     ERROR = 'error'
+
+class Caption(Enum):
+    SRT = 'srt'
+    WEBVTT = 'webvtt'
