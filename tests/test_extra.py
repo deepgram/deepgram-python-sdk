@@ -32,5 +32,5 @@ A response without Utterances cannot be captioned.
 def test_get_SRT_no_utterances():
     response_no_utts = MOCK_RESPONSE
     del response_no_utts["results"]["utterances"]
-    with pytest.raises(AssertionError):
+    with pytest.warns(UserWarning):
         deepgram.extra.to_SRT(response_no_utts)
