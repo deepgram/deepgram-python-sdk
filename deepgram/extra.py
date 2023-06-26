@@ -52,11 +52,12 @@ class Extra:
         line_counter = 1
         for utt_index, utt in enumerate(utterances):
             words = utterances[utt_index]["words"]
+            word_text = "punctuated_word" if "punctuated_word" in words[0] else "word"
             for i in range(0, len(words), line_length):
                 start_time = words[i]["start"]
                 end_index = min(len(words) - 1, i + line_length - 1)
                 end_time = words[end_index]["end"]
-                text = " ".join([w["word"] for w in words[i:end_index + 1]])
+                text = " ".join([w[word_text] for w in words[i:end_index + 1]])
                 separator = "," if format is Caption.SRT else '.'
                 prefix = "" if format is Caption.SRT else "- "
                 caption = (
