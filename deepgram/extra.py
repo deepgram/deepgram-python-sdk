@@ -50,6 +50,8 @@ class Extra:
             utterances = response["results"]["channels"][0]["alternatives"]
         captions = []
         line_counter = 1
+        if format is Caption.WEBVTT:
+            captions.append("WEBVTT")
         for utt_index, utt in enumerate(utterances):
             words = utterances[utt_index]["words"]
             word_text = "punctuated_word" if "punctuated_word" in words[0] else "word"
