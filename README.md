@@ -77,11 +77,7 @@ import aiohttp
 DEEPGRAM_API_KEY = 'YOUR_API_KEY'
 
 # URL for the audio you would like to stream
-# URL for the example resource will change depending on whether user is outside or inside the UK
-# Outside the UK
-URL = 'http://stream.live.vc.bbcmedia.co.uk/bbc_radio_fourlw_online_nonuk'
-# Inside the UK
-# URL = 'http://stream.live.vc.bbcmedia.co.uk/bbc_radio_fourfm'
+URL = 'http://stream.live.vc.bbcmedia.co.uk/bbc_world_service'
 
 async def main():
   # Initialize the Deepgram SDK
