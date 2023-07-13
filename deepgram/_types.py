@@ -6,6 +6,7 @@
 import sys
 from datetime import datetime
 from typing import Optional, List, Union, Any, Dict
+
 if sys.version_info >= (3, 8):
     from typing import TypedDict, Literal
 else:
@@ -40,10 +41,13 @@ class BufferSource(TypedDict):
 TranscriptionSource = Union[UrlSource, BufferSource]
 
 
-BoostedKeyword = TypedDict('BoostedKeyword', {
-    'word': str,
-    'boost': float,
-})
+BoostedKeyword = TypedDict(
+    "BoostedKeyword",
+    {
+        "word": str,
+        "boost": float,
+    },
+)
 Keyword = Union[str, BoostedKeyword]
 
 
@@ -57,7 +61,7 @@ class TranscriptionOptions(TypedDict, total=False):
     punctuate: bool
     profanity_filter: bool
     redact: List[str]
-    diarize: Literal['false', 'true']
+    diarize: Literal["false", "true"]
     diarize_version: str
     version: str
     multichannel: bool
@@ -89,7 +93,7 @@ class PrerecordedOptions(TranscriptionOptions, total=False):
     utterances: bool
     utt_split: float
     detect_entities: bool
-    summarize: Union[bool, str] 
+    summarize: Union[bool, str]
     paragraphs: bool
     detect_language: bool
     detect_topics: bool
@@ -110,8 +114,10 @@ class LiveOptions(TranscriptionOptions, total=False):
     channels: int
     sample_rate: int
 
+
 class ToggleConfigOptions(TypedDict):
     numerals: bool
+
 
 class WordBase(TypedDict):
     word: str
@@ -208,8 +214,21 @@ class Utterance(TypedDict):
     id: str
 
 
+class Warning(TypedDict):
+    parameter: str
+    type: Literal[
+        "unsupported_language",
+        "unsupported_model",
+        "unsupported_encoding",
+        "deprecated",
+    ]
+    message: str
+
+
 class SummaryV2(TypedDict):
     short: str
+    result: Literal["success", "failure"]
+
 
 class Metadata(TypedDict):
     request_id: str
@@ -220,13 +239,17 @@ class Metadata(TypedDict):
     channels: int
     models: List[str]
     model_info: Dict[str, Any]
+    warnings: List[Warning]
 
 
-TranscriptionResults = TypedDict('TranscriptionResults', {
-    'channels': List[Channel],
-    'utterances': Optional[List[Utterance]],
-    'summary': Optional[SummaryV2],
-})
+TranscriptionResults = TypedDict(
+    "TranscriptionResults",
+    {
+        "channels": List[Channel],
+        "utterances": Optional[List[Utterance]],
+        "summary": Optional[SummaryV2],
+    },
+)
 
 
 class PrerecordedTranscriptionResponse(TypedDict, total=False):
@@ -235,10 +258,13 @@ class PrerecordedTranscriptionResponse(TypedDict, total=False):
     results: TranscriptionResults
 
 
-StreamingMetadata = TypedDict('StreamingMetadata', {
-    'request_id': str,
-    'model_uuid': str,
-})
+StreamingMetadata = TypedDict(
+    "StreamingMetadata",
+    {
+        "request_id": str,
+        "model_uuid": str,
+    },
+)
 
 
 class LiveTranscriptionResponse(TypedDict):
@@ -263,6 +289,7 @@ class Key(TypedDict):
     comment: str
     created: datetime
     scopes: List[str]
+
 
 # Members
 
@@ -304,7 +331,7 @@ class UsageRequestListOptions(TypedDict):
     end: Optional[str]
     page: Optional[int]
     limit: Optional[int]
-    status: Literal['succeeded', 'failed']
+    status: Literal["succeeded", "failed"]
 
 
 class UsageRequestDetails(TypedDict):
@@ -314,7 +341,7 @@ class UsageRequestDetails(TypedDict):
     channels: int
     streams: int
     model: str
-    method: Literal['sync', 'async', 'streaming']
+    method: Literal["sync", "async", "streaming"]
     tags: List[str]
     features: List[str]
     config: Dict[str, bool]  # TODO: add all possible request options
@@ -353,7 +380,7 @@ class UsageOptions(TypedDict, total=False):
     end: str
     accessor: str
     tag: List[str]
-    method: Literal['sync', 'async', 'streaming']
+    method: Literal["sync", "async", "streaming"]
     model: str
     multichannel: bool
     interim_results: bool
@@ -370,7 +397,7 @@ class UsageOptions(TypedDict, total=False):
     alternatives: bool
     numerals: bool
     detect_entities: bool
-    summarize: Union[bool, str] 
+    summarize: Union[bool, str]
     paragraphs: bool
     detect_language: bool
     detect_topics: bool
@@ -386,10 +413,9 @@ class UsageResponseDetail(TypedDict):
     requests: int
 
 
-UsageResponseResolution = TypedDict("UsageResponseResolution", {
-    'units': str,
-    'amount': int
-})
+UsageResponseResolution = TypedDict(
+    "UsageResponseResolution", {"units": str, "amount": int}
+)
 
 
 class UsageResponse(TypedDict):
@@ -411,6 +437,7 @@ class UsageField(TypedDict):
     languages: List[str]
     features: List[str]
 
+
 # Billing
 
 
@@ -427,11 +454,13 @@ class BalanceResponse(TypedDict):
 
 # Scope
 
+
 class Scope(TypedDict):
     scopes: List[str]
 
 
 # Invitation
+
 
 class Invitation(TypedDict):
     email: str
