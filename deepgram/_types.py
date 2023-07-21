@@ -82,7 +82,7 @@ class TranscriptionOptions(TypedDict, total=False):
     dictation: bool
     measurements: bool
     smart_format: bool
-    replace: str | List[str]
+    replace: Union[str, List[str]]
     tag: List[str]
 
 
@@ -387,7 +387,7 @@ class UsageOptions(TypedDict, total=False):
     punctuate: bool
     ner: bool
     utterances: bool
-    replace: str | List[str]
+    replace: Union[str, List[str]]
     profanity_filter: bool
     keywords: bool
     diarize: bool
