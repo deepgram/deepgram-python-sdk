@@ -84,6 +84,7 @@ class TranscriptionOptions(TypedDict, total=False):
     smart_format: bool
     replace: Union[str, List[str]]
     tag: List[str]
+    filler_words: bool
 
 
 class PrerecordedOptions(TranscriptionOptions, total=False):
