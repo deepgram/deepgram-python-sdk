@@ -11,7 +11,6 @@ from ._types import (Options, PrerecordedOptions, LiveOptions, ToggleConfigOptio
 from ._enums import LiveTranscriptionEvent
 from ._utils import _request, _sync_request, _make_query_string, _socket_connect
 
-
 class PrerecordedTranscription:
     """This class provides an interface for doing transcription asynchronously on prerecorded audio files."""
 
@@ -311,6 +310,10 @@ class LiveTranscription:
             "type": "Configure",
             "processors": config
         })))
+
+    def keep_alive(self) -> None:
+        """Keeps the connection open when no audio data is being sent."""
+        self._queue.put_nowait((False, json.dumps({"type": "KeepAlive"})))
 
     async def finish(self) -> None:
         """Closes the connection to the Deepgram endpoint,
