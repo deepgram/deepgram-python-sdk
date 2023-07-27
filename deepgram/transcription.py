@@ -11,6 +11,7 @@ from ._types import (Options, PrerecordedOptions, LiveOptions, ToggleConfigOptio
 from ._enums import LiveTranscriptionEvent
 from ._utils import _request, _sync_request, _make_query_string, _socket_connect
 
+
 class PrerecordedTranscription:
     """This class provides an interface for doing transcription asynchronously on prerecorded audio files."""
 
