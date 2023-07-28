@@ -316,7 +316,7 @@ class LiveTranscription:
         """Closes the connection to the Deepgram endpoint,
         waiting until ASR is complete on all submitted data."""
 
-        self.send(b'')  # Set message for "data is finished sending"
+        self.send(json.dumps({"type": "CloseStream"}))  # Set message for "data is finished sending"
         while not self.done:
             await asyncio.sleep(0.1)
 
