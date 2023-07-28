@@ -133,9 +133,9 @@ async def _request(
             if content is not None:
                 try:
                     body = json.loads(content)
+                    raise DeepgramApiError(body, http_library_error=exc) from exc if exc.status < 500 else exc
                 except:
                     pass
-                raise DeepgramApiError(body, http_library_error=exc) from exc if exc.status < 500 else exc
             else:
                 raise DeepgramApiError(exc.message, http_library_error=exc) from exc if exc.status < 500 else exc
         except aiohttp.ClientError as exc:

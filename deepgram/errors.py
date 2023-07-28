@@ -5,7 +5,7 @@ import aiohttp
 import uuid
 
 
-class DeepgramError:
+class DeepgramError(Exception):
     pass
 
 
@@ -54,7 +54,9 @@ class DeepgramApiError(DeepgramError):
                 self.warnings = args[0]["metadata"]["warnings"]
             elif "warnings" in args[0]:  # Occurs when `raise_warnings_as_errors` is enabled
                 self.warnings = args[0]["warnings"]
-            if "metadata" in args[0] and "request_id" in args[0]["metadata"]:
+            if "metadata" in args[0] and "request_id" in args[0]["metadata"]:  # Occurs when Deepgram returns a success response (for warnings)
+                self.request_id = uuid.UUID(args[0]["request_id"])
+            elif "request_id" in args[0]:  # Occurs when Deepgram returns a failed response
                 self.request_id = uuid.UUID(args[0]["request_id"])
         elif isinstance(args[0], str):
             self.error = args[0]
