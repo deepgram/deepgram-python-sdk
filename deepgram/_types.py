@@ -27,6 +27,8 @@ class UpdateResponse(TypedDict):
 class Options(TypedDict, total=False):
     api_key: str
     api_url: str  # this URL should /not/ include a trailing slash
+    suppress_warnings: bool
+    raise_warnings_as_errors: bool
 
 
 class UrlSource(TypedDict):

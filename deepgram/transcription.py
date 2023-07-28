@@ -10,6 +10,7 @@ from ._types import (Options, PrerecordedOptions, LiveOptions, ToggleConfigOptio
                      LiveTranscriptionResponse, Metadata, EventHandler)
 from ._enums import LiveTranscriptionEvent
 from ._utils import _request, _sync_request, _make_query_string, _socket_connect
+from .errors import DeepgramApiError
 
 
 class PrerecordedTranscription:
@@ -50,8 +51,9 @@ class PrerecordedTranscription:
         """
 
         if 'buffer' in source and 'mimetype' not in source:
-            raise Exception(
-                'DG: Mimetype must be provided if the source is bytes'
+            raise DeepgramApiError(
+                'Mimetype must be provided if the source is bytes',
+                http_library_error=None,
             )
         payload = cast(
             Union[bytes, Dict],
@@ -106,8 +108,9 @@ class SyncPrerecordedTranscription:
         """
     
         if 'buffer' in source and 'mimetype' not in source:
-            raise Exception(
-                'DG: Mimetype must be provided if the source is bytes'
+            raise DeepgramApiError(
+                'Mimetype must be provided if the source is bytes',
+                http_library_error=None,
             )
         payload = cast(
             Union[bytes, Dict],
@@ -334,7 +337,7 @@ class Transcription:
     return transcription responses for audio files and live audio streams, respectively.
 
     """
-    
+
     def __init__(self, options: Options) -> None:
         self.options = options
 
@@ -354,7 +357,6 @@ class Transcription:
             self.options, full_options, endpoint
         )(source, timeout=timeout)
 
-
     def sync_prerecorded(
         self, source: TranscriptionSource,
         options: PrerecordedOptions = None,
@@ -370,7 +372,6 @@ class Transcription:
         return SyncPrerecordedTranscription(
             self.options, full_options, endpoint
         )(source, timeout=timeout)
-
 
     async def live(
         self, options: LiveOptions = None, endpoint = "/listen", **kwargs

@@ -9,9 +9,12 @@ import re
 import platform
 import websockets
 import websockets.client
+import websockets.exceptions
+import warnings
 from ._constants import DEFAULT_ENDPOINT
 from ._types import Options
 from ._version import __version__
+from .errors import DeepgramApiError
 
 Payload = Optional[Union[dict, str, bytes, IO]]
 
@@ -94,22 +97,49 @@ async def _request(
         timeout = aiohttp.ClientTimeout(total=timeout)
 
     async def attempt():
+        # Define `content` outside the try block so we can differentiate between errors
+        # thrown by `aiohttp.request` and `resp.raise_for_status()`. This can be removed
+        # after the aiohttp issue mentioned below is fixed.
+        content = None
         try:
             async with aiohttp.request(
                 method, destination, data=_normalize_payload(payload),
-                headers=updated_headers, raise_for_status=True, timeout=timeout
+                headers=updated_headers, timeout=timeout
             ) as resp:
+                # The error handling for this async code is more difficult than normal
+                # because aiohttp does not include the response body in the exception
+                # object. We therefore need to read the response body before throwing
+                # an error, and attach the response body to the error. This should
+                # be fixed by aiohttp in v4.x. See the github issue here for info:
+                # https://github.com/aio-libs/aiohttp/issues/4600
+                # Once that work is complete, we can use `raise_for_status=True` as a
+                # parameter in the `aiohttp.request` call.
                 content = (await resp.text()).strip()
+                resp.raise_for_status()
                 if not content:
                     return None
                 body = json.loads(content)
-                if body.get('error'):
-                    raise Exception(f'DG: {content}')
+                if body.get('error') or body.get('err_msg'):
+                    raise DeepgramApiError(body, http_library_error=None)
+                if options.get("raise_warnings_as_errors") and "metadata" in body and "warnings" in body["metadata"]:
+                    raise DeepgramApiError({"warnings": body["metadata"]["warnings"]}, http_library_error=None)
+                if (not options.get("suppress_warnings")) and "metadata" in body and "warnings" in body["metadata"]:
+                    for warning in body["metadata"]["warnings"]:
+                        warnings.warn(warning["message"])
                 return body
         except aiohttp.ClientResponseError as exc:
-            raise (Exception(f'DG: {exc}') if exc.status < 500 else exc)
+            # If the request returned a response body and errored, return the response body.
+            # Otherwise return the request's error message.
+            if content is not None:
+                try:
+                    body = json.loads(content)
+                except:
+                    pass
+                raise DeepgramApiError(body, http_library_error=exc) from exc if exc.status < 500 else exc
+            else:
+                raise DeepgramApiError(exc.message, http_library_error=exc) from exc if exc.status < 500 else exc
         except aiohttp.ClientError as exc:
-            raise exc
+            raise DeepgramApiError(exc, http_library_error=exc) from exc
 
     tries = RETRY_COUNT
     while tries > 0:
@@ -117,9 +147,10 @@ async def _request(
             return await attempt()
         except aiohttp.ClientError as exc:
             if isinstance(payload, io.IOBase):
-                raise exc # stream is now invalid as payload
+                # stream is now invalid as payload
                 # the way aiohttp handles streaming form data
                 # means that just seeking this back still runs into issues
+                raise DeepgramApiError(exc, http_library_error=exc) from exc 
             tries -= 1
             continue
     return await attempt()
@@ -148,11 +179,23 @@ def _sync_request(
                 if not content:
                     return None
                 body = json.loads(content)
-                if body.get('error'):
-                    raise Exception(f'DG: {content}')
+                if body.get('error') or body.get('err_msg'):
+                    raise DeepgramApiError(body, http_library_error=None)
+                if options.get("raise_warnings_as_errors") and "metadata" in body and "warnings" in body["metadata"]:
+                    raise DeepgramApiError({"warnings": body["metadata"]["warnings"]}, http_library_error=None)
+                if (not options.get("suppress_warnings")) and "metadata" in body and "warnings" in body["metadata"]:
+                    for warning in body["metadata"]["warnings"]:
+                        warnings.warn(warning["message"])
                 return body
         except urllib.error.HTTPError as exc:
-            raise (Exception(f'DG: {exc}') if exc.code < 500 else exc)
+            # Try to get the HTTP error's request body. Deepgram returns a JSON response
+            # body for error messages. We want to return that as the error message if
+            # it exists.
+            try:
+                error_body = json.loads(exc.read().decode("utf-8"))
+            except Exception:
+                error_body = str(exc)
+            raise DeepgramApiError(error_body, http_library_error=exc) from exc
 
     tries = RETRY_COUNT
     while tries > 0:
@@ -160,9 +203,10 @@ def _sync_request(
             return attempt()
         except urllib.error.URLError as exc:
             if isinstance(payload, io.IOBase):
-                raise exc # stream is now invalid as payload
+                # stream is now invalid as payload
                 # the way aiohttp handles streaming form data
                 # means that just seeking this back still runs into issues
+                raise DeepgramApiError(exc, http_library_error=exc) from exc
             tries -= 1
             continue
     return attempt()
@@ -186,7 +230,7 @@ async def _socket_connect(
                 destination, extra_headers=updated_headers, ping_interval=5
             )
         except websockets.exceptions.InvalidHandshake as exc:
-            raise Exception(f'DG: {exc}')
+            raise DeepgramApiError(exc, http_library_error=exc) from exc
 
     tries = RETRY_COUNT
     while tries > 0:
