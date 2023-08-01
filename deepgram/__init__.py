@@ -21,7 +21,7 @@ class Deepgram:
         if isinstance(options, str):
             options: Options = {"api_key": options}
 
-        if 'api_key' not in options:
+        if "api_key" not in options:
             raise DeepgramSetupError("API key is required")
 
         if "api_url" in options and options.get("api_url", None) is None:

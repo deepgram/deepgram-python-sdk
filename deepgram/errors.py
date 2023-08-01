@@ -47,21 +47,22 @@ class DeepgramApiError(DeepgramError):
         self.request_id: Optional[uuid.UUID] = None
         self.http_error_status: Optional[int] = None
 
-        # Set the `error`, `warning`, and `request_id` fields
+        # Set the `error`, `warning`, and `request_id` fields from the incoming data object
         if isinstance(args[0], dict) and "err_msg" in args[0]:
-            self.error = args[0]["err_msg"]
-            if "metadata" in args[0] and "warnings" in args[0]["metadata"]:
-                self.warnings = args[0]["metadata"]["warnings"]
-            elif "warnings" in args[0]:  # Occurs when `raise_warnings_as_errors` is enabled
-                self.warnings = args[0]["warnings"]
-            if "metadata" in args[0] and "request_id" in args[0]["metadata"]:  # Occurs when Deepgram returns a success response (for warnings)
-                self.request_id = uuid.UUID(args[0]["request_id"])
-            elif "request_id" in args[0]:  # Occurs when Deepgram returns a failed response
-                self.request_id = uuid.UUID(args[0]["request_id"])
-        elif isinstance(args[0], str):
-            self.error = args[0]
+            error_or_warning_data = args[0]
+            self.error = error_or_warning_data["err_msg"]
+            if "metadata" in error_or_warning_data and "warnings" in error_or_warning_data["metadata"]:
+                self.warnings = error_or_warning_data["metadata"]["warnings"]
+            elif "warnings" in error_or_warning_data:  # Occurs when `raise_warnings_as_errors` is enabled
+                self.warnings = error_or_warning_data["warnings"]
+            if "metadata" in error_or_warning_data and "request_id" in error_or_warning_data["metadata"]:  # Occurs when Deepgram returns a success response (for warnings)
+                self.request_id = uuid.UUID(error_or_warning_data["request_id"])
+            elif "request_id" in error_or_warning_data:  # Occurs when Deepgram returns a failed response
+                self.request_id = uuid.UUID(error_or_warning_data["request_id"])
+        elif isinstance(error_or_warning_data, str):
+            self.error = error_or_warning_data
         else:
-            self.error = str(args[0])
+            self.error = str(error_or_warning_data)
 
         # Set the error code from the underlying exception, if possible
         if http_library_error is not None:
