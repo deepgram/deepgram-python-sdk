@@ -5,7 +5,7 @@ async-timeout==4.0.2
 attrs==21.4.0
 autobahn==22.2.2
 Automat==20.2.0
-certifi==2021.10.8
+certifi==2023.7.22
 cffi==1.15.0
 channels==3.0.4
 charset-normalizer==2.0.12
