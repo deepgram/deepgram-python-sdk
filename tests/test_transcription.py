@@ -1,7 +1,6 @@
 import asyncio
-import json
 import pytest
-import sys
+import pytest_asyncio
 import os.path
 
 # from .conftest import option
@@ -72,7 +71,7 @@ async def test_transcribe_prerecorded_file():
     """
     Test basic asyncronous pre-recorded transcription.
     """
-    example_wav_file = os.path.join(CURRENT_DIRECTORY, "the-missle-short.wav")
+    example_wav_file = os.path.join(CURRENT_DIRECTORY, "the-missile-short.wav")
     with open(example_wav_file, "rb") as audio:
-        response = await deepgram.transcription.prerecorded({"buffer": audio, "mimetype": "audio/wav"})()
+        response = await deepgram.transcription.prerecorded({"buffer": audio, "mimetype": "audio/wav"})
         assert "results" in response
