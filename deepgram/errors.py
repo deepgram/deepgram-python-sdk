@@ -59,10 +59,10 @@ class DeepgramApiError(DeepgramError):
                 self.request_id = uuid.UUID(error_or_warning_data["request_id"])
             elif "request_id" in error_or_warning_data:  # Occurs when Deepgram returns a failed response
                 self.request_id = uuid.UUID(error_or_warning_data["request_id"])
-        elif isinstance(error_or_warning_data, str):
-            self.error = error_or_warning_data
+        elif isinstance(args[0], str):
+            self.error = args[0]
         else:
-            self.error = str(error_or_warning_data)
+            self.error = str(args[0])
 
         # Set the error code from the underlying exception, if possible
         if http_library_error is not None:
