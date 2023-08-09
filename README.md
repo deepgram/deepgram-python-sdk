@@ -5,9 +5,11 @@
 Official Python SDK for [Deepgram](https://www.deepgram.com/). Start building with our powerful transcription & speech understanding API.
 
 > This SDK only supports hosted usage of api.deepgram.com.
+
 ## Getting an API Key
 
 🔑 To access the Deepgram API you will need a [free Deepgram API Key](https://console.deepgram.com/signup?jump=keys).
+
 ## Documentation
 
 Complete documentation of the Python SDK can be found at [Deepgram Docs](https://developers.deepgram.com/docs/python-sdk).
@@ -118,10 +120,13 @@ asyncio.run(main())
 
 Query parameters like `punctuate` are added as part of the `TranscriptionOptions` `dict` in the `.prerecorded`/`.live` transcription call.
 Multiple query parameters can be added similarly, and any dict will do - the types are provided for reference/convenience.
+
 ```python
 response = await dg_client.transcription.prerecorded(source, {'punctuate': True, 'keywords': ['first:5', 'second']})
 ```
+
 Depending on your preference, you can also add parameters as named arguments, instead.
+
 ```python
 response = await dg_client.transcription.prerecorded(source, punctuate=True, keywords=['first:5', 'second'])
 ```
@@ -143,6 +148,12 @@ In the `sample-projects` folder, there are examples from four different Python w
 
 ```
 pytest --api-key <key> tests/
+```
+
+## Test Coverage Report
+
+```
+pytest --cov=deepgram --api-key <key> tests/
 ```
 
 ## Development and Contributing
