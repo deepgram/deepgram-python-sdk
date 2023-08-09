@@ -139,6 +139,12 @@ In the `sample-projects` folder, there are examples from four different Python w
 - Django
 - Quart
 
+## Testing
+
+```
+pytest --api-key <key> tests/
+```
+
 ## Development and Contributing
 
 Interested in contributing? We ❤️ pull requests!
