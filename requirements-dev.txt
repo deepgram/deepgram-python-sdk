@@ -1,0 +1,10 @@
+# pip install -r requirements-dev.txt
+
+# Async functionality, likely to be already installed
+asyncio
+aiohttp
+
+# Testing
+pytest
+pytest-asyncio
+fuzzywuzzy

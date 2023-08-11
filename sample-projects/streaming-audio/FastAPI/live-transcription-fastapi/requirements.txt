@@ -1,10 +1,10 @@
-aiohttp==3.8.1
+aiohttp==3.8.5
 aiosignal==1.2.0
 anyio==3.5.0
 asgiref==3.5.0
 async-timeout==4.0.2
 attrs==21.4.0
-certifi==2021.10.8
+certifi==2023.7.22
 charset-normalizer==2.0.12
 click==8.0.4
 deepgram-sdk==0.2.4
@@ -24,7 +24,7 @@ pydantic==1.9.0
 python-dotenv==0.19.2
 python-multipart==0.0.5
 PyYAML==5.4.1
-requests==2.27.1
+requests==2.31.0
 six==1.16.0
 sniffio==1.2.0
 starlette==0.17.1

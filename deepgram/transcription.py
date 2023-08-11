@@ -315,6 +315,10 @@ class LiveTranscription:
             "processors": config
         })))
 
+    def keep_alive(self) -> None:
+        """Keeps the connection open when no audio data is being sent."""
+        self._queue.put_nowait((False, json.dumps({"type": "KeepAlive"})))
+
     async def finish(self) -> None:
         """Closes the connection to the Deepgram endpoint,
         waiting until ASR is complete on all submitted data."""

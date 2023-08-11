@@ -1,10 +1,14 @@
 import json
 import pytest
-import sys
+import os
 
 # from .conftest import option
 from deepgram import Deepgram
-from .mock_response import MOCK_RESPONSE
+
+
+CURRENT_DIRECTORY = os.path.split(os.path.abspath(__file__))[0]
+with open(os.path.join(CURRENT_DIRECTORY, "mock_response.json")) as f:
+    MOCK_RESPONSE = json.load(f)
 
 api_key = pytest.api_key
 assert api_key, "Pass Deepgram API key as an argument: `pytest --api-key <key> tests/`"
