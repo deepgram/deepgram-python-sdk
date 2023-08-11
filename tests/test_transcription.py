@@ -12,7 +12,7 @@ assert api_key, "Pass Deepgram API key as an argument: `pytest --api-key <key> t
 
 deepgram = Deepgram(api_key)
 
-MOCK_TRANSCRIPT = "Yep. I said it before, and I'll say it again. Life moves pretty fast. You don't stop and look around once in a while. you could miss it."
+MOCK_TRANSCRIPT = "Yep. I said it before, and I'll say it again. Life moves pretty fast. You don't stop and look around once in a while. you could miss it"
 AUDIO_URL = "https://static.deepgram.com/examples/Bueller-Life-moves-pretty-fast.wav"
 
 def test_transcribe_prerecorded():
