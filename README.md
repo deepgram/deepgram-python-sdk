@@ -146,11 +146,20 @@ In the `sample-projects` folder, there are examples from four different Python w
 
 ## Testing
 
+### Setup
+
+```
+pip install pytest
+pip install pytest-cov
+```
+
+### Run All Tests
+
 ```
 pytest --api-key <key> tests/
 ```
 
-## Test Coverage Report
+### Test Coverage Report
 
 ```
 pytest --cov=deepgram --api-key <key> tests/
