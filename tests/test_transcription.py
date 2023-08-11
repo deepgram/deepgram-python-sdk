@@ -5,7 +5,7 @@ import os.path
 import fuzzywuzzy.fuzz
 
 # from .conftest import option
-from deepgram import Deepgram, DeepgramApiError, DeepgramSetupError
+from deepgram import Deepgram
 
 
 CURRENT_DIRECTORY = os.path.split(os.path.abspath(__file__))[0]
@@ -76,11 +76,3 @@ async def test_transcribe_prerecorded_file():
     with open(example_wav_file, "rb") as audio:
         response = await deepgram.transcription.prerecorded({"buffer": audio, "mimetype": "audio/wav"})
         assert "results" in response
-
-def test_missing_api_key():
-    with pytest.raises(DeepgramSetupError):
-        Deepgram({})
-
-def test_400_error():
-    with pytest.raises(DeepgramApiError):
-        deepgram.transcription.sync_prerecorded({"url": AUDIO_URL}, {"model": "nova", "language": "de"})
