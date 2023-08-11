@@ -84,4 +84,4 @@ def test_missing_api_key():
 
 def test_400_error():
     with pytest.raises(DeepgramApiError):
-        deepgram.transcription.sync_prerecorded({"url": AUDIO_URL}, {"model": "nova", "language": "de"})
+        deepgram.transcription.sync_prerecorded({"url": AUDIO_URL}, {"model": "nova", "language": "ta"})
