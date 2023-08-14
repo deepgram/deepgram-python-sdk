@@ -152,8 +152,11 @@ def test_diarization():
         },
     )
 
-    # Checks if the speakers key is present in the alternatives[0] object
+    # Checks the keys for the alternatives[0] object
     assert set(response['results']['channels'][0]['alternatives'][0]['paragraphs']['paragraphs'][0].keys()) == set(['sentences','speaker', 'num_words', 'start', 'end'])
+
+    # Checks the keys in the words object
+    assert set(response['results']['channels'][0]['alternatives'][0]['words'][0].keys()) == set(['word', 'start', 'end', 'confidence', 'speaker', 'speaker_confidence', 'punctuated_word'])
 
 def test_summarize():
     """
@@ -174,6 +177,10 @@ def test_summarize():
     assert set(response['results']['summary'].keys()) == set(['result', 'short'])
     # Check if the result is a string
     assert type(response['results']['summary']['result']) == str
+
+    # Check if the request was successful
+    assert response['results']['summary']['result'] == 'success'
+
     # Check if the short is a string
     assert type(response['results']['summary']['short']) == str
 
