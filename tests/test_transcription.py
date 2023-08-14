@@ -211,3 +211,27 @@ def test_topic_detection():
     # Checks if the topics object is a list
     assert type(response['results']['channels'][0]['alternatives'][0]['topics'][0]['topics']) == list
 
+def test_detect_language():
+    response = deepgram.transcription.sync_prerecorded(
+        {
+            "url": AUDIO_URL
+        },
+        {
+            "model": "nova",
+            "detect_language": True
+        },
+    )
+    assert type(response['results']['channels'][0]['detected_language']) == str
+    assert response['results']['channels'][0]['detected_language'] == 'en'
+
+def test_alternatives():
+    response = deepgram.transcription.sync_prerecorded(
+        {
+            "url": AUDIO_URL
+        },
+        {
+            "model": "nova",
+            "alternatives": 2
+        },
+    )
+    assert len(response['results']['channels'][0]['alternatives']) == 2
