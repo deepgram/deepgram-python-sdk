@@ -9,18 +9,25 @@ from .members import Members
 from .scopes import Scopes
 from .invitations import Invitations
 from .extra import Extra
+from .errors import DeepgramSetupError, DeepgramApiError
 
 
 class Deepgram:
     def __init__(self, options: Union[str, Options]) -> None:
-        if not isinstance(options, str) and not options.get('api_url'):
-            raise ValueError("DG: API URL must be valid or omitted")
-        t_options: Options = {
-            'api_key': options
-        } if isinstance(options, str) else options
-        if 'api_key' not in t_options:
-            raise ValueError("DG: API key is required")
-        self.options = t_options
+        if not isinstance(options, (str, dict)):
+            raise DeepgramSetupError("`options` must be a dictionary or an API key string")
+
+        # Convert to dictionary if the api key was passed as a string
+        if isinstance(options, str):
+            options: Options = {"api_key": options}
+
+        if "api_key" not in options:
+            raise DeepgramSetupError("API key is required")
+
+        if "api_url" in options and options.get("api_url", None) is None:
+            raise DeepgramSetupError("API URL must be valid or omitted")
+
+        self.options = options
 
     @property
     def keys(self) -> Keys:
@@ -59,4 +66,4 @@ class Deepgram:
         return Extra(self.options)
 
 
-__all__ = ["Deepgram"]
+__all__ = [Deepgram, DeepgramSetupError, DeepgramApiError]
