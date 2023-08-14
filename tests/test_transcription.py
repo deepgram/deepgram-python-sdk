@@ -9,6 +9,7 @@ from deepgram import Deepgram
 
 
 CURRENT_DIRECTORY = os.path.split(os.path.abspath(__file__))[0]
+from deepgram import Deepgram, DeepgramApiError, DeepgramSetupError
 
 api_key = pytest.api_key
 assert api_key, "Pass Deepgram API key as an argument: `pytest --api-key <key> tests/`"
@@ -77,6 +78,7 @@ async def test_transcribe_prerecorded_file():
         response = await deepgram.transcription.prerecorded({"buffer": audio, "mimetype": "audio/wav"})
         assert "results" in response
 
+
 def test_prerecorded_json_structure():
     """
     Testing the JSON structure of the Deepgram response. This should be consistent across all outputs
@@ -134,6 +136,7 @@ def test_prerecorded_json_structure():
     # Checks if the paragraphs[0] object contains the expected keys
     assert set(response['results']['channels'][0]['alternatives'][0]['paragraphs']['paragraphs'][0]) == set(['sentences', 'num_words', 'start', 'end'])
 
+
 def test_diarization():
 
     """
@@ -157,6 +160,7 @@ def test_diarization():
 
     # Checks the keys in the words object
     assert set(response['results']['channels'][0]['alternatives'][0]['words'][0].keys()) == set(['word', 'start', 'end', 'confidence', 'speaker', 'speaker_confidence', 'punctuated_word'])
+
 
 def test_summarize():
     """
@@ -183,6 +187,7 @@ def test_summarize():
 
     # Check if the short is a string
     assert type(response['results']['summary']['short']) == str
+
 
 def test_topic_detection():
     """
@@ -211,6 +216,7 @@ def test_topic_detection():
     # Checks if the topics object is a list
     assert type(response['results']['channels'][0]['alternatives'][0]['topics'][0]['topics']) == list
 
+
 def test_detect_language():
     response = deepgram.transcription.sync_prerecorded(
         {
@@ -224,6 +230,7 @@ def test_detect_language():
     assert type(response['results']['channels'][0]['detected_language']) == str
     assert response['results']['channels'][0]['detected_language'] == 'en'
 
+
 def test_alternatives():
     response = deepgram.transcription.sync_prerecorded(
         {
@@ -235,3 +242,14 @@ def test_alternatives():
         },
     )
     assert len(response['results']['channels'][0]['alternatives']) == 2
+
+
+def test_missing_api_key():
+    with pytest.raises(DeepgramSetupError):
+        Deepgram({})
+
+
+def test_400_error():
+    with pytest.raises(DeepgramApiError):
+        deepgram.transcription.sync_prerecorded({"url": AUDIO_URL}, {"model": "nova", "language": "ta"})
+
