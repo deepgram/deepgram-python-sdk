@@ -14,7 +14,7 @@ from .errors import DeepgramSetupError, DeepgramApiError
 
 
 def api_key_is_valid(api_key: str) -> bool:
-    pattern = r"^[a-z0-9]{40}$"
+    pattern = r"^[a-f0-9]{40}$"
     return re.match(pattern, api_key) is not None
 
 
