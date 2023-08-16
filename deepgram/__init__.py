@@ -1,4 +1,5 @@
 from typing import Union
+import re
 from ._types import Options
 from .keys import Keys
 from .transcription import Transcription
@@ -12,6 +13,11 @@ from .extra import Extra
 from .errors import DeepgramSetupError, DeepgramApiError
 
 
+def validate_api_key(api_key: str) -> bool:
+    pattern = r"^[a-z0-9]{40}$"
+    re.fullmatch(pattern, api_key) is not None
+
+
 class Deepgram:
     def __init__(self, options: Union[str, Options]) -> None:
         if not isinstance(options, (str, dict)):
@@ -23,6 +29,8 @@ class Deepgram:
 
         if "api_key" not in options:
             raise DeepgramSetupError("API key is required")
+        if not validate_api_key(options["api_key"]):
+            raise DeepgramSetupError("Invalid API key")
 
         if "api_url" in options and options.get("api_url", None) is None:
             raise DeepgramSetupError("API URL must be valid or omitted")
