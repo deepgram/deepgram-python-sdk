@@ -387,4 +387,3 @@ class Transcription:
         return await LiveTranscription(
             self.options, full_options, endpoint
         )()
-    
