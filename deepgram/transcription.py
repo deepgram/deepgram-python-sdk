@@ -41,13 +41,13 @@ class PrerecordedTranscription:
         as a function. This is useful for creating instances of the class, where we can
         call `PrerecordedTranscription()` and pass in arguments to set up an instance of
         the class. For example:
-
+        
             prerecorded_transcription = PrerecordedTranscription(...)
-
+        
         :param source:TranscriptionSource: Used to Pass in the audio file.
         :param timeout:float: (optional) The request timeout (if not set, defaults to `aiohttp`'s default timeout)
         :return: A `PrerecordedTranscriptionResponse` object, which contains the transcription results.
-
+        
         """
 
         if 'buffer' in source and 'mimetype' not in source:
@@ -92,20 +92,21 @@ class SyncPrerecordedTranscription:
     def __call__(
         self, source: TranscriptionSource, timeout: float = None
     ) -> PrerecordedTranscriptionResponse:
+
         """
         The __call__ function is a special method that allows the class to be called
         as a function. This is useful for creating instances of the class, where we can
         call `SyncPrerecordedTranscription()` and pass in arguments to set up an instance of
         the class. For example:
-
+        
             sync_prerecorded_transcription = SyncPrerecordedTranscription(...)
-
+        
         :param source:TranscriptionSource: Used to Pass in the audio file.
         :param timeout:float: (optional) The request timeout, excluding the upload time of the audio file.
         :return: A `prerecordedtranscriptionresponse` object, which contains the transcription results.
-
+        
         """
-
+    
         if 'buffer' in source and 'mimetype' not in source:
             raise DeepgramApiError(
                 'Mimetype must be provided if the source is bytes',
@@ -141,11 +142,11 @@ class LiveTranscription:
         It initializes all of the attributes that are part of the object, and can be
         accessed using "self." notation. In this case, it sets up a list to store any
         messages received from Transcribe Streaming.
-
+        
         :param options:Options: Used to Pass the options for the transcription job.
         :param transcription_options:LiveOptions: Used to Pass in the configuration for the transcription job.
         :return: None.
-
+        
         """
 
         self.options = options
@@ -166,9 +167,9 @@ class LiveTranscription:
         as a function. In this case, it is used to connect the client and start the
         transcription process. It returns itself after starting so that operations can
         be chained.
-
+        
         :return: The object itself.
-
+        
         """
         self._socket = await _socket_connect(
             f'{self._root}{_make_query_string(self.transcription_options)}',
@@ -181,11 +182,11 @@ class LiveTranscription:
         """
         The _start function is the main function of the LiveTranscription class.
         It is responsible for creating a websocket connection to Deepgram Transcribe,
-        and then listening for incoming messages from that socket. It also sends any
-        messages that are in its queue (which is populated by other functions). The
-        _start function will run until it receives a message with an empty transcription,
+        and then listening for incoming messages from that socket. It also sends any 
+        messages that are in its queue (which is populated by other functions). The 
+        _start function will run until it receives a message with an empty transcription, 
         at which point it will close the socket and return.
-
+        
         :return: None.
 
         """
@@ -213,7 +214,7 @@ class LiveTranscription:
                         parsed
                     )
                     self.received.append(parsed)
-                    if 'sha256' in parsed:
+                    if 'sha256' in parsed: 
                         self.done = True
                 except json.decoder.JSONDecodeError:
                     self._ping_handlers(
@@ -232,7 +233,7 @@ class LiveTranscription:
         The _receiver function is a coroutine that receives messages from the socket and puts them in a queue.
         It is started by calling start_receiver() on an instance of AsyncSocket. It runs until the socket is closed,
         or until an exception occurs.
-
+        
         :return: None.
 
         """
@@ -242,7 +243,7 @@ class LiveTranscription:
                 body = await self._socket.recv()
                 self._queue.put_nowait((True, body))
             except Exception as exc:
-                self.done = True  # socket closed, will terminate on next loop
+                self.done = True # socket closed, will terminate on next loop
 
     def _ping_handlers(self, event_type: LiveTranscriptionEvent,
                        body: Any) -> None:
@@ -250,13 +251,13 @@ class LiveTranscription:
         The _ping_handlers function is a callback that is called when the
         transcription service sends a ping event.  It calls all of the functions
         in self.handlers, which are registered by calling add_ping_handler().
-
+        
         :param event_type:LiveTranscriptionEvent: Used to Determine if the function should be called.
         :param body:Any: Used to Pass the event data to the handler function.
         :return: The list of handlers for the event type.
 
         """
-
+        
         for handled_type, func in self.handlers:
             if handled_type is event_type:
                 if inspect.iscoroutinefunction(func):
@@ -322,8 +323,7 @@ class LiveTranscription:
         """Closes the connection to the Deepgram endpoint,
         waiting until ASR is complete on all submitted data."""
 
-        # Set message for "data is finished sending"
-        self.send(json.dumps({"type": "CloseStream"}))
+        self.send(json.dumps({"type": "CloseStream"}))  # Set message for "data is finished sending"
         while not self.done:
             await asyncio.sleep(0.1)
 
@@ -348,7 +348,7 @@ class Transcription:
     async def prerecorded(
         self, source: TranscriptionSource,
         options: PrerecordedOptions = None,
-        endpoint="/listen",
+        endpoint = "/listen",
         timeout: float = None,
         **kwargs
     ) -> PrerecordedTranscriptionResponse:
@@ -364,7 +364,7 @@ class Transcription:
     def sync_prerecorded(
         self, source: TranscriptionSource,
         options: PrerecordedOptions = None,
-        endpoint="/listen",
+        endpoint = "/listen",
         timeout: float = None,
         **kwargs
     ) -> PrerecordedTranscriptionResponse:
@@ -378,7 +378,7 @@ class Transcription:
         )(source, timeout=timeout)
 
     async def live(
-        self, options: LiveOptions = None, endpoint="/listen", **kwargs
+        self, options: LiveOptions = None, endpoint = "/listen", **kwargs
     ) -> LiveTranscription:
         """Provides a client to send raw audio data to be transcribed."""
         if options is None:
