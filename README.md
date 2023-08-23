@@ -135,14 +135,24 @@ response = await dg_client.transcription.prerecorded(source, punctuate=True, key
 
 To run the sample code, you may want to create a virtual environment to isolate your Python projects, but it's not required. You can learn how to make and activate these virtual environments in [this article](https://blog.deepgram.com/python-virtual-environments/) on our Deepgram blog.
 
+#### Prerecorded Audio Code Samples
+
+In the `sample-projects/prerecorded-audio` folder, there is a quickstart project to get you quickly started transcribing prerecorded audio (from a local file or a remote file) with Deepgram.
+
+- Quickstart
+
 #### Streaming Audio Code Samples
 
-In the `sample-projects` folder, there are examples from four different Python web frameworks of how to do live streaming audio transcription with Deepgram. These include:
+In the `sample-projects/streaming-audio` folder, there are examples from four different Python web frameworks of how to do live streaming audio transcription with Deepgram. These include:
 
 - Flask 2.0
 - FastAPI
 - Django
 - Quart
+
+There is also a Quickstart that you can use to get up and running without a Python web framework.
+
+- Quickstart
 
 ## Testing
 
@@ -164,6 +174,15 @@ pytest --api-key <key> tests/
 ```
 pytest --cov=deepgram --api-key <key> tests/
 ```
+
+### Using Example Projects to test features
+
+Use the example projects to test features if there aren't currently the appropriate tests for your use case. Go to the folder `examples` and look for these two projects, which can be used to test out features in the Deepgram Python SDK.
+
+- prerecorded
+- streaming
+
+These are standalone projects, so you will need to follow the instructions in the `README.md` files for each project to get it running.
 
 ## Development and Contributing
 
