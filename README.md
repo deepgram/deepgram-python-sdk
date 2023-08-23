@@ -175,9 +175,11 @@ pytest --api-key <key> tests/
 pytest --cov=deepgram --api-key <key> tests/
 ```
 
-### Using Example Projects to test features
+### Using Example Projects to test new features
 
-Use the example projects to test features if there aren't currently the appropriate tests for your use case. Go to the folder `examples` and look for these two projects, which can be used to test out features in the Deepgram Python SDK.
+Contributors to the SDK can test their changes locally by running the projects in the `examples` folder. This can be done when making changes without adding a unit test, but of course it is recommended that you add unit tests for any feature additions made to the SDK.
+
+Go to the folder `examples` and look for these two projects, which can be used to test out features in the Deepgram Python SDK:
 
 - prerecorded
 - streaming
