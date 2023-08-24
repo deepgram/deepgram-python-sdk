@@ -10,15 +10,22 @@ The example projects are meant to be used to test features locally by contributo
 
 If you are contributing changes to this SDK, you can test those changes by using the `prerecorded` or `streaming` projects in the `examples` folder. Here are the steps to follow:
 
-1. Make your changes to the SDK (be sure you are on a branch you have created to do this work).
+### Add Your Code
+Make your changes to the SDK (be sure you are on a branch you have created to do this work).
 
-2. Install dependencies
+### Install dependencies
+
+Run the following command to install the project dependencies:
 
 `pip install -r requirements.txt`
+
+### Edit the API key
 
 Replace the API key where it says 'YOUR_DEEPGRAM_API_KEY'
 
 `DEEPGRAM_API_KEY = 'YOUR_DEEPGRAM_API_KEY'`
+
+### Run the project
 
 Make sure you're in the directory with the `main.py` file and run the project with the following command.
 
