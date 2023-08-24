@@ -1,4 +1,4 @@
-# Examples Folder - Test Features Locally
+# Examples for Testing Features Locally
 
 The example projects are meant to be used to test features locally by contributors working on this SDK. In the `requirements.txt` file, the deepgram package used is the local version:
 
