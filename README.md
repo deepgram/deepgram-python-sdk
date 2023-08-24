@@ -131,29 +131,6 @@ Depending on your preference, you can also add parameters as named arguments, in
 response = await dg_client.transcription.prerecorded(source, punctuate=True, keywords=['first:5', 'second'])
 ```
 
-## Code Samples
-
-To run the sample code, you may want to create a virtual environment to isolate your Python projects, but it's not required. You can learn how to make and activate these virtual environments in [this article](https://blog.deepgram.com/python-virtual-environments/) on our Deepgram blog.
-
-#### Prerecorded Audio Code Samples
-
-In the `sample-projects/prerecorded-audio` folder, there is a quickstart project to get you quickly started transcribing prerecorded audio (from a local file or a remote file) with Deepgram.
-
-- Quickstart
-
-#### Streaming Audio Code Samples
-
-In the `sample-projects/streaming-audio` folder, there are examples from four different Python web frameworks of how to do live streaming audio transcription with Deepgram. These include:
-
-- Flask 2.0
-- FastAPI
-- Django
-- Quart
-
-There is also a Quickstart that you can use to get up and running without a Python web framework.
-
-- Quickstart
-
 ## Testing
 
 ### Setup

@@ -1,2 +1,0 @@
-deepgram-sdk
-asyncio

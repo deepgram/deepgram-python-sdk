@@ -1,3 +1,0 @@
-deepgram-sdk
-asyncio
-aiohttp
