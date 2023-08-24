@@ -8,3 +8,6 @@ aiohttp
 pytest
 pytest-asyncio
 fuzzywuzzy
+
+# Lint
+pre-commit
