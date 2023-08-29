@@ -2,7 +2,7 @@
 
 [![GitHub Workflow Status](https://img.shields.io/github/workflow/status/deepgram/deepgram-python-sdk/CI)](https://github.com/deepgram/deepgram-python-sdk/actions/workflows/CI.yml) [![PyPI](https://img.shields.io/pypi/v/deepgram-sdk)](https://pypi.org/project/deepgram-sdk/) [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-v2.0%20adopted-ff69b4.svg?style=flat-rounded)](./.github/CODE_OF_CONDUCT.md)
 
-Official Python SDK for [Deepgram](https://www.deepgram.com/). Start building with our powerful transcription & speech understanding API.
+Official Python SDK for [Deepgram](https://www.deepgram.com/). Power your apps with world-class speech and Language AI models.
 
 > This SDK only supports hosted usage of api.deepgram.com.
 
@@ -139,6 +139,15 @@ Run the following command to install `pytest` and `pytest-cov` as dev dependenci
 
 ```
 pip install -r requirements-dev.txt
+```
+
+### Run All Tests
+
+### Setup
+
+```
+pip install pytest
+pip install pytest-cov
 ```
 
 ### Run All Tests
