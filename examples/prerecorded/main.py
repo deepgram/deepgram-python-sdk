@@ -6,8 +6,7 @@ import asyncio
 from deepgram import Deepgram
 
 # Your Deepgram API Key
-# DEEPGRAM_API_KEY = 'YOUR_DEEPGRAM_API_KEY'
-DEEPGRAM_API_KEY = ''
+DEEPGRAM_API_KEY = 'YOUR_DEEPGRAM_API_KEY'
 
 # Location of the file you want to transcribe. Should include filename and extension.
 # Example of a local file: ../../Audio/life-moves-pretty-fast.wav

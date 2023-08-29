@@ -135,9 +135,10 @@ response = await dg_client.transcription.prerecorded(source, punctuate=True, key
 
 ### Setup
 
+Run the following command to install `pytest` and `pytest-cov` as dev dependencies.
+
 ```
-pip install pytest
-pip install pytest-cov
+pip install -r requirements-dev.txt
 ```
 
 ### Run All Tests

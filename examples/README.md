@@ -1,28 +1,38 @@
 # Examples for Testing Features Locally
 
-The example projects are meant to be used to test features locally by contributors working on this SDK. In the `requirements.txt` file, the deepgram package used is the local version:
+The example projects are meant to be used to test features locally by contributors working on this SDK, but they can also be used as quickstarts to get up and running with the Deeegram Python SDK.
 
-```
--e ../../
-```
+Here are the steps to follow to run the examples with the **local version** of the SDK:
 
-## Steps to Test Your Code
-
-If you are contributing changes to this SDK, you can test those changes by using the `prerecorded` or `streaming` projects in the `examples` folder. Here are the steps to follow:
-
-### Add Your Code
+## Add Your Code
 
 Make your changes to the SDK (be sure you are on a branch you have created to do this work).
 
-### Install dependencies
+## Install dependencies
 
-From inside the `examples/<example>` folder, run the following command to install the project dependencies:
+You can choose between two methods for installing the Deepgram SDK from the local folder:
+
+### Install locally with the `examples/<example>/requirements.txt` file
+
+Move to within the `examples/<example>` folder and run the following command to install the project dependencies. This command will install the dependencies from the local repo due to the package being added as `-e ../../` The`-e` indicates that a package should be installed in "editable" mode, which means in-place from the source code (local folder).
 
 `pip install -r requirements.txt`
 
+### Install locally with `pip install -e`
+
+The other method that can be used to install the Deepgram SDK from the local project is to use `pip install -e`. In this case, you would:
+
+```
+pip uninstall deepgram-sdk # If it's already installed
+cd /path/to/deepgram-python-sdk/ # navigate to inside the deepgram SDK
+pip install -e .
+```
+
+This will install the SDK from the local source code in editable mode, so any changes made inside the project will be instantly usable from the example files.
+
 ### Edit the API key
 
-Replace the API key where it says 'YOUR_DEEPGRAM_API_KEY'
+Inside the example file, replace the API key where it says 'YOUR_DEEPGRAM_API_KEY'
 
 `DEEPGRAM_API_KEY = 'YOUR_DEEPGRAM_API_KEY'`
 
@@ -31,6 +41,10 @@ Replace the API key where it says 'YOUR_DEEPGRAM_API_KEY'
 Make sure you're in the directory with the `main.py` file and run the project with the following command.
 
 `python main.py`
+
+### After testing
+
+After you have used the example files to test your code, be sure to reset the example file to the way it was when you started (i.e. discard features you may have added to the options dictionary when testing features).
 
 ## How to verify that you're testing the local changes
 
