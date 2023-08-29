@@ -8,3 +8,4 @@ aiohttp
 pytest
 pytest-asyncio
 fuzzywuzzy
+pytest-cov
