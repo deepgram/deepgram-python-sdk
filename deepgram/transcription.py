@@ -5,6 +5,7 @@ import inspect
 from enum import Enum
 from warnings import warn
 import websockets.client
+import websockets.exceptions
 from ._types import (Options, PrerecordedOptions, LiveOptions, ToggleConfigOptions,
                      TranscriptionSource, PrerecordedTranscriptionResponse,
                      LiveTranscriptionResponse, Metadata, EventHandler)
@@ -242,7 +243,8 @@ class LiveTranscription:
             try:
                 body = await self._socket.recv()
                 self._queue.put_nowait((True, body))
-            except Exception as exc:
+            except websockets.exceptions.ConnectionClosedOK:
+                await self._queue.join()
                 self.done = True # socket closed, will terminate on next loop
 
     def _ping_handlers(self, event_type: LiveTranscriptionEvent,
