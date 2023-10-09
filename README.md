@@ -14,6 +14,7 @@ Official Python SDK for [Deepgram](https://www.deepgram.com/). Power your apps w
 * [Examples](#examples)
 * [Testing](#testing)
 * [Configuration](#configuration)
+  * [Custom API Endpoint] [#custom-api-endpoint] 
 * [Transcription](#transcription)
   * [Remote Files](#remote-files)
   * [Local Files](#local-files)
@@ -109,6 +110,17 @@ from deepgram import Deepgram
 
 DEEPGRAM_API_KEY = 'YOUR_API_KEY'
 deepgram = Deepgram(DEEPGRAM_API_KEY)
+```
+
+## Custom API Endpoint
+
+In order to point the SDK at a different API endpoint (e.g., for on-prem deployments), you can pass in an object setting the `api_url` when initializing the Deepgram client.
+
+```py
+dg_client = Deepgram({ 
+  "api_key": DEEPGRAM_API_KEY, 
+  "api_url": "http://localhost:8080/v1/listen" 
+})
 ```
 
 # Transcription
