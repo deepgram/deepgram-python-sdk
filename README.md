@@ -114,7 +114,7 @@ deepgram = Deepgram(DEEPGRAM_API_KEY)
 
 ## Custom API Endpoint
 
-In order to point the SDK at a different API endpoint (e.g., for on-prem deployments), you can pass in an object setting the `api_url` when initializing the Deepgram client.
+In order to point the SDK at a different API environment (e.g., for on-prem deployments), you can pass in an object setting the `api_url` when initializing the Deepgram client.
 
 ```py
 dg_client = Deepgram({ 
