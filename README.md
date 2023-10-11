@@ -276,7 +276,7 @@ project = await deepgram.projects.get(PROJECT_ID)
 
 ### Get a Project Response
 
-```json
+```
 {
   project_id: String,
   name: String,
@@ -302,7 +302,7 @@ updateResponse = await deepgram.projects.update(project)
 
 ### Update a Project Response
 
-```json
+```
 {
 	message: String;
 }
@@ -330,7 +330,7 @@ response = await deepgram.keys.list(PROJECT_ID)
 
 ### List Keys Response
 
-```json
+```
 {
 	api_keys: [
 		{
@@ -363,7 +363,7 @@ response = await deepgram.keys.create(PROJECT_ID, COMMENT_FOR_KEY, SCOPES)
 
 ### Create API Key Response
 
-```json
+```
 {
   api_key_id: string,
   key: string,
@@ -416,7 +416,7 @@ response = await deepgram.members.list_members(PROJECT_ID)
 
 ### Get Members Response
 
-```json
+```
 {
   members: [
     {
@@ -449,7 +449,7 @@ response = await deepgram.members.remove_member(PROJECT_ID, MEMBER_ID)
 
 ### Remove Member Response
 
-```json
+```
 {
 	message: string;
 }
@@ -477,7 +477,7 @@ response = await deepgram.scopes.get_scope(PROJECT_ID, MEMBER_ID)
 
 ### Get Member Scopes Response
 
-```json
+```
 {
   scopes: string[]
 }
@@ -503,7 +503,7 @@ response = await deepgram.scopes.update_scope(PROJECT_ID, MEMBER_ID, 'member')
 
 ### Update Scope Response
 
-```json
+```
 {
 	message: string;
 }
@@ -531,7 +531,7 @@ response = await deepgram.invitations.list_invitations(PROJECT_ID)
 
 ### List Invites Response
 
-```json
+```
 {
 	members: [
 		{
@@ -564,7 +564,7 @@ response = await deepgram.invitations.send_invitation(PROJECT_ID, {
 
 ### Send Invite Response
 
-```json
+```
 {
 	message: string;
 }
@@ -592,7 +592,7 @@ response = await deepgram.invitations.remove_invitation(
 
 ### Delete Invite Response
 
-```json
+```
 {
 	message: string;
 }
@@ -616,7 +616,7 @@ response = await deepgram.invitations.leave_project(PROJECT_ID)
 
 ### Leave Project Response
 
-```json
+```
 {
 	message: string;
 }
@@ -670,7 +670,7 @@ response = await deepgram.usage.list_requests(PROJECT_ID, {
 
 ### Get All Requests Response
 
-```json
+```
 {
   page: Number,
   limit: Number,
@@ -739,7 +739,7 @@ response = await deepgram.usage.get_request(PROJECT_ID, REQUEST_ID)
 
 ### Get Request Response
 
-```json
+```
 {
   request_id: String;
   created: String;
@@ -852,7 +852,7 @@ response = await deepgram.usage.get_usage(PROJECT_ID, {
 
 ### Get Usage Response
 
-```json
+```
 {
   start: String,
   end: String,
@@ -906,7 +906,7 @@ response = await deepgram.usage.get_fields(PROJECT_ID, {
 
 #### Get Fields Response
 
-```json
+```
 {
   tags: String[],
   models: String[],
@@ -939,7 +939,7 @@ response = await deepgram.billing.list_balance(PROJECT_ID)
 
 ### Get All Balances Response
 
-```json
+```
 {
   balances: [
       {
@@ -971,7 +971,7 @@ const response = deepgram.billing.get_balance(PROJECT_ID, BALANCE_ID)
 
 ### Get Balance Response
 
-```json
+```
 {
 	balance: {
 		balance_id: string;
