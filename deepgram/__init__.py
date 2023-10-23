@@ -1,77 +1,29 @@
-from typing import Union
-import re
-from ._types import Options
-from .keys import Keys
-from .transcription import Transcription
-from .projects import Projects
-from .usage import Usage
-from .billing import Billing
-from .members import Members
-from .scopes import Scopes
-from .invitations import Invitations
-from .extra import Extra
-from .errors import DeepgramSetupError, DeepgramApiError
+from deepgram.deepgram_client import DeepgramClient
+from .types.deepgram_client_options import DeepgramClientOptions
 
+def create_client(api_key: str, config_options: DeepgramClientOptions = None) -> DeepgramClient:
+    """
+    Create a DeepgramClient instance with the provided API key and optional configuration options.
 
-def api_key_is_valid(api_key: str) -> bool:
-    pattern = r"^[a-f0-9]{40}$"
-    return re.match(pattern, api_key) is not None
+    This function initializes and returns a DeepgramClient instance, which can be used to interact with the Deepgram API. You can provide an API key for authentication and customize the client's configuration by passing a DeepgramClientOptions object.
 
+    Args:
+        api_key (str): The Deepgram API key used for authentication.
+        config_options (DeepgramClientOptions, optional): An optional configuration object specifying client options. If not provided, the default settings will be used.
 
-class Deepgram:
-    def __init__(self, options: Union[str, Options]) -> None:
-        if not isinstance(options, (str, dict)):
-            raise DeepgramSetupError("`options` must be a dictionary or an API key string")
+    Returns:
+        DeepgramClient: An instance of the DeepgramClient class for making requests to the Deepgram API.
 
-        # Convert to dictionary if the api key was passed as a string
-        if isinstance(options, str):
-            options: Options = {"api_key": options}
+    Example usage:
+        To create a DeepgramClient instance with a custom configuration:
 
-        if "api_key" not in options:
-            raise DeepgramSetupError("API key is required")
-        if not api_key_is_valid(options["api_key"]):
-            raise DeepgramSetupError("Invalid API key")
+        >>> api_key = "your_api_key"
+        >>> custom_options = DeepgramClientOptions(global_options={"url": "custom_url", "headers": {"Custom-Header": "value"}})
+        >>> client = create_client(api_key, config_options=custom_options)
 
-        if "api_url" in options and options.get("api_url", None) is None:
-            raise DeepgramSetupError("API URL must be valid or omitted")
+    Example usage with default settings:
 
-        self.options = options
-
-    @property
-    def keys(self) -> Keys:
-        return Keys(self.options)
-
-    @property
-    def transcription(self) -> Transcription:
-        return Transcription(self.options)
-
-    @property
-    def projects(self) -> Projects:
-        return Projects(self.options)
-
-    @property
-    def usage(self) -> Usage:
-        return Usage(self.options)
-
-    @property
-    def billing(self) -> Billing:
-        return Billing(self.options)
-
-    @property
-    def members(self) -> Members:
-        return Members(self.options)
-
-    @property
-    def scopes(self) -> Scopes:
-        return Scopes(self.options)
-
-    @property
-    def invitations(self) -> Invitations:
-        return Invitations(self.options)
-
-    @property
-    def extra(self) -> Extra:
-        return Extra(self.options)
-
-
-__all__ = [Deepgram, DeepgramSetupError, DeepgramApiError]
+        >>> api_key = "your_api_key"
+        >>> client = create_client(api_key)
+    """
+    return DeepgramClient(api_key, config_options)

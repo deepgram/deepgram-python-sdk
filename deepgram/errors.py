@@ -1,88 +1,57 @@
-from typing import Union, Optional
-import websockets.exceptions
-import urllib.error
-import aiohttp
-import uuid
 
 
 class DeepgramError(Exception):
-    pass
+    """
+    Base class for exceptions raised by the Deepgram API client.
 
-
-class DeepgramSetupError(DeepgramError, ValueError):
-    pass
-
+    Attributes:
+        message (str): The error message describing the exception.
+    """
+    def __init__(self, message: str):
+        super().__init__(message)
+        self.name = "DeepgramError"
 
 class DeepgramApiError(DeepgramError):
-    """An error returned by the Deepgram API.
-
-    If the error was raised by an http client, the client's error message
-    is accessible via the `http_library_error` field. This may be useful
-    for handling different error codes, such as 429s or 503s.
-
-    The `error` field is set to the API's error message (dict), if avilable.
-    Otherwise the `error` field is set to the parent exception's message (str).
-    
-    The `warning` field is set to the API's warning messages (list[str]), if available.
-
-    The `request_id` field is set to the API's request ID, if available.
     """
-    def __init__(
-        self,
-        *args: object,
-        http_library_error: Optional[
-            Union[
-                urllib.error.HTTPError,
-                urllib.error.URLError,
-                websockets.exceptions.InvalidHandshake,
-                aiohttp.ClientResponseError,
-                aiohttp.ClientError,
-            ]
-        ] = None,
-    ):
-        super().__init__(*args)
-        self.http_library_error = http_library_error
-        self.error: Union[str, dict]  # If you change the type, change it in the docstring as well!
-        self.warnings: Optional[list[str]] = None  # If you change the type, change it in the docstring as well!
-        self.request_id: Optional[uuid.UUID] = None
-        self.http_error_status: Optional[int] = None
+    Exception raised for known errors (in json response format) related to the Deepgram API.
 
-        # Set the `error`, `warning`, and `request_id` fields from the incoming data object
-        if isinstance(args[0], dict) and "err_msg" in args[0]:
-            error_or_warning_data = args[0]
-            self.error = error_or_warning_data["err_msg"]
-            if "metadata" in error_or_warning_data and "warnings" in error_or_warning_data["metadata"]:
-                self.warnings = error_or_warning_data["metadata"]["warnings"]
-            elif "warnings" in error_or_warning_data:  # Occurs when `raise_warnings_as_errors` is enabled
-                self.warnings = error_or_warning_data["warnings"]
-            if "metadata" in error_or_warning_data and "request_id" in error_or_warning_data["metadata"]:  # Occurs when Deepgram returns a success response (for warnings)
-                self.request_id = uuid.UUID(error_or_warning_data["request_id"])
-            elif "request_id" in error_or_warning_data:  # Occurs when Deepgram returns a failed response
-                self.request_id = uuid.UUID(error_or_warning_data["request_id"])
-        elif isinstance(args[0], str):
-            self.error = args[0]
-        else:
-            self.error = str(args[0])
+    Attributes:
+        message (str): The error message describing the exception.
+        status (str): The HTTP status associated with the API error.
+    """
+    def __init__(self, message: str, status: str, original_error = None):
+        super().__init__(message)
+        self.name = "DeepgramApiError"
+        self.status = status
+        self.message = message
+        self.original_error = original_error
+        
+    def __str__(self):
+        return f"{self.name}: {self.message} (Status: {self.status}) \n Error: {self.original_error}"
 
-        # Set the error code from the underlying exception, if possible
-        if http_library_error is not None:
-            # Note: The following Exceptions do not have HTTP error codes:
-            #   - urllib.error.URLError
-            #   - websockets.exceptions.InvalidHandshake
-            #   - aiohttp.ClientError
-            if isinstance(http_library_error, urllib.error.HTTPError):
-                self.http_error_status = http_library_error.code
-            elif isinstance(http_library_error, aiohttp.ClientResponseError):
-                self.http_error_status = http_library_error.status
+class DeepgramUnknownApiError(DeepgramApiError):
+    """
+    Exception raised for unknown errors related to the Deepgram API.
 
-    def __str__(self) -> str:
-        if self.request_id:
-            if self.warnings:
-                warning_string = f"\n\n{self.warnings}"
-            else:
-                warning_string = ""
-            if self.http_error_status:
-                return f"Request `{self.request_id}` returned {self.http_error_status}: {self.error}" + warning_string
-            else:
-                return f"Request `{self.request_id}` returned {self.error}" + warning_string
-        return super().__str__()
+    Inherits from DeepgramApiError and includes the same attributes.
+
+    Attributes:
+        message (str): The error message describing the exception.
+        status (str): The HTTP status associated with the API error.
+    """
+    def __init__(self, message: str, status: str):
+        super().__init__(message, status)
+        self.name = "DeepgramUnknownApiError"
+
+class DeepgramUnknownError(DeepgramError):
+    """
+    Exception raised for unknown errors not specific to the Deepgram API.
+
+    Attributes:
+        message (str): The error message describing the exception.
+        original_error (Exception): The original error that triggered this exception.
+    """
+    def __init__(self, message: str, original_error):
+        super().__init__(message)
+        self.name = "DeepgramUnknownError"
+        self.original_error = original_error

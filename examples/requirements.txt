@@ -1,0 +1,4 @@
+-e ../../
+httpx
+typing_extensions
+python-dotenv
