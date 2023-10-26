@@ -1,6 +1,7 @@
 from deepgram.deepgram_client import DeepgramClient
 from .types.deepgram_client_options import DeepgramClientOptions
 
+
 def create_client(api_key: str, config_options: DeepgramClientOptions = None) -> DeepgramClient:
     """
     Create a DeepgramClient instance with the provided API key and optional configuration options.
