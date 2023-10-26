@@ -7,12 +7,13 @@ load_dotenv()
 
 API_KEY = os.getenv('DG_API_KEY')
 AUDIO_FILE = "preamble.wav"
-AUDIO_URL = {"url":"https://static.deepgram.com/examples/Bueller-Life-moves-pretty-fast.wav"}
+AUDIO_URL = {
+    "url": "https://static.deepgram.com/examples/Bueller-Life-moves-pretty-fast.wav"}
 OPTIONS = {
-        "model": "nova",
-        "smart_format": "true",
-        "summarize": "v2",
-    }
+    "model": "nova",
+    "smart_format": "true",
+    "summarize": "v2",
+}
 CALLBACK = "https://example.com/callback"
 
 # STEP 1 Create a Deepgram client using the API key (optional - add config options)
@@ -30,7 +31,7 @@ async def transcribe_file():
         "buffer": buffer_data,
         "mimetype": "audio/wav",
     }
-    
+
     # STEP 2 Call the transcribe_file method on the prerecorded class
     file_response = await deepgram.listen.prerecorded.transcribe_file(PAYLOAD, OPTIONS)
     return file_response
@@ -42,7 +43,6 @@ async def transcribe_url():
     url_response = await deepgram.listen.prerecorded.transcribe_url(AUDIO_URL, OPTIONS)
     # url_response = await deepgram.listen.prerecorded.transcribe_url_callback(AUDIO_URL,CALLBACK, OPTIONS)
     return url_response
-
 
 
 async def main():
