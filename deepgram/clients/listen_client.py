@@ -8,7 +8,6 @@ class ListenClient:
         self.url = url
         self.api_key = api_key
         self.headers = headers
-    print('hey')
 
     @property
     def prerecorded(self):

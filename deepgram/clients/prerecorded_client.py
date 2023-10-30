@@ -6,10 +6,12 @@ from ..types.transcription_options import PrerecordedOptions
 from ..types.prerecorded_response import AsyncPrerecordedResponse
 from ..types.prerecorded_response import SyncPrerecordedResponse
 
+
 class PreRecordedClient(AbstractRestfulClient):
     """
     A client class for handling pre-recorded audio data. Provides methods for transcribing audio from URLs and files.
     """
+
     def __init__(self, url, headers):
         """
         Initializes a new instance of the PreRecordedClient.
@@ -21,9 +23,9 @@ class PreRecordedClient(AbstractRestfulClient):
         self.url = url
         self.headers = headers
         super().__init__(url, headers)
-    
+
     async def transcribe_url(
-        self, source: UrlSource, options: PrerecordedOptions = None, endpoint: str="v1/listen"
+        self, source: UrlSource, options: PrerecordedOptions = None, endpoint: str = "v1/listen"
     ) -> SyncPrerecordedResponse:
         """
         Transcribes audio from a URL source.
@@ -38,6 +40,7 @@ class PreRecordedClient(AbstractRestfulClient):
 
         Raises:
             DeepgramError: If the "callback" option is provided for a synchronous transcription.
+            DeepgramError: If the source type is unknown.
             DeepgramApiError: Raised for known API errors.
             DeepgramUnknownApiError: Raised for unknown API errors.
             DeepgramUnknownError: Raised for unexpected errors not specific to the API.
@@ -46,14 +49,15 @@ class PreRecordedClient(AbstractRestfulClient):
 
         url = f"{self.url}/{endpoint}"
         if options is not None and "callback" in options:
-            raise DeepgramError("Callback cannot be provided as an option to a synchronous transcription. Use `transcribe_url_callback` instead.")
+            raise DeepgramError(
+                "Callback cannot be provided as an option to a synchronous transcription. Use `transcribe_url_callback` instead.")
         if is_url_source(source):
             body = source
         else:
             raise DeepgramError("Unknown transcription source type")
         return await self.post(url, options, json=body)
-        
-    async def transcribe_url_callback( self, source: UrlSource, callback:str, options: PrerecordedOptions = None, endpoint: str="v1/listen") -> AsyncPrerecordedResponse:
+
+    async def transcribe_url_callback(self, source: UrlSource, callback: str, options: PrerecordedOptions = None, endpoint: str = "v1/listen") -> AsyncPrerecordedResponse:
         """
         Transcribes audio from a URL source and sends the result to a callback URL.
 
@@ -67,7 +71,6 @@ class PreRecordedClient(AbstractRestfulClient):
             AsyncPrerecordedResponse: An object containing the request_id or an error message.
 
         Raises:
-            DeepgramError: If the "callback" option is provided for a synchronous transcription.
             DeepgramApiError: Raised for known API errors.
             DeepgramUnknownApiError: Raised for unknown API errors.
             DeepgramUnknownError: Raised for unexpected errors not specific to the API.
@@ -83,8 +86,7 @@ class PreRecordedClient(AbstractRestfulClient):
             raise DeepgramError("Unknown transcription source type")
         return await self.post(url, options, json=body)
 
-    
-    async def transcribe_file(self, source: FileSource, options: PrerecordedOptions=None, endpoint: str = "v1/listen") -> SyncPrerecordedResponse:
+    async def transcribe_file(self, source: FileSource, options: PrerecordedOptions = None, endpoint: str = "v1/listen") -> SyncPrerecordedResponse:
         """
         Transcribes audio from a local file source.
 
@@ -98,13 +100,14 @@ class PreRecordedClient(AbstractRestfulClient):
 
         Raises:
             DeepgramError: If the "callback" option is provided for a synchronous transcription.
+            DeepgramError: If the source type is unknown.
             DeepgramApiError: Raised for known API errors.
             DeepgramUnknownApiError: Raised for unknown API errors.
             DeepgramUnknownError: Raised for unexpected errors not specific to the API.
             Exception: For any other unexpected exceptions.
         """
 
-        url = f"{self.url}/{endpoint}"        
+        url = f"{self.url}/{endpoint}"
         await self._set_file_mimetype_headers(source)
         if is_buffer_source(source):
             body = source["buffer"]
@@ -114,7 +117,7 @@ class PreRecordedClient(AbstractRestfulClient):
             raise DeepgramError("Unknown transcription source type")
         return await self.post(url, options, content=body)
 
-    async def transcribe_file_callback(self, source: FileSource, callback:str, options: PrerecordedOptions = None, endpoint: str="v1/listen") -> AsyncPrerecordedResponse:
+    async def transcribe_file_callback(self, source: FileSource, callback: str, options: PrerecordedOptions = None, endpoint: str = "v1/listen") -> AsyncPrerecordedResponse:
         """
         Transcribes audio from a local file source and sends the result to a callback URL.
 
@@ -128,7 +131,7 @@ class PreRecordedClient(AbstractRestfulClient):
             AsyncPrerecordedResponse: An object containing the request_id or an error message.
 
         Raises:
-            DeepgramError: If the "callback" option is provided for a synchronous transcription.
+            DeepgramError: If the source type is unknown.
             DeepgramApiError: Raised for known API errors.
             DeepgramUnknownApiError: Raised for unknown API errors.
             DeepgramUnknownError: Raised for unexpected errors not specific to the API.
@@ -150,5 +153,6 @@ class PreRecordedClient(AbstractRestfulClient):
 
     async def _set_file_mimetype_headers(self, source: FileSource) -> None:
         if "mimetype" not in source or not source["mimetype"]:
-            raise DeepgramError("Mimetype must be provided if the source is a Buffer or a Readable")
+            raise DeepgramError(
+                "Mimetype must be provided if the source is a Buffer or a Readable")
         self.headers["Content-Type"] = source["mimetype"]

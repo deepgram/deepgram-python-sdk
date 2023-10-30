@@ -53,8 +53,6 @@ class AbstractRestfulClient:
         return await self._handle_request('DELETE', url, headers=headers)
 
     async def _handle_request(self, method, url, **kwargs):
-        # for key, value in kwargs.items():
-        #     print(f"Request Argument - {key}: {value}")
         try:
             with httpx.Client() as client:
                 response = client.request(method, url, **kwargs)
