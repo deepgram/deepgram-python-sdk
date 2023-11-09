@@ -4,26 +4,28 @@
 
 from typing import Union, List, TypedDict
 
-class LiveOptions(TypedDict, total=False):
+class PrerecordedOptionsV1(TypedDict, total=False):
+    alternatives: int
     callback: str
-    channels: int
+    detect_entities: bool
+    detect_language: bool
+    detect_topics: bool
     diarize: bool
-    encoding: str
-    endpointing: int
-    interim_results: bool
-    keywords: str
+    keywords: Union[list, str]
     language: str
     model: str
     multichannel: bool
     numerals: bool
-    punctuate: bool
+    paragraphs: bool
     profanity_filter: bool
-    redact: bool
-    replace: str
-    sample_rate: int
-    search: str
+    punctuate: bool
+    redact: Union[List[str], bool, str]
+    replace: Union[list, str]
+    search: Union[list, str]
     smart_format: bool
+    summarize: Union[bool, str]
     tag: list
     tier: str
+    utt_split: int
+    utterances: bool
     version: str
-

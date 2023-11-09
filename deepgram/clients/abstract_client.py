@@ -59,7 +59,6 @@ class AbstractRestfulClient:
         try:
             with httpx.Client() as client:
                 response = client.request(method, url, **kwargs)
-
                 response.raise_for_status()
                 return response.json()
         except httpx._exceptions.HTTPError as e:

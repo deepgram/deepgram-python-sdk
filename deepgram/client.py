@@ -10,8 +10,8 @@ from .options import DeepgramClientOptions
 from .errors import DeepgramError
 
 from .clients.listen import ListenClient
-from .clients.manage.client import ManageClient
-from .clients.onprem.client import OnPremClient
+from .clients.manage.client import ManageClient # FUTURE VERSIONINING:, ManageClientV1
+from .clients.onprem.client import OnPremClient # FUTURE VERSIONINING: , OnPremClientV1
 
 class DeepgramClient:
     """
@@ -67,6 +67,16 @@ class DeepgramClient:
     def manage(self):
         return ManageClient(self.url, self.headers)
     
+    # FUTURE VERSIONINING:
+    # @property
+    # def manage_v1(self):
+    #     return ManageClientV1(self.url, self.headers)
+    
     @property
     def onprem(self):
         return OnPremClient(self.url, self.headers)
+    
+    # FUTURE VERSIONINING:
+    # @property
+    # def onprem_v1(self):
+    #     return OnPremClientV1(self.url, self.headers)

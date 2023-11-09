@@ -17,7 +17,7 @@ class Project(TypedDict):
 class ProjectsResponse(TypedDict):
     projects: List[Project]
 
-class ProjectOptions(TypedDict, total=False):
+class ProjectOptionsV1(TypedDict, total=False):
     name: Optional[str]
     company: Optional[str]
 
@@ -57,7 +57,7 @@ class CreateKeyResponse(TypedDict):
     scopes: List[str]
     tags: Optional[List[str]]
 
-class KeyOptions(TypedDict):
+class KeyOptionsV1(TypedDict):
     comment: str
     scopes: List[str]
     tags: Optional[List[str]]
@@ -69,7 +69,7 @@ class KeyOptions(TypedDict):
 class ScopesResponse(TypedDict):
     scopes: List[str]
 
-class ScopeOptions(TypedDict):
+class ScopeOptionsV1(TypedDict):
     scope: str
 
 # Invites
@@ -81,7 +81,7 @@ class Invite(TypedDict):
 class InvitesResponse(TypedDict):
     projects: List[Invite]
 
-class InviteOptions(TypedDict):
+class InviteOptionsV1(TypedDict):
     email: str
     scope: str
 
@@ -138,13 +138,13 @@ class UsageRequestsResponse(TypedDict):
     limit: int
     requests: List[UsageRequest]
 
-class UsageRequestOptions(TypedDict):
+class UsageRequestOptionsV1(TypedDict):
     start: Optional[str]
     end: Optional[str]
     limit: Optional[int]
     status: Optional[str]
 
-class UsageSummaryOptions(TypedDict):
+class UsageSummaryOptionsV1(TypedDict):
     start: Optional[str]
     end: Optional[str]
     accessor: Optional[str]
@@ -197,7 +197,7 @@ class UsageFieldsResponse(TypedDict):
     languages: List[str]
     features: List[str]
 
-class UsageFieldsOptions(TypedDict):
+class UsageFieldsOptionsV1(TypedDict):
     start: Optional[str]
     end: Optional[str]
 

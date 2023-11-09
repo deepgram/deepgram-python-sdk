@@ -11,11 +11,11 @@ from .options import DeepgramClientOptions
 from .errors import DeepgramError, DeepgramApiError, DeepgramUnknownApiError, DeepgramUnknownError
 
 # live
-from .clients.live.options import LiveOptions
 from .clients.live.enums import LiveTranscriptionEvents
+from .clients.live.client import LiveClient, LiveOptions
 
 # prerecorded
-from .clients.prerecorded.options import PrerecordedOptions
+from .clients.prerecorded.client import PreRecordedClient, PrerecordedOptions
 
 # manage
-from .clients.manage.client import ManageClient
+from .clients.manage.client import ManageClient, ProjectOptions, KeyOptions, ScopeOptions, InviteOptions, UsageRequestOptions, UsageSummaryOptions, UsageFieldsOptions
