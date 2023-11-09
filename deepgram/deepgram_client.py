@@ -1,11 +1,13 @@
 import re
+from urllib.parse import urlparse, urlunparse, parse_qs, urlencode
 from typing import Optional
-from .clients.listen_client import ListenClient
-from .clients.manage_client import ManageClient
-from .clients.onprem_client import OnPremClient
-from .helpers import strip_trailing_slash
-from .types.deepgram_client_options import DeepgramClientOptions
+
+from .deepgram_client_options import DeepgramClientOptions
 from .errors import DeepgramError
+
+from .clients.listen import ListenClient
+from .clients.manage.manage_client import ManageClient
+from .clients.onprem.onprem_client import OnPremClient
 
 class DeepgramClient:
     """
@@ -51,7 +53,7 @@ class DeepgramClient:
         url = config_options['url']
         if not re.match(r'^https?://', url, re.IGNORECASE):
             url = 'https://' + url
-        return strip_trailing_slash(url)
+        return url.strip('/')
     
     @property
     def listen(self):
