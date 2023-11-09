@@ -108,7 +108,6 @@ class PreRecordedClient(AbstractRestfulClient):
         """
 
         url = f"{self.url}/{endpoint}"
-        await self._set_file_mimetype_headers(source)
         if is_buffer_source(source):
             body = source["buffer"]
         elif is_readstream_source(source):
@@ -142,7 +141,6 @@ class PreRecordedClient(AbstractRestfulClient):
         if options is None:
             options = {}
         options['callback'] = callback
-        await self._set_file_mimetype_headers(source)
         if is_buffer_source(source):
             body = source["buffer"]
         elif is_readstream_source(source):
@@ -150,9 +148,3 @@ class PreRecordedClient(AbstractRestfulClient):
         else:
             raise DeepgramError("Unknown transcription source type")
         return await self.post(url, options, content=body)
-
-    async def _set_file_mimetype_headers(self, source: FileSource) -> None:
-        if "mimetype" not in source or not source["mimetype"]:
-            raise DeepgramError(
-                "Mimetype must be provided if the source is a Buffer or a Readable")
-        self.headers["Content-Type"] = source["mimetype"]

@@ -1,6 +1,6 @@
 import asyncio
 import os
-from deepgram import create_client, DeepgramClient
+from deepgram import DeepgramClient
 from dotenv import load_dotenv
 load_dotenv()
 
@@ -19,7 +19,7 @@ CREATE_KEY_OPTIONS = {
 }
 
 # Create a Deepgram client using the API key
-deepgram: DeepgramClient = create_client(API_KEY)
+deepgram: DeepgramClient = DeepgramClient(API_KEY)
 
 
 async def main():

@@ -1,5 +1,4 @@
-from deepgram import create_client, DeepgramClient
-from deepgram.enums import LiveTranscriptionEvents
+from deepgram import DeepgramClient, LiveTranscriptionEvents, LiveOptions
 from dotenv import load_dotenv
 import asyncio
 import aiohttp
@@ -21,7 +20,7 @@ config_options = {
         }
     }
 
-options = {
+options: LiveOptions = {
       'model': 'nova',
       'interim_results': False,
       'language': 'en-US'
@@ -34,8 +33,7 @@ deepgram_api_key = os.getenv('DG_API_KEY')
 
 
 async def main():
-  deepgram: DeepgramClient = create_client(deepgram_api_key)
-  # deepgram: DeepgramClient = create_client(deepgram_api_key, config_options)
+  deepgram: DeepgramClient = DeepgramClient(deepgram_api_key)
 
   # Create a websocket connection to Deepgram
   try:

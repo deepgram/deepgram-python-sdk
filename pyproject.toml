@@ -1,3 +1,10 @@
 [build-system]
 requires = ["setuptools", "wheel"]
 build-backend = "setuptools.build_meta"
+
+[project]
+name = "deepgram-sdk"
+dynamic = ["version"]
+
+[tool.setuptools.dynamic]
+version = {attr = "deepgram.__version__"}

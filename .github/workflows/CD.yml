@@ -12,8 +12,8 @@ jobs:
         with:
           python-version: '3.10' 
           
-      - name: Update Version in _version.py
-        run: sed -i 's/0.0.0/${{ github.event.release.tag_name }}/g' ./deepgram/_version.py
+      - name: Update Version in __init__.py
+        run: sed -i 's/0.0.0/${{ github.event.release.tag_name }}/g' ./deepgram/__init__.py
           
       - name: Install Dependencies
         run: pip install .
