@@ -2,29 +2,14 @@
 # Use of this source code is governed by a MIT license that can be found in the LICENSE file.
 # SPDX-License-Identifier: MIT
 
-from dotenv import load_dotenv
 import asyncio
 import aiohttp
 import os
+from dotenv import load_dotenv
 
 from deepgram import DeepgramClient, LiveTranscriptionEvents, LiveOptions
 
 load_dotenv()
-
-base_url = "api.beta.deepgram.com" # will change to https://api.beta.deepgram.com
-beta_url = "https://api.beta.deepgram.com" # will stay as to https://api.beta.deepgram.com
-testing_url = "http://localhost:8080" # will stay as http://api.deepgram.com
-
-config_headers = {
-    "header_key": "header value",
-}
-    
-config_options = {
-    "global_options" : {
-        "url": beta_url, 
-        "headers": config_headers
-        }
-    }
 
 options: LiveOptions = {
       'model': 'nova',

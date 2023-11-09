@@ -6,6 +6,7 @@ from .source import UrlSource, FileSource
 
 from .v1_client import PreRecordedClientV1
 from .v1_options import PrerecordedOptionsV1
+from .source import PrerecordedSource, FileSource, UrlSource
 
 '''
 The client.py points to the current supported version in the SDK.
@@ -18,7 +19,6 @@ class PreRecordedClient(PreRecordedClientV1):
     """
     Please see PreRecordedClientV1 for details
     """
-
     def __init__(self, url, headers):
         self.url = url
         self.headers = headers

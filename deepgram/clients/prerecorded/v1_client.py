@@ -44,7 +44,6 @@ class PreRecordedClientV1(AbstractRestfulClient):
             DeepgramError: If the "callback" option is provided for a synchronous transcription.
             DeepgramApiError: Raised for known API errors.
             DeepgramUnknownApiError: Raised for unknown API errors.
-            DeepgramUnknownError: Raised for unexpected errors not specific to the API.
             Exception: For any other unexpected exceptions.
         """
 
@@ -74,7 +73,6 @@ class PreRecordedClientV1(AbstractRestfulClient):
             DeepgramError: If the "callback" option is provided for a synchronous transcription.
             DeepgramApiError: Raised for known API errors.
             DeepgramUnknownApiError: Raised for unknown API errors.
-            DeepgramUnknownError: Raised for unexpected errors not specific to the API.
             Exception: For any other unexpected exceptions.
         """
         url = f"{self.url}/{endpoint}"
@@ -104,7 +102,6 @@ class PreRecordedClientV1(AbstractRestfulClient):
             DeepgramError: If the "callback" option is provided for a synchronous transcription.
             DeepgramApiError: Raised for known API errors.
             DeepgramUnknownApiError: Raised for unknown API errors.
-            DeepgramUnknownError: Raised for unexpected errors not specific to the API.
             Exception: For any other unexpected exceptions.
         """
 
@@ -134,7 +131,6 @@ class PreRecordedClientV1(AbstractRestfulClient):
             DeepgramError: If the "callback" option is provided for a synchronous transcription.
             DeepgramApiError: Raised for known API errors.
             DeepgramUnknownApiError: Raised for unknown API errors.
-            DeepgramUnknownError: Raised for unexpected errors not specific to the API.
             Exception: For any other unexpected exceptions.
         """
 

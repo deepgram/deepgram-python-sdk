@@ -6,7 +6,7 @@ import httpx
 import json
 from typing import Dict, Any, Optional
 
-from ..errors import DeepgramApiError, DeepgramUnknownApiError, DeepgramUnknownError
+from ..errors import DeepgramApiError, DeepgramUnknownApiError
 
 class AbstractRestfulClient:
     """
@@ -27,9 +27,7 @@ class AbstractRestfulClient:
     Exceptions:
         DeepgramApiError: Raised for known API errors.
         DeepgramUnknownApiError: Raised for unknown API errors.
-        DeepgramUnknownError: Raised for unexpected errors not specific to the API.
     """
-
     def __init__(self, url: Dict[str, str], headers: Optional[Dict[str, Any]]):
         self.url = url
         self.client = httpx.AsyncClient()
@@ -60,19 +58,18 @@ class AbstractRestfulClient:
             with httpx.Client() as client:
                 response = client.request(method, url, **kwargs)
                 response.raise_for_status()
-                return response.json()
+                return response.text
         except httpx._exceptions.HTTPError as e:
             if isinstance(e, httpx.HTTPStatusError):
                 status_code = e.response.status_code or 500
-                if is_json(e.response.text):
+                try:
                     json_object = json.loads(e.response.text)
-                    raise DeepgramApiError(json_object.get(
-                        'err_msg'), status_code, json.dumps(json_object)) from e
-                else:
-                    raise DeepgramUnknownApiError(
-                        e.response.text, status_code) from e
+                    raise DeepgramApiError(json_object.get('message'), status_code, json.dumps(json_object)) from e
+                except json.decoder.JSONDecodeError:
+                    raise DeepgramUnknownApiError(e.response.text, status_code) from e
+                except ValueError as e:
+                    raise DeepgramUnknownApiError(e.response.text, status_code) from e
             else:
                 raise
         except Exception as e:
-            raise DeepgramUnknownError(
-                "An unknown error occurred during the request.", e) from e
+            raise

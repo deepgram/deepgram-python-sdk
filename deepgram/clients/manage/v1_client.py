@@ -2,7 +2,7 @@
 # Use of this source code is governed by a MIT license that can be found in the LICENSE file.
 # SPDX-License-Identifier: MIT
 
-from .v1_response import Project, ProjectsResponse, Message, ProjectOptionsV1, KeysResponse, Key, KeyOptionsV1, CreateKeyResponse, MembersResponse, ScopesResponse, ScopeOptionsV1, InvitesResponse, InviteOptionsV1, UsageRequestsResponse, UsageRequestOptionsV1, UsageRequest, UsageSummaryOptionsV1, UsageSummaryResponse, UsageFieldsResponse, UsageFieldsOptionsV1, BalancesResponse, Balance
+from .v1_response import Project, ProjectsResponse, Message, ProjectOptionsV1, KeysResponse, KeyResponse, KeyOptionsV1, Key, MembersResponse, ScopesResponse, ScopeOptionsV1, InvitesResponse, InviteOptionsV1, UsageRequestsResponse, UsageRequestOptionsV1, UsageRequest, UsageSummaryOptionsV1, UsageSummaryResponse, UsageFieldsResponse, UsageFieldsOptionsV1, BalancesResponse, Balance
 
 from ..abstract_client import AbstractRestfulClient
 
@@ -29,7 +29,6 @@ class ManageClientV1(AbstractRestfulClient):
     Raises:
         DeepgramApiError: Raised for known API errors.
         DeepgramUnknownApiError: Raised for unknown API errors.
-        DeepgramUnknownError: Raised for unexpected errors not specific to the API.
         Exception: For any other unexpected exceptions.
     """
     def __init__(self, url, headers):
@@ -37,91 +36,120 @@ class ManageClientV1(AbstractRestfulClient):
       self.headers = headers
       self.endpoint = "v1/projects"
       super().__init__(url, headers)
-
-    async def get_projects(self) -> ProjectsResponse:
+    
+    # projects
+    async def list_projects(self):
+        return self.get_projects()
+    async def get_projects(self):
         url = f"{self.url}/{self.endpoint}"
-        return await self.get(url)
+        return ProjectsResponse.from_json(await self.get(url))
 
-    async def get_project(self, project_id: str) -> Project:
+    async def get_project(self, project_id: str):
         url = f"{self.url}/{self.endpoint}/{project_id}"
-        return await self.get(url)
+        return Project.from_json(await self.get(url))
 
-    async def update_project(self, project_id: str, options: ProjectOptionsV1) -> Message:
+    async def update_project_option(self, project_id: str, options: ProjectOptionsV1):
         url = f"{self.url}/{self.endpoint}/{project_id}"
-        return await self.patch(url, json=options)
+        return Message.from_json(await self.patch(url, json=options))
+    async def update_project(self, project_id: str, name=""):
+        url = f"{self.url}/{self.endpoint}/{project_id}"
+        options: ProjectOptionsV1 = {
+            "name": name,
+        }
+        return Message.from_json(await self.patch(url, json=options))
 
     async def delete_project(self, project_id: str) -> None:
         url = f"{self.url}/{self.endpoint}/{project_id}"
-        return await self.delete(url)
+        return Message.from_json(await self.delete(url))
 
-    async def get_project_keys(self, project_id: str) -> KeysResponse:
+    # keys
+    async def list_keys(self, project_id: str):
+        return self.get_keys(project_id)
+    async def get_keys(self, project_id: str):
         url = f"{self.url}/{self.endpoint}/{project_id}/keys"
-        return await self.get(url)
+        result = await self.get(url)
+        return KeysResponse.from_json(result)
 
-    async def get_project_key(self, project_id: str, key_id: str) -> Key:
+    async def get_key(self, project_id: str, key_id: str):
         url = f"{self.url}/{self.endpoint}/{project_id}/keys/{key_id}"
-        return await self.get(url)
+        return KeyResponse.from_json(await self.get(url))
 
-    async def create_project_key(self, project_id: str, options: KeyOptionsV1) -> CreateKeyResponse:
+    async def create_key(self, project_id: str, options: KeyOptionsV1):
         url = f"{self.url}/{self.endpoint}/{project_id}/keys"
-        return await self.post(url, json=options)
+        return Key.from_json(await self.post(url, json=options))
 
-    async def delete_project_key(self, project_id: str, key_id: str) -> None:
+    async def delete_key(self, project_id: str, key_id: str) -> None:
         url = f"{self.url}/{self.endpoint}/{project_id}/keys/{key_id}"
-        return await self.delete(url)
+        return Message.from_json(await self.delete(url))
 
-    async def get_project_members(self, project_id: str) -> MembersResponse:
+    # members
+    async def get_members(self, project_id: str):
         url = f"{self.url}/{self.endpoint}/{project_id}/members"
-        return await self.get(url)
+        return MembersResponse.from_json(await self.get(url))
 
-    async def remove_project_member(self, project_id: str, member_id: str) -> None:
+    async def remove_member(self, project_id: str, member_id: str) -> None:
         url = f"{self.url}/{self.endpoint}/{project_id}/members/{member_id}"
-        return await self.delete(url)
+        return Message.from_json(await self.delete(url))
 
-    async def get_project_member_scopes(self, project_id: str, member_id: str) -> ScopesResponse:
+    # scopes
+    async def get_member_scopes(self, project_id: str, member_id: str):
         url = f"{self.url}/{self.endpoint}/{project_id}/members/{member_id}/scopes"
-        return await self.get(url)
+        return ScopesResponse.from_json(await self.get(url))
 
-    async def update_project_member_scope(self, project_id: str, member_id: str, options: ScopeOptionsV1) -> Message:
+    async def update_member_scope(self, project_id: str, member_id: str, options: ScopeOptionsV1):
         url = f"{self.url}/{self.endpoint}/{project_id}/members/{member_id}/scopes"
-        return await self.put(url, json=options)
+        return Message.from_json(await self.put(url, json=options))
 
-    async def get_project_invites(self, project_id: str) -> InvitesResponse:
+    # invites
+    async def list_invites(self, project_id: str):
+        return self.get_invites(project_id)
+    async def get_invites(self, project_id: str):
         url = f"{self.url}/{self.endpoint}/{project_id}/invites"
-        return await self.get(url)
+        return InvitesResponse.from_json(await self.get(url))
 
-    async def send_project_invite(self, project_id: str, options: InviteOptionsV1) -> Message:
+    async def send_invite_options(self, project_id: str, options: InviteOptionsV1):
         url = f"{self.url}/{self.endpoint}/{project_id}/invites"
-        return await self.post(url, json=options)
+        return Message.from_json(await self.post(url, json=options))
+    async def send_invite(self, project_id: str, email: str, scope="member"):
+        url = f"{self.url}/{self.endpoint}/{project_id}/invites"
+        options: InviteOptionsV1 = {
+            "email": email,
+            "scope": scope,
+        }
+        return Message.from_json(await self.post(url, json=options))
 
-    async def delete_project_invite(self, project_id: str, email: str) -> Message:
+    async def delete_invite(self, project_id: str, email: str):
         url = f"{self.url}/{self.endpoint}/{project_id}/invites/{email}"
-        return await self.delete(url)
+        return Message.from_json(await self.delete(url))
 
-    async def leave_project(self, project_id: str) -> Message:
+    async def leave_project(self, project_id: str):
         url = f"{self.url}/{self.endpoint}/{project_id}/leave"
-        return await self.delete(url)
+        return Message.from_json(await self.delete(url))
 
-    async def get_project_usage_requests(self, project_id: str, options: UsageRequestOptionsV1) -> UsageRequestsResponse:
+    # usage
+    async def get_usage_requests(self, project_id: str, options: UsageRequestOptionsV1):
         url = f"{self.url}/{self.endpoint}/{project_id}/requests"
-        return await self.get(url, options)
+        return UsageRequestsResponse.from_json(await self.get(url, options))
 
-    async def get_project_usage_request(self, project_id: str, request_id: str) -> UsageRequest:
+    async def get_usage_request(self, project_id: str, request_id: str):
         url = f"{self.url}/{self.endpoint}/{project_id}/requests/{request_id}"
-        return await self.get(url)
+        return UsageRequest.from_json(await self.get(url))
 
-    async def get_project_usage_summary(self, project_id: str, options: UsageSummaryOptionsV1) -> UsageSummaryResponse:
+    async def get_usage_summary(self, project_id: str, options: UsageSummaryOptionsV1):
         url = f"{self.url}/{self.endpoint}/{project_id}/usage"
-        return await self.get(url, options)
+        return UsageSummaryResponse.from_json(await self.get(url, options))
 
-    async def get_project_usage_fields(self, project_id: str, options: UsageFieldsOptionsV1) -> UsageFieldsResponse:
+    async def get_usage_fields(self, project_id: str, options: UsageFieldsOptionsV1):
         url = f"{self.url}/{self.endpoint}/{project_id}/usage/fields"
-        return await self.get(url, options)
+        return UsageFieldsResponse.from_json(await self.get(url, options))
 
-    async def get_project_balances(self, project_id: str) -> BalancesResponse:
+    # balances
+    async def list_balances(self, project_id: str):
+        return self.get_balances(project_id)
+    async def get_balances(self, project_id: str):
         url = f"{self.url}/{self.endpoint}/{project_id}/balances"
-        return await self.get(url)
+        return BalancesResponse.from_json(await self.get(url))
 
-    async def get_project_balance(self, project_id: str, balance_id: str) -> Balance:
+    async def get_balance(self, project_id: str, balance_id: str):
         url = f"{self.url}/{self.endpoint}/{project_id}/balances/{balance_id}"
-        return await self.get(url)
+        return Balance.from_json(await self.get(url))

@@ -74,7 +74,7 @@ To quickly get started with examples for prerecorded and streaming, run the file
 Run the following command to install `pytest` and `pytest-cov` as dev dependencies.
 
 ```
-pip install -r requirements-dev.txt
+pip install -r requirements.txt
 ```
 
 ## Run All Tests
