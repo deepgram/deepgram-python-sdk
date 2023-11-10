@@ -1,5 +1,5 @@
-from .prerecorded.prerecorded_client import PreRecordedClient
-from .live.live_client import LiveClient
+from .prerecorded.client import PreRecordedClient
+from .live.client import LiveClient
 from typing import Dict, Any, Optional
 
 
