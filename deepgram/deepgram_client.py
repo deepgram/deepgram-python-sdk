@@ -26,7 +26,7 @@ class DeepgramClient:
         onprem: Returns an OnPremClient instance for interacting with Deepgram's on-premises API.
 
     """
-    def __init__(self, api_key: str, config_options: Optional[DeepgramClientOptions]):
+    def __init__(self, api_key: str, config_options: Optional[DeepgramClientOptions] = None):
         if not api_key:
             raise DeepgramError("Deepgram API key is required")
 

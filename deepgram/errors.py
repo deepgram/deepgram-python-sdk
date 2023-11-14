@@ -1,5 +1,4 @@
 
-
 class DeepgramError(Exception):
     """
     Base class for exceptions raised by the Deepgram API client.

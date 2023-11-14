@@ -1,8 +1,8 @@
 *.egg-info
-*/__pycache__/
-**/__pycache__/
+__pycache__
 dist/
 .venv
+.env
 venv/
 venv.bak/
 build/

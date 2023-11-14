@@ -1,24 +1,5 @@
 from typing import Union, List, TypedDict
 
-class TranscriptionOptions(TypedDict, total=False):
-    callback: str
-    diarize: bool
-    keywords: Union[List[str], str]
-    language: str
-    model: str
-    multichannel: bool
-    numerals: bool
-    punctuate: bool
-    profanity_filter: bool
-    redact: Union[List[str], List[bool], bool]
-    replace: Union[List[str], str]
-    search: Union[List[str], str]
-    smart_format: bool
-    tag: List[str]
-    tier: str
-    version: str
-
-
 class PrerecordedOptions(TypedDict, total=False):
     alternatives: int
     callback: str
