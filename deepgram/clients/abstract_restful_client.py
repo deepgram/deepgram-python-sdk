@@ -4,7 +4,6 @@ from typing import Dict, Any, Optional
 
 from ..errors import DeepgramApiError, DeepgramUnknownApiError, DeepgramUnknownError
 
-
 class AbstractRestfulClient:
     """
     An abstract base class for a RESTful HTTP client.

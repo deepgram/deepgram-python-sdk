@@ -6,7 +6,6 @@ from .prerecorded_source import UrlSource, FileSource
 from .transcription_options import PrerecordedOptions
 from .prerecorded_response import AsyncPrerecordedResponse, SyncPrerecordedResponse
 
-
 class PreRecordedClient(AbstractRestfulClient):
     """
     A client class for handling pre-recorded audio data. Provides methods for transcribing audio from URLs and files.
