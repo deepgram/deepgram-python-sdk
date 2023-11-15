@@ -1,10 +1,10 @@
-from ..errors import DeepgramError
-from .abstract_restful_client import AbstractRestfulClient
-from ..helpers import is_buffer_source, is_readstream_source, is_url_source
-from ..types.prerecorded_source import UrlSource, FileSource
-from ..types.transcription_options import PrerecordedOptions
-from ..types.prerecorded_response import AsyncPrerecordedResponse
-from ..types.prerecorded_response import SyncPrerecordedResponse
+from ...errors import DeepgramError
+from ..abstract_restful_client import AbstractRestfulClient
+
+from .helpers import is_buffer_source, is_readstream_source, is_url_source
+from .prerecorded_source import UrlSource, FileSource
+from .transcription_options import PrerecordedOptions
+from .prerecorded_response import AsyncPrerecordedResponse, SyncPrerecordedResponse
 
 
 class PreRecordedClient(AbstractRestfulClient):

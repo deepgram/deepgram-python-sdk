@@ -1,8 +1,10 @@
-from deepgram import DeepgramClient, LiveTranscriptionEvents, LiveOptions
 from dotenv import load_dotenv
 import asyncio
 import aiohttp
 import os
+
+from deepgram import DeepgramClient, LiveTranscriptionEvents, LiveOptions
+
 load_dotenv()
 
 base_url = "api.beta.deepgram.com" # will change to https://api.beta.deepgram.com

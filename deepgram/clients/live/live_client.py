@@ -1,6 +1,8 @@
-from deepgram.enums import LiveTranscriptionEvents
+from .enums import LiveTranscriptionEvents
+from .helpers import convert_to_websocket_url, append_query_params
+
 from deepgram.errors import DeepgramApiError
-from deepgram.helpers import convert_to_websocket_url, append_query_params
+
 import asyncio
 import json
 import websockets

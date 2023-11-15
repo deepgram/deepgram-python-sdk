@@ -1,8 +1,8 @@
 import httpx
 import json
 from typing import Dict, Any, Optional
+
 from ..errors import DeepgramApiError, DeepgramUnknownApiError, DeepgramUnknownError
-from ..helpers import is_json
 
 
 class AbstractRestfulClient:

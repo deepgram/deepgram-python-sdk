@@ -1,4 +1,4 @@
-from .abstract_restful_client import AbstractRestfulClient
+from ..abstract_restful_client import AbstractRestfulClient
 
 class OnPremClient(AbstractRestfulClient):
   """

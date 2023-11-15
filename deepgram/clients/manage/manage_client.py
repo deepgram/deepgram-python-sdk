@@ -1,6 +1,6 @@
-from .abstract_restful_client import AbstractRestfulClient
-from ..types.management import Project, ProjectsResponse, Message, ProjectOptions, KeysResponse, Key, KeyOptions, CreateKeyResponse, MembersResponse, ScopesResponse, ScopeOptions, InvitesResponse, InviteOptions, UsageRequestsResponse, UsageRequestOptions, UsageRequest, UsageSummaryOptions, UsageSummaryResponse, UsageFieldsResponse, UsageFieldsOptions, BalancesResponse, Balance
+from .management import Project, ProjectsResponse, Message, ProjectOptions, KeysResponse, Key, KeyOptions, CreateKeyResponse, MembersResponse, ScopesResponse, ScopeOptions, InvitesResponse, InviteOptions, UsageRequestsResponse, UsageRequestOptions, UsageRequest, UsageSummaryOptions, UsageSummaryResponse, UsageFieldsResponse, UsageFieldsOptions, BalancesResponse, Balance
 
+from ..abstract_restful_client import AbstractRestfulClient
 
 class ManageClient(AbstractRestfulClient):
     """

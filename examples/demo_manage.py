@@ -21,7 +21,6 @@ CREATE_KEY_OPTIONS = {
 # Create a Deepgram client using the API key
 deepgram: DeepgramClient = DeepgramClient(API_KEY)
 
-
 async def main():
     response = await deepgram.manage.get_projects()
     # response = await deepgram.manage.get_project(PROJECT_ID)
