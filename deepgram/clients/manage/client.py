@@ -1,3 +1,7 @@
+# Copyright 2023 Deepgram SDK contributors. All Rights Reserved.
+# Use of this source code is governed by a MIT license that can be found in the LICENSE file.
+# SPDX-License-Identifier: MIT
+
 from .response import Project, ProjectsResponse, Message, ProjectOptions, KeysResponse, Key, KeyOptions, CreateKeyResponse, MembersResponse, ScopesResponse, ScopeOptions, InvitesResponse, InviteOptions, UsageRequestsResponse, UsageRequestOptions, UsageRequest, UsageSummaryOptions, UsageSummaryResponse, UsageFieldsResponse, UsageFieldsOptions, BalancesResponse, Balance
 
 from ..abstract_client import AbstractRestfulClient
