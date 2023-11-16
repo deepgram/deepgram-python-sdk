@@ -6,7 +6,7 @@ from typing import List, Optional, TypedDict, Dict
 
 # Async Prerecorded Response Types:
 
-class AsyncPrerecordedResponse(TypedDict):
+class AsyncPrerecordedResponseV1(TypedDict):
     request_id: str
 
 # Sync Prerecorded Response Types:
@@ -27,12 +27,12 @@ class ModelInfo(TypedDict):
     version: str
     arch: str
 
-class Summary(TypedDict):
+class SummaryV2(TypedDict):
     summary: Optional[str]
     start_word: Optional[float]
     end_word: Optional[float]
 
-class TranscriptionSummary(TypedDict):
+class SummaryV1(TypedDict):
     result: str
     short: str
 
@@ -42,7 +42,7 @@ class Hit(TypedDict):
     end: float
     snippet: str
 
-class WordBase(TypedDict):
+class Word(TypedDict):
     word: str
     start: float
     end: float
@@ -61,8 +61,9 @@ class Paragraph(TypedDict):
     start: float
     end: float
     num_words: float
+    speaker: Optional[int]
 
-class ParagraphGroup(TypedDict):
+class Paragraphs(TypedDict):
     transcript: str
     paragraphs: List[Paragraph]
 
@@ -70,7 +71,7 @@ class Topic(TypedDict):
     topic: str
     confidence: float
 
-class TopicGroup(TypedDict):
+class Topics(TypedDict):
     topics: List[Topic]
     text: str
     start_word: float
@@ -95,7 +96,7 @@ class Utterance(TypedDict):
     confidence: float
     channel: int
     transcript: str
-    words: List[WordBase]
+    words: List[Word]
     speaker: Optional[int]
     id: str
 
@@ -109,12 +110,12 @@ class Entity(TypedDict):
 class Alternative(TypedDict):
     transcript: str
     confidence: float
-    words: List[WordBase]
-    summaries: Optional[List[Summary]]
-    paragraphs: Optional[ParagraphGroup]
+    words: List[Word]
+    summaries: Optional[List[SummaryV2]]
+    paragraphs: Optional[Paragraphs]
     entities: Optional[List[Entity]]
     translations: Optional[List[Translation]]
-    topics: Optional[List[TopicGroup]]
+    topics: Optional[List[Topics]]
 
 class Channel(TypedDict):
     search: Optional[List[Search]]
@@ -124,8 +125,8 @@ class Channel(TypedDict):
 class Result(TypedDict):
     channels: List[Channel]
     utterances: Optional[List[Utterance]]
-    summary: Optional[TranscriptionSummary]
+    summary: Optional[SummaryV1]
 
-class SyncPrerecordedResponse(TypedDict):
+class SyncPrerecordedResponseV1(TypedDict):
     metadata: Metadata
     results: Result
