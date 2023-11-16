@@ -1,7 +1,9 @@
-from deepgram import DeepgramClient, PrerecordedOptions
 import asyncio
 import os
 from dotenv import load_dotenv
+
+from deepgram import DeepgramClient, PrerecordedOptions
+
 load_dotenv()
 
 API_KEY = os.getenv('DG_API_KEY')

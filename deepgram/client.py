@@ -2,12 +2,12 @@ import re
 from urllib.parse import urlparse, urlunparse, parse_qs, urlencode
 from typing import Optional
 
-from .deepgram_client_options import DeepgramClientOptions
+from .options import DeepgramClientOptions
 from .errors import DeepgramError
 
 from .clients.listen import ListenClient
-from .clients.manage.manage_client import ManageClient
-from .clients.onprem.onprem_client import OnPremClient
+from .clients.manage.client import ManageClient
+from .clients.onprem.client import OnPremClient
 
 class DeepgramClient:
     """

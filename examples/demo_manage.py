@@ -1,7 +1,9 @@
 import asyncio
 import os
-from deepgram import DeepgramClient
 from dotenv import load_dotenv
+
+from deepgram import DeepgramClient
+
 load_dotenv()
 
 API_KEY = os.getenv('DG_API_KEY_MANAGE')

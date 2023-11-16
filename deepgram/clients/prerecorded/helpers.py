@@ -1,4 +1,4 @@
-from .prerecorded_source import PrerecordedSource
+from .source import PrerecordedSource
 
 def is_buffer_source(provided_source: PrerecordedSource) -> bool:
     return "buffer" in provided_source
