@@ -21,7 +21,6 @@ class DeepgramClientOptions:
         self.global_options = {
             "headers": {
                 "Accept": "application/json",
-                "Content-Type": "application/json",
                 "Authorization": f"Token {self.api_key}"
             },
             "url": "api.deepgram.com"

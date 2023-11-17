@@ -6,13 +6,12 @@ from .prerecorded.client import PreRecordedClient # FUTURE VERSIONINING:, PreRec
 from .live.client import LiveClient # FUTURE VERSIONINING:, LiveClientV1
 from typing import Dict, Any, Optional
 
-
 class ListenClient:
     def __init__(self, url: str, api_key: str, headers: Optional[Dict[str, Any]]):
         self.url = url
         self.api_key = api_key
         self.headers = headers
-
+        
     @property
     def prerecorded(self):
         return PreRecordedClient(self.url, self.headers)

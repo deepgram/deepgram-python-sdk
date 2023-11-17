@@ -13,7 +13,7 @@ class DeepgramError(Exception):
         super().__init__(message)
         self.name = "DeepgramError"
 
-class DeepgramApiError(DeepgramError):
+class DeepgramApiError(Exception):
     """
     Exception raised for known errors (in json response format) related to the Deepgram API.
 
@@ -29,9 +29,9 @@ class DeepgramApiError(DeepgramError):
         self.original_error = original_error
         
     def __str__(self):
-        return f"{self.name}: {self.message} (Status: {self.status}) \n Error: {self.original_error}"
+        return f"{self.name}: {self.message} (Status: {self.status})"
 
-class DeepgramUnknownApiError(DeepgramApiError):
+class DeepgramUnknownApiError(Exception):
     """
     Exception raised for unknown errors related to the Deepgram API.
 
@@ -44,16 +44,8 @@ class DeepgramUnknownApiError(DeepgramApiError):
     def __init__(self, message: str, status: str):
         super().__init__(message, status)
         self.name = "DeepgramUnknownApiError"
+        self.status = status
+        self.message = message
 
-class DeepgramUnknownError(DeepgramError):
-    """
-    Exception raised for unknown errors not specific to the Deepgram API.
-
-    Attributes:
-        message (str): The error message describing the exception.
-        original_error (Exception): The original error that triggered this exception.
-    """
-    def __init__(self, message: str, original_error):
-        super().__init__(message)
-        self.name = "DeepgramUnknownError"
-        self.original_error = original_error
+    def __str__(self):
+        return f"{self.name}: {self.message} (Status: {self.status})"

@@ -17,12 +17,15 @@ API_KEY = os.getenv('DG_API_KEY_MANAGE')
 deepgram: DeepgramClient = DeepgramClient(API_KEY)
 
 async def main():
-  response = await deepgram.manage.get_projects()
-  print(response)
+    try:
+        response = await deepgram.manage.get_projects()
+        print(response)
 
-# FUTURE VERSIONINING:
-#   response = await deepgram.manage_v1.get_projects()
-#   print(response)
+        # FUTURE VERSIONINING:
+        #   response = await deepgram.manage_v1.get_projects()
+        #   print(response)
+    except Exception as e:
+        print(f"Exception: {e}")
 
 if __name__ == "__main__":
     asyncio.run(main())

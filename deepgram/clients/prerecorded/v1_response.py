@@ -12,105 +12,110 @@ class AsyncPrerecordedResponseV1(TypedDict):
 # Sync Prerecorded Response Types:
 
 class Metadata(TypedDict):
-    transaction_key: str
-    request_id: str
-    sha256: str
-    created: str
-    duration: float
-    channels: int
-    models: List[str]
-    model_info: Dict[str, 'ModelInfo']
+    transaction_key: Optional[str]
+    request_id: Optional[str]
+    sha256: Optional[str]
+    created: Optional[str]
+    duration: Optional[float]
+    channels: Optional[int]
+    models: Optional[List[str]]
+    model_info: Optional[Dict[str, 'ModelInfo']]
+    summary_info: Optional[Dict[str, 'SummaryV2']]
     warnings: Optional[List['Warning']]
 
 class ModelInfo(TypedDict):
-    name: str
-    version: str
-    arch: str
+    name: Optional[str]
+    version: Optional[str]
+    arch: Optional[str]
 
 class SummaryV2(TypedDict):
     summary: Optional[str]
     start_word: Optional[float]
     end_word: Optional[float]
+class Summaries(SummaryV2): # internal reference to old name
+    pass
 
 class SummaryV1(TypedDict):
-    result: str
-    short: str
+    result: Optional[str]
+    short: Optional[str]
+class Summary(SummaryV1): # internal reference to old name
+    pass
 
 class Hit(TypedDict):
-    confidence: float
-    start: float
-    end: float
-    snippet: str
+    confidence: Optional[float]
+    start: Optional[float]
+    end: Optional[float]
+    snippet: Optional[str]
 
 class Word(TypedDict):
-    word: str
-    start: float
-    end: float
-    confidence: float
+    word: Optional[str]
+    start: Optional[float]
+    end: Optional[float]
+    confidence: Optional[float]
     punctuated_word: Optional[str]
     speaker: Optional[int]
     speaker_confidence: Optional[float]
 
 class Sentence(TypedDict):
-    text: str
-    start: float
-    end: float
+    text: Optional[str]
+    start: Optional[float]
+    end: Optional[float]
 
 class Paragraph(TypedDict):
-    sentences: List[Sentence]
-    start: float
-    end: float
-    num_words: float
+    sentences: Optional[List[Sentence]]
+    start: Optional[float]
+    end: Optional[float]
+    num_words: Optional[float]
     speaker: Optional[int]
 
 class Paragraphs(TypedDict):
-    transcript: str
-    paragraphs: List[Paragraph]
+    transcript: Optional[str]
+    paragraphs: Optional[List[Paragraph]]
 
 class Topic(TypedDict):
-    topic: str
-    confidence: float
+    topic: Optional[str]
+    confidence: Optional[float]
 
 class Topics(TypedDict):
-    topics: List[Topic]
-    text: str
-    start_word: float
-    end_word: float
+    topics: Optional[List[Topic]]
+    text: Optional[str]
+    start_word: Optional[float]
+    end_word: Optional[float]
 
 class Translation(TypedDict):
-    language: str
-    translation: str
+    language: Optional[str]
+    translation: Optional[str]
 
 class Warning(TypedDict):
-    parameter: str
-    type: str
-    message: str
+    parameter: Optional[str]
+    type: Optional[str]
+    message: Optional[str]
 
 class Search(TypedDict):
-    query: str
-    hits: List[Hit]
+    query: Optional[str]
+    hits: Optional[List[Hit]]
 
 class Utterance(TypedDict):
-    start: float
-    end: float
-    confidence: float
-    channel: int
-    transcript: str
-    words: List[Word]
+    start: Optional[float]
+    end: Optional[float]
+    confidence: Optional[float]
+    channel: Optional[int]
+    transcript: Optional[str]
+    words: Optional[List[Word]]
     speaker: Optional[int]
-    id: str
+    id: Optional[str]
 
 class Entity(TypedDict):
-    label: str
-    value: str
-    confidence: float
-    start_word: float
-    end_word: float
+    label: Optional[str]
+    value: Optional[str]
+    confidence: Optional[float]
+    start_word: Optional[float]
+    end_word: Optional[float]
 
 class Alternative(TypedDict):
-    transcript: str
-    confidence: float
-    words: List[Word]
+    transcript: Optional[str]
+    confidence: Optional[float]
+    words: Optional[List[Word]]
     summaries: Optional[List[SummaryV2]]
     paragraphs: Optional[Paragraphs]
     entities: Optional[List[Entity]]
@@ -119,14 +124,14 @@ class Alternative(TypedDict):
 
 class Channel(TypedDict):
     search: Optional[List[Search]]
-    alternatives: List[Alternative]
+    alternatives: Optional[List[Alternative]]
     detected_language: Optional[str]
 
 class Result(TypedDict):
-    channels: List[Channel]
+    channels: Optional[List[Channel]]
     utterances: Optional[List[Utterance]]
     summary: Optional[SummaryV1]
 
 class SyncPrerecordedResponseV1(TypedDict):
-    metadata: Metadata
-    results: Result
+    metadata: Optional[Metadata]
+    results: Optional[Result]

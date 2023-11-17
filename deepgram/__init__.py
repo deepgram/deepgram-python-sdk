@@ -8,14 +8,14 @@ __version__ = '0.0.0'
 # entry point for the deepgram python sdk
 from .client import DeepgramClient
 from .options import DeepgramClientOptions
-from .errors import DeepgramError, DeepgramApiError, DeepgramUnknownApiError, DeepgramUnknownError
+from .errors import DeepgramError, DeepgramApiError, DeepgramUnknownApiError
 
 # live
 from .clients.live.enums import LiveTranscriptionEvents
 from .clients.live.client import LiveClient, LiveOptions
 
 # prerecorded
-from .clients.prerecorded.client import PreRecordedClient, PrerecordedOptions
+from .clients.prerecorded.client import PreRecordedClient, PrerecordedOptions, PrerecordedSource, FileSource, UrlSource
 
 # manage
 from .clients.manage.client import ManageClient, ProjectOptions, KeyOptions, ScopeOptions, InviteOptions, UsageRequestOptions, UsageSummaryOptions, UsageFieldsOptions
