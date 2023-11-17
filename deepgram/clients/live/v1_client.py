@@ -2,14 +2,19 @@
 # Use of this source code is governed by a MIT license that can be found in the LICENSE file.
 # SPDX-License-Identifier: MIT
 
+from ...options import DeepgramClientOptions
+from .v1_options import LiveOptionsV1
 from .enums import LiveTranscriptionEvents
+from .v1_response import LiveResultResponse, MetadataResponse, ErrorResponse
 from .helpers import convert_to_websocket_url, append_query_params
+from .errors import DeepgramError, DeepgramWebsocketError
 
-from deepgram.errors import DeepgramApiError
-
-import asyncio
 import json
-import websockets
+from websockets.sync.client import connect
+import threading
+import time
+
+PING_INTERVAL = 5
 
 class LiveClientV1:
   """
@@ -18,9 +23,7 @@ class LiveClientV1:
     This class provides methods to establish a WebSocket connection for live transcription and handle real-time transcription events.
 
     Args:
-        base_url (str): The base URL for WebSocket connection.
-        api_key (str): The Deepgram API key used for authentication.
-        headers (dict): Additional HTTP headers for WebSocket connection.
+        config (DeepgramClientOptions): all the options for the client.
 
     Attributes:
         endpoint (str): The API endpoint for live transcription.
@@ -34,72 +37,162 @@ class LiveClientV1:
         send: Sends data over the WebSocket connection.
         finish: Closes the WebSocket connection gracefully.
     """
-  def __init__(self, base_url, api_key, headers):
-    self.base_url = base_url
-    self.api_key = api_key
-    self.headers = headers
+  def __init__(self, config: DeepgramClientOptions):
+    if config is None:
+      raise DeepgramError("Config are required")
+
+    self.config = config
     self.endpoint = "v1/listen"
     self._socket = None
+    self.exit = False
     self._event_handlers = { event: [] for event in LiveTranscriptionEvents }
-    self.websocket_url = convert_to_websocket_url(base_url, self.endpoint)
-  
-  async def __call__(self, options=None):
-      url_with_params = append_query_params(self.websocket_url, options)
-      try:
-          self._socket = await _socket_connect(url_with_params, self.headers)
-          asyncio.create_task(self._start())
-          return self
-      except websockets.ConnectionClosed as e:
-          await self._emit(LiveTranscriptionEvents.Close, e.code)
-  
-  
+    self.websocket_url = convert_to_websocket_url(self.config.url, self.endpoint)
+
+  def __call__(self, options: LiveOptionsV1 = None):
+    self.options = options
+    return self
+
+  def start(self):
+    if self._socket is not None:
+      raise DeepgramWebsocketError("Websocket already started")
+
+    url_with_params = append_query_params(self.websocket_url, self.options)
+    self._socket = connect(url_with_params, additional_headers=self.config.headers)
+      
+    self.exit = False
+    self.lock_exit = threading.Lock()
+    self.lock_send = threading.Lock()
+
+    # listening thread
+    self.listening = threading.Thread(target=self._listening)
+    self.listening.start()
+
+    # keepalive thread
+    self.processing = None
+    if self.config.options.get("keepalive") == "true":
+      self.processing = threading.Thread(target=self._processing)
+      self.processing.start()
+
   def on(self, event, handler): # registers event handlers for specific events
       if event in LiveTranscriptionEvents and callable(handler):
           self._event_handlers[event].append(handler)
 
-  async def _emit(self, event, *args, **kwargs): # triggers the registered event handlers for a specific event
+  def _emit(self, event, *args, **kwargs): # triggers the registered event handlers for a specific event
       for handler in self._event_handlers[event]:
           handler(*args, **kwargs)
 
-  async def _start(self) -> None:
-      async for message in self._socket:
+  def _listening(self) -> None:
+      while True:
         try:
+            self.lock_exit.acquire()
+            myExit = self.exit
+            self.lock_exit.release()
+            if myExit:
+                return
+            
+            message = self._socket.recv()
+            if len(message) == 0:
+            #    print("empty message")
+               continue
+            
             data = json.loads(message)
             response_type = data.get("type")
-            if response_type == LiveTranscriptionEvents.Transcript.value:
-                await self._emit(LiveTranscriptionEvents.Transcript, data)
-            if "metadata" in data:
-                await self._emit(LiveTranscriptionEvents.Metadata, data["metadata"])
-        except json.JSONDecodeError as e:
-            await self._emit(LiveTranscriptionEvents.Error, e.code)
-  
-  async def send(self, data):
-      if self._socket:
-          await self._socket.send(data)
+            # print(f"response_type: {response_type}")
 
-  async def finish(self):
-      if self._socket:
-          await self._socket.send(json.dumps({"type": "CloseStream"}))
-          # await self._socket.send("")  # Send a zero-byte message
-          await self._socket.wait_closed()
+            match response_type:
+                case LiveTranscriptionEvents.Transcript.value:
+                    result = LiveResultResponse.from_json(message)
+                    self._emit(LiveTranscriptionEvents.Transcript, result=result)
+                case LiveTranscriptionEvents.Metadata.value:
+                    result = MetadataResponse.from_json(message)
+                    self._emit(LiveTranscriptionEvents.Metadata, metadata=result)
+                case LiveTranscriptionEvents.Error.value:
+                    result = ErrorResponse.from_json(message)
+                    self._emit(LiveTranscriptionEvents.Error, error=result)
+                case _:
+                    error: ErrorResponse = {
+                        'type': 'UnhandledMessage',
+                        'description': 'Unknown message type',
+                        'message':  f'Unhandle message type: {response_type}',
+                        'variant':  '',
+                    }
+                    self._emit(LiveTranscriptionEvents.Error, error)
 
-async def _socket_connect(websocket_url, headers):
-    destination = websocket_url
-    updated_headers = headers
+        except Exception as e:
+            # print(f"Exception in _listening: {e}")
+            if e.code == 1000:
+                # print("Websocket closed")
+                return
+            
+            error: ErrorResponse = {
+                'type': 'Exception',
+                'description': 'Unknown error _listening',
+                'message':  f'{e}',
+                'variant':  '',
+            }
+            self._emit(LiveTranscriptionEvents.Error, error)
 
-    async def attempt():
+  def _processing(self) -> None:
+    # print("Starting KeepAlive")
+    while True:
         try:
-            return await websockets.connect(
-                destination, extra_headers=updated_headers, ping_interval=5
-            )
-        except websockets.exceptions.InvalidHandshake as exc:
-            raise DeepgramApiError(exc, http_library_error=exc) from exc
+            time.sleep(PING_INTERVAL)
 
-    # tries = 4
-    # while tries > 0:
-    #     try:
-    #         return await attempt()
-    #     except Exception as exc:
-    #         tries -= 1
-    #         continue
-    return await attempt()
+            self.lock_exit.acquire()
+            myExit = self.exit
+            self.lock_exit.release()
+            if myExit:
+                return
+
+            # deepgram keepalive
+            # print("Sending KeepAlive")
+            self.send(json.dumps({"type": "KeepAlive"}))
+
+        except Exception as e:
+            # print(f"Exception in _processing: {e}")
+            if e.code == 1000:
+                # print("Websocket closed")
+                return
+
+            error: ErrorResponse = {
+                'type': 'Exception',
+                'description': 'Unknown error in _processing',
+                'message':  f'{e}',
+                'variant':  '',
+            }
+            self._emit(LiveTranscriptionEvents.Error, error)
+  
+  def send(self, data) -> int:
+    if self._socket:
+      self.lock_send.acquire()
+      ret = self._socket.send(data)
+      self.lock_send.release()
+      return ret
+    return 0
+
+  def finish(self):
+    #   print("Send CloseStream")
+    if self._socket:
+      self._socket.send(json.dumps({"type": "CloseStream"}))
+      time.sleep(1)
+
+    #   print("Closing connection...")
+    self.lock_exit.acquire()
+    self.exit = True
+    self.lock_exit.release()
+
+    #   print("Waiting for threads to finish...")
+    if self.processing is not None:
+      self.processing.join()
+      self.processing = None
+
+    #   print("Waiting for threads to finish...")
+    if self.listening is not None:
+      self.listening.join()
+      self.listening = None
+
+    if self._socket:
+      self._socket.close()
+
+    self._socket = None
+    self.lock_exit = None

@@ -6,7 +6,8 @@ import httpx
 import json
 from typing import Dict, Any, Optional
 
-from ..errors import DeepgramApiError, DeepgramUnknownApiError
+from ..options import DeepgramClientOptions
+from .errors import DeepgramError, DeepgramApiError, DeepgramUnknownApiError
 
 class AbstractRestfulClient:
     """
@@ -28,30 +29,27 @@ class AbstractRestfulClient:
         DeepgramApiError: Raised for known API errors.
         DeepgramUnknownApiError: Raised for unknown API errors.
     """
-    def __init__(self, url: Dict[str, str], headers: Optional[Dict[str, Any]]):
-        self.url = url
+    def __init__(self, config: DeepgramClientOptions):
+        if config is None:
+            raise DeepgramError("Config are required")
+
+        self.config = config
         self.client = httpx.AsyncClient()
-        self.headers = headers
 
     async def get(self, url: str, options=None):
-        headers = self.headers
-        return await self._handle_request('GET', url, params=options, headers=headers)
+        return await self._handle_request('GET', url, params=options, headers=self.config.headers)
 
     async def post(self, url: str, options=None, **kwargs):
-        headers = self.headers
-        return await self._handle_request('POST', url, params=options, headers=headers, **kwargs)
+        return await self._handle_request('POST', url, params=options, headers=self.config.headers, **kwargs)
 
     async def put(self, url: str, options=None, **kwargs):
-        headers = self.headers
-        return await self._handle_request('PUT', url, params=options, headers=headers, **kwargs)
+        return await self._handle_request('PUT', url, params=options, headers=self.config.headers, **kwargs)
 
     async def patch(self, url: str, options=None, **kwargs):
-        headers = self.headers
-        return await self._handle_request('PATCH', url, params=options, headers=headers, **kwargs)
+        return await self._handle_request('PATCH', url, params=options, headers=self.config.headers, **kwargs)
 
     async def delete(self, url: str):
-        headers = self.headers
-        return await self._handle_request('DELETE', url, headers=headers)
+        return await self._handle_request('DELETE', url, headers=self.config.headers)
 
     async def _handle_request(self, method, url, **kwargs):
         try:

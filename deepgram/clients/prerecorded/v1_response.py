@@ -132,6 +132,6 @@ class Result(TypedDict):
     utterances: Optional[List[Utterance]]
     summary: Optional[SummaryV1]
 
-class SyncPrerecordedResponseV1(TypedDict):
+class PrerecordedResponseV1(TypedDict):
     metadata: Optional[Metadata]
     results: Optional[Result]

@@ -4,7 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "deepgram-sdk"
-dynamic = ["version"]
+dynamic = ["version", "readme", "license", "description", "authors", "keywords", "classifiers", "dependencies"]
 
 [tool.setuptools.dynamic]
 version = {attr = "deepgram.__version__"}
+readme = {file = "README.md"}
