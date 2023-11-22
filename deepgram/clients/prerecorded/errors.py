@@ -2,13 +2,18 @@
 # Use of this source code is governed by a MIT license that can be found in the LICENSE file.
 # SPDX-License-Identifier: MIT
 
-class DeepgramApiKeyError(Exception):
+class DeepgramTypeError(Exception):
     """
-    Base class for exceptions raised for a missing Deepgram API Key.
+    Exception raised for unknown errors related to unknown Types for Transcription.
 
     Attributes:
         message (str): The error message describing the exception.
+        status (str): The HTTP status associated with the API error.
     """
     def __init__(self, message: str):
         super().__init__(message)
-        self.name = "DeepgramApiKeyError"
+        self.name = "DeepgramTypeError"
+        self.message = message
+
+    def __str__(self):
+        return f"{self.name}: {self.message}"

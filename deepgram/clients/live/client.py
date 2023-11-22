@@ -3,6 +3,7 @@
 # SPDX-License-Identifier: MIT
 
 from .v1_client import LiveClientV1
+from .v1_legacy_client import LegacyLiveClientV1
 from .v1_options import LiveOptionsV1
 
 '''
@@ -16,6 +17,13 @@ class LiveClient(LiveClientV1):
   """
     Please see LiveClientV1 for details
     """
-  def __init__(self, base_url, api_key, headers):
-      super().__init__(base_url, api_key, headers)
+  def __init__(self, config):
+      super().__init__(config)
+
+class LegacyLiveClient(LegacyLiveClientV1):
+  """
+    Please see LiveClientV1 for details
+    """
+  def __init__(self, config):
+      super().__init__(config)
   

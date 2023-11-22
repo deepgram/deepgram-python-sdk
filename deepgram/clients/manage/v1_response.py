@@ -39,7 +39,6 @@ class ProjectsResponse:
         _dict = self.to_dict()
         if _dict["projects"] is not None:
             _dict["projects"] = [Project.from_dict(project) for project in _dict["projects"]]
-        _dict["projects"] = [Project.from_dict(project) for project in _dict["projects"]]
         return _dict[key]
 
 class ProjectOptionsV1(TypedDict, total=False):

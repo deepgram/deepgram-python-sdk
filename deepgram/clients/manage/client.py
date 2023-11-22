@@ -34,5 +34,5 @@ class ManageClient(ManageClientV1):
     """
     Please see ManageClientV1 for details
     """
-    def __init__(self, url, headers):
-      super().__init__(url, headers)
+    def __init__(self, config):
+      super().__init__(config)

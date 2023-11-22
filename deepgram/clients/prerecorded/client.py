@@ -19,7 +19,6 @@ class PreRecordedClient(PreRecordedClientV1):
     """
     Please see PreRecordedClientV1 for details
     """
-    def __init__(self, url, headers):
-        self.url = url
-        self.headers = headers
-        super().__init__(url, headers)
+    def __init__(self, config):
+        self.config = config
+        super().__init__(config)

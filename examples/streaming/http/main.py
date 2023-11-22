@@ -28,7 +28,7 @@ async def main():
 
   # Create a websocket connection to Deepgram
   try:
-    dg_connection = await deepgram.listen.live(options)
+    dg_connection = await deepgram.listen.legacylive(options)
   except Exception as e:
     print(f'Could not open socket: {e}')
     return
@@ -41,7 +41,6 @@ async def main():
 
   # Listen for the connection to close
   dg_connection.on(LiveTranscriptionEvents.Close, lambda c: print(f'Connection closed with code {c}.'))
-
 
   # Send streaming audio from the URL to Deepgram
   async with aiohttp.ClientSession() as session:

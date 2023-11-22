@@ -11,8 +11,7 @@ class OnPremClientV1(AbstractRestfulClient):
     This class provides methods to manage and interact with on-premises projects and distribution credentials.
 
     Args:
-        url (str): The base URL for API requests.
-        headers (dict): Additional HTTP headers for API requests.
+        config (DeepgramClientOptions): all the options for the client.
 
     Attributes:
         endpoint (str): The API endpoint for on-premises projects.
@@ -24,26 +23,25 @@ class OnPremClientV1(AbstractRestfulClient):
         delete_onprem_credentials: Deletes an on-premises distribution credential for a project.
 
     """
-  def __init__(self, url, headers):
-    self.url = url
-    self.headers = headers
+  def __init__(self, config):
+    self.config = config
     self.endpoint = "v1/projects"
-    super().__init__(url, headers)
+    super().__init__(config)
   
   async def list_onprem_credentials(self, project_id: str):
-    url = f"{self.url}/{self.endpoint}/{project_id}/onprem/distribution/credentials"
+    url = f"{self.config.url}/{self.endpoint}/{project_id}/onprem/distribution/credentials"
     return await self.get(url)
   
   async def get_onprem_credentials(self, project_id: str, distribution_credentials_id: str):
-    url = f"{self.url}/{self.endpoint}/{project_id}/onprem/distribution/credentials/{distribution_credentials_id}"
+    url = f"{self.config.url}/{self.endpoint}/{project_id}/onprem/distribution/credentials/{distribution_credentials_id}"
     return await self.get(url)
   
   async def create_onprem_credentials(self, project_id: str, options):
-    url = f"{self.url}/{self.endpoint}/{project_id}/onprem/distribution/credentials/"
+    url = f"{self.config.url}/{self.endpoint}/{project_id}/onprem/distribution/credentials/"
     return await self.post(url,json=options)
   
   async def delete_onprem_credentials(self, project_id: str, distribution_credentials_id: str):
-    url = f"{self.url}/{self.endpoint}/{project_id}/onprem/distribution/credentials/{distribution_credentials_id}"
+    url = f"{self.config.url}/{self.endpoint}/{project_id}/onprem/distribution/credentials/{distribution_credentials_id}"
     return await self.delete(url)
   
 

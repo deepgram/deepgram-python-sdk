@@ -12,5 +12,5 @@ class OnPremClient(OnPremClientV1):
   """
     Please see OnPremClientV1 for details
     """
-  def __init__(self, url, headers):
-    super().__init__(url, headers)
+  def __init__(self, config):
+    super().__init__(config)
