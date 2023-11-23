@@ -1,22 +1,22 @@
 # Copyright 2023 Deepgram SDK contributors. All Rights Reserved.
 # Use of this source code is governed by a MIT license that can be found in the LICENSE file.
 # SPDX-License-Identifier: MIT
-
-from ...options import DeepgramClientOptions
-from .v1_options import LiveOptionsV1
-from .enums import LiveTranscriptionEvents
-from .v1_response import LiveResultResponse, MetadataResponse, ErrorResponse
-from .helpers import convert_to_websocket_url, append_query_params
-from .errors import DeepgramError, DeepgramWebsocketError
-
 import json
 from websockets.sync.client import connect
 import threading
 import time
 
+from ....options import DeepgramClientOptions
+from ..enums import LiveTranscriptionEvents
+from ..helpers import convert_to_websocket_url, append_query_params
+from ..errors import DeepgramError, DeepgramWebsocketError
+
+from .response import LiveResultResponse, MetadataResponse, ErrorResponse
+from .options import LiveOptions
+
 PING_INTERVAL = 5
 
-class LiveClientV1:
+class LiveClient:
   """
    Client for interacting with Deepgram's live transcription services over WebSockets.
 
@@ -48,7 +48,7 @@ class LiveClientV1:
     self._event_handlers = { event: [] for event in LiveTranscriptionEvents }
     self.websocket_url = convert_to_websocket_url(self.config.url, self.endpoint)
 
-  def __call__(self, options: LiveOptionsV1 = None):
+  def __call__(self, options: LiveOptions = None):
     self.options = options
     return self
 

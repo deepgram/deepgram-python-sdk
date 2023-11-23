@@ -1,18 +1,18 @@
 # Copyright 2023 Deepgram SDK contributors. All Rights Reserved.
 # Use of this source code is governed by a MIT license that can be found in the LICENSE file.
 # SPDX-License-Identifier: MIT
-
-from ...options import DeepgramClientOptions
-from .v1_options import LiveOptionsV1
-from .enums import LiveTranscriptionEvents
-from .helpers import convert_to_websocket_url, append_query_params
-from .errors import DeepgramError
-
 import asyncio
 import json
 import websockets
 
-class LegacyLiveClientV1:
+from ....options import DeepgramClientOptions
+from ..enums import LiveTranscriptionEvents
+from ..helpers import convert_to_websocket_url, append_query_params
+from ..errors import DeepgramError
+
+from .options import LiveOptions
+
+class LegacyLiveClient:
   """
    Client for interacting with Deepgram's live transcription services over WebSockets.
 
@@ -43,7 +43,7 @@ class LegacyLiveClientV1:
     self._event_handlers = { event: [] for event in LiveTranscriptionEvents }
     self.websocket_url = convert_to_websocket_url(self.config.url, self.endpoint)
   
-  async def __call__(self, options: LiveOptionsV1 = None):
+  async def __call__(self, options: LiveOptions = None):
       self.options = options
       url_with_params = append_query_params(self.websocket_url, self.options)
       try:

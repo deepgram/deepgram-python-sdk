@@ -5,7 +5,6 @@
 from ..options import DeepgramClientOptions
 from .prerecorded.client import PreRecordedClient # FUTURE VERSIONINING:, PreRecordedClientV1
 from .live.client import LiveClient, LegacyLiveClient # FUTURE VERSIONINING:, LiveClientV1
-from typing import Dict, Any, Optional
 
 class ListenClient:
     def __init__(self, config: DeepgramClientOptions):
@@ -32,3 +31,36 @@ class ListenClient:
     # @property
     # def live_v1(self):
     #     return LiveClientV1(self.config)
+
+    # INTERNAL CLASSES
+    class Version:
+        def __init__(self, parent : str, version: int = 0):
+            self.parent = parent
+            self.version = version
+
+        @property
+        def latest(self):
+            match self.parent:
+                case "live":
+                    return LiveClient(self.config)
+                case "legacylive":
+                    return LegacyLiveClient(self.config)
+                case _:
+                    raise Exception("Invalid parent") 
+        
+        @property
+        def v(self):
+            if self.version == 0:
+                raise Exception("Invalid version")
+            
+            className = ""
+            match self.parent:
+                case "manage":
+                    className = "ManageClient"
+                case "onprem":
+                    className = "OnPremClient"
+                case _:
+                    raise Exception("Invalid parent")
+                
+            myClass = __import__(f".{self.parent}.v{self.version}.client.{className}")
+            return myClass

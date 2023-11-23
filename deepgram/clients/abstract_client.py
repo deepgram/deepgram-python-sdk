@@ -4,7 +4,6 @@
 
 import httpx
 import json
-from typing import Dict, Any, Optional
 
 from ..options import DeepgramClientOptions
 from .errors import DeepgramError, DeepgramApiError, DeepgramUnknownApiError

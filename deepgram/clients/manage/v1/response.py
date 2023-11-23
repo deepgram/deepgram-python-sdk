@@ -5,7 +5,7 @@
 from dataclasses import dataclass
 from dataclasses_json import dataclass_json
 from datetime import datetime
-from typing import TypedDict, List, Optional, Dict
+from typing import TypedDict, List, Optional
 
 # Result Message
 
@@ -41,7 +41,7 @@ class ProjectsResponse:
             _dict["projects"] = [Project.from_dict(project) for project in _dict["projects"]]
         return _dict[key]
 
-class ProjectOptionsV1(TypedDict, total=False):
+class ProjectOptions(TypedDict, total=False):
     name: Optional[str]
 
 # Members
@@ -107,7 +107,7 @@ class KeysResponse:
             _dict["api_keys"] = [KeyResponse.from_dict(key) for key in _dict["api_keys"]]
         return _dict[key]
 
-class KeyOptionsV1(TypedDict):
+class KeyOptions(TypedDict):
     comment: Optional[str]
     scopes: Optional[List[str]]
     tags: Optional[List[str]]
@@ -124,7 +124,7 @@ class ScopesResponse:
         _dict = self.to_dict()
         return _dict[key]
 
-class ScopeOptionsV1(TypedDict):
+class ScopeOptions(TypedDict):
     scope: str
 
 # Invites
@@ -150,7 +150,7 @@ class InvitesResponse:
             _dict["invites"] = [Invite.from_dict(invite) for invite in _dict["invites"]]
         return _dict[key]
 
-class InviteOptionsV1:
+class InviteOptions:
     email: Optional[str]
     scope: Optional[str]
     
@@ -244,13 +244,13 @@ class UsageRequestsResponse:
             _dict["requests"] = [UsageRequest.from_dict(request) for request in _dict["requests"]]
         return _dict[key]
 
-class UsageRequestOptionsV1(TypedDict):
+class UsageRequestOptions(TypedDict):
     start: Optional[str]
     end: Optional[str]
     limit: Optional[int]
     status: Optional[str]
 
-class UsageSummaryOptionsV1(TypedDict):
+class UsageSummaryOptions(TypedDict):
     start: Optional[str]
     end: Optional[str]
     accessor: Optional[str]
@@ -339,7 +339,7 @@ class UsageFieldsResponse:
             _dict["models"] = [UsageModel.from_dict(model) for model in _dict["models"]]
         return _dict[key]
 
-class UsageFieldsOptionsV1(TypedDict):
+class UsageFieldsOptions(TypedDict):
     start: Optional[str]
     end: Optional[str]
 

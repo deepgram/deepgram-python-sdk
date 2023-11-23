@@ -6,10 +6,10 @@ from typing import List, Optional, TypedDict, Dict
 
 # Async Prerecorded Response Types:
 
-class AsyncPrerecordedResponseV1(TypedDict):
+class AsyncPrerecordedResponse(TypedDict):
     request_id: str
 
-# Sync Prerecorded Response Types:
+# Prerecorded Response Types:
 
 class Metadata(TypedDict):
     transaction_key: Optional[str]
@@ -35,10 +35,10 @@ class SummaryV2(TypedDict):
 class Summaries(SummaryV2): # internal reference to old name
     pass
 
-class SummaryV1(TypedDict):
+class Summary(TypedDict):
     result: Optional[str]
     short: Optional[str]
-class Summary(SummaryV1): # internal reference to old name
+class Summary(Summary): # internal reference to old name
     pass
 
 class Hit(TypedDict):
@@ -130,8 +130,8 @@ class Channel(TypedDict):
 class Result(TypedDict):
     channels: Optional[List[Channel]]
     utterances: Optional[List[Utterance]]
-    summary: Optional[SummaryV1]
+    summary: Optional[Summary]
 
-class PrerecordedResponseV1(TypedDict):
+class PrerecordedResponse(TypedDict):
     metadata: Optional[Metadata]
     results: Optional[Result]

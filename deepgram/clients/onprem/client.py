@@ -2,7 +2,7 @@
 # Use of this source code is governed by a MIT license that can be found in the LICENSE file.
 # SPDX-License-Identifier: MIT
 
-from .v1_client import OnPremClientV1
+from .v1.client import OnPremClient as OnPremClientV1
 
 '''
 The client.py points to the current supported version in the SDK.
