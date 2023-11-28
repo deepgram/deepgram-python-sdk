@@ -21,7 +21,7 @@ deepgram: DeepgramClient = DeepgramClient(API_KEY)
 async def main():
     try:
         # get projects
-        projectResp = await deepgram.manage.get_projects()
+        projectResp = await deepgram.manage.v("1").get_projects()
         if projectResp is None:
             print(f"ListProjects failed.")
             sys.exit(1)
@@ -35,7 +35,7 @@ async def main():
 
         # list members
         delMemberId = None
-        listResp = await deepgram.manage.get_members(myId)
+        listResp = await deepgram.manage.v("1").get_members(myId)
         if listResp is None:
             print("No members found")
         else:
@@ -53,7 +53,7 @@ async def main():
             print("")
             sys.exit(1)
 
-        deleteResp = await deepgram.manage.remove_member(myId, delMemberId)
+        deleteResp = await deepgram.manage.v("1").remove_member(myId, delMemberId)
         if deleteResp is None:
             print(f"RemoveMember failed.")
             sys.exit(1)
@@ -62,7 +62,7 @@ async def main():
 
         # list members
         delMemberId = None
-        listResp = await deepgram.manage.get_members(myId)
+        listResp = await deepgram.manage.v("1").get_members(myId)
         if listResp is None:
             print("No members found")
         else:

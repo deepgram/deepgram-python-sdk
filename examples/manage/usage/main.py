@@ -20,7 +20,7 @@ deepgram: DeepgramClient = DeepgramClient(API_KEY)
 async def main():
     try:
         # get projects
-        projectResp = await deepgram.manage.get_projects()
+        projectResp = await deepgram.manage.v("1").get_projects()
         if projectResp is None:
             print(f"ListProjects failed.")
             sys.exit(1)
@@ -35,7 +35,7 @@ async def main():
         # list requests
         requestId = None
         options: UsageRequestOptions = {}
-        listResp = await deepgram.manage.get_usage_requests(myId, options)
+        listResp = await deepgram.manage.v("1").get_usage_requests(myId, options)
         if listResp is None:
             print("No requests found")
         else:
@@ -46,7 +46,7 @@ async def main():
         print("")
 
         # get request
-        reqResp = await deepgram.manage.get_usage_request(myId, requestId)
+        reqResp = await deepgram.manage.v("1").get_usage_request(myId, requestId)
         if reqResp is None:
             print("No request found")
         else:
@@ -56,7 +56,7 @@ async def main():
 
         # get fields
         options: UsageFieldsOptions = {}
-        listResp = await deepgram.manage.get_usage_fields(myId, options)
+        listResp = await deepgram.manage.v("1").get_usage_fields(myId, options)
         if listResp is None:
             print(f"UsageFields not found.")
             sys.exit(1)
@@ -69,7 +69,7 @@ async def main():
 
         # list members
         options: UsageSummaryOptions = {}
-        listResp = await deepgram.manage.get_usage_summary(myId, options)
+        listResp = await deepgram.manage.v("1").get_usage_summary(myId, options)
         if listResp is None:
             print("UsageSummary not found")
         else:

@@ -12,3 +12,14 @@ class DeepgramApiKeyError(Exception):
     def __init__(self, message: str):
         super().__init__(message)
         self.name = "DeepgramApiKeyError"
+
+class DeepgramModuleError(Exception):
+    """
+    Base class for exceptions raised for a missing Deepgram module.
+
+    Attributes:
+        message (str): The error message describing the exception.
+    """
+    def __init__(self, message: str):
+        super().__init__(message)
+        self.name = "DeepgramModuleError"

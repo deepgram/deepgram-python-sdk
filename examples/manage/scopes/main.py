@@ -21,7 +21,7 @@ deepgram: DeepgramClient = DeepgramClient(API_KEY)
 async def main():
     try:
         # get projects
-        projectResp = await deepgram.manage.get_projects()
+        projectResp = await deepgram.manage.v("1").get_projects()
         if projectResp is None:
             print(f"ListProjects failed.")
             sys.exit(1)
@@ -36,7 +36,7 @@ async def main():
 
         # list members
         memberId = None
-        listResp = await deepgram.manage.get_members(myId)
+        listResp = await deepgram.manage.v("1").get_members(myId)
         if listResp is None:
             print("No members found")
         else:
@@ -52,7 +52,7 @@ async def main():
             sys.exit(1)
 
         # get member scope
-        memberResp = await deepgram.manage.get_member_scopes(myId, memberId)
+        memberResp = await deepgram.manage.v("1").get_member_scopes(myId, memberId)
         if memberResp is None:
             print("No scopes found")
             sys.exit(1)
@@ -63,11 +63,11 @@ async def main():
             "scope": "admin"
         }
 
-        updateResp = await deepgram.manage.update_member_scope(myId, memberId, options)
+        updateResp = await deepgram.manage.v("1").update_member_scope(myId, memberId, options)
         print(f"UpdateMemberScope() - Msg: {updateResp.message}")
 
         # get member scope
-        memberResp = await deepgram.manage.get_member_scopes(myId, memberId)
+        memberResp = await deepgram.manage.v("1").get_member_scopes(myId, memberId)
         if memberResp is None:
             print("No scopes found")
             sys.exit(1)
@@ -78,11 +78,11 @@ async def main():
             "scope": "member"
         }
 
-        updateResp = await deepgram.manage.update_member_scope(myId, memberId, options)
+        updateResp = await deepgram.manage.v("1").update_member_scope(myId, memberId, options)
         print(f"UpdateMemberScope() - Msg: {updateResp.message}")
 
         # get member scope
-        memberResp = await deepgram.manage.get_member_scopes(myId, memberId)
+        memberResp = await deepgram.manage.v("1").get_member_scopes(myId, memberId)
         if memberResp is None:
             print("No scopes found")
             sys.exit(1)

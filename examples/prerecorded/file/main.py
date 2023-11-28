@@ -32,7 +32,7 @@ async def transcribe_file():
         "buffer": buffer_data,
     }
     
-    file_response = await deepgram.listen.prerecorded.transcribe_file(payload, options)
+    file_response = await deepgram.listen.prerecorded.v("1").transcribe_file(payload, options)
     return file_response
 
 async def main():

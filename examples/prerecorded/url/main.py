@@ -24,7 +24,7 @@ deepgram = DeepgramClient(API_KEY)
 
 # STEP 2 Call the transcribe_url method on the prerecorded class
 async def transcribe_url():
-    url_response = await deepgram.listen.prerecorded.transcribe_url(AUDIO_URL, options)
+    url_response = await deepgram.listen.prerecorded.v("1").transcribe_url(AUDIO_URL, options)
     return url_response
 
 

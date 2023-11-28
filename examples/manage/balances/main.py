@@ -20,7 +20,7 @@ deepgram: DeepgramClient = DeepgramClient(API_KEY)
 async def main():
     try:
         # get projects
-        projectResp = await deepgram.manage.get_projects()
+        projectResp = await deepgram.manage.v("1").get_projects()
         if projectResp is None:
             print(f"ListProjects failed.")
             sys.exit(1)
@@ -34,7 +34,7 @@ async def main():
             break
 
         # list balances
-        listResp = await deepgram.manage.get_balances(myId)
+        listResp = await deepgram.manage.v("1").get_balances(myId)
         if listResp is None:
             print(f"ListBalances failed.")
             sys.exit(1)
@@ -45,7 +45,7 @@ async def main():
             print(f"GetBalance() - Name: {balance.balance_id}, Amount: {balance.amount}")
 
         # get balance
-        getResp = await deepgram.manage.get_balance(myId, myBalanceId)
+        getResp = await deepgram.manage.v("1").get_balance(myId, myBalanceId)
         print(f"GetBalance() - Name: {getResp.balance_id}, Amount: {getResp.amount}")
     except Exception as e:
         print(f"Exception: {e}")

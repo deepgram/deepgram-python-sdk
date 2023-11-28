@@ -48,8 +48,8 @@ def main():
 
     try:
         # Create a websocket connection to Deepgram
-        dg_connection = deepgram.listen.live(options)
-        dg_connection.start()
+        dg_connection = deepgram.listen.live.v("1")
+        dg_connection.start(options)
 
         dg_connection.on(LiveTranscriptionEvents.Transcript, on_message)
         dg_connection.on(LiveTranscriptionEvents.Metadata, on_metadata)
