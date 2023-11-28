@@ -8,6 +8,7 @@ import json
 from ..options import DeepgramClientOptions
 from .errors import DeepgramError, DeepgramApiError, DeepgramUnknownApiError
 
+
 class AbstractRestfulClient:
     """
     An abstract base class for a RESTful HTTP client.
@@ -28,6 +29,7 @@ class AbstractRestfulClient:
         DeepgramApiError: Raised for known API errors.
         DeepgramUnknownApiError: Raised for unknown API errors.
     """
+
     def __init__(self, config: DeepgramClientOptions):
         if config is None:
             raise DeepgramError("Config are required")
@@ -36,19 +38,27 @@ class AbstractRestfulClient:
         self.client = httpx.AsyncClient()
 
     async def get(self, url: str, options=None):
-        return await self._handle_request('GET', url, params=options, headers=self.config.headers)
+        return await self._handle_request(
+            "GET", url, params=options, headers=self.config.headers
+        )
 
     async def post(self, url: str, options=None, **kwargs):
-        return await self._handle_request('POST', url, params=options, headers=self.config.headers, **kwargs)
+        return await self._handle_request(
+            "POST", url, params=options, headers=self.config.headers, **kwargs
+        )
 
     async def put(self, url: str, options=None, **kwargs):
-        return await self._handle_request('PUT', url, params=options, headers=self.config.headers, **kwargs)
+        return await self._handle_request(
+            "PUT", url, params=options, headers=self.config.headers, **kwargs
+        )
 
     async def patch(self, url: str, options=None, **kwargs):
-        return await self._handle_request('PATCH', url, params=options, headers=self.config.headers, **kwargs)
+        return await self._handle_request(
+            "PATCH", url, params=options, headers=self.config.headers, **kwargs
+        )
 
     async def delete(self, url: str):
-        return await self._handle_request('DELETE', url, headers=self.config.headers)
+        return await self._handle_request("DELETE", url, headers=self.config.headers)
 
     async def _handle_request(self, method, url, **kwargs):
         try:
@@ -61,7 +71,9 @@ class AbstractRestfulClient:
                 status_code = e.response.status_code or 500
                 try:
                     json_object = json.loads(e.response.text)
-                    raise DeepgramApiError(json_object.get('message'), status_code, json.dumps(json_object)) from e
+                    raise DeepgramApiError(
+                        json_object.get("message"), status_code, json.dumps(json_object)
+                    ) from e
                 except json.decoder.JSONDecodeError:
                     raise DeepgramUnknownApiError(e.response.text, status_code) from e
                 except ValueError as e:

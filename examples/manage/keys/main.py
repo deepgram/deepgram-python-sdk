@@ -17,6 +17,7 @@ API_KEY = os.getenv("DG_API_KEY")
 # Create a Deepgram client using the API key
 deepgram: DeepgramClient = DeepgramClient(API_KEY)
 
+
 async def main():
     try:
         # get projects
@@ -39,13 +40,12 @@ async def main():
             print("No keys found")
         else:
             for key in listResp.api_keys:
-                print(f"GetKeys() - ID: {key.api_key.api_key_id}, Member: {key.member.email}, Comment: {key.api_key.comment}, Scope: {key.api_key.scopes}")
+                print(
+                    f"GetKeys() - ID: {key.api_key.api_key_id}, Member: {key.member.email}, Comment: {key.api_key.comment}, Scope: {key.api_key.scopes}"
+                )
 
         # create key
-        options: KeyOptions = {
-            "comment": "MyTestKey",
-            "scopes": ["member"]
-        }
+        options: KeyOptions = {"comment": "MyTestKey", "scopes": ["member"]}
 
         myKeyId = None
         createResp = await deepgram.manage.v("1").create_key(myId, options)
@@ -54,7 +54,9 @@ async def main():
             sys.exit(1)
         else:
             myKeyId = createResp.api_key_id
-            print(f"CreateKey() - ID: {myKeyId}, Comment: {createResp.comment} Scope: {createResp.scopes}")
+            print(
+                f"CreateKey() - ID: {myKeyId}, Comment: {createResp.comment} Scope: {createResp.scopes}"
+            )
 
         # list keys
         listResp = await deepgram.manage.v("1").get_keys(myId)
@@ -62,7 +64,9 @@ async def main():
             print("No keys found")
         else:
             for key in listResp.api_keys:
-                print(f"GetKeys() - ID: {key.api_key.api_key_id}, Member: {key.member.email}, Comment: {key.api_key.comment}, Scope: {key.api_key.scopes}")
+                print(
+                    f"GetKeys() - ID: {key.api_key.api_key_id}, Member: {key.member.email}, Comment: {key.api_key.comment}, Scope: {key.api_key.scopes}"
+                )
 
         # get key
         getResp = await deepgram.manage.v("1").get_key(myId, myKeyId)
@@ -70,7 +74,9 @@ async def main():
             print(f"GetKey failed.")
             sys.exit(1)
         else:
-            print(f"GetKey() - ID: {key.api_key.api_key_id}, Member: {key.member.email}, Comment: {key.api_key.comment}, Scope: {key.api_key.scopes}")
+            print(
+                f"GetKey() - ID: {key.api_key.api_key_id}, Member: {key.member.email}, Comment: {key.api_key.comment}, Scope: {key.api_key.scopes}"
+            )
 
         # delete key
         deleteResp = await deepgram.manage.v("1").delete_key(myId, myKeyId)
@@ -86,9 +92,12 @@ async def main():
             print("No keys found")
         else:
             for key in listResp.api_keys:
-                print(f"GetKeys() - ID: {key.api_key.api_key_id}, Member: {key.member.email}, Comment: {key.api_key.comment}, Scope: {key.api_key.scopes}")
+                print(
+                    f"GetKeys() - ID: {key.api_key.api_key_id}, Member: {key.member.email}, Comment: {key.api_key.comment}, Scope: {key.api_key.scopes}"
+                )
     except Exception as e:
         print(f"Exception: {e}")
- 
+
+
 if __name__ == "__main__":
     asyncio.run(main())

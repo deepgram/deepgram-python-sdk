@@ -9,6 +9,7 @@ from typing import List, Optional, Dict
 
 # Result Message
 
+
 @dataclass_json
 @dataclass
 class Word:
@@ -21,6 +22,7 @@ class Word:
     def __getitem__(self, key):
         _dict = self.to_dict()
         return _dict[key]
+
 
 @dataclass_json
 @dataclass
@@ -35,6 +37,7 @@ class Alternative:
             _dict["words"] = [Word.from_dict(project) for project in _dict["words"]]
         return _dict[key]
 
+
 @dataclass_json
 @dataclass
 class Channel:
@@ -43,8 +46,11 @@ class Channel:
     def __getitem__(self, key):
         _dict = self.to_dict()
         if _dict["alternatives"] is not None:
-            _dict["alternatives"] = [Alternative.from_dict(project) for project in _dict["alternatives"]]
+            _dict["alternatives"] = [
+                Alternative.from_dict(project) for project in _dict["alternatives"]
+            ]
         return _dict[key]
+
 
 @dataclass_json
 @dataclass
@@ -57,6 +63,7 @@ class ModelInfo:
         _dict = self.to_dict()
         return _dict[key]
 
+
 @dataclass_json
 @dataclass
 class Metadata:
@@ -67,8 +74,11 @@ class Metadata:
     def __getitem__(self, key):
         _dict = self.to_dict()
         if _dict["model_info"] is not None:
-            _dict["model_info"] = [ModelInfo.from_dict(project) for project in _dict["model_info"]]
+            _dict["model_info"] = [
+                ModelInfo.from_dict(project) for project in _dict["model_info"]
+            ]
         return _dict[key]
+
 
 @dataclass_json
 @dataclass
@@ -85,12 +95,18 @@ class LiveResultResponse:
     def __getitem__(self, key):
         _dict = self.to_dict()
         if _dict["channel"] is not None:
-            _dict["channel"] = [Channel.from_dict(project) for project in _dict["channel"]]
+            _dict["channel"] = [
+                Channel.from_dict(project) for project in _dict["channel"]
+            ]
         if _dict["metadata"] is not None:
-            _dict["metadata"] = [Metadata.from_dict(project) for project in _dict["metadata"]]
+            _dict["metadata"] = [
+                Metadata.from_dict(project) for project in _dict["metadata"]
+            ]
         return _dict[key]
 
+
 # Metadata Message
+
 
 @dataclass_json
 @dataclass
@@ -102,6 +118,7 @@ class ModelInfo:
     def __getitem__(self, key):
         _dict = self.to_dict()
         return _dict[key]
+
 
 @dataclass_json
 @dataclass
@@ -116,7 +133,18 @@ class MetadataResponse:
     models: Optional[List[str]]
     model_info: Optional[Dict[str, ModelInfo]]
 
-    def __init__(self, type: str, transaction_key: str, request_id: str, sha256: str, created: datetime, duration: float, channels: int, models: List[str], model_info: Dict[str, ModelInfo]) -> None:
+    def __init__(
+        self,
+        type: str,
+        transaction_key: str,
+        request_id: str,
+        sha256: str,
+        created: datetime,
+        duration: float,
+        channels: int,
+        models: List[str],
+        model_info: Dict[str, ModelInfo],
+    ) -> None:
         self.type = type
         self.transaction_key = transaction_key
         self.request_id = request_id
@@ -134,7 +162,9 @@ class MetadataResponse:
         #     _dict["model_info"] = [ModelInfo.from_dict(value) for value in _dict["model_info"]]
         return _dict[key]
 
+
 # Error Message
+
 
 @dataclass_json
 @dataclass
@@ -147,4 +177,3 @@ class ErrorResponse:
     def __getitem__(self, key):
         _dict = self.to_dict()
         return _dict[key]
-    

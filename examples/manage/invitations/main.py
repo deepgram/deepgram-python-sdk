@@ -17,6 +17,7 @@ API_KEY = os.getenv("DG_API_KEY")
 # Create a Deepgram client using the API key
 deepgram: DeepgramClient = DeepgramClient(API_KEY)
 
+
 async def main():
     try:
         # get projects
@@ -42,10 +43,7 @@ async def main():
                 print(f"GetInvites() - Name: {invite.email}, Amount: {invite.scope}")
 
         # send invite
-        options: InviteOptions = {
-            "email": "spam@spam.com",
-            "scope": "member"
-        }
+        options: InviteOptions = {"email": "spam@spam.com", "scope": "member"}
 
         getResp = await deepgram.manage.v("1").send_invite_options(myId, options)
         print(f"SendInvite() - Msg: {getResp.message}")
@@ -67,6 +65,7 @@ async def main():
         # print(f"LeaveProject() - Msg: {delResp.message}")
     except Exception as e:
         print(f"Exception: {e}")
+
 
 if __name__ == "__main__":
     asyncio.run(main())

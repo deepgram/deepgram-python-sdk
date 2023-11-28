@@ -9,6 +9,7 @@ from typing import TypedDict, List, Optional
 
 # Result Message
 
+
 @dataclass_json
 @dataclass
 class Message:
@@ -18,7 +19,9 @@ class Message:
         _dict = self.to_dict()
         return _dict[key]
 
+
 # Projects
+
 
 @dataclass_json
 @dataclass
@@ -30,6 +33,7 @@ class Project:
         _dict = self.to_dict()
         return _dict[key]
 
+
 @dataclass_json
 @dataclass
 class ProjectsResponse:
@@ -38,13 +42,18 @@ class ProjectsResponse:
     def __getitem__(self, key):
         _dict = self.to_dict()
         if _dict["projects"] is not None:
-            _dict["projects"] = [Project.from_dict(project) for project in _dict["projects"]]
+            _dict["projects"] = [
+                Project.from_dict(project) for project in _dict["projects"]
+            ]
         return _dict[key]
+
 
 class ProjectOptions(TypedDict, total=False):
     name: Optional[str]
 
+
 # Members
+
 
 @dataclass_json
 @dataclass
@@ -58,6 +67,7 @@ class Member:
         _dict = self.to_dict()
         return _dict[key]
 
+
 @dataclass_json
 @dataclass
 class MembersResponse:
@@ -68,6 +78,7 @@ class MembersResponse:
         if _dict["members"] is not None:
             _dict["members"] = [Member.from_dict(member) for member in _dict["members"]]
         return _dict[key]
+
 
 # Keys
 @dataclass_json
@@ -81,6 +92,7 @@ class Key:
     def __getitem__(self, key):
         _dict = self.to_dict()
         return _dict[key]
+
 
 @dataclass_json
 @dataclass
@@ -96,6 +108,7 @@ class KeyResponse:
             _dict["member"] = Member.from_dict(_dict["member"])
         return _dict[key]
 
+
 @dataclass_json
 @dataclass
 class KeysResponse:
@@ -104,8 +117,11 @@ class KeysResponse:
     def __getitem__(self, key):
         _dict = self.to_dict()
         if _dict["api_keys"] is not None:
-            _dict["api_keys"] = [KeyResponse.from_dict(key) for key in _dict["api_keys"]]
+            _dict["api_keys"] = [
+                KeyResponse.from_dict(key) for key in _dict["api_keys"]
+            ]
         return _dict[key]
+
 
 class KeyOptions(TypedDict):
     comment: Optional[str]
@@ -113,6 +129,7 @@ class KeyOptions(TypedDict):
     tags: Optional[List[str]]
     time_to_live_in_seconds: Optional[int]
     expiration_date: Optional[datetime]
+
 
 # Scopes
 @dataclass_json
@@ -124,10 +141,13 @@ class ScopesResponse:
         _dict = self.to_dict()
         return _dict[key]
 
+
 class ScopeOptions(TypedDict):
     scope: str
 
+
 # Invites
+
 
 @dataclass_json
 @dataclass
@@ -138,6 +158,7 @@ class Invite:
     def __getitem__(self, key):
         _dict = self.to_dict()
         return _dict[key]
+
 
 @dataclass_json
 @dataclass
@@ -150,10 +171,12 @@ class InvitesResponse:
             _dict["invites"] = [Invite.from_dict(invite) for invite in _dict["invites"]]
         return _dict[key]
 
+
 class InviteOptions:
     email: Optional[str]
     scope: Optional[str]
-    
+
+
 # Usage
 @dataclass_json
 @dataclass
@@ -167,6 +190,7 @@ class Config:
     def __getitem__(self, key):
         _dict = self.to_dict()
         return _dict[key]
+
 
 @dataclass_json
 @dataclass
@@ -188,6 +212,7 @@ class Details:
         #     _dict["config"] = Config.from_dict(_dict["config"])
         return _dict[key]
 
+
 @dataclass_json
 @dataclass
 class Callback:
@@ -198,6 +223,7 @@ class Callback:
     def __getitem__(self, key):
         _dict = self.to_dict()
         return _dict[key]
+
 
 @dataclass_json
 @dataclass
@@ -211,6 +237,7 @@ class Response:
         if _dict["details"] is not None:
             _dict["details"] = Details.from_dict(_dict["details"])
         return _dict[key]
+
 
 @dataclass_json
 @dataclass
@@ -231,6 +258,7 @@ class UsageRequest:
         #     _dict["callback"] = Callback.from_dict(_dict["callback"])
         return _dict[key]
 
+
 @dataclass_json
 @dataclass
 class UsageRequestsResponse:
@@ -241,14 +269,18 @@ class UsageRequestsResponse:
     def __getitem__(self, key):
         _dict = self.to_dict()
         if _dict["requests"] is not None:
-            _dict["requests"] = [UsageRequest.from_dict(request) for request in _dict["requests"]]
+            _dict["requests"] = [
+                UsageRequest.from_dict(request) for request in _dict["requests"]
+            ]
         return _dict[key]
+
 
 class UsageRequestOptions(TypedDict):
     start: Optional[str]
     end: Optional[str]
     limit: Optional[int]
     status: Optional[str]
+
 
 class UsageSummaryOptions(TypedDict):
     start: Optional[str]
@@ -273,6 +305,7 @@ class UsageSummaryOptions(TypedDict):
     numerals: Optional[bool]
     smart_format: Optional[bool]
 
+
 @dataclass_json
 @dataclass
 class Results:
@@ -286,6 +319,7 @@ class Results:
         _dict = self.to_dict()
         return _dict[key]
 
+
 @dataclass_json
 @dataclass
 class Resolution:
@@ -295,6 +329,7 @@ class Resolution:
     def __getitem__(self, key):
         _dict = self.to_dict()
         return _dict[key]
+
 
 @dataclass_json
 @dataclass
@@ -309,8 +344,11 @@ class UsageSummaryResponse:
         if _dict["resolution"] is not None:
             _dict["resolution"] = Resolution.from_dict(_dict["resolution"])
         if _dict["results"] is not None:
-            _dict["results"] = [Results.from_dict(result) for result in _dict["results"]]
+            _dict["results"] = [
+                Results.from_dict(result) for result in _dict["results"]
+            ]
         return _dict[key]
+
 
 @dataclass_json
 @dataclass
@@ -323,6 +361,7 @@ class UsageModel:
     def __getitem__(self, key):
         _dict = self.to_dict()
         return _dict[key]
+
 
 @dataclass_json
 @dataclass
@@ -339,11 +378,14 @@ class UsageFieldsResponse:
             _dict["models"] = [UsageModel.from_dict(model) for model in _dict["models"]]
         return _dict[key]
 
+
 class UsageFieldsOptions(TypedDict):
     start: Optional[str]
     end: Optional[str]
 
+
 # Billing
+
 
 @dataclass_json
 @dataclass
@@ -357,6 +399,7 @@ class Balance:
         _dict = self.to_dict()
         return _dict[key]
 
+
 @dataclass_json
 @dataclass
 class BalancesResponse:
@@ -365,5 +408,7 @@ class BalancesResponse:
     def __getitem__(self, key):
         _dict = self.to_dict()
         if _dict["balances"] is not None:
-            _dict["balances"] = [Balance.from_dict(balance) for balance in _dict["balances"]]
+            _dict["balances"] = [
+                Balance.from_dict(balance) for balance in _dict["balances"]
+            ]
         return _dict[key]

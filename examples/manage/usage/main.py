@@ -7,7 +7,12 @@ import os
 import sys
 from dotenv import load_dotenv
 
-from deepgram import DeepgramClient, UsageFieldsOptions, UsageSummaryOptions, UsageRequestOptions
+from deepgram import (
+    DeepgramClient,
+    UsageFieldsOptions,
+    UsageSummaryOptions,
+    UsageRequestOptions,
+)
 
 load_dotenv()
 
@@ -16,6 +21,7 @@ API_KEY = os.getenv("DG_API_KEY")
 
 # Create a Deepgram client using the API key
 deepgram: DeepgramClient = DeepgramClient(API_KEY)
+
 
 async def main():
     try:
@@ -51,7 +57,9 @@ async def main():
             print("No request found")
         else:
             for request in listResp.requests:
-                print(f"GetUsageRequest() - ID: {request.request_id}, Path: {request.path}")
+                print(
+                    f"GetUsageRequest() - ID: {request.request_id}, Path: {request.path}"
+                )
         print("")
 
         # get fields
@@ -62,7 +70,9 @@ async def main():
             sys.exit(1)
         else:
             for model in listResp.models:
-                print(f"GetUsageFields Models - ID: {model.model_id}, Name: {model.name}")
+                print(
+                    f"GetUsageFields Models - ID: {model.model_id}, Name: {model.name}"
+                )
             for method in listResp.processing_methods:
                 print(f"GetUsageFields Methods: {method}")
         print("")
@@ -77,6 +87,7 @@ async def main():
                 print(f"GetSummary - {item.requests} Calls/{listResp.resolution.units}")
     except Exception as e:
         print(f"Exception: {e}")
-            
+
+
 if __name__ == "__main__":
     asyncio.run(main())

@@ -5,8 +5,33 @@
 from ....options import DeepgramClientOptions
 from ...abstract_client import AbstractRestfulClient
 
-from .response import Project, ProjectsResponse, Message, KeysResponse, KeyResponse, Key, MembersResponse, ScopesResponse, InvitesResponse, UsageRequestsResponse, UsageRequest, UsageSummaryResponse, UsageFieldsResponse, BalancesResponse, Balance
-from .response import ProjectOptions, KeyOptions, ScopeOptions, InviteOptions, UsageRequestOptions, UsageSummaryOptions, UsageFieldsOptions
+from .response import (
+    Project,
+    ProjectsResponse,
+    Message,
+    KeysResponse,
+    KeyResponse,
+    Key,
+    MembersResponse,
+    ScopesResponse,
+    InvitesResponse,
+    UsageRequestsResponse,
+    UsageRequest,
+    UsageSummaryResponse,
+    UsageFieldsResponse,
+    BalancesResponse,
+    Balance,
+)
+from .response import (
+    ProjectOptions,
+    KeyOptions,
+    ScopeOptions,
+    InviteOptions,
+    UsageRequestOptions,
+    UsageSummaryOptions,
+    UsageFieldsOptions,
+)
+
 
 class ManageClient(AbstractRestfulClient):
     """
@@ -32,14 +57,16 @@ class ManageClient(AbstractRestfulClient):
         DeepgramUnknownApiError: Raised for unknown API errors.
         Exception: For any other unexpected exceptions.
     """
-    def __init__(self, config : DeepgramClientOptions):
-      self.config = config
-      self.endpoint = "v1/projects"
-      super().__init__(config)
-    
+
+    def __init__(self, config: DeepgramClientOptions):
+        self.config = config
+        self.endpoint = "v1/projects"
+        super().__init__(config)
+
     # projects
     async def list_projects(self):
         return self.get_projects()
+
     async def get_projects(self):
         url = f"{self.config.url}/{self.endpoint}"
         return ProjectsResponse.from_json(await self.get(url))
@@ -51,6 +78,7 @@ class ManageClient(AbstractRestfulClient):
     async def update_project_option(self, project_id: str, options: ProjectOptions):
         url = f"{self.config.url}/{self.endpoint}/{project_id}"
         return Message.from_json(await self.patch(url, json=options))
+
     async def update_project(self, project_id: str, name=""):
         url = f"{self.config.url}/{self.endpoint}/{project_id}"
         options: ProjectOptions = {
@@ -65,6 +93,7 @@ class ManageClient(AbstractRestfulClient):
     # keys
     async def list_keys(self, project_id: str):
         return self.get_keys(project_id)
+
     async def get_keys(self, project_id: str):
         url = f"{self.config.url}/{self.endpoint}/{project_id}/keys"
         result = await self.get(url)
@@ -93,16 +122,23 @@ class ManageClient(AbstractRestfulClient):
 
     # scopes
     async def get_member_scopes(self, project_id: str, member_id: str):
-        url = f"{self.config.url}/{self.endpoint}/{project_id}/members/{member_id}/scopes"
+        url = (
+            f"{self.config.url}/{self.endpoint}/{project_id}/members/{member_id}/scopes"
+        )
         return ScopesResponse.from_json(await self.get(url))
 
-    async def update_member_scope(self, project_id: str, member_id: str, options: ScopeOptions):
-        url = f"{self.config.url}/{self.endpoint}/{project_id}/members/{member_id}/scopes"
+    async def update_member_scope(
+        self, project_id: str, member_id: str, options: ScopeOptions
+    ):
+        url = (
+            f"{self.config.url}/{self.endpoint}/{project_id}/members/{member_id}/scopes"
+        )
         return Message.from_json(await self.put(url, json=options))
 
     # invites
     async def list_invites(self, project_id: str):
         return self.get_invites(project_id)
+
     async def get_invites(self, project_id: str):
         url = f"{self.config.url}/{self.endpoint}/{project_id}/invites"
         return InvitesResponse.from_json(await self.get(url))
@@ -110,6 +146,7 @@ class ManageClient(AbstractRestfulClient):
     async def send_invite_options(self, project_id: str, options: InviteOptions):
         url = f"{self.config.url}/{self.endpoint}/{project_id}/invites"
         return Message.from_json(await self.post(url, json=options))
+
     async def send_invite(self, project_id: str, email: str, scope="member"):
         url = f"{self.config.url}/{self.endpoint}/{project_id}/invites"
         options: InviteOptions = {
@@ -146,6 +183,7 @@ class ManageClient(AbstractRestfulClient):
     # balances
     async def list_balances(self, project_id: str):
         return self.get_balances(project_id)
+
     async def get_balances(self, project_id: str):
         url = f"{self.config.url}/{self.endpoint}/{project_id}/balances"
         return BalancesResponse.from_json(await self.get(url))

@@ -10,7 +10,7 @@ from deepgram import DeepgramClient, PrerecordedOptions, FileSource
 
 load_dotenv()
 
-API_KEY = os.getenv('DG_API_KEY')
+API_KEY = os.getenv("DG_API_KEY")
 AUDIO_FILE = "preamble.wav"
 
 options: PrerecordedOptions = {
@@ -22,18 +22,22 @@ options: PrerecordedOptions = {
 # STEP 1 Create a Deepgram client using the API key (optional - add config options)
 deepgram = DeepgramClient(API_KEY)
 
+
 # STEP 2 Call the transcribe_file method on the prerecorded class
 async def transcribe_file():
     # Logic to read the file
-    with open(AUDIO_FILE, 'rb') as file:
+    with open(AUDIO_FILE, "rb") as file:
         buffer_data = file.read()
 
     payload: FileSource = {
         "buffer": buffer_data,
     }
-    
-    file_response = await deepgram.listen.prerecorded.v("1").transcribe_file(payload, options)
+
+    file_response = await deepgram.listen.prerecorded.v("1").transcribe_file(
+        payload, options
+    )
     return file_response
+
 
 async def main():
     try:
@@ -41,6 +45,7 @@ async def main():
         print(response)
     except Exception as e:
         print(f"Exception: {e}")
+
 
 if __name__ == "__main__":
     asyncio.run(main())

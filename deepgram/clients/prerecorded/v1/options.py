@@ -4,6 +4,7 @@
 
 from typing import Union, List, TypedDict
 
+
 class PrerecordedOptions(TypedDict, total=False):
     alternatives: int
     callback: str

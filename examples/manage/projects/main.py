@@ -18,6 +18,7 @@ DELETE_PROJECT_BY_NAME = os.getenv("DG_DELETE_PROJECT_BY_NAME")
 # Create a Deepgram client using the API key
 deepgram: DeepgramClient = DeepgramClient(API_KEY)
 
+
 async def main():
     try:
         # get projects
@@ -36,7 +37,6 @@ async def main():
             myName = project.name
             print(f"ListProjects() - ID: {myId}, Name: {myName}")
 
-
         # get project
         getResp = await deepgram.manage.v("1").get_project(myId)
         print(f"GetProject() - Name: {getResp.name}")
@@ -46,7 +46,9 @@ async def main():
             "name": "My TEST RENAME Example",
         }
 
-        updateResp = await deepgram.manage.v("1").update_project_option(myId, updateOptions)
+        updateResp = await deepgram.manage.v("1").update_project_option(
+            myId, updateOptions
+        )
         if updateResp is None:
             print(f"UpdateProject failed.")
             sys.exit(1)
@@ -76,8 +78,12 @@ async def main():
         # delete project
         if myDeleteId == None:
             print("")
-            print("This example requires a project who already exists who name is in the value \"DELETE_PROJECT_ID\".")
-            print("This is required to exercise the UpdateProject and DeleteProject function.")
+            print(
+                'This example requires a project who already exists who name is in the value "DELETE_PROJECT_ID".'
+            )
+            print(
+                "This is required to exercise the UpdateProject and DeleteProject function."
+            )
             print("In the absence of this, this example will exit early.")
             print("")
             sys.exit(1)
@@ -89,6 +95,7 @@ async def main():
         print(f"DeleteProject() - Msg: {respDelete.message}")
     except Exception as e:
         print(f"Exception: {e}")
+
 
 if __name__ == "__main__":
     asyncio.run(main())

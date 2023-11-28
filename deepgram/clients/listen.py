@@ -10,25 +10,26 @@ from .prerecorded.client import PreRecordedClient
 from .live.client import LiveClient, LegacyLiveClient
 from .errors import DeepgramModuleError
 
+
 class ListenClient:
     def __init__(self, config: DeepgramClientOptions):
         self.config = config
-        
+
     @property
     def prerecorded(self):
         return self.Version(self.config, "prerecorded")
-    
+
     @property
     def live(self):
         return self.Version(self.config, "live")
-    
+
     @property
     def legacylive(self):
         return LegacyLiveClient(self.config)
 
     # INTERNAL CLASSES
     class Version:
-        def __init__(self, config, parent : str):
+        def __init__(self, config, parent: str):
             self.config = config
             self.parent = parent
 
