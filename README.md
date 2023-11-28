@@ -63,6 +63,7 @@ You can learn more about the Deepgram API at [developers.deepgram.com](https://d
 ```sh
 pip install deepgram-sdk
 ```
+
 # Examples
 
 To quickly get started with examples for prerecorded and streaming, run the files in the example folder. See the README in that folder for more information on getting started.
@@ -454,6 +455,7 @@ response = await deepgram.members.remove_member(PROJECT_ID, MEMBER_ID)
 	message: string;
 }
 ```
+
 # Scopes
 
 The `deepgram.scopes` object provides access to the scopes endpoints of the Deepgram API. Each request is project based and will require a `project_id`.
