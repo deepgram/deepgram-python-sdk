@@ -2,15 +2,15 @@
 # Use of this source code is governed by a MIT license that can be found in the LICENSE file.
 # SPDX-License-Identifier: MIT
 
-from urllib.parse import urlparse, urlunparse, parse_qs, urlencode
 from typing import Optional
+from importlib import import_module
 
 from .clients.listen import ListenClient
-from .clients.manage.client import ManageClient # FUTURE VERSIONINING:, ManageClientV1
-from .clients.onprem.client import OnPremClient # FUTURE VERSIONINING: , OnPremClientV1
+from .clients.manage.client import ManageClient
+from .clients.onprem.client import OnPremClient
 
 from .options import DeepgramClientOptions
-from .errors import DeepgramApiKeyError
+from .errors import DeepgramApiKeyError, DeepgramModuleError
 
 class DeepgramClient:
     """
@@ -48,18 +48,58 @@ class DeepgramClient:
     
     @property
     def manage(self):
-        return ManageClient(self.config)
-    
-    # FUTURE VERSIONINING:
-    # @property
-    # def manage_v1(self):
-    #     return ManageClientV1(self.config)
+        return self.Version(self.config, "manage")
     
     @property
     def onprem(self):
-        return OnPremClient(self.config)
-    
-    # FUTURE VERSIONINING:
-    # @property
-    # def onprem_v1(self):
-    #     return OnPremClientV1(self.config)
+        return self.Version(self.config, "onprem")
+
+    # INTERNAL CLASSES
+    class Version:
+        def __init__(self, config, parent : str):
+            self.config = config
+            self.parent = parent
+
+        # FUTURE VERSIONING:
+        # When v2 or v1.1beta1 or etc. This allows easy access to the latest version of the API.
+        # @property
+        # def latest(self):
+        #     match self.parent:
+        #         case "manage":
+        #             return ManageClient(self.config)
+        #         case "onprem":
+        #             return OnPremClient(self.config)
+        #         case _:
+        #             raise DeepgramModuleError("Invalid parent")
+
+        def v(self, version: str = ""):
+            # print(f"version: {version}")
+            if len(version) == 0:
+                raise DeepgramModuleError("Invalid module version")
+
+            className = ""
+            match self.parent:
+                case "manage":
+                    className = "ManageClient"
+                case "onprem":
+                    className = "OnPremClient"
+                case _:
+                    raise DeepgramModuleError("Invalid parent type")
+
+            # create class path
+            path = f"deepgram.clients.{self.parent}.v{version}.client"
+            # print(f"path: {path}")
+            # print(f"className: {className}")
+
+            # import class
+            mod = import_module(path)
+            if mod is None:
+                raise DeepgramModuleError("Unable to find package")
+
+            my_class = getattr(mod, className)
+            if my_class is None:
+                raise DeepgramModuleError("Unable to find class")
+
+            # instantiate class
+            myClass = my_class(self.config)
+            return myClass

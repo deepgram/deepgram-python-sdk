@@ -2,37 +2,37 @@
 # Use of this source code is governed by a MIT license that can be found in the LICENSE file.
 # SPDX-License-Identifier: MIT
 
-from .v1.client import ManageClient as ManageClientV1
-from .v1.response import ProjectOptions as ProjectOptionsV1, KeyOptions as KeyOptionsV1, ScopeOptions as ScopeOptionsV1, InviteOptions as InviteOptionsV1, UsageRequestOptions as UsageRequestOptionsV1, UsageSummaryOptions as UsageSummaryOptionsV1, UsageFieldsOptions as UsageFieldsOptionsV1
+from .v1.client import ManageClient as ManageClientLatest
+from .v1.response import ProjectOptions as ProjectOptionsLatest, KeyOptions as KeyOptionsLatest, ScopeOptions as ScopeOptionsLatest, InviteOptions as InviteOptionsLatest, UsageRequestOptions as UsageRequestOptionsLatest, UsageSummaryOptions as UsageSummaryOptionsLatest, UsageFieldsOptions as UsageFieldsOptionsLatest
 
 '''
 The client.py points to the current supported version in the SDK.
 Older versions are supported in the SDK for backwards compatibility.
 '''
-class ProjectOptions(ProjectOptionsV1):
+class ProjectOptions(ProjectOptionsLatest):
    pass
 
-class KeyOptions(KeyOptionsV1):
+class KeyOptions(KeyOptionsLatest):
    pass
 
-class ScopeOptions(ScopeOptionsV1):
+class ScopeOptions(ScopeOptionsLatest):
    pass
 
-class InviteOptions(InviteOptionsV1):
+class InviteOptions(InviteOptionsLatest):
    pass
 
-class UsageRequestOptions(UsageRequestOptionsV1):
+class UsageRequestOptions(UsageRequestOptionsLatest):
    pass
 
-class UsageSummaryOptions(UsageSummaryOptionsV1):
+class UsageSummaryOptions(UsageSummaryOptionsLatest):
    pass
 
-class UsageFieldsOptions(UsageFieldsOptionsV1):
+class UsageFieldsOptions(UsageFieldsOptionsLatest):
    pass
 
-class ManageClient(ManageClientV1):
+class ManageClient(ManageClientLatest):
     """
-    Please see ManageClientV1 for details
+    Please see ManageClientLatest for details
     """
     def __init__(self, config):
       super().__init__(config)

@@ -67,7 +67,6 @@ class PreRecordedClient(AbstractRestfulClient):
             AsyncPrerecordedResponse: An object containing the request_id or an error message.
 
         Raises:
-            DeepgramError: If the "callback" option is provided for a synchronous transcription.
             DeepgramApiError: Raised for known API errors.
             DeepgramUnknownApiError: Raised for unknown API errors.
             Exception: For any other unexpected exceptions.
@@ -125,7 +124,6 @@ class PreRecordedClient(AbstractRestfulClient):
             AsyncPrerecordedResponse: An object containing the request_id or an error message.
 
         Raises:
-            DeepgramError: If the "callback" option is provided for a synchronous transcription.
             DeepgramApiError: Raised for known API errors.
             DeepgramUnknownApiError: Raised for unknown API errors.
             Exception: For any other unexpected exceptions.

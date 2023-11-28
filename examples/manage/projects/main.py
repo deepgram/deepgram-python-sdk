@@ -21,7 +21,7 @@ deepgram: DeepgramClient = DeepgramClient(API_KEY)
 async def main():
     try:
         # get projects
-        listResp = await deepgram.manage.get_projects()
+        listResp = await deepgram.manage.v("1").get_projects()
         if listResp is None:
             print(f"ListProjects failed.")
             sys.exit(1)
@@ -38,7 +38,7 @@ async def main():
 
 
         # get project
-        getResp = await deepgram.manage.get_project(myId)
+        getResp = await deepgram.manage.v("1").get_project(myId)
         print(f"GetProject() - Name: {getResp.name}")
 
         # update project
@@ -46,28 +46,28 @@ async def main():
             "name": "My TEST RENAME Example",
         }
 
-        updateResp = await deepgram.manage.update_project_option(myId, updateOptions)
+        updateResp = await deepgram.manage.v("1").update_project_option(myId, updateOptions)
         if updateResp is None:
             print(f"UpdateProject failed.")
             sys.exit(1)
         print(f"UpdateProject() - Msg: {updateResp.message}")
 
         # get project
-        getResp = await deepgram.manage.get_project(myId)
+        getResp = await deepgram.manage.v("1").get_project(myId)
         if getResp is None:
             print(f"GetProject failed.")
             sys.exit(1)
         print(f"GetProject() - Name: {getResp.name}")
 
         # update project
-        updateResp = await deepgram.manage.update_project(myId, name=myName)
+        updateResp = await deepgram.manage.v("1").update_project(myId, name=myName)
         if updateResp is None:
             print(f"UpdateProject failed.")
             sys.exit(1)
         print(f"UpdateProject() - Msg: {updateResp.message}")
 
         # get project
-        getResp = await deepgram.manage.get_project(myId)
+        getResp = await deepgram.manage.v("1").get_project(myId)
         if getResp is None:
             print(f"GetProject failed.")
             sys.exit(1)
@@ -82,7 +82,7 @@ async def main():
             print("")
             sys.exit(1)
 
-        respDelete = deepgram.manage.delete_project(myDeleteId)
+        respDelete = deepgram.manage.v("1").delete_project(myDeleteId)
         if respDelete is None:
             print(f"DeleteProject failed.")
             sys.exit(1)

@@ -48,11 +48,9 @@ class LiveClient:
     self._event_handlers = { event: [] for event in LiveTranscriptionEvents }
     self.websocket_url = convert_to_websocket_url(self.config.url, self.endpoint)
 
-  def __call__(self, options: LiveOptions = None):
+  def start(self, options: LiveOptions = None):
     self.options = options
-    return self
 
-  def start(self):
     if self._socket is not None:
       raise DeepgramWebsocketError("Websocket already started")
 

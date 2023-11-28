@@ -20,7 +20,7 @@ deepgram: DeepgramClient = DeepgramClient(API_KEY)
 async def main():
     try:
         # get projects
-        projectResp = await deepgram.manage.get_projects()
+        projectResp = await deepgram.manage.v("1").get_projects()
         if projectResp is None:
             print(f"ListProjects failed.")
             sys.exit(1)
@@ -34,7 +34,7 @@ async def main():
             break
 
         # list invites
-        listResp = await deepgram.manage.get_invites(myId)
+        listResp = await deepgram.manage.v("1").get_invites(myId)
         if listResp is None:
             print("No invites found")
         else:
@@ -47,11 +47,11 @@ async def main():
             "scope": "member"
         }
 
-        getResp = await deepgram.manage.send_invite_options(myId, options)
+        getResp = await deepgram.manage.v("1").send_invite_options(myId, options)
         print(f"SendInvite() - Msg: {getResp.message}")
 
         # list invites
-        listResp = await deepgram.manage.get_invites(myId)
+        listResp = await deepgram.manage.v("1").get_invites(myId)
         if listResp is None:
             print("No invites found")
         else:
@@ -59,11 +59,11 @@ async def main():
                 print(f"GetInvites() - Name: {invite.email}, Amount: {invite.scope}")
 
         # delete invite
-        delResp = await deepgram.manage.delete_invite(myId, "spam@spam.com")
+        delResp = await deepgram.manage.v("1").delete_invite(myId, "spam@spam.com")
         print(f"DeleteInvite() - Msg: {delResp.message}")
 
         # # leave invite
-        # delResp = await deepgram.manage.leave_project(myId)
+        # delResp = await deepgram.manage.v("1").leave_project(myId)
         # print(f"LeaveProject() - Msg: {delResp.message}")
     except Exception as e:
         print(f"Exception: {e}")

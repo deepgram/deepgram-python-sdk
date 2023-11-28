@@ -20,7 +20,7 @@ deepgram: DeepgramClient = DeepgramClient(API_KEY)
 async def main():
     try:
         # get projects
-        projectResp = await deepgram.manage.get_projects()
+        projectResp = await deepgram.manage.v("1").get_projects()
         if projectResp is None:
             print(f"ListProjects failed.")
             sys.exit(1)
@@ -34,7 +34,7 @@ async def main():
             break
 
         # list keys
-        listResp = await deepgram.manage.get_keys(myId)
+        listResp = await deepgram.manage.v("1").get_keys(myId)
         if listResp is None:
             print("No keys found")
         else:
@@ -48,7 +48,7 @@ async def main():
         }
 
         myKeyId = None
-        createResp = await deepgram.manage.create_key(myId, options)
+        createResp = await deepgram.manage.v("1").create_key(myId, options)
         if createResp is None:
             print(f"CreateKey failed.")
             sys.exit(1)
@@ -57,7 +57,7 @@ async def main():
             print(f"CreateKey() - ID: {myKeyId}, Comment: {createResp.comment} Scope: {createResp.scopes}")
 
         # list keys
-        listResp = await deepgram.manage.get_keys(myId)
+        listResp = await deepgram.manage.v("1").get_keys(myId)
         if listResp is None:
             print("No keys found")
         else:
@@ -65,7 +65,7 @@ async def main():
                 print(f"GetKeys() - ID: {key.api_key.api_key_id}, Member: {key.member.email}, Comment: {key.api_key.comment}, Scope: {key.api_key.scopes}")
 
         # get key
-        getResp = await deepgram.manage.get_key(myId, myKeyId)
+        getResp = await deepgram.manage.v("1").get_key(myId, myKeyId)
         if getResp is None:
             print(f"GetKey failed.")
             sys.exit(1)
@@ -73,7 +73,7 @@ async def main():
             print(f"GetKey() - ID: {key.api_key.api_key_id}, Member: {key.member.email}, Comment: {key.api_key.comment}, Scope: {key.api_key.scopes}")
 
         # delete key
-        deleteResp = await deepgram.manage.delete_key(myId, myKeyId)
+        deleteResp = await deepgram.manage.v("1").delete_key(myId, myKeyId)
         if deleteResp is None:
             print(f"DeleteKey failed.")
             sys.exit(1)
@@ -81,7 +81,7 @@ async def main():
             print(f"DeleteKey() - Msg: {deleteResp.message}")
 
         # list keys
-        listResp = await deepgram.manage.get_keys(myId)
+        listResp = await deepgram.manage.v("1").get_keys(myId)
         if listResp is None:
             print("No keys found")
         else:
