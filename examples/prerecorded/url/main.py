@@ -10,8 +10,10 @@ from deepgram import DeepgramClient, PrerecordedOptions
 
 load_dotenv()
 
-API_KEY = os.getenv('DG_API_KEY')
-AUDIO_URL = {"url":"https://static.deepgram.com/examples/Bueller-Life-moves-pretty-fast.wav"}
+API_KEY = os.getenv("DG_API_KEY")
+AUDIO_URL = {
+    "url": "https://static.deepgram.com/examples/Bueller-Life-moves-pretty-fast.wav"
+}
 
 options: PrerecordedOptions = {
     "model": "nova",
@@ -22,9 +24,12 @@ options: PrerecordedOptions = {
 # STEP 1 Create a Deepgram client using the API key (optional - add config options)
 deepgram = DeepgramClient(API_KEY)
 
+
 # STEP 2 Call the transcribe_url method on the prerecorded class
 async def transcribe_url():
-    url_response = await deepgram.listen.prerecorded.v("1").transcribe_url(AUDIO_URL, options)
+    url_response = await deepgram.listen.prerecorded.v("1").transcribe_url(
+        AUDIO_URL, options
+    )
     return url_response
 
 
@@ -34,6 +39,7 @@ async def main():
         print(response)
     except Exception as e:
         print(f"Exception: {e}")
- 
+
+
 if __name__ == "__main__":
     asyncio.run(main())

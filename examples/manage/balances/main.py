@@ -17,6 +17,7 @@ API_KEY = os.getenv("DG_API_KEY")
 # Create a Deepgram client using the API key
 deepgram: DeepgramClient = DeepgramClient(API_KEY)
 
+
 async def main():
     try:
         # get projects
@@ -42,13 +43,16 @@ async def main():
         myBalanceId = None
         for balance in listResp.balances:
             myBalanceId = balance.balance_id
-            print(f"GetBalance() - Name: {balance.balance_id}, Amount: {balance.amount}")
+            print(
+                f"GetBalance() - Name: {balance.balance_id}, Amount: {balance.amount}"
+            )
 
         # get balance
         getResp = await deepgram.manage.v("1").get_balance(myId, myBalanceId)
         print(f"GetBalance() - Name: {getResp.balance_id}, Amount: {getResp.amount}")
     except Exception as e:
         print(f"Exception: {e}")
+
 
 if __name__ == "__main__":
     asyncio.run(main())

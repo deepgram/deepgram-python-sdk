@@ -4,10 +4,11 @@
 
 from urllib.parse import urlparse, urlunparse, parse_qs, urlencode
 
+
 def append_query_params(url, params=""):
     parsed_url = urlparse(url)
     query_params = parse_qs(parsed_url.query)
-    
+
     if params:
         for key, value in params.items():
             if isinstance(value, bool):
@@ -17,10 +18,11 @@ def append_query_params(url, params=""):
                     query_params[key] = query_params.get(key, []) + [str(item)]
             else:
                 query_params[key] = [str(value)]
-    
+
     updated_query_string = urlencode(query_params, doseq=True)
     updated_url = parsed_url._replace(query=updated_query_string).geturl()
     return updated_url
+
 
 def convert_to_websocket_url(base_url, endpoint):
     parsed_url = urlparse(base_url)

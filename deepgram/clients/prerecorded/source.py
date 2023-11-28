@@ -6,6 +6,7 @@ from typing import Union
 from io import BufferedReader
 from typing_extensions import TypedDict
 
+
 class ReadStreamSource(TypedDict):
     """
     Represents a data source for reading binary data from a stream-like source.
@@ -17,8 +18,10 @@ class ReadStreamSource(TypedDict):
         stream (BufferedReader): A BufferedReader object for reading binary data.
         mimetype (str): The MIME type or content type associated with the data.
     """
+
     stream: BufferedReader
     mimetype: str
+
 
 class UrlSource(TypedDict):
     """
@@ -30,7 +33,9 @@ class UrlSource(TypedDict):
     Attributes:
         url (str): The URL pointing to the hosted file.
     """
+
     url: str
+
 
 class BufferSource(TypedDict):
     """
@@ -43,8 +48,10 @@ class BufferSource(TypedDict):
         buffer (bytes): The binary data.
         mimetype (str): The MIME type or content type associated with the data.
     """
+
     buffer: bytes
     mimetype: str
+
 
 PrerecordedSource = Union[UrlSource, BufferSource, ReadStreamSource]
 FileSource = Union[BufferSource, ReadStreamSource]

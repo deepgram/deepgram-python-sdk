@@ -3,7 +3,7 @@
 # SPDX-License-Identifier: MIT
 
 # version
-__version__ = '3.0.0'
+__version__ = "3.0.0"
 
 # entry point for the deepgram python sdk
 from .client import DeepgramClient, DeepgramApiKeyError
@@ -14,10 +14,25 @@ from .clients.live.enums import LiveTranscriptionEvents
 from .clients.live.client import LiveClient, LegacyLiveClient, LiveOptions
 
 # prerecorded
-from .clients.prerecorded.client import PreRecordedClient, PrerecordedOptions, PrerecordedSource, FileSource, UrlSource
+from .clients.prerecorded.client import (
+    PreRecordedClient,
+    PrerecordedOptions,
+    PrerecordedSource,
+    FileSource,
+    UrlSource,
+)
 
 # manage
-from .clients.manage.client import ManageClient, ProjectOptions, KeyOptions, ScopeOptions, InviteOptions, UsageRequestOptions, UsageSummaryOptions, UsageFieldsOptions
+from .clients.manage.client import (
+    ManageClient,
+    ProjectOptions,
+    KeyOptions,
+    ScopeOptions,
+    InviteOptions,
+    UsageRequestOptions,
+    UsageSummaryOptions,
+    UsageFieldsOptions,
+)
 
 # utilities
 from .audio.microphone.microphone import Microphone

@@ -5,6 +5,7 @@
 from typing import Dict
 import re
 
+
 class DeepgramClientOptions:
 
     """
@@ -19,18 +20,23 @@ class DeepgramClientOptions:
             - url (str): The URL used to interact with production, On-prem, and other Deepgram environments. Defaults to `api.deepgram.com`.
     """
 
-    def __init__(self, api_key: str = "", url: str = "", headers: Dict[str, str] = None, options: Dict[str, str] = None):
+    def __init__(
+        self,
+        api_key: str = "",
+        url: str = "",
+        headers: Dict[str, str] = None,
+        options: Dict[str, str] = None,
+    ):
         self.api_key = api_key
         if headers is None:
             self.headers = {
                 "Accept": "application/json",
-                "Authorization": f"Token {self.api_key}"
+                "Authorization": f"Token {self.api_key}",
             }
         else:
-            self.headers.update({
-                "Accept": "application/json",
-                "Authorization": f"Token {self.api_key}"
-            })
+            self.headers.update(
+                {"Accept": "application/json", "Authorization": f"Token {self.api_key}"}
+            )
         if len(url) == 0:
             url = "api.deepgram.com"
         self.url = self._get_url(url)
@@ -40,12 +46,11 @@ class DeepgramClientOptions:
 
     def set_apikey(self, api_key: str):
         self.api_key = api_key
-        self.headers.update({
-            "Accept": "application/json",
-            "Authorization": f"Token {self.api_key}"
-        })
+        self.headers.update(
+            {"Accept": "application/json", "Authorization": f"Token {self.api_key}"}
+        )
 
     def _get_url(self, url):
-        if not re.match(r'^https?://', url, re.IGNORECASE):
-            url = 'https://' + url
-        return url.strip('/')
+        if not re.match(r"^https?://", url, re.IGNORECASE):
+            url = "https://" + url
+        return url.strip("/")

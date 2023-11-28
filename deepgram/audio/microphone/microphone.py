@@ -16,11 +16,15 @@ CHANNELS = 1
 RATE = 16000
 CHUNK = 8000
 
+
 class Microphone:
     """
-        TODO
+    TODO
     """
-    def __init__(self, push_callback, format=FORMAT, rate=RATE, chunk=CHUNK, channels=CHANNELS):
+
+    def __init__(
+        self, push_callback, format=FORMAT, rate=RATE, chunk=CHUNK, channels=CHANNELS
+    ):
         self.audio = pyaudio.PyAudio()
         self.chunk = chunk
         self.rate = rate
@@ -37,7 +41,7 @@ class Microphone:
     def start(self):
         if self.stream is not None:
             raise DeepgramMicrophoneError("Microphone already started")
-        
+
         self.stream = self.audio.open(
             format=self.format,
             channels=self.channels,
@@ -86,4 +90,3 @@ class Microphone:
         self.stream.stop_stream()
         self.stream.close()
         self.stream = None
-        

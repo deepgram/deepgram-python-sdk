@@ -4,6 +4,7 @@
 
 from enum import Enum
 
+
 class LiveTranscriptionEvents(Enum):
     Open = "open"
     Close = "close"

@@ -12,6 +12,7 @@ from .clients.onprem.client import OnPremClient
 from .options import DeepgramClientOptions
 from .errors import DeepgramApiKeyError, DeepgramModuleError
 
+
 class DeepgramClient:
     """
     Represents a client for interacting with the Deepgram API.
@@ -31,32 +32,33 @@ class DeepgramClient:
         onprem: Returns an OnPremClient instance for interacting with Deepgram's on-premises API.
 
     """
+
     def __init__(self, api_key: str, config: Optional[DeepgramClientOptions] = None):
         if not api_key:
             raise DeepgramApiKeyError("Deepgram API key is required")
 
         self.api_key = api_key
-        if config is None: # Use default configuration
+        if config is None:  # Use default configuration
             self.config = DeepgramClientOptions(self.api_key)
         else:
             config.set_apikey(self.api_key)
             self.config = config
-    
+
     @property
     def listen(self):
         return ListenClient(self.config)
-    
+
     @property
     def manage(self):
         return self.Version(self.config, "manage")
-    
+
     @property
     def onprem(self):
         return self.Version(self.config, "onprem")
 
     # INTERNAL CLASSES
     class Version:
-        def __init__(self, config, parent : str):
+        def __init__(self, config, parent: str):
             self.config = config
             self.parent = parent
 

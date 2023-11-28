@@ -4,6 +4,7 @@
 
 from typing import List, TypedDict
 
+
 class LiveOptions(TypedDict, total=False):
     callback: str
     channels: int
@@ -26,4 +27,3 @@ class LiveOptions(TypedDict, total=False):
     tag: list
     tier: str
     version: str
-

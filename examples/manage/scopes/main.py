@@ -18,6 +18,7 @@ MEMBER_BY_EMAIL = "enter-your-email@gmail.com"
 # Create a Deepgram client using the API key
 deepgram: DeepgramClient = DeepgramClient(API_KEY)
 
+
 async def main():
     try:
         # get projects
@@ -46,7 +47,9 @@ async def main():
                 print(f"GetMembers() - ID: {member.member_id}, Email: {member.email}")
 
         if memberId == None:
-            print("This example requires a member who is already a member with email in the value of \"MEMBER_BY_EMAIL\".")
+            print(
+                'This example requires a member who is already a member with email in the value of "MEMBER_BY_EMAIL".'
+            )
             print("This is required to exercise the UpdateMemberScope function.")
             print("In the absence of this, this example will exit early.")
             sys.exit(1)
@@ -56,14 +59,16 @@ async def main():
         if memberResp is None:
             print("No scopes found")
             sys.exit(1)
-        print(f"GetMemberScope() - ID: {myId}, Email: {memberId}, Scope: {memberResp.scopes}")
+        print(
+            f"GetMemberScope() - ID: {myId}, Email: {memberId}, Scope: {memberResp.scopes}"
+        )
 
         # update scope
-        options: ScopeOptions = {
-            "scope": "admin"
-        }
+        options: ScopeOptions = {"scope": "admin"}
 
-        updateResp = await deepgram.manage.v("1").update_member_scope(myId, memberId, options)
+        updateResp = await deepgram.manage.v("1").update_member_scope(
+            myId, memberId, options
+        )
         print(f"UpdateMemberScope() - Msg: {updateResp.message}")
 
         # get member scope
@@ -71,14 +76,16 @@ async def main():
         if memberResp is None:
             print("No scopes found")
             sys.exit(1)
-        print(f"GetMemberScope() - ID: {myId}, Email: {memberId}, Scope: {memberResp.scopes}")
+        print(
+            f"GetMemberScope() - ID: {myId}, Email: {memberId}, Scope: {memberResp.scopes}"
+        )
 
         # update scope
-        options: ScopeOptions = {
-            "scope": "member"
-        }
+        options: ScopeOptions = {"scope": "member"}
 
-        updateResp = await deepgram.manage.v("1").update_member_scope(myId, memberId, options)
+        updateResp = await deepgram.manage.v("1").update_member_scope(
+            myId, memberId, options
+        )
         print(f"UpdateMemberScope() - Msg: {updateResp.message}")
 
         # get member scope
@@ -86,9 +93,12 @@ async def main():
         if memberResp is None:
             print("No scopes found")
             sys.exit(1)
-        print(f"GetMemberScope() - ID: {myId}, Email: {memberId}, Scope: {memberResp.scopes}")
+        print(
+            f"GetMemberScope() - ID: {myId}, Email: {memberId}, Scope: {memberResp.scopes}"
+        )
     except Exception as e:
         print(f"Exception: {e}")
+
 
 if __name__ == "__main__":
     asyncio.run(main())

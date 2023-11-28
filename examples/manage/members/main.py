@@ -18,6 +18,7 @@ DELETE_MEMBER_BY_EMAIL = "enter-your-email@gmail.com"
 # Create a Deepgram client using the API key
 deepgram: DeepgramClient = DeepgramClient(API_KEY)
 
+
 async def main():
     try:
         # get projects
@@ -47,7 +48,9 @@ async def main():
         # delete member
         if delMemberId == None:
             print("")
-            print("This example requires a project who already exists who name is in \"DELETE_MEMBER_BY_EMAIL\".")
+            print(
+                'This example requires a project who already exists who name is in "DELETE_MEMBER_BY_EMAIL".'
+            )
             print("This is required to exercise the RemoveMember function.")
             print("In the absence of this, this example will exit early.")
             print("")
@@ -70,6 +73,7 @@ async def main():
                 print(f"GetMembers() - ID: {member.member_id}, Email: {member.email}")
     except Exception as e:
         print(f"Exception: {e}")
-            
+
+
 if __name__ == "__main__":
     asyncio.run(main())

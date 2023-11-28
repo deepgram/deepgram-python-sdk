@@ -2,6 +2,7 @@
 # Use of this source code is governed by a MIT license that can be found in the LICENSE file.
 # SPDX-License-Identifier: MIT
 
+
 class DeepgramTypeError(Exception):
     """
     Exception raised for unknown errors related to unknown Types for Transcription.
@@ -10,6 +11,7 @@ class DeepgramTypeError(Exception):
         message (str): The error message describing the exception.
         status (str): The HTTP status associated with the API error.
     """
+
     def __init__(self, message: str):
         super().__init__(message)
         self.name = "DeepgramTypeError"

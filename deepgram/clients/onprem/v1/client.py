@@ -4,8 +4,9 @@
 
 from ...abstract_client import AbstractRestfulClient
 
+
 class OnPremClient(AbstractRestfulClient):
-  """
+    """
     Client for interacting with Deepgram's on-premises API.
 
     This class provides methods to manage and interact with on-premises projects and distribution credentials.
@@ -23,26 +24,28 @@ class OnPremClient(AbstractRestfulClient):
         delete_onprem_credentials: Deletes an on-premises distribution credential for a project.
 
     """
-  def __init__(self, config):
-    self.config = config
-    self.endpoint = "v1/projects"
-    super().__init__(config)
-  
-  async def list_onprem_credentials(self, project_id: str):
-    url = f"{self.config.url}/{self.endpoint}/{project_id}/onprem/distribution/credentials"
-    return await self.get(url)
-  
-  async def get_onprem_credentials(self, project_id: str, distribution_credentials_id: str):
-    url = f"{self.config.url}/{self.endpoint}/{project_id}/onprem/distribution/credentials/{distribution_credentials_id}"
-    return await self.get(url)
-  
-  async def create_onprem_credentials(self, project_id: str, options):
-    url = f"{self.config.url}/{self.endpoint}/{project_id}/onprem/distribution/credentials/"
-    return await self.post(url,json=options)
-  
-  async def delete_onprem_credentials(self, project_id: str, distribution_credentials_id: str):
-    url = f"{self.config.url}/{self.endpoint}/{project_id}/onprem/distribution/credentials/{distribution_credentials_id}"
-    return await self.delete(url)
-  
 
+    def __init__(self, config):
+        self.config = config
+        self.endpoint = "v1/projects"
+        super().__init__(config)
 
+    async def list_onprem_credentials(self, project_id: str):
+        url = f"{self.config.url}/{self.endpoint}/{project_id}/onprem/distribution/credentials"
+        return await self.get(url)
+
+    async def get_onprem_credentials(
+        self, project_id: str, distribution_credentials_id: str
+    ):
+        url = f"{self.config.url}/{self.endpoint}/{project_id}/onprem/distribution/credentials/{distribution_credentials_id}"
+        return await self.get(url)
+
+    async def create_onprem_credentials(self, project_id: str, options):
+        url = f"{self.config.url}/{self.endpoint}/{project_id}/onprem/distribution/credentials/"
+        return await self.post(url, json=options)
+
+    async def delete_onprem_credentials(
+        self, project_id: str, distribution_credentials_id: str
+    ):
+        url = f"{self.config.url}/{self.endpoint}/{project_id}/onprem/distribution/credentials/{distribution_credentials_id}"
+        return await self.delete(url)

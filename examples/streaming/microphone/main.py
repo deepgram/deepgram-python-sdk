@@ -5,19 +5,26 @@
 import os
 from dotenv import load_dotenv
 
-from deepgram import DeepgramClient, DeepgramClientOptions, LiveTranscriptionEvents, LiveOptions, Microphone
+from deepgram import (
+    DeepgramClient,
+    DeepgramClientOptions,
+    LiveTranscriptionEvents,
+    LiveOptions,
+    Microphone,
+)
 
 load_dotenv()
 
 options: LiveOptions = {
-    'punctuate': True,
-    'language': 'en-US',
-    'encoding':  'linear16',
-    'channels':  1,
-    'sample_rate': 16000,
+    "punctuate": True,
+    "language": "en-US",
+    "encoding": "linear16",
+    "channels": 1,
+    "sample_rate": 16000,
 }
 
-deepgram_api_key = os.getenv('DG_API_KEY')
+deepgram_api_key = os.getenv("DG_API_KEY")
+
 
 def on_message(result=None):
     if result is None:
@@ -27,12 +34,14 @@ def on_message(result=None):
         return
     print(f"speaker: {sentence}")
 
+
 def on_metadata(metadata=None):
     if metadata is None:
         return
     print("")
     print(metadata)
     print("")
+
 
 def on_error(error=None):
     if error is None:
@@ -41,8 +50,8 @@ def on_error(error=None):
     print(error)
     print("")
 
+
 def main():
-    
     # config: DeepgramClientOptions = DeepgramClientOptions(options={'keepalive': 'true'})
     deepgram: DeepgramClient = DeepgramClient(deepgram_api_key)
 
@@ -54,7 +63,7 @@ def main():
         dg_connection.on(LiveTranscriptionEvents.Transcript, on_message)
         dg_connection.on(LiveTranscriptionEvents.Metadata, on_metadata)
         dg_connection.on(LiveTranscriptionEvents.Error, on_error)
-    
+
         # Open a microphone stream
         microphone = Microphone(dg_connection.send)
 
@@ -63,7 +72,7 @@ def main():
 
         # wait until finished
         input("Press Enter to stop recording...\n\n")
-        
+
         # Wait for the connection to close
         microphone.finish()
 
@@ -73,8 +82,9 @@ def main():
         print("Finished")
 
     except Exception as e:
-        print(f'Could not open socket: {e}')
+        print(f"Could not open socket: {e}")
         return
+
 
 if __name__ == "__main__":
     main()
