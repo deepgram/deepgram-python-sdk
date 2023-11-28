@@ -2,16 +2,15 @@
 # Use of this source code is governed by a MIT license that can be found in the LICENSE file.
 # SPDX-License-Identifier: MIT
 
-import re
 from urllib.parse import urlparse, urlunparse, parse_qs, urlencode
 from typing import Optional
-
-from .options import DeepgramClientOptions
-from .errors import DeepgramApiKeyError
 
 from .clients.listen import ListenClient
 from .clients.manage.client import ManageClient # FUTURE VERSIONINING:, ManageClientV1
 from .clients.onprem.client import OnPremClient # FUTURE VERSIONINING: , OnPremClientV1
+
+from .options import DeepgramClientOptions
+from .errors import DeepgramApiKeyError
 
 class DeepgramClient:
     """

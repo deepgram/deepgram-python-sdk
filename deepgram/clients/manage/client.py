@@ -2,8 +2,8 @@
 # Use of this source code is governed by a MIT license that can be found in the LICENSE file.
 # SPDX-License-Identifier: MIT
 
-from .v1_client import ManageClientV1
-from .v1_response import ProjectOptionsV1, KeyOptionsV1, ScopeOptionsV1, InviteOptionsV1, UsageRequestOptionsV1, UsageSummaryOptionsV1, UsageFieldsOptionsV1
+from .v1.client import ManageClient as ManageClientV1
+from .v1.response import ProjectOptions as ProjectOptionsV1, KeyOptions as KeyOptionsV1, ScopeOptions as ScopeOptionsV1, InviteOptions as InviteOptionsV1, UsageRequestOptions as UsageRequestOptionsV1, UsageSummaryOptions as UsageSummaryOptionsV1, UsageFieldsOptions as UsageFieldsOptionsV1
 
 '''
 The client.py points to the current supported version in the SDK.

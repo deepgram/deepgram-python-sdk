@@ -2,12 +2,13 @@
 # Use of this source code is governed by a MIT license that can be found in the LICENSE file.
 # SPDX-License-Identifier: MIT
 
-from .v1_response import Project, ProjectsResponse, Message, ProjectOptionsV1, KeysResponse, KeyResponse, KeyOptionsV1, Key, MembersResponse, ScopesResponse, ScopeOptionsV1, InvitesResponse, InviteOptionsV1, UsageRequestsResponse, UsageRequestOptionsV1, UsageRequest, UsageSummaryOptionsV1, UsageSummaryResponse, UsageFieldsResponse, UsageFieldsOptionsV1, BalancesResponse, Balance
+from ....options import DeepgramClientOptions
+from ...abstract_client import AbstractRestfulClient
 
-from ...options import DeepgramClientOptions
-from ..abstract_client import AbstractRestfulClient
+from .response import Project, ProjectsResponse, Message, KeysResponse, KeyResponse, Key, MembersResponse, ScopesResponse, InvitesResponse, UsageRequestsResponse, UsageRequest, UsageSummaryResponse, UsageFieldsResponse, BalancesResponse, Balance
+from .response import ProjectOptions, KeyOptions, ScopeOptions, InviteOptions, UsageRequestOptions, UsageSummaryOptions, UsageFieldsOptions
 
-class ManageClientV1(AbstractRestfulClient):
+class ManageClient(AbstractRestfulClient):
     """
     A client for managing Deepgram projects and associated resources via the Deepgram API.
 
@@ -47,12 +48,12 @@ class ManageClientV1(AbstractRestfulClient):
         url = f"{self.config.url}/{self.endpoint}/{project_id}"
         return Project.from_json(await self.get(url))
 
-    async def update_project_option(self, project_id: str, options: ProjectOptionsV1):
+    async def update_project_option(self, project_id: str, options: ProjectOptions):
         url = f"{self.config.url}/{self.endpoint}/{project_id}"
         return Message.from_json(await self.patch(url, json=options))
     async def update_project(self, project_id: str, name=""):
         url = f"{self.config.url}/{self.endpoint}/{project_id}"
-        options: ProjectOptionsV1 = {
+        options: ProjectOptions = {
             "name": name,
         }
         return Message.from_json(await self.patch(url, json=options))
@@ -73,7 +74,7 @@ class ManageClientV1(AbstractRestfulClient):
         url = f"{self.config.url}/{self.endpoint}/{project_id}/keys/{key_id}"
         return KeyResponse.from_json(await self.get(url))
 
-    async def create_key(self, project_id: str, options: KeyOptionsV1):
+    async def create_key(self, project_id: str, options: KeyOptions):
         url = f"{self.config.url}/{self.endpoint}/{project_id}/keys"
         return Key.from_json(await self.post(url, json=options))
 
@@ -95,7 +96,7 @@ class ManageClientV1(AbstractRestfulClient):
         url = f"{self.config.url}/{self.endpoint}/{project_id}/members/{member_id}/scopes"
         return ScopesResponse.from_json(await self.get(url))
 
-    async def update_member_scope(self, project_id: str, member_id: str, options: ScopeOptionsV1):
+    async def update_member_scope(self, project_id: str, member_id: str, options: ScopeOptions):
         url = f"{self.config.url}/{self.endpoint}/{project_id}/members/{member_id}/scopes"
         return Message.from_json(await self.put(url, json=options))
 
@@ -106,12 +107,12 @@ class ManageClientV1(AbstractRestfulClient):
         url = f"{self.config.url}/{self.endpoint}/{project_id}/invites"
         return InvitesResponse.from_json(await self.get(url))
 
-    async def send_invite_options(self, project_id: str, options: InviteOptionsV1):
+    async def send_invite_options(self, project_id: str, options: InviteOptions):
         url = f"{self.config.url}/{self.endpoint}/{project_id}/invites"
         return Message.from_json(await self.post(url, json=options))
     async def send_invite(self, project_id: str, email: str, scope="member"):
         url = f"{self.config.url}/{self.endpoint}/{project_id}/invites"
-        options: InviteOptionsV1 = {
+        options: InviteOptions = {
             "email": email,
             "scope": scope,
         }
@@ -126,7 +127,7 @@ class ManageClientV1(AbstractRestfulClient):
         return Message.from_json(await self.delete(url))
 
     # usage
-    async def get_usage_requests(self, project_id: str, options: UsageRequestOptionsV1):
+    async def get_usage_requests(self, project_id: str, options: UsageRequestOptions):
         url = f"{self.config.url}/{self.endpoint}/{project_id}/requests"
         return UsageRequestsResponse.from_json(await self.get(url, options))
 
@@ -134,11 +135,11 @@ class ManageClientV1(AbstractRestfulClient):
         url = f"{self.config.url}/{self.endpoint}/{project_id}/requests/{request_id}"
         return UsageRequest.from_json(await self.get(url))
 
-    async def get_usage_summary(self, project_id: str, options: UsageSummaryOptionsV1):
+    async def get_usage_summary(self, project_id: str, options: UsageSummaryOptions):
         url = f"{self.config.url}/{self.endpoint}/{project_id}/usage"
         return UsageSummaryResponse.from_json(await self.get(url, options))
 
-    async def get_usage_fields(self, project_id: str, options: UsageFieldsOptionsV1):
+    async def get_usage_fields(self, project_id: str, options: UsageFieldsOptions):
         url = f"{self.config.url}/{self.endpoint}/{project_id}/usage/fields"
         return UsageFieldsResponse.from_json(await self.get(url, options))
 

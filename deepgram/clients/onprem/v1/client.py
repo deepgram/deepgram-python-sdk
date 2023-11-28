@@ -2,9 +2,9 @@
 # Use of this source code is governed by a MIT license that can be found in the LICENSE file.
 # SPDX-License-Identifier: MIT
 
-from ..abstract_client import AbstractRestfulClient
+from ...abstract_client import AbstractRestfulClient
 
-class OnPremClientV1(AbstractRestfulClient):
+class OnPremClient(AbstractRestfulClient):
   """
     Client for interacting with Deepgram's on-premises API.
 

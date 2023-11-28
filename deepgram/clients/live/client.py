@@ -2,9 +2,9 @@
 # Use of this source code is governed by a MIT license that can be found in the LICENSE file.
 # SPDX-License-Identifier: MIT
 
-from .v1_client import LiveClientV1
-from .v1_legacy_client import LegacyLiveClientV1
-from .v1_options import LiveOptionsV1
+from .v1.client import LiveClient as LiveClientV1
+from .v1.legacy_client import LegacyLiveClient as LegacyLiveClientV1
+from .v1.options import LiveOptions as LiveOptionsV1
 
 '''
 The client.py points to the current supported version in the SDK.

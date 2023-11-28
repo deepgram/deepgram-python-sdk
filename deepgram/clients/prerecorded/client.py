@@ -2,10 +2,8 @@
 # Use of this source code is governed by a MIT license that can be found in the LICENSE file.
 # SPDX-License-Identifier: MIT
 
-from .source import UrlSource, FileSource
-
-from .v1_client import PreRecordedClientV1
-from .v1_options import PrerecordedOptionsV1
+from .v1.client import PreRecordedClient as PreRecordedClientV1
+from .v1.options import PrerecordedOptions as PrerecordedOptionsV1
 from .source import PrerecordedSource, FileSource, UrlSource
 
 '''

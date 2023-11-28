@@ -2,15 +2,15 @@
 # Use of this source code is governed by a MIT license that can be found in the LICENSE file.
 # SPDX-License-Identifier: MIT
 
-from .errors import DeepgramTypeError
-from ..abstract_client import AbstractRestfulClient
+from ...abstract_client import AbstractRestfulClient
+from ..errors import DeepgramTypeError
+from ..helpers import is_buffer_source, is_readstream_source, is_url_source
+from ..source import UrlSource, FileSource
 
-from .helpers import is_buffer_source, is_readstream_source, is_url_source
-from .source import UrlSource, FileSource
-from .v1_options import PrerecordedOptionsV1
-from .v1_response import AsyncPrerecordedResponseV1, PrerecordedResponseV1
+from .options import PrerecordedOptions
+from .response import AsyncPrerecordedResponse, PrerecordedResponse
 
-class PreRecordedClientV1(AbstractRestfulClient):
+class PreRecordedClient(AbstractRestfulClient):
     """
     A client class for handling pre-recorded audio data. Provides methods for transcribing audio from URLs and files.
     """
@@ -25,8 +25,8 @@ class PreRecordedClientV1(AbstractRestfulClient):
         super().__init__(config)
     
     async def transcribe_url(
-        self, source: UrlSource, options: PrerecordedOptionsV1 = None, endpoint: str="v1/listen"
-    ) -> PrerecordedResponseV1:
+        self, source: UrlSource, options: PrerecordedOptions = None, endpoint: str="v1/listen"
+    ) -> PrerecordedResponse:
         """
         Transcribes audio from a URL source.
 
@@ -53,7 +53,7 @@ class PreRecordedClientV1(AbstractRestfulClient):
             raise DeepgramTypeError("Unknown transcription source type")
         return await self.post(url, options, json=body)
         
-    async def transcribe_url_callback( self, source: UrlSource, callback:str, options: PrerecordedOptionsV1 = None, endpoint: str="v1/listen") -> AsyncPrerecordedResponseV1:
+    async def transcribe_url_callback( self, source: UrlSource, callback:str, options: PrerecordedOptions = None, endpoint: str="v1/listen") -> AsyncPrerecordedResponse:
         """
         Transcribes audio from a URL source and sends the result to a callback URL.
 
@@ -83,7 +83,7 @@ class PreRecordedClientV1(AbstractRestfulClient):
         return await self.post(url, options, json=body)
 
     
-    async def transcribe_file(self, source: FileSource, options: PrerecordedOptionsV1=None, endpoint: str = "v1/listen") -> PrerecordedResponseV1:
+    async def transcribe_file(self, source: FileSource, options: PrerecordedOptions=None, endpoint: str = "v1/listen") -> PrerecordedResponse:
         """
         Transcribes audio from a local file source.
 
@@ -111,7 +111,7 @@ class PreRecordedClientV1(AbstractRestfulClient):
             raise DeepgramTypeError("Unknown transcription source type")
         return await self.post(url, options, content=body)
 
-    async def transcribe_file_callback(self, source: FileSource, callback:str, options: PrerecordedOptionsV1 = None, endpoint: str="v1/listen") -> AsyncPrerecordedResponseV1:
+    async def transcribe_file_callback(self, source: FileSource, callback:str, options: PrerecordedOptions = None, endpoint: str="v1/listen") -> AsyncPrerecordedResponse:
         """
         Transcribes audio from a local file source and sends the result to a callback URL.
 
