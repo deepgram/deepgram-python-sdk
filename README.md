@@ -14,7 +14,7 @@ Official Python SDK for [Deepgram](https://www.deepgram.com/). Power your apps w
 * [Examples](#examples)
 * [Testing](#testing)
 * [Configuration](#configuration)
-  * [Custom API Endpoint] [#custom-api-endpoint] 
+  * [Custom API Endpoint] [#custom-api-endpoint]
 * [Transcription](#transcription)
   * [Remote Files](#remote-files)
   * [Local Files](#local-files)
@@ -74,7 +74,7 @@ To quickly get started with examples for prerecorded and streaming, run the file
 
 Run the following command to install `pytest` and `pytest-cov` as dev dependencies.
 
-```
+```sh
 pip install -r requirements.txt
 ```
 
@@ -82,20 +82,20 @@ pip install -r requirements.txt
 
 ## Setup
 
-```
+```sh
 pip install pytest
 pip install pytest-cov
 ```
 
 ## Run All Tests
 
-```
+```sh
 pytest --api-key <key> tests/
 ```
 
 ## Test Coverage Report
 
-```
+```sh
 pytest --cov=deepgram --api-key <key> tests/
 ```
 
@@ -103,8 +103,8 @@ pytest --cov=deepgram --api-key <key> tests/
 
 To setup the configuration of the Deepgram Client, do the following:
 
-- Import the Deepgram client
-- Create a Deepgram Client instance and pass in credentials to the constructor.
+* Import the Deepgram client
+* Create a Deepgram Client instance and pass in credentials to the constructor.
 
 ```python
 from deepgram import Deepgram
@@ -117,7 +117,7 @@ deepgram = Deepgram(DEEPGRAM_API_KEY)
 
 In order to point the SDK at a different API environment (e.g., for on-prem deployments), you can pass in an object setting the `api_url` when initializing the Deepgram client.
 
-```py
+```python
 dg_client = Deepgram({ 
   "api_key": DEEPGRAM_API_KEY, 
   "api_url": "http://localhost:8080/v1/listen" 
@@ -277,7 +277,7 @@ project = await deepgram.projects.get(PROJECT_ID)
 
 ### Get a Project Response
 
-```
+```ts
 {
   project_id: String,
   name: String,
@@ -294,7 +294,6 @@ Updates a project based on a provided project object.
 | --------- | ------ | ------------------------------------------------------------------------------- |
 | project   | Object | Object representing a project. Must contain `project_id` and `name` properties. |
 
-
 ### Update a Project Example Request
 
 ```python
@@ -303,9 +302,9 @@ updateResponse = await deepgram.projects.update(project)
 
 ### Update a Project Response
 
-```
+```ts
 {
-	message: String;
+ message: String;
 }
 ```
 
@@ -331,16 +330,16 @@ response = await deepgram.keys.list(PROJECT_ID)
 
 ### List Keys Response
 
-```
+```ts
 {
-	api_keys: [
-		{
-			api_key_id: string,
-			comment: string,
-			created: string,
-			scopes: Array<string>,
-		},
-	];
+ api_keys: [
+  {
+   api_key_id: string,
+   comment: string,
+   created: string,
+   scopes: Array<string>,
+  },
+ ];
 }
 ```
 
@@ -364,7 +363,7 @@ response = await deepgram.keys.create(PROJECT_ID, COMMENT_FOR_KEY, SCOPES)
 
 ### Create API Key Response
 
-```
+```ts
 {
   api_key_id: string,
   key: string,
@@ -417,7 +416,7 @@ response = await deepgram.members.list_members(PROJECT_ID)
 
 ### Get Members Response
 
-```
+```ts
 {
   members: [
     {
@@ -450,9 +449,9 @@ response = await deepgram.members.remove_member(PROJECT_ID, MEMBER_ID)
 
 ### Remove Member Response
 
-```
+```ts
 {
-	message: string;
+ message: string;
 }
 ```
 
@@ -479,7 +478,7 @@ response = await deepgram.scopes.get_scope(PROJECT_ID, MEMBER_ID)
 
 ### Get Member Scopes Response
 
-```
+```ts
 {
   scopes: string[]
 }
@@ -505,9 +504,9 @@ response = await deepgram.scopes.update_scope(PROJECT_ID, MEMBER_ID, 'member')
 
 ### Update Scope Response
 
-```
+```ts
 {
-	message: string;
+ message: string;
 }
 ```
 
@@ -533,14 +532,14 @@ response = await deepgram.invitations.list_invitations(PROJECT_ID)
 
 ### List Invites Response
 
-```
+```ts
 {
-	members: [
-		{
-			email: string,
-			scope: string,
-		},
-	];
+ members: [
+  {
+   email: string,
+   scope: string,
+  },
+ ];
 }
 ```
 
@@ -566,9 +565,9 @@ response = await deepgram.invitations.send_invitation(PROJECT_ID, {
 
 ### Send Invite Response
 
-```
+```ts
 {
-	message: string;
+ message: string;
 }
 ```
 
@@ -594,9 +593,9 @@ response = await deepgram.invitations.remove_invitation(
 
 ### Delete Invite Response
 
-```
+```ts
 {
-	message: string;
+ message: string;
 }
 ```
 
@@ -618,9 +617,9 @@ response = await deepgram.invitations.leave_project(PROJECT_ID)
 
 ### Leave Project Response
 
-```
+```ts
 {
-	message: string;
+ message: string;
 }
 ```
 
@@ -672,7 +671,7 @@ response = await deepgram.usage.list_requests(PROJECT_ID, {
 
 ### Get All Requests Response
 
-```
+```ts
 {
   page: Number,
   limit: Number,
@@ -741,7 +740,7 @@ response = await deepgram.usage.get_request(PROJECT_ID, REQUEST_ID)
 
 ### Get Request Response
 
-```
+```ts
 {
   request_id: String;
   created: String;
@@ -798,7 +797,7 @@ Retrieves aggregated usage data for a project based on the provided options.
 
 #### Get Usage Options
 
-```python
+```ts
 {
   // The time to retrieve requests made since
   // Example: "2020-01-01T00:00:00+00:00"
@@ -854,7 +853,7 @@ response = await deepgram.usage.get_usage(PROJECT_ID, {
 
 ### Get Usage Response
 
-```
+```ts
 {
   start: String,
   end: String,
@@ -886,7 +885,7 @@ Retrieves features used by the provided project_id based on the provided options
 
 #### Get Fields Options
 
-```typescript
+```ts
 {
   // The time to retrieve requests made since
   // Example: "2020-01-01T00:00:00+00:00"
@@ -908,7 +907,7 @@ response = await deepgram.usage.get_fields(PROJECT_ID, {
 
 #### Get Fields Response
 
-```
+```ts
 {
   tags: String[],
   models: String[],
@@ -921,7 +920,6 @@ response = await deepgram.usage.get_fields(PROJECT_ID, {
 # Billing
 
 The `deepgram.billing` object provides access to the balances endpoints of the Deepgram API. Each request is project based and will require a `project_id`.
-
 
 ## Get All Balances
 
@@ -941,7 +939,7 @@ response = await deepgram.billing.list_balance(PROJECT_ID)
 
 ### Get All Balances Response
 
-```
+```ts
 {
   balances: [
       {
@@ -973,14 +971,14 @@ const response = deepgram.billing.get_balance(PROJECT_ID, BALANCE_ID)
 
 ### Get Balance Response
 
-```
+```ts
 {
-	balance: {
-		balance_id: string;
-		amount: number;
-		units: string;
-		purchase: string;
-	}
+ balance: {
+  balance_id: string;
+  amount: number;
+  units: string;
+  purchase: string;
+ }
 }
 ```
 
@@ -997,10 +995,6 @@ To make sure our community is safe for all, be sure to review and agree to our
 We love to hear from you so if you have questions, comments or find a bug in the
 project, let us know! You can either:
 
-- [Open an issue in this repository](https://github.com/deepgram/deepgram-python-sdk/issues/new)
-- [Join the Deepgram Github Discussions Community](https://github.com/orgs/deepgram/discussions)
-- [Join the Deepgram Discord Community](https://discord.gg/xWRaCDBtW4)
-
-[license]: LICENSE.txt
-
-
+* [Open an issue in this repository](https://github.com/deepgram/deepgram-python-sdk/issues/new)
+* [Join the Deepgram Github Discussions Community](https://github.com/orgs/deepgram/discussions)
+* [Join the Deepgram Discord Community](https://discord.gg/xWRaCDBtW4)
