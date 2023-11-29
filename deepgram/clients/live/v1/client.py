@@ -5,6 +5,7 @@ import json
 from websockets.sync.client import connect
 import threading
 import time
+import logging, verboselogs
 
 from ....options import DeepgramClientOptions
 from ..enums import LiveTranscriptionEvents
@@ -43,6 +44,10 @@ class LiveClient:
         if config is None:
             raise DeepgramError("Config are required")
 
+        self.logger = logging.getLogger(__name__)
+        self.logger.addHandler(logging.StreamHandler())
+        self.logger.setLevel(config.verbose)
+
         self.config = config
         self.endpoint = "v1/listen"
         self._socket = None
@@ -51,9 +56,14 @@ class LiveClient:
         self.websocket_url = convert_to_websocket_url(self.config.url, self.endpoint)
 
     def start(self, options: LiveOptions = None):
+        self.logger.debug("LiveClient.start ENTER")
+        # TODO: options
+
         self.options = options
 
         if self._socket is not None:
+            self.logger.error("socket is already initialized")
+            self.logger.debug("LiveClient.start LEAVE")
             raise DeepgramWebsocketError("Websocket already started")
 
         url_with_params = append_query_params(self.websocket_url, self.options)
@@ -70,8 +80,12 @@ class LiveClient:
         # keepalive thread
         self.processing = None
         if self.config.options.get("keepalive") == "true":
+            self.logger.info("KeepAlive enabled")
             self.processing = threading.Thread(target=self._processing)
             self.processing.start()
+
+        self.logger.notice("start succeeded")
+        self.logger.debug("LiveClient.start LEAVE")
 
     def on(self, event, handler):  # registers event handlers for specific events
         if event in LiveTranscriptionEvents and callable(handler):
@@ -84,22 +98,26 @@ class LiveClient:
             handler(*args, **kwargs)
 
     def _listening(self) -> None:
+        self.logger.debug("LiveClient._listening ENTER")
+
         while True:
             try:
                 self.lock_exit.acquire()
                 myExit = self.exit
                 self.lock_exit.release()
                 if myExit:
+                    self.logger.notice("exiting gracefully")
+                    self.logger.debug("LiveClient._listening LEAVE")
                     return
 
                 message = self._socket.recv()
                 if len(message) == 0:
-                    #    print("empty message")
+                    self.logger.info("message is empty")
                     continue
 
                 data = json.loads(message)
                 response_type = data.get("type")
-                # print(f"response_type: {response_type}")
+                self.logger.verbose("response_type: %s", response_type)
 
                 match response_type:
                     case LiveTranscriptionEvents.Transcript.value:
@@ -121,9 +139,9 @@ class LiveClient:
                         self._emit(LiveTranscriptionEvents.Error, error)
 
             except Exception as e:
-                # print(f"Exception in _listening: {e}")
                 if e.code == 1000:
-                    # print("Websocket closed")
+                    self.logger.notice("exiting thread gracefully")
+                    self.logger.debug("LiveClient._listening LEAVE")
                     return
 
                 error: ErrorResponse = {
@@ -134,8 +152,12 @@ class LiveClient:
                 }
                 self._emit(LiveTranscriptionEvents.Error, error)
 
+                self.logger.error("Exception in _listening: %s", str(e))
+                self.logger.debug("LiveClient._listening LEAVE")
+
     def _processing(self) -> None:
-        # print("Starting KeepAlive")
+        self.logger.debug("LiveClient._processing ENTER")
+
         while True:
             try:
                 time.sleep(PING_INTERVAL)
@@ -144,16 +166,18 @@ class LiveClient:
                 myExit = self.exit
                 self.lock_exit.release()
                 if myExit:
+                    self.logger.notice("exiting gracefully")
+                    self.logger.debug("LiveClient._processing LEAVE")
                     return
 
                 # deepgram keepalive
-                # print("Sending KeepAlive")
+                self.logger.debug("Sending KeepAlive...")
                 self.send(json.dumps({"type": "KeepAlive"}))
 
             except Exception as e:
-                # print(f"Exception in _processing: {e}")
                 if e.code == 1000:
-                    # print("Websocket closed")
+                    self.logger.notice("exiting thread gracefully")
+                    self.logger.debug("LiveClient._processing LEAVE")
                     return
 
                 error: ErrorResponse = {
@@ -164,37 +188,55 @@ class LiveClient:
                 }
                 self._emit(LiveTranscriptionEvents.Error, error)
 
+                self.logger.error("Exception in _processing: %s", str(e))
+                self.logger.debug("LiveClient._processing LEAVE")
+
     def send(self, data) -> int:
+        self.logger.spam("LiveClient.send ENTER")
+        self.logger.spam("data: %s", data)
+
         if self._socket:
             self.lock_send.acquire()
             ret = self._socket.send(data)
             self.lock_send.release()
+
+            self.logger.spam("send bytes: %d", ret)
+            self.logger.spam("LiveClient.send LEAVE")
             return ret
+
+        self.logger.spam("message is empty")
+        self.logger.spam("LiveClient.send LEAVE")
         return 0
 
     def finish(self):
-        #   print("Send CloseStream")
+        self.logger.spam("LiveClient.finish ENTER")
+
         if self._socket:
+            self.logger.notice("sending CloseStream...")
             self._socket.send(json.dumps({"type": "CloseStream"}))
             time.sleep(1)
 
-        #   print("Closing connection...")
         self.lock_exit.acquire()
+        self.logger.notice("signal exit")
         self.exit = True
         self.lock_exit.release()
 
-        #   print("Waiting for threads to finish...")
         if self.processing is not None:
             self.processing.join()
             self.processing = None
+        self.logger.notice("processing thread joined")
 
-        #   print("Waiting for threads to finish...")
         if self.listening is not None:
             self.listening.join()
             self.listening = None
+        self.logger.notice("listening thread joined")
 
         if self._socket:
+            self.logger.notice("closing socket...")
             self._socket.close()
 
         self._socket = None
         self.lock_exit = None
+
+        self.logger.notice("finish succeeded")
+        self.logger.spam("LiveClient.finish LEAVE")

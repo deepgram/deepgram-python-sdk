@@ -13,11 +13,11 @@ from typing import List, Optional, Dict
 @dataclass_json
 @dataclass
 class Word:
-    word: Optional[str]
-    start: Optional[float]
-    end: Optional[float]
-    confidence: Optional[float]
-    punctuated_word: Optional[str]
+    word: Optional[str] = ""
+    start: Optional[float] = 0
+    end: Optional[float] = 0
+    confidence: Optional[float] = 0
+    punctuated_word: Optional[str] = ""
 
     def __getitem__(self, key):
         _dict = self.to_dict()
@@ -27,9 +27,9 @@ class Word:
 @dataclass_json
 @dataclass
 class Alternative:
-    transcript: Optional[str]
-    confidence: Optional[float]
-    words: Optional[List[Word]]
+    transcript: Optional[str] = ""
+    confidence: Optional[float] = 0
+    words: Optional[List[Word]] = None
 
     def __getitem__(self, key):
         _dict = self.to_dict()
@@ -41,7 +41,7 @@ class Alternative:
 @dataclass_json
 @dataclass
 class Channel:
-    alternatives: Optional[List[Alternative]]
+    alternatives: Optional[List[Alternative]] = None
 
     def __getitem__(self, key):
         _dict = self.to_dict()
@@ -55,9 +55,9 @@ class Channel:
 @dataclass_json
 @dataclass
 class ModelInfo:
-    name: Optional[str]
-    version: Optional[str]
-    arch: Optional[str]
+    name: Optional[str] = ""
+    version: Optional[str] = ""
+    arch: Optional[str] = ""
 
     def __getitem__(self, key):
         _dict = self.to_dict()
@@ -67,9 +67,9 @@ class ModelInfo:
 @dataclass_json
 @dataclass
 class Metadata:
-    request_id: Optional[str]
-    model_info: Optional[ModelInfo]
-    model_uuid: Optional[str]
+    request_id: Optional[str] = ""
+    model_info: Optional[ModelInfo] = None
+    model_uuid: Optional[str] = ""
 
     def __getitem__(self, key):
         _dict = self.to_dict()
@@ -83,14 +83,14 @@ class Metadata:
 @dataclass_json
 @dataclass
 class LiveResultResponse:
-    type: Optional[str]
-    channel_index: Optional[List[int]]
-    duration: Optional[float]
-    start: Optional[float]
-    is_final: Optional[bool]
-    speech_final: Optional[bool]
-    channel: Optional[Channel]
-    metadata: Optional[Metadata]
+    type: Optional[str] = ""
+    channel_index: Optional[List[int]] = None
+    duration: Optional[float] = 0
+    start: Optional[float] = 0
+    is_final: Optional[bool] = False
+    speech_final: Optional[bool] = False
+    channel: Optional[Channel] = None
+    metadata: Optional[Metadata] = None
 
     def __getitem__(self, key):
         _dict = self.to_dict()
@@ -111,9 +111,9 @@ class LiveResultResponse:
 @dataclass_json
 @dataclass
 class ModelInfo:
-    name: Optional[str]
-    version: Optional[str]
-    arch: Optional[str]
+    name: Optional[str] = ""
+    version: Optional[str] = ""
+    arch: Optional[str] = ""
 
     def __getitem__(self, key):
         _dict = self.to_dict()
@@ -123,43 +123,24 @@ class ModelInfo:
 @dataclass_json
 @dataclass
 class MetadataResponse:
-    type: Optional[str]
-    transaction_key: Optional[str]
-    request_id: Optional[str]
-    sha256: Optional[str]
-    created: Optional[str]
-    duration: Optional[float]
-    channels: Optional[int]
-    models: Optional[List[str]]
-    model_info: Optional[Dict[str, ModelInfo]]
-
-    def __init__(
-        self,
-        type: str,
-        transaction_key: str,
-        request_id: str,
-        sha256: str,
-        created: datetime,
-        duration: float,
-        channels: int,
-        models: List[str],
-        model_info: Dict[str, ModelInfo],
-    ) -> None:
-        self.type = type
-        self.transaction_key = transaction_key
-        self.request_id = request_id
-        self.sha256 = sha256
-        self.created = created
-        self.duration = duration
-        self.channels = channels
-        self.models = models
-        self.model_info = model_info
+    type: Optional[str] = ""
+    transaction_key: Optional[str] = ""
+    request_id: Optional[str] = ""
+    sha256: Optional[str] = ""
+    created: Optional[str] = ""
+    duration: Optional[float] = 0
+    channels: Optional[int] = 0
+    models: Optional[List[str]] = None
+    model_info: Optional[Dict[str, ModelInfo]] = None
 
     def __getitem__(self, key):
         _dict = self.to_dict()
-        # TODO: fix this
-        # if _dict["model_info"] is not None:
-        #     _dict["model_info"] = [ModelInfo.from_dict(value) for value in _dict["model_info"]]
+        if _dict["models"] is not None:
+            _dict["models"] = [str(models) for models in _dict["models"]]
+        if _dict["model_info"] is not None:
+            _dict["model_info"] = [
+                ModelInfo.from_dict(value) for value in _dict["model_info"]
+            ]
         return _dict[key]
 
 
@@ -169,10 +150,10 @@ class MetadataResponse:
 @dataclass_json
 @dataclass
 class ErrorResponse:
-    description: Optional[str]
-    message: Optional[str]
-    type: Optional[str]
-    variant: Optional[str]
+    description: Optional[str] = ""
+    message: Optional[str] = ""
+    type: Optional[str] = ""
+    variant: Optional[str] = ""
 
     def __getitem__(self, key):
         _dict = self.to_dict()

@@ -2,6 +2,7 @@
 # Use of this source code is governed by a MIT license that can be found in the LICENSE file.
 # SPDX-License-Identifier: MIT
 
+import logging, verboselogs
 from typing import Dict
 import re
 
@@ -24,9 +25,11 @@ class DeepgramClientOptions:
         self,
         api_key: str = "",
         url: str = "",
+        verbose: int = logging.WARNING,
         headers: Dict[str, str] = None,
         options: Dict[str, str] = None,
     ):
+        self.verbose = verbose
         self.api_key = api_key
         if headers is None:
             self.headers = {

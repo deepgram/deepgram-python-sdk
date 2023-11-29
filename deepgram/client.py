@@ -4,8 +4,9 @@
 
 from typing import Optional
 from importlib import import_module
+import logging, verboselogs
 
-from .clients.listen import ListenClient
+from .clients.listen import ListenClient, PreRecordedClient
 from .clients.manage.client import ManageClient
 from .clients.onprem.client import OnPremClient
 
@@ -30,10 +31,13 @@ class DeepgramClient:
         listen: Returns a ListenClient instance for interacting with Deepgram's transcription services.
         manage: Returns a ManageClient instance for managing Deepgram resources.
         onprem: Returns an OnPremClient instance for interacting with Deepgram's on-premises API.
-
     """
 
     def __init__(self, api_key: str, config: Optional[DeepgramClientOptions] = None):
+        verboselogs.install()
+        self.logger = logging.getLogger(__name__)
+        self.logger.addHandler(logging.StreamHandler())
+
         if not api_key:
             raise DeepgramApiKeyError("Deepgram API key is required")
 
@@ -43,6 +47,8 @@ class DeepgramClient:
         else:
             config.set_apikey(self.api_key)
             self.config = config
+
+        self.logger.setLevel(logging.SPAM)
 
     @property
     def listen(self):
@@ -59,6 +65,9 @@ class DeepgramClient:
     # INTERNAL CLASSES
     class Version:
         def __init__(self, config, parent: str):
+            self.logger = logging.getLogger(__name__)
+            self.logger.addHandler(logging.StreamHandler())
+            self.logger.setLevel(config.verbose)
             self.config = config
             self.parent = parent
 
@@ -75,8 +84,11 @@ class DeepgramClient:
         #             raise DeepgramModuleError("Invalid parent")
 
         def v(self, version: str = ""):
-            # print(f"version: {version}")
+            self.logger.debug("Version.v ENTER")
+            self.logger.info("version: %s", version)
             if len(version) == 0:
+                self.logger.error("version is empty")
+                self.logger.debug("Version.v LEAVE")
                 raise DeepgramModuleError("Invalid module version")
 
             className = ""
@@ -86,22 +98,30 @@ class DeepgramClient:
                 case "onprem":
                     className = "OnPremClient"
                 case _:
+                    self.logger.error("parent unknown: %s", self.parent)
+                    self.logger.debug("Version.v LEAVE")
                     raise DeepgramModuleError("Invalid parent type")
 
             # create class path
             path = f"deepgram.clients.{self.parent}.v{version}.client"
-            # print(f"path: {path}")
-            # print(f"className: {className}")
+            self.logger.info("path: %s", path)
+            self.logger.info("className: %s", className)
 
             # import class
             mod = import_module(path)
             if mod is None:
+                self.logger.error("module path is None")
+                self.logger.debug("Version.v LEAVE")
                 raise DeepgramModuleError("Unable to find package")
 
             my_class = getattr(mod, className)
             if my_class is None:
+                self.logger.error("my_class is None")
+                self.logger.debug("Version.v LEAVE")
                 raise DeepgramModuleError("Unable to find class")
 
             # instantiate class
             myClass = my_class(self.config)
+            self.logger.notice("Version.v succeeded")
+            self.logger.debug("Version.v LEAVE")
             return myClass

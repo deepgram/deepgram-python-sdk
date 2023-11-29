@@ -5,22 +5,33 @@
 import asyncio
 import os
 from dotenv import load_dotenv
+import logging, verboselogs
 
-from deepgram import DeepgramClient, PrerecordedOptions, FileSource
+from deepgram import (
+    DeepgramClientOptions,
+    DeepgramClient,
+    PrerecordedOptions,
+    FileSource,
+)
 
 load_dotenv()
 
 API_KEY = os.getenv("DG_API_KEY")
 AUDIO_FILE = "preamble.wav"
 
-options: PrerecordedOptions = {
-    "model": "nova",
-    "smart_format": "true",
-    "summarize": "v2",
-}
+# Create a Deepgram client using the API key
+config: DeepgramClientOptions = DeepgramClientOptions(
+    verbose=logging.SPAM,
+)
+
+options: PrerecordedOptions = PrerecordedOptions(
+    model="nova",
+    smart_format="true",
+    summarize="v2",
+)
 
 # STEP 1 Create a Deepgram client using the API key (optional - add config options)
-deepgram = DeepgramClient(API_KEY)
+deepgram: DeepgramClient = DeepgramClient(API_KEY, config)
 
 
 # STEP 2 Call the transcribe_file method on the prerecorded class
@@ -43,6 +54,10 @@ async def main():
     try:
         response = await transcribe_file()
         print(response)
+        print("")
+        json = response.to_json()
+        print("")
+        print(json)
     except Exception as e:
         print(f"Exception: {e}")
 

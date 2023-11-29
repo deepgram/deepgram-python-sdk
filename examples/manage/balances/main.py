@@ -6,8 +6,9 @@ import asyncio
 import os
 import sys
 from dotenv import load_dotenv
+import logging, verboselogs
 
-from deepgram import DeepgramClient
+from deepgram import DeepgramClient, DeepgramClientOptions
 
 load_dotenv()
 
@@ -15,7 +16,11 @@ load_dotenv()
 API_KEY = os.getenv("DG_API_KEY")
 
 # Create a Deepgram client using the API key
-deepgram: DeepgramClient = DeepgramClient(API_KEY)
+config: DeepgramClientOptions = DeepgramClientOptions(
+    verbose=logging.SPAM,
+)
+
+deepgram: DeepgramClient = DeepgramClient(API_KEY, config)
 
 
 async def main():
