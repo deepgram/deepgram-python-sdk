@@ -13,7 +13,7 @@ from typing import TypedDict, List, Optional
 @dataclass_json
 @dataclass
 class Message:
-    message: Optional[str]
+    message: Optional[str] = ""
 
     def __getitem__(self, key):
         _dict = self.to_dict()
@@ -26,8 +26,8 @@ class Message:
 @dataclass_json
 @dataclass
 class Project:
-    project_id: Optional[str]
-    name: Optional[str]
+    project_id: Optional[str] = ""
+    name: Optional[str] = ""
 
     def __getitem__(self, key):
         _dict = self.to_dict()
@@ -37,7 +37,7 @@ class Project:
 @dataclass_json
 @dataclass
 class ProjectsResponse:
-    projects: Optional[List[Project]]
+    projects: Optional[List[Project]] = None
 
     def __getitem__(self, key):
         _dict = self.to_dict()
@@ -48,8 +48,14 @@ class ProjectsResponse:
         return _dict[key]
 
 
-class ProjectOptions(TypedDict, total=False):
-    name: Optional[str]
+@dataclass_json
+@dataclass
+class ProjectOptions:
+    name: Optional[str] = ""
+
+    def __getitem__(self, key):
+        _dict = self.to_dict()
+        return _dict[key]
 
 
 # Members
@@ -58,10 +64,10 @@ class ProjectOptions(TypedDict, total=False):
 @dataclass_json
 @dataclass
 class Member:
-    email: Optional[str]
-    first_name: Optional[str]
-    last_name: Optional[str]
-    member_id: Optional[str]
+    email: Optional[str] = ""
+    first_name: Optional[str] = ""
+    last_name: Optional[str] = ""
+    member_id: Optional[str] = ""
 
     def __getitem__(self, key):
         _dict = self.to_dict()
@@ -71,7 +77,7 @@ class Member:
 @dataclass_json
 @dataclass
 class MembersResponse:
-    members: Optional[List[Member]]
+    members: Optional[List[Member]] = None
 
     def __getitem__(self, key):
         _dict = self.to_dict()
@@ -84,21 +90,23 @@ class MembersResponse:
 @dataclass_json
 @dataclass
 class Key:
-    api_key_id: Optional[str]
-    comment: Optional[str]
-    created: Optional[str]
-    scopes: Optional[List[str]]
+    api_key_id: Optional[str] = ""
+    comment: Optional[str] = ""
+    created: Optional[str] = ""
+    scopes: Optional[List[str]] = None
 
     def __getitem__(self, key):
         _dict = self.to_dict()
+        if _dict["scopes"] is not None:
+            _dict["scopes"] = [str(scopes) for scopes in _dict["scopes"]]
         return _dict[key]
 
 
 @dataclass_json
 @dataclass
 class KeyResponse:
-    api_key: Optional[Key]
-    member: Optional[Member]
+    api_key: Optional[Key] = None
+    member: Optional[Member] = None
 
     def __getitem__(self, key):
         _dict = self.to_dict()
@@ -112,7 +120,7 @@ class KeyResponse:
 @dataclass_json
 @dataclass
 class KeysResponse:
-    api_keys: Optional[List[KeyResponse]]
+    api_keys: Optional[List[KeyResponse]] = None
 
     def __getitem__(self, key):
         _dict = self.to_dict()
@@ -123,27 +131,45 @@ class KeysResponse:
         return _dict[key]
 
 
-class KeyOptions(TypedDict):
-    comment: Optional[str]
-    scopes: Optional[List[str]]
-    tags: Optional[List[str]]
-    time_to_live_in_seconds: Optional[int]
-    expiration_date: Optional[datetime]
+@dataclass_json
+@dataclass
+class KeyOptions:
+    comment: Optional[str] = ""
+    time_to_live_in_seconds: Optional[int] = 0
+    expiration_date: Optional[str] = ""
+    scopes: Optional[List[str]] = None
+    tags: Optional[List[str]] = None
+
+    def __getitem__(self, key):
+        _dict = self.to_dict()
+        if _dict["scopes"] is not None:
+            _dict["scopes"] = [str(scopes) for scopes in _dict["scopes"]]
+        if _dict["tags"] is not None:
+            _dict["tags"] = [str(tags) for tags in _dict["tags"]]
+        return _dict[key]
 
 
 # Scopes
 @dataclass_json
 @dataclass
 class ScopesResponse:
-    scopes: List[str]
+    scopes: Optional[List[str]] = None
+
+    def __getitem__(self, key):
+        _dict = self.to_dict()
+        if _dict["scopes"] is not None:
+            _dict["scopes"] = [str(scopes) for scopes in _dict["scopes"]]
+        return _dict[key]
+
+
+@dataclass_json
+@dataclass
+class ScopeOptions:
+    scope: Optional[str] = ""
 
     def __getitem__(self, key):
         _dict = self.to_dict()
         return _dict[key]
-
-
-class ScopeOptions(TypedDict):
-    scope: str
 
 
 # Invites
@@ -152,8 +178,8 @@ class ScopeOptions(TypedDict):
 @dataclass_json
 @dataclass
 class Invite:
-    email: Optional[str]
-    scope: Optional[str]
+    email: Optional[str] = ""
+    scope: Optional[str] = ""
 
     def __getitem__(self, key):
         _dict = self.to_dict()
@@ -163,7 +189,7 @@ class Invite:
 @dataclass_json
 @dataclass
 class InvitesResponse:
-    invites: List[Invite]
+    invites: Optional[List[Invite]] = None
 
     def __getitem__(self, key):
         _dict = self.to_dict()
@@ -172,20 +198,26 @@ class InvitesResponse:
         return _dict[key]
 
 
+@dataclass_json
+@dataclass
 class InviteOptions:
-    email: Optional[str]
-    scope: Optional[str]
+    email: Optional[str] = ""
+    scope: Optional[str] = ""
+
+    def __getitem__(self, key):
+        _dict = self.to_dict()
+        return _dict[key]
 
 
 # Usage
 @dataclass_json
 @dataclass
 class Config:
-    # diarize: Optional[bool]
-    # language: Optional[str]
-    # model: Optional[str]
-    # punctuate: Optional[bool]
-    # utterances: Optional[bool]
+    language: Optional[str] = ""
+    model: Optional[str] = ""
+    punctuate: Optional[bool] = False
+    utterances: Optional[bool] = False
+    diarize: Optional[bool] = False
 
     def __getitem__(self, key):
         _dict = self.to_dict()
@@ -195,30 +227,36 @@ class Config:
 @dataclass_json
 @dataclass
 class Details:
-    usd: Optional[float]
-    duration: Optional[float]
-    total_audio: Optional[float]
-    channels: Optional[int]
-    streams: Optional[int]
-    models: List[str]
-    method: Optional[str]
-    tags: Optional[List[str]]
-    features: Optional[List[str]]
-    config: Optional[Config]
+    usd: Optional[float] = 0
+    duration: Optional[float] = 0
+    total_audio: Optional[float] = 0
+    channels: Optional[int] = 0
+    streams: Optional[int] = 0
+    method: Optional[str] = ""
+    models: Optional[List[str]] = None
+    tags: Optional[List[str]] = None
+    features: Optional[List[str]] = None
+    config: Optional[Config] = None
 
     def __getitem__(self, key):
         _dict = self.to_dict()
-        # if _dict["config"] is not None:
-        #     _dict["config"] = Config.from_dict(_dict["config"])
+        if _dict["models"] is not None:
+            _dict["models"] = [str(models) for models in _dict["models"]]
+        if _dict["tags"] is not None:
+            _dict["tags"] = [str(tags) for tags in _dict["tags"]]
+        if _dict["features"] is not None:
+            _dict["features"] = [str(features) for features in _dict["features"]]
+        if _dict["config"] is not None:
+            _dict["config"] = Config.from_dict(_dict["config"])
         return _dict[key]
 
 
 @dataclass_json
 @dataclass
 class Callback:
-    attempts: Optional[int]
-    code: Optional[int]
-    completed: Optional[str]
+    attempts: Optional[int] = 0
+    code: Optional[int] = 0
+    completed: Optional[str] = ""
 
     def __getitem__(self, key):
         _dict = self.to_dict()
@@ -228,9 +266,9 @@ class Callback:
 @dataclass_json
 @dataclass
 class Response:
-    details: Optional[Details]
-    code: Optional[int]
-    completed: Optional[str]
+    code: Optional[int] = 0
+    completed: Optional[str] = ""
+    details: Optional[Details] = None
 
     def __getitem__(self, key):
         _dict = self.to_dict()
@@ -242,29 +280,29 @@ class Response:
 @dataclass_json
 @dataclass
 class UsageRequest:
-    request_id: Optional[str]
-    created: Optional[str]
-    path: Optional[str]
-    # accessor: Optional[str]
-    api_key_id: Optional[str]
-    response: Optional[Response]
-    # callback: Optional[Callback]
+    request_id: Optional[str] = ""
+    created: Optional[str] = ""
+    path: Optional[str] = ""
+    api_key_id: Optional[str] = ""
+    response: Optional[Response] = None
+    callback: Optional[Callback] = None
+    accessor: Optional[str] = ""
 
     def __getitem__(self, key):
         _dict = self.to_dict()
         if _dict["response"] is not None:
             _dict["response"] = Response.from_dict(_dict["response"])
-        # if _dict["callback"] is not None:
-        #     _dict["callback"] = Callback.from_dict(_dict["callback"])
+        if _dict["callback"] is not None:
+            _dict["callback"] = Callback.from_dict(_dict["callback"])
         return _dict[key]
 
 
 @dataclass_json
 @dataclass
 class UsageRequestsResponse:
-    page: Optional[int]
-    limit: Optional[int]
-    requests: List[UsageRequest]
+    page: Optional[int] = 0
+    limit: Optional[int] = 0
+    requests: Optional[List[UsageRequest]] = None
 
     def __getitem__(self, key):
         _dict = self.to_dict()
@@ -275,45 +313,53 @@ class UsageRequestsResponse:
         return _dict[key]
 
 
-class UsageRequestOptions(TypedDict):
-    start: Optional[str]
-    end: Optional[str]
-    limit: Optional[int]
-    status: Optional[str]
+class UsageRequestOptions:
+    start: Optional[str] = ""
+    end: Optional[str] = ""
+    limit: Optional[int] = 0
+    status: Optional[str] = ""
+
+    def __getitem__(self, key):
+        _dict = self.to_dict()
+        return _dict[key]
 
 
-class UsageSummaryOptions(TypedDict):
-    start: Optional[str]
-    end: Optional[str]
-    accessor: Optional[str]
-    tag: Optional[str]
-    method: Optional[str]
-    model: Optional[str]
-    multichannel: Optional[bool]
-    interim_results: Optional[bool]
-    punctuate: Optional[bool]
-    ner: Optional[bool]
-    utterances: Optional[bool]
-    replace: Optional[bool]
-    profanity_filter: Optional[bool]
-    keywords: Optional[bool]
-    detect_topics: Optional[bool]
-    diarize: Optional[bool]
-    search: Optional[bool]
-    redact: Optional[bool]
-    alternatives: Optional[bool]
-    numerals: Optional[bool]
-    smart_format: Optional[bool]
+class UsageSummaryOptions:
+    start: Optional[str] = ""
+    end: Optional[str] = ""
+    accessor: Optional[str] = ""
+    tag: Optional[str] = ""
+    method: Optional[str] = ""
+    model: Optional[str] = ""
+    multichannel: Optional[bool] = False
+    interim_results: Optional[bool] = False
+    punctuate: Optional[bool] = False
+    ner: Optional[bool] = False
+    utterances: Optional[bool] = False
+    replace: Optional[bool] = False
+    profanity_filter: Optional[bool] = False
+    keywords: Optional[bool] = False
+    detect_topics: Optional[bool] = False
+    diarize: Optional[bool] = False
+    search: Optional[bool] = False
+    redact: Optional[bool] = False
+    alternatives: Optional[bool] = False
+    numerals: Optional[bool] = False
+    smart_format: Optional[bool] = False
+
+    def __getitem__(self, key):
+        _dict = self.to_dict()
+        return _dict[key]
 
 
 @dataclass_json
 @dataclass
 class Results:
-    start: Optional[str]
-    end: Optional[str]
-    hours: Optional[int]
-    total_hours: Optional[int]
-    requests: Optional[int]
+    start: Optional[str] = ""
+    end: Optional[str] = ""
+    hours: Optional[int] = 0
+    total_hours: Optional[int] = 0
+    requests: Optional[int] = 0
 
     def __getitem__(self, key):
         _dict = self.to_dict()
@@ -323,8 +369,8 @@ class Results:
 @dataclass_json
 @dataclass
 class Resolution:
-    units: Optional[str]
-    amount: Optional[int]
+    units: Optional[str] = ""
+    amount: Optional[int] = 0
 
     def __getitem__(self, key):
         _dict = self.to_dict()
@@ -334,10 +380,10 @@ class Resolution:
 @dataclass_json
 @dataclass
 class UsageSummaryResponse:
-    start: Optional[str]
-    end: Optional[str]
-    resolution: Optional[Resolution]
-    results: Optional[List[Results]]
+    start: Optional[str] = ""
+    end: Optional[str] = ""
+    resolution: Optional[Resolution] = None
+    results: Optional[List[Results]] = None
 
     def __getitem__(self, key):
         _dict = self.to_dict()
@@ -353,10 +399,10 @@ class UsageSummaryResponse:
 @dataclass_json
 @dataclass
 class UsageModel:
-    name: Optional[str]
-    language: Optional[str]
-    version: Optional[str]
-    model_id: Optional[str]
+    name: Optional[str] = ""
+    language: Optional[str] = ""
+    version: Optional[str] = ""
+    model_id: Optional[str] = ""
 
     def __getitem__(self, key):
         _dict = self.to_dict()
@@ -366,22 +412,39 @@ class UsageModel:
 @dataclass_json
 @dataclass
 class UsageFieldsResponse:
-    tags: Optional[List[str]]
-    models: Optional[List[UsageModel]]
-    processing_methods: Optional[List[str]]
-    # languages: Optional[List[str]]
-    features: Optional[List[str]]
+    tags: Optional[List[str]] = None
+    models: Optional[List[UsageModel]] = None
+    processing_methods: Optional[List[str]] = None
+    features: Optional[List[str]] = None
+    languages: Optional[List[str]] = None
 
     def __getitem__(self, key):
         _dict = self.to_dict()
+        if _dict["tags"] is not None:
+            _dict["tags"] = [str(tags) for tags in _dict["tags"]]
         if _dict["models"] is not None:
             _dict["models"] = [UsageModel.from_dict(model) for model in _dict["models"]]
+        if _dict["processing_methods"] is not None:
+            _dict["processing_methods"] = [
+                str(processing_methods)
+                for processing_methods in _dict["processing_methods"]
+            ]
+        if _dict["features"] is not None:
+            _dict["features"] = [str(features) for features in _dict["features"]]
+        if _dict["languages"] is not None:
+            _dict["languages"] = [str(model) for model in _dict["languages"]]
         return _dict[key]
 
 
-class UsageFieldsOptions(TypedDict):
-    start: Optional[str]
-    end: Optional[str]
+class UsageFieldsOptions:
+    start: Optional[str] = ""
+    end: Optional[str] = ""
+
+    def __getitem__(self, key):
+        _dict = self.to_dict()
+        if _dict["details"] is not None:
+            _dict["details"] = Details.from_dict(_dict["details"])
+        return _dict[key]
 
 
 # Billing
@@ -390,10 +453,10 @@ class UsageFieldsOptions(TypedDict):
 @dataclass_json
 @dataclass
 class Balance:
-    balance_id: Optional[str]
-    amount: Optional[str]
-    units: Optional[str]
-    purchase_order_id: Optional[str]
+    balance_id: Optional[str] = ""
+    amount: Optional[str] = ""
+    units: Optional[str] = ""
+    purchase_order_id: Optional[str] = ""
 
     def __getitem__(self, key):
         _dict = self.to_dict()
@@ -403,7 +466,7 @@ class Balance:
 @dataclass_json
 @dataclass
 class BalancesResponse:
-    balances: Optional[List[Balance]]
+    balances: Optional[List[Balance]] = None
 
     def __getitem__(self, key):
         _dict = self.to_dict()

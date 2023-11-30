@@ -32,6 +32,7 @@ setup(
         "python-dotenv",
         "asyncio",
         "aiohttp",
+        "verboselogs",
     ],
     keywords=["deepgram", "deepgram speech-to-text"],
     classifiers=[

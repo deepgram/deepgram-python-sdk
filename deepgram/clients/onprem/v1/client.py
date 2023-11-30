@@ -2,6 +2,8 @@
 # Use of this source code is governed by a MIT license that can be found in the LICENSE file.
 # SPDX-License-Identifier: MIT
 
+import logging, verboselogs
+
 from ...abstract_client import AbstractRestfulClient
 
 
@@ -26,26 +28,49 @@ class OnPremClient(AbstractRestfulClient):
     """
 
     def __init__(self, config):
+        self.logger = logging.getLogger(__name__)
+        self.logger.addHandler(logging.StreamHandler())
+        self.logger.setLevel(config.verbose)
         self.config = config
         self.endpoint = "v1/projects"
         super().__init__(config)
 
     async def list_onprem_credentials(self, project_id: str):
+        self.logger.debug("OnPremClient.list_onprem_credentials ENTER")
         url = f"{self.config.url}/{self.endpoint}/{project_id}/onprem/distribution/credentials"
-        return await self.get(url)
+        res = await self.get(url)
+        self.logger.info("result: %s", res)
+        self.logger.notice("list_onprem_credentials succeeded")
+        self.logger.debug("OnPremClient.list_onprem_credentials LEAVE")
+        return res
 
     async def get_onprem_credentials(
         self, project_id: str, distribution_credentials_id: str
     ):
+        self.logger.debug("OnPremClient.get_onprem_credentials ENTER")
         url = f"{self.config.url}/{self.endpoint}/{project_id}/onprem/distribution/credentials/{distribution_credentials_id}"
-        return await self.get(url)
+        res = await self.get(url)
+        self.logger.info("result: %s", res)
+        self.logger.notice("get_onprem_credentials succeeded")
+        self.logger.debug("OnPremClient.get_onprem_credentials LEAVE")
+        return res
 
     async def create_onprem_credentials(self, project_id: str, options):
+        self.logger.debug("OnPremClient.create_onprem_credentials ENTER")
         url = f"{self.config.url}/{self.endpoint}/{project_id}/onprem/distribution/credentials/"
-        return await self.post(url, json=options)
+        res = await self.post(url, json=options)
+        self.logger.info("result: %s", res)
+        self.logger.notice("create_onprem_credentials succeeded")
+        self.logger.debug("OnPremClient.create_onprem_credentials LEAVE")
+        return res
 
     async def delete_onprem_credentials(
         self, project_id: str, distribution_credentials_id: str
     ):
+        self.logger.debug("OnPremClient.delete_onprem_credentials ENTER")
         url = f"{self.config.url}/{self.endpoint}/{project_id}/onprem/distribution/credentials/{distribution_credentials_id}"
-        return await self.delete(url)
+        res = await self.delete(url)
+        self.logger.info("result: %s", res)
+        self.logger.notice("delete_onprem_credentials succeeded")
+        self.logger.debug("OnPremClient.delete_onprem_credentials LEAVE")
+        return res
