@@ -57,7 +57,7 @@ class LiveClient:
 
     def start(self, options: LiveOptions = None):
         self.logger.debug("LiveClient.start ENTER")
-        # TODO: options
+        self.logger.info("options: %s", options)
 
         self.options = options
 
@@ -88,6 +88,7 @@ class LiveClient:
         self.logger.debug("LiveClient.start LEAVE")
 
     def on(self, event, handler):  # registers event handlers for specific events
+        self.logger.info("event fired: %s", event)
         if event in LiveTranscriptionEvents and callable(handler):
             self._event_handlers[event].append(handler)
 

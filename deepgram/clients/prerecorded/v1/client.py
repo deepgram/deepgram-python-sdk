@@ -63,8 +63,11 @@ class PreRecordedClient(AbstractRestfulClient):
             self.logger.debug("PreRecordedClient.transcribe_url LEAVE")
             raise DeepgramTypeError("Unknown transcription source type")
 
+        self.logger.info("url: %s", url)
+        self.logger.info("source: %s", source)
+        self.logger.info("options: %s", options)
         res = PrerecordedResponse.from_json(await self.post(url, options, json=body))
-        self.logger.info("result: %s", res)
+        self.logger.verbose("result: %s", res)
         self.logger.notice("transcribe_url succeeded")
         self.logger.debug("PreRecordedClient.transcribe_url LEAVE")
         return res
@@ -107,10 +110,13 @@ class PreRecordedClient(AbstractRestfulClient):
             self.logger.debug("PreRecordedClient.transcribe_url_callback LEAVE")
             raise DeepgramTypeError("Unknown transcription source type")
 
-        res = AsyncPrerecordedResponse.from_json(
-            await self.post(url, options, json=body)
-        )
-        self.logger.info("result: %s", res)
+        self.logger.info("url: %s", url)
+        self.logger.info("source: %s", source)
+        self.logger.info("options: %s", options)
+        json = await self.post(url, options, json=body)
+        self.logger.info("json: %s", json)
+        res = AsyncPrerecordedResponse.from_json(json)
+        self.logger.verbose("result: %s", res)
         self.logger.notice("transcribe_url_callback succeeded")
         self.logger.debug("PreRecordedClient.transcribe_url_callback LEAVE")
         return res
@@ -151,8 +157,12 @@ class PreRecordedClient(AbstractRestfulClient):
             self.logger.debug("PreRecordedClient.transcribe_file LEAVE")
             raise DeepgramTypeError("Unknown transcription source type")
 
-        res = PrerecordedResponse.from_json(await self.post(url, options, content=body))
-        self.logger.info("result: %s", res)
+        self.logger.info("url: %s", url)
+        self.logger.info("options: %s", options)
+        json = await self.post(url, options, content=body)
+        self.logger.info("json: %s", json)
+        res = PrerecordedResponse.from_json(json)
+        self.logger.verbose("result: %s", res)
         self.logger.notice("transcribe_file succeeded")
         self.logger.debug("PreRecordedClient.transcribe_file LEAVE")
         return res
@@ -197,10 +207,12 @@ class PreRecordedClient(AbstractRestfulClient):
             self.logger.debug("PreRecordedClient.transcribe_file_callback LEAVE")
             raise DeepgramTypeError("Unknown transcription source type")
 
-        res = AsyncPrerecordedResponse.from_json(
-            await self.post(url, options, json=body)
-        )
-        self.logger.info("result: %s", res)
+        self.logger.info("url: %s", url)
+        self.logger.info("options: %s", options)
+        json = await self.post(url, options, json=body)
+        self.logger.info("json: %s", json)
+        res = AsyncPrerecordedResponse.from_json(json)
+        self.logger.verbose("result: %s", res)
         self.logger.notice("transcribe_file_callback succeeded")
         self.logger.debug("PreRecordedClient.transcribe_file_callback LEAVE")
         return res
