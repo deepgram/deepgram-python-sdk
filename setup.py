@@ -25,9 +25,7 @@ setup(
     install_requires=[
         "httpx",
         "websockets",
-        "typing-extensions; python_version < '3.8.0'",
         "dataclasses-json",
-        "dataclasses",
         "typing_extensions",
         "python-dotenv",
         "asyncio",
