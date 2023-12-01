@@ -52,7 +52,7 @@ class LegacyLiveClient:
 
     async def __call__(self, options: LiveOptions = None):
         self.logger.debug("LegacyLiveClient.__call__ ENTER")
-        # TODO: options
+        self.logger.info("options: %s", options)
 
         self.options = options
         url_with_params = append_query_params(self.websocket_url, self.options)

@@ -19,7 +19,7 @@ CHUNK = 8194
 
 class Microphone:
     """
-    TODO
+    This implements a microphone for local audio input. This uses PyAudio under the hood.
     """
 
     def __init__(

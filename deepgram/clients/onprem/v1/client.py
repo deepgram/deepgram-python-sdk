@@ -38,8 +38,10 @@ class OnPremClient(AbstractRestfulClient):
     async def list_onprem_credentials(self, project_id: str):
         self.logger.debug("OnPremClient.list_onprem_credentials ENTER")
         url = f"{self.config.url}/{self.endpoint}/{project_id}/onprem/distribution/credentials"
+        self.logger.info("url: %s", url)
+        self.logger.info("project_id: %s", project_id)
         res = await self.get(url)
-        self.logger.info("result: %s", res)
+        self.logger.verbose("result: %s", res)
         self.logger.notice("list_onprem_credentials succeeded")
         self.logger.debug("OnPremClient.list_onprem_credentials LEAVE")
         return res
@@ -49,8 +51,11 @@ class OnPremClient(AbstractRestfulClient):
     ):
         self.logger.debug("OnPremClient.get_onprem_credentials ENTER")
         url = f"{self.config.url}/{self.endpoint}/{project_id}/onprem/distribution/credentials/{distribution_credentials_id}"
+        self.logger.info("url: %s", url)
+        self.logger.info("project_id: %s", project_id)
+        self.logger.info("distribution_credentials_id: %s", distribution_credentials_id)
         res = await self.get(url)
-        self.logger.info("result: %s", res)
+        self.logger.verbose("result: %s", res)
         self.logger.notice("get_onprem_credentials succeeded")
         self.logger.debug("OnPremClient.get_onprem_credentials LEAVE")
         return res
@@ -58,8 +63,11 @@ class OnPremClient(AbstractRestfulClient):
     async def create_onprem_credentials(self, project_id: str, options):
         self.logger.debug("OnPremClient.create_onprem_credentials ENTER")
         url = f"{self.config.url}/{self.endpoint}/{project_id}/onprem/distribution/credentials/"
+        self.logger.info("url: %s", url)
+        self.logger.info("project_id: %s", project_id)
+        self.logger.info("options: %s", options)
         res = await self.post(url, json=options)
-        self.logger.info("result: %s", res)
+        self.logger.verbose("result: %s", res)
         self.logger.notice("create_onprem_credentials succeeded")
         self.logger.debug("OnPremClient.create_onprem_credentials LEAVE")
         return res
@@ -69,8 +77,11 @@ class OnPremClient(AbstractRestfulClient):
     ):
         self.logger.debug("OnPremClient.delete_onprem_credentials ENTER")
         url = f"{self.config.url}/{self.endpoint}/{project_id}/onprem/distribution/credentials/{distribution_credentials_id}"
+        self.logger.info("url: %s", url)
+        self.logger.info("project_id: %s", project_id)
+        self.logger.info("distrbution_credentials_id: %s", distribution_credentials_id)
         res = await self.delete(url)
-        self.logger.info("result: %s", res)
+        self.logger.verbose("result: %s", res)
         self.logger.notice("delete_onprem_credentials succeeded")
         self.logger.debug("OnPremClient.delete_onprem_credentials LEAVE")
         return res
