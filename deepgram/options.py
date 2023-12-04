@@ -3,7 +3,7 @@
 # SPDX-License-Identifier: MIT
 
 import logging, verboselogs
-from typing import Dict
+from typing import Dict, Optional
 import re
 
 
@@ -31,15 +31,7 @@ class DeepgramClientOptions:
     ):
         self.verbose = verbose
         self.api_key = api_key
-        if headers is None:
-            self.headers = {
-                "Accept": "application/json",
-                "Authorization": f"Token {self.api_key}",
-            }
-        else:
-            self.headers.update(
-                {"Accept": "application/json", "Authorization": f"Token {self.api_key}"}
-            )
+        self._update_headers(headers=headers)
         if len(url) == 0:
             url = "api.deepgram.com"
         self.url = self._get_url(url)
@@ -49,11 +41,21 @@ class DeepgramClientOptions:
 
     def set_apikey(self, api_key: str):
         self.api_key = api_key
-        self.headers.update(
-            {"Accept": "application/json", "Authorization": f"Token {self.api_key}"}
-        )
+        self._update_headers()
 
     def _get_url(self, url):
         if not re.match(r"^https?://", url, re.IGNORECASE):
             url = "https://" + url
         return url.strip("/")
+
+    def _update_headers(self, headers: Optional[Dict[str, str]] = None):
+        if not hasattr(self, "headers") or self.headers is None:
+            self.headers = {}
+        self.headers["Accept"] = "application/json"
+        if self.api_key:
+            self.headers["Authorization"] = f"Token {self.api_key}"
+        elif "Authorization" in self.headers:
+            del self.headers["Authorization"]
+        # Overwrite / add any headers that were passed in
+        if headers:
+            self.headers.update(headers)

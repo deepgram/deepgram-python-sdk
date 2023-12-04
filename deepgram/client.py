@@ -5,6 +5,7 @@
 from typing import Optional
 from importlib import import_module
 import logging, verboselogs
+import os
 
 from .clients.listen import ListenClient, PreRecordedClient
 from .clients.manage.client import ManageClient
@@ -39,7 +40,8 @@ class DeepgramClient:
         self.logger.addHandler(logging.StreamHandler())
 
         if not api_key:
-            raise DeepgramApiKeyError("Deepgram API key is required")
+            # Default to `None` for on-prem instances where an API key is not required
+            api_key = os.getenv("DEEPGRAM_API_KEY", None)
 
         self.api_key = api_key
         if config is None:  # Use default configuration
