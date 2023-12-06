@@ -48,16 +48,6 @@ class ProjectsResponse:
         return _dict[key]
 
 
-@dataclass_json
-@dataclass
-class ProjectOptions:
-    name: Optional[str] = ""
-
-    def __getitem__(self, key):
-        _dict = self.to_dict()
-        return _dict[key]
-
-
 # Members
 
 
@@ -131,24 +121,6 @@ class KeysResponse:
         return _dict[key]
 
 
-@dataclass_json
-@dataclass
-class KeyOptions:
-    comment: Optional[str] = ""
-    time_to_live_in_seconds: Optional[int] = 0
-    expiration_date: Optional[str] = ""
-    scopes: Optional[List[str]] = None
-    tags: Optional[List[str]] = None
-
-    def __getitem__(self, key):
-        _dict = self.to_dict()
-        if _dict["scopes"] is not None:
-            _dict["scopes"] = [str(scopes) for scopes in _dict["scopes"]]
-        if _dict["tags"] is not None:
-            _dict["tags"] = [str(tags) for tags in _dict["tags"]]
-        return _dict[key]
-
-
 # Scopes
 @dataclass_json
 @dataclass
@@ -159,16 +131,6 @@ class ScopesResponse:
         _dict = self.to_dict()
         if _dict["scopes"] is not None:
             _dict["scopes"] = [str(scopes) for scopes in _dict["scopes"]]
-        return _dict[key]
-
-
-@dataclass_json
-@dataclass
-class ScopeOptions:
-    scope: Optional[str] = ""
-
-    def __getitem__(self, key):
-        _dict = self.to_dict()
         return _dict[key]
 
 
@@ -195,17 +157,6 @@ class InvitesResponse:
         _dict = self.to_dict()
         if _dict["invites"] is not None:
             _dict["invites"] = [Invite.from_dict(invite) for invite in _dict["invites"]]
-        return _dict[key]
-
-
-@dataclass_json
-@dataclass
-class InviteOptions:
-    email: Optional[str] = ""
-    scope: Optional[str] = ""
-
-    def __getitem__(self, key):
-        _dict = self.to_dict()
         return _dict[key]
 
 
@@ -313,45 +264,6 @@ class UsageRequestsResponse:
         return _dict[key]
 
 
-class UsageRequestOptions:
-    start: Optional[str] = ""
-    end: Optional[str] = ""
-    limit: Optional[int] = 0
-    status: Optional[str] = ""
-
-    def __getitem__(self, key):
-        _dict = self.to_dict()
-        return _dict[key]
-
-
-class UsageSummaryOptions:
-    start: Optional[str] = ""
-    end: Optional[str] = ""
-    accessor: Optional[str] = ""
-    tag: Optional[str] = ""
-    method: Optional[str] = ""
-    model: Optional[str] = ""
-    multichannel: Optional[bool] = False
-    interim_results: Optional[bool] = False
-    punctuate: Optional[bool] = False
-    ner: Optional[bool] = False
-    utterances: Optional[bool] = False
-    replace: Optional[bool] = False
-    profanity_filter: Optional[bool] = False
-    keywords: Optional[bool] = False
-    detect_topics: Optional[bool] = False
-    diarize: Optional[bool] = False
-    search: Optional[bool] = False
-    redact: Optional[bool] = False
-    alternatives: Optional[bool] = False
-    numerals: Optional[bool] = False
-    smart_format: Optional[bool] = False
-
-    def __getitem__(self, key):
-        _dict = self.to_dict()
-        return _dict[key]
-
-
 @dataclass_json
 @dataclass
 class Results:
@@ -433,17 +345,6 @@ class UsageFieldsResponse:
             _dict["features"] = [str(features) for features in _dict["features"]]
         if _dict["languages"] is not None:
             _dict["languages"] = [str(model) for model in _dict["languages"]]
-        return _dict[key]
-
-
-class UsageFieldsOptions:
-    start: Optional[str] = ""
-    end: Optional[str] = ""
-
-    def __getitem__(self, key):
-        _dict = self.to_dict()
-        if _dict["details"] is not None:
-            _dict["details"] = Details.from_dict(_dict["details"])
         return _dict[key]
 
 

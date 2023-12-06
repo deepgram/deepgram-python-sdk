@@ -24,7 +24,7 @@ from .response import (
     BalancesResponse,
     Balance,
 )
-from .response import (
+from .options import (
     ProjectOptions,
     KeyOptions,
     ScopeOptions,

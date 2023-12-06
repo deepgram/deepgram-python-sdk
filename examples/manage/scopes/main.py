@@ -12,11 +12,10 @@ from deepgram import DeepgramClient, ScopeOptions
 load_dotenv()
 
 # environment variables
-API_KEY = os.getenv("DG_API_KEY")
 MEMBER_BY_EMAIL = "enter-your-email@gmail.com"
 
 # Create a Deepgram client using the API key
-deepgram: DeepgramClient = DeepgramClient(API_KEY)
+deepgram: DeepgramClient = DeepgramClient()
 
 
 async def main():

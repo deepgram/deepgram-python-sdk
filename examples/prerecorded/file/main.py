@@ -16,7 +16,6 @@ from deepgram import (
 
 load_dotenv()
 
-API_KEY = os.getenv("DG_API_KEY")
 AUDIO_FILE = "preamble.wav"
 
 # Create a Deepgram client using the API key
@@ -24,14 +23,14 @@ config: DeepgramClientOptions = DeepgramClientOptions(
     verbose=logging.SPAM,
 )
 
-options: PrerecordedOptions = PrerecordedOptions(
+options = PrerecordedOptions(
     model="nova",
     smart_format="true",
     summarize="v2",
 )
 
 # STEP 1 Create a Deepgram client using the API key (optional - add config options)
-deepgram: DeepgramClient = DeepgramClient(API_KEY, config)
+deepgram: DeepgramClient = DeepgramClient("", config)
 
 
 # STEP 2 Call the transcribe_file method on the prerecorded class

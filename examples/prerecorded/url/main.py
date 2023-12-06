@@ -10,7 +10,6 @@ from deepgram import DeepgramClient, PrerecordedOptions
 
 load_dotenv()
 
-API_KEY = os.getenv("DG_API_KEY")
 AUDIO_URL = {
     "url": "https://static.deepgram.com/examples/Bueller-Life-moves-pretty-fast.wav"
 }
@@ -22,7 +21,7 @@ options: PrerecordedOptions = {
 }
 
 # STEP 1 Create a Deepgram client using the API key (optional - add config options)
-deepgram = DeepgramClient(API_KEY)
+deepgram = DeepgramClient()
 
 
 # STEP 2 Call the transcribe_url method on the prerecorded class

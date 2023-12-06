@@ -2,31 +2,39 @@
 # Use of this source code is governed by a MIT license that can be found in the LICENSE file.
 # SPDX-License-Identifier: MIT
 
-from typing import Union, List, TypedDict
+from dataclasses import dataclass
+from dataclasses_json import dataclass_json
+from typing import Union, List, TypedDict, Optional
 
 
-class PrerecordedOptions(TypedDict, total=False):
-    alternatives: int
-    callback: str
-    detect_entities: bool
-    detect_language: bool
-    detect_topics: bool
-    diarize: bool
-    keywords: Union[list, str]
-    language: str
-    model: str
-    multichannel: bool
-    numerals: bool
-    paragraphs: bool
-    profanity_filter: bool
-    punctuate: bool
-    redact: Union[List[str], bool, str]
-    replace: Union[list, str]
-    search: Union[list, str]
-    smart_format: bool
-    summarize: Union[bool, str]
-    tag: list
-    tier: str
-    utt_split: int
-    utterances: bool
-    version: str
+@dataclass_json
+@dataclass
+class PrerecordedOptions:
+    alternatives: Optional[int] = None
+    callback: Optional[str] = None
+    detect_entities: Optional[bool] = None
+    detect_language: Optional[bool] = None
+    detect_topics: Optional[bool] = None
+    diarize: Optional[bool] = None
+    keywords: Optional[Union[list, str]] = None
+    language: Optional[str] = None
+    model: Optional[str] = None
+    multichannel: Optional[bool] = None
+    numerals: Optional[bool] = None
+    paragraphs: Optional[bool] = None
+    profanity_filter: Optional[bool] = None
+    punctuate: Optional[bool] = None
+    redact: Optional[Union[List[str], bool, str]] = None
+    replace: Optional[Union[list, str]] = None
+    search: Optional[Union[list, str]] = None
+    smart_format: Optional[bool] = None
+    summarize: Optional[Union[bool, str]] = None
+    tag: Optional[list] = None
+    tier: Optional[str] = None
+    utt_split: Optional[int] = None
+    utterances: Optional[bool] = None
+    version: Optional[str] = None
+
+    def __getitem__(self, key):
+        _dict = self.to_dict()
+        return _dict[key]

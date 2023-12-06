@@ -12,15 +12,12 @@ from deepgram import DeepgramClient, DeepgramClientOptions
 
 load_dotenv()
 
-# environment variables
-API_KEY = os.getenv("DG_API_KEY")
-
 # Create a Deepgram client using the API key
 config: DeepgramClientOptions = DeepgramClientOptions(
     verbose=logging.SPAM,
 )
 
-deepgram: DeepgramClient = DeepgramClient(API_KEY, config)
+deepgram: DeepgramClient = DeepgramClient("", config)
 
 
 async def main():
