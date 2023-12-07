@@ -1,54 +1,55 @@
 # Deepgram Python SDK
 
- [![Discord](https://dcbadge.vercel.app/api/server/xWRaCDBtW4?style=flat)](https://discord.gg/xWRaCDBtW4) [![GitHub Workflow Status](https://img.shields.io/github/workflow/status/deepgram/deepgram-python-sdk/CI)](https://github.com/deepgram/deepgram-python-sdk/actions/workflows/CI.yml) [![PyPI](https://img.shields.io/pypi/v/deepgram-sdk)](https://pypi.org/project/deepgram-sdk/)
+[![Discord](https://dcbadge.vercel.app/api/server/xWRaCDBtW4?style=flat)](https://discord.gg/xWRaCDBtW4) [![GitHub Workflow Status](https://img.shields.io/github/workflow/status/deepgram/deepgram-python-sdk/CI)](https://github.com/deepgram/deepgram-python-sdk/actions/workflows/CI.yml) [![PyPI](https://img.shields.io/pypi/v/deepgram-sdk)](https://pypi.org/project/deepgram-sdk/)
 [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-v2.0%20adopted-ff69b4.svg?style=flat-rounded)](./.github/CODE_OF_CONDUCT.md)
 
 Official Python SDK for [Deepgram](https://www.deepgram.com/). Power your apps with world-class speech and Language AI models.
 
 > This SDK only supports hosted usage of api.deepgram.com.
 
-* [Deepgram Python SDK](#deepgram-python-sdk)
-* [Documentation](#documentation)
-* [Getting an API Key](#getting-an-api-key)
-* [Installation](#installation)
-* [Examples](#examples)
-* [Testing](#testing)
-* [Configuration](#configuration)
-  * [Custom API Endpoint] [#custom-api-endpoint]
-* [Transcription](#transcription)
-  * [Remote Files](#remote-files)
-  * [Local Files](#local-files)
-  * [Live Audio](#live-audio)
-  * [Parameters](#parameters)
-* [Projects](#projects)
-  * [Get Projects](#get-projects)
-  * [Get Project](#get-project)
-  * [Update Project](#update-project)
-* [Keys](#keys)
-  * [List Keys](#list-keys)
-  * [Get Key](#get-key)
-  * [Create Key](#create-key)
-  * [Delete Key](#delete-key)
-* [Members](#members)
-  * [Get Members](#get-members)
-  * [Remove Member](#remove-member)
-* [Scopes](#scopes)
-  * [Get Member Scopes](#get-member-scopes)
-  * [Update Scope](#update-scope)
-* [Invitations](#invitations)
-  * [List Invites](#list-invites)
-  * [Send Invite](#send-invite)
-  * [Delete Invite](#delete-invite)
-  * [Leave Project](#leave-project)
-* [Usage](#usage)
-  * [Get All Requests](#get-all-requests)
-  * [Get Request](#get-request)
-  * [Get Fields](#get-fields)
-* [Billing](#billing)
-  * [Get All Balances](#get-all-balances)
-  * [Get Balance](#get-balance)
-* [Development and Contributing](#development-and-contributing)
-* [Getting Help](#getting-help)
+- [Deepgram Python SDK](#deepgram-python-sdk)
+- [Documentation](#documentation)
+- [Getting an API Key](#getting-an-api-key)
+- [Installation](#installation)
+- [Examples](#examples)
+- [Testing](#testing)
+- [Configuration](#configuration)
+  - [Custom API Endpoint] [#custom-api-endpoint]
+- [Transcription](#transcription)
+  - [Remote Files](#remote-files)
+  - [Local Files](#local-files)
+  - [Live Audio](#live-audio)
+  - [Parameters](#parameters)
+- [Transcribing to captions](#transcribing-to-captions)
+- [Projects](#projects)
+  - [Get Projects](#get-projects)
+  - [Get Project](#get-project)
+  - [Update Project](#update-project)
+- [Keys](#keys)
+  - [List Keys](#list-keys)
+  - [Get Key](#get-key)
+  - [Create Key](#create-key)
+  - [Delete Key](#delete-key)
+- [Members](#members)
+  - [Get Members](#get-members)
+  - [Remove Member](#remove-member)
+- [Scopes](#scopes)
+  - [Get Member Scopes](#get-member-scopes)
+  - [Update Scope](#update-scope)
+- [Invitations](#invitations)
+  - [List Invites](#list-invites)
+  - [Send Invite](#send-invite)
+  - [Delete Invite](#delete-invite)
+  - [Leave Project](#leave-project)
+- [Usage](#usage)
+  - [Get All Requests](#get-all-requests)
+  - [Get Request](#get-request)
+  - [Get Fields](#get-fields)
+- [Billing](#billing)
+  - [Get All Balances](#get-all-balances)
+  - [Get Balance](#get-balance)
+- [Development and Contributing](#development-and-contributing)
+- [Getting Help](#getting-help)
 
 # Documentation
 
@@ -103,8 +104,8 @@ pytest --cov=deepgram --api-key <key> tests/
 
 To setup the configuration of the Deepgram Client, do the following:
 
-* Import the Deepgram client
-* Create a Deepgram Client instance and pass in credentials to the constructor.
+- Import the Deepgram client
+- Create a Deepgram Client instance and pass in credentials to the constructor.
 
 ```python
 from deepgram import Deepgram
@@ -118,9 +119,9 @@ deepgram = Deepgram(DEEPGRAM_API_KEY)
 In order to point the SDK at a different API environment (e.g., for on-prem deployments), you can pass in an object setting the `api_url` when initializing the Deepgram client.
 
 ```python
-dg_client = Deepgram({ 
-  "api_key": DEEPGRAM_API_KEY, 
-  "api_url": "http://localhost:8080/v1/listen" 
+dg_client = Deepgram({
+  "api_key": DEEPGRAM_API_KEY,
+  "api_url": "http://localhost:8080/v1/listen"
 })
 ```
 
@@ -234,6 +235,18 @@ Depending on your preference, you can also add parameters as named arguments, in
 response = await dg_client.transcription.prerecorded(source, punctuate=True, keywords=['first:5', 'second'])
 ```
 
+# Transcribing to captions
+
+```python
+from deepgram_captions import DeepgramConverter, webvtt, srt
+
+transcription = DeepgramConverter(dg_response)
+captions = webvtt(transcription)
+# captions = srt(transcription)
+```
+
+[See our standalone captions library for more information](https://github.com/deepgram/deepgram-python-captions).
+
 # Projects
 
 The `Deepgram.projects` object provides access to manage projects associated with the API key you provided when instantiating the Deepgram client.
@@ -304,7 +317,7 @@ updateResponse = await deepgram.projects.update(project)
 
 ```ts
 {
- message: String;
+  message: String;
 }
 ```
 
@@ -332,14 +345,14 @@ response = await deepgram.keys.list(PROJECT_ID)
 
 ```ts
 {
- api_keys: [
-  {
-   api_key_id: string,
-   comment: string,
-   created: string,
-   scopes: Array<string>,
-  },
- ];
+  api_keys: [
+    {
+      api_key_id: string,
+      comment: string,
+      created: string,
+      scopes: Array<string>,
+    },
+  ];
 }
 ```
 
@@ -451,7 +464,7 @@ response = await deepgram.members.remove_member(PROJECT_ID, MEMBER_ID)
 
 ```ts
 {
- message: string;
+  message: string;
 }
 ```
 
@@ -506,7 +519,7 @@ response = await deepgram.scopes.update_scope(PROJECT_ID, MEMBER_ID, 'member')
 
 ```ts
 {
- message: string;
+  message: string;
 }
 ```
 
@@ -534,12 +547,12 @@ response = await deepgram.invitations.list_invitations(PROJECT_ID)
 
 ```ts
 {
- members: [
-  {
-   email: string,
-   scope: string,
-  },
- ];
+  members: [
+    {
+      email: string,
+      scope: string,
+    },
+  ];
 }
 ```
 
@@ -567,7 +580,7 @@ response = await deepgram.invitations.send_invitation(PROJECT_ID, {
 
 ```ts
 {
- message: string;
+  message: string;
 }
 ```
 
@@ -595,7 +608,7 @@ response = await deepgram.invitations.remove_invitation(
 
 ```ts
 {
- message: string;
+  message: string;
 }
 ```
 
@@ -619,7 +632,7 @@ response = await deepgram.invitations.leave_project(PROJECT_ID)
 
 ```ts
 {
- message: string;
+  message: string;
 }
 ```
 
@@ -973,12 +986,12 @@ const response = deepgram.billing.get_balance(PROJECT_ID, BALANCE_ID)
 
 ```ts
 {
- balance: {
-  balance_id: string;
-  amount: number;
-  units: string;
-  purchase: string;
- }
+  balance: {
+    balance_id: string;
+    amount: number;
+    units: string;
+    purchase: string;
+  }
 }
 ```
 
@@ -995,6 +1008,6 @@ To make sure our community is safe for all, be sure to review and agree to our
 We love to hear from you so if you have questions, comments or find a bug in the
 project, let us know! You can either:
 
-* [Open an issue in this repository](https://github.com/deepgram/deepgram-python-sdk/issues/new)
-* [Join the Deepgram Github Discussions Community](https://github.com/orgs/deepgram/discussions)
-* [Join the Deepgram Discord Community](https://discord.gg/xWRaCDBtW4)
+- [Open an issue in this repository](https://github.com/deepgram/deepgram-python-sdk/issues/new)
+- [Join the Deepgram Github Discussions Community](https://github.com/orgs/deepgram/discussions)
+- [Join the Deepgram Discord Community](https://discord.gg/xWRaCDBtW4)
