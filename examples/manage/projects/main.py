@@ -12,11 +12,10 @@ from deepgram import DeepgramClient, ProjectOptions
 load_dotenv()
 
 # environment variables
-API_KEY = os.getenv("DG_API_KEY")
 DELETE_PROJECT_BY_NAME = os.getenv("DG_DELETE_PROJECT_BY_NAME")
 
 # Create a Deepgram client using the API key
-deepgram: DeepgramClient = DeepgramClient(API_KEY)
+deepgram: DeepgramClient = DeepgramClient()
 
 
 async def main():

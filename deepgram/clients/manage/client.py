@@ -3,7 +3,7 @@
 # SPDX-License-Identifier: MIT
 
 from .v1.client import ManageClient as ManageClientLatest
-from .v1.response import (
+from .v1.options import (
     ProjectOptions as ProjectOptionsLatest,
     KeyOptions as KeyOptionsLatest,
     ScopeOptions as ScopeOptionsLatest,

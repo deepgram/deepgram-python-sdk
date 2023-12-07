@@ -55,6 +55,10 @@ class LegacyLiveClient:
         self.logger.info("options: %s", options)
 
         self.options = options
+        if isinstance(options, LiveOptions):
+            self.logger.info("LiveOptions switching class -> json")
+            self.options = self.options.to_dict()
+
         url_with_params = append_query_params(self.websocket_url, self.options)
         try:
             self._socket = await _socket_connect(url_with_params, self.config.headers)

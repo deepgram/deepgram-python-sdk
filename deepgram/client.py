@@ -7,6 +7,8 @@ from importlib import import_module
 import logging, verboselogs
 import os
 
+from .clients.live.client import LiveOptions
+from .clients.prerecorded.client import PrerecordedOptions
 from .clients.listen import ListenClient, PreRecordedClient
 from .clients.manage.client import ManageClient
 from .clients.onprem.client import OnPremClient
@@ -34,7 +36,9 @@ class DeepgramClient:
         onprem: Returns an OnPremClient instance for interacting with Deepgram's on-premises API.
     """
 
-    def __init__(self, api_key: str, config: Optional[DeepgramClientOptions] = None):
+    def __init__(
+        self, api_key: str = "", config: Optional[DeepgramClientOptions] = None
+    ):
         verboselogs.install()
         self.logger = logging.getLogger(__name__)
         self.logger.addHandler(logging.StreamHandler())
@@ -42,6 +46,8 @@ class DeepgramClient:
         if not api_key:
             # Default to `None` for on-prem instances where an API key is not required
             api_key = os.getenv("DEEPGRAM_API_KEY", None)
+        if not api_key:
+            self.logger.warning("WARNING: API key is missing")
 
         self.api_key = api_key
         if config is None:  # Use default configuration

@@ -60,6 +60,9 @@ class LiveClient:
         self.logger.info("options: %s", options)
 
         self.options = options
+        if isinstance(options, LiveOptions):
+            self.logger.info("LiveOptions switching class -> json")
+            self.options = self.options.to_dict()
 
         if self._socket is not None:
             self.logger.error("socket is already initialized")

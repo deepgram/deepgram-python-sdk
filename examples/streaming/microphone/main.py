@@ -4,6 +4,7 @@
 
 import os
 from dotenv import load_dotenv
+import logging, verboselogs
 
 from deepgram import (
     DeepgramClient,
@@ -15,15 +16,19 @@ from deepgram import (
 
 load_dotenv()
 
-options: LiveOptions = {
-    "punctuate": True,
-    "language": "en-US",
-    "encoding": "linear16",
-    "channels": 1,
-    "sample_rate": 16000,
-}
+# example of setting up a client config
+# config = DeepgramClientOptions(
+#     verbose=logging.SPAM,
+#     options={'keepalive': 'true'}
+# )
 
-deepgram_api_key = os.getenv("DG_API_KEY")
+options = LiveOptions(
+    punctuate=True,
+    language="en-US",
+    encoding="linear16",
+    channels=1,
+    sample_rate=16000,
+)
 
 
 def on_message(result=None):
@@ -52,8 +57,10 @@ def on_error(error=None):
 
 
 def main():
-    # config: DeepgramClientOptions = DeepgramClientOptions(options={'keepalive': 'true'})
-    deepgram: DeepgramClient = DeepgramClient(deepgram_api_key)
+    # to specify a client config
+    # deepgram: DeepgramClient = DeepgramClient("", config)
+    # otherwise, use default config
+    deepgram: DeepgramClient = DeepgramClient()
 
     try:
         # Create a websocket connection to Deepgram
