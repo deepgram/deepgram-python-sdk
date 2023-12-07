@@ -3,6 +3,7 @@
 # SPDX-License-Identifier: MIT
 
 from .v1.client import PreRecordedClient as PreRecordedClientLatest
+from .v1.async_client import AsyncPreRecordedClient as AsyncPreRecordedClientLatest
 from .v1.options import PrerecordedOptions as PrerecordedOptionsLatest
 from .source import PrerecordedSource, FileSource, UrlSource
 
@@ -23,4 +24,13 @@ class PreRecordedClient(PreRecordedClientLatest):
 
     def __init__(self, config):
         self.config = config
+        super().__init__(config)
+
+
+class AsyncPreRecordedClient(AsyncPreRecordedClientLatest):
+    """
+    Please see AsyncPreRecordedClientLatest for details
+    """
+
+    def __init__(self, config):
         super().__init__(config)

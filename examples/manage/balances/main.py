@@ -2,7 +2,6 @@
 # Use of this source code is governed by a MIT license that can be found in the LICENSE file.
 # SPDX-License-Identifier: MIT
 
-import asyncio
 import os
 import sys
 from dotenv import load_dotenv
@@ -20,10 +19,10 @@ config: DeepgramClientOptions = DeepgramClientOptions(
 deepgram: DeepgramClient = DeepgramClient("", config)
 
 
-async def main():
+def main():
     try:
         # get projects
-        projectResp = await deepgram.manage.v("1").get_projects()
+        projectResp = deepgram.manage.v("1").get_projects()
         if projectResp is None:
             print(f"ListProjects failed.")
             sys.exit(1)
@@ -37,7 +36,7 @@ async def main():
             break
 
         # list balances
-        listResp = await deepgram.manage.v("1").get_balances(myId)
+        listResp = deepgram.manage.v("1").get_balances(myId)
         if listResp is None:
             print(f"ListBalances failed.")
             sys.exit(1)
@@ -50,11 +49,11 @@ async def main():
             )
 
         # get balance
-        getResp = await deepgram.manage.v("1").get_balance(myId, myBalanceId)
+        getResp = deepgram.manage.v("1").get_balance(myId, myBalanceId)
         print(f"GetBalance() - Name: {getResp.balance_id}, Amount: {getResp.amount}")
     except Exception as e:
         print(f"Exception: {e}")
 
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    main()

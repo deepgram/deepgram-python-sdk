@@ -2,6 +2,7 @@
 # Use of this source code is governed by a MIT license that can be found in the LICENSE file.
 # SPDX-License-Identifier: MIT
 
+import asyncio
 import os
 import sys
 from dotenv import load_dotenv
@@ -10,14 +11,17 @@ from deepgram import DeepgramClient, InviteOptions
 
 load_dotenv()
 
+# environment variables
+API_KEY = os.getenv("DG_API_KEY")
+
 # Create a Deepgram client using the API key
-deepgram: DeepgramClient = DeepgramClient()
+deepgram: DeepgramClient = DeepgramClient(API_KEY)
 
 
-def main():
+async def main():
     try:
         # get projects
-        projectResp = deepgram.manage.v("1").get_projects()
+        projectResp = await deepgram.asyncmanage.v("1").get_projects()
         if projectResp is None:
             print(f"ListProjects failed.")
             sys.exit(1)
@@ -31,7 +35,7 @@ def main():
             break
 
         # list invites
-        listResp = deepgram.manage.v("1").get_invites(myId)
+        listResp = await deepgram.asyncmanage.v("1").get_invites(myId)
         if len(listResp.invites) == 0:
             print("No invites found")
         else:
@@ -41,11 +45,11 @@ def main():
         # send invite
         options: InviteOptions = {"email": "spam@spam.com", "scope": "member"}
 
-        getResp = deepgram.manage.v("1").send_invite_options(myId, options)
+        getResp = await deepgram.asyncmanage.v("1").send_invite_options(myId, options)
         print(f"SendInvite() - Msg: {getResp.message}")
 
         # list invites
-        listResp = deepgram.manage.v("1").get_invites(myId)
+        listResp = await deepgram.asyncmanage.v("1").get_invites(myId)
         if listResp is None:
             print("No invites found")
         else:
@@ -53,15 +57,15 @@ def main():
                 print(f"GetInvites() - Name: {invite.email}, Amount: {invite.scope}")
 
         # delete invite
-        delResp = deepgram.manage.v("1").delete_invite(myId, "spam@spam.com")
+        delResp = await deepgram.asyncmanage.v("1").delete_invite(myId, "spam@spam.com")
         print(f"DeleteInvite() - Msg: {delResp.message}")
 
         # # leave invite
-        # delResp = deepgram.manage.v("1").leave_project(myId)
+        # delResp = await deepgram.asyncmanage.leave_project(myId)
         # print(f"LeaveProject() - Msg: {delResp.message}")
     except Exception as e:
         print(f"Exception: {e}")
 
 
 if __name__ == "__main__":
-    main()
+    asyncio.run(main())

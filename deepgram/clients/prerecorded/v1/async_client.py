@@ -3,9 +3,8 @@
 # SPDX-License-Identifier: MIT
 
 import logging, verboselogs
-import inspect
 
-from ...abstract_sync_client import AbstractSyncRestClient
+from ...abstract_async_client import AbstractAsyncRestClient
 from ..errors import DeepgramTypeError
 from ..helpers import is_buffer_source, is_readstream_source, is_url_source
 from ..source import UrlSource, FileSource
@@ -14,7 +13,7 @@ from .options import PrerecordedOptions
 from .response import AsyncPrerecordedResponse, PrerecordedResponse
 
 
-class PreRecordedClient(AbstractSyncRestClient):
+class AsyncPreRecordedClient(AbstractAsyncRestClient):
     """
     A client class for handling pre-recorded audio data.
     Provides methods for transcribing audio from URLs and files.
@@ -44,19 +43,21 @@ class PreRecordedClient(AbstractSyncRestClient):
         Exception: For any other unexpected exceptions.
     """
 
-    def transcribe_url(
+    async def transcribe_url(
         self,
         source: UrlSource,
         options: PrerecordedOptions = None,
         endpoint: str = "v1/listen",
     ) -> PrerecordedResponse:
         self.logger.debug("PreRecordedClient.transcribe_url ENTER")
-        url = f"{self.config.url}/{endpoint}"
+
         if options is not None and "callback" in options:
             self.logger.debug("PreRecordedClient.transcribe_url LEAVE")
-            return self.transcribe_url_callback(
+            return await self.transcribe_url_callback(
                 source, options["callback"], options, endpoint
             )
+
+        url = f"{self.config.url}/{endpoint}"
         if is_url_source(source):
             body = source
         else:
@@ -67,10 +68,7 @@ class PreRecordedClient(AbstractSyncRestClient):
         self.logger.info("url: %s", url)
         self.logger.info("source: %s", source)
         self.logger.info("options: %s", options)
-        if isinstance(options, PrerecordedOptions):
-            self.logger.info("PrerecordedOptions switching class -> json")
-            options = options.to_json()
-        res = PrerecordedResponse.from_json(self.post(url, options, json=body))
+        res = PrerecordedResponse.from_json(await self.post(url, options, json=body))
         self.logger.verbose("result: %s", res)
         self.logger.notice("transcribe_url succeeded")
         self.logger.debug("PreRecordedClient.transcribe_url LEAVE")
@@ -94,7 +92,7 @@ class PreRecordedClient(AbstractSyncRestClient):
         Exception: For any other unexpected exceptions.
     """
 
-    def transcribe_url_callback(
+    async def transcribe_url_callback(
         self,
         source: UrlSource,
         callback: str,
@@ -117,10 +115,7 @@ class PreRecordedClient(AbstractSyncRestClient):
         self.logger.info("url: %s", url)
         self.logger.info("source: %s", source)
         self.logger.info("options: %s", options)
-        if isinstance(options, PrerecordedOptions):
-            self.logger.info("PrerecordedOptions switching class -> json")
-            options = options.to_json()
-        json = self.post(url, options, json=body)
+        json = await self.post(url, options, json=body)
         self.logger.info("json: %s", json)
         res = AsyncPrerecordedResponse.from_json(json)
         self.logger.verbose("result: %s", res)
@@ -146,13 +141,19 @@ class PreRecordedClient(AbstractSyncRestClient):
         Exception: For any other unexpected exceptions.
     """
 
-    def transcribe_file(
+    async def transcribe_file(
         self,
         source: FileSource,
         options: PrerecordedOptions = None,
         endpoint: str = "v1/listen",
     ) -> PrerecordedResponse:
         self.logger.debug("PreRecordedClient.transcribe_file ENTER")
+
+        if options is not None and "callback" in options:
+            self.logger.debug("PreRecordedClient.transcribe_file LEAVE")
+            return await self.transcribe_file_callback(
+                source, options["callback"], options, endpoint
+            )
 
         url = f"{self.config.url}/{endpoint}"
         if is_buffer_source(source):
@@ -166,10 +167,7 @@ class PreRecordedClient(AbstractSyncRestClient):
 
         self.logger.info("url: %s", url)
         self.logger.info("options: %s", options)
-        if isinstance(options, PrerecordedOptions):
-            self.logger.info("PrerecordedOptions switching class -> json")
-            options = options.to_json()
-        json = self.post(url, options, content=body)
+        json = await self.post(url, options, content=body)
         self.logger.info("json: %s", json)
         res = PrerecordedResponse.from_json(json)
         self.logger.verbose("result: %s", res)
@@ -195,7 +193,7 @@ class PreRecordedClient(AbstractSyncRestClient):
         Exception: For any other unexpected exceptions.
     """
 
-    def transcribe_file_callback(
+    async def transcribe_file_callback(
         self,
         source: FileSource,
         callback: str,
@@ -219,10 +217,7 @@ class PreRecordedClient(AbstractSyncRestClient):
 
         self.logger.info("url: %s", url)
         self.logger.info("options: %s", options)
-        if isinstance(options, PrerecordedOptions):
-            self.logger.info("PrerecordedOptions switching class -> json")
-            options = options.to_json()
-        json = self.post(url, options, json=body)
+        json = await self.post(url, options, json=body)
         self.logger.info("json: %s", json)
         res = AsyncPrerecordedResponse.from_json(json)
         self.logger.verbose("result: %s", res)

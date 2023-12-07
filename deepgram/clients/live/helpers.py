@@ -3,9 +3,6 @@
 # SPDX-License-Identifier: MIT
 
 from urllib.parse import urlparse, urlunparse, parse_qs, urlencode
-from typing import Dict
-
-from .errors import DeepgramError
 
 
 def append_query_params(url, params):

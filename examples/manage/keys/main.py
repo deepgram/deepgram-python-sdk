@@ -2,7 +2,6 @@
 # Use of this source code is governed by a MIT license that can be found in the LICENSE file.
 # SPDX-License-Identifier: MIT
 
-import asyncio
 import os
 import sys
 from dotenv import load_dotenv
@@ -15,10 +14,10 @@ load_dotenv()
 deepgram: DeepgramClient = DeepgramClient()
 
 
-async def main():
+def main():
     try:
         # get projects
-        projectResp = await deepgram.manage.v("1").get_projects()
+        projectResp = deepgram.manage.v("1").get_projects()
         if projectResp is None:
             print(f"ListProjects failed.")
             sys.exit(1)
@@ -32,7 +31,7 @@ async def main():
             break
 
         # list keys
-        listResp = await deepgram.manage.v("1").get_keys(myId)
+        listResp = deepgram.manage.v("1").get_keys(myId)
         if listResp is None:
             print("No keys found")
         else:
@@ -45,7 +44,7 @@ async def main():
         options: KeyOptions = {"comment": "MyTestKey", "scopes": ["member"]}
 
         myKeyId = None
-        createResp = await deepgram.manage.v("1").create_key(myId, options)
+        createResp = deepgram.manage.v("1").create_key(myId, options)
         if createResp is None:
             print(f"CreateKey failed.")
             sys.exit(1)
@@ -56,7 +55,7 @@ async def main():
             )
 
         # list keys
-        listResp = await deepgram.manage.v("1").get_keys(myId)
+        listResp = deepgram.manage.v("1").get_keys(myId)
         if listResp is None:
             print("No keys found")
         else:
@@ -66,7 +65,7 @@ async def main():
                 )
 
         # get key
-        getResp = await deepgram.manage.v("1").get_key(myId, myKeyId)
+        getResp = deepgram.manage.v("1").get_key(myId, myKeyId)
         if getResp is None:
             print(f"GetKey failed.")
             sys.exit(1)
@@ -76,7 +75,7 @@ async def main():
             )
 
         # delete key
-        deleteResp = await deepgram.manage.v("1").delete_key(myId, myKeyId)
+        deleteResp = deepgram.manage.v("1").delete_key(myId, myKeyId)
         if deleteResp is None:
             print(f"DeleteKey failed.")
             sys.exit(1)
@@ -84,7 +83,7 @@ async def main():
             print(f"DeleteKey() - Msg: {deleteResp.message}")
 
         # list keys
-        listResp = await deepgram.manage.v("1").get_keys(myId)
+        listResp = deepgram.manage.v("1").get_keys(myId)
         if listResp is None:
             print("No keys found")
         else:
@@ -97,4 +96,4 @@ async def main():
 
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    main()

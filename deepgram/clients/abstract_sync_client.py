@@ -9,7 +9,7 @@ from ..options import DeepgramClientOptions
 from .errors import DeepgramError, DeepgramApiError, DeepgramUnknownApiError
 
 
-class AbstractRestfulClient:
+class AbstractSyncRestClient:
     """
     An abstract base class for a RESTful HTTP client.
 
@@ -35,32 +35,31 @@ class AbstractRestfulClient:
             raise DeepgramError("Config are required")
 
         self.config = config
-        self.client = httpx.AsyncClient()
 
-    async def get(self, url: str, options=None):
-        return await self._handle_request(
+    def get(self, url: str, options=None):
+        return self._handle_request(
             "GET", url, params=options, headers=self.config.headers
         )
 
-    async def post(self, url: str, options=None, **kwargs):
-        return await self._handle_request(
+    def post(self, url: str, options=None, **kwargs):
+        return self._handle_request(
             "POST", url, params=options, headers=self.config.headers, **kwargs
         )
 
-    async def put(self, url: str, options=None, **kwargs):
-        return await self._handle_request(
+    def put(self, url: str, options=None, **kwargs):
+        return self._handle_request(
             "PUT", url, params=options, headers=self.config.headers, **kwargs
         )
 
-    async def patch(self, url: str, options=None, **kwargs):
-        return await self._handle_request(
+    def patch(self, url: str, options=None, **kwargs):
+        return self._handle_request(
             "PATCH", url, params=options, headers=self.config.headers, **kwargs
         )
 
-    async def delete(self, url: str):
-        return await self._handle_request("DELETE", url, headers=self.config.headers)
+    def delete(self, url: str):
+        return self._handle_request("DELETE", url, headers=self.config.headers)
 
-    async def _handle_request(self, method, url, **kwargs):
+    def _handle_request(self, method, url, **kwargs):
         try:
             with httpx.Client() as client:
                 response = client.request(method, url, **kwargs)
