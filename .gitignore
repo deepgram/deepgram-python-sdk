@@ -6,4 +6,4 @@ dist/
 venv/
 venv.bak/
 build/
-.env
+.vscode/
