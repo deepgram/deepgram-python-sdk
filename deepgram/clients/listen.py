@@ -7,13 +7,20 @@ import logging, verboselogs
 
 from ..options import DeepgramClientOptions
 
-from .prerecorded.client import PreRecordedClient
-from .live.client import LiveClient, LegacyLiveClient
+from .prerecorded.client import (
+    PreRecordedClient,
+    AsyncPreRecordedClient,
+    PrerecordedOptions,
+)
+from .live.client import LiveClient, AsyncLiveClient, LiveOptions
 from .errors import DeepgramModuleError
 
 
 class ListenClient:
     def __init__(self, config: DeepgramClientOptions):
+        self.logger = logging.getLogger(__name__)
+        self.logger.addHandler(logging.StreamHandler())
+        self.logger.setLevel(config.verbose)
         self.config = config
 
     @property
@@ -21,12 +28,16 @@ class ListenClient:
         return self.Version(self.config, "prerecorded")
 
     @property
+    def asyncprerecorded(self):
+        return self.Version(self.config, "asyncprerecorded")
+
+    @property
     def live(self):
         return self.Version(self.config, "live")
 
     @property
-    def legacylive(self):
-        return LegacyLiveClient(self.config)
+    def asynclive(self):
+        return self.Version(self.config, "asynclive")
 
     # INTERNAL CLASSES
     class Version:
@@ -57,19 +68,33 @@ class ListenClient:
                 self.logger.debug("Version.v LEAVE")
                 raise DeepgramModuleError("Invalid module version")
 
+            parent = ""
+            fileName = ""
             className = ""
             match self.parent:
                 case "live":
+                    parent = "live"
+                    fileName = "client"
                     className = "LiveClient"
+                case "asynclive":
+                    parent = "live"
+                    fileName = "async_client"
+                    className = "AsyncLiveClient"
                 case "prerecorded":
+                    parent = "prerecorded"
+                    fileName = "client"
                     className = "PreRecordedClient"
+                case "asyncprerecorded":
+                    parent = "prerecorded"
+                    fileName = "async_client"
+                    className = "AsyncPreRecordedClient"
                 case _:
                     self.logger.error("parent unknown: %s", self.parent)
                     self.logger.debug("Version.v LEAVE")
                     raise DeepgramModuleError("Invalid parent type")
 
             # create class path
-            path = f"deepgram.clients.{self.parent}.v{version}.client"
+            path = f"deepgram.clients.{parent}.v{version}.{fileName}"
             self.logger.info("path: %s", path)
             self.logger.info("className: %s", className)
 

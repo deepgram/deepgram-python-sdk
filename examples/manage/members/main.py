@@ -2,7 +2,6 @@
 # Use of this source code is governed by a MIT license that can be found in the LICENSE file.
 # SPDX-License-Identifier: MIT
 
-import asyncio
 import os
 import sys
 from dotenv import load_dotenv
@@ -18,10 +17,10 @@ DELETE_MEMBER_BY_EMAIL = "enter-your-email@gmail.com"
 deepgram: DeepgramClient = DeepgramClient()
 
 
-async def main():
+def main():
     try:
         # get projects
-        projectResp = await deepgram.manage.v("1").get_projects()
+        projectResp = deepgram.manage.v("1").get_projects()
         if projectResp is None:
             print(f"ListProjects failed.")
             sys.exit(1)
@@ -35,7 +34,7 @@ async def main():
 
         # list members
         delMemberId = None
-        listResp = await deepgram.manage.v("1").get_members(myId)
+        listResp = deepgram.manage.v("1").get_members(myId)
         if listResp is None:
             print("No members found")
         else:
@@ -55,7 +54,7 @@ async def main():
             print("")
             sys.exit(1)
 
-        deleteResp = await deepgram.manage.v("1").remove_member(myId, delMemberId)
+        deleteResp = deepgram.manage.v("1").remove_member(myId, delMemberId)
         if deleteResp is None:
             print(f"RemoveMember failed.")
             sys.exit(1)
@@ -64,7 +63,7 @@ async def main():
 
         # list members
         delMemberId = None
-        listResp = await deepgram.manage.v("1").get_members(myId)
+        listResp = deepgram.manage.v("1").get_members(myId)
         if listResp is None:
             print("No members found")
         else:
@@ -75,4 +74,4 @@ async def main():
 
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    main()

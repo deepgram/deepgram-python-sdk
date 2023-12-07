@@ -2,7 +2,6 @@
 # Use of this source code is governed by a MIT license that can be found in the LICENSE file.
 # SPDX-License-Identifier: MIT
 
-import asyncio
 import os
 import sys
 from dotenv import load_dotenv
@@ -18,10 +17,10 @@ MEMBER_BY_EMAIL = "enter-your-email@gmail.com"
 deepgram: DeepgramClient = DeepgramClient()
 
 
-async def main():
+def main():
     try:
         # get projects
-        projectResp = await deepgram.manage.v("1").get_projects()
+        projectResp = deepgram.manage.v("1").get_projects()
         if projectResp is None:
             print(f"ListProjects failed.")
             sys.exit(1)
@@ -36,7 +35,7 @@ async def main():
 
         # list members
         memberId = None
-        listResp = await deepgram.manage.v("1").get_members(myId)
+        listResp = deepgram.manage.v("1").get_members(myId)
         if listResp is None:
             print("No members found")
         else:
@@ -54,7 +53,7 @@ async def main():
             sys.exit(1)
 
         # get member scope
-        memberResp = await deepgram.manage.v("1").get_member_scopes(myId, memberId)
+        memberResp = deepgram.manage.v("1").get_member_scopes(myId, memberId)
         if memberResp is None:
             print("No scopes found")
             sys.exit(1)
@@ -65,13 +64,11 @@ async def main():
         # update scope
         options: ScopeOptions = {"scope": "admin"}
 
-        updateResp = await deepgram.manage.v("1").update_member_scope(
-            myId, memberId, options
-        )
+        updateResp = deepgram.manage.v("1").update_member_scope(myId, memberId, options)
         print(f"UpdateMemberScope() - Msg: {updateResp.message}")
 
         # get member scope
-        memberResp = await deepgram.manage.v("1").get_member_scopes(myId, memberId)
+        memberResp = deepgram.manage.v("1").get_member_scopes(myId, memberId)
         if memberResp is None:
             print("No scopes found")
             sys.exit(1)
@@ -82,13 +79,11 @@ async def main():
         # update scope
         options: ScopeOptions = {"scope": "member"}
 
-        updateResp = await deepgram.manage.v("1").update_member_scope(
-            myId, memberId, options
-        )
+        updateResp = deepgram.manage.v("1").update_member_scope(myId, memberId, options)
         print(f"UpdateMemberScope() - Msg: {updateResp.message}")
 
         # get member scope
-        memberResp = await deepgram.manage.v("1").get_member_scopes(myId, memberId)
+        memberResp = deepgram.manage.v("1").get_member_scopes(myId, memberId)
         if memberResp is None:
             print("No scopes found")
             sys.exit(1)
@@ -100,4 +95,4 @@ async def main():
 
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    main()

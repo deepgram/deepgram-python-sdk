@@ -2,7 +2,6 @@
 # Use of this source code is governed by a MIT license that can be found in the LICENSE file.
 # SPDX-License-Identifier: MIT
 
-import asyncio
 import os
 import sys
 from dotenv import load_dotenv
@@ -18,10 +17,10 @@ DELETE_PROJECT_BY_NAME = os.getenv("DG_DELETE_PROJECT_BY_NAME")
 deepgram: DeepgramClient = DeepgramClient()
 
 
-async def main():
+def main():
     try:
         # get projects
-        listResp = await deepgram.manage.v("1").get_projects()
+        listResp = deepgram.manage.v("1").get_projects()
         if listResp is None:
             print(f"ListProjects failed.")
             sys.exit(1)
@@ -37,7 +36,7 @@ async def main():
             print(f"ListProjects() - ID: {myId}, Name: {myName}")
 
         # get project
-        getResp = await deepgram.manage.v("1").get_project(myId)
+        getResp = deepgram.manage.v("1").get_project(myId)
         print(f"GetProject() - Name: {getResp.name}")
 
         # update project
@@ -45,30 +44,28 @@ async def main():
             "name": "My TEST RENAME Example",
         }
 
-        updateResp = await deepgram.manage.v("1").update_project_option(
-            myId, updateOptions
-        )
+        updateResp = deepgram.manage.v("1").update_project_option(myId, updateOptions)
         if updateResp is None:
             print(f"UpdateProject failed.")
             sys.exit(1)
         print(f"UpdateProject() - Msg: {updateResp.message}")
 
         # get project
-        getResp = await deepgram.manage.v("1").get_project(myId)
+        getResp = deepgram.manage.v("1").get_project(myId)
         if getResp is None:
             print(f"GetProject failed.")
             sys.exit(1)
         print(f"GetProject() - Name: {getResp.name}")
 
         # update project
-        updateResp = await deepgram.manage.v("1").update_project(myId, name=myName)
+        updateResp = deepgram.manage.v("1").update_project(myId, name=myName)
         if updateResp is None:
             print(f"UpdateProject failed.")
             sys.exit(1)
         print(f"UpdateProject() - Msg: {updateResp.message}")
 
         # get project
-        getResp = await deepgram.manage.v("1").get_project(myId)
+        getResp = deepgram.manage.v("1").get_project(myId)
         if getResp is None:
             print(f"GetProject failed.")
             sys.exit(1)
@@ -97,4 +94,4 @@ async def main():
 
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    main()

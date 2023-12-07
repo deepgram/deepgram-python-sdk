@@ -4,10 +4,10 @@
 
 import logging, verboselogs
 
-from ...abstract_sync_client import AbstractSyncRestClient
+from ...abstract_async_client import AbstractAsyncRestClient
 
 
-class OnPremClient(AbstractSyncRestClient):
+class AsyncOnPremClient(AbstractAsyncRestClient):
     """
     Client for interacting with Deepgram's on-premises API.
 
@@ -35,42 +35,44 @@ class OnPremClient(AbstractSyncRestClient):
         self.endpoint = "v1/projects"
         super().__init__(config)
 
-    def list_onprem_credentials(self, project_id: str):
+    async def list_onprem_credentials(self, project_id: str):
         self.logger.debug("OnPremClient.list_onprem_credentials ENTER")
         url = f"{self.config.url}/{self.endpoint}/{project_id}/onprem/distribution/credentials"
         self.logger.info("url: %s", url)
         self.logger.info("project_id: %s", project_id)
-        res = self.get(url)
+        res = await self.get(url)
         self.logger.verbose("result: %s", res)
         self.logger.notice("list_onprem_credentials succeeded")
         self.logger.debug("OnPremClient.list_onprem_credentials LEAVE")
         return res
 
-    def get_onprem_credentials(self, project_id: str, distribution_credentials_id: str):
+    async def get_onprem_credentials(
+        self, project_id: str, distribution_credentials_id: str
+    ):
         self.logger.debug("OnPremClient.get_onprem_credentials ENTER")
         url = f"{self.config.url}/{self.endpoint}/{project_id}/onprem/distribution/credentials/{distribution_credentials_id}"
         self.logger.info("url: %s", url)
         self.logger.info("project_id: %s", project_id)
         self.logger.info("distribution_credentials_id: %s", distribution_credentials_id)
-        res = self.get(url)
+        res = await self.get(url)
         self.logger.verbose("result: %s", res)
         self.logger.notice("get_onprem_credentials succeeded")
         self.logger.debug("OnPremClient.get_onprem_credentials LEAVE")
         return res
 
-    def create_onprem_credentials(self, project_id: str, options):
+    async def create_onprem_credentials(self, project_id: str, options):
         self.logger.debug("OnPremClient.create_onprem_credentials ENTER")
         url = f"{self.config.url}/{self.endpoint}/{project_id}/onprem/distribution/credentials/"
         self.logger.info("url: %s", url)
         self.logger.info("project_id: %s", project_id)
         self.logger.info("options: %s", options)
-        res = self.post(url, json=options)
+        res = await self.post(url, json=options)
         self.logger.verbose("result: %s", res)
         self.logger.notice("create_onprem_credentials succeeded")
         self.logger.debug("OnPremClient.create_onprem_credentials LEAVE")
         return res
 
-    def delete_onprem_credentials(
+    async def delete_onprem_credentials(
         self, project_id: str, distribution_credentials_id: str
     ):
         self.logger.debug("OnPremClient.delete_onprem_credentials ENTER")
@@ -78,7 +80,7 @@ class OnPremClient(AbstractSyncRestClient):
         self.logger.info("url: %s", url)
         self.logger.info("project_id: %s", project_id)
         self.logger.info("distrbution_credentials_id: %s", distribution_credentials_id)
-        res = self.delete(url)
+        res = await self.delete(url)
         self.logger.verbose("result: %s", res)
         self.logger.notice("delete_onprem_credentials succeeded")
         self.logger.debug("OnPremClient.delete_onprem_credentials LEAVE")

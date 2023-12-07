@@ -3,6 +3,7 @@
 # SPDX-License-Identifier: MIT
 
 from .v1.client import ManageClient as ManageClientLatest
+from .v1.async_client import AsyncManageClient as AsyncManageClientLatest
 from .v1.options import (
     ProjectOptions as ProjectOptionsLatest,
     KeyOptions as KeyOptionsLatest,
@@ -50,6 +51,15 @@ class UsageFieldsOptions(UsageFieldsOptionsLatest):
 class ManageClient(ManageClientLatest):
     """
     Please see ManageClientLatest for details
+    """
+
+    def __init__(self, config):
+        super().__init__(config)
+
+
+class AsyncManageClient(AsyncManageClientLatest):
+    """
+    Please see AsyncManageClientLatest for details
     """
 
     def __init__(self, config):

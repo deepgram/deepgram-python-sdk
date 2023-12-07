@@ -2,7 +2,6 @@
 # Use of this source code is governed by a MIT license that can be found in the LICENSE file.
 # SPDX-License-Identifier: MIT
 
-import asyncio
 import os
 from dotenv import load_dotenv
 import logging, verboselogs
@@ -34,7 +33,7 @@ deepgram: DeepgramClient = DeepgramClient("", config)
 
 
 # STEP 2 Call the transcribe_file method on the prerecorded class
-async def transcribe_file():
+def transcribe_file():
     # Logic to read the file
     with open(AUDIO_FILE, "rb") as file:
         buffer_data = file.read()
@@ -43,15 +42,13 @@ async def transcribe_file():
         "buffer": buffer_data,
     }
 
-    file_response = await deepgram.listen.prerecorded.v("1").transcribe_file(
-        payload, options
-    )
+    file_response = deepgram.listen.prerecorded.v("1").transcribe_file(payload, options)
     return file_response
 
 
-async def main():
+def main():
     try:
-        response = await transcribe_file()
+        response = transcribe_file()
         print(response)
         print("")
         json = response.to_json()
@@ -62,4 +59,4 @@ async def main():
 
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    main()

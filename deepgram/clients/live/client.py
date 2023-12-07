@@ -3,7 +3,7 @@
 # SPDX-License-Identifier: MIT
 
 from .v1.client import LiveClient as LiveClientLatest
-from .v1.legacy_client import LegacyLiveClient as LegacyLiveClientLatest
+from .v1.async_client import AsyncLiveClient as AsyncLiveClientLatest
 from .v1.options import LiveOptions as LiveOptionsLatest
 
 """
@@ -25,7 +25,7 @@ class LiveClient(LiveClientLatest):
         super().__init__(config)
 
 
-class LegacyLiveClient(LegacyLiveClientLatest):
+class AsyncLiveClient(AsyncLiveClientLatest):
     """
     Please see LiveClientLatest for details
     """

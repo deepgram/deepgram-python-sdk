@@ -7,11 +7,18 @@ from importlib import import_module
 import logging, verboselogs
 import os
 
-from .clients.live.client import LiveOptions
-from .clients.prerecorded.client import PrerecordedOptions
-from .clients.listen import ListenClient, PreRecordedClient
-from .clients.manage.client import ManageClient
+from .clients.listen import (
+    ListenClient,
+    PreRecordedClient,
+    AsyncLiveClient,
+    AsyncPreRecordedClient,
+    PrerecordedOptions,
+    LiveOptions,
+)
 from .clients.onprem.client import OnPremClient
+from .clients.onprem.v1.async_client import AsyncOnPremClient
+from .clients.manage.client import ManageClient
+from .clients.manage.v1.async_client import AsyncManageClient
 
 from .options import DeepgramClientOptions
 from .errors import DeepgramApiKeyError, DeepgramModuleError
@@ -67,8 +74,16 @@ class DeepgramClient:
         return self.Version(self.config, "manage")
 
     @property
+    def asyncmanage(self):
+        return self.Version(self.config, "asyncmanage")
+
+    @property
     def onprem(self):
         return self.Version(self.config, "onprem")
+
+    @property
+    def asynconprem(self):
+        return self.Version(self.config, "asynconprem")
 
     # INTERNAL CLASSES
     class Version:
@@ -99,19 +114,33 @@ class DeepgramClient:
                 self.logger.debug("Version.v LEAVE")
                 raise DeepgramModuleError("Invalid module version")
 
+            parent = ""
+            fileName = ""
             className = ""
             match self.parent:
                 case "manage":
+                    parent = "manage"
+                    fileName = "client"
                     className = "ManageClient"
+                case "asyncmanage":
+                    parent = "manage"
+                    fileName = "async_client"
+                    className = "AsyncManageClient"
                 case "onprem":
+                    parent = "onprem"
+                    fileName = "client"
                     className = "OnPremClient"
+                case "asynconprem":
+                    parent = "onprem"
+                    fileName = "async_client"
+                    className = "AsyncOnPremClient"
                 case _:
                     self.logger.error("parent unknown: %s", self.parent)
                     self.logger.debug("Version.v LEAVE")
                     raise DeepgramModuleError("Invalid parent type")
 
             # create class path
-            path = f"deepgram.clients.{self.parent}.v{version}.client"
+            path = f"deepgram.clients.{parent}.v{version}.{fileName}"
             self.logger.info("path: %s", path)
             self.logger.info("className: %s", className)
 

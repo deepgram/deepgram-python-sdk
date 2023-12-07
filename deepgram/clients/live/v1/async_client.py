@@ -14,7 +14,7 @@ from ..errors import DeepgramError
 from .options import LiveOptions
 
 
-class LegacyLiveClient:
+class AsyncLiveClient:
     """
     Client for interacting with Deepgram's live transcription services over WebSockets.
 
@@ -51,7 +51,7 @@ class LegacyLiveClient:
         self.websocket_url = convert_to_websocket_url(self.config.url, self.endpoint)
 
     async def __call__(self, options: LiveOptions = None):
-        self.logger.debug("LegacyLiveClient.__call__ ENTER")
+        self.logger.debug("AsyncLiveClient.__call__ ENTER")
         self.logger.info("options: %s", options)
 
         self.options = options
@@ -65,12 +65,12 @@ class LegacyLiveClient:
             asyncio.create_task(self._start())
 
             self.logger.notice("__call__ succeeded")
-            self.logger.debug("LegacyLiveClient.__call__ LEAVE")
+            self.logger.debug("AsyncLiveClient.__call__ LEAVE")
             return self
         except websockets.ConnectionClosed as e:
             await self._emit(LiveTranscriptionEvents.Close, e.code)
             self.logger.notice("exception: websockets.ConnectionClosed")
-            self.logger.debug("LegacyLiveClient.__call__ LEAVE")
+            self.logger.debug("AsyncLiveClient.__call__ LEAVE")
 
     def on(self, event, handler):  # registers event handlers for specific events
         if event in LiveTranscriptionEvents and callable(handler):
@@ -83,7 +83,7 @@ class LegacyLiveClient:
             handler(*args, **kwargs)
 
     async def _start(self) -> None:
-        self.logger.debug("LegacyLiveClient._start ENTER")
+        self.logger.debug("AsyncLiveClient._start ENTER")
 
         async for message in self._socket:
             try:
@@ -113,20 +113,20 @@ class LegacyLiveClient:
             except json.JSONDecodeError as e:
                 await self._emit(LiveTranscriptionEvents.Error, e.code)
                 self.logger.error("exception: json.JSONDecodeError: %s", str(e))
-                self.logger.debug("LegacyLiveClient._start LEAVE")
+                self.logger.debug("AsyncLiveClient._start LEAVE")
 
     async def send(self, data):
-        self.logger.spam("LegacyLiveClient.send ENTER")
+        self.logger.spam("AsyncLiveClient.send ENTER")
         self.logger.spam("data: %s", data)
 
         if self._socket:
             await self._socket.send(data)
             self.logger.spam("data sent")
 
-        self.logger.spam("LegacyLiveClient.send LEAVE")
+        self.logger.spam("AsyncLiveClient.send LEAVE")
 
     async def finish(self):
-        self.logger.debug("LegacyLiveClient.finish LEAVE")
+        self.logger.debug("AsyncLiveClient.finish LEAVE")
 
         if self._socket:
             self.logger.notice("send CloseStream...")
@@ -136,7 +136,7 @@ class LegacyLiveClient:
             self.logger.notice("socket.wait_closed succeeded")
 
         self.logger.notice("finish succeeded")
-        self.logger.debug("LegacyLiveClient.finish LEAVE")
+        self.logger.debug("AsyncLiveClient.finish LEAVE")
 
 
 async def _socket_connect(websocket_url, headers):

@@ -11,11 +11,18 @@ from .options import DeepgramClientOptions
 
 # live
 from .clients.live.enums import LiveTranscriptionEvents
-from .clients.live.client import LiveClient, LegacyLiveClient, LiveOptions
+from .clients.live.client import LiveClient, AsyncLiveClient, LiveOptions
+
+# onprem
+from .clients.onprem.client import (
+    OnPremClient,
+    AsyncOnPremClient,
+)
 
 # prerecorded
 from .clients.prerecorded.client import (
     PreRecordedClient,
+    AsyncPreRecordedClient,
     PrerecordedOptions,
     PrerecordedSource,
     FileSource,
@@ -25,6 +32,7 @@ from .clients.prerecorded.client import (
 # manage
 from .clients.manage.client import (
     ManageClient,
+    AsyncManageClient,
     ProjectOptions,
     KeyOptions,
     ScopeOptions,
