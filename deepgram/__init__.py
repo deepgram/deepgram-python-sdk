@@ -44,3 +44,10 @@ from .clients.manage.client import (
 
 # utilities
 from .audio.microphone.microphone import Microphone
+from .audio.microphone.microphone import (
+    LOGGING,
+    FORMAT,
+    CHANNELS,
+    RATE,
+    CHUNK,
+)
