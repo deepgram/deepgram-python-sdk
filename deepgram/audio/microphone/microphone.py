@@ -10,11 +10,7 @@ from array import array
 import logging, verboselogs
 
 from .errors import DeepgramMicrophoneError
-
-FORMAT = pyaudio.paInt16
-CHANNELS = 1
-RATE = 16000
-CHUNK = 8194
+from .constants import LOGGING, FORMAT, CHANNELS, RATE, CHUNK
 
 
 class Microphone:
@@ -25,7 +21,7 @@ class Microphone:
     def __init__(
         self,
         push_callback,
-        verbose=logging.WARNING,
+        verbose=LOGGING,
         format=FORMAT,
         rate=RATE,
         chunk=CHUNK,

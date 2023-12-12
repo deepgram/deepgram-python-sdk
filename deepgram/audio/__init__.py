@@ -5,8 +5,20 @@
 import pyaudio
 import logging, verboselogs
 
-from .microphone import Microphone
-from .constants import LOGGING, FORMAT, CHANNELS, RATE, CHUNK
+from .microphone import microphone
+from .microphone import (
+    LOGGING as iLOGGING,
+    FORMAT as iFORMAT,
+    CHANNELS as iCHANNELS,
+    RATE as iRATE,
+    CHUNK as iCHUNK,
+)
+
+LOGGING = iLOGGING
+FORMAT = iFORMAT
+CHANNELS = iCHANNELS
+RATE = iRATE
+CHUNK = iCHUNK
 
 
 def microphone(
@@ -17,4 +29,4 @@ def microphone(
     chunk=CHUNK,
     channels=CHANNELS,
 ):
-    return Microphone(push_callback, verbose, format, rate, chunk, channels)
+    return microphone(push_callback, verbose, format, rate, chunk, channels)
