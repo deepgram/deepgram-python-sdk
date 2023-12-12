@@ -43,8 +43,8 @@ from .clients.manage.client import (
 )
 
 # utilities
-from .audio.microphone import Microphone
-from .audio.microphone import (
+from .audio import Microphone
+from .audio import (
     LOGGING,
     CHANNELS,
     RATE,
