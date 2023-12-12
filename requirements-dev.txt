@@ -1,0 +1,7 @@
+# pip install -r requirements.txt
+
+# Testing
+pytest
+pytest-asyncio
+fuzzywuzzy
+pytest-cov

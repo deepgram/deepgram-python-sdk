@@ -1,0 +1,7 @@
+# pip install -r requirements-examples.txt
+
+# general
+python-dotenv
+
+# streaming libs
+pyaudio
