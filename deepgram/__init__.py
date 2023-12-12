@@ -6,21 +6,21 @@
 __version__ = "0.0.0"
 
 # entry point for the deepgram python sdk
-from .client import DeepgramClient, DeepgramApiKeyError
+from .client import DeepgramClient
 from .options import DeepgramClientOptions
 
 # live
-from .clients.live.enums import LiveTranscriptionEvents
-from .clients.live.client import LiveClient, AsyncLiveClient, LiveOptions
+from .clients import LiveTranscriptionEvents
+from .clients import LiveClient, AsyncLiveClient, LiveOptions
 
 # onprem
-from .clients.onprem.client import (
+from .clients import (
     OnPremClient,
     AsyncOnPremClient,
 )
 
 # prerecorded
-from .clients.prerecorded.client import (
+from .clients import (
     PreRecordedClient,
     AsyncPreRecordedClient,
     PrerecordedOptions,
@@ -30,7 +30,7 @@ from .clients.prerecorded.client import (
 )
 
 # manage
-from .clients.manage.client import (
+from .clients import (
     ManageClient,
     AsyncManageClient,
     ProjectOptions,
@@ -43,4 +43,10 @@ from .clients.manage.client import (
 )
 
 # utilities
-from .audio.microphone.microphone import Microphone
+from .audio import Microphone
+from .audio import (
+    LOGGING,
+    CHANNELS,
+    RATE,
+    CHUNK,
+)
