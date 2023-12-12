@@ -5,12 +5,11 @@
 import inspect
 import asyncio
 import threading
-import pyaudio
 from array import array
 import logging, verboselogs
 
 from .errors import DeepgramMicrophoneError
-from .constants import LOGGING, FORMAT, CHANNELS, RATE, CHUNK
+from .constants import LOGGING, CHANNELS, RATE, CHUNK
 
 
 class Microphone:
@@ -22,11 +21,12 @@ class Microphone:
         self,
         push_callback,
         verbose=LOGGING,
-        format=FORMAT,
         rate=RATE,
         chunk=CHUNK,
         channels=CHANNELS,
     ):
+        import pyaudio
+
         self.logger = logging.getLogger(__name__)
         self.logger.addHandler(logging.StreamHandler())
         self.logger.setLevel(verbose)
@@ -34,7 +34,7 @@ class Microphone:
         self.audio = pyaudio.PyAudio()
         self.chunk = chunk
         self.rate = rate
-        self.format = format
+        self.format = pyaudio.paInt16
         self.channels = channels
         self.push_callback = push_callback
         self.stream = None

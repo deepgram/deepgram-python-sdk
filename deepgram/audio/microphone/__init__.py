@@ -3,4 +3,4 @@
 # SPDX-License-Identifier: MIT
 
 from .microphone import Microphone
-from .constants import LOGGING, FORMAT, CHANNELS, RATE, CHUNK
+from .constants import LOGGING, CHANNELS, RATE, CHUNK

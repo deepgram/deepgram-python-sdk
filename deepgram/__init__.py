@@ -43,10 +43,9 @@ from .clients.manage.client import (
 )
 
 # utilities
-from .audio.microphone.microphone import Microphone
-from .audio.microphone.microphone import (
+from .audio.microphone import Microphone
+from .audio.microphone import (
     LOGGING,
-    FORMAT,
     CHANNELS,
     RATE,
     CHUNK,
