@@ -1,9 +1,17 @@
-*.egg-info
-__pycache__
-dist/
+# general
+
+# environment artifacts
 .venv
 .env
 venv/
 venv.bak/
-build/
 .vscode/
+
+# python artifacts
+__pycache__
+*.egg-info
+dist/
+
+# build
+build/
+poetry.lock

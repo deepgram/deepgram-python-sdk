@@ -6,18 +6,8 @@ httpx
 dataclasses-json
 dataclasses
 typing_extensions
-python-dotenv
 verboselogs
-
-# streaming libs
-pyaudio
 
 # Async functionality, likely to be already installed
 asyncio
 aiohttp
-
-# Testing
-pytest
-pytest-asyncio
-fuzzywuzzy
-pytest-cov
