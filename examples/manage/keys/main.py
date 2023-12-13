@@ -11,7 +11,7 @@ from deepgram import DeepgramClient, KeyOptions
 load_dotenv()
 
 # Create a Deepgram client using the API key
-deepgram: DeepgramClient = DeepgramClient()
+deepgram = DeepgramClient()
 
 
 def main():

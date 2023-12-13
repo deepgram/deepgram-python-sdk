@@ -60,7 +60,7 @@ def main():
     # to specify a client config
     # deepgram: DeepgramClient = DeepgramClient("", config)
     # otherwise, use default config
-    deepgram: DeepgramClient = DeepgramClient()
+    deepgram = DeepgramClient()
 
     try:
         # Create a websocket connection to Deepgram

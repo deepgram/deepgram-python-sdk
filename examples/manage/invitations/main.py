@@ -11,7 +11,7 @@ from deepgram import DeepgramClient, InviteOptions
 load_dotenv()
 
 # Create a Deepgram client using the API key
-deepgram: DeepgramClient = DeepgramClient()
+deepgram = DeepgramClient()
 
 
 def main():
@@ -39,7 +39,7 @@ def main():
                 print(f"GetInvites() - Name: {invite.email}, Amount: {invite.scope}")
 
         # send invite
-        options: InviteOptions = {"email": "spam@spam.com", "scope": "member"}
+        options = InviteOptions(email="spam@spam.com", scope="member")
 
         getResp = deepgram.manage.v("1").send_invite_options(myId, options)
         print(f"SendInvite() - Msg: {getResp.message}")
