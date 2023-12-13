@@ -7,6 +7,7 @@ import json
 
 from ..options import DeepgramClientOptions
 from .errors import DeepgramError, DeepgramApiError, DeepgramUnknownApiError
+from .helpers import append_query_params
 
 
 class AbstractAsyncRestClient:
@@ -57,13 +58,17 @@ class AbstractAsyncRestClient:
             "PATCH", url, params=options, headers=self.config.headers, **kwargs
         )
 
-    async def delete(self, url: str):
-        return await self._handle_request("DELETE", url, headers=self.config.headers)
+    async def delete(self, url: str, options=None):
+        return await self._handle_request("DELETE", url, params=options, headers=self.config.headers)
 
-    async def _handle_request(self, method, url, **kwargs):
+    async def _handle_request(self, method, url, params, headers, **kwargs):
+        new_url = url
+        if params is not None:
+            new_url = append_query_params(new_url, params)
+
         try:
             with httpx.Client() as client:
-                response = client.request(method, url, **kwargs)
+                response = client.request(method, new_url, headers=headers, **kwargs)
                 response.raise_for_status()
                 return response.text
         except httpx._exceptions.HTTPError as e:

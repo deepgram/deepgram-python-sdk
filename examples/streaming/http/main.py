@@ -44,7 +44,7 @@ def on_error(error=None):
 
 def main():
     # config: DeepgramClientOptions = DeepgramClientOptions(options={'keepalive': 'true'})
-    deepgram: DeepgramClient = DeepgramClient()
+    deepgram = DeepgramClient()
 
     try:
         # Create a websocket connection to Deepgram

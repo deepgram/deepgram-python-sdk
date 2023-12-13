@@ -2,6 +2,7 @@
 # Use of this source code is governed by a MIT license that can be found in the LICENSE file.
 # SPDX-License-Identifier: MIT
 
+import json
 import logging, verboselogs
 
 from ...abstract_async_client import AbstractAsyncRestClient
@@ -51,7 +52,7 @@ class AsyncPreRecordedClient(AbstractAsyncRestClient):
     ) -> PrerecordedResponse:
         self.logger.debug("PreRecordedClient.transcribe_url ENTER")
 
-        if options is not None and "callback" in options:
+        if options is not None and options.callback is not None:
             self.logger.debug("PreRecordedClient.transcribe_url LEAVE")
             return await self.transcribe_url_callback(
                 source, options["callback"], options, endpoint
@@ -68,7 +69,12 @@ class AsyncPreRecordedClient(AbstractAsyncRestClient):
         self.logger.info("url: %s", url)
         self.logger.info("source: %s", source)
         self.logger.info("options: %s", options)
-        res = PrerecordedResponse.from_json(await self.post(url, options, json=body))
+        if isinstance(options, PrerecordedOptions):
+            self.logger.info("PrerecordedOptions switching class -> json")
+            options = json.loads(options.to_json())
+        result = await self.post(url, options=options, json=body)
+        self.logger.info("json: %s", result)
+        res = PrerecordedResponse.from_json(result)
         self.logger.verbose("result: %s", res)
         self.logger.notice("transcribe_url succeeded")
         self.logger.debug("PreRecordedClient.transcribe_url LEAVE")
@@ -115,9 +121,12 @@ class AsyncPreRecordedClient(AbstractAsyncRestClient):
         self.logger.info("url: %s", url)
         self.logger.info("source: %s", source)
         self.logger.info("options: %s", options)
-        json = await self.post(url, options, json=body)
-        self.logger.info("json: %s", json)
-        res = AsyncPrerecordedResponse.from_json(json)
+        if isinstance(options, PrerecordedOptions):
+            self.logger.info("PrerecordedOptions switching class -> json")
+            options = json.loads(options.to_json())
+        result = await self.post(url, options=options, json=body)
+        self.logger.info("json: %s", result)
+        res = AsyncPrerecordedResponse.from_json(result)
         self.logger.verbose("result: %s", res)
         self.logger.notice("transcribe_url_callback succeeded")
         self.logger.debug("PreRecordedClient.transcribe_url_callback LEAVE")
@@ -149,7 +158,7 @@ class AsyncPreRecordedClient(AbstractAsyncRestClient):
     ) -> PrerecordedResponse:
         self.logger.debug("PreRecordedClient.transcribe_file ENTER")
 
-        if options is not None and "callback" in options:
+        if options is not None and options.callback is not None:
             self.logger.debug("PreRecordedClient.transcribe_file LEAVE")
             return await self.transcribe_file_callback(
                 source, options["callback"], options, endpoint
@@ -167,9 +176,12 @@ class AsyncPreRecordedClient(AbstractAsyncRestClient):
 
         self.logger.info("url: %s", url)
         self.logger.info("options: %s", options)
-        json = await self.post(url, options, content=body)
-        self.logger.info("json: %s", json)
-        res = PrerecordedResponse.from_json(json)
+        if isinstance(options, PrerecordedOptions):
+            self.logger.info("PrerecordedOptions switching class -> json")
+            options = json.loads(options.to_json())
+        result = await self.post(url, options=options, content=body)
+        self.logger.info("json: %s", result)
+        res = PrerecordedResponse.from_json(result)
         self.logger.verbose("result: %s", res)
         self.logger.notice("transcribe_file succeeded")
         self.logger.debug("PreRecordedClient.transcribe_file LEAVE")
@@ -217,9 +229,12 @@ class AsyncPreRecordedClient(AbstractAsyncRestClient):
 
         self.logger.info("url: %s", url)
         self.logger.info("options: %s", options)
-        json = await self.post(url, options, json=body)
-        self.logger.info("json: %s", json)
-        res = AsyncPrerecordedResponse.from_json(json)
+        if isinstance(options, PrerecordedOptions):
+            self.logger.info("PrerecordedOptions switching class -> json")
+            options = json.loads(options.to_json())
+        result = await self.post(url, options=options, json=body)
+        self.logger.info("json: %s", result)
+        res = AsyncPrerecordedResponse.from_json(result)
         self.logger.verbose("result: %s", res)
         self.logger.notice("transcribe_file_callback succeeded")
         self.logger.debug("PreRecordedClient.transcribe_file_callback LEAVE")

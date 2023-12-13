@@ -4,7 +4,7 @@
 
 import httpx
 import logging, verboselogs
-import inspect
+import json
 
 from ...abstract_sync_client import AbstractSyncRestClient
 from ..errors import DeepgramTypeError
@@ -53,12 +53,14 @@ class PreRecordedClient(AbstractSyncRestClient):
         endpoint: str = "v1/listen",
     ) -> PrerecordedResponse:
         self.logger.debug("PreRecordedClient.transcribe_url ENTER")
-        url = f"{self.config.url}/{endpoint}"
-        if options is not None and "callback" in options:
+
+        if options is not None and options.callback is not None:
             self.logger.debug("PreRecordedClient.transcribe_url LEAVE")
             return self.transcribe_url_callback(
                 source, options["callback"], options, endpoint
             )
+
+        url = f"{self.config.url}/{endpoint}"
         if is_url_source(source):
             body = source
         else:
@@ -71,8 +73,10 @@ class PreRecordedClient(AbstractSyncRestClient):
         self.logger.info("options: %s", options)
         if isinstance(options, PrerecordedOptions):
             self.logger.info("PrerecordedOptions switching class -> json")
-            options = options.to_json()
-        res = PrerecordedResponse.from_json(self.post(url, options, json=body, timeout=timeout))
+            options = json.loads(options.to_json())
+        result = self.post(url, options=options, json=body, timeout=timeout)
+        self.logger.info("json: %s", result)
+        res = PrerecordedResponse.from_json(result)
         self.logger.verbose("result: %s", res)
         self.logger.notice("transcribe_url succeeded")
         self.logger.debug("PreRecordedClient.transcribe_url LEAVE")
@@ -122,10 +126,10 @@ class PreRecordedClient(AbstractSyncRestClient):
         self.logger.info("options: %s", options)
         if isinstance(options, PrerecordedOptions):
             self.logger.info("PrerecordedOptions switching class -> json")
-            options = options.to_json()
-        json = self.post(url, options, json=body, timeout=timeout)
-        self.logger.info("json: %s", json)
-        res = AsyncPrerecordedResponse.from_json(json)
+            options = json.loads(options.to_json())
+        result = self.post(url, options=options, json=body, timeout=timeout)
+        self.logger.info("json: %s", result)
+        res = AsyncPrerecordedResponse.from_json(result)
         self.logger.verbose("result: %s", res)
         self.logger.notice("transcribe_url_callback succeeded")
         self.logger.debug("PreRecordedClient.transcribe_url_callback LEAVE")
@@ -158,6 +162,12 @@ class PreRecordedClient(AbstractSyncRestClient):
     ) -> PrerecordedResponse:
         self.logger.debug("PreRecordedClient.transcribe_file ENTER")
 
+        if options is not None and options.callback is not None:
+            self.logger.debug("PreRecordedClient.transcribe_file LEAVE")
+            return self.transcribe_file_callback(
+                source, options["callback"], options, endpoint
+            )
+
         url = f"{self.config.url}/{endpoint}"
         if is_buffer_source(source):
             body = source["buffer"]
@@ -172,10 +182,10 @@ class PreRecordedClient(AbstractSyncRestClient):
         self.logger.info("options: %s", options)
         if isinstance(options, PrerecordedOptions):
             self.logger.info("PrerecordedOptions switching class -> json")
-            options = options.to_json()
-        json = self.post(url, options, content=body, timeout=timeout)
-        self.logger.info("json: %s", json)
-        res = PrerecordedResponse.from_json(json)
+            options = json.loads(options.to_json())
+        result = self.post(url, options=options, content=body, timeout=timeout)
+        self.logger.info("json: %s", result)
+        res = PrerecordedResponse.from_json(result)
         self.logger.verbose("result: %s", res)
         self.logger.notice("transcribe_file succeeded")
         self.logger.debug("PreRecordedClient.transcribe_file LEAVE")
@@ -226,10 +236,10 @@ class PreRecordedClient(AbstractSyncRestClient):
         self.logger.info("options: %s", options)
         if isinstance(options, PrerecordedOptions):
             self.logger.info("PrerecordedOptions switching class -> json")
-            options = options.to_json()
-        json = self.post(url, options, json=body, timeout=timeout)
-        self.logger.info("json: %s", json)
-        res = AsyncPrerecordedResponse.from_json(json)
+            options = json.loads(options.to_json())
+        result = self.post(url, options=options, json=body, timeout=timeout)
+        self.logger.info("json: %s", result)
+        res = AsyncPrerecordedResponse.from_json(result)
         self.logger.verbose("result: %s", res)
         self.logger.notice("transcribe_file_callback succeeded")
         self.logger.debug("PreRecordedClient.transcribe_file_callback LEAVE")

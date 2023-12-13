@@ -11,7 +11,11 @@ from deepgram import DeepgramClient, LiveTranscriptionEvents, LiveOptions
 
 load_dotenv()
 
-options: LiveOptions = {"model": "nova", "interim_results": False, "language": "en-US"}
+options = LiveOptions(
+    model="nova",
+    interim_results=False,
+    language="en-US",
+)
 
 # URL for the realtime streaming audio you would like to transcribe
 URL = "http://stream.live.vc.bbcmedia.co.uk/bbc_world_service"
@@ -20,7 +24,7 @@ deepgram_api_key = os.getenv("DG_API_KEY")
 
 
 async def main():
-    deepgram: DeepgramClient = DeepgramClient(deepgram_api_key)
+    deepgram = DeepgramClient(deepgram_api_key)
 
     # Create a websocket connection to Deepgram
     try:

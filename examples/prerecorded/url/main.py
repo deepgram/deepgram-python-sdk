@@ -4,8 +4,9 @@
 
 import os
 from dotenv import load_dotenv
+import logging, verboselogs
 
-from deepgram import DeepgramClient, PrerecordedOptions
+from deepgram import DeepgramClient, DeepgramClientOptions, PrerecordedOptions
 
 load_dotenv()
 
@@ -13,14 +14,18 @@ AUDIO_URL = {
     "url": "https://static.deepgram.com/examples/Bueller-Life-moves-pretty-fast.wav"
 }
 
-options: PrerecordedOptions = {
-    "model": "nova",
-    "smart_format": "true",
-    "summarize": "v2",
-}
+options = PrerecordedOptions(
+    model="nova",
+    smart_format=True,
+    summarize="v2",
+)
 
 # STEP 1 Create a Deepgram client using the API key (optional - add config options)
-deepgram = DeepgramClient()
+config = DeepgramClientOptions(
+    verbose=logging.SPAM,
+)
+
+deepgram = DeepgramClient("", config)
 
 
 # STEP 2 Call the transcribe_url method on the prerecorded class

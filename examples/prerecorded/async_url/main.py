@@ -15,11 +15,11 @@ AUDIO_URL = {
     "url": "https://static.deepgram.com/examples/Bueller-Life-moves-pretty-fast.wav"
 }
 
-options: PrerecordedOptions = {
-    "model": "nova",
-    "smart_format": "true",
-    "summarize": "v2",
-}
+options = PrerecordedOptions(
+    model="nova",
+    smart_format=True,
+    summarize="v2",
+)
 
 # STEP 1 Create a Deepgram client using the API key (optional - add config options)
 deepgram = DeepgramClient(API_KEY)
