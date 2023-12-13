@@ -14,7 +14,7 @@ load_dotenv()
 DELETE_PROJECT_BY_NAME = os.getenv("DG_DELETE_PROJECT_BY_NAME")
 
 # Create a Deepgram client using the API key
-deepgram: DeepgramClient = DeepgramClient()
+deepgram = DeepgramClient()
 
 
 def main():

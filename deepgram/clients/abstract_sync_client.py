@@ -5,6 +5,7 @@
 import httpx
 import json
 
+from .helpers import append_query_params
 from ..options import DeepgramClientOptions
 from .errors import DeepgramError, DeepgramApiError, DeepgramUnknownApiError
 
@@ -56,15 +57,20 @@ class AbstractSyncRestClient:
             "PATCH", url, params=options, headers=self.config.headers, timeout=timeout, **kwargs
         )
 
-    def delete(self, url: str, timeout=None):
-        return self._handle_request("DELETE", url, headers=self.config.headers, timeout=timeout)
+    def delete(self, url: str, options=None, timeout=None):
+        return self._handle_request("DELETE", url, params=options, headers=self.config.headers, timeout=timeout)
 
-    def _handle_request(self, method, url, timeout, **kwargs):
+    def _handle_request(self, method, url, params, headers, timeout, **kwargs):
+        new_url = url
+        if params is not None:
+            new_url = append_query_params(url, params)
+
         if timeout is None:
             timeout = httpx.Timeout(10.0, connect=10.0)
+
         try:
             with httpx.Client(timeout=timeout) as client:
-                response = client.request(method, url, **kwargs)
+                response = client.request(method, new_url, headers=headers, **kwargs)
                 response.raise_for_status()
                 return response.text
         except httpx._exceptions.HTTPError as e:

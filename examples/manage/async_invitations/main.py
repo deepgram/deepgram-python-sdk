@@ -15,7 +15,7 @@ load_dotenv()
 API_KEY = os.getenv("DG_API_KEY")
 
 # Create a Deepgram client using the API key
-deepgram: DeepgramClient = DeepgramClient(API_KEY)
+deepgram = DeepgramClient()
 
 
 async def main():

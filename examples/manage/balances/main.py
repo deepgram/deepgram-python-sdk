@@ -12,11 +12,11 @@ from deepgram import DeepgramClient, DeepgramClientOptions
 load_dotenv()
 
 # Create a Deepgram client using the API key
-config: DeepgramClientOptions = DeepgramClientOptions(
+config = DeepgramClientOptions(
     verbose=logging.SPAM,
 )
 
-deepgram: DeepgramClient = DeepgramClient("", config)
+deepgram = DeepgramClient("", config)
 
 
 def main():

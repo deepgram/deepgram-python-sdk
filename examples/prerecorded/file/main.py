@@ -24,8 +24,10 @@ config: DeepgramClientOptions = DeepgramClientOptions(
 
 options = PrerecordedOptions(
     model="nova",
-    smart_format="true",
-    summarize="v2",
+    smart_format=True,
+    utterances=True,
+    punctuate=True,
+    diarize=True,
 )
 
 # STEP 1 Create a Deepgram client using the API key (optional - add config options)

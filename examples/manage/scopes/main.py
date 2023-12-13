@@ -14,7 +14,7 @@ load_dotenv()
 MEMBER_BY_EMAIL = "enter-your-email@gmail.com"
 
 # Create a Deepgram client using the API key
-deepgram: DeepgramClient = DeepgramClient()
+deepgram = DeepgramClient()
 
 
 def main():
