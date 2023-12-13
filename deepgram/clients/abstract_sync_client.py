@@ -36,32 +36,34 @@ class AbstractSyncRestClient:
 
         self.config = config
 
-    def get(self, url: str, options=None):
+    def get(self, url: str, options=None, timeout=None):
         return self._handle_request(
-            "GET", url, params=options, headers=self.config.headers
+            "GET", url, params=options, headers=self.config.headers, timeout=timeout
         )
 
-    def post(self, url: str, options=None, **kwargs):
+    def post(self, url: str, options=None, timeout=None,  **kwargs):
         return self._handle_request(
-            "POST", url, params=options, headers=self.config.headers, **kwargs
+            "POST", url, params=options, headers=self.config.headers, timeout=timeout, **kwargs
         )
 
-    def put(self, url: str, options=None, **kwargs):
+    def put(self, url: str, options=None, timeout=None, **kwargs):
         return self._handle_request(
-            "PUT", url, params=options, headers=self.config.headers, **kwargs
+            "PUT", url, params=options, headers=self.config.headers, timeout=timeout, **kwargs
         )
 
-    def patch(self, url: str, options=None, **kwargs):
+    def patch(self, url: str, options=None, timeout=None, **kwargs):
         return self._handle_request(
-            "PATCH", url, params=options, headers=self.config.headers, **kwargs
+            "PATCH", url, params=options, headers=self.config.headers, timeout=timeout, **kwargs
         )
 
-    def delete(self, url: str):
-        return self._handle_request("DELETE", url, headers=self.config.headers)
+    def delete(self, url: str, timeout=None):
+        return self._handle_request("DELETE", url, headers=self.config.headers, timeout=timeout)
 
-    def _handle_request(self, method, url, **kwargs):
+    def _handle_request(self, method, url, timeout, **kwargs):
+        if timeout is None:
+            timeout = httpx.Timeout(10.0, connect=10.0)
         try:
-            with httpx.Client() as client:
+            with httpx.Client(timeout=timeout) as client:
                 response = client.request(method, url, **kwargs)
                 response.raise_for_status()
                 return response.text
