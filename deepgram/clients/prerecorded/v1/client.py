@@ -2,6 +2,7 @@
 # Use of this source code is governed by a MIT license that can be found in the LICENSE file.
 # SPDX-License-Identifier: MIT
 
+import httpx
 import logging, verboselogs
 import inspect
 
@@ -48,6 +49,7 @@ class PreRecordedClient(AbstractSyncRestClient):
         self,
         source: UrlSource,
         options: PrerecordedOptions = None,
+        timeout: httpx.Timeout = None,
         endpoint: str = "v1/listen",
     ) -> PrerecordedResponse:
         self.logger.debug("PreRecordedClient.transcribe_url ENTER")
@@ -70,7 +72,7 @@ class PreRecordedClient(AbstractSyncRestClient):
         if isinstance(options, PrerecordedOptions):
             self.logger.info("PrerecordedOptions switching class -> json")
             options = options.to_json()
-        res = PrerecordedResponse.from_json(self.post(url, options, json=body))
+        res = PrerecordedResponse.from_json(self.post(url, options, json=body, timeout=timeout))
         self.logger.verbose("result: %s", res)
         self.logger.notice("transcribe_url succeeded")
         self.logger.debug("PreRecordedClient.transcribe_url LEAVE")
@@ -99,6 +101,7 @@ class PreRecordedClient(AbstractSyncRestClient):
         source: UrlSource,
         callback: str,
         options: PrerecordedOptions = None,
+        timeout: httpx.Timeout = None,
         endpoint: str = "v1/listen",
     ) -> AsyncPrerecordedResponse:
         self.logger.debug("PreRecordedClient.transcribe_url_callback ENTER")
@@ -120,7 +123,7 @@ class PreRecordedClient(AbstractSyncRestClient):
         if isinstance(options, PrerecordedOptions):
             self.logger.info("PrerecordedOptions switching class -> json")
             options = options.to_json()
-        json = self.post(url, options, json=body)
+        json = self.post(url, options, json=body, timeout=timeout)
         self.logger.info("json: %s", json)
         res = AsyncPrerecordedResponse.from_json(json)
         self.logger.verbose("result: %s", res)
@@ -150,6 +153,7 @@ class PreRecordedClient(AbstractSyncRestClient):
         self,
         source: FileSource,
         options: PrerecordedOptions = None,
+        timeout: httpx.Timeout = None,
         endpoint: str = "v1/listen",
     ) -> PrerecordedResponse:
         self.logger.debug("PreRecordedClient.transcribe_file ENTER")
@@ -169,7 +173,7 @@ class PreRecordedClient(AbstractSyncRestClient):
         if isinstance(options, PrerecordedOptions):
             self.logger.info("PrerecordedOptions switching class -> json")
             options = options.to_json()
-        json = self.post(url, options, content=body)
+        json = self.post(url, options, content=body, timeout=timeout)
         self.logger.info("json: %s", json)
         res = PrerecordedResponse.from_json(json)
         self.logger.verbose("result: %s", res)
@@ -200,6 +204,7 @@ class PreRecordedClient(AbstractSyncRestClient):
         source: FileSource,
         callback: str,
         options: PrerecordedOptions = None,
+        timeout: httpx.Timeout = None,
         endpoint: str = "v1/listen",
     ) -> AsyncPrerecordedResponse:
         self.logger.debug("PreRecordedClient.transcribe_file_callback ENTER")
@@ -222,7 +227,7 @@ class PreRecordedClient(AbstractSyncRestClient):
         if isinstance(options, PrerecordedOptions):
             self.logger.info("PrerecordedOptions switching class -> json")
             options = options.to_json()
-        json = self.post(url, options, json=body)
+        json = self.post(url, options, json=body, timeout=timeout)
         self.logger.info("json: %s", json)
         res = AsyncPrerecordedResponse.from_json(json)
         self.logger.verbose("result: %s", res)
