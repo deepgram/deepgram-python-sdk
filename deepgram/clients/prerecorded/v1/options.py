@@ -10,6 +10,12 @@ from typing import Union, List, TypedDict, Optional
 @dataclass_json
 @dataclass
 class PrerecordedOptions:
+    """
+    Contains all the options for the PrerecordedClient.
+
+    Reference:
+    https://developers.deepgram.com/reference/pre-recorded
+    """
     alternatives: Optional[int] = None
     callback: Optional[str] = None
     detect_entities: Optional[bool] = None

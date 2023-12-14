@@ -10,12 +10,11 @@ from deepgram import DeepgramClient, KeyOptions
 
 load_dotenv()
 
-# Create a Deepgram client using the API key
-deepgram = DeepgramClient()
-
-
 def main():
     try:
+        # Create a Deepgram client using the API key
+        deepgram = DeepgramClient()
+
         # get projects
         projectResp = deepgram.manage.v("1").get_projects()
         if projectResp is None:

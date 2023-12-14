@@ -4,7 +4,9 @@
 
 from enum import Enum
 
-
+"""
+Constants mapping to events from the Deepgram API
+"""
 class LiveTranscriptionEvents(Enum):
     Open = "open"
     Close = "close"

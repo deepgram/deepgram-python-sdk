@@ -36,12 +36,10 @@ class AsyncPreRecordedClient(AbstractAsyncRestClient):
         endpoint (str): The API endpoint for the transcription (default is "v1/listen").
 
     Returns:
-        SyncPrerecordedResponse: An object containing the transcription result.
+        PrerecordedResponse: An object containing the transcription result.
 
     Raises:
-        DeepgramApiError: Raised for known API errors.
-        DeepgramUnknownApiError: Raised for unknown API errors.
-        Exception: For any other unexpected exceptions.
+        DeepgramTypeError: Raised for known API errors.
     """
 
     async def transcribe_url(
@@ -93,9 +91,7 @@ class AsyncPreRecordedClient(AbstractAsyncRestClient):
         AsyncPrerecordedResponse: An object containing the request_id or an error message.
 
     Raises:
-        DeepgramApiError: Raised for known API errors.
-        DeepgramUnknownApiError: Raised for unknown API errors.
-        Exception: For any other unexpected exceptions.
+        DeepgramTypeError: Raised for known API errors.
     """
 
     async def transcribe_url_callback(
@@ -141,13 +137,10 @@ class AsyncPreRecordedClient(AbstractAsyncRestClient):
         endpoint (str): The API endpoint for the transcription (default is "v1/listen").
 
     Returns:
-        SyncPrerecordedResponse: An object containing the transcription result or an error message.
+        PrerecordedResponse: An object containing the transcription result or an error message.
 
     Raises:
-
-        DeepgramApiError: Raised for known API errors.
-        DeepgramUnknownApiError: Raised for unknown API errors.
-        Exception: For any other unexpected exceptions.
+        DeepgramTypeError: Raised for known API errors.
     """
 
     async def transcribe_file(
@@ -200,9 +193,7 @@ class AsyncPreRecordedClient(AbstractAsyncRestClient):
         AsyncPrerecordedResponse: An object containing the request_id or an error message.
 
     Raises:
-        DeepgramApiError: Raised for known API errors.
-        DeepgramUnknownApiError: Raised for unknown API errors.
-        Exception: For any other unexpected exceptions.
+        DeepgramTypeError: Raised for known API errors.
     """
 
     async def transcribe_file_callback(

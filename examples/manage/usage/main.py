@@ -15,12 +15,11 @@ from deepgram import (
 
 load_dotenv()
 
-# Create a Deepgram client using the API key
-deepgram = DeepgramClient()
-
-
 def main():
     try:
+        # Create a Deepgram client using the API key
+        deepgram = DeepgramClient()
+
         # get projects
         projectResp = deepgram.manage.v("1").get_projects()
         if projectResp is None:
@@ -73,7 +72,7 @@ def main():
                 print(f"GetUsageFields Methods: {method}")
         print("")
 
-        # list members
+        # list usage
         options: UsageSummaryOptions = {}
         listResp = deepgram.manage.v("1").get_usage_summary(myId, options)
         if listResp is None:

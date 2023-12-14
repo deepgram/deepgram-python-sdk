@@ -48,16 +48,6 @@ class AsyncManageClient(AbstractAsyncRestClient):
 
     Args:
         config (DeepgramClientOptions): all the options for the client.
-
-    Attributes:
-        url (str): The base URL of the Deepgram API.
-        headers (dict): Optional HTTP headers to include in requests.
-        endpoint (str): The API endpoint for managing projects.
-
-    Raises:
-        DeepgramApiError: Raised for known API errors.
-        DeepgramUnknownApiError: Raised for unknown API errors.
-        Exception: For any other unexpected exceptions.
     """
 
     def __init__(self, config: DeepgramClientOptions):
@@ -70,9 +60,18 @@ class AsyncManageClient(AbstractAsyncRestClient):
 
     # projects
     async def list_projects(self):
+        """
+        Please see get_projects for more information.
+        """
         return self.get_projects()
 
     async def get_projects(self):
+        """
+        Gets a list of projects for the authenticated user.
+
+        Reference:
+        https://developers.deepgram.com/reference/get-projects
+        """
         self.logger.debug("ManageClient.get_projects ENTER")
         url = f"{self.config.url}/{self.endpoint}"
         self.logger.info("url: %s", url)
@@ -85,6 +84,12 @@ class AsyncManageClient(AbstractAsyncRestClient):
         return res
 
     async def get_project(self, project_id: str):
+        """
+        Gets details for a specific project.
+        
+        Reference:
+        https://developers.deepgram.com/reference/get-project
+        """
         self.logger.debug("ManageClient.get_project ENTER")
         url = f"{self.config.url}/{self.endpoint}/{project_id}"
         self.logger.info("url: %s", url)
@@ -98,6 +103,12 @@ class AsyncManageClient(AbstractAsyncRestClient):
         return res
 
     async def update_project_option(self, project_id: str, options: ProjectOptions):
+        """
+        Updates a project's settings.
+        
+        Reference:
+        https://developers.deepgram.com/reference/update-project
+        """
         self.logger.debug("ManageClient.update_project_option ENTER")
         url = f"{self.config.url}/{self.endpoint}/{project_id}"
         self.logger.info("url: %s", url)
@@ -112,6 +123,12 @@ class AsyncManageClient(AbstractAsyncRestClient):
         return res
 
     async def update_project(self, project_id: str, name=""):
+        """
+        Updates a project's settings.
+        
+        Reference:
+        https://developers.deepgram.com/reference/update-project
+        """
         self.logger.debug("ManageClient.update_project ENTER")
         url = f"{self.config.url}/{self.endpoint}/{project_id}"
         options: ProjectOptions = {
@@ -129,6 +146,12 @@ class AsyncManageClient(AbstractAsyncRestClient):
         return res
 
     async def delete_project(self, project_id: str) -> None:
+        """
+        Deletes a project.
+        
+        Reference:
+        https://developers.deepgram.com/reference/delete-project
+        """
         self.logger.debug("ManageClient.delete_project ENTER")
         url = f"{self.config.url}/{self.endpoint}/{project_id}"
         json = await self.delete(url)
@@ -141,9 +164,18 @@ class AsyncManageClient(AbstractAsyncRestClient):
 
     # keys
     async def list_keys(self, project_id: str):
+        """
+        Please see get_keys for more information.
+        """
         return self.get_keys(project_id)
 
     async def get_keys(self, project_id: str):
+        """
+        Gets a list of keys for a project.
+        
+        Reference:
+        https://developers.deepgram.com/reference/list-keys
+        """
         self.logger.debug("ManageClient.get_keys ENTER")
         url = f"{self.config.url}/{self.endpoint}/{project_id}/keys"
         self.logger.info("url: %s", url)
@@ -157,6 +189,12 @@ class AsyncManageClient(AbstractAsyncRestClient):
         return res
 
     async def get_key(self, project_id: str, key_id: str):
+        """
+        Gets details for a specific key.
+        
+        Reference:
+        https://developers.deepgram.com/reference/get-key
+        """
         self.logger.debug("ManageClient.get_key ENTER")
         url = f"{self.config.url}/{self.endpoint}/{project_id}/keys/{key_id}"
         self.logger.info("url: %s", url)
@@ -171,6 +209,12 @@ class AsyncManageClient(AbstractAsyncRestClient):
         return res
 
     async def create_key(self, project_id: str, options: KeyOptions):
+        """
+        Creates a new key.
+        
+        Reference:
+        https://developers.deepgram.com/reference/create-key
+        """
         self.logger.debug("ManageClient.create_key ENTER")
         url = f"{self.config.url}/{self.endpoint}/{project_id}/keys"
         self.logger.info("url: %s", url)
@@ -185,6 +229,12 @@ class AsyncManageClient(AbstractAsyncRestClient):
         return res
 
     async def delete_key(self, project_id: str, key_id: str) -> None:
+        """
+        Deletes a key.
+        
+        Reference:
+        https://developers.deepgram.com/reference/delete-key
+        """
         self.logger.debug("ManageClient.delete_key ENTER")
         url = f"{self.config.url}/{self.endpoint}/{project_id}/keys/{key_id}"
         self.logger.info("url: %s", url)
@@ -200,9 +250,18 @@ class AsyncManageClient(AbstractAsyncRestClient):
 
     # members
     async def list_members(self, project_id: str):
+        """
+        Please see get_members for more information.
+        """
         return self.get_members(project_id)
 
     async def get_members(self, project_id: str):
+        """
+        Gets a list of members for a project.
+        
+        Reference:
+        https://developers.deepgram.com/reference/get-members
+        """
         self.logger.debug("ManageClient.get_members ENTER")
         url = f"{self.config.url}/{self.endpoint}/{project_id}/members"
         self.logger.info("url: %s", url)
@@ -216,6 +275,12 @@ class AsyncManageClient(AbstractAsyncRestClient):
         return res
 
     async def remove_member(self, project_id: str, member_id: str) -> None:
+        """
+        Removes a member from a project.
+        
+        Reference:
+        https://developers.deepgram.com/reference/remove-member
+        """
         self.logger.debug("ManageClient.remove_member ENTER")
         url = f"{self.config.url}/{self.endpoint}/{project_id}/members/{member_id}"
         self.logger.info("url: %s", url)
@@ -231,6 +296,12 @@ class AsyncManageClient(AbstractAsyncRestClient):
 
     # scopes
     async def get_member_scopes(self, project_id: str, member_id: str):
+        """
+        Gets a list of scopes for a member.
+        
+        Reference:
+        https://developers.deepgram.com/reference/get-member-scopes
+        """
         self.logger.debug("ManageClient.get_member_scopes ENTER")
         url = (
             f"{self.config.url}/{self.endpoint}/{project_id}/members/{member_id}/scopes"
@@ -249,6 +320,12 @@ class AsyncManageClient(AbstractAsyncRestClient):
     async def update_member_scope(
         self, project_id: str, member_id: str, options: ScopeOptions
     ):
+        """
+        Updates a member's scopes.
+        
+        Reference:
+        https://developers.deepgram.com/reference/update-scope
+        """
         self.logger.debug("ManageClient.update_member_scope ENTER")
         url = (
             f"{self.config.url}/{self.endpoint}/{project_id}/members/{member_id}/scopes"
@@ -266,9 +343,18 @@ class AsyncManageClient(AbstractAsyncRestClient):
 
     # invites
     async def list_invites(self, project_id: str):
+        """
+        Please see get_invites for more information.
+        """
         return self.get_invites(project_id)
 
     async def get_invites(self, project_id: str):
+        """
+        Gets a list of invites for a project.
+        
+        Reference:
+        https://developers.deepgram.com/reference/list-invites
+        """
         self.logger.debug("ManageClient.get_invites ENTER")
         url = f"{self.config.url}/{self.endpoint}/{project_id}/invites"
         self.logger.info("url: %s", url)
@@ -282,6 +368,12 @@ class AsyncManageClient(AbstractAsyncRestClient):
         return res
 
     async def send_invite_options(self, project_id: str, options: InviteOptions):
+        """
+        Sends an invite to a project.
+        
+        Reference:
+        https://developers.deepgram.com/reference/send-invite
+        """
         self.logger.debug("ManageClient.send_invite_options ENTER")
         url = f"{self.config.url}/{self.endpoint}/{project_id}/invites"
         self.logger.info("url: %s", url)
@@ -296,6 +388,12 @@ class AsyncManageClient(AbstractAsyncRestClient):
         return res
 
     async def send_invite(self, project_id: str, email: str, scope="member"):
+        """
+        Sends an invite to a project.
+        
+        Reference:
+        https://developers.deepgram.com/reference/send-invite
+        """
         self.logger.debug("ManageClient.send_invite ENTER")
         url = f"{self.config.url}/{self.endpoint}/{project_id}/invites"
         options: InviteOptions = {
@@ -314,6 +412,12 @@ class AsyncManageClient(AbstractAsyncRestClient):
         return res
 
     async def delete_invite(self, project_id: str, email: str):
+        """
+        Deletes an invite from a project.
+        
+        Reference:
+        https://developers.deepgram.com/reference/delete-invite
+        """
         self.logger.debug("ManageClient.delete_invite ENTER")
         url = f"{self.config.url}/{self.endpoint}/{project_id}/invites/{email}"
         self.logger.info("url: %s", url)
@@ -328,6 +432,12 @@ class AsyncManageClient(AbstractAsyncRestClient):
         return res
 
     async def leave_project(self, project_id: str):
+        """
+        Leaves a project.
+        
+        Reference:
+        https://developers.deepgram.com/reference/leave-project
+        """
         self.logger.debug("ManageClient.leave_project ENTER")
         url = f"{self.config.url}/{self.endpoint}/{project_id}/leave"
         self.logger.info("url: %s", url)
@@ -342,6 +452,12 @@ class AsyncManageClient(AbstractAsyncRestClient):
 
     # usage
     async def get_usage_requests(self, project_id: str, options: UsageRequestOptions):
+        """
+        Gets a list of usage requests for a project.
+        
+        Reference:
+        https://developers.deepgram.com/reference/get-all-requests
+        """
         self.logger.debug("ManageClient.get_usage_requests ENTER")
         url = f"{self.config.url}/{self.endpoint}/{project_id}/requests"
         self.logger.info("url: %s", url)
@@ -356,6 +472,12 @@ class AsyncManageClient(AbstractAsyncRestClient):
         return res
 
     async def get_usage_request(self, project_id: str, request_id: str):
+        """
+        Gets details for a specific usage request.
+        
+        Reference:
+        https://developers.deepgram.com/reference/get-request
+        """
         self.logger.debug("ManageClient.get_usage_request ENTER")
         url = f"{self.config.url}/{self.endpoint}/{project_id}/requests/{request_id}"
         self.logger.info("url: %s", url)
@@ -370,6 +492,12 @@ class AsyncManageClient(AbstractAsyncRestClient):
         return res
 
     async def get_usage_summary(self, project_id: str, options: UsageSummaryOptions):
+        """
+        Gets a summary of usage for a project.
+        
+        Reference:
+        https://developers.deepgram.com/reference/summarize-usage
+        """
         self.logger.debug("ManageClient.get_usage_summary ENTER")
         url = f"{self.config.url}/{self.endpoint}/{project_id}/usage"
         self.logger.info("url: %s", url)
@@ -384,6 +512,12 @@ class AsyncManageClient(AbstractAsyncRestClient):
         return res
 
     async def get_usage_fields(self, project_id: str, options: UsageFieldsOptions):
+        """
+        Gets a list of usage fields for a project.
+        
+        Reference:
+        https://developers.deepgram.com/reference/get-fields
+        """
         self.logger.debug("ManageClient.get_usage_fields ENTER")
         url = f"{self.config.url}/{self.endpoint}/{project_id}/usage/fields"
         self.logger.info("url: %s", url)
@@ -399,9 +533,18 @@ class AsyncManageClient(AbstractAsyncRestClient):
 
     # balances
     async def list_balances(self, project_id: str):
+        """
+        Please see get_balances for more information.
+        """
         return self.get_balances(project_id)
 
     async def get_balances(self, project_id: str):
+        """
+        Gets a list of balances for a project.
+        
+        Reference:
+        https://developers.deepgram.com/reference/get-all-balances
+        """
         self.logger.debug("ManageClient.get_balances ENTER")
         url = f"{self.config.url}/{self.endpoint}/{project_id}/balances"
         self.logger.info("url: %s", url)
@@ -415,6 +558,12 @@ class AsyncManageClient(AbstractAsyncRestClient):
         return res
 
     async def get_balance(self, project_id: str, balance_id: str):
+        """
+        Gets details for a specific balance.
+        
+        Reference:
+        https://developers.deepgram.com/reference/get-balance
+        """
         self.logger.debug("ManageClient.get_balance ENTER")
         url = f"{self.config.url}/{self.endpoint}/{project_id}/balances/{balance_id}"
         self.logger.info("url: %s", url)

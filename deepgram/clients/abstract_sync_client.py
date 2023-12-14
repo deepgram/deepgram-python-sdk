@@ -20,11 +20,8 @@ class AbstractSyncRestClient:
     Args:
         url (Dict[str, str]): The base URL for the RESTful API, including any path segments.
         headers (Optional[Dict[str, Any]]): Optional HTTP headers to include in requests.
-
-    Attributes:
-        url (Dict[str, str]): The base URL for the RESTful API.
-        client (httpx.AsyncClient): An asynchronous HTTP client for making requests.
-        headers (Optional[Dict[str, Any]]): Optional HTTP headers to include in requests.
+        params (Optional[Dict[str, Any]]): Optional query parameters to include in requests.
+        timeout (Optional[httpx.Timeout]): Optional timeout configuration for requests.
 
     Exceptions:
         DeepgramApiError: Raised for known API errors.

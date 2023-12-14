@@ -7,28 +7,26 @@ from .v1.async_client import AsyncLiveClient as AsyncLiveClientLatest
 from .v1.options import LiveOptions as LiveOptionsLatest
 
 """
-The client.py points to the current supported version in the SDK.
+The vX/client.py points to the current supported version in the SDK.
 Older versions are supported in the SDK for backwards compatibility.
 """
 
-
 class LiveOptions(LiveOptionsLatest):
+    """
+    pass through for LiveOptions based on API version
+    """
     pass
-
 
 class LiveClient(LiveClientLatest):
     """
     Please see LiveClientLatest for details
     """
-
     def __init__(self, config):
         super().__init__(config)
-
 
 class AsyncLiveClient(AsyncLiveClientLatest):
     """
     Please see LiveClientLatest for details
     """
-
     def __init__(self, config):
         super().__init__(config)

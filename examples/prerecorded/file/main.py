@@ -17,45 +17,36 @@ load_dotenv()
 
 AUDIO_FILE = "preamble.wav"
 
-# Create a Deepgram client using the API key
-config: DeepgramClientOptions = DeepgramClientOptions(
-    verbose=logging.SPAM,
-)
-
-options = PrerecordedOptions(
-    model="nova",
-    smart_format=True,
-    utterances=True,
-    punctuate=True,
-    diarize=True,
-)
-
-# STEP 1 Create a Deepgram client using the API key (optional - add config options)
-deepgram: DeepgramClient = DeepgramClient("", config)
-
-
-# STEP 2 Call the transcribe_file method on the prerecorded class
-def transcribe_file():
-    # Logic to read the file
-    with open(AUDIO_FILE, "rb") as file:
-        buffer_data = file.read()
-
-    payload: FileSource = {
-        "buffer": buffer_data,
-    }
-
-    file_response = deepgram.listen.prerecorded.v("1").transcribe_file(payload, options)
-    return file_response
-
-
 def main():
     try:
-        response = transcribe_file()
-        print(response)
-        print("")
-        json = response.to_json()
-        print("")
-        print(json)
+        # STEP 1 Create a Deepgram client using the API key in the environment variables
+        config: DeepgramClientOptions = DeepgramClientOptions(
+            verbose=logging.SPAM,
+        )
+
+        deepgram: DeepgramClient = DeepgramClient("", config)
+
+        # STEP 2 Call the transcribe_file method on the prerecorded class
+        with open(AUDIO_FILE, "rb") as file:
+            buffer_data = file.read()
+
+        payload: FileSource = {
+            "buffer": buffer_data,
+        }
+
+        options = PrerecordedOptions(
+            model="nova",
+            smart_format=True,
+            utterances=True,
+            punctuate=True,
+            diarize=True,
+        )
+        file_response = deepgram.listen.prerecorded.v("1").transcribe_file(payload, options)
+
+        print(f"\n\n{file_response}\n\n")
+        json = file_response.to_json()
+        print(f"{json}\n")
+
     except Exception as e:
         print(f"Exception: {e}")
 

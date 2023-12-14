@@ -10,6 +10,12 @@ from typing import List, Optional
 @dataclass_json
 @dataclass
 class LiveOptions:
+    """
+    Live Transcription Options for the Deepgram Platform.
+    
+    Please see the documentation for more information on each option:
+    https://developers.deepgram.com/reference/streaming
+    """
     callback: Optional[str] = None
     channels: Optional[int] = None
     diarize: Optional[bool] = None

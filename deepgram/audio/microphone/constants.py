@@ -4,6 +4,9 @@
 
 import logging, verboselogs
 
+"""
+constants for microphone
+"""
 LOGGING = logging.WARNING
 CHANNELS = 1
 RATE = 16000

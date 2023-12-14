@@ -11,16 +11,15 @@ from deepgram import DeepgramClient, DeepgramClientOptions
 
 load_dotenv()
 
-# Create a Deepgram client using the API key
-config = DeepgramClientOptions(
-    verbose=logging.SPAM,
-)
-
-deepgram = DeepgramClient("", config)
-
-
 def main():
     try:
+        # Create a Deepgram client using the API key
+        config = DeepgramClientOptions(
+            verbose=logging.SPAM,
+        )
+
+        deepgram = DeepgramClient("", config)
+
         # get projects
         projectResp = deepgram.manage.v("1").get_projects()
         if projectResp is None:

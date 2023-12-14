@@ -16,37 +16,28 @@ options = LiveOptions(model="nova", interim_results=False, language="en-US")
 # URL for the realtime streaming audio you would like to transcribe
 URL = "http://stream.live.vc.bbcmedia.co.uk/bbc_world_service"
 
-
-def on_message(result=None):
-    if result is None:
-        return
-    sentence = result.channel.alternatives[0].transcript
-    if len(sentence) == 0:
-        return
-    print(f"speaker: {sentence}")
-
-
-def on_metadata(metadata=None):
-    if metadata is None:
-        return
-    print("")
-    print(metadata)
-    print("")
-
-
-def on_error(error=None):
-    if error is None:
-        return
-    print("")
-    print(error)
-    print("")
-
-
 def main():
-    # config: DeepgramClientOptions = DeepgramClientOptions(options={'keepalive': 'true'})
-    deepgram = DeepgramClient()
-
     try:
+        deepgram = DeepgramClient()
+
+        def on_message(result=None):
+            if result is None:
+                return
+            sentence = result.channel.alternatives[0].transcript
+            if len(sentence) == 0:
+                return
+            print(f"speaker: {sentence}")
+
+        def on_metadata(metadata=None):
+            if metadata is None:
+                return
+            print(f"\n{metadata}\n")
+
+        def on_error(error=None):
+            if error is None:
+                return
+            print(f"\n{error}\n")
+
         # Create a websocket connection to Deepgram
         dg_connection = deepgram.listen.live.v("1")
         dg_connection.start(options)
@@ -82,7 +73,7 @@ def main():
         # Wait for the HTTP thread to close and join
         myHttp.join()
 
-        # Indicate that we've finished sending data by sending the {"type": "CloseStream"}
+        # Indicate that we've finished
         dg_connection.finish()
 
         print("Finished")

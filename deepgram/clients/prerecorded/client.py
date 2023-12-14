@@ -14,6 +14,9 @@ Older versions are supported in the SDK for backwards compatibility.
 
 
 class PrerecordedOptions(PrerecordedOptionsLatest):
+    """
+    Please see PrerecordedOptionsLatest for details
+    """
     pass
 
 
@@ -21,7 +24,6 @@ class PreRecordedClient(PreRecordedClientLatest):
     """
     Please see PreRecordedClientLatest for details
     """
-
     def __init__(self, config):
         self.config = config
         super().__init__(config)
@@ -31,6 +33,5 @@ class AsyncPreRecordedClient(AsyncPreRecordedClientLatest):
     """
     Please see AsyncPreRecordedClientLatest for details
     """
-
     def __init__(self, config):
         super().__init__(config)

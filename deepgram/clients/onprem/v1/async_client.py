@@ -15,18 +15,7 @@ class AsyncOnPremClient(AbstractAsyncRestClient):
 
     Args:
         config (DeepgramClientOptions): all the options for the client.
-
-    Attributes:
-        endpoint (str): The API endpoint for on-premises projects.
-
-    Methods:
-        list_onprem_credentials: Lists on-premises distribution credentials for a specific project.
-        get_onprem_credentials: Retrieves details of a specific on-premises distribution credential for a project.
-        create_onprem_credentials: Creates a new on-premises distribution credential for a project.
-        delete_onprem_credentials: Deletes an on-premises distribution credential for a project.
-
     """
-
     def __init__(self, config):
         self.logger = logging.getLogger(__name__)
         self.logger.addHandler(logging.StreamHandler())

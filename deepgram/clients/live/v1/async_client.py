@@ -22,18 +22,6 @@ class AsyncLiveClient:
 
      Args:
          config (DeepgramClientOptions): all the options for the client.
-
-     Attributes:
-         endpoint (str): The API endpoint for live transcription.
-         _socket (websockets.WebSocketClientProtocol): The WebSocket connection object.
-         _event_handlers (dict): Dictionary of event handlers for specific events.
-         websocket_url (str): The WebSocket URL used for connection.
-
-     Methods:
-         __call__: Establishes a WebSocket connection for live transcription.
-         on: Registers event handlers for specific events.
-         send: Sends data over the WebSocket connection.
-         finish: Closes the WebSocket connection gracefully.
     """
 
     def __init__(self, config: DeepgramClientOptions):
@@ -51,6 +39,9 @@ class AsyncLiveClient:
         self.websocket_url = convert_to_websocket_url(self.config.url, self.endpoint)
 
     async def __call__(self, options: LiveOptions = None):
+        """
+        Establishes a WebSocket connection for live transcription.
+        """
         self.logger.debug("AsyncLiveClient.__call__ ENTER")
         self.logger.info("options: %s", options)
 
@@ -72,7 +63,10 @@ class AsyncLiveClient:
             self.logger.notice("exception: websockets.ConnectionClosed")
             self.logger.debug("AsyncLiveClient.__call__ LEAVE")
 
-    def on(self, event, handler):  # registers event handlers for specific events
+    def on(self, event, handler):
+        """
+        Registers event handlers for specific events.
+        """
         if event in LiveTranscriptionEvents and callable(handler):
             self._event_handlers[event].append(handler)
 
@@ -116,6 +110,9 @@ class AsyncLiveClient:
                 self.logger.debug("AsyncLiveClient._start LEAVE")
 
     async def send(self, data):
+        """
+        Sends data over the WebSocket connection.
+        """
         self.logger.spam("AsyncLiveClient.send ENTER")
         self.logger.spam("data: %s", data)
 
@@ -126,6 +123,9 @@ class AsyncLiveClient:
         self.logger.spam("AsyncLiveClient.send LEAVE")
 
     async def finish(self):
+        """
+        Closes the WebSocket connection gracefully.
+        """
         self.logger.debug("AsyncLiveClient.finish LEAVE")
 
         if self._socket:
