@@ -43,14 +43,17 @@ class LiveClient:
         self._event_handlers = {event: [] for event in LiveTranscriptionEvents}
         self.websocket_url = convert_to_websocket_url(self.config.url, self.endpoint)
 
-    def start(self, options: LiveOptions = None):
+    def start(self, options: LiveOptions = None, **kwargs):
         """
         Starts the WebSocket connection for live transcription.
         """
         self.logger.debug("LiveClient.start ENTER")
-        self.logger.info("options: %s", options)
+        self.logger.info("kwargs: %s", options)
+        self.logger.info("options: %s", kwargs)
 
         self.options = options
+        self.kwargs = kwargs
+
         if isinstance(options, LiveOptions):
             self.logger.info("LiveOptions switching class -> json")
             self.options = self.options.to_dict()
@@ -89,11 +92,9 @@ class LiveClient:
         if event in LiveTranscriptionEvents and callable(handler):
             self._event_handlers[event].append(handler)
 
-    def _emit(
-        self, event, *args, **kwargs
-    ):
+    def _emit(self, event, *args, **kwargs):
         for handler in self._event_handlers[event]:
-            handler(*args, **kwargs)
+            handler(self, *args, **kwargs)
 
     def _listening(self) -> None:
         self.logger.debug("LiveClient._listening ENTER")
@@ -119,22 +120,45 @@ class LiveClient:
 
                 match response_type:
                     case LiveTranscriptionEvents.Transcript.value:
+                        self.logger.debug(
+                            "response_type: %s, data: %s", response_type, data
+                        )
                         result = LiveResultResponse.from_json(message)
-                        self._emit(LiveTranscriptionEvents.Transcript, result=result)
+                        self._emit(
+                            LiveTranscriptionEvents.Transcript,
+                            result=result,
+                            kwargs=self.kwargs,
+                        )
                     case LiveTranscriptionEvents.Metadata.value:
+                        self.logger.debug(
+                            "response_type: %s, data: %s", response_type, data
+                        )
                         result = MetadataResponse.from_json(message)
-                        self._emit(LiveTranscriptionEvents.Metadata, metadata=result)
+                        self._emit(
+                            LiveTranscriptionEvents.Metadata,
+                            metadata=result,
+                            kwargs=self.kwargs,
+                        )
                     case LiveTranscriptionEvents.Error.value:
+                        self.logger.debug(
+                            "response_type: %s, data: %s", response_type, data
+                        )
                         result = ErrorResponse.from_json(message)
-                        self._emit(LiveTranscriptionEvents.Error, error=result)
+                        self._emit(
+                            LiveTranscriptionEvents.Error,
+                            error=result,
+                            kwargs=self.kwargs,
+                        )
                     case _:
-                        error: ErrorResponse = {
-                            "type": "UnhandledMessage",
-                            "description": "Unknown message type",
-                            "message": f"Unhandle message type: {response_type}",
-                            "variant": "",
-                        }
-                        self._emit(LiveTranscriptionEvents.Error, error)
+                        self.logger.error(
+                            "response_type: %s, data: %s", response_type, data
+                        )
+                        error = ErrorResponse(
+                            type="UnhandledMessage",
+                            description="Unknown message type",
+                            message=f"Unhandle message type: {response_type}",
+                        )
+                        self._emit(LiveTranscriptionEvents.Error, error=error)
 
             except Exception as e:
                 if e.code == 1000:
