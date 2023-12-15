@@ -5,6 +5,8 @@
 from .v1.client import LiveClient as LiveClientLatest
 from .v1.async_client import AsyncLiveClient as AsyncLiveClientLatest
 from .v1.options import LiveOptions as LiveOptionsLatest
+from .enums import LiveTranscriptionEvents
+from .v1.response import LiveResultResponse, MetadataResponse, ErrorResponse
 
 """
 The vX/client.py points to the current supported version in the SDK.
