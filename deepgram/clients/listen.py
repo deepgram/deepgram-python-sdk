@@ -12,7 +12,15 @@ from .prerecorded.client import (
     AsyncPreRecordedClient,
     PrerecordedOptions,
 )
-from .live.client import LiveClient, AsyncLiveClient, LiveOptions
+from .live.client import (
+    LiveClient,
+    AsyncLiveClient,
+    LiveOptions,
+    LiveResultResponse,
+    MetadataResponse,
+    ErrorResponse,
+    LiveTranscriptionEvents,
+)
 from .errors import DeepgramModuleError
 
 

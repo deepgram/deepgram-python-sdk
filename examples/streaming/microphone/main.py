@@ -16,6 +16,7 @@ from deepgram import (
 
 load_dotenv()
 
+
 def main():
     try:
         # example of setting up a client config
@@ -27,16 +28,9 @@ def main():
         # otherwise, use default config
         deepgram = DeepgramClient()
 
-        # Create a websocket connection to Deepgram
-        options = LiveOptions(
-            punctuate=True,
-            language="en-US",
-            encoding="linear16",
-            channels=1,
-            sample_rate=16000,
-        )
+        dg_connection = deepgram.listen.live.v("1")
 
-        def on_message(result=None):
+        def on_message(self, result, **kwargs):
             if result is None:
                 return
             sentence = result.channel.alternatives[0].transcript
@@ -44,24 +38,30 @@ def main():
                 return
             print(f"speaker: {sentence}")
 
-        def on_metadata(metadata=None):
+        def on_metadata(self, metadata, **kwargs):
             if metadata is None:
                 return
-            print(f"\n{metadata}\n")
+            print(f"\n\n{metadata}\n\n")
 
-        def on_error(error=None):
+        def on_error(self, error, **kwargs):
             if error is None:
                 return
-            print(f"\n{error}\n")
-        
-        dg_connection = deepgram.listen.live.v("1")
-        dg_connection.start(options)
+            print(f"\n\n{error}\n\n")
 
         dg_connection.on(LiveTranscriptionEvents.Transcript, on_message)
         dg_connection.on(LiveTranscriptionEvents.Metadata, on_metadata)
         dg_connection.on(LiveTranscriptionEvents.Error, on_error)
 
-        # create microphone
+        options = LiveOptions(
+            punctuate=True,
+            language="en-US",
+            encoding="linear16",
+            channels=1,
+            sample_rate=16000,
+        )
+        dg_connection.start(options)
+
+        # Open a microphone stream
         microphone = Microphone(dg_connection.send)
 
         # start microphone

@@ -11,6 +11,7 @@ from ..enums import LiveTranscriptionEvents
 from ..helpers import convert_to_websocket_url, append_query_params
 from ..errors import DeepgramError
 
+from .response import LiveResultResponse, MetadataResponse, ErrorResponse
 from .options import LiveOptions
 
 
@@ -38,14 +39,14 @@ class AsyncLiveClient:
         self._event_handlers = {event: [] for event in LiveTranscriptionEvents}
         self.websocket_url = convert_to_websocket_url(self.config.url, self.endpoint)
 
-    async def __call__(self, options: LiveOptions = None):
-        """
-        Establishes a WebSocket connection for live transcription.
-        """
-        self.logger.debug("AsyncLiveClient.__call__ ENTER")
-        self.logger.info("options: %s", options)
+    async def start(self, options: LiveOptions = None, **kwargs):
+        self.logger.debug("AsyncLiveClient.start ENTER")
+        self.logger.info("kwargs: %s", options)
+        self.logger.info("options: %s", kwargs)
 
         self.options = options
+        self.kwargs = kwargs
+
         if isinstance(options, LiveOptions):
             self.logger.info("LiveOptions switching class -> json")
             self.options = self.options.to_dict()
@@ -55,13 +56,13 @@ class AsyncLiveClient:
             self._socket = await _socket_connect(url_with_params, self.config.headers)
             asyncio.create_task(self._start())
 
-            self.logger.notice("__call__ succeeded")
-            self.logger.debug("AsyncLiveClient.__call__ LEAVE")
+            self.logger.notice("start succeeded")
+            self.logger.debug("AsyncLiveClient.start LEAVE")
             return self
         except websockets.ConnectionClosed as e:
             await self._emit(LiveTranscriptionEvents.Close, e.code)
             self.logger.notice("exception: websockets.ConnectionClosed")
-            self.logger.debug("AsyncLiveClient.__call__ LEAVE")
+            self.logger.debug("AsyncLiveClient.start LEAVE")
 
     def on(self, event, handler):
         """
@@ -74,7 +75,7 @@ class AsyncLiveClient:
         self, event, *args, **kwargs
     ):  # triggers the registered event handlers for a specific event
         for handler in self._event_handlers[event]:
-            handler(*args, **kwargs)
+            handler(self, *args, **kwargs)
 
     async def _start(self) -> None:
         self.logger.debug("AsyncLiveClient._start ENTER")
@@ -85,25 +86,45 @@ class AsyncLiveClient:
                 response_type = data.get("type")
                 match response_type:
                     case LiveTranscriptionEvents.Transcript.value:
-                        self.logger.verbose(
+                        self.logger.debug(
                             "response_type: %s, data: %s", response_type, data
                         )
-                        await self._emit(LiveTranscriptionEvents.Transcript, data)
-                    case LiveTranscriptionEvents.Error.value:
-                        self.logger.verbose(
-                            "response_type: %s, data: %s", response_type, data
+                        result = LiveResultResponse.from_json(message)
+                        await self._emit(
+                            LiveTranscriptionEvents.Transcript,
+                            result=result,
+                            kwargs=self.kwargs,
                         )
-                        await self._emit(LiveTranscriptionEvents.Error, data)
                     case LiveTranscriptionEvents.Metadata.value:
-                        self.logger.verbose(
+                        self.logger.debug(
                             "response_type: %s, data: %s", response_type, data
                         )
-                        await self._emit(LiveTranscriptionEvents.Metadata, data)
+                        result = ErrorResponse.from_json(message)
+                        await self._emit(
+                            LiveTranscriptionEvents.Metadata,
+                            metadata=result,
+                            kwargs=self.kwargs,
+                        )
+                    case LiveTranscriptionEvents.Error.value:
+                        self.logger.debug(
+                            "response_type: %s, data: %s", response_type, data
+                        )
+                        result = MetadataResponse.from_json(message)
+                        await self._emit(
+                            LiveTranscriptionEvents.Error,
+                            error=result,
+                            kwargs=self.kwargs,
+                        )
                     case _:
                         self.logger.error(
                             "response_type: %s, data: %s", response_type, data
                         )
-                        await self._emit(LiveTranscriptionEvents.Error, data)
+                        error = ErrorResponse(
+                            type="UnhandledMessage",
+                            description="Unknown message type",
+                            message=f"Unhandle message type: {response_type}",
+                        )
+                        await self._emit(LiveTranscriptionEvents.Error, error=error)
             except json.JSONDecodeError as e:
                 await self._emit(LiveTranscriptionEvents.Error, e.code)
                 self.logger.error("exception: json.JSONDecodeError: %s", str(e))

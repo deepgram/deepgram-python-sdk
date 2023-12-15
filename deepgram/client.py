@@ -14,6 +14,7 @@ from .clients.listen import (
     AsyncPreRecordedClient,
     PrerecordedOptions,
     LiveOptions,
+    LiveTranscriptionEvents,
 )
 from .clients.onprem.client import OnPremClient
 from .clients.onprem.v1.async_client import AsyncOnPremClient

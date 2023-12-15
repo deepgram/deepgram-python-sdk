@@ -11,10 +11,9 @@ from deepgram import DeepgramClient, LiveTranscriptionEvents, LiveOptions
 
 load_dotenv()
 
-options = LiveOptions(model="nova", interim_results=False, language="en-US")
-
 # URL for the realtime streaming audio you would like to transcribe
 URL = "http://stream.live.vc.bbcmedia.co.uk/bbc_world_service"
+
 
 def main():
     try:
@@ -40,11 +39,32 @@ def main():
 
         # Create a websocket connection to Deepgram
         dg_connection = deepgram.listen.live.v("1")
-        dg_connection.start(options)
+
+        def on_message(self, result, **kwargs):
+            if result is None:
+                return
+            sentence = result.channel.alternatives[0].transcript
+            if len(sentence) == 0:
+                return
+            print(f"speaker: {sentence}")
+
+        def on_metadata(self, metadata, **kwargs):
+            if metadata is None:
+                return
+            print(f"\n\n{metadata}\n\n")
+
+        def on_error(self, error, **kwargs):
+            if error is None:
+                return
+            print(f"\n\n{error}\n\n")
 
         dg_connection.on(LiveTranscriptionEvents.Transcript, on_message)
         dg_connection.on(LiveTranscriptionEvents.Metadata, on_metadata)
         dg_connection.on(LiveTranscriptionEvents.Error, on_error)
+
+        # connect to websocket
+        options = LiveOptions(model="nova", interim_results=False, language="en-US")
+        dg_connection.start(options)
 
         lock_exit = threading.Lock()
         exit = False
