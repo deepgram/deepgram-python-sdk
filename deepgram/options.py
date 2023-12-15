@@ -8,18 +8,18 @@ import re
 
 
 class DeepgramClientOptions:
-
     """
     Represents options for configuring a Deepgram client.
 
     This class allows you to customize various options for interacting with the Deepgram API.
 
     Attributes:
-        api_key (str): A Deepgram API key used for authentication.
-        global_options (dict): A dictionary containing global configuration options.
-            - headers (dict): Optional headers for initializing the client.
-            - url (str): The URL used to interact with production, On-prem, and other Deepgram environments. Defaults to `api.deepgram.com`.
-    """
+        api_key: (Optional) A Deepgram API key used for authentication. Default uses the `DEEPGRAM_API_KEY` environment variable.
+        verbose: (Optional) The logging level for the client. Defaults to `logging.WARNING`.
+        url: (Optional) The URL used to interact with production, On-prem, and other Deepgram environments. Defaults to `api.deepgram.com`.
+        headers: (Optional) Headers for initializing the client.
+        options: (Optional) Additional options for initializing the client.
+        """
 
     def __init__(
         self,

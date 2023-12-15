@@ -21,11 +21,6 @@ class AbstractAsyncRestClient:
         url (Dict[str, str]): The base URL for the RESTful API, including any path segments.
         headers (Optional[Dict[str, Any]]): Optional HTTP headers to include in requests.
 
-    Attributes:
-        url (Dict[str, str]): The base URL for the RESTful API.
-        client (httpx.AsyncClient): An asynchronous HTTP client for making requests.
-        headers (Optional[Dict[str, Any]]): Optional HTTP headers to include in requests.
-
     Exceptions:
         DeepgramApiError: Raised for known API errors.
         DeepgramUnknownApiError: Raised for unknown API errors.

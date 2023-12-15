@@ -16,11 +16,8 @@ class ReadStreamSource(TypedDict):
 
     Attributes:
         stream (BufferedReader): A BufferedReader object for reading binary data.
-        mimetype (str): The MIME type or content type associated with the data.
     """
-
     stream: BufferedReader
-    mimetype: str
 
 
 class UrlSource(TypedDict):
@@ -33,7 +30,6 @@ class UrlSource(TypedDict):
     Attributes:
         url (str): The URL pointing to the hosted file.
     """
-
     url: str
 
 
@@ -46,11 +42,8 @@ class BufferSource(TypedDict):
 
     Attributes:
         buffer (bytes): The binary data.
-        mimetype (str): The MIME type or content type associated with the data.
     """
-
     buffer: bytes
-    mimetype: str
 
 
 PrerecordedSource = Union[UrlSource, BufferSource, ReadStreamSource]

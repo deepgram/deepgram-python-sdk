@@ -15,7 +15,6 @@ class OnPremClient(OnPremClientLatest):
     """
     Please see OnPremClientLatest for details
     """
-
     def __init__(self, config):
         super().__init__(config)
 
@@ -24,6 +23,5 @@ class AsyncOnPremClient(AsyncOnPremClientLatest):
     """
     Please see AsyncOnPremClientLatest for details
     """
-
     def __init__(self, config):
         super().__init__(config)

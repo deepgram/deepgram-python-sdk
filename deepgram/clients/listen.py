@@ -17,6 +17,25 @@ from .errors import DeepgramModuleError
 
 
 class ListenClient:
+    """
+    Represents a client for interacting with the Deepgram API.
+
+    This class provides a client for making requests to the Deepgram API with various configuration options.
+
+    Attributes:
+        api_key (str): The Deepgram API key used for authentication.
+        config_options (DeepgramClientOptions): An optional configuration object specifying client options.
+
+    Raises:
+        DeepgramApiKeyError: If the API key is missing or invalid.
+
+    Methods:
+        live: (Preferred) Returns a Threaded LiveClient instance for interacting with Deepgram's transcription services.
+        prerecorded: (Preferred) Returns an Threaded PreRecordedClient instance for interacting with Deepgram's prerecorded transcription services.
+
+        asynclive: Returns an (Async) LiveClient instance for interacting with Deepgram's transcription services.
+        asyncprerecorded: Returns an (Async) PreRecordedClient instance for interacting with Deepgram's prerecorded transcription services.
+    """
     def __init__(self, config: DeepgramClientOptions):
         self.logger = logging.getLogger(__name__)
         self.logger.addHandler(logging.StreamHandler())

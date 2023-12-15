@@ -11,7 +11,6 @@ import logging, verboselogs
 from .errors import DeepgramMicrophoneError
 from .constants import LOGGING, CHANNELS, RATE, CHUNK
 
-
 class Microphone:
     """
     This implements a microphone for local audio input. This uses PyAudio under the hood.
@@ -25,6 +24,7 @@ class Microphone:
         chunk=CHUNK,
         channels=CHANNELS,
     ):
+        # dynamic import of pyaudio as not to force the requirements on the SDK (and users)
         import pyaudio
 
         self.logger = logging.getLogger(__name__)
@@ -40,6 +40,9 @@ class Microphone:
         self.stream = None
 
     def is_active(self):
+        """
+        returns True if the stream is active, False otherwise
+        """
         self.logger.debug("Microphone.is_active ENTER")
         if self.stream is None:
             self.logger.error("stream is None")
@@ -52,6 +55,9 @@ class Microphone:
         return
 
     def start(self):
+        """
+        starts the microphone stream
+        """
         self.logger.debug("Microphone.start ENTER")
 
         if self.stream is not None:
@@ -76,14 +82,17 @@ class Microphone:
         self.lock = threading.Lock()
 
         self.stream.start_stream()
-        self.thread = threading.Thread(target=self.processing)
+        self.thread = threading.Thread(target=self._processing)
         self.thread.start()
 
         self.logger.notice("start succeeded")
         self.logger.debug("Microphone.start LEAVE")
 
-    def processing(self):
-        self.logger.debug("Microphone.processing ENTER")
+    def _processing(self):
+        """
+        the main processing loop for the microphone
+        """
+        self.logger.debug("Microphone._processing ENTER")
 
         try:
             while True:
@@ -106,15 +115,18 @@ class Microphone:
                     self.logger.verbose("regular threaded callback")
                     self.push_callback(data)
 
-            self.logger.notice("processing exiting...")
-            self.logger.debug("Microphone.processing LEAVE")
+            self.logger.notice("_processing exiting...")
+            self.logger.debug("Microphone._processing LEAVE")
 
         except Exception as e:
             self.logger.error("Error while sending: %s", str(e))
-            self.logger.debug("Microphone.processing LEAVE")
+            self.logger.debug("Microphone._processing LEAVE")
             raise
 
     def finish(self):
+        """
+        Stops the microphone stream
+        """
         self.logger.debug("Microphone.finish ENTER")
 
         self.lock.acquire()
@@ -125,7 +137,7 @@ class Microphone:
         if self.thread is not None:
             self.thread.join()
             self.thread = None
-        self.logger.notice("processing/send thread joined")
+        self.logger.notice("_processing/send thread joined")
 
         if self.stream is not None:
             self.stream.stop_stream()

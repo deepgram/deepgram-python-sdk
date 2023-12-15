@@ -26,18 +26,6 @@ class LiveClient:
 
      Args:
          config (DeepgramClientOptions): all the options for the client.
-
-     Attributes:
-         endpoint (str): The API endpoint for live transcription.
-         _socket (websockets.WebSocketClientProtocol): The WebSocket connection object.
-         _event_handlers (dict): Dictionary of event handlers for specific events.
-         websocket_url (str): The WebSocket URL used for connection.
-
-     Methods:
-         __call__: Establishes a WebSocket connection for live transcription.
-         on: Registers event handlers for specific events.
-         send: Sends data over the WebSocket connection.
-         finish: Closes the WebSocket connection gracefully.
     """
 
     def __init__(self, config: DeepgramClientOptions):
@@ -56,6 +44,9 @@ class LiveClient:
         self.websocket_url = convert_to_websocket_url(self.config.url, self.endpoint)
 
     def start(self, options: LiveOptions = None):
+        """
+        Starts the WebSocket connection for live transcription.
+        """
         self.logger.debug("LiveClient.start ENTER")
         self.logger.info("options: %s", options)
 
@@ -90,14 +81,17 @@ class LiveClient:
         self.logger.notice("start succeeded")
         self.logger.debug("LiveClient.start LEAVE")
 
-    def on(self, event, handler):  # registers event handlers for specific events
+    def on(self, event, handler):
+        """
+        Registers event handlers for specific events.
+        """
         self.logger.info("event fired: %s", event)
         if event in LiveTranscriptionEvents and callable(handler):
             self._event_handlers[event].append(handler)
 
     def _emit(
         self, event, *args, **kwargs
-    ):  # triggers the registered event handlers for a specific event
+    ):
         for handler in self._event_handlers[event]:
             handler(*args, **kwargs)
 
@@ -196,6 +190,9 @@ class LiveClient:
                 self.logger.debug("LiveClient._processing LEAVE")
 
     def send(self, data) -> int:
+        """
+        Sends data over the WebSocket connection.
+        """
         self.logger.spam("LiveClient.send ENTER")
         self.logger.spam("data: %s", data)
 
@@ -213,6 +210,9 @@ class LiveClient:
         return 0
 
     def finish(self):
+        """
+        Closes the WebSocket connection gracefully.
+        """
         self.logger.spam("LiveClient.finish ENTER")
 
         if self._socket:

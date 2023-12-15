@@ -16,54 +16,44 @@ from deepgram import (
 
 load_dotenv()
 
-# example of setting up a client config
-# config = DeepgramClientOptions(
-#     verbose=logging.SPAM,
-#     options={'keepalive': 'true'}
-# )
-
-options = LiveOptions(
-    punctuate=True,
-    language="en-US",
-    encoding="linear16",
-    channels=1,
-    sample_rate=16000,
-)
-
-
-def on_message(result=None):
-    if result is None:
-        return
-    sentence = result.channel.alternatives[0].transcript
-    if len(sentence) == 0:
-        return
-    print(f"speaker: {sentence}")
-
-
-def on_metadata(metadata=None):
-    if metadata is None:
-        return
-    print("")
-    print(metadata)
-    print("")
-
-
-def on_error(error=None):
-    if error is None:
-        return
-    print("")
-    print(error)
-    print("")
-
-
 def main():
-    # to specify a client config
-    # deepgram: DeepgramClient = DeepgramClient("", config)
-    # otherwise, use default config
-    deepgram = DeepgramClient()
-
     try:
+        # example of setting up a client config
+        # config = DeepgramClientOptions(
+        #     verbose=logging.SPAM,
+        #     options={'keepalive': 'true'}
+        # )
+        # deepgram: DeepgramClient = DeepgramClient("", config)
+        # otherwise, use default config
+        deepgram = DeepgramClient()
+
         # Create a websocket connection to Deepgram
+        options = LiveOptions(
+            punctuate=True,
+            language="en-US",
+            encoding="linear16",
+            channels=1,
+            sample_rate=16000,
+        )
+
+        def on_message(result=None):
+            if result is None:
+                return
+            sentence = result.channel.alternatives[0].transcript
+            if len(sentence) == 0:
+                return
+            print(f"speaker: {sentence}")
+
+        def on_metadata(metadata=None):
+            if metadata is None:
+                return
+            print(f"\n{metadata}\n")
+
+        def on_error(error=None):
+            if error is None:
+                return
+            print(f"\n{error}\n")
+        
         dg_connection = deepgram.listen.live.v("1")
         dg_connection.start(options)
 
@@ -71,7 +61,7 @@ def main():
         dg_connection.on(LiveTranscriptionEvents.Metadata, on_metadata)
         dg_connection.on(LiveTranscriptionEvents.Error, on_error)
 
-        # Open a microphone stream
+        # create microphone
         microphone = Microphone(dg_connection.send)
 
         # start microphone
@@ -80,10 +70,10 @@ def main():
         # wait until finished
         input("Press Enter to stop recording...\n\n")
 
-        # Wait for the connection to close
+        # Wait for the microphone to close
         microphone.finish()
 
-        # Indicate that we've finished sending data by sending the {"type": "CloseStream"}
+        # Indicate that we've finished
         dg_connection.finish()
 
         print("Finished")

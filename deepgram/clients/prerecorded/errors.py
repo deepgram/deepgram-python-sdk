@@ -9,9 +9,7 @@ class DeepgramTypeError(Exception):
 
     Attributes:
         message (str): The error message describing the exception.
-        status (str): The HTTP status associated with the API error.
     """
-
     def __init__(self, message: str):
         super().__init__(message)
         self.name = "DeepgramTypeError"

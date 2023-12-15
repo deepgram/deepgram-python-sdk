@@ -13,12 +13,11 @@ load_dotenv()
 # environment variables
 DELETE_MEMBER_BY_EMAIL = "enter-your-email@gmail.com"
 
-# Create a Deepgram client using the API key
-deepgram = DeepgramClient()
-
-
 def main():
     try:
+        # Create a Deepgram client using the API key
+        deepgram = DeepgramClient()
+
         # get projects
         projectResp = deepgram.manage.v("1").get_projects()
         if projectResp is None:

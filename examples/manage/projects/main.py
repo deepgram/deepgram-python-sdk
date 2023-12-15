@@ -13,12 +13,11 @@ load_dotenv()
 # environment variables
 DELETE_PROJECT_BY_NAME = os.getenv("DG_DELETE_PROJECT_BY_NAME")
 
-# Create a Deepgram client using the API key
-deepgram = DeepgramClient()
-
-
 def main():
     try:
+        # Create a Deepgram client using the API key
+        deepgram = DeepgramClient()
+
         # get projects
         listResp = deepgram.manage.v("1").get_projects()
         if listResp is None:

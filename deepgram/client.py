@@ -39,8 +39,12 @@ class DeepgramClient:
 
     Methods:
         listen: Returns a ListenClient instance for interacting with Deepgram's transcription services.
-        manage: Returns a ManageClient instance for managing Deepgram resources.
-        onprem: Returns an OnPremClient instance for interacting with Deepgram's on-premises API.
+
+        manage: (Preferred) Returns a Threaded ManageClient instance for managing Deepgram resources.
+        onprem: (Preferred) Returns an Threaded OnPremClient instance for interacting with Deepgram's on-premises API.
+
+        asyncmanage: Returns an (Async) ManageClient instance for managing Deepgram resources.
+        asynconprem: Returns an (Async) OnPremClient instance for interacting with Deepgram's on-premises API.
     """
 
     def __init__(
