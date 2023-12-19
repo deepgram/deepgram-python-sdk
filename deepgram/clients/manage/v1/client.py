@@ -51,6 +51,7 @@ class ManageClient(AbstractSyncRestClient):
     Args:
         config (DeepgramClientOptions): all the options for the client.
     """
+
     def __init__(self, config: DeepgramClientOptions):
         self.logger = logging.getLogger(__name__)
         self.logger.addHandler(logging.StreamHandler())
@@ -61,13 +62,17 @@ class ManageClient(AbstractSyncRestClient):
         super().__init__(config)
 
     # projects
-    def list_projects(self, timeout: httpx.Timeout = None):
+    def list_projects(
+        self, timeout: httpx.Timeout = None, addons: dict = None, **kwargs
+    ):
         """
         List all projects for the current user.
         """
-        return self.get_projects()
+        return self.get_projects(timeout=timeout, addons=addons, **kwargs)
 
-    def get_projects(self, timeout: httpx.Timeout = None):
+    def get_projects(
+        self, timeout: httpx.Timeout = None, addons: dict = None, **kwargs
+    ):
         """
         Gets a list of projects for the authenticated user.
 
@@ -77,7 +82,8 @@ class ManageClient(AbstractSyncRestClient):
         self.logger.debug("ManageClient.get_projects ENTER")
         url = f"{self.config.url}/{self.endpoint}"
         self.logger.info("url: %s", url)
-        result = self.get(url, timeout=timeout)
+        self.logger.info("addons: %s", addons)
+        result = self.get(url, timeout=timeout, addons=addons, **kwargs)
         self.logger.info("json: %s", result)
         res = ProjectsResponse.from_json(result)
         self.logger.verbose("result: %s", res)
@@ -85,10 +91,16 @@ class ManageClient(AbstractSyncRestClient):
         self.logger.debug("ManageClient.get_projects LEAVE")
         return res
 
-    def get_project(self, project_id: str, timeout: httpx.Timeout = None):
+    def get_project(
+        self,
+        project_id: str,
+        timeout: httpx.Timeout = None,
+        addons: dict = None,
+        **kwargs,
+    ):
         """
         Gets details for a specific project.
-        
+
         Reference:
         https://developers.deepgram.com/reference/get-project
         """
@@ -96,7 +108,8 @@ class ManageClient(AbstractSyncRestClient):
         url = f"{self.config.url}/{self.endpoint}/{project_id}"
         self.logger.info("url: %s", url)
         self.logger.info("project_id: %s", project_id)
-        result = self.get(url, timeout=timeout)
+        self.logger.info("addons: %s", addons)
+        result = self.get(url, timeout=timeout, addons=addons, **kwargs)
         self.logger.info("json: %s", result)
         res = Project.from_json(result)
         self.logger.verbose("result: %s", res)
@@ -104,10 +117,17 @@ class ManageClient(AbstractSyncRestClient):
         self.logger.debug("ManageClient.get_project LEAVE")
         return res
 
-    def update_project_option(self, project_id: str, options: ProjectOptions, timeout: httpx.Timeout = None):
+    def update_project_option(
+        self,
+        project_id: str,
+        options: ProjectOptions,
+        timeout: httpx.Timeout = None,
+        addons: dict = None,
+        **kwargs,
+    ):
         """
         Updates a project's settings.
-        
+
         Reference:
         https://developers.deepgram.com/reference/update-project
         """
@@ -119,7 +139,8 @@ class ManageClient(AbstractSyncRestClient):
             self.logger.info("ProjectOptions switching class -> json")
             options = json.loads(options.to_json())
         self.logger.info("options: %s", options)
-        result = self.patch(url, json=options, timeout=timeout)
+        self.logger.info("addons: %s", addons)
+        result = self.patch(url, json=options, timeout=timeout, addons=addons, **kwargs)
         self.logger.info("json: %s", result)
         res = Message.from_json(result)
         self.logger.verbose("result: %s", res)
@@ -127,10 +148,17 @@ class ManageClient(AbstractSyncRestClient):
         self.logger.debug("ManageClient.update_project_option LEAVE")
         return res
 
-    def update_project(self, project_id: str, name="", timeout: httpx.Timeout = None):
+    def update_project(
+        self,
+        project_id: str,
+        name="",
+        timeout: httpx.Timeout = None,
+        addons: dict = None,
+        **kwargs,
+    ):
         """
         Updates a project's settings.
-        
+
         Reference:
         https://developers.deepgram.com/reference/update-project
         """
@@ -142,7 +170,8 @@ class ManageClient(AbstractSyncRestClient):
         self.logger.info("url: %s", url)
         self.logger.info("project_id: %s", project_id)
         self.logger.info("options: %s", options)
-        result = self.patch(url, json=options, timeout=timeout)
+        self.logger.info("addons: %s", addons)
+        result = self.patch(url, json=options, timeout=timeout, addons=addons, **kwargs)
         self.logger.info("json: %s", result)
         res = Message.from_json(result)
         self.logger.verbose("result: %s", res)
@@ -150,16 +179,23 @@ class ManageClient(AbstractSyncRestClient):
         self.logger.debug("ManageClient.update_project LEAVE")
         return res
 
-    def delete_project(self, project_id: str, timeout: httpx.Timeout = None) -> None:
+    def delete_project(
+        self,
+        project_id: str,
+        timeout: httpx.Timeout = None,
+        addons: dict = None,
+        **kwargs,
+    ) -> None:
         """
         Deletes a project.
-        
+
         Reference:
         https://developers.deepgram.com/reference/delete-project
         """
         self.logger.debug("ManageClient.delete_project ENTER")
         url = f"{self.config.url}/{self.endpoint}/{project_id}"
-        result = self.delete(url, timeout=timeout)
+        self.logger.info("addons: %s", addons)
+        result = self.delete(url, timeout=timeout, addons=addons, **kwargs)
         self.logger.info("json: %s", result)
         res = Message.from_json(result)
         self.logger.verbose("result: %s", res)
@@ -168,16 +204,28 @@ class ManageClient(AbstractSyncRestClient):
         return res
 
     # keys
-    def list_keys(self, project_id: str, timeout: httpx.Timeout = None):
+    def list_keys(
+        self,
+        project_id: str,
+        timeout: httpx.Timeout = None,
+        addons: dict = None,
+        **kwargs,
+    ):
         """
         Please see get_keys for more information.
         """
-        return self.get_keys(project_id)
+        return self.get_keys(project_id, timeout=timeout, addons=addons, **kwargs)
 
-    def get_keys(self, project_id: str, timeout: httpx.Timeout = None):
+    def get_keys(
+        self,
+        project_id: str,
+        timeout: httpx.Timeout = None,
+        addons: dict = None,
+        **kwargs,
+    ):
         """
         Gets a list of keys for a project.
-        
+
         Reference:
         https://developers.deepgram.com/reference/list-keys
         """
@@ -185,7 +233,8 @@ class ManageClient(AbstractSyncRestClient):
         url = f"{self.config.url}/{self.endpoint}/{project_id}/keys"
         self.logger.info("url: %s", url)
         self.logger.info("project_id: %s", project_id)
-        result = self.get(url, timeout=timeout)
+        self.logger.info("addons: %s", addons)
+        result = self.get(url, timeout=timeout, addons=addons, **kwargs)
         self.logger.info("json: %s", result)
         res = KeysResponse.from_json(result)
         self.logger.verbose("result: %s", res)
@@ -193,10 +242,17 @@ class ManageClient(AbstractSyncRestClient):
         self.logger.debug("ManageClient.get_keys LEAVE")
         return res
 
-    def get_key(self, project_id: str, key_id: str, timeout: httpx.Timeout = None):
+    def get_key(
+        self,
+        project_id: str,
+        key_id: str,
+        timeout: httpx.Timeout = None,
+        addons: dict = None,
+        **kwargs,
+    ):
         """
         Gets details for a specific key.
-        
+
         Reference:
         https://developers.deepgram.com/reference/get-key
         """
@@ -205,7 +261,8 @@ class ManageClient(AbstractSyncRestClient):
         self.logger.info("url: %s", url)
         self.logger.info("project_id: %s", project_id)
         self.logger.info("key_id: %s", key_id)
-        result = self.get(url, timeout=timeout)
+        self.logger.info("addons: %s", addons)
+        result = self.get(url, timeout=timeout, addons=addons, **kwargs)
         self.logger.info("json: %s", result)
         res = KeyResponse.from_json(result)
         self.logger.verbose("result: %s", res)
@@ -213,10 +270,17 @@ class ManageClient(AbstractSyncRestClient):
         self.logger.debug("ManageClient.get_key LEAVE")
         return res
 
-    def create_key(self, project_id: str, options: KeyOptions, timeout: httpx.Timeout = None):
+    def create_key(
+        self,
+        project_id: str,
+        options: KeyOptions,
+        timeout: httpx.Timeout = None,
+        addons: dict = None,
+        **kwargs,
+    ):
         """
         Creates a new key.
-        
+
         Reference:
         https://developers.deepgram.com/reference/create-key
         """
@@ -228,7 +292,8 @@ class ManageClient(AbstractSyncRestClient):
             self.logger.info("KeyOptions switching class -> json")
             options = json.loads(options.to_json())
         self.logger.info("options: %s", options)
-        result = self.post(url, json=options, timeout=timeout)
+        self.logger.info("addons: %s", addons)
+        result = self.post(url, json=options, timeout=timeout, addons=addons, **kwargs)
         self.logger.info("json: %s", result)
         res = Key.from_json(result)
         self.logger.verbose("result: %s", res)
@@ -236,10 +301,17 @@ class ManageClient(AbstractSyncRestClient):
         self.logger.debug("ManageClient.create_key LEAVE")
         return res
 
-    def delete_key(self, project_id: str, key_id: str, timeout: httpx.Timeout = None) -> None:
+    def delete_key(
+        self,
+        project_id: str,
+        key_id: str,
+        timeout: httpx.Timeout = None,
+        addons: dict = None,
+        **kwargs,
+    ) -> None:
         """
         Deletes a key.
-        
+
         Reference:
         https://developers.deepgram.com/reference/delete-key
         """
@@ -248,7 +320,8 @@ class ManageClient(AbstractSyncRestClient):
         self.logger.info("url: %s", url)
         self.logger.info("project_id: %s", project_id)
         self.logger.info("key_id: %s", key_id)
-        result = self.delete(url, timeout=timeout)
+        self.logger.info("addons: %s", addons)
+        result = self.delete(url, timeout=timeout, addons=addons, **kwargs)
         self.logger.info("json: %s", result)
         res = Message.from_json(result)
         self.logger.verbose("result: %s", res)
@@ -257,16 +330,28 @@ class ManageClient(AbstractSyncRestClient):
         return res
 
     # members
-    def list_members(self, project_id: str, timeout: httpx.Timeout = None):
+    def list_members(
+        self,
+        project_id: str,
+        timeout: httpx.Timeout = None,
+        addons: dict = None,
+        **kwargs,
+    ):
         """
         Please see get_members for more information.
         """
-        return self.get_members(project_id)
+        return self.get_members(project_id, timeout=timeout, addons=addons, **kwargs)
 
-    def get_members(self, project_id: str, timeout: httpx.Timeout = None):
+    def get_members(
+        self,
+        project_id: str,
+        timeout: httpx.Timeout = None,
+        addons: dict = None,
+        **kwargs,
+    ):
         """
         Gets a list of members for a project.
-        
+
         Reference:
         https://developers.deepgram.com/reference/get-members
         """
@@ -274,7 +359,8 @@ class ManageClient(AbstractSyncRestClient):
         url = f"{self.config.url}/{self.endpoint}/{project_id}/members"
         self.logger.info("url: %s", url)
         self.logger.info("project_id: %s", project_id)
-        result = self.get(url, timeout=timeout)
+        self.logger.info("addons: %s", addons)
+        result = self.get(url, timeout=timeout, addons=addons, **kwargs)
         self.logger.info("json: %s", result)
         res = MembersResponse.from_json(result)
         self.logger.verbose("result: %s", res)
@@ -282,10 +368,17 @@ class ManageClient(AbstractSyncRestClient):
         self.logger.debug("ManageClient.get_members LEAVE")
         return res
 
-    def remove_member(self, project_id: str, member_id: str, timeout: httpx.Timeout = None) -> None:
+    def remove_member(
+        self,
+        project_id: str,
+        member_id: str,
+        timeout: httpx.Timeout = None,
+        addons: dict = None,
+        **kwargs,
+    ) -> None:
         """
         Removes a member from a project.
-        
+
         Reference:
         https://developers.deepgram.com/reference/remove-member
         """
@@ -294,7 +387,8 @@ class ManageClient(AbstractSyncRestClient):
         self.logger.info("url: %s", url)
         self.logger.info("project_id: %s", project_id)
         self.logger.info("member_id: %s", member_id)
-        result = self.delete(url, timeout=timeout)
+        self.logger.info("addons: %s", addons)
+        result = self.delete(url, timeout=timeout, addons=addons, **kwargs)
         self.logger.info("json: %s", result)
         res = Message.from_json(result)
         self.logger.verbose("result: %s", res)
@@ -303,10 +397,17 @@ class ManageClient(AbstractSyncRestClient):
         return res
 
     # scopes
-    def get_member_scopes(self, project_id: str, member_id: str, timeout: httpx.Timeout = None):
+    def get_member_scopes(
+        self,
+        project_id: str,
+        member_id: str,
+        timeout: httpx.Timeout = None,
+        addons: dict = None,
+        **kwargs,
+    ):
         """
         Gets a list of scopes for a member.
-        
+
         Reference:
         https://developers.deepgram.com/reference/get-member-scopes
         """
@@ -317,7 +418,8 @@ class ManageClient(AbstractSyncRestClient):
         self.logger.info("url: %s", url)
         self.logger.info("project_id: %s", project_id)
         self.logger.info("member_id: %s", member_id)
-        result = self.get(url, timeout=timeout)
+        self.logger.info("addons: %s", addons)
+        result = self.get(url, timeout=timeout, addons=addons, **kwargs)
         self.logger.info("json: %s", result)
         res = ScopesResponse.from_json(result)
         self.logger.verbose("result: %s", res)
@@ -326,11 +428,17 @@ class ManageClient(AbstractSyncRestClient):
         return res
 
     def update_member_scope(
-        self, project_id: str, member_id: str, options: ScopeOptions, timeout: httpx.Timeout = None
+        self,
+        project_id: str,
+        member_id: str,
+        options: ScopeOptions,
+        timeout: httpx.Timeout = None,
+        addons: dict = None,
+        **kwargs,
     ):
         """
         Updates a member's scopes.
-        
+
         Reference:
         https://developers.deepgram.com/reference/update-scope
         """
@@ -344,7 +452,8 @@ class ManageClient(AbstractSyncRestClient):
             self.logger.info("ScopeOptions switching class -> json")
             options = json.loads(options.to_json())
         self.logger.info("options: %s", options)
-        result = self.put(url, json=options, timeout=timeout)
+        self.logger.info("addons: %s", addons)
+        result = self.put(url, json=options, timeout=timeout, addons=addons, **kwargs)
         self.logger.info("json: %s", result)
         res = Message.from_json(result)
         self.logger.verbose("result: %s", res)
@@ -353,16 +462,28 @@ class ManageClient(AbstractSyncRestClient):
         return res
 
     # invites
-    def list_invites(self, project_id: str, timeout: httpx.Timeout = None):
+    def list_invites(
+        self,
+        project_id: str,
+        timeout: httpx.Timeout = None,
+        addons: dict = None,
+        **kwargs,
+    ):
         """
         Please see get_invites for more information.
         """
-        return self.get_invites(project_id)
+        return self.get_invites(project_id, timeout=timeout, addons=addons, **kwargs)
 
-    def get_invites(self, project_id: str, timeout: httpx.Timeout = None):
+    def get_invites(
+        self,
+        project_id: str,
+        timeout: httpx.Timeout = None,
+        addons: dict = None,
+        **kwargs,
+    ):
         """
         Gets a list of invites for a project.
-        
+
         Reference:
         https://developers.deepgram.com/reference/list-invites
         """
@@ -370,7 +491,8 @@ class ManageClient(AbstractSyncRestClient):
         url = f"{self.config.url}/{self.endpoint}/{project_id}/invites"
         self.logger.info("url: %s", url)
         self.logger.info("project_id: %s", project_id)
-        result = self.get(url, timeout=timeout)
+        self.logger.info("addons: %s", addons)
+        result = self.get(url, timeout=timeout, addons=addons, **kwargs)
         self.logger.info("json: %s", result)
         res = InvitesResponse.from_json(result)
         self.logger.verbose("result: %s", res)
@@ -378,10 +500,17 @@ class ManageClient(AbstractSyncRestClient):
         self.logger.debug("ManageClient.get_invites LEAVE")
         return res
 
-    def send_invite_options(self, project_id: str, options: InviteOptions, timeout: httpx.Timeout = None):
+    def send_invite_options(
+        self,
+        project_id: str,
+        options: InviteOptions,
+        timeout: httpx.Timeout = None,
+        addons: dict = None,
+        **kwargs,
+    ):
         """
         Sends an invite to a project.
-        
+
         Reference:
         https://developers.deepgram.com/reference/send-invite
         """
@@ -393,7 +522,8 @@ class ManageClient(AbstractSyncRestClient):
             self.logger.info("InviteOptions switching class -> json")
             options = json.loads(options.to_json())
         self.logger.info("options: %s", options)
-        result = self.post(url, json=options, timeout=timeout)
+        self.logger.info("addons: %s", addons)
+        result = self.post(url, json=options, timeout=timeout, addons=addons, **kwargs)
         self.logger.info("json: %s", result)
         res = Message.from_json(result)
         self.logger.verbose("result: %s", res)
@@ -401,10 +531,18 @@ class ManageClient(AbstractSyncRestClient):
         self.logger.debug("ManageClient.send_invite_options LEAVE")
         return res
 
-    def send_invite(self, project_id: str, email: str, scope="member", timeout: httpx.Timeout = None):
+    def send_invite(
+        self,
+        project_id: str,
+        email: str,
+        scope="member",
+        timeout: httpx.Timeout = None,
+        addons: dict = None,
+        **kwargs,
+    ):
         """
         Sends an invite to a project.
-        
+
         Reference:
         https://developers.deepgram.com/reference/send-invite
         """
@@ -417,7 +555,8 @@ class ManageClient(AbstractSyncRestClient):
         self.logger.info("url: %s", url)
         self.logger.info("project_id: %s", project_id)
         self.logger.info("options: %s", options)
-        result = self.post(url, json=options, timeout=timeout)
+        self.logger.info("addons: %s", addons)
+        result = self.post(url, json=options, timeout=timeout, addons=addons, **kwargs)
         self.logger.info("json: %s", result)
         res = Message.from_json(result)
         self.logger.verbose("result: %s", res)
@@ -425,10 +564,17 @@ class ManageClient(AbstractSyncRestClient):
         self.logger.debug("ManageClient.send_invite LEAVE")
         return res
 
-    def delete_invite(self, project_id: str, email: str, timeout: httpx.Timeout = None):
+    def delete_invite(
+        self,
+        project_id: str,
+        email: str,
+        timeout: httpx.Timeout = None,
+        addons: dict = None,
+        **kwargs,
+    ):
         """
         Deletes an invite from a project.
-        
+
         Reference:
         https://developers.deepgram.com/reference/delete-invite
         """
@@ -437,7 +583,8 @@ class ManageClient(AbstractSyncRestClient):
         self.logger.info("url: %s", url)
         self.logger.info("project_id: %s", project_id)
         self.logger.info("email: %s", email)
-        result = self.delete(url, timeout=timeout)
+        self.logger.info("addons: %s", addons)
+        result = self.delete(url, timeout=timeout, addons=addons, **kwargs)
         self.logger.info("json: %s", result)
         res = Message.from_json(result)
         self.logger.verbose("result: %s", res)
@@ -445,10 +592,16 @@ class ManageClient(AbstractSyncRestClient):
         self.logger.debug("ManageClient.delete_invite LEAVE")
         return res
 
-    def leave_project(self, project_id: str, timeout: httpx.Timeout = None):
+    def leave_project(
+        self,
+        project_id: str,
+        timeout: httpx.Timeout = None,
+        addons: dict = None,
+        **kwargs,
+    ):
         """
         Leaves a project.
-        
+
         Reference:
         https://developers.deepgram.com/reference/leave-project
         """
@@ -456,7 +609,8 @@ class ManageClient(AbstractSyncRestClient):
         url = f"{self.config.url}/{self.endpoint}/{project_id}/leave"
         self.logger.info("url: %s", url)
         self.logger.info("project_id: %s", project_id)
-        result = self.delete(url, timeout=timeout)
+        self.logger.info("addons: %s", addons)
+        result = self.delete(url, timeout=timeout, addons=addons, **kwargs)
         self.logger.info("json: %s", result)
         res = Message.from_json(result)
         self.logger.verbose("result: %s", res)
@@ -465,10 +619,17 @@ class ManageClient(AbstractSyncRestClient):
         return res
 
     # usage
-    def get_usage_requests(self, project_id: str, options: UsageRequestOptions, timeout: httpx.Timeout = None):
+    def get_usage_requests(
+        self,
+        project_id: str,
+        options: UsageRequestOptions,
+        timeout: httpx.Timeout = None,
+        addons: dict = None,
+        **kwargs,
+    ):
         """
         Gets a list of usage requests for a project.
-        
+
         Reference:
         https://developers.deepgram.com/reference/get-all-requests
         """
@@ -480,7 +641,10 @@ class ManageClient(AbstractSyncRestClient):
             self.logger.info("UsageRequestOptions switching class -> json")
             options = json.loads(options.to_json())
         self.logger.info("options: %s", options)
-        result = self.get(url, options, timeout=timeout)
+        self.logger.info("addons: %s", addons)
+        result = self.get(
+            url, options=options, timeout=timeout, addons=addons, **kwargs
+        )
         self.logger.info("json: %s", result)
         res = UsageRequestsResponse.from_json(result)
         self.logger.verbose("result: %s", res)
@@ -488,10 +652,17 @@ class ManageClient(AbstractSyncRestClient):
         self.logger.debug("ManageClient.get_usage_requests LEAVE")
         return res
 
-    def get_usage_request(self, project_id: str, request_id: str, timeout: httpx.Timeout = None):
+    def get_usage_request(
+        self,
+        project_id: str,
+        request_id: str,
+        timeout: httpx.Timeout = None,
+        addons: dict = None,
+        **kwargs,
+    ):
         """
         Gets details for a specific usage request.
-        
+
         Reference:
         https://developers.deepgram.com/reference/get-request
         """
@@ -500,7 +671,8 @@ class ManageClient(AbstractSyncRestClient):
         self.logger.info("url: %s", url)
         self.logger.info("project_id: %s", project_id)
         self.logger.info("request_id: %s", request_id)
-        result = self.get(url, timeout=timeout)
+        self.logger.info("addons: %s", addons)
+        result = self.get(url, timeout=timeout, addons=addons, **kwargs)
         self.logger.info("json: %s", result)
         res = UsageRequest.from_json(result)
         self.logger.verbose("result: %s", res)
@@ -508,10 +680,17 @@ class ManageClient(AbstractSyncRestClient):
         self.logger.debug("ManageClient.get_usage_request LEAVE")
         return res
 
-    def get_usage_summary(self, project_id: str, options: UsageSummaryOptions, timeout: httpx.Timeout = None):
+    def get_usage_summary(
+        self,
+        project_id: str,
+        options: UsageSummaryOptions,
+        timeout: httpx.Timeout = None,
+        addons: dict = None,
+        **kwargs,
+    ):
         """
         Gets a summary of usage for a project.
-        
+
         Reference:
         https://developers.deepgram.com/reference/summarize-usage
         """
@@ -523,7 +702,10 @@ class ManageClient(AbstractSyncRestClient):
             self.logger.info("UsageSummaryOptions switching class -> json")
             options = json.loads(options.to_json())
         self.logger.info("options: %s", options)
-        result = self.get(url, options, timeout=timeout)
+        self.logger.info("addons: %s", addons)
+        result = self.get(
+            url, options=options, timeout=timeout, addons=addons, **kwargs
+        )
         self.logger.info("json: %s", result)
         res = UsageSummaryResponse.from_json(result)
         self.logger.verbose("result: %s", res)
@@ -531,10 +713,17 @@ class ManageClient(AbstractSyncRestClient):
         self.logger.debug("ManageClient.get_usage_summary LEAVE")
         return res
 
-    def get_usage_fields(self, project_id: str, options: UsageFieldsOptions, timeout: httpx.Timeout = None):
+    def get_usage_fields(
+        self,
+        project_id: str,
+        options: UsageFieldsOptions,
+        timeout: httpx.Timeout = None,
+        addons: dict = None,
+        **kwargs,
+    ):
         """
         Gets a list of usage fields for a project.
-        
+
         Reference:
         https://developers.deepgram.com/reference/get-fields
         """
@@ -546,7 +735,10 @@ class ManageClient(AbstractSyncRestClient):
             self.logger.info("UsageFieldsOptions switching class -> json")
             options = json.loads(options.to_json())
         self.logger.info("options: %s", options)
-        result = self.get(url, options, timeout=timeout)
+        self.logger.info("addons: %s", addons)
+        result = self.get(
+            url, options=options, timeout=timeout, addons=addons, **kwargs
+        )
         self.logger.info("json: %s", result)
         res = UsageFieldsResponse.from_json(result)
         self.logger.verbose("result: %s", res)
@@ -555,16 +747,28 @@ class ManageClient(AbstractSyncRestClient):
         return res
 
     # balances
-    def list_balances(self, project_id: str, timeout: httpx.Timeout = None):
+    def list_balances(
+        self,
+        project_id: str,
+        timeout: httpx.Timeout = None,
+        addons: dict = None,
+        **kwargs,
+    ):
         """
         Please see get_balances for more information.
         """
-        return self.get_balances(project_id)
+        return self.get_balances(project_id, timeout=timeout, addons=addons, **kwargs)
 
-    def get_balances(self, project_id: str, timeout: httpx.Timeout = None):
+    def get_balances(
+        self,
+        project_id: str,
+        timeout: httpx.Timeout = None,
+        addons: dict = None,
+        **kwargs,
+    ):
         """
         Gets a list of balances for a project.
-        
+
         Reference:
         https://developers.deepgram.com/reference/get-all-balances
         """
@@ -572,7 +776,8 @@ class ManageClient(AbstractSyncRestClient):
         url = f"{self.config.url}/{self.endpoint}/{project_id}/balances"
         self.logger.info("url: %s", url)
         self.logger.info("project_id: %s", project_id)
-        result = self.get(url, timeout=timeout)
+        self.logger.info("addons: %s", addons)
+        result = self.get(url, timeout=timeout, addons=addons, **kwargs)
         self.logger.info("json: %s", result)
         res = BalancesResponse.from_json(result)
         self.logger.verbose("result: %s", res)
@@ -580,10 +785,17 @@ class ManageClient(AbstractSyncRestClient):
         self.logger.debug("ManageClient.get_balances LEAVE")
         return res
 
-    def get_balance(self, project_id: str, balance_id: str, timeout: httpx.Timeout = None):
+    def get_balance(
+        self,
+        project_id: str,
+        balance_id: str,
+        timeout: httpx.Timeout = None,
+        addons: dict = None,
+        **kwargs,
+    ):
         """
         Gets details for a specific balance.
-        
+
         Reference:
         https://developers.deepgram.com/reference/get-balance
         """
@@ -592,7 +804,8 @@ class ManageClient(AbstractSyncRestClient):
         self.logger.info("url: %s", url)
         self.logger.info("project_id: %s", project_id)
         self.logger.info("balance_id: %s", balance_id)
-        result = self.get(url, timeout=timeout)
+        self.logger.info("addons: %s", addons)
+        result = self.get(url, timeout=timeout, addons=addons, **kwargs)
         self.logger.info("json: %s", result)
         res = Balance.from_json(result)
         self.logger.verbose("result: %s", res)

@@ -59,13 +59,13 @@ class AsyncManageClient(AbstractAsyncRestClient):
         super().__init__(config)
 
     # projects
-    async def list_projects(self):
+    async def list_projects(self, addons: dict = None, **kwargs):
         """
         Please see get_projects for more information.
         """
-        return self.get_projects()
+        return self.get_projects(addons=addons, **kwargs)
 
-    async def get_projects(self):
+    async def get_projects(self, addons: dict = None, **kwargs):
         """
         Gets a list of projects for the authenticated user.
 
@@ -75,18 +75,19 @@ class AsyncManageClient(AbstractAsyncRestClient):
         self.logger.debug("ManageClient.get_projects ENTER")
         url = f"{self.config.url}/{self.endpoint}"
         self.logger.info("url: %s", url)
-        json = await self.get(url)
-        self.logger.info("json: %s", json)
-        res = ProjectsResponse.from_json(json)
+        self.logger.info("addons: %s", addons)
+        result = await self.get(url, addons=addons, **kwargs)
+        self.logger.info("result: %s", result)
+        res = ProjectsResponse.from_json(result)
         self.logger.verbose("result: %s", res)
         self.logger.notice("get_projects succeeded")
         self.logger.debug("ManageClient.get_projects LEAVE")
         return res
 
-    async def get_project(self, project_id: str):
+    async def get_project(self, project_id: str, addons: dict = None, **kwargs):
         """
         Gets details for a specific project.
-        
+
         Reference:
         https://developers.deepgram.com/reference/get-project
         """
@@ -94,18 +95,21 @@ class AsyncManageClient(AbstractAsyncRestClient):
         url = f"{self.config.url}/{self.endpoint}/{project_id}"
         self.logger.info("url: %s", url)
         self.logger.info("project_id: %s", project_id)
-        json = await self.get(url)
-        self.logger.info("json: %s", json)
-        res = Project.from_json(json)
+        self.logger.info("addons: %s", addons)
+        result = await self.get(url, addons=addons, **kwargs)
+        self.logger.info("result: %s", result)
+        res = Project.from_json(result)
         self.logger.verbose("result: %s", res)
         self.logger.notice("get_project succeeded")
         self.logger.debug("ManageClient.get_project LEAVE")
         return res
 
-    async def update_project_option(self, project_id: str, options: ProjectOptions):
+    async def update_project_option(
+        self, project_id: str, options: ProjectOptions, addons: dict = None, **kwargs
+    ):
         """
         Updates a project's settings.
-        
+
         Reference:
         https://developers.deepgram.com/reference/update-project
         """
@@ -114,18 +118,21 @@ class AsyncManageClient(AbstractAsyncRestClient):
         self.logger.info("url: %s", url)
         self.logger.info("project_id: %s", project_id)
         self.logger.info("options: %s", options)
-        json = await self.patch(url, json=options)
-        self.logger.info("json: %s", json)
-        res = Message.from_json(json)
+        self.logger.info("addons: %s", addons)
+        result = await self.patch(url, json=options, addons=addons, **kwargs)
+        self.logger.info("result: %s", result)
+        res = Message.from_json(result)
         self.logger.verbose("result: %s", res)
         self.logger.notice("update_project_option succeeded")
         self.logger.debug("ManageClient.update_project_option LEAVE")
         return res
 
-    async def update_project(self, project_id: str, name=""):
+    async def update_project(
+        self, project_id: str, name="", addons: dict = None, **kwargs
+    ):
         """
         Updates a project's settings.
-        
+
         Reference:
         https://developers.deepgram.com/reference/update-project
         """
@@ -137,42 +144,46 @@ class AsyncManageClient(AbstractAsyncRestClient):
         self.logger.info("url: %s", url)
         self.logger.info("project_id: %s", project_id)
         self.logger.info("options: %s", options)
-        json = await self.patch(url, json=options)
-        self.logger.info("json: %s", json)
-        res = Message.from_json(json)
+        self.logger.info("addons: %s", addons)
+        result = await self.patch(url, json=options, addons=addons, **kwargs)
+        self.logger.info("result: %s", result)
+        res = Message.from_json(result)
         self.logger.verbose("result: %s", res)
         self.logger.notice("update_project succeeded")
         self.logger.debug("ManageClient.update_project LEAVE")
         return res
 
-    async def delete_project(self, project_id: str) -> None:
+    async def delete_project(
+        self, project_id: str, addons: dict = None, **kwargs
+    ) -> None:
         """
         Deletes a project.
-        
+
         Reference:
         https://developers.deepgram.com/reference/delete-project
         """
         self.logger.debug("ManageClient.delete_project ENTER")
         url = f"{self.config.url}/{self.endpoint}/{project_id}"
-        json = await self.delete(url)
-        self.logger.info("json: %s", json)
-        res = Message.from_json(await self.delete(url))
+        self.logger.info("addons: %s", addons)
+        result = await self.delete(url, addons=addons, **kwargs)
+        self.logger.info("result: %s", result)
+        res = Message.from_json(result)
         self.logger.verbose("result: %s", res)
         self.logger.notice("delete_project succeeded")
         self.logger.debug("ManageClient.delete_project LEAVE")
         return res
 
     # keys
-    async def list_keys(self, project_id: str):
+    async def list_keys(self, project_id: str, addons: dict = None, **kwargs):
         """
         Please see get_keys for more information.
         """
-        return self.get_keys(project_id)
+        return self.get_keys(project_id, addons=addons, **kwargs)
 
-    async def get_keys(self, project_id: str):
+    async def get_keys(self, project_id: str, addons: dict = None, **kwargs):
         """
         Gets a list of keys for a project.
-        
+
         Reference:
         https://developers.deepgram.com/reference/list-keys
         """
@@ -180,18 +191,21 @@ class AsyncManageClient(AbstractAsyncRestClient):
         url = f"{self.config.url}/{self.endpoint}/{project_id}/keys"
         self.logger.info("url: %s", url)
         self.logger.info("project_id: %s", project_id)
-        json = await self.get(url)
-        self.logger.info("json: %s", json)
-        res = KeysResponse.from_json(json)
+        self.logger.info("addons: %s", addons)
+        result = await self.get(url, addons=addons, **kwargs)
+        self.logger.info("result: %s", result)
+        res = KeysResponse.from_json(result)
         self.logger.verbose("result: %s", res)
         self.logger.notice("get_keys succeeded")
         self.logger.debug("ManageClient.get_keys LEAVE")
         return res
 
-    async def get_key(self, project_id: str, key_id: str):
+    async def get_key(
+        self, project_id: str, key_id: str, addons: dict = None, **kwargs
+    ):
         """
         Gets details for a specific key.
-        
+
         Reference:
         https://developers.deepgram.com/reference/get-key
         """
@@ -200,18 +214,21 @@ class AsyncManageClient(AbstractAsyncRestClient):
         self.logger.info("url: %s", url)
         self.logger.info("project_id: %s", project_id)
         self.logger.info("key_id: %s", key_id)
-        json = await self.get(url)
-        self.logger.info("json: %s", json)
-        res = KeyResponse.from_json(json)
+        self.logger.info("addons: %s", addons)
+        result = await self.get(url, addons=addons, **kwargs)
+        self.logger.info("result: %s", result)
+        res = KeyResponse.from_json(result)
         self.logger.verbose("result: %s", res)
         self.logger.notice("get_key succeeded")
         self.logger.debug("ManageClient.get_key LEAVE")
         return res
 
-    async def create_key(self, project_id: str, options: KeyOptions):
+    async def create_key(
+        self, project_id: str, options: KeyOptions, addons: dict = None, **kwargs
+    ):
         """
         Creates a new key.
-        
+
         Reference:
         https://developers.deepgram.com/reference/create-key
         """
@@ -220,18 +237,21 @@ class AsyncManageClient(AbstractAsyncRestClient):
         self.logger.info("url: %s", url)
         self.logger.info("project_id: %s", project_id)
         self.logger.info("options: %s", options)
-        json = await self.post(url, json=options)
-        self.logger.info("json: %s", json)
-        res = Key.from_json(json)
+        self.logger.info("addons: %s", addons)
+        result = await self.post(url, json=options, addons=addons, **kwargs)
+        self.logger.info("result: %s", result)
+        res = Key.from_json(result)
         self.logger.verbose("result: %s", res)
         self.logger.notice("create_key succeeded")
         self.logger.debug("ManageClient.create_key LEAVE")
         return res
 
-    async def delete_key(self, project_id: str, key_id: str) -> None:
+    async def delete_key(
+        self, project_id: str, key_id: str, addons: dict = None, **kwargs
+    ) -> None:
         """
         Deletes a key.
-        
+
         Reference:
         https://developers.deepgram.com/reference/delete-key
         """
@@ -240,25 +260,26 @@ class AsyncManageClient(AbstractAsyncRestClient):
         self.logger.info("url: %s", url)
         self.logger.info("project_id: %s", project_id)
         self.logger.info("key_id: %s", key_id)
-        json = await self.delete(url)
-        self.logger.info("json: %s", json)
-        res = Message.from_json(json)
+        self.logger.info("addons: %s", addons)
+        result = await self.delete(url, addons=addons, **kwargs)
+        self.logger.info("result: %s", result)
+        res = Message.from_json(result)
         self.logger.verbose("result: %s", res)
         self.logger.notice("delete_key succeeded")
         self.logger.debug("ManageClient.delete_key LEAVE")
         return res
 
     # members
-    async def list_members(self, project_id: str):
+    async def list_members(self, project_id: str, addons: dict = None, **kwargs):
         """
         Please see get_members for more information.
         """
-        return self.get_members(project_id)
+        return self.get_members(project_id, addons=addons, **kwargs)
 
-    async def get_members(self, project_id: str):
+    async def get_members(self, project_id: str, addons: dict = None, **kwargs):
         """
         Gets a list of members for a project.
-        
+
         Reference:
         https://developers.deepgram.com/reference/get-members
         """
@@ -266,18 +287,21 @@ class AsyncManageClient(AbstractAsyncRestClient):
         url = f"{self.config.url}/{self.endpoint}/{project_id}/members"
         self.logger.info("url: %s", url)
         self.logger.info("project_id: %s", project_id)
-        json = await self.get(url)
-        self.logger.info("json: %s", json)
-        res = MembersResponse.from_json(json)
+        self.logger.info("addons: %s", addons)
+        result = await self.get(url, addons=addons, **kwargs)
+        self.logger.info("result: %s", result)
+        res = MembersResponse.from_json(result)
         self.logger.verbose("result: %s", res)
         self.logger.notice("get_members succeeded")
         self.logger.debug("ManageClient.get_members LEAVE")
         return res
 
-    async def remove_member(self, project_id: str, member_id: str) -> None:
+    async def remove_member(
+        self, project_id: str, member_id: str, addons: dict = None, **kwargs
+    ) -> None:
         """
         Removes a member from a project.
-        
+
         Reference:
         https://developers.deepgram.com/reference/remove-member
         """
@@ -286,19 +310,22 @@ class AsyncManageClient(AbstractAsyncRestClient):
         self.logger.info("url: %s", url)
         self.logger.info("project_id: %s", project_id)
         self.logger.info("member_id: %s", member_id)
-        json = await self.delete(url)
-        self.logger.info("json: %s", json)
-        res = Message.from_json(json)
+        self.logger.info("addons: %s", addons)
+        result = await self.delete(url, addons=addons, **kwargs)
+        self.logger.info("result: %s", result)
+        res = Message.from_json(result)
         self.logger.verbose("result: %s", res)
         self.logger.notice("remove_member succeeded")
         self.logger.debug("ManageClient.remove_member LEAVE")
         return res
 
     # scopes
-    async def get_member_scopes(self, project_id: str, member_id: str):
+    async def get_member_scopes(
+        self, project_id: str, member_id: str, addons: dict = None, **kwargs
+    ):
         """
         Gets a list of scopes for a member.
-        
+
         Reference:
         https://developers.deepgram.com/reference/get-member-scopes
         """
@@ -309,20 +336,26 @@ class AsyncManageClient(AbstractAsyncRestClient):
         self.logger.info("url: %s", url)
         self.logger.info("project_id: %s", project_id)
         self.logger.info("member_id: %s", member_id)
-        json = await self.get(url)
-        self.logger.info("json: %s", json)
-        res = ScopesResponse.from_json(json)
+        self.logger.info("addons: %s", addons)
+        result = await self.get(url, addons=addons, **kwargs)
+        self.logger.info("result: %s", result)
+        res = ScopesResponse.from_json(result)
         self.logger.verbose("result: %s", res)
         self.logger.notice("get_member_scopes succeeded")
         self.logger.debug("ManageClient.get_member_scopes LEAVE")
         return res
 
     async def update_member_scope(
-        self, project_id: str, member_id: str, options: ScopeOptions
+        self,
+        project_id: str,
+        member_id: str,
+        options: ScopeOptions,
+        addons: dict = None,
+        **kwargs,
     ):
         """
         Updates a member's scopes.
-        
+
         Reference:
         https://developers.deepgram.com/reference/update-scope
         """
@@ -333,25 +366,26 @@ class AsyncManageClient(AbstractAsyncRestClient):
         self.logger.info("url: %s", url)
         self.logger.info("project_id: %s", project_id)
         self.logger.info("options: %s", options)
-        json = await self.put(url, json=options)
-        self.logger.info("json: %s", json)
-        res = Message.from_json(json)
+        self.logger.info("addons: %s", addons)
+        result = await self.put(url, json=options, addons=addons, **kwargs)
+        self.logger.info("result: %s", result)
+        res = Message.from_json(result)
         self.logger.verbose("result: %s", res)
         self.logger.notice("update_member_scope succeeded")
         self.logger.debug("ManageClient.update_member_scope LEAVE")
         return res
 
     # invites
-    async def list_invites(self, project_id: str):
+    async def list_invites(self, project_id: str, addons: dict = None, **kwargs):
         """
         Please see get_invites for more information.
         """
-        return self.get_invites(project_id)
+        return self.get_invites(project_id, addons=addons, **kwargs)
 
-    async def get_invites(self, project_id: str):
+    async def get_invites(self, project_id: str, addons: dict = None, **kwargs):
         """
         Gets a list of invites for a project.
-        
+
         Reference:
         https://developers.deepgram.com/reference/list-invites
         """
@@ -359,18 +393,21 @@ class AsyncManageClient(AbstractAsyncRestClient):
         url = f"{self.config.url}/{self.endpoint}/{project_id}/invites"
         self.logger.info("url: %s", url)
         self.logger.info("project_id: %s", project_id)
-        json = await self.get(url)
-        self.logger.info("json: %s", json)
-        res = InvitesResponse.from_json(json)
+        self.logger.info("addons: %s", addons)
+        result = await self.get(url, addons=addons, **kwargs)
+        self.logger.info("result: %s", result)
+        res = InvitesResponse.from_json(result)
         self.logger.verbose("result: %s", res)
         self.logger.notice("get_invites succeeded")
         self.logger.debug("ManageClient.get_invites LEAVE")
         return res
 
-    async def send_invite_options(self, project_id: str, options: InviteOptions):
+    async def send_invite_options(
+        self, project_id: str, options: InviteOptions, addons: dict = None, **kwargs
+    ):
         """
         Sends an invite to a project.
-        
+
         Reference:
         https://developers.deepgram.com/reference/send-invite
         """
@@ -379,18 +416,21 @@ class AsyncManageClient(AbstractAsyncRestClient):
         self.logger.info("url: %s", url)
         self.logger.info("project_id: %s", project_id)
         self.logger.info("options: %s", options)
-        json = await self.post(url, json=options)
-        self.logger.info("json: %s", json)
-        res = Message.from_json(json)
+        self.logger.info("addons: %s", addons)
+        result = await self.post(url, json=options, addons=addons, **kwargs)
+        self.logger.info("result: %s", result)
+        res = Message.from_json(result)
         self.logger.verbose("result: %s", res)
         self.logger.notice("send_invite_options succeeded")
         self.logger.debug("ManageClient.send_invite_options LEAVE")
         return res
 
-    async def send_invite(self, project_id: str, email: str, scope="member"):
+    async def send_invite(
+        self, project_id: str, email: str, scope="member", addons: dict = None, **kwargs
+    ):
         """
         Sends an invite to a project.
-        
+
         Reference:
         https://developers.deepgram.com/reference/send-invite
         """
@@ -403,18 +443,21 @@ class AsyncManageClient(AbstractAsyncRestClient):
         self.logger.info("url: %s", url)
         self.logger.info("project_id: %s", project_id)
         self.logger.info("options: %s", options)
-        json = await self.post(url, json=options)
-        self.logger.info("json: %s", json)
-        res = Message.from_json(json)
+        self.logger.info("addons: %s", addons)
+        result = await self.post(url, json=options, addons=addons, **kwargs)
+        self.logger.info("result: %s", result)
+        res = Message.from_json(result)
         self.logger.verbose("result: %s", res)
         self.logger.notice("send_invite succeeded")
         self.logger.debug("ManageClient.send_invite LEAVE")
         return res
 
-    async def delete_invite(self, project_id: str, email: str):
+    async def delete_invite(
+        self, project_id: str, email: str, addons: dict = None, **kwargs
+    ):
         """
         Deletes an invite from a project.
-        
+
         Reference:
         https://developers.deepgram.com/reference/delete-invite
         """
@@ -423,18 +466,19 @@ class AsyncManageClient(AbstractAsyncRestClient):
         self.logger.info("url: %s", url)
         self.logger.info("project_id: %s", project_id)
         self.logger.info("email: %s", email)
-        json = await self.delete(url)
-        self.logger.info("json: %s", json)
-        res = Message.from_json(json)
+        self.logger.info("addons: %s", addons)
+        result = await self.delete(url, addons=addons, **kwargs)
+        self.logger.info("result: %s", result)
+        res = Message.from_json(result)
         self.logger.verbose("result: %s", res)
         self.logger.notice("delete_invite succeeded")
         self.logger.debug("ManageClient.delete_invite LEAVE")
         return res
 
-    async def leave_project(self, project_id: str):
+    async def leave_project(self, project_id: str, addons: dict = None, **kwargs):
         """
         Leaves a project.
-        
+
         Reference:
         https://developers.deepgram.com/reference/leave-project
         """
@@ -442,19 +486,26 @@ class AsyncManageClient(AbstractAsyncRestClient):
         url = f"{self.config.url}/{self.endpoint}/{project_id}/leave"
         self.logger.info("url: %s", url)
         self.logger.info("project_id: %s", project_id)
-        json = await self.delete(url)
-        self.logger.info("json: %s", json)
-        res = Message.from_json(json)
+        self.logger.info("addons: %s", addons)
+        result = await self.delete(url, addons=addons, **kwargs)
+        self.logger.info("result: %s", result)
+        res = Message.from_json(result)
         self.logger.verbose("result: %s", res)
         self.logger.notice("leave_project succeeded")
         self.logger.debug("ManageClient.leave_project LEAVE")
         return res
 
     # usage
-    async def get_usage_requests(self, project_id: str, options: UsageRequestOptions):
+    async def get_usage_requests(
+        self,
+        project_id: str,
+        options: UsageRequestOptions,
+        addons: dict = None,
+        **kwargs,
+    ):
         """
         Gets a list of usage requests for a project.
-        
+
         Reference:
         https://developers.deepgram.com/reference/get-all-requests
         """
@@ -463,18 +514,21 @@ class AsyncManageClient(AbstractAsyncRestClient):
         self.logger.info("url: %s", url)
         self.logger.info("project_id: %s", project_id)
         self.logger.info("options: %s", options)
-        json = await self.get(url, options)
-        self.logger.info("json: %s", json)
-        res = UsageRequestsResponse.from_json(json)
+        self.logger.info("addons: %s", addons)
+        result = await self.get(url, options=options, addons=addons, **kwargs)
+        self.logger.info("result: %s", result)
+        res = UsageRequestsResponse.from_json(result)
         self.logger.verbose("result: %s", res)
         self.logger.notice("get_usage_requests succeeded")
         self.logger.debug("ManageClient.get_usage_requests LEAVE")
         return res
 
-    async def get_usage_request(self, project_id: str, request_id: str):
+    async def get_usage_request(
+        self, project_id: str, request_id: str, addons: dict = None, **kwargs
+    ):
         """
         Gets details for a specific usage request.
-        
+
         Reference:
         https://developers.deepgram.com/reference/get-request
         """
@@ -483,18 +537,25 @@ class AsyncManageClient(AbstractAsyncRestClient):
         self.logger.info("url: %s", url)
         self.logger.info("project_id: %s", project_id)
         self.logger.info("request_id: %s", request_id)
-        json = await self.get(url)
-        self.logger.info("json: %s", json)
-        res = UsageRequest.from_json(json)
+        self.logger.info("addons: %s", addons)
+        result = await self.get(url, addons=addons, **kwargs)
+        self.logger.info("result: %s", result)
+        res = UsageRequest.from_json(result)
         self.logger.verbose("result: %s", res)
         self.logger.notice("get_usage_request succeeded")
         self.logger.debug("ManageClient.get_usage_request LEAVE")
         return res
 
-    async def get_usage_summary(self, project_id: str, options: UsageSummaryOptions):
+    async def get_usage_summary(
+        self,
+        project_id: str,
+        options: UsageSummaryOptions,
+        addons: dict = None,
+        **kwargs,
+    ):
         """
         Gets a summary of usage for a project.
-        
+
         Reference:
         https://developers.deepgram.com/reference/summarize-usage
         """
@@ -503,18 +564,25 @@ class AsyncManageClient(AbstractAsyncRestClient):
         self.logger.info("url: %s", url)
         self.logger.info("project_id: %s", project_id)
         self.logger.info("options: %s", options)
-        json = await self.get(url, options)
-        self.logger.info("json: %s", json)
-        res = UsageSummaryResponse.from_json(json)
+        self.logger.info("addons: %s", addons)
+        result = await self.get(url, options=options, addons=addons, **kwargs)
+        self.logger.info("result: %s", result)
+        res = UsageSummaryResponse.from_json(result)
         self.logger.verbose("result: %s", res)
         self.logger.notice("get_usage_summary succeeded")
         self.logger.debug("ManageClient.get_usage_summary LEAVE")
         return res
 
-    async def get_usage_fields(self, project_id: str, options: UsageFieldsOptions):
+    async def get_usage_fields(
+        self,
+        project_id: str,
+        options: UsageFieldsOptions,
+        addons: dict = None,
+        **kwargs,
+    ):
         """
         Gets a list of usage fields for a project.
-        
+
         Reference:
         https://developers.deepgram.com/reference/get-fields
         """
@@ -523,25 +591,26 @@ class AsyncManageClient(AbstractAsyncRestClient):
         self.logger.info("url: %s", url)
         self.logger.info("project_id: %s", project_id)
         self.logger.info("options: %s", options)
-        json = await self.get(url, options)
-        self.logger.info("json: %s", json)
-        res = UsageFieldsResponse.from_json(json)
+        self.logger.info("addons: %s", addons)
+        result = await self.get(url, options=options, addons=addons, **kwargs)
+        self.logger.info("result: %s", result)
+        res = UsageFieldsResponse.from_json(result)
         self.logger.verbose("result: %s", res)
         self.logger.notice("get_usage_fields succeeded")
         self.logger.debug("ManageClient.get_usage_fields LEAVE")
         return res
 
     # balances
-    async def list_balances(self, project_id: str):
+    async def list_balances(self, project_id: str, addons: dict = None, **kwargs):
         """
         Please see get_balances for more information.
         """
-        return self.get_balances(project_id)
+        return self.get_balances(project_id, addons=addons, **kwargs)
 
-    async def get_balances(self, project_id: str):
+    async def get_balances(self, project_id: str, addons: dict = None, **kwargs):
         """
         Gets a list of balances for a project.
-        
+
         Reference:
         https://developers.deepgram.com/reference/get-all-balances
         """
@@ -549,18 +618,21 @@ class AsyncManageClient(AbstractAsyncRestClient):
         url = f"{self.config.url}/{self.endpoint}/{project_id}/balances"
         self.logger.info("url: %s", url)
         self.logger.info("project_id: %s", project_id)
-        json = await self.get(url)
-        self.logger.info("json: %s", json)
-        res = BalancesResponse.from_json(json)
+        self.logger.info("addons: %s", addons)
+        result = await self.get(url, addons=addons, **kwargs)
+        self.logger.info("result: %s", result)
+        res = BalancesResponse.from_json(result)
         self.logger.verbose("result: %s", res)
         self.logger.notice("get_balances succeeded")
         self.logger.debug("ManageClient.get_balances LEAVE")
         return res
 
-    async def get_balance(self, project_id: str, balance_id: str):
+    async def get_balance(
+        self, project_id: str, balance_id: str, addons: dict = None, **kwargs
+    ):
         """
         Gets details for a specific balance.
-        
+
         Reference:
         https://developers.deepgram.com/reference/get-balance
         """
@@ -569,9 +641,10 @@ class AsyncManageClient(AbstractAsyncRestClient):
         self.logger.info("url: %s", url)
         self.logger.info("project_id: %s", project_id)
         self.logger.info("balance_id: %s", balance_id)
-        json = await self.get(url)
-        self.logger.info("json: %s", json)
-        res = Balance.from_json(json)
+        self.logger.info("addons: %s", addons)
+        result = await self.get(url, addons=addons, **kwargs)
+        self.logger.info("result: %s", result)
+        res = Balance.from_json(result)
         self.logger.verbose("result: %s", res)
         self.logger.notice("get_balance succeeded")
         self.logger.debug("ManageClient.get_balance LEAVE")
