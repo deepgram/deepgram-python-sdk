@@ -22,7 +22,8 @@ def main():
     try:
         # example of setting up a client config. logging values: WARNING, VERBOSE, DEBUG, SPAM
         # config = DeepgramClientOptions(
-        #     verbose=logging.SPAM, options={"keepalive": "true"}
+        #     verbose=logging.DEBUG,
+        #     options={"keepalive": "true"}
         # )
         # deepgram: DeepgramClient = DeepgramClient("", config)
         # otherwise, use default config
@@ -89,6 +90,8 @@ def main():
         dg_connection.finish()
 
         print("Finished")
+        # sleep(30)  # wait 30 seconds to see if there is any additional socket activity
+        # print("Really done!")
 
     except Exception as e:
         print(f"Could not open socket: {e}")
