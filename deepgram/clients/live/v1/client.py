@@ -81,11 +81,8 @@ class LiveClient:
         self.listening.start()
 
         # keepalive thread
-        self.processing = None
-        if self.config.options.get("keepalive") == "true":
-            self.logger.info("KeepAlive enabled")
-            self.processing = threading.Thread(target=self._processing)
-            self.processing.start()
+        self.processing = threading.Thread(target=self._processing)
+        self.processing.start()
 
         self.logger.notice("start succeeded")
         self.logger.debug("LiveClient.start LEAVE")
@@ -111,7 +108,7 @@ class LiveClient:
                 myExit = self.exit
                 self.lock_exit.release()
                 if myExit:
-                    self.logger.notice("exiting gracefully")
+                    self.logger.notice("_listening exiting gracefully")
                     self.logger.debug("LiveClient._listening LEAVE")
                     return
 
@@ -156,19 +153,15 @@ class LiveClient:
                             **dict(self.kwargs),
                         )
                     case _:
-                        self.logger.error(
-                            "response_type: %s, data: %s", response_type, data
+                        self.logger.warning(
+                            "Unknown Message: response_type: %s, data: %s",
+                            response_type,
+                            data,
                         )
-                        error = ErrorResponse(
-                            type="UnhandledMessage",
-                            description="Unknown message type",
-                            message=f"Unhandle message type: {response_type}",
-                        )
-                        self._emit(LiveTranscriptionEvents.Error, error=error)
 
             except Exception as e:
                 if e.code == 1000:
-                    self.logger.notice("exiting thread gracefully")
+                    self.logger.notice("_listening(1000) exiting gracefully")
                     self.logger.debug("LiveClient._listening LEAVE")
                     return
 
@@ -186,25 +179,34 @@ class LiveClient:
     def _processing(self) -> None:
         self.logger.debug("LiveClient._processing ENTER")
 
+        counter = 0
+
         while True:
             try:
                 time.sleep(PING_INTERVAL)
+                counter += 1
 
                 self.lock_exit.acquire()
                 myExit = self.exit
                 self.lock_exit.release()
                 if myExit:
-                    self.logger.notice("exiting gracefully")
+                    self.logger.notice("_processing exiting gracefully")
                     self.logger.debug("LiveClient._processing LEAVE")
                     return
 
                 # deepgram keepalive
-                self.logger.debug("Sending KeepAlive...")
-                self.send(json.dumps({"type": "KeepAlive"}))
+                if self.config.options.get("keepalive") == "true":
+                    self.logger.debug("Sending KeepAlive...")
+                    self.send(json.dumps({"type": "KeepAlive"}))
+
+                # websocket keepalive
+                if counter % 4 == 0:
+                    self.logger.debug("Sending Ping...")
+                    self.send_ping()
 
             except Exception as e:
                 if e.code == 1000:
-                    self.logger.notice("exiting thread gracefully")
+                    self.logger.notice("_processing(1000) exiting gracefully")
                     self.logger.debug("LiveClient._processing LEAVE")
                     return
 
@@ -239,6 +241,19 @@ class LiveClient:
         self.logger.spam("LiveClient.send LEAVE")
         return 0
 
+    def send_ping(self) -> None:
+        """
+        Sends a ping over the WebSocket connection.
+        """
+        self.logger.spam("LiveClient.send_ping ENTER")
+
+        if self._socket:
+            self.lock_send.acquire()
+            self._socket.ping()
+            self.lock_send.release()
+
+        self.logger.spam("LiveClient.send_ping LEAVE")
+
     def finish(self):
         """
         Closes the WebSocket connection gracefully.
@@ -247,8 +262,8 @@ class LiveClient:
 
         if self._socket:
             self.logger.notice("sending CloseStream...")
-            self._socket.send(json.dumps({"type": "CloseStream"}))
-            time.sleep(1)
+            self.send(json.dumps({"type": "CloseStream"}))
+            time.sleep(0.5)
 
         self.lock_exit.acquire()
         self.logger.notice("signal exit")
@@ -271,6 +286,7 @@ class LiveClient:
 
         self._socket = None
         self.lock_exit = None
+        self.lock_send = None
 
         self.logger.notice("finish succeeded")
         self.logger.spam("LiveClient.finish LEAVE")

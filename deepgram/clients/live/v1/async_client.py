@@ -162,6 +162,8 @@ class AsyncLiveClient:
             await self._socket.wait_closed()
             self.logger.notice("socket.wait_closed succeeded")
 
+        self._socket = None
+
         self.logger.notice("finish succeeded")
         self.logger.debug("AsyncLiveClient.finish LEAVE")
 
