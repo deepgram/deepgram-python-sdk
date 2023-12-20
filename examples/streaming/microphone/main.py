@@ -5,6 +5,7 @@
 import os
 from dotenv import load_dotenv
 import logging, verboselogs
+from time import sleep
 
 from deepgram import (
     DeepgramClient,
@@ -19,10 +20,9 @@ load_dotenv()
 
 def main():
     try:
-        # example of setting up a client config
+        # example of setting up a client config. logging values: WARNING, VERBOSE, DEBUG, SPAM
         # config = DeepgramClientOptions(
-        #     verbose=logging.SPAM,
-        #     options={'keepalive': 'true'}
+        #     verbose=logging.SPAM, options={"keepalive": "true"}
         # )
         # deepgram: DeepgramClient = DeepgramClient("", config)
         # otherwise, use default config
@@ -30,13 +30,25 @@ def main():
 
         dg_connection = deepgram.listen.live.v("1")
 
-        def on_message(self, result, **kwargs):
+        def on_message(self, result, addon=dict(myattr=True), **kwargs):
             if result is None:
                 return
             sentence = result.channel.alternatives[0].transcript
             if len(sentence) == 0:
                 return
             print(f"speaker: {sentence}")
+
+            # testing modifying self class
+            if self.myattr is not None:
+                print(f"myattr - {self.myattr}")
+            else:
+                print("Setting myattr=hello")
+                setattr(self, "myattr", "hello")
+            self.myattr = "bye"
+
+            # testing kwargs
+            val = kwargs["test"]
+            print(f"kwargs - {val}")
 
         def on_metadata(self, metadata, **kwargs):
             if metadata is None:
@@ -59,7 +71,7 @@ def main():
             channels=1,
             sample_rate=16000,
         )
-        dg_connection.start(options)
+        dg_connection.start(options, addons=dict(myattr="hello"), test="hello")
 
         # Open a microphone stream
         microphone = Microphone(dg_connection.send)

@@ -34,33 +34,67 @@ class AbstractSyncRestClient:
 
         self.config = config
 
-    def get(self, url: str, options=None, timeout=None):
+    def get(self, url: str, options=None, addons=None, timeout=None, **kwargs):
         return self._handle_request(
-            "GET", url, params=options, headers=self.config.headers, timeout=timeout
+            "GET",
+            url,
+            params=options,
+            addons=addons,
+            headers=self.config.headers,
+            timeout=timeout,
+            **kwargs
         )
 
-    def post(self, url: str, options=None, timeout=None,  **kwargs):
+    def post(self, url: str, options=None, addons=None, timeout=None, **kwargs):
         return self._handle_request(
-            "POST", url, params=options, headers=self.config.headers, timeout=timeout, **kwargs
+            "POST",
+            url,
+            params=options,
+            addons=addons,
+            headers=self.config.headers,
+            timeout=timeout,
+            **kwargs
         )
 
-    def put(self, url: str, options=None, timeout=None, **kwargs):
+    def put(self, url: str, options=None, addons=None, timeout=None, **kwargs):
         return self._handle_request(
-            "PUT", url, params=options, headers=self.config.headers, timeout=timeout, **kwargs
+            "PUT",
+            url,
+            params=options,
+            addons=addons,
+            headers=self.config.headers,
+            timeout=timeout,
+            **kwargs
         )
 
-    def patch(self, url: str, options=None, timeout=None, **kwargs):
+    def patch(self, url: str, options=None, addons=None, timeout=None, **kwargs):
         return self._handle_request(
-            "PATCH", url, params=options, headers=self.config.headers, timeout=timeout, **kwargs
+            "PATCH",
+            url,
+            params=options,
+            addons=addons,
+            headers=self.config.headers,
+            timeout=timeout,
+            **kwargs
         )
 
-    def delete(self, url: str, options=None, timeout=None):
-        return self._handle_request("DELETE", url, params=options, headers=self.config.headers, timeout=timeout)
+    def delete(self, url: str, options=None, addons=None, timeout=None, **kwargs):
+        return self._handle_request(
+            "DELETE",
+            url,
+            params=options,
+            addons=addons,
+            headers=self.config.headers,
+            timeout=timeout,
+            **kwargs
+        )
 
-    def _handle_request(self, method, url, params, headers, timeout, **kwargs):
+    def _handle_request(self, method, url, params, addons, headers, timeout, **kwargs):
         new_url = url
         if params is not None:
-            new_url = append_query_params(url, params)
+            new_url = append_query_params(new_url, params)
+        if addons is not None:
+            new_url = append_query_params(new_url, addons)
 
         if timeout is None:
             timeout = httpx.Timeout(10.0, connect=10.0)

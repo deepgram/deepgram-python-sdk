@@ -43,16 +43,22 @@ class LiveClient:
         self._event_handlers = {event: [] for event in LiveTranscriptionEvents}
         self.websocket_url = convert_to_websocket_url(self.config.url, self.endpoint)
 
-    def start(self, options: LiveOptions = None, **kwargs):
+    def start(self, options: LiveOptions = None, addons: dict = None, **kwargs):
         """
         Starts the WebSocket connection for live transcription.
         """
         self.logger.debug("LiveClient.start ENTER")
         self.logger.info("kwargs: %s", options)
+        self.logger.info("addon: %s", addons)
         self.logger.info("options: %s", kwargs)
 
         self.options = options
-        self.kwargs = kwargs
+        if addons is not None:
+            self.__dict__.update(addons)
+        if kwargs is not None:
+            self.kwargs = kwargs
+        else:
+            self.kwargs = dict()
 
         if isinstance(options, LiveOptions):
             self.logger.info("LiveOptions switching class -> json")
@@ -127,7 +133,7 @@ class LiveClient:
                         self._emit(
                             LiveTranscriptionEvents.Transcript,
                             result=result,
-                            kwargs=self.kwargs,
+                            **dict(self.kwargs),
                         )
                     case LiveTranscriptionEvents.Metadata.value:
                         self.logger.debug(
@@ -137,7 +143,7 @@ class LiveClient:
                         self._emit(
                             LiveTranscriptionEvents.Metadata,
                             metadata=result,
-                            kwargs=self.kwargs,
+                            **dict(self.kwargs),
                         )
                     case LiveTranscriptionEvents.Error.value:
                         self.logger.debug(
@@ -147,7 +153,7 @@ class LiveClient:
                         self._emit(
                             LiveTranscriptionEvents.Error,
                             error=result,
-                            kwargs=self.kwargs,
+                            **dict(self.kwargs),
                         )
                     case _:
                         self.logger.error(
@@ -225,7 +231,7 @@ class LiveClient:
             ret = self._socket.send(data)
             self.lock_send.release()
 
-            self.logger.spam("send bytes: %d", ret)
+            self.logger.spam(f"send bytes: {ret}")
             self.logger.spam("LiveClient.send LEAVE")
             return ret
 
@@ -259,7 +265,7 @@ class LiveClient:
             self.listening = None
         self.logger.notice("listening thread joined")
 
-        if self._socket:
+        if self._socket is not None:
             self.logger.notice("closing socket...")
             self._socket.close()
 

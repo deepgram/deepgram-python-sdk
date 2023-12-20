@@ -46,6 +46,7 @@ class AsyncPreRecordedClient(AbstractAsyncRestClient):
         self,
         source: UrlSource,
         options: PrerecordedOptions = None,
+        addons: dict = None,
         endpoint: str = "v1/listen",
     ) -> PrerecordedResponse:
         self.logger.debug("PreRecordedClient.transcribe_url ENTER")
@@ -53,7 +54,7 @@ class AsyncPreRecordedClient(AbstractAsyncRestClient):
         if options is not None and options.callback is not None:
             self.logger.debug("PreRecordedClient.transcribe_url LEAVE")
             return await self.transcribe_url_callback(
-                source, options["callback"], options, endpoint
+                source, options["callback"], options, addons, endpoint
             )
 
         url = f"{self.config.url}/{endpoint}"
@@ -66,11 +67,12 @@ class AsyncPreRecordedClient(AbstractAsyncRestClient):
 
         self.logger.info("url: %s", url)
         self.logger.info("source: %s", source)
-        self.logger.info("options: %s", options)
         if isinstance(options, PrerecordedOptions):
             self.logger.info("PrerecordedOptions switching class -> json")
             options = json.loads(options.to_json())
-        result = await self.post(url, options=options, json=body)
+        self.logger.info("options: %s", options)
+        self.logger.info("addons: %s", addons)
+        result = await self.post(url, options=options, addons=addons, json=body)
         self.logger.info("json: %s", result)
         res = PrerecordedResponse.from_json(result)
         self.logger.verbose("result: %s", res)
@@ -99,6 +101,7 @@ class AsyncPreRecordedClient(AbstractAsyncRestClient):
         source: UrlSource,
         callback: str,
         options: PrerecordedOptions = None,
+        addons: dict = None,
         endpoint: str = "v1/listen",
     ) -> AsyncPrerecordedResponse:
         self.logger.debug("PreRecordedClient.transcribe_url_callback ENTER")
@@ -116,11 +119,12 @@ class AsyncPreRecordedClient(AbstractAsyncRestClient):
 
         self.logger.info("url: %s", url)
         self.logger.info("source: %s", source)
-        self.logger.info("options: %s", options)
         if isinstance(options, PrerecordedOptions):
             self.logger.info("PrerecordedOptions switching class -> json")
             options = json.loads(options.to_json())
-        result = await self.post(url, options=options, json=body)
+        self.logger.info("options: %s", options)
+        self.logger.info("addons: %s", addons)
+        result = await self.post(url, options=options, addons=addons, json=body)
         self.logger.info("json: %s", result)
         res = AsyncPrerecordedResponse.from_json(result)
         self.logger.verbose("result: %s", res)
@@ -147,6 +151,7 @@ class AsyncPreRecordedClient(AbstractAsyncRestClient):
         self,
         source: FileSource,
         options: PrerecordedOptions = None,
+        addons: dict = None,
         endpoint: str = "v1/listen",
     ) -> PrerecordedResponse:
         self.logger.debug("PreRecordedClient.transcribe_file ENTER")
@@ -154,7 +159,7 @@ class AsyncPreRecordedClient(AbstractAsyncRestClient):
         if options is not None and options.callback is not None:
             self.logger.debug("PreRecordedClient.transcribe_file LEAVE")
             return await self.transcribe_file_callback(
-                source, options["callback"], options, endpoint
+                source, options["callback"], options, addons, endpoint
             )
 
         url = f"{self.config.url}/{endpoint}"
@@ -168,11 +173,12 @@ class AsyncPreRecordedClient(AbstractAsyncRestClient):
             raise DeepgramTypeError("Unknown transcription source type")
 
         self.logger.info("url: %s", url)
-        self.logger.info("options: %s", options)
         if isinstance(options, PrerecordedOptions):
             self.logger.info("PrerecordedOptions switching class -> json")
             options = json.loads(options.to_json())
-        result = await self.post(url, options=options, content=body)
+        self.logger.info("options: %s", options)
+        self.logger.info("addons: %s", addons)
+        result = await self.post(url, options=options, addons=addons, content=body)
         self.logger.info("json: %s", result)
         res = PrerecordedResponse.from_json(result)
         self.logger.verbose("result: %s", res)
@@ -201,6 +207,7 @@ class AsyncPreRecordedClient(AbstractAsyncRestClient):
         source: FileSource,
         callback: str,
         options: PrerecordedOptions = None,
+        addons: dict = None,
         endpoint: str = "v1/listen",
     ) -> AsyncPrerecordedResponse:
         self.logger.debug("PreRecordedClient.transcribe_file_callback ENTER")
@@ -219,11 +226,12 @@ class AsyncPreRecordedClient(AbstractAsyncRestClient):
             raise DeepgramTypeError("Unknown transcription source type")
 
         self.logger.info("url: %s", url)
-        self.logger.info("options: %s", options)
         if isinstance(options, PrerecordedOptions):
             self.logger.info("PrerecordedOptions switching class -> json")
             options = json.loads(options.to_json())
-        result = await self.post(url, options=options, json=body)
+        self.logger.info("options: %s", options)
+        self.logger.info("addons: %s", addons)
+        result = await self.post(url, options=options, addons=addons, json=body)
         self.logger.info("json: %s", result)
         res = AsyncPrerecordedResponse.from_json(result)
         self.logger.verbose("result: %s", res)

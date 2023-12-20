@@ -33,33 +33,62 @@ class AbstractAsyncRestClient:
         self.config = config
         self.client = httpx.AsyncClient()
 
-    async def get(self, url: str, options=None):
+    async def get(self, url: str, options=None, addons=None, **kwargs):
         return await self._handle_request(
-            "GET", url, params=options, headers=self.config.headers
+            "GET",
+            url,
+            params=options,
+            addons=addons,
+            headers=self.config.headers,
+            **kwargs
         )
 
-    async def post(self, url: str, options=None, **kwargs):
+    async def post(self, url: str, options=None, addons=None, **kwargs):
         return await self._handle_request(
-            "POST", url, params=options, headers=self.config.headers, **kwargs
+            "POST",
+            url,
+            params=options,
+            addons=addons,
+            headers=self.config.headers,
+            **kwargs
         )
 
-    async def put(self, url: str, options=None, **kwargs):
+    async def put(self, url: str, options=None, addons=None, **kwargs):
         return await self._handle_request(
-            "PUT", url, params=options, headers=self.config.headers, **kwargs
+            "PUT",
+            url,
+            params=options,
+            addons=addons,
+            headers=self.config.headers,
+            **kwargs
         )
 
-    async def patch(self, url: str, options=None, **kwargs):
+    async def patch(self, url: str, options=None, addons=None, **kwargs):
         return await self._handle_request(
-            "PATCH", url, params=options, headers=self.config.headers, **kwargs
+            "PATCH",
+            url,
+            params=options,
+            addons=addons,
+            headers=self.config.headers,
+            **kwargs
         )
 
-    async def delete(self, url: str, options=None):
-        return await self._handle_request("DELETE", url, params=options, headers=self.config.headers)
+    async def delete(self, url: str, options=None, addons=None, **kwargs):
+        return await self._handle_request(
+            "DELETE",
+            url,
+            params=options,
+            addons=addons,
+            headers=self.config.headers,
+            **kwargs
+        )
 
-    async def _handle_request(self, method, url, params, headers, **kwargs):
+    async def _handle_request(self, method, url, params, addons, headers, **kwargs):
         new_url = url
         if params is not None:
             new_url = append_query_params(new_url, params)
+        if addons is not None:
+            new_url = append_query_params(new_url, addons)
 
         try:
             with httpx.Client() as client:

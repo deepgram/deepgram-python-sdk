@@ -39,13 +39,19 @@ class AsyncLiveClient:
         self._event_handlers = {event: [] for event in LiveTranscriptionEvents}
         self.websocket_url = convert_to_websocket_url(self.config.url, self.endpoint)
 
-    async def start(self, options: LiveOptions = None, **kwargs):
+    async def start(self, options: LiveOptions = None, addons: dict = None, **kwargs):
         self.logger.debug("AsyncLiveClient.start ENTER")
         self.logger.info("kwargs: %s", options)
+        self.logger.info("addons: %s", addons)
         self.logger.info("options: %s", kwargs)
 
         self.options = options
-        self.kwargs = kwargs
+        if addons is not None:
+            self.__dict__.update(addons)
+        if kwargs is not None:
+            self.kwargs = kwargs
+        else:
+            self.kwargs = dict()
 
         if isinstance(options, LiveOptions):
             self.logger.info("LiveOptions switching class -> json")
@@ -93,7 +99,7 @@ class AsyncLiveClient:
                         await self._emit(
                             LiveTranscriptionEvents.Transcript,
                             result=result,
-                            kwargs=self.kwargs,
+                            **dict(self.kwargs),
                         )
                     case LiveTranscriptionEvents.Metadata.value:
                         self.logger.debug(
@@ -103,7 +109,7 @@ class AsyncLiveClient:
                         await self._emit(
                             LiveTranscriptionEvents.Metadata,
                             metadata=result,
-                            kwargs=self.kwargs,
+                            **dict(self.kwargs),
                         )
                     case LiveTranscriptionEvents.Error.value:
                         self.logger.debug(
@@ -113,7 +119,7 @@ class AsyncLiveClient:
                         await self._emit(
                             LiveTranscriptionEvents.Error,
                             error=result,
-                            kwargs=self.kwargs,
+                            **dict(self.kwargs),
                         )
                     case _:
                         self.logger.error(
