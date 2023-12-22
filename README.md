@@ -35,9 +35,39 @@ You can learn more about the Deepgram API at [developers.deepgram.com](https://d
 
 # Installation
 
+To install the latest version available (which will guarantee change over time):
+
 ```sh
 pip install deepgram-sdk
 ```
+
+If you are going to write an application to consume this SDK, it's [highly recommended](https://discuss.python.org/t/how-to-pin-a-package-to-a-specific-major-version-or-lower/17077) and a [programming staple](https://www.easypost.com/dependency-pinning-guide) to pin to at **least** a major version of an SDK (ie `==2.*`) or **with due diligence**, to a minor and/or specific version (ie `==2.1.*` or `==2.12.0`, respectively). If you are unfamiliar with [semantic versioning or semver](https://semver.org/), it's a must-read.
+
+In a `requirements.txt` file, pinning to a major (or minor) version, like if you want to stick to using the SDK `v2.12.0` release, that can be done like this:
+
+```
+deepgram-sdk==2.*
+```
+
+Or using pip:
+
+```sh
+pip install deepgram-sdk==2.*
+```
+
+Pinning to a specific version can be done like this in a `requirements.txt` file:
+
+```
+deepgram-sdk==2.12.0
+```
+
+Or using pip:
+
+```sh
+pip install deepgram-sdk==2.12.0
+```
+
+We guarantee that major interfaces will not break in a given major semver (ie `2.*` release). However, all bets are off moving from a `2.*` to `3.*` major release. This follows standard semver best-practices.
 
 # Quickstarts
 
