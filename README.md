@@ -31,8 +31,6 @@ You can learn more about the Deepgram API at [developers.deepgram.com](https://d
 
 [Python](https://www.python.org/downloads/) (version ^3.10)
 
-> **_NOTE:_** Althought many older versions should work.
-
 # Installation
 
 To install the latest version available (which will guarantee change over time):
