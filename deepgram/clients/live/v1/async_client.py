@@ -81,7 +81,7 @@ class AsyncLiveClient:
         self, event, *args, **kwargs
     ):  # triggers the registered event handlers for a specific event
         for handler in self._event_handlers[event]:
-            handler(self, *args, **kwargs)
+            await handler(self, *args, **kwargs)
 
     async def _start(self) -> None:
         self.logger.debug("AsyncLiveClient._start ENTER")
