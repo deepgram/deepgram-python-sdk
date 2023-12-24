@@ -25,6 +25,29 @@ from .options import DeepgramClientOptions
 from .errors import DeepgramApiKeyError, DeepgramModuleError
 
 
+class Deepgram:
+    def __init__(self):
+        raise Exception(
+            """
+            FATAL ERROR:
+            You are attempting to instantiate a Deepgram object, which is no longer a class in version 3 of this SDK.
+
+            To fix this issue:
+                1. You need to revert to the previous version 2 of the SDK: pip install deepgram-sdk==2.12.0
+                2. or, update your application's code to use version 3 of this SDK. See the README for more information.
+
+            Things to consider:
+
+                - This Version 3 of the SDK requires Python 3.10 or higher.
+                  Older versions (3.9 and lower) of Python are nearing end-of-life: https://devguide.python.org/versions/
+                  Understand the risks of using a version of Python nearing EOL.
+
+                - Version 2 of the SDK will receive maintenance updates in the form of security fixes only.
+                  No new features will be added to version 2 of the SDK.
+            """
+        )
+
+
 class DeepgramClient:
     """
     Represents a client for interacting with the Deepgram API.
