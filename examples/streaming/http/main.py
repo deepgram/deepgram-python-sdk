@@ -19,24 +19,6 @@ def main():
     try:
         deepgram = DeepgramClient()
 
-        def on_message(result=None):
-            if result is None:
-                return
-            sentence = result.channel.alternatives[0].transcript
-            if len(sentence) == 0:
-                return
-            print(f"speaker: {sentence}")
-
-        def on_metadata(metadata=None):
-            if metadata is None:
-                return
-            print(f"\n{metadata}\n")
-
-        def on_error(error=None):
-            if error is None:
-                return
-            print(f"\n{error}\n")
-
         # Create a websocket connection to Deepgram
         dg_connection = deepgram.listen.live.v("1")
 
