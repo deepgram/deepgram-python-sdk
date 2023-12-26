@@ -28,7 +28,7 @@ async def main():
     try:
         dg_connection = deepgram.listen.asynclive.v("1")
 
-        def on_message(self, result, **kwargs):
+        async def on_message(self, result, **kwargs):
             if result is None:
                 return
             sentence = result.channel.alternatives[0].transcript
@@ -36,12 +36,12 @@ async def main():
                 return
             print(f"speaker: {sentence}")
 
-        def on_metadata(self, metadata, **kwargs):
+        async def on_metadata(self, metadata, **kwargs):
             if metadata is None:
                 return
             print(f"\n\n{metadata}\n\n")
 
-        def on_error(self, error, **kwargs):
+        async def on_error(self, error, **kwargs):
             if error is None:
                 return
             print(f"\n\n{error}\n\n")
