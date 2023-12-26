@@ -6,7 +6,7 @@
 __version__ = "0.0.0"
 
 # entry point for the deepgram python sdk
-from .client import DeepgramClient
+from .client import Deepgram, DeepgramClient
 from .options import DeepgramClientOptions
 
 # live
