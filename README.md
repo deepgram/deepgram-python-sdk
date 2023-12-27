@@ -189,6 +189,26 @@ To make sure our community is safe for all, be sure to review and agree to our
 [Code of Conduct](./CODE_OF_CONDUCT.md). Then see the
 [Contribution](./CONTRIBUTING.md) guidelines for more information.
 
+## Prerequisites
+
+In order to develop new features for the SDK itself, you first need to uninstall any previous installation of the `deepgram-sdk` and then install/pip the dependencies contained in the `requirements.txt` then instruct python (via pip) to use the SDK by installing it locally.
+
+From the root of the repo, that would entail:
+
+```bash
+pip uninstall deepgram-sdk
+pip install -r requirements.txt
+pip install -e .
+```
+
+## Testing
+
+If you are looking to contribute or modify pytest code, then you need to install the following dependencies:
+
+```bash
+pip install -r requirements-dev.txt
+```
+
 # Getting Help
 
 We love to hear from you so if you have questions, comments or find a bug in the

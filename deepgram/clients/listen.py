@@ -35,6 +35,7 @@ from .live.client import (
 from .live.client import (
     LiveResultResponse,
     MetadataResponse,
+    UtteranceEndResponse,
     ErrorResponse,
 )
 

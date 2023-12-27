@@ -10,5 +10,6 @@ from ...options import DeepgramClientOptions
 from .client import (
     LiveResultResponse,
     MetadataResponse,
+    UtteranceEndResponse,
     ErrorResponse,
 )

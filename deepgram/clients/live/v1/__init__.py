@@ -9,5 +9,6 @@ from ....options import DeepgramClientOptions
 from .response import (
     LiveResultResponse,
     MetadataResponse,
+    UtteranceEndResponse,
     ErrorResponse,
 )

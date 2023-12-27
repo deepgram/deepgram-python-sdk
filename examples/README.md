@@ -2,6 +2,14 @@
 
 The example projects are meant to be used to test features locally by contributors working on this SDK.
 
+## Prerequisites
+
+In order to run the code in the `examples` folder, you first need to install/pip the dependencies contained in the `requirements-examples.txt` for the examples.
+
+```bash
+pip install -r requirements-examples.txt
+```
+
 ## Steps to Test Your Code
 
 If you are contributing changes to this SDK, you can test those changes by using the `prerecorded`, `streaming`, or `manage` "hello world"-style applications in the `examples` folder. Here are the steps to follow:

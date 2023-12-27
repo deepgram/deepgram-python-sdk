@@ -10,11 +10,56 @@ from deepgram import (
     DeepgramClient,
     DeepgramClientOptions,
     LiveTranscriptionEvents,
+    LiveClient,
     LiveOptions,
     Microphone,
+    LiveResultResponse,
+    MetadataResponse,
+    UtteranceEndResponse,
+    ErrorResponse,
 )
 
 load_dotenv()
+
+
+# more complex example
+class MyLiveClient(LiveClient):
+    def __init__(self, config: DeepgramClientOptions):
+        super().__init__(config)
+        super().on(LiveTranscriptionEvents.Transcript, self.on_message)
+        super().on(LiveTranscriptionEvents.Metadata, self.on_metadata)
+        super().on(LiveTranscriptionEvents.UtteranceEnd, self.on_utterance_end)
+        super().on(LiveTranscriptionEvents.Error, self.on_error)
+        # self.test = "child"
+
+    def on_message(self, parent, result, **kwargs):
+        # print(f"child attr: {self.test}")
+        # print(f"parent attr: {parent.endpoint}")
+        sentence = result.channel.alternatives[0].transcript
+        if len(sentence) == 0:
+            return
+        print(f"speaker: {sentence}")
+
+        # testing modifying self class
+        if self.myattr is not None:
+            print(f"myattr - {self.myattr}")
+        else:
+            print("Setting myattr=hello")
+            setattr(self, "myattr", "hello")
+        self.myattr = "bye"
+
+        # testing kwargs
+        val = kwargs["test"]
+        print(f"kwargs - {val}")
+
+    def on_metadata(self, parent, metadata, **kwargs):
+        print(f"\n\n{metadata}\n\n")
+
+    def on_utterance_end(self, parent, utterance_end, **kwargs):
+        print(f"\n\n{utterance_end}\n\n")
+
+    def on_error(self, parent, error, **kwargs):
+        print(f"\n\n{error}\n\n")
 
 
 def main():
@@ -27,28 +72,7 @@ def main():
         # deepgram: DeepgramClient = DeepgramClient("", config)
         # otherwise, use default config
         deepgram = DeepgramClient()
-
-        dg_connection = deepgram.listen.live.v("1")
-
-        def on_message(self, result, **kwargs):
-            sentence = result.channel.alternatives[0].transcript
-            if len(sentence) == 0:
-                return
-            print(f"speaker: {sentence}")
-
-        def on_metadata(self, metadata, **kwargs):
-            print(f"\n\n{metadata}\n\n")
-
-        def on_utterance_end(self, utterance_end, **kwargs):
-            print(f"\n\n{utterance_end}\n\n")
-
-        def on_error(self, error, **kwargs):
-            print(f"\n\n{error}\n\n")
-
-        dg_connection.on(LiveTranscriptionEvents.Transcript, on_message)
-        dg_connection.on(LiveTranscriptionEvents.Metadata, on_metadata)
-        dg_connection.on(LiveTranscriptionEvents.UtteranceEnd, on_utterance_end)
-        dg_connection.on(LiveTranscriptionEvents.Error, on_error)
+        liveClient = MyLiveClient(deepgram.config)
 
         options = LiveOptions(
             punctuate=True,
@@ -60,10 +84,10 @@ def main():
             interim_results=True,
             utterance_end_ms="1000",
         )
-        dg_connection.start(options, addons=dict(myattr="hello"), test="hello")
+        liveClient.start(options, addons=dict(myattr="hello"), test="hello")
 
         # Open a microphone stream
-        microphone = Microphone(dg_connection.send)
+        microphone = Microphone(liveClient.send)
 
         # start microphone
         microphone.start()
@@ -75,7 +99,7 @@ def main():
         microphone.finish()
 
         # Indicate that we've finished
-        dg_connection.finish()
+        liveClient.finish()
 
         print("Finished")
         # sleep(30)  # wait 30 seconds to see if there is any additional socket activity

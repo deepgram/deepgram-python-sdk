@@ -9,6 +9,7 @@ from .enums import LiveTranscriptionEvents
 from .v1.response import (
     LiveResultResponse as LiveResultResponseLatest,
     MetadataResponse as MetadataResponseLatest,
+    UtteranceEndResponse as UtteranceEndResponseLatest,
     ErrorResponse as ErrorResponseLatest,
 )
 
@@ -39,6 +40,14 @@ class LiveResultResponse(LiveResultResponseLatest):
 class MetadataResponse(MetadataResponseLatest):
     """
     pass through for MetadataResponse based on API version
+    """
+
+    pass
+
+
+class UtteranceEndResponse(UtteranceEndResponseLatest):
+    """
+    pass through for UtteranceEndResponse based on API version
     """
 
     pass

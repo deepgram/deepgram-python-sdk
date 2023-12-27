@@ -21,6 +21,7 @@ from .clients import (
 from .clients import (
     LiveResultResponse,
     MetadataResponse,
+    UtteranceEndResponse,
     ErrorResponse,
 )
 

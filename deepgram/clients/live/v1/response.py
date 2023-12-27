@@ -152,6 +152,19 @@ class MetadataResponse:
         return _dict[key]
 
 
+# Utterance End Message
+
+
+@dataclass_json
+@dataclass
+class UtteranceEndResponse:
+    """
+    UtteranceEnd Message from the Deepgram Platform
+    """
+
+    type: Optional[str] = ""
+
+
 # Error Message
 
 

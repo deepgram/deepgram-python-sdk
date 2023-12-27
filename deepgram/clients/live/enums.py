@@ -14,5 +14,6 @@ class LiveTranscriptionEvents(Enum):
     Close = "Close"
     Transcript = "Results"
     Metadata = "Metadata"
+    UtteranceEnd = "UtteranceEnd"
     Error = "Error"
     Warning = "Warning"
