@@ -7,19 +7,74 @@ from importlib import import_module
 import logging, verboselogs
 import os
 
-from .clients.listen import (
-    ListenClient,
-    PreRecordedClient,
-    AsyncLiveClient,
-    AsyncPreRecordedClient,
-    PrerecordedOptions,
+# listen client
+from .clients import ListenClient
+
+# live
+from .clients import LiveClient, AsyncLiveClient
+from .clients import (
     LiveOptions,
     LiveTranscriptionEvents,
 )
+
+# live client responses
+from .clients import (
+    LiveResultResponse,
+    MetadataResponse,
+    ErrorResponse,
+)
+
+# prerecorded
+from .clients import PreRecordedClient, AsyncPreRecordedClient
+from .clients import (
+    PrerecordedSource,
+    FileSource,
+    UrlSource,
+    BufferSource,
+    ReadStreamSource,
+    PrerecordedOptions,
+)
+
+# prerecorded client responses
+from .clients import (
+    AsyncPrerecordedResponse,
+    PrerecordedResponse,
+)
+
+# manage client classes/input
+from .clients import ManageClient, AsyncManageClient
+from .clients import (
+    ProjectOptions,
+    KeyOptions,
+    ScopeOptions,
+    InviteOptions,
+    UsageRequestOptions,
+    UsageSummaryOptions,
+    UsageFieldsOptions,
+)
+
+# manage client responses
+from .clients import (
+    Message,
+    Project,
+    ProjectsResponse,
+    MembersResponse,
+    Key,
+    KeyResponse,
+    KeysResponse,
+    ScopesResponse,
+    InvitesResponse,
+    UsageRequest,
+    UsageRequestsResponse,
+    UsageSummaryResponse,
+    UsageFieldsResponse,
+    Balance,
+    BalancesResponse,
+)
+
+# on-prem
 from .clients.onprem.client import OnPremClient
 from .clients.onprem.v1.async_client import AsyncOnPremClient
-from .clients.manage.client import ManageClient
-from .clients.manage.v1.async_client import AsyncManageClient
 
 from .options import DeepgramClientOptions
 from .errors import DeepgramApiKeyError, DeepgramModuleError

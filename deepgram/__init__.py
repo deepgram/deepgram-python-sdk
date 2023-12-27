@@ -9,32 +9,37 @@ __version__ = "0.0.0"
 from .client import Deepgram, DeepgramClient
 from .options import DeepgramClientOptions
 
-# live
-from .clients import LiveTranscriptionEvents
-from .clients import LiveClient, AsyncLiveClient, LiveOptions
+# listen client
+from .client import ListenClient
 
-# onprem
-from .clients import (
-    OnPremClient,
-    AsyncOnPremClient,
+# live
+from .client import LiveTranscriptionEvents
+from .client import LiveClient, AsyncLiveClient
+from .client import LiveOptions
+from .client import (
+    LiveResultResponse,
+    MetadataResponse,
+    ErrorResponse,
 )
 
 # prerecorded
-from .clients import (
-    PreRecordedClient,
-    AsyncPreRecordedClient,
-    PrerecordedOptions,
+from .client import PreRecordedClient, AsyncPreRecordedClient
+from .client import (
     PrerecordedSource,
     FileSource,
     UrlSource,
     BufferSource,
     ReadStreamSource,
+    PrerecordedOptions,
+)
+from .client import (
+    AsyncPrerecordedResponse,
+    PrerecordedResponse,
 )
 
 # manage
-from .clients import (
-    ManageClient,
-    AsyncManageClient,
+from .client import ManageClient, AsyncManageClient
+from .client import (
     ProjectOptions,
     KeyOptions,
     ScopeOptions,
@@ -42,6 +47,31 @@ from .clients import (
     UsageRequestOptions,
     UsageSummaryOptions,
     UsageFieldsOptions,
+)
+
+# manage client responses
+from .client import (
+    Message,
+    Project,
+    ProjectsResponse,
+    MembersResponse,
+    Key,
+    KeyResponse,
+    KeysResponse,
+    ScopesResponse,
+    InvitesResponse,
+    UsageRequest,
+    UsageRequestsResponse,
+    UsageSummaryResponse,
+    UsageFieldsResponse,
+    Balance,
+    BalancesResponse,
+)
+
+# onprem
+from .client import (
+    OnPremClient,
+    AsyncOnPremClient,
 )
 
 # utilities

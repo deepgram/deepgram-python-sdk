@@ -11,7 +11,11 @@ from ..enums import LiveTranscriptionEvents
 from ..helpers import convert_to_websocket_url, append_query_params
 from ..errors import DeepgramError
 
-from .response import LiveResultResponse, MetadataResponse, ErrorResponse
+from .response import (
+    LiveResultResponse,
+    MetadataResponse,
+    ErrorResponse,
+)
 from .options import LiveOptions
 
 
@@ -96,6 +100,9 @@ class AsyncLiveClient:
                             "response_type: %s, data: %s", response_type, data
                         )
                         result = LiveResultResponse.from_json(message)
+                        if result is None:
+                            self.logger.error("LiveResultResponse.from_json is None")
+                            continue
                         await self._emit(
                             LiveTranscriptionEvents.Transcript,
                             result=result,
@@ -105,7 +112,10 @@ class AsyncLiveClient:
                         self.logger.debug(
                             "response_type: %s, data: %s", response_type, data
                         )
-                        result = ErrorResponse.from_json(message)
+                        result = MetadataResponse.from_json(message)
+                        if result is None:
+                            self.logger.error("MetadataResponse.from_json is None")
+                            continue
                         await self._emit(
                             LiveTranscriptionEvents.Metadata,
                             metadata=result,
@@ -115,7 +125,10 @@ class AsyncLiveClient:
                         self.logger.debug(
                             "response_type: %s, data: %s", response_type, data
                         )
-                        result = MetadataResponse.from_json(message)
+                        result = ErrorResponse.from_json(message)
+                        if result is None:
+                            self.logger.error("ErrorResponse.from_json is None")
+                            continue
                         await self._emit(
                             LiveTranscriptionEvents.Error,
                             error=result,

@@ -7,6 +7,7 @@ from dataclasses_json import dataclass_json
 from datetime import datetime
 from typing import TypedDict, List, Optional
 
+
 # Result Message
 
 
@@ -77,6 +78,8 @@ class MembersResponse:
 
 
 # Keys
+
+
 @dataclass_json
 @dataclass
 class Key:
@@ -122,6 +125,8 @@ class KeysResponse:
 
 
 # Scopes
+
+
 @dataclass_json
 @dataclass
 class ScopesResponse:
@@ -161,6 +166,8 @@ class InvitesResponse:
 
 
 # Usage
+
+
 @dataclass_json
 @dataclass
 class Config:

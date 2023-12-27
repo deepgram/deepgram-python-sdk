@@ -2,9 +2,9 @@
 # Use of this source code is governed by a MIT license that can be found in the LICENSE file.
 # SPDX-License-Identifier: MIT
 
-from .v1.client import PreRecordedClient
-from .v1.async_client import AsyncPreRecordedClient
-from .v1.options import PrerecordedOptions
+from .client import PreRecordedClient
+from .client import AsyncPreRecordedClient
+from .client import PrerecordedOptions
 from .source import (
     PrerecordedSource,
     FileSource,
@@ -12,5 +12,6 @@ from .source import (
     BufferSource,
     ReadStreamSource,
 )
+from .client import AsyncPrerecordedResponse, PrerecordedResponse
 
 from ...options import DeepgramClientOptions

@@ -2,9 +2,9 @@
 # Use of this source code is governed by a MIT license that can be found in the LICENSE file.
 # SPDX-License-Identifier: MIT
 
-from .v1.client import ManageClient
-from .v1.async_client import AsyncManageClient
-from .v1.options import (
+from .client import ManageClient
+from .client import AsyncManageClient
+from .client import (
     ProjectOptions,
     KeyOptions,
     ScopeOptions,
@@ -12,5 +12,22 @@ from .v1.options import (
     UsageRequestOptions,
     UsageSummaryOptions,
     UsageFieldsOptions,
+)
+from .client import (
+    Message,
+    Project,
+    ProjectsResponse,
+    MembersResponse,
+    Key,
+    KeyResponse,
+    KeysResponse,
+    ScopesResponse,
+    InvitesResponse,
+    UsageRequest,
+    UsageRequestsResponse,
+    UsageSummaryResponse,
+    UsageFieldsResponse,
+    Balance,
+    BalancesResponse,
 )
 from ...options import DeepgramClientOptions

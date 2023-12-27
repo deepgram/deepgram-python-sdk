@@ -2,8 +2,13 @@
 # Use of this source code is governed by a MIT license that can be found in the LICENSE file.
 # SPDX-License-Identifier: MIT
 
-from .v1.client import LiveClient
-from .v1.async_client import AsyncLiveClient
+from .client import LiveClient
+from .client import AsyncLiveClient
 from .v1.options import LiveOptions
 from .enums import LiveTranscriptionEvents
 from ...options import DeepgramClientOptions
+from .client import (
+    LiveResultResponse,
+    MetadataResponse,
+    ErrorResponse,
+)

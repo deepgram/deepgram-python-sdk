@@ -9,6 +9,7 @@ from typing import List, Optional, Dict
 
 # Result Message
 
+
 @dataclass_json
 @dataclass
 class Word:
@@ -85,6 +86,7 @@ class LiveResultResponse:
     """
     Result Message from the Deepgram Platform
     """
+
     type: Optional[str] = ""
     channel_index: Optional[List[int]] = None
     duration: Optional[float] = 0
@@ -109,6 +111,7 @@ class LiveResultResponse:
 
 # Metadata Message
 
+
 @dataclass_json
 @dataclass
 class ModelInfo:
@@ -127,6 +130,7 @@ class MetadataResponse:
     """
     Metadata Message from the Deepgram Platform
     """
+
     type: Optional[str] = ""
     transaction_key: Optional[str] = ""
     request_id: Optional[str] = ""
@@ -146,8 +150,10 @@ class MetadataResponse:
                 ModelInfo.from_dict(value) for value in _dict["model_info"]
             ]
         return _dict[key]
-    
+
+
 # Error Message
+
 
 @dataclass_json
 @dataclass
@@ -155,6 +161,7 @@ class ErrorResponse:
     """
     Error Message from the Deepgram Platform
     """
+
     description: Optional[str] = ""
     message: Optional[str] = ""
     type: Optional[str] = ""
