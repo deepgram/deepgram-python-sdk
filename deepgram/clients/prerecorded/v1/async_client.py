@@ -28,6 +28,49 @@ class AsyncPreRecordedClient(AbstractAsyncRestClient):
         super().__init__(config)
 
     """
+    Transcribes audio from a URL or FILE source.
+
+    A wrapped for transcribe_url and transcribe_file.
+    Please see the documentation for those methods for more information.
+    """
+
+    async def transcribe(
+        self,
+        source: UrlSource,
+        options: PrerecordedOptions = None,
+        addons: dict = None,
+        endpoint: str = "v1/listen",
+    ) -> PrerecordedResponse:
+        if "url" in source:
+            return await self.transcribe_url(source, options, addons, endpoint)
+        else:
+            return await self.transcribe_file(source, options, addons, endpoint)
+
+    """
+    Transcribes audio from a URL or FILE source with a Callback.
+
+    A wrapped for transcribe_url_callback and transcribe_file_callback.
+    Please see the documentation for those methods for more information.
+    """
+
+    async def transcribe_callback(
+        self,
+        source: UrlSource,
+        callback: str,
+        options: PrerecordedOptions = None,
+        addons: dict = None,
+        endpoint: str = "v1/listen",
+    ) -> AsyncPrerecordedResponse:
+        if "url" in source:
+            return await self.transcribe_url_callback(
+                source, callback, options, addons, endpoint
+            )
+        else:
+            return await self.transcribe_file_callback(
+                source, callback, options, addons, endpoint
+            )
+
+    """
     Transcribes audio from a URL source.
 
     Args:

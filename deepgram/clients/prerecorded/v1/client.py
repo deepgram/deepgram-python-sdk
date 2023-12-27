@@ -29,6 +29,51 @@ class PreRecordedClient(AbstractSyncRestClient):
         super().__init__(config)
 
     """
+    Transcribes audio from a URL or FILE source.
+
+    A wrapped for transcribe_url and transcribe_file.
+    Please see the documentation for those methods for more information.
+    """
+
+    def transcribe(
+        self,
+        source: UrlSource,
+        options: PrerecordedOptions = None,
+        addons: dict = None,
+        timeout: httpx.Timeout = None,
+        endpoint: str = "v1/listen",
+    ) -> PrerecordedResponse:
+        if "url" in source:
+            return self.transcribe_url(source, options, addons, timeout, endpoint)
+        else:
+            return self.transcribe_file(source, options, addons, timeout, endpoint)
+
+    """
+    Transcribes audio from a URL or FILE source with a Callback.
+
+    A wrapped for transcribe_url_callback and transcribe_file_callback.
+    Please see the documentation for those methods for more information.
+    """
+
+    def transcribe_url_callback(
+        self,
+        source: UrlSource,
+        callback: str,
+        options: PrerecordedOptions = None,
+        addons: dict = None,
+        timeout: httpx.Timeout = None,
+        endpoint: str = "v1/listen",
+    ) -> AsyncPrerecordedResponse:
+        if "url" in source:
+            return self.transcribe_url_callback(
+                source, callback, options, addons, timeout, endpoint
+            )
+        else:
+            return self.transcribe_file_callback(
+                source, callback, options, addons, timeout, endpoint
+            )
+
+    """
     Transcribes audio from a URL source.
 
     Args:
