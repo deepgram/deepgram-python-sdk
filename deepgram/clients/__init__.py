@@ -12,6 +12,7 @@ from .live import LiveTranscriptionEvents
 from .live import (
     LiveResultResponse,
     MetadataResponse,
+    UtteranceEndResponse,
     ErrorResponse,
 )
 

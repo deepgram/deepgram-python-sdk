@@ -29,25 +29,23 @@ async def main():
         dg_connection = deepgram.listen.asynclive.v("1")
 
         async def on_message(self, result, **kwargs):
-            if result is None:
-                return
             sentence = result.channel.alternatives[0].transcript
             if len(sentence) == 0:
                 return
             print(f"speaker: {sentence}")
 
         async def on_metadata(self, metadata, **kwargs):
-            if metadata is None:
-                return
             print(f"\n\n{metadata}\n\n")
 
+        def on_utterance_end(self, utterance_end, **kwargs):
+            print(f"\n\n{utterance_end}\n\n")
+
         async def on_error(self, error, **kwargs):
-            if error is None:
-                return
             print(f"\n\n{error}\n\n")
 
         dg_connection.on(LiveTranscriptionEvents.Transcript, on_message)
         dg_connection.on(LiveTranscriptionEvents.Metadata, on_metadata)
+        dg_connection.on(LiveTranscriptionEvents.UtteranceEnd, on_utterance_end)
         dg_connection.on(LiveTranscriptionEvents.Error, on_error)
 
         # connect to websocket
