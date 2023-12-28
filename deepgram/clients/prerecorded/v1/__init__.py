@@ -6,3 +6,4 @@ from .client import PreRecordedClient
 from .async_client import AsyncPreRecordedClient
 from .options import PrerecordedOptions
 from ....options import DeepgramClientOptions
+from .response import AsyncPrerecordedResponse, PrerecordedResponse

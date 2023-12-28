@@ -2,16 +2,21 @@
 # Use of this source code is governed by a MIT license that can be found in the LICENSE file.
 # SPDX-License-Identifier: MIT
 
+# listen
+from .listen import ListenClient
+
 # live
-from .live import LiveClient
-from .live import AsyncLiveClient
+from .live import LiveClient, AsyncLiveClient
 from .live import LiveOptions
 from .live import LiveTranscriptionEvents
-from ..options import DeepgramClientOptions
+from .live import (
+    LiveResultResponse,
+    MetadataResponse,
+    ErrorResponse,
+)
 
 # prerecorded
-from .prerecorded import PreRecordedClient
-from .prerecorded import AsyncPreRecordedClient
+from .prerecorded import PreRecordedClient, AsyncPreRecordedClient
 from .prerecorded import PrerecordedOptions
 from .prerecorded import (
     PrerecordedSource,
@@ -20,16 +25,13 @@ from .prerecorded import (
     BufferSource,
     ReadStreamSource,
 )
-from ..options import DeepgramClientOptions
-
-# onprem
-from .onprem import OnPremClient
-from .onprem import AsyncOnPremClient
-from ..options import DeepgramClientOptions
+from .prerecorded import (
+    AsyncPrerecordedResponse,
+    PrerecordedResponse,
+)
 
 # manage
-from .manage import ManageClient
-from .manage import AsyncManageClient
+from .manage import ManageClient, AsyncManageClient
 from .manage import (
     ProjectOptions,
     KeyOptions,
@@ -39,4 +41,26 @@ from .manage import (
     UsageSummaryOptions,
     UsageFieldsOptions,
 )
+from .manage import (
+    Message,
+    Project,
+    ProjectsResponse,
+    MembersResponse,
+    Key,
+    KeyResponse,
+    KeysResponse,
+    ScopesResponse,
+    InvitesResponse,
+    UsageRequest,
+    UsageRequestsResponse,
+    UsageSummaryResponse,
+    UsageFieldsResponse,
+    Balance,
+    BalancesResponse,
+)
+
+# onprem
+from .onprem import OnPremClient, AsyncOnPremClient
+
+# client options
 from ..options import DeepgramClientOptions

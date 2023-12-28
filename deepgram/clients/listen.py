@@ -6,22 +6,37 @@ from importlib import import_module
 import logging, verboselogs
 
 from ..options import DeepgramClientOptions
+from .errors import DeepgramModuleError
 
+# live client
+# classes and input
 from .prerecorded.client import (
     PreRecordedClient,
     AsyncPreRecordedClient,
     PrerecordedOptions,
 )
+
+# responses
+from .prerecorded.client import (
+    AsyncPrerecordedResponse,
+    PrerecordedResponse,
+)
+
+# live client
+# classes and input
 from .live.client import (
     LiveClient,
     AsyncLiveClient,
     LiveOptions,
+    LiveTranscriptionEvents,
+)
+
+# responses
+from .live.client import (
     LiveResultResponse,
     MetadataResponse,
     ErrorResponse,
-    LiveTranscriptionEvents,
 )
-from .errors import DeepgramModuleError
 
 
 class ListenClient:
@@ -44,6 +59,7 @@ class ListenClient:
         asynclive: Returns an (Async) LiveClient instance for interacting with Deepgram's transcription services.
         asyncprerecorded: Returns an (Async) PreRecordedClient instance for interacting with Deepgram's prerecorded transcription services.
     """
+
     def __init__(self, config: DeepgramClientOptions):
         self.logger = logging.getLogger(__name__)
         self.logger.addHandler(logging.StreamHandler())

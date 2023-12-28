@@ -12,10 +12,11 @@ from typing import List, Optional
 class LiveOptions:
     """
     Live Transcription Options for the Deepgram Platform.
-    
+
     Please see the documentation for more information on each option:
     https://developers.deepgram.com/reference/streaming
     """
+
     callback: Optional[str] = None
     channels: Optional[int] = None
     diarize: Optional[bool] = None
@@ -36,6 +37,7 @@ class LiveOptions:
     smart_format: Optional[bool] = None
     tag: Optional[list] = None
     tier: Optional[str] = None
+    utterance_end_ms: Optional[str] = None
     version: Optional[str] = None
 
     def __getitem__(self, key):

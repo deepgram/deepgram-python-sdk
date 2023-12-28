@@ -3,11 +3,16 @@
 # SPDX-License-Identifier: MIT
 
 import httpx
-import os
 from dotenv import load_dotenv
+import logging, verboselogs
 import threading
 
-from deepgram import DeepgramClient, LiveTranscriptionEvents, LiveOptions
+from deepgram import (
+    DeepgramClient,
+    DeepgramClientOptions,
+    LiveTranscriptionEvents,
+    LiveOptions,
+)
 
 load_dotenv()
 
@@ -17,6 +22,12 @@ URL = "http://stream.live.vc.bbcmedia.co.uk/bbc_world_service"
 
 def main():
     try:
+        # example of setting up a client config. logging values: WARNING, VERBOSE, DEBUG, SPAM
+        # config = DeepgramClientOptions(
+        #     verbose=logging.DEBUG, options={"keepalive": "true"}
+        # )
+        # deepgram: DeepgramClient = DeepgramClient("", config)
+        # otherwise, use default config
         deepgram = DeepgramClient()
 
         # Create a websocket connection to Deepgram
