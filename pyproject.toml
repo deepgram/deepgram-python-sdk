@@ -22,7 +22,7 @@ version = {attr = "deepgram.__version__"}
 # poetry configuration
 [tool.poetry]
 name = "deepgram"
-version = "3.0.0"
+version = "3.X.Y" # Please update this to the version you are using
 description = "The official Python SDK for the Deepgram automated speech recognition platform."
 authors = ["Deepgram DevRel <devrel@deepgram.com>"]
 license = "MIT"
