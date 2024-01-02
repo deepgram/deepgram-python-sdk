@@ -44,7 +44,7 @@ class ProjectsResponse:
         _dict = self.to_dict()
         if _dict["projects"] is not None:
             _dict["projects"] = [
-                Project.from_dict(project) for project in _dict["projects"]
+                Project.from_dict(projects) for _, projects in _dict["projects"].items()
             ]
         return _dict[key]
 
@@ -73,7 +73,9 @@ class MembersResponse:
     def __getitem__(self, key):
         _dict = self.to_dict()
         if _dict["members"] is not None:
-            _dict["members"] = [Member.from_dict(member) for member in _dict["members"]]
+            _dict["members"] = [
+                Member.from_dict(members) for _, members in _dict["members"].items()
+            ]
         return _dict[key]
 
 
@@ -91,7 +93,7 @@ class Key:
     def __getitem__(self, key):
         _dict = self.to_dict()
         if _dict["scopes"] is not None:
-            _dict["scopes"] = [str(scopes) for scopes in _dict["scopes"]]
+            _dict["scopes"] = [str(scopes) for _, scopes in _dict["scopes"].items()]
         return _dict[key]
 
 
@@ -119,7 +121,8 @@ class KeysResponse:
         _dict = self.to_dict()
         if _dict["api_keys"] is not None:
             _dict["api_keys"] = [
-                KeyResponse.from_dict(key) for key in _dict["api_keys"]
+                KeyResponse.from_dict(api_keys)
+                for _, api_keys in _dict["api_keys"].items()
             ]
         return _dict[key]
 
@@ -135,7 +138,7 @@ class ScopesResponse:
     def __getitem__(self, key):
         _dict = self.to_dict()
         if _dict["scopes"] is not None:
-            _dict["scopes"] = [str(scopes) for scopes in _dict["scopes"]]
+            _dict["scopes"] = [str(scopes) for _, scopes in _dict["scopes"].items()]
         return _dict[key]
 
 
@@ -161,7 +164,9 @@ class InvitesResponse:
     def __getitem__(self, key):
         _dict = self.to_dict()
         if _dict["invites"] is not None:
-            _dict["invites"] = [Invite.from_dict(invite) for invite in _dict["invites"]]
+            _dict["invites"] = [
+                Invite.from_dict(invites) for _, invites in _dict["invites"].items()
+            ]
         return _dict[key]
 
 
@@ -199,11 +204,13 @@ class Details:
     def __getitem__(self, key):
         _dict = self.to_dict()
         if _dict["models"] is not None:
-            _dict["models"] = [str(models) for models in _dict["models"]]
+            _dict["models"] = [str(models) for _, models in _dict["models"].items()]
         if _dict["tags"] is not None:
-            _dict["tags"] = [str(tags) for tags in _dict["tags"]]
+            _dict["tags"] = [str(tags) for _, tags in _dict["tags"].items()]
         if _dict["features"] is not None:
-            _dict["features"] = [str(features) for features in _dict["features"]]
+            _dict["features"] = [
+                str(features) for _, features in _dict["features"].items()
+            ]
         if _dict["config"] is not None:
             _dict["config"] = Config.from_dict(_dict["config"])
         return _dict[key]
@@ -266,7 +273,8 @@ class UsageRequestsResponse:
         _dict = self.to_dict()
         if _dict["requests"] is not None:
             _dict["requests"] = [
-                UsageRequest.from_dict(request) for request in _dict["requests"]
+                UsageRequest.from_dict(requests)
+                for _, requests in _dict["requests"].items()
             ]
         return _dict[key]
 
@@ -310,7 +318,7 @@ class UsageSummaryResponse:
             _dict["resolution"] = Resolution.from_dict(_dict["resolution"])
         if _dict["results"] is not None:
             _dict["results"] = [
-                Results.from_dict(result) for result in _dict["results"]
+                Results.from_dict(results) for _, results in _dict["results"].items()
             ]
         return _dict[key]
 
@@ -340,18 +348,24 @@ class UsageFieldsResponse:
     def __getitem__(self, key):
         _dict = self.to_dict()
         if _dict["tags"] is not None:
-            _dict["tags"] = [str(tags) for tags in _dict["tags"]]
+            _dict["tags"] = [str(tags) for _, tags in _dict["tags"].items()]
         if _dict["models"] is not None:
-            _dict["models"] = [UsageModel.from_dict(model) for model in _dict["models"]]
+            _dict["models"] = [
+                UsageModel.from_dict(models) for _, models in _dict["models"].items()
+            ]
         if _dict["processing_methods"] is not None:
             _dict["processing_methods"] = [
                 str(processing_methods)
-                for processing_methods in _dict["processing_methods"]
+                for _, processing_methods in _dict["processing_methods"].items()
             ]
         if _dict["features"] is not None:
-            _dict["features"] = [str(features) for features in _dict["features"]]
+            _dict["features"] = [
+                str(features) for _, features in _dict["features"].items()
+            ]
         if _dict["languages"] is not None:
-            _dict["languages"] = [str(model) for model in _dict["languages"]]
+            _dict["languages"] = [
+                str(languages) for _, languages in _dict["languages"].items()
+            ]
         return _dict[key]
 
 
@@ -380,6 +394,6 @@ class BalancesResponse:
         _dict = self.to_dict()
         if _dict["balances"] is not None:
             _dict["balances"] = [
-                Balance.from_dict(balance) for balance in _dict["balances"]
+                Balance.from_dict(balances) for _, balances in _dict["balances"].items()
             ]
         return _dict[key]
