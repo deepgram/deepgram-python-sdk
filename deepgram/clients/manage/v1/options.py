@@ -32,9 +32,9 @@ class KeyOptions:
     def __getitem__(self, key):
         _dict = self.to_dict()
         if _dict["scopes"] is not None:
-            _dict["scopes"] = [str(scopes) for scopes in _dict["scopes"]]
+            _dict["scopes"] = [str(scopes) for _, scopes in _dict["scopes"].items()]
         if _dict["tags"] is not None:
-            _dict["tags"] = [str(tags) for tags in _dict["tags"]]
+            _dict["tags"] = [str(tags) for _, tags in _dict["tags"].items()]
         return _dict[key]
 
 
@@ -110,6 +110,4 @@ class UsageFieldsOptions:
 
     def __getitem__(self, key):
         _dict = self.to_dict()
-        if _dict["details"] is not None:
-            _dict["details"] = Details.from_dict(_dict["details"])
         return _dict[key]

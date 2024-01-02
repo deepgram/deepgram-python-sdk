@@ -34,7 +34,9 @@ class Alternative:
     def __getitem__(self, key):
         _dict = self.to_dict()
         if _dict["words"] is not None:
-            _dict["words"] = [Word.from_dict(project) for project in _dict["words"]]
+            _dict["words"] = [
+                Word.from_dict(words) for _, words in _dict["words"].items()
+            ]
         return _dict[key]
 
 
@@ -47,7 +49,8 @@ class Channel:
         _dict = self.to_dict()
         if _dict["alternatives"] is not None:
             _dict["alternatives"] = [
-                Alternative.from_dict(project) for project in _dict["alternatives"]
+                Alternative.from_dict(alternatives)
+                for _, alternatives in _dict["alternatives"].items()
             ]
         return _dict[key]
 
@@ -75,7 +78,8 @@ class Metadata:
         _dict = self.to_dict()
         if _dict["model_info"] is not None:
             _dict["model_info"] = [
-                ModelInfo.from_dict(project) for project in _dict["model_info"]
+                ModelInfo.from_dict(model_info)
+                for _, model_info in _dict["model_info"].items()
             ]
         return _dict[key]
 
@@ -100,11 +104,12 @@ class LiveResultResponse:
         _dict = self.to_dict()
         if _dict["channel"] is not None:
             _dict["channel"] = [
-                Channel.from_dict(project) for project in _dict["channel"]
+                Channel.from_dict(channel) for _, channel in _dict["channel"].items()
             ]
         if _dict["metadata"] is not None:
             _dict["metadata"] = [
-                Metadata.from_dict(project) for project in _dict["metadata"]
+                Metadata.from_dict(metadata)
+                for _, metadata in _dict["metadata"].items()
             ]
         return _dict[key]
 
@@ -144,10 +149,11 @@ class MetadataResponse:
     def __getitem__(self, key):
         _dict = self.to_dict()
         if _dict["models"] is not None:
-            _dict["models"] = [str(models) for models in _dict["models"]]
+            _dict["models"] = [str(models) for _, models in _dict["models"].items()]
         if _dict["model_info"] is not None:
             _dict["model_info"] = [
-                ModelInfo.from_dict(value) for value in _dict["model_info"]
+                ModelInfo.from_dict(model_info)
+                for _, model_info in _dict["model_info"].items()
             ]
         return _dict[key]
 

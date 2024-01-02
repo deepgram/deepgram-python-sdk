@@ -63,16 +63,17 @@ class Metadata:
     def __getitem__(self, key):
         _dict = self.to_dict()
         if _dict["models"] is not None:
-            _dict["models"] = [str(models) for models in _dict["models"]]
+            _dict["models"] = [str(models) for _, models in _dict["models"].items()]
         if _dict["model_info"] is not None:
             _dict["model_info"] = [
-                ModelInfo.from_dict(model_info) for model_info in _dict["model_info"]
+                ModelInfo.from_dict(model_info)
+                for _, model_info in _dict["model_info"].items()
             ]
         if _dict["summary_info"] is not None:
             _dict["summary_info"] = SummaryInfo.from_dict(_dict["summary_info"])
         if _dict["warnings"] is not None:
             _dict["warnings"] = [
-                Warning.from_dict(warning) for warning in _dict["warnings"]
+                Warning.from_dict(warnings) for _, warnings in _dict["warnings"].items()
             ]
         return _dict[key]
 
@@ -177,7 +178,8 @@ class Paragraph:
         _dict = self.to_dict()
         if _dict["sentences"] is not None:
             _dict["sentences"] = [
-                Sentence.from_dict(sentences) for sentences in _dict["sentences"]
+                Sentence.from_dict(sentences)
+                for _, sentences in _dict["sentences"].items()
             ]
         return _dict[key]
 
@@ -192,7 +194,8 @@ class Paragraphs:
         _dict = self.to_dict()
         if _dict["paragraphs"] is not None:
             _dict["paragraphs"] = [
-                Paragraph.from_dict(paragraphs) for paragraphs in _dict["paragraphs"]
+                Paragraph.from_dict(paragraphs)
+                for _, paragraphs in _dict["paragraphs"].items()
             ]
         return _dict[key]
 
@@ -219,7 +222,9 @@ class Topics:
     def __getitem__(self, key):
         _dict = self.to_dict()
         if _dict["topics"] is not None:
-            _dict["topics"] = [Topic.from_dict(topics) for topics in _dict["topics"]]
+            _dict["topics"] = [
+                Topic.from_dict(topics) for _, topics in _dict["topics"].items()
+            ]
         return _dict[key]
 
 
@@ -255,7 +260,7 @@ class Search:
     def __getitem__(self, key):
         _dict = self.to_dict()
         if _dict["hits"] is not None:
-            _dict["hits"] = [Hit.from_dict(hits) for hits in _dict["hits"]]
+            _dict["hits"] = [Hit.from_dict(hits) for _, hits in _dict["hits"].items()]
         return _dict[key]
 
 
@@ -274,7 +279,9 @@ class Utterance:
     def __getitem__(self, key):
         _dict = self.to_dict()
         if _dict["words"] is not None:
-            _dict["words"] = [Word.from_dict(words) for words in _dict["words"]]
+            _dict["words"] = [
+                Word.from_dict(words) for _, words in _dict["words"].items()
+            ]
         return _dict[key]
 
 
@@ -307,24 +314,29 @@ class Alternative:
     def __getitem__(self, key):
         _dict = self.to_dict()
         if _dict["words"] is not None:
-            _dict["words"] = [Word.from_dict(words) for words in _dict["words"]]
+            _dict["words"] = [
+                Word.from_dict(words) for _, words in _dict["words"].items()
+            ]
         if _dict["summaries"] is not None:
             _dict["summaries"] = [
-                SummaryV2.from_dict(summaries) for summaries in _dict["summaries"]
+                SummaryV2.from_dict(summaries)
+                for _, summaries in _dict["summaries"].items()
             ]
         if _dict["paragraphs"] is not None:
             _dict["paragraphs"] = Paragraphs.from_dict(_dict["paragraphs"])
         if _dict["entities"] is not None:
             _dict["entities"] = [
-                Entity.from_dict(entities) for entities in _dict["entities"]
+                Entity.from_dict(entities) for _, entities in _dict["entities"].items()
             ]
         if _dict["translations"] is not None:
             _dict["translations"] = [
                 Translation.from_dict(translations)
-                for translations in _dict["translations"]
+                for _, translations in _dict["translations"].items()
             ]
         if _dict["topics"] is not None:
-            _dict["topics"] = [Topics.from_dict(topics) for topics in _dict["topics"]]
+            _dict["topics"] = [
+                Topics.from_dict(topics) for _, topics in _dict["topics"].items()
+            ]
         return _dict[key]
 
 
@@ -338,11 +350,13 @@ class Channel:
     def __getitem__(self, key):
         _dict = self.to_dict()
         if _dict["search"] is not None:
-            _dict["search"] = [Search.from_dict(search) for search in _dict["search"]]
+            _dict["search"] = [
+                Search.from_dict(search) for _, search in _dict["search"].items()
+            ]
         if _dict["alternatives"] is not None:
             _dict["alternatives"] = [
                 Alternative.from_dict(alternatives)
-                for alternatives in _dict["alternatives"]
+                for _, alternatives in _dict["alternatives"].items()
             ]
         return _dict[key]
 
@@ -358,11 +372,12 @@ class Result:
         _dict = self.to_dict()
         if _dict["channels"] is not None:
             _dict["channels"] = [
-                Channel.from_dict(channels) for channels in _dict["channels"]
+                Channel.from_dict(channels) for _, channels in _dict["channels"].items()
             ]
         if _dict["utterances"] is not None:
             _dict["utterances"] = [
-                Utterance.from_dict(utterances) for utterances in _dict["utterances"]
+                Utterance.from_dict(utterances)
+                for _, utterances in _dict["utterances"].items()
             ]
         if _dict["summary"] is not None:
             _dict["summary"] = Summary.from_dict(_dict["summary"])
