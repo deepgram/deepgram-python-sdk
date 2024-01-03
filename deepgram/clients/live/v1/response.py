@@ -18,6 +18,7 @@ class Word:
     end: Optional[float] = 0
     confidence: Optional[float] = 0
     punctuated_word: Optional[str] = ""
+    speaker: Optional[int] = 0
 
     def __getitem__(self, key):
         _dict = self.to_dict()
