@@ -93,7 +93,7 @@ class Key:
     def __getitem__(self, key):
         _dict = self.to_dict()
         if _dict["scopes"] is not None:
-            _dict["scopes"] = [str(scopes) for _, scopes in _dict["scopes"].items()]
+            _dict["scopes"] = [str(scopes) for scopes in _dict["scopes"]]
         return _dict[key]
 
 
@@ -138,7 +138,7 @@ class ScopesResponse:
     def __getitem__(self, key):
         _dict = self.to_dict()
         if _dict["scopes"] is not None:
-            _dict["scopes"] = [str(scopes) for _, scopes in _dict["scopes"].items()]
+            _dict["scopes"] = [str(scopes) for scopes in _dict["scopes"]]
         return _dict[key]
 
 
@@ -204,13 +204,11 @@ class Details:
     def __getitem__(self, key):
         _dict = self.to_dict()
         if _dict["models"] is not None:
-            _dict["models"] = [str(models) for _, models in _dict["models"].items()]
+            _dict["models"] = [str(models) for models in _dict["models"]]
         if _dict["tags"] is not None:
-            _dict["tags"] = [str(tags) for _, tags in _dict["tags"].items()]
+            _dict["tags"] = [str(tags) for tags in _dict["tags"]]
         if _dict["features"] is not None:
-            _dict["features"] = [
-                str(features) for _, features in _dict["features"].items()
-            ]
+            _dict["features"] = [str(features) for features in _dict["features"]]
         if _dict["config"] is not None:
             _dict["config"] = Config.from_dict(_dict["config"])
         return _dict[key]
@@ -348,7 +346,7 @@ class UsageFieldsResponse:
     def __getitem__(self, key):
         _dict = self.to_dict()
         if _dict["tags"] is not None:
-            _dict["tags"] = [str(tags) for _, tags in _dict["tags"].items()]
+            _dict["tags"] = [str(tags) for tags in _dict["tags"]]
         if _dict["models"] is not None:
             _dict["models"] = [
                 UsageModel.from_dict(models) for _, models in _dict["models"].items()
@@ -356,16 +354,12 @@ class UsageFieldsResponse:
         if _dict["processing_methods"] is not None:
             _dict["processing_methods"] = [
                 str(processing_methods)
-                for _, processing_methods in _dict["processing_methods"].items()
+                for processing_methods in _dict["processing_methods"]
             ]
         if _dict["features"] is not None:
-            _dict["features"] = [
-                str(features) for _, features in _dict["features"].items()
-            ]
+            _dict["features"] = [str(features) for features in _dict["features"]]
         if _dict["languages"] is not None:
-            _dict["languages"] = [
-                str(languages) for _, languages in _dict["languages"].items()
-            ]
+            _dict["languages"] = [str(languages) for languages in _dict["languages"]]
         return _dict[key]
 
 
