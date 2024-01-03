@@ -4,6 +4,10 @@
 
 from setuptools import setup, find_packages
 import os.path
+import sys
+
+if sys.version_info < (3, 10):
+    sys.exit("Sorry, Python < 3.10 is not supported")
 
 with open("README.md", "r", encoding="utf-8") as fh:
     LONG_DESCRIPTION = fh.read()
@@ -23,14 +27,13 @@ setup(
     license="MIT",
     packages=find_packages(),
     install_requires=[
-        "httpx",
-        "websockets",
-        "dataclasses-json",
-        "typing_extensions",
-        "python-dotenv",
-        "asyncio",
-        "aiohttp",
-        "verboselogs",
+        "httpx>=0.25.2",
+        "websockets>=12.0",
+        "dataclasses-json>=0.6.3",
+        "typing_extensions>=4.9.0",
+        "asyncio>=3.4.3",
+        "aiohttp>=3.9.1",
+        "verboselogs>=1.7",
     ],
     keywords=["deepgram", "deepgram speech-to-text"],
     classifiers=[
