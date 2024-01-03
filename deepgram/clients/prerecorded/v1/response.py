@@ -63,7 +63,7 @@ class Metadata:
     def __getitem__(self, key):
         _dict = self.to_dict()
         if _dict["models"] is not None:
-            _dict["models"] = [str(models) for _, models in _dict["models"].items()]
+            _dict["models"] = [str(models) for models in _dict["models"]]
         if _dict["model_info"] is not None:
             _dict["model_info"] = [
                 ModelInfo.from_dict(model_info)

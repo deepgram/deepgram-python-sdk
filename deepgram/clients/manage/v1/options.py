@@ -32,9 +32,9 @@ class KeyOptions:
     def __getitem__(self, key):
         _dict = self.to_dict()
         if _dict["scopes"] is not None:
-            _dict["scopes"] = [str(scopes) for _, scopes in _dict["scopes"].items()]
+            _dict["scopes"] = [str(scopes) for scopes in _dict["scopes"]]
         if _dict["tags"] is not None:
-            _dict["tags"] = [str(tags) for _, tags in _dict["tags"].items()]
+            _dict["tags"] = [str(tags) for tags in _dict["tags"]]
         return _dict[key]
 
 
