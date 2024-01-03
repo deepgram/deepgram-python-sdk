@@ -110,7 +110,7 @@ class AbstractSyncRestClient:
                 try:
                     json_object = json.loads(e.response.text)
                     raise DeepgramApiError(
-                        json_object.get("message"), status_code, json.dumps(json_object)
+                        json_object.get("err_msg"), status_code, json.dumps(json_object)
                     ) from e
                 except json.decoder.JSONDecodeError:
                     raise DeepgramUnknownApiError(e.response.text, status_code) from e
