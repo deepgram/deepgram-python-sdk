@@ -17,6 +17,7 @@ load_dotenv()
 
 AUDIO_FILE = "preamble.wav"
 
+
 def main():
     try:
         # STEP 1 Create a Deepgram client using the API key in the environment variables
@@ -41,11 +42,8 @@ def main():
             punctuate=True,
             diarize=True,
         )
-        file_response = deepgram.listen.prerecorded.v("1").transcribe_file(payload, options)
-
-        print(f"\n\n{file_response}\n\n")
-        json = file_response.to_json()
-        print(f"{json}\n")
+        response = deepgram.listen.prerecorded.v("1").transcribe_file(payload, options)
+        print(response.to_json(indent=4))
 
     except Exception as e:
         print(f"Exception: {e}")

@@ -36,7 +36,7 @@ async def transcribe_url():
 async def main():
     try:
         response = await transcribe_url()
-        print(response)
+        print(response.to_json(indent=4))
     except Exception as e:
         print(f"Exception: {e}")
 

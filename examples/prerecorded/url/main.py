@@ -14,6 +14,7 @@ AUDIO_URL = {
     "url": "https://static.deepgram.com/examples/Bueller-Life-moves-pretty-fast.wav"
 }
 
+
 def main():
     try:
         # STEP 1 Create a Deepgram client using the API key from environment variables
@@ -25,8 +26,8 @@ def main():
             smart_format=True,
             summarize="v2",
         )
-        url_response = deepgram.listen.prerecorded.v("1").transcribe_url(AUDIO_URL, options)
-        print(url_response)
+        response = deepgram.listen.prerecorded.v("1").transcribe_url(AUDIO_URL, options)
+        print(response.to_json(indent=4))
 
     except Exception as e:
         print(f"Exception: {e}")

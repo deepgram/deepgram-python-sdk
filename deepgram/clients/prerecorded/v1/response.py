@@ -80,31 +80,25 @@ class Metadata:
 
 @dataclass_json
 @dataclass
+class SummaryV1:
+    summary: Optional[str] = ""
+    start_word: Optional[float] = 0
+    end_word: Optional[float] = 0
+
+    def __getitem__(self, key):
+        _dict = self.to_dict()
+        return _dict[key]
+
+
+@dataclass_json
+@dataclass
+class Summaries(SummaryV1):  # internal reference to old name
+    pass
+
+
+@dataclass_json
+@dataclass
 class SummaryV2:
-    summary: Optional[str] = ""
-    start_word: Optional[float] = 0
-    end_word: Optional[float] = 0
-
-    def __getitem__(self, key):
-        _dict = self.to_dict()
-        return _dict[key]
-
-
-@dataclass_json
-@dataclass
-class Summaries(SummaryV2):  # internal reference to old name
-    summary: Optional[str] = ""
-    start_word: Optional[float] = 0
-    end_word: Optional[float] = 0
-
-    def __getitem__(self, key):
-        _dict = self.to_dict()
-        return _dict[key]
-
-
-@dataclass_json
-@dataclass
-class Summary:
     result: Optional[str] = ""
     short: Optional[str] = ""
 
@@ -115,13 +109,8 @@ class Summary:
 
 @dataclass_json
 @dataclass
-class Summary(Summary):  # internal reference to old name
-    result: Optional[str] = ""
-    short: Optional[str] = ""
-
-    def __getitem__(self, key):
-        _dict = self.to_dict()
-        return _dict[key]
+class Summary(SummaryV2):  # internal reference to old name
+    pass
 
 
 @dataclass_json
@@ -305,7 +294,7 @@ class Alternative:
     transcript: Optional[str] = ""
     confidence: Optional[float] = 0
     words: Optional[List[Word]] = None
-    summaries: Optional[List[SummaryV2]] = None
+    summaries: Optional[List[SummaryV1]] = None
     paragraphs: Optional[Paragraphs] = None
     entities: Optional[List[Entity]] = None
     translations: Optional[List[Translation]] = None
@@ -319,7 +308,7 @@ class Alternative:
             ]
         if _dict["summaries"] is not None:
             _dict["summaries"] = [
-                SummaryV2.from_dict(summaries)
+                SummaryV1.from_dict(summaries)
                 for _, summaries in _dict["summaries"].items()
             ]
         if _dict["paragraphs"] is not None:
@@ -346,6 +335,7 @@ class Channel:
     search: Optional[List[Search]] = None
     alternatives: Optional[List[Alternative]] = None
     detected_language: Optional[str] = ""
+    language_confidence: Optional[float] = 0
 
     def __getitem__(self, key):
         _dict = self.to_dict()
@@ -366,7 +356,7 @@ class Channel:
 class Result:
     channels: Optional[List[Channel]] = None
     utterances: Optional[List[Utterance]] = None
-    summary: Optional[Summary] = None
+    summary: Optional[SummaryV2] = None
 
     def __getitem__(self, key):
         _dict = self.to_dict()
@@ -380,7 +370,7 @@ class Result:
                 for _, utterances in _dict["utterances"].items()
             ]
         if _dict["summary"] is not None:
-            _dict["summary"] = Summary.from_dict(_dict["summary"])
+            _dict["summary"] = SummaryV2.from_dict(_dict["summary"])
         return _dict[key]
 
 
