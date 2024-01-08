@@ -130,10 +130,6 @@ class DeepgramClient:
     def __init__(
         self, api_key: str = "", config: Optional[DeepgramClientOptions] = None
     ):
-        verboselogs.install()
-        self.logger = logging.getLogger(__name__)
-        self.logger.addHandler(logging.StreamHandler())
-
         if not api_key:
             # Default to `None` for on-prem instances where an API key is not required
             api_key = os.getenv("DEEPGRAM_API_KEY", None)
@@ -146,8 +142,6 @@ class DeepgramClient:
         else:
             config.set_apikey(self.api_key)
             self.config = config
-
-        self.logger.setLevel(logging.SPAM)
 
     @property
     def listen(self):

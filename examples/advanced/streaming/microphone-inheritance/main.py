@@ -7,8 +7,7 @@ import logging, verboselogs
 from time import sleep
 
 from deepgram import (
-    DeepgramClient,
-    DeepgramClientOptions,
+    ClientOptionsFromEnv,
     LiveTranscriptionEvents,
     LiveClient,
     LiveOptions,
@@ -24,7 +23,7 @@ load_dotenv()
 
 # more complex example
 class MyLiveClient(LiveClient):
-    def __init__(self, config: DeepgramClientOptions):
+    def __init__(self, config: LiveClient):
         super().__init__(config)
         super().on(LiveTranscriptionEvents.Transcript, self.on_message)
         super().on(LiveTranscriptionEvents.Metadata, self.on_metadata)
@@ -65,14 +64,13 @@ class MyLiveClient(LiveClient):
 def main():
     try:
         # example of setting up a client config. logging values: WARNING, VERBOSE, DEBUG, SPAM
-        # config = DeepgramClientOptions(
+        # config = ClientOptionsFromEnv(
         #     verbose=logging.DEBUG,
         #     options={"keepalive": "true"}
         # )
-        # deepgram: DeepgramClient = DeepgramClient("", config)
+        # liveClient = MyLiveClient(config)
         # otherwise, use default config
-        deepgram = DeepgramClient()
-        liveClient = MyLiveClient(deepgram.config)
+        liveClient = MyLiveClient(ClientOptionsFromEnv())
 
         options = LiveOptions(
             punctuate=True,
