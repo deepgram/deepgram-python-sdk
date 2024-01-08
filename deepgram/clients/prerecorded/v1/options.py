@@ -16,8 +16,10 @@ class PrerecordedOptions:
     Reference:
     https://developers.deepgram.com/reference/pre-recorded
     """
+
     alternatives: Optional[int] = None
     callback: Optional[str] = None
+    callback_method: Optional[bool] = None
     detect_entities: Optional[bool] = None
     detect_language: Optional[bool] = None
     detect_topics: Optional[bool] = None
