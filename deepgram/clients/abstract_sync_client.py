@@ -31,7 +31,6 @@ class AbstractSyncRestClient:
     def __init__(self, config: DeepgramClientOptions):
         if config is None:
             raise DeepgramError("Config are required")
-
         self.config = config
 
     def get(self, url: str, options=None, addons=None, timeout=None, **kwargs):
@@ -97,7 +96,7 @@ class AbstractSyncRestClient:
             new_url = append_query_params(new_url, addons)
 
         if timeout is None:
-            timeout = httpx.Timeout(10.0, connect=10.0)
+            timeout = httpx.Timeout(30.0, connect=10.0)
 
         try:
             with httpx.Client(timeout=timeout) as client:

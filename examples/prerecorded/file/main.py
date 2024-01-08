@@ -5,6 +5,7 @@
 import os
 from dotenv import load_dotenv
 import logging, verboselogs
+from datetime import datetime, timedelta
 
 from deepgram import (
     DeepgramClientOptions,
@@ -42,8 +43,15 @@ def main():
             punctuate=True,
             diarize=True,
         )
+
+        before = datetime.now()
         response = deepgram.listen.prerecorded.v("1").transcribe_file(payload, options)
+        after = datetime.now()
+
         print(response.to_json(indent=4))
+        print("")
+        difference = after - before
+        print(f"time: {difference.seconds}")
 
     except Exception as e:
         print(f"Exception: {e}")
