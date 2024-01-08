@@ -5,6 +5,7 @@
 import httpx
 import json
 
+from .helpers import append_query_params
 from ..options import DeepgramClientOptions
 from .errors import DeepgramError, DeepgramApiError, DeepgramUnknownApiError
 from .helpers import append_query_params
@@ -20,6 +21,8 @@ class AbstractAsyncRestClient:
     Args:
         url (Dict[str, str]): The base URL for the RESTful API, including any path segments.
         headers (Optional[Dict[str, Any]]): Optional HTTP headers to include in requests.
+        params (Optional[Dict[str, Any]]): Optional query parameters to include in requests.
+        timeout (Optional[httpx.Timeout]): Optional timeout configuration for requests.
 
     Exceptions:
         DeepgramApiError: Raised for known API errors.
@@ -29,70 +32,80 @@ class AbstractAsyncRestClient:
     def __init__(self, config: DeepgramClientOptions):
         if config is None:
             raise DeepgramError("Config are required")
-
         self.config = config
-        self.client = httpx.AsyncClient()
 
-    async def get(self, url: str, options=None, addons=None, **kwargs):
+    async def get(self, url: str, options=None, addons=None, timeout=None, **kwargs):
         return await self._handle_request(
             "GET",
             url,
             params=options,
             addons=addons,
+            timeout=timeout,
             headers=self.config.headers,
             **kwargs
         )
 
-    async def post(self, url: str, options=None, addons=None, **kwargs):
+    async def post(self, url: str, options=None, addons=None, timeout=None, **kwargs):
         return await self._handle_request(
             "POST",
             url,
             params=options,
             addons=addons,
+            timeout=timeout,
             headers=self.config.headers,
             **kwargs
         )
 
-    async def put(self, url: str, options=None, addons=None, **kwargs):
+    async def put(self, url: str, options=None, addons=None, timeout=None, **kwargs):
         return await self._handle_request(
             "PUT",
             url,
             params=options,
             addons=addons,
+            timeout=timeout,
             headers=self.config.headers,
             **kwargs
         )
 
-    async def patch(self, url: str, options=None, addons=None, **kwargs):
+    async def patch(self, url: str, options=None, addons=None, timeout=None, **kwargs):
         return await self._handle_request(
             "PATCH",
             url,
             params=options,
             addons=addons,
+            timeout=timeout,
             headers=self.config.headers,
             **kwargs
         )
 
-    async def delete(self, url: str, options=None, addons=None, **kwargs):
+    async def delete(self, url: str, options=None, addons=None, timeout=None, **kwargs):
         return await self._handle_request(
             "DELETE",
             url,
             params=options,
             addons=addons,
+            timeout=timeout,
             headers=self.config.headers,
             **kwargs
         )
 
-    async def _handle_request(self, method, url, params, addons, headers, **kwargs):
+    async def _handle_request(
+        self, method, url, params, addons, timeout, headers, **kwargs
+    ):
         new_url = url
         if params is not None:
             new_url = append_query_params(new_url, params)
         if addons is not None:
             new_url = append_query_params(new_url, addons)
 
+        if timeout is None:
+            timeout = httpx.Timeout(30.0, connect=10.0)
+
         try:
-            with httpx.Client() as client:
-                response = client.request(method, new_url, headers=headers, **kwargs)
+            async with httpx.AsyncClient(timeout=timeout) as client:
+                response = await client.request(
+                    method, new_url, headers=headers, **kwargs
+                )
                 response.raise_for_status()
                 return response.text
         except httpx._exceptions.HTTPError as e:

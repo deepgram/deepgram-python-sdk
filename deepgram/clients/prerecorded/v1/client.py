@@ -56,7 +56,7 @@ class PreRecordedClient(AbstractSyncRestClient):
         if options is not None and options.callback is not None:
             self.logger.debug("PreRecordedClient.transcribe_url LEAVE")
             return self.transcribe_url_callback(
-                source, options["callback"], options, addons, endpoint
+                source, options["callback"], options, addons, timeout, endpoint
             )
 
         url = f"{self.config.url}/{endpoint}"
@@ -167,7 +167,7 @@ class PreRecordedClient(AbstractSyncRestClient):
         if options is not None and options.callback is not None:
             self.logger.debug("PreRecordedClient.transcribe_file LEAVE")
             return self.transcribe_file_callback(
-                source, options["callback"], options, addons, endpoint
+                source, options["callback"], options, addons, timeout, endpoint
             )
 
         url = f"{self.config.url}/{endpoint}"

@@ -2,6 +2,8 @@
 # Use of this source code is governed by a MIT license that can be found in the LICENSE file.
 # SPDX-License-Identifier: MIT
 
+import httpx
+import logging, verboselogs
 import json
 import logging, verboselogs
 
@@ -47,6 +49,7 @@ class AsyncPreRecordedClient(AbstractAsyncRestClient):
         source: UrlSource,
         options: PrerecordedOptions = None,
         addons: dict = None,
+        timeout: httpx.Timeout = None,
         endpoint: str = "v1/listen",
     ) -> PrerecordedResponse:
         self.logger.debug("PreRecordedClient.transcribe_url ENTER")
@@ -54,7 +57,7 @@ class AsyncPreRecordedClient(AbstractAsyncRestClient):
         if options is not None and options.callback is not None:
             self.logger.debug("PreRecordedClient.transcribe_url LEAVE")
             return await self.transcribe_url_callback(
-                source, options["callback"], options, addons, endpoint
+                source, options["callback"], options, addons, timeout, endpoint
             )
 
         url = f"{self.config.url}/{endpoint}"
@@ -72,7 +75,9 @@ class AsyncPreRecordedClient(AbstractAsyncRestClient):
             options = json.loads(options.to_json())
         self.logger.info("options: %s", options)
         self.logger.info("addons: %s", addons)
-        result = await self.post(url, options=options, addons=addons, json=body)
+        result = await self.post(
+            url, options=options, addons=addons, json=body, timeout=timeout
+        )
         self.logger.info("json: %s", result)
         res = PrerecordedResponse.from_json(result)
         self.logger.verbose("result: %s", res)
@@ -102,6 +107,7 @@ class AsyncPreRecordedClient(AbstractAsyncRestClient):
         callback: str,
         options: PrerecordedOptions = None,
         addons: dict = None,
+        timeout: httpx.Timeout = None,
         endpoint: str = "v1/listen",
     ) -> AsyncPrerecordedResponse:
         self.logger.debug("PreRecordedClient.transcribe_url_callback ENTER")
@@ -124,7 +130,9 @@ class AsyncPreRecordedClient(AbstractAsyncRestClient):
             options = json.loads(options.to_json())
         self.logger.info("options: %s", options)
         self.logger.info("addons: %s", addons)
-        result = await self.post(url, options=options, addons=addons, json=body)
+        result = await self.post(
+            url, options=options, addons=addons, json=body, timeout=timeout
+        )
         self.logger.info("json: %s", result)
         res = AsyncPrerecordedResponse.from_json(result)
         self.logger.verbose("result: %s", res)
@@ -152,6 +160,7 @@ class AsyncPreRecordedClient(AbstractAsyncRestClient):
         source: FileSource,
         options: PrerecordedOptions = None,
         addons: dict = None,
+        timeout: httpx.Timeout = None,
         endpoint: str = "v1/listen",
     ) -> PrerecordedResponse:
         self.logger.debug("PreRecordedClient.transcribe_file ENTER")
@@ -159,7 +168,7 @@ class AsyncPreRecordedClient(AbstractAsyncRestClient):
         if options is not None and options.callback is not None:
             self.logger.debug("PreRecordedClient.transcribe_file LEAVE")
             return await self.transcribe_file_callback(
-                source, options["callback"], options, addons, endpoint
+                source, options["callback"], options, addons, timeout, endpoint
             )
 
         url = f"{self.config.url}/{endpoint}"
@@ -178,7 +187,9 @@ class AsyncPreRecordedClient(AbstractAsyncRestClient):
             options = json.loads(options.to_json())
         self.logger.info("options: %s", options)
         self.logger.info("addons: %s", addons)
-        result = await self.post(url, options=options, addons=addons, content=body)
+        result = await self.post(
+            url, options=options, addons=addons, content=body, timeout=timeout
+        )
         self.logger.info("json: %s", result)
         res = PrerecordedResponse.from_json(result)
         self.logger.verbose("result: %s", res)
@@ -208,6 +219,7 @@ class AsyncPreRecordedClient(AbstractAsyncRestClient):
         callback: str,
         options: PrerecordedOptions = None,
         addons: dict = None,
+        timeout: httpx.Timeout = None,
         endpoint: str = "v1/listen",
     ) -> AsyncPrerecordedResponse:
         self.logger.debug("PreRecordedClient.transcribe_file_callback ENTER")
@@ -231,7 +243,9 @@ class AsyncPreRecordedClient(AbstractAsyncRestClient):
             options = json.loads(options.to_json())
         self.logger.info("options: %s", options)
         self.logger.info("addons: %s", addons)
-        result = await self.post(url, options=options, addons=addons, json=body)
+        result = await self.post(
+            url, options=options, addons=addons, json=body, timeout=timeout
+        )
         self.logger.info("json: %s", result)
         res = AsyncPrerecordedResponse.from_json(result)
         self.logger.verbose("result: %s", res)
