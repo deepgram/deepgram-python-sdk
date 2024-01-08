@@ -4,7 +4,9 @@
 
 import logging, verboselogs
 from typing import Dict, Optional
+from .errors import DeepgramApiKeyError
 import re
+import os
 
 
 class DeepgramClientOptions:
@@ -19,7 +21,7 @@ class DeepgramClientOptions:
         url: (Optional) The URL used to interact with production, On-prem, and other Deepgram environments. Defaults to `api.deepgram.com`.
         headers: (Optional) Headers for initializing the client.
         options: (Optional) Additional options for initializing the client.
-        """
+    """
 
     def __init__(
         self,
@@ -29,6 +31,10 @@ class DeepgramClientOptions:
         headers: Dict[str, str] = None,
         options: Dict[str, str] = None,
     ):
+        verboselogs.install()
+        self.logger = logging.getLogger(__name__)
+        self.logger.addHandler(logging.StreamHandler())
+
         self.verbose = verbose
         self.api_key = api_key
         self._update_headers(headers=headers)
@@ -59,3 +65,23 @@ class DeepgramClientOptions:
         # Overwrite / add any headers that were passed in
         if headers:
             self.headers.update(headers)
+
+
+class ClientOptionsFromEnv(DeepgramClientOptions):
+    def __init__(
+        self,
+        verbose: int = logging.WARNING,
+        headers: Dict[str, str] = None,
+        options: Dict[str, str] = None,
+    ):
+        apiKey = os.getenv("DEEPGRAM_API_KEY", None)
+        if apiKey is None:
+            raise DeepgramApiKeyError("Deepgram API KEY is not set")
+
+        url = os.getenv("DEEPGRAM_URL", None)
+        if url is None:
+            url = "api.deepgram.com"
+
+        super().__init__(
+            api_key=apiKey, url=url, verbose=verbose, headers=headers, options=options
+        )
