@@ -11,6 +11,8 @@ from deepgram import DeepgramClient, LiveTranscriptionEvents, LiveOptions
 
 load_dotenv()
 
+API_KEY = os.getenv("DG_API_KEY")
+
 options = LiveOptions(
     model="nova",
     interim_results=False,
@@ -22,7 +24,7 @@ URL = "http://stream.live.vc.bbcmedia.co.uk/bbc_world_service"
 
 
 async def main():
-    deepgram = DeepgramClient()
+    deepgram = DeepgramClient(API_KEY)
 
     # Create a websocket connection to Deepgram
     try:

@@ -77,7 +77,7 @@ from .clients import (
 from .clients.onprem.client import OnPremClient
 from .clients.onprem.v1.async_client import AsyncOnPremClient
 
-from .options import DeepgramClientOptions
+from .options import DeepgramClientOptions, ClientOptionsFromEnv
 from .errors import DeepgramApiKeyError, DeepgramModuleError
 
 
@@ -128,8 +128,16 @@ class DeepgramClient:
     """
 
     def __init__(
-        self, api_key: str = "", config: Optional[DeepgramClientOptions] = None
+        self,
+        api_key: str = "",
+        config: Optional[DeepgramClientOptions] = None,
     ):
+        verboselogs.install()
+        self.logger = logging.getLogger(__name__)
+        self.logger.addHandler(logging.StreamHandler())
+
+        if config is not None:
+            api_key = config.api_key
         if not api_key:
             # Default to `None` for on-prem instances where an API key is not required
             api_key = os.getenv("DEEPGRAM_API_KEY", None)

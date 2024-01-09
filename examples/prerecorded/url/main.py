@@ -6,7 +6,11 @@ import os
 from dotenv import load_dotenv
 import logging, verboselogs
 
-from deepgram import DeepgramClient, DeepgramClientOptions, PrerecordedOptions
+from deepgram import (
+    DeepgramClient,
+    ClientOptionsFromEnv,
+    PrerecordedOptions,
+)
 
 load_dotenv()
 
@@ -18,7 +22,7 @@ AUDIO_URL = {
 def main():
     try:
         # STEP 1 Create a Deepgram client using the API key from environment variables
-        deepgram = DeepgramClient()
+        deepgram = DeepgramClient("", ClientOptionsFromEnv())
 
         # STEP 2 Call the transcribe_url method on the prerecorded class
         options = PrerecordedOptions(
