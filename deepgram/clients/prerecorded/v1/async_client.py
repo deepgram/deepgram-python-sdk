@@ -1,4 +1,4 @@
-# Copyright 2023 Deepgram SDK contributors. All Rights Reserved.
+# Copyright 2023-2024 Deepgram SDK contributors. All Rights Reserved.
 # Use of this source code is governed by a MIT license that can be found in the LICENSE file.
 # SPDX-License-Identifier: MIT
 
@@ -8,7 +8,7 @@ import json
 import logging, verboselogs
 
 from ...abstract_async_client import AbstractAsyncRestClient
-from ..errors import DeepgramTypeError
+from ..errors import DeepgramError, DeepgramTypeError
 from ..helpers import is_buffer_source, is_readstream_source, is_url_source
 from ..source import UrlSource, FileSource
 
@@ -68,6 +68,11 @@ class AsyncPreRecordedClient(AbstractAsyncRestClient):
             self.logger.debug("PreRecordedClient.transcribe_url LEAVE")
             raise DeepgramTypeError("Unknown transcription source type")
 
+        if options is not None and not options.check():
+            self.logger.error("options.check failed")
+            self.logger.debug("PreRecordedClient.transcribe_url LEAVE")
+            raise DeepgramError("Fatal transcription options error")
+
         self.logger.info("url: %s", url)
         self.logger.info("source: %s", source)
         if isinstance(options, PrerecordedOptions):
@@ -122,6 +127,11 @@ class AsyncPreRecordedClient(AbstractAsyncRestClient):
             self.logger.error("Unknown transcription source type")
             self.logger.debug("PreRecordedClient.transcribe_url_callback LEAVE")
             raise DeepgramTypeError("Unknown transcription source type")
+
+        if options is not None and not options.check():
+            self.logger.error("options.check failed")
+            self.logger.debug("PreRecordedClient.transcribe_url_callback LEAVE")
+            raise DeepgramError("Fatal transcription options error")
 
         self.logger.info("url: %s", url)
         self.logger.info("source: %s", source)
@@ -181,6 +191,11 @@ class AsyncPreRecordedClient(AbstractAsyncRestClient):
             self.logger.debug("PreRecordedClient.transcribe_file LEAVE")
             raise DeepgramTypeError("Unknown transcription source type")
 
+        if options is not None and not options.check():
+            self.logger.error("options.check failed")
+            self.logger.debug("PreRecordedClient.transcribe_file LEAVE")
+            raise DeepgramError("Fatal transcription options error")
+
         self.logger.info("url: %s", url)
         if isinstance(options, PrerecordedOptions):
             self.logger.info("PrerecordedOptions switching class -> json")
@@ -236,6 +251,11 @@ class AsyncPreRecordedClient(AbstractAsyncRestClient):
             self.logger.error("Unknown transcription source type")
             self.logger.debug("PreRecordedClient.transcribe_file_callback LEAVE")
             raise DeepgramTypeError("Unknown transcription source type")
+
+        if options is not None and not options.check():
+            self.logger.error("options.check failed")
+            self.logger.debug("PreRecordedClient.transcribe_file_callback LEAVE")
+            raise DeepgramError("Fatal transcription options error")
 
         self.logger.info("url: %s", url)
         if isinstance(options, PrerecordedOptions):

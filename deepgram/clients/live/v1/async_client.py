@@ -1,4 +1,4 @@
-# Copyright 2023 Deepgram SDK contributors. All Rights Reserved.
+# Copyright 2023-2024 Deepgram SDK contributors. All Rights Reserved.
 # Use of this source code is governed by a MIT license that can be found in the LICENSE file.
 # SPDX-License-Identifier: MIT
 import asyncio
@@ -49,6 +49,11 @@ class AsyncLiveClient:
         self.logger.info("kwargs: %s", options)
         self.logger.info("addons: %s", addons)
         self.logger.info("options: %s", kwargs)
+
+        if options is not None and not options.check():
+            self.logger.error("options.check failed")
+            self.logger.debug("AsyncLiveClient.start LEAVE")
+            raise DeepgramError("Fatal transcription options error")
 
         self.options = options
         if addons is not None:
