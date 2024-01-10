@@ -8,8 +8,8 @@ import logging, verboselogs
 from datetime import datetime, timedelta
 
 from deepgram import (
-    DeepgramClientOptions,
     DeepgramClient,
+    DeepgramClientOptions,
     PrerecordedOptions,
     FileSource,
 )
@@ -22,11 +22,11 @@ AUDIO_FILE = "preamble.wav"
 def main():
     try:
         # STEP 1 Create a Deepgram client using the API key in the environment variables
-        config: DeepgramClientOptions = DeepgramClientOptions(
+        config = DeepgramClientOptions(
             verbose=logging.SPAM,
         )
 
-        deepgram: DeepgramClient = DeepgramClient("", config)
+        deepgram = DeepgramClient("", config)
 
         # STEP 2 Call the transcribe_file method on the prerecorded class
         with open(AUDIO_FILE, "rb") as file:
