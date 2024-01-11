@@ -5,12 +5,12 @@
 import httpx
 import logging, verboselogs
 import json
-import logging, verboselogs
 
 from ...abstract_async_client import AbstractAsyncRestClient
 from ..errors import DeepgramError, DeepgramTypeError
 from ..helpers import is_buffer_source, is_readstream_source, is_url_source
 from ..source import UrlSource, FileSource
+from ..enums import Sentiment
 
 from .options import PrerecordedOptions
 from .response import AsyncPrerecordedResponse, PrerecordedResponse

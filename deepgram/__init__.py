@@ -11,7 +11,7 @@ from .options import DeepgramClientOptions, ClientOptionsFromEnv
 import logging, verboselogs
 
 # listen client
-from .client import ListenClient
+from .client import Listen, Read
 
 # live
 from .client import LiveTranscriptionEvents
@@ -33,10 +33,29 @@ from .client import (
     BufferSource,
     ReadStreamSource,
     PrerecordedOptions,
+    Sentiment,
 )
 from .client import (
     AsyncPrerecordedResponse,
     PrerecordedResponse,
+    SyncPrerecordedResponse,
+)
+
+# read
+from .client import AnalyzeClient, AsyncAnalyzeClient
+from .client import (
+    AnalyzeSource,
+    TextSource,
+    UrlSource,
+    BufferSource,
+    AnalyzeStreamSource,
+    AnalyzeOptions,
+    Sentiment,
+)
+from .client import (
+    AsyncAnalyzeResponse,
+    AnalyzeResponse,
+    SyncAnalyzeResponse,
 )
 
 # manage

@@ -9,7 +9,9 @@ from .source import PrerecordedSource, FileSource, UrlSource
 from .v1.response import (
     AsyncPrerecordedResponse as AsyncPrerecordedResponseLatest,
     PrerecordedResponse as PrerecordedResponseLatest,
+    SyncPrerecordedResponse as SyncPrerecordedResponseLatest,
 )
+from .enums import Sentiment
 
 """
 The client.py points to the current supported version in the SDK.
@@ -36,6 +38,14 @@ class AsyncPrerecordedResponse(AsyncPrerecordedResponseLatest):
 
 
 class PrerecordedResponse(PrerecordedResponseLatest):
+    """
+    Please see PrerecordedResponseLatest for details
+    """
+
+    pass
+
+
+class SyncPrerecordedResponse(PrerecordedResponseLatest):
     """
     Please see PrerecordedResponseLatest for details
     """

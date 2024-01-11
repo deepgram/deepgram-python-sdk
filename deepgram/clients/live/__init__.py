@@ -4,12 +4,13 @@
 
 from .client import LiveClient
 from .client import AsyncLiveClient
-from .v1.options import LiveOptions
-from .enums import LiveTranscriptionEvents
-from ...options import DeepgramClientOptions
+from .client import LiveOptions
+from .client import LiveTranscriptionEvents
 from .client import (
     LiveResultResponse,
     MetadataResponse,
     UtteranceEndResponse,
     ErrorResponse,
 )
+
+from ...options import DeepgramClientOptions

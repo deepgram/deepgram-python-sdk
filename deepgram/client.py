@@ -8,7 +8,7 @@ import logging, verboselogs
 import os
 
 # listen client
-from .clients import ListenClient
+from .clients import Listen, Read
 
 # live
 from .clients import LiveClient, AsyncLiveClient
@@ -34,12 +34,33 @@ from .clients import (
     BufferSource,
     ReadStreamSource,
     PrerecordedOptions,
+    Sentiment,
 )
 
 # prerecorded client responses
 from .clients import (
     AsyncPrerecordedResponse,
     PrerecordedResponse,
+    SyncPrerecordedResponse,
+)
+
+# analyze
+from .clients import AnalyzeClient, AsyncAnalyzeClient
+from .clients import (
+    AnalyzeSource,
+    TextSource,
+    UrlSource,
+    BufferSource,
+    AnalyzeStreamSource,
+    AnalyzeOptions,
+    Sentiment,
+)
+
+# read client responses
+from .clients import (
+    AsyncAnalyzeResponse,
+    AnalyzeResponse,
+    SyncAnalyzeResponse,
 )
 
 # manage client classes/input
@@ -153,7 +174,11 @@ class DeepgramClient:
 
     @property
     def listen(self):
-        return ListenClient(self.config)
+        return Listen(self.config)
+
+    @property
+    def read(self):
+        return Read(self.config)
 
     @property
     def manage(self):

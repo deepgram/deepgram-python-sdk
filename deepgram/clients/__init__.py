@@ -3,7 +3,8 @@
 # SPDX-License-Identifier: MIT
 
 # listen
-from .listen import ListenClient
+from .listen import Listen
+from .read import Read
 
 # live
 from .live import LiveClient, AsyncLiveClient
@@ -19,6 +20,7 @@ from .live import (
 # prerecorded
 from .prerecorded import PreRecordedClient, AsyncPreRecordedClient
 from .prerecorded import PrerecordedOptions
+from .prerecorded import Sentiment
 from .prerecorded import (
     PrerecordedSource,
     FileSource,
@@ -29,6 +31,24 @@ from .prerecorded import (
 from .prerecorded import (
     AsyncPrerecordedResponse,
     PrerecordedResponse,
+    SyncPrerecordedResponse,
+)
+
+# analyze
+from .analyze import AnalyzeClient, AsyncAnalyzeClient
+from .analyze import AnalyzeOptions
+from .analyze import Sentiment
+from .analyze import (
+    AnalyzeSource,
+    TextSource,
+    UrlSource,
+    BufferSource,
+    AnalyzeStreamSource,
+)
+from .analyze import (
+    AsyncAnalyzeResponse,
+    AnalyzeResponse,
+    SyncAnalyzeResponse,
 )
 
 # manage
