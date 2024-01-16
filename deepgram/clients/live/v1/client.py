@@ -3,6 +3,7 @@
 # SPDX-License-Identifier: MIT
 import json
 from websockets.sync.client import connect
+import websockets
 import threading
 import time
 import logging, verboselogs
@@ -191,7 +192,7 @@ class LiveClient:
                             data,
                         )
 
-            except Exception as e:
+            except websockets.exceptions.ConnectionClosedOK as e:
                 if e.code == 1000:
                     self.logger.notice("_listening(1000) exiting gracefully")
                     self.logger.debug("LiveClient._listening LEAVE")
