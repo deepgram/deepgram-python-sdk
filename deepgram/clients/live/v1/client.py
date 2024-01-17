@@ -3,6 +3,7 @@
 # SPDX-License-Identifier: MIT
 import json
 from websockets.sync.client import connect
+import websockets
 import threading
 import time
 import logging, verboselogs
@@ -191,12 +192,24 @@ class LiveClient:
                             data,
                         )
 
-            except Exception as e:
+            except websockets.exceptions.ConnectionClosedOK as e:
                 if e.code == 1000:
                     self.logger.notice("_listening(1000) exiting gracefully")
                     self.logger.debug("LiveClient._listening LEAVE")
                     return
+                else:
+                    error: ErrorResponse = {
+                    "type": "Exception",
+                    "description": "Unknown error _listening",
+                    "message": f"{e}",
+                    "variant": "",
+                }
+                    self.logger.error(f"WebSocket connection closed with code {e.code}: {e.reason}")
+                    self._emit(LiveTranscriptionEvents.Error, error)
+                    self.logger.debug("LiveClient._listening LEAVE")
+                    raise
 
+            except Exception as e:
                 error: ErrorResponse = {
                     "type": "Exception",
                     "description": "Unknown error _listening",
@@ -204,9 +217,9 @@ class LiveClient:
                     "variant": "",
                 }
                 self._emit(LiveTranscriptionEvents.Error, error)
-
                 self.logger.error("Exception in _listening: %s", str(e))
                 self.logger.debug("LiveClient._listening LEAVE")
+                raise
 
     def _processing(self) -> None:
         self.logger.debug("LiveClient._processing ENTER")
