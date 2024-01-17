@@ -240,16 +240,6 @@ class TokenDetail:
         _dict = self.to_dict()
         return _dict[key]
     
-@dataclass
-@dataclass_json
-class Request:
-    ProjectUUID: Optional[str] = ""
-
-    def __getitem__(self, key):
-        _dict = self.to_dict()
-        return _dict[key]
-
-
 @dataclass_json
 @dataclass
 class Response:
@@ -272,6 +262,7 @@ class Response:
 @dataclass_json
 @dataclass
 class UsageRequest:
+    ProjectUUID: Optional[str] = ""
     request_id: Optional[str] = ""
     created: Optional[str] = ""
     path: Optional[str] = ""
