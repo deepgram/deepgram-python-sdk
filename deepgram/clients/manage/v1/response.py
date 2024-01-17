@@ -253,7 +253,7 @@ class Response:
         if _dict["details"] is not None:
             _dict["details"] = Details.from_dict(_dict["details"])
         if _dict["token_details"] is not None:
-            _dict["details"] = [
+            _dict["token_details"] = [
                 TokenDetail.from_dict(token_details) for _, token_details in _dict["token_details"].items()
             ]
         return _dict[key]
@@ -262,7 +262,7 @@ class Response:
 @dataclass_json
 @dataclass
 class UsageRequest:
-    ProjectUUID: Optional[str] = ""
+    project_uuid: Optional[str] = ""
     request_id: Optional[str] = ""
     created: Optional[str] = ""
     path: Optional[str] = ""
