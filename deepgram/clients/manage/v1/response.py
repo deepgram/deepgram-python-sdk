@@ -6,7 +6,6 @@ from dataclasses import dataclass
 from dataclasses_json import dataclass_json
 from datetime import datetime
 from typing import TypedDict, List, Optional
-from enum import Enum
 
 
 # Result Message
