@@ -181,11 +181,12 @@ class Config:
     punctuate: Optional[bool] = False
     utterances: Optional[bool] = False
     diarize: Optional[bool] = False
+    smart_format: Optional[bool] = False
+    interim_results: Optional[bool] = False
 
     def __getitem__(self, key):
         _dict = self.to_dict()
         return _dict[key]
-
 
 @dataclass_json
 @dataclass
@@ -200,6 +201,8 @@ class Details:
     tags: Optional[List[str]] = None
     features: Optional[List[str]] = None
     config: Optional[Config] = None
+    tier: Optional[str] = ""
+
 
     def __getitem__(self, key):
         _dict = self.to_dict()
@@ -225,24 +228,41 @@ class Callback:
         _dict = self.to_dict()
         return _dict[key]
 
+@dataclass_json
+@dataclass
+class TokenDetail:
+    feature: Optional[str] = ""
+    input: Optional[int] = 0
+    model: Optional[str] = ""
+    output: Optional[int] = 0
 
+    def __getitem__(self, key):
+        _dict = self.to_dict()
+        return _dict[key]
+    
 @dataclass_json
 @dataclass
 class Response:
     code: Optional[int] = 0
     completed: Optional[str] = ""
     details: Optional[Details] = None
+    token_details: Optional[List[TokenDetail]] = None
 
     def __getitem__(self, key):
         _dict = self.to_dict()
         if _dict["details"] is not None:
             _dict["details"] = Details.from_dict(_dict["details"])
+        if _dict["token_details"] is not None:
+            _dict["token_details"] = [
+                TokenDetail.from_dict(token_details) for _, token_details in _dict["token_details"].items()
+            ]
         return _dict[key]
 
 
 @dataclass_json
 @dataclass
 class UsageRequest:
+    project_uuid: Optional[str] = ""
     request_id: Optional[str] = ""
     created: Optional[str] = ""
     path: Optional[str] = ""
@@ -276,6 +296,13 @@ class UsageRequestsResponse:
             ]
         return _dict[key]
 
+class Tokens:
+    tokens_in: Optional[int] = 0
+    out: Optional[int] = 0
+
+    def __getitem__(self, key):
+        _dict = self.to_dict()
+        return _dict[key]
 
 @dataclass_json
 @dataclass
@@ -285,9 +312,14 @@ class Results:
     hours: Optional[int] = 0
     total_hours: Optional[int] = 0
     requests: Optional[int] = 0
+    tokens: Optional[Tokens] = None
 
     def __getitem__(self, key):
         _dict = self.to_dict()
+        if _dict["tokens"] is not None:
+            _dict["tokens"] = [
+                Tokens.from_dict(tokens) for _, tokens in _dict["tokens"].items()
+            ]
         return _dict[key]
 
 
