@@ -6,6 +6,7 @@ from dataclasses import dataclass
 from dataclasses_json import dataclass_json
 from datetime import datetime
 from typing import TypedDict, List, Optional
+from enum import Enum
 
 
 # Result Message
@@ -181,11 +182,18 @@ class Config:
     punctuate: Optional[bool] = False
     utterances: Optional[bool] = False
     diarize: Optional[bool] = False
+    smart_format: Optional[bool] = False
+    interim_results: Optional[bool] = False
 
     def __getitem__(self, key):
         _dict = self.to_dict()
         return _dict[key]
 
+@dataclass_json
+@dataclass
+class Tier(Enum):
+    BASE = "base"
+    NOVA = "nova"
 
 @dataclass_json
 @dataclass
@@ -200,6 +208,8 @@ class Details:
     tags: Optional[List[str]] = None
     features: Optional[List[str]] = None
     config: Optional[Config] = None
+    tier: Optional[Tier] = None
+
 
     def __getitem__(self, key):
         _dict = self.to_dict()
@@ -225,6 +235,17 @@ class Callback:
         _dict = self.to_dict()
         return _dict[key]
 
+@dataclass_json
+@dataclass
+class TokenDetail:
+    feature: Optional[str] = ""
+    input: Optional[int] = 0
+    model: Optional[str] = ""
+    output: Optional[int] = 0
+
+    def __getitem__(self, key):
+        _dict = self.to_dict()
+        return _dict[key]
 
 @dataclass_json
 @dataclass
@@ -232,6 +253,7 @@ class Response:
     code: Optional[int] = 0
     completed: Optional[str] = ""
     details: Optional[Details] = None
+    token_details: Optional[List[TokenDetail]]
 
     def __getitem__(self, key):
         _dict = self.to_dict()
@@ -276,6 +298,13 @@ class UsageRequestsResponse:
             ]
         return _dict[key]
 
+class Tokens:
+    tokens_in: Optional[int] = 0
+    out: Optional[int] = 0
+
+    def __getitem__(self, key):
+        _dict = self.to_dict()
+        return _dict[key]
 
 @dataclass_json
 @dataclass
@@ -285,6 +314,7 @@ class Results:
     hours: Optional[int] = 0
     total_hours: Optional[int] = 0
     requests: Optional[int] = 0
+    tokens: Optional[Tokens] = None
 
     def __getitem__(self, key):
         _dict = self.to_dict()
