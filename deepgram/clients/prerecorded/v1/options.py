@@ -21,6 +21,10 @@ class PrerecordedOptions:
     alternatives: Optional[int] = None
     callback: Optional[str] = None
     callback_method: Optional[str] = None
+    custom_intent: Optional[Union[list, str]] = None
+    custom_intent_mode: Optional[str] = None
+    custom_topics: Optional[Union[list, str]] = None
+    custom_topic_mode: Optional[str] = None
     detect_entities: Optional[bool] = None
     detect_language: Optional[bool] = None
     detect_topics: Optional[bool] = None
@@ -29,6 +33,7 @@ class PrerecordedOptions:
     dictation: Optional[bool] = None
     extra: Optional[str] = None
     filler_words: Optional[bool] = None
+    intents: Optional[bool] = None
     keywords: Optional[Union[list, str]] = None
     language: Optional[str] = None
     measurements: Optional[bool] = None
@@ -41,10 +46,12 @@ class PrerecordedOptions:
     redact: Optional[Union[List[str], bool, str]] = None
     replace: Optional[Union[list, str]] = None
     search: Optional[Union[list, str]] = None
+    sentiment: Optional[bool] = None
     smart_format: Optional[bool] = None
     summarize: Optional[Union[bool, str]] = None
     tag: Optional[list] = None
     tier: Optional[str] = None
+    topics: Optional[bool] = None
     utt_split: Optional[int] = None
     utterances: Optional[bool] = None
     version: Optional[str] = None

@@ -1,4 +1,4 @@
-# Copyright 2023-2024 Deepgram SDK contributors. All Rights Reserved.
+# Copyright 2024 Deepgram SDK contributors. All Rights Reserved.
 # Use of this source code is governed by a MIT license that can be found in the LICENSE file.
 # SPDX-License-Identifier: MIT
 
@@ -9,17 +9,17 @@ import json
 from ...abstract_sync_client import AbstractSyncRestClient
 from ..errors import DeepgramError, DeepgramTypeError
 from ..helpers import is_buffer_source, is_readstream_source, is_url_source
-from ..source import UrlSource, FileSource
+from ..source import UrlSource, TextSource
 from ..enums import Sentiment
 
-from .options import PrerecordedOptions
-from .response import AsyncPrerecordedResponse, PrerecordedResponse
+from .options import AnalyzeOptions
+from .response import AsyncAnalyzeResponse, AnalyzeResponse
 
 
-class PreRecordedClient(AbstractSyncRestClient):
+class AnalyzeClient(AbstractSyncRestClient):
     """
-    A client class for handling pre-recorded audio data.
-    Provides methods for transcribing audio from URLs and files.
+    A client class for handling text data.
+    Provides methods for transcribing text from URLs, files, etc.
     """
 
     def __init__(self, config):
@@ -30,33 +30,33 @@ class PreRecordedClient(AbstractSyncRestClient):
         super().__init__(config)
 
     """
-    Transcribes audio from a URL source.
+    Analyze text from a URL source.
 
     Args:
-        source (UrlSource): The URL source of the audio to transcribe.
-        options (PrerecordedOptions): Additional options for the transcription (default is None).
-        endpoint (str): The API endpoint for the transcription (default is "v1/listen").
+        source (UrlSource): The URL source of the text to ingest.
+        options (AnalyzeOptions): Additional options for the ingest (default is None).
+        endpoint (str): The API endpoint for the ingest (default is "v1/read").
 
     Returns:
-        PrerecordedResponse: An object containing the transcription result.
+        AnalyzeResponse: An object containing the result.
 
     Raises:
         DeepgramTypeError: Raised for known API errors.
     """
 
-    def transcribe_url(
+    def analyze_url(
         self,
         source: UrlSource,
-        options: PrerecordedOptions = None,
+        options: AnalyzeOptions = None,
         addons: dict = None,
         timeout: httpx.Timeout = None,
-        endpoint: str = "v1/listen",
-    ) -> PrerecordedResponse:
-        self.logger.debug("PreRecordedClient.transcribe_url ENTER")
+        endpoint: str = "v1/read",
+    ) -> AnalyzeResponse:
+        self.logger.debug("AnalyzeClient.analyze_url ENTER")
 
         if options is not None and options.callback is not None:
-            self.logger.debug("PreRecordedClient.transcribe_url LEAVE")
-            return self.transcribe_url_callback(
+            self.logger.debug("AnalyzeClient.analyze_url LEAVE")
+            return self.analyze_url_callback(
                 source, options["callback"], options, addons, timeout, endpoint
             )
 
@@ -65,18 +65,18 @@ class PreRecordedClient(AbstractSyncRestClient):
             body = source
         else:
             self.logger.error("Unknown transcription source type")
-            self.logger.debug("PreRecordedClient.transcribe_url LEAVE")
+            self.logger.debug("AnalyzeClient.analyze_url LEAVE")
             raise DeepgramTypeError("Unknown transcription source type")
 
         if options is not None and not options.check():
             self.logger.error("options.check failed")
-            self.logger.debug("PreRecordedClient.transcribe_url LEAVE")
+            self.logger.debug("AnalyzeClient.analyze_url LEAVE")
             raise DeepgramError("Fatal transcription options error")
 
         self.logger.info("url: %s", url)
         self.logger.info("source: %s", source)
-        if isinstance(options, PrerecordedOptions):
-            self.logger.info("PrerecordedOptions switching class -> json")
+        if isinstance(options, AnalyzeOptions):
+            self.logger.info("AnalyzeOptions switching class -> json")
             options = json.loads(options.to_json())
         self.logger.info("options: %s", options)
         self.logger.info("addons: %s", addons)
@@ -84,10 +84,10 @@ class PreRecordedClient(AbstractSyncRestClient):
             url, options=options, addons=addons, json=body, timeout=timeout
         )
         self.logger.info("json: %s", result)
-        res = PrerecordedResponse.from_json(result)
+        res = AnalyzeResponse.from_json(result)
         self.logger.verbose("result: %s", res)
-        self.logger.notice("transcribe_url succeeded")
-        self.logger.debug("PreRecordedClient.transcribe_url LEAVE")
+        self.logger.notice("analyze_url succeeded")
+        self.logger.debug("AnalyzeClient.analyze_url LEAVE")
         return res
 
     """
@@ -96,26 +96,26 @@ class PreRecordedClient(AbstractSyncRestClient):
     Args:
         source (UrlSource): The URL source of the audio to transcribe.
         callback (str): The callback URL where the transcription results will be sent.
-        options (PrerecordedOptions): Additional options for the transcription (default is None).
-        endpoint (str): The API endpoint for the transcription (default is "v1/listen").
+        options (AnalyzeOptions): Additional options for the transcription (default is None).
+        endpoint (str): The API endpoint for the transcription (default is "v1/read").
 
     Returns:
-        AsyncPrerecordedResponse: An object containing the request_id or an error message.
+        AsyncAnalyzeResponse: An object containing the request_id or an error message.
 
     Raises:
         DeepgramTypeError: Raised for known API errors.
     """
 
-    def transcribe_url_callback(
+    def analyze_url_callback(
         self,
         source: UrlSource,
         callback: str,
-        options: PrerecordedOptions = None,
+        options: AnalyzeOptions = None,
         addons: dict = None,
         timeout: httpx.Timeout = None,
-        endpoint: str = "v1/listen",
-    ) -> AsyncPrerecordedResponse:
-        self.logger.debug("PreRecordedClient.transcribe_url_callback ENTER")
+        endpoint: str = "v1/read",
+    ) -> AsyncAnalyzeResponse:
+        self.logger.debug("AnalyzeClient.analyze_url_callback ENTER")
 
         url = f"{self.config.url}/{endpoint}"
         if options is None:
@@ -125,18 +125,18 @@ class PreRecordedClient(AbstractSyncRestClient):
             body = source
         else:
             self.logger.error("Unknown transcription source type")
-            self.logger.debug("PreRecordedClient.transcribe_url_callback LEAVE")
+            self.logger.debug("AnalyzeClient.analyze_url_callback LEAVE")
             raise DeepgramTypeError("Unknown transcription source type")
 
         if options is not None and not options.check():
             self.logger.error("options.check failed")
-            self.logger.debug("PreRecordedClient.transcribe_url_callback LEAVE")
+            self.logger.debug("AnalyzeClient.analyze_url_callback LEAVE")
             raise DeepgramError("Fatal transcription options error")
 
         self.logger.info("url: %s", url)
         self.logger.info("source: %s", source)
-        if isinstance(options, PrerecordedOptions):
-            self.logger.info("PrerecordedOptions switching class -> json")
+        if isinstance(options, AnalyzeOptions):
+            self.logger.info("AnalyzeOptions switching class -> json")
             options = json.loads(options.to_json())
         self.logger.info("options: %s", options)
         self.logger.info("addons: %s", addons)
@@ -144,40 +144,40 @@ class PreRecordedClient(AbstractSyncRestClient):
             url, options=options, addons=addons, json=body, timeout=timeout
         )
         self.logger.info("json: %s", result)
-        res = AsyncPrerecordedResponse.from_json(result)
+        res = AsyncAnalyzeResponse.from_json(result)
         self.logger.verbose("result: %s", res)
-        self.logger.notice("transcribe_url_callback succeeded")
-        self.logger.debug("PreRecordedClient.transcribe_url_callback LEAVE")
+        self.logger.notice("analyze_url_callback succeeded")
+        self.logger.debug("AnalyzeClient.analyze_url_callback LEAVE")
         return res
 
     """
-    Transcribes audio from a local file source.
+    Analyze text from a local file source.
 
     Args:
-        source (FileSource): The local file source of the audio to transcribe.
-        options (PrerecordedOptions): Additional options for the transcription (default is None).
-        endpoint (str): The API endpoint for the transcription (default is "v1/listen").
+        source (TextSource): The local file source of the text to ingest.
+        options (AnalyzeOptions): Additional options for the ingest (default is None).
+        endpoint (str): The API endpoint for the transcription (default is "v1/read").
 
     Returns:
-        PrerecordedResponse: An object containing the transcription result or an error message.
+        AnalyzeResponse: An object containing the transcription result or an error message.
 
     Raises:
         DeepgramTypeError: Raised for known API errors.
     """
 
-    def transcribe_file(
+    def analyze_text(
         self,
-        source: FileSource,
-        options: PrerecordedOptions = None,
+        source: TextSource,
+        options: AnalyzeOptions = None,
         addons: dict = None,
         timeout: httpx.Timeout = None,
-        endpoint: str = "v1/listen",
-    ) -> PrerecordedResponse:
-        self.logger.debug("PreRecordedClient.transcribe_file ENTER")
+        endpoint: str = "v1/read",
+    ) -> AnalyzeResponse:
+        self.logger.debug("AnalyzeClient.analyze_text ENTER")
 
         if options is not None and options.callback is not None:
-            self.logger.debug("PreRecordedClient.transcribe_file LEAVE")
-            return self.transcribe_file_callback(
+            self.logger.debug("AnalyzeClient.analyze_text LEAVE")
+            return self.analyze_text_callback(
                 source, options["callback"], options, addons, timeout, endpoint
             )
 
@@ -188,17 +188,17 @@ class PreRecordedClient(AbstractSyncRestClient):
             body = source["stream"]
         else:
             self.logger.error("Unknown transcription source type")
-            self.logger.debug("PreRecordedClient.transcribe_file LEAVE")
+            self.logger.debug("AnalyzeClient.analyze_text LEAVE")
             raise DeepgramTypeError("Unknown transcription source type")
 
         if options is not None and not options.check():
             self.logger.error("options.check failed")
-            self.logger.debug("PreRecordedClient.transcribe_file LEAVE")
+            self.logger.debug("AnalyzeClient.analyze_text LEAVE")
             raise DeepgramError("Fatal transcription options error")
 
         self.logger.info("url: %s", url)
-        if isinstance(options, PrerecordedOptions):
-            self.logger.info("PrerecordedOptions switching class -> json")
+        if isinstance(options, AnalyzeOptions):
+            self.logger.info("AnalyzeOptions switching class -> json")
             options = json.loads(options.to_json())
         self.logger.info("options: %s", options)
         self.logger.info("addons: %s", addons)
@@ -206,38 +206,38 @@ class PreRecordedClient(AbstractSyncRestClient):
             url, options=options, addons=addons, content=body, timeout=timeout
         )
         self.logger.info("json: %s", result)
-        res = PrerecordedResponse.from_json(result)
+        res = AnalyzeResponse.from_json(result)
         self.logger.verbose("result: %s", res)
-        self.logger.notice("transcribe_file succeeded")
-        self.logger.debug("PreRecordedClient.transcribe_file LEAVE")
+        self.logger.notice("analyze_text succeeded")
+        self.logger.debug("AnalyzeClient.analyze_text LEAVE")
         return res
 
     """
     Transcribes audio from a local file source and sends the result to a callback URL.
 
     Args:
-        source (FileSource): The local file source of the audio to transcribe.
+        source (TextSource): The local file source of the audio to transcribe.
         callback (str): The callback URL where the transcription results will be sent.
-        options (PrerecordedOptions): Additional options for the transcription (default is None).
-        endpoint (str): The API endpoint for the transcription (default is "v1/listen").
+        options (AnalyzeOptions): Additional options for the transcription (default is None).
+        endpoint (str): The API endpoint for the transcription (default is "v1/read").
 
     Returns:
-        AsyncPrerecordedResponse: An object containing the request_id or an error message.
+        AsyncAnalyzeResponse: An object containing the request_id or an error message.
 
     Raises:
         DeepgramTypeError: Raised for known API errors.
     """
 
-    def transcribe_file_callback(
+    def analyze_file_callback(
         self,
-        source: FileSource,
+        source: TextSource,
         callback: str,
-        options: PrerecordedOptions = None,
+        options: AnalyzeOptions = None,
         addons: dict = None,
         timeout: httpx.Timeout = None,
-        endpoint: str = "v1/listen",
-    ) -> AsyncPrerecordedResponse:
-        self.logger.debug("PreRecordedClient.transcribe_file_callback ENTER")
+        endpoint: str = "v1/read",
+    ) -> AsyncAnalyzeResponse:
+        self.logger.debug("AnalyzeClient.analyze_file_callback ENTER")
 
         url = f"{self.config.url}/{endpoint}"
         if options is None:
@@ -249,17 +249,17 @@ class PreRecordedClient(AbstractSyncRestClient):
             body = source["stream"]
         else:
             self.logger.error("Unknown transcription source type")
-            self.logger.debug("PreRecordedClient.transcribe_file_callback LEAVE")
+            self.logger.debug("AnalyzeClient.analyze_file_callback LEAVE")
             raise DeepgramTypeError("Unknown transcription source type")
 
         if options is not None and not options.check():
             self.logger.error("options.check failed")
-            self.logger.debug("PreRecordedClient.transcribe_file_callback LEAVE")
+            self.logger.debug("AnalyzeClient.analyze_file_callback LEAVE")
             raise DeepgramError("Fatal transcription options error")
 
         self.logger.info("url: %s", url)
-        if isinstance(options, PrerecordedOptions):
-            self.logger.info("PrerecordedOptions switching class -> json")
+        if isinstance(options, AnalyzeOptions):
+            self.logger.info("AnalyzeOptions switching class -> json")
             options = json.loads(options.to_json())
         self.logger.info("options: %s", options)
         self.logger.info("addons: %s", addons)
@@ -267,8 +267,8 @@ class PreRecordedClient(AbstractSyncRestClient):
             url, options=options, addons=addons, json=body, timeout=timeout
         )
         self.logger.info("json: %s", result)
-        res = AsyncPrerecordedResponse.from_json(result)
+        res = AsyncAnalyzeResponse.from_json(result)
         self.logger.verbose("result: %s", res)
-        self.logger.notice("transcribe_file_callback succeeded")
-        self.logger.debug("PreRecordedClient.transcribe_file_callback LEAVE")
+        self.logger.notice("analyze_file_callback succeeded")
+        self.logger.debug("AnalyzeClient.analyze_file_callback LEAVE")
         return res

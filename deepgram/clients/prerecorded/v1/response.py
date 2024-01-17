@@ -5,6 +5,7 @@
 from dataclasses import dataclass
 from dataclasses_json import dataclass_json
 from typing import List, Optional, TypedDict, Dict
+from ..enums import Sentiment
 
 # Async Prerecorded Response Types:
 
@@ -48,6 +49,42 @@ class ModelInfo:
 
 @dataclass_json
 @dataclass
+class IntentsInfo:
+    model_uuid: Optional[str] = ""
+    input_tokens: Optional[int] = 0
+    output_tokens: Optional[int] = 0
+
+    def __getitem__(self, key):
+        _dict = self.to_dict()
+        return _dict[key]
+
+
+@dataclass_json
+@dataclass
+class SentimentInfo:
+    model_uuid: Optional[str] = 0
+    input_tokens: Optional[int] = 0
+    output_tokens: Optional[int] = 0
+
+    def __getitem__(self, key):
+        _dict = self.to_dict()
+        return _dict[key]
+
+
+@dataclass_json
+@dataclass
+class TopicsInfo:
+    model_uuid: Optional[str] = ""
+    input_tokens: Optional[int] = 0
+    output_tokens: Optional[int] = 0
+
+    def __getitem__(self, key):
+        _dict = self.to_dict()
+        return _dict[key]
+
+
+@dataclass_json
+@dataclass
 class Metadata:
     transaction_key: Optional[str] = ""
     request_id: Optional[str] = ""
@@ -59,11 +96,18 @@ class Metadata:
     warnings: Optional[List[Warning]] = None
     model_info: Optional[Dict[str, ModelInfo]] = None
     summary_info: Optional[SummaryInfo] = None
+    intents_info: Optional[IntentsInfo] = None
+    sentiment_info: Optional[SentimentInfo] = None
+    topics_info: Optional[TopicsInfo] = None
 
     def __getitem__(self, key):
         _dict = self.to_dict()
         if _dict["models"] is not None:
             _dict["models"] = [str(models) for models in _dict["models"]]
+        if _dict["warnings"] is not None:
+            _dict["warnings"] = [
+                Warning.from_dict(warnings) for _, warnings in _dict["warnings"].items()
+            ]
         if _dict["model_info"] is not None:
             _dict["model_info"] = [
                 ModelInfo.from_dict(model_info)
@@ -71,10 +115,12 @@ class Metadata:
             ]
         if _dict["summary_info"] is not None:
             _dict["summary_info"] = SummaryInfo.from_dict(_dict["summary_info"])
-        if _dict["warnings"] is not None:
-            _dict["warnings"] = [
-                Warning.from_dict(warnings) for _, warnings in _dict["warnings"].items()
-            ]
+        if _dict["intents_info"] is not None:
+            _dict["intents_info"] = IntentsInfo.from_dict(_dict["intents_info"])
+        if _dict["sentiment_info"] is not None:
+            _dict["sentiment_info"] = SentimentInfo.from_dict(_dict["sentiment_info"])
+        if _dict["topics_info"] is not None:
+            _dict["topics_info"] = TopicsInfo.from_dict(_dict["topics_info"])
         return _dict[key]
 
 
@@ -136,6 +182,8 @@ class Word:
     punctuated_word: Optional[str] = ""
     speaker: Optional[int] = 0
     speaker_confidence: Optional[float] = 0
+    sentiment: Optional[Sentiment] = ""
+    sentiment_score: Optional[float] = 0
 
     def __getitem__(self, key):
         _dict = self.to_dict()
@@ -148,6 +196,8 @@ class Sentence:
     text: Optional[str] = ""
     start: Optional[float] = 0
     end: Optional[float] = 0
+    sentiment: Optional[Sentiment] = ""
+    sentiment_score: Optional[float] = None
 
     def __getitem__(self, key):
         _dict = self.to_dict()
@@ -162,6 +212,8 @@ class Paragraph:
     end: Optional[float] = 0
     num_words: Optional[float] = 0
     speaker: Optional[int] = 0
+    sentiment: Optional[Sentiment] = ""
+    sentiment_score: Optional[float] = 0
 
     def __getitem__(self, key):
         _dict = self.to_dict()
@@ -185,34 +237,6 @@ class Paragraphs:
             _dict["paragraphs"] = [
                 Paragraph.from_dict(paragraphs)
                 for _, paragraphs in _dict["paragraphs"].items()
-            ]
-        return _dict[key]
-
-
-@dataclass_json
-@dataclass
-class Topic:
-    topic: Optional[str] = ""
-    confidence: Optional[float] = 0
-
-    def __getitem__(self, key):
-        _dict = self.to_dict()
-        return _dict[key]
-
-
-@dataclass_json
-@dataclass
-class Topics:
-    topics: Optional[List[Topic]] = None
-    text: Optional[str] = ""
-    start_word: Optional[float] = 0
-    end_word: Optional[float] = 0
-
-    def __getitem__(self, key):
-        _dict = self.to_dict()
-        if _dict["topics"] is not None:
-            _dict["topics"] = [
-                Topic.from_dict(topics) for _, topics in _dict["topics"].items()
             ]
         return _dict[key]
 
@@ -263,6 +287,8 @@ class Utterance:
     transcript: Optional[str] = ""
     words: Optional[List[Word]] = None
     speaker: Optional[int] = 0
+    sentiment: Optional[Sentiment] = ""
+    sentiment_score: Optional[float] = 0
     id: Optional[str] = ""
 
     def __getitem__(self, key):
@@ -298,7 +324,6 @@ class Alternative:
     paragraphs: Optional[Paragraphs] = None
     entities: Optional[List[Entity]] = None
     translations: Optional[List[Translation]] = None
-    topics: Optional[List[Topics]] = None
 
     def __getitem__(self, key):
         _dict = self.to_dict()
@@ -321,10 +346,6 @@ class Alternative:
             _dict["translations"] = [
                 Translation.from_dict(translations)
                 for _, translations in _dict["translations"].items()
-            ]
-        if _dict["topics"] is not None:
-            _dict["topics"] = [
-                Topics.from_dict(topics) for _, topics in _dict["topics"].items()
             ]
         return _dict[key]
 
@@ -353,10 +374,111 @@ class Channel:
 
 @dataclass_json
 @dataclass
-class Result:
+class Intent:
+    intent: Optional[str] = ""
+    confidence_score: Optional[float] = 0
+
+    def __getitem__(self, key):
+        _dict = self.to_dict()
+        return _dict[key]
+
+
+@dataclass_json
+@dataclass
+class Average:
+    sentiment: Optional[Sentiment] = ""
+    sentiment_score: Optional[float] = 0
+
+    def __getitem__(self, key):
+        _dict = self.to_dict()
+        return _dict[key]
+
+
+@dataclass_json
+@dataclass
+class Topic:
+    topic: Optional[str] = ""
+    confidence_score: Optional[float] = 0
+
+    def __getitem__(self, key):
+        _dict = self.to_dict()
+        return _dict[key]
+
+
+@dataclass_json
+@dataclass
+class Segment:
+    text: Optional[str] = ""
+    start_word: Optional[int] = 0
+    end_word: Optional[int] = 0
+    sentiment: Optional[Sentiment] = ""
+    sentiment_score: Optional[float] = 0
+    intents: Optional[List[Intent]] = None
+    topics: Optional[List[Topic]] = None
+
+    def __getitem__(self, key):
+        _dict = self.to_dict()
+        if _dict["intents"] is not None:
+            _dict["intents"] = Intent.from_dict(_dict["intents"])
+        if _dict["topics"] is not None:
+            _dict["topics"] = Topic.from_dict(_dict["topics"])
+        return _dict[key]
+
+
+@dataclass_json
+@dataclass
+class Sentiments:
+    segments: Optional[List[Segment]] = None
+    average: Optional[Average] = None
+
+    def __getitem__(self, key):
+        _dict = self.to_dict()
+        if _dict["segments"] is not None:
+            _dict["segments"] = [
+                Segment.from_dict(segments) for _, segments in _dict["segments"].items()
+            ]
+        if _dict["average"] is not None:
+            _dict["average"] = Average.from_dict(_dict["average"])
+        return _dict[key]
+
+
+@dataclass_json
+@dataclass
+class Topics:
+    segments: Optional[List[Segment]] = 0
+
+    def __getitem__(self, key):
+        _dict = self.to_dict()
+        if _dict["segments"] is not None:
+            _dict["segments"] = [
+                Segment.from_dict(segments) for _, segments in _dict["segments"].items()
+            ]
+        return _dict[key]
+
+
+@dataclass_json
+@dataclass
+class Intents:
+    segments: Optional[List[Segment]] = None
+
+    def __getitem__(self, key):
+        _dict = self.to_dict()
+        if _dict["segments"] is not None:
+            _dict["segments"] = [
+                Segment.from_dict(segments) for _, segments in _dict["segments"].items()
+            ]
+        return _dict[key]
+
+
+@dataclass_json
+@dataclass
+class Results:
     channels: Optional[List[Channel]] = None
     utterances: Optional[List[Utterance]] = None
     summary: Optional[SummaryV2] = None
+    sentiments: Optional[Sentiments] = None
+    topics: Optional[Topics] = None
+    intents: Optional[Intents] = None
 
     def __getitem__(self, key):
         _dict = self.to_dict()
@@ -371,6 +493,12 @@ class Result:
             ]
         if _dict["summary"] is not None:
             _dict["summary"] = SummaryV2.from_dict(_dict["summary"])
+        if _dict["sentiments"] is not None:
+            _dict["sentiments"] = Sentiments.from_dict(_dict["sentiments"])
+        if _dict["topics"] is not None:
+            _dict["topics"] = Topics.from_dict(_dict["topics"])
+        if _dict["intents"] is not None:
+            _dict["intents"] = Intents.from_dict(_dict["intents"])
         return _dict[key]
 
 
@@ -381,12 +509,18 @@ class Result:
 @dataclass
 class PrerecordedResponse:
     metadata: Optional[Metadata] = None
-    results: Optional[Result] = None
+    results: Optional[Results] = None
 
     def __getitem__(self, key):
         _dict = self.to_dict()
         if _dict["metadata"] is not None:
             _dict["metadata"] = Metadata.from_dict(_dict["metadata"])
         if _dict["results"] is not None:
-            _dict["results"] = Result.from_dict(_dict["results"])
+            _dict["results"] = Results.from_dict(_dict["results"])
         return _dict[key]
+
+
+@dataclass_json
+@dataclass
+class SyncPrerecordedResponse(PrerecordedResponse):
+    pass

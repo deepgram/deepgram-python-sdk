@@ -1,4 +1,4 @@
-# Copyright 2023 Deepgram SDK contributors. All Rights Reserved.
+# Copyright 2024 Deepgram SDK contributors. All Rights Reserved.
 # Use of this source code is governed by a MIT license that can be found in the LICENSE file.
 # SPDX-License-Identifier: MIT
 
@@ -10,38 +10,21 @@ from .errors import DeepgramModuleError
 
 # live client
 # classes and input
-from .prerecorded import (
-    PreRecordedClient,
-    AsyncPreRecordedClient,
-    PrerecordedOptions,
+from .analyze import (
+    AnalyzeClient,
+    AsyncAnalyzeClient,
+    AnalyzeOptions,
 )
 
 # responses
-from .prerecorded import (
-    AsyncPrerecordedResponse,
-    PrerecordedResponse,
-    SyncPrerecordedResponse,
-)
-
-# live client
-# classes and input
-from .live import (
-    LiveClient,
-    AsyncLiveClient,
-    LiveOptions,
-    LiveTranscriptionEvents,
-)
-
-# responses
-from .live import (
-    LiveResultResponse,
-    MetadataResponse,
-    UtteranceEndResponse,
-    ErrorResponse,
+from .analyze import (
+    AsyncAnalyzeResponse,
+    AnalyzeResponse,
+    SyncAnalyzeResponse,
 )
 
 
-class Listen:
+class Read:
     """
     Represents a client for interacting with the Deepgram API.
 
@@ -55,11 +38,8 @@ class Listen:
         DeepgramApiKeyError: If the API key is missing or invalid.
 
     Methods:
-        live: (Preferred) Returns a Threaded LiveClient instance for interacting with Deepgram's transcription services.
-        prerecorded: (Preferred) Returns an Threaded PreRecordedClient instance for interacting with Deepgram's prerecorded transcription services.
-
-        asynclive: Returns an (Async) LiveClient instance for interacting with Deepgram's transcription services.
-        asyncprerecorded: Returns an (Async) PreRecordedClient instance for interacting with Deepgram's prerecorded transcription services.
+        read: (Preferred) Returns an Threaded AnalyzeClient instance for interacting with Deepgram's read transcription services.
+        asyncread: Returns an (Async) AnalyzeClient instance for interacting with Deepgram's read transcription services.
     """
 
     def __init__(self, config: DeepgramClientOptions):
@@ -69,20 +49,12 @@ class Listen:
         self.config = config
 
     @property
-    def prerecorded(self):
-        return self.Version(self.config, "prerecorded")
+    def analyze(self):
+        return self.Version(self.config, "analyze")
 
     @property
-    def asyncprerecorded(self):
-        return self.Version(self.config, "asyncprerecorded")
-
-    @property
-    def live(self):
-        return self.Version(self.config, "live")
-
-    @property
-    def asynclive(self):
-        return self.Version(self.config, "asynclive")
+    def asyncanalyze(self):
+        return self.Version(self.config, "asyncanalyze")
 
     # INTERNAL CLASSES
     class Version:
@@ -98,10 +70,8 @@ class Listen:
         # @property
         # def latest(self):
         #     match self.parent:
-        #         case "live":
-        #             return LiveClient(self.config)
-        #         case "prerecorded":
-        #             return PreRecordedClient(self.config)
+        #         case "analyze":
+        #             return AnalyzeClient(self.config)
         #         case _:
         #             raise DeepgramModuleError("Invalid parent")
 
@@ -117,22 +87,14 @@ class Listen:
             fileName = ""
             className = ""
             match self.parent:
-                case "live":
-                    parent = "live"
+                case "analyze":
+                    parent = "analyze"
                     fileName = "client"
-                    className = "LiveClient"
-                case "asynclive":
-                    parent = "live"
+                    className = "AnalyzeClient"
+                case "asyncanalyze":
+                    parent = "analyze"
                     fileName = "async_client"
-                    className = "AsyncLiveClient"
-                case "prerecorded":
-                    parent = "prerecorded"
-                    fileName = "client"
-                    className = "PreRecordedClient"
-                case "asyncprerecorded":
-                    parent = "prerecorded"
-                    fileName = "async_client"
-                    className = "AsyncPreRecordedClient"
+                    className = "AsyncAnalyzeClient"
                 case _:
                     self.logger.error("parent unknown: %s", self.parent)
                     self.logger.debug("Version.v LEAVE")
