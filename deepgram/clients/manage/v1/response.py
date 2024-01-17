@@ -191,12 +191,6 @@ class Config:
 
 @dataclass_json
 @dataclass
-class Tier(Enum):
-    BASE = "base"
-    NOVA = "nova"
-
-@dataclass_json
-@dataclass
 class Details:
     usd: Optional[float] = 0
     duration: Optional[float] = 0
@@ -208,7 +202,7 @@ class Details:
     tags: Optional[List[str]] = None
     features: Optional[List[str]] = None
     config: Optional[Config] = None
-    tier: Optional[Tier] = None
+    tier: Optional[str] = ""
 
 
     def __getitem__(self, key):
