@@ -239,6 +239,16 @@ class TokenDetail:
     def __getitem__(self, key):
         _dict = self.to_dict()
         return _dict[key]
+    
+@dataclass
+@dataclass_json
+class Request:
+    ProjectUUID: Optional[str] = ""
+
+    def __getitem__(self, key):
+        _dict = self.to_dict()
+        return _dict[key]
+
 
 @dataclass_json
 @dataclass
@@ -246,12 +256,16 @@ class Response:
     code: Optional[int] = 0
     completed: Optional[str] = ""
     details: Optional[Details] = None
-    token_details: Optional[List[TokenDetail]]
+    token_details: Optional[List[TokenDetail]] = None
 
     def __getitem__(self, key):
         _dict = self.to_dict()
         if _dict["details"] is not None:
             _dict["details"] = Details.from_dict(_dict["details"])
+        if _dict["token_details"] is not None:
+            _dict["details"] = [
+                TokenDetail.from_dict(token_details) for _, token_details in _dict["token_details"].items()
+            ]
         return _dict[key]
 
 
@@ -311,6 +325,10 @@ class Results:
 
     def __getitem__(self, key):
         _dict = self.to_dict()
+        if _dict["tokens"] is not None:
+            _dict["tokens"] = [
+                Tokens.from_dict(tokens) for _, tokens in _dict["tokens"].items()
+            ]
         return _dict[key]
 
 
