@@ -170,6 +170,12 @@ class UtteranceEndResponse:
     """
 
     type: Optional[str] = ""
+    channel: Optional[List[int]] = None
+    last_word_end: Optional[float] = 0
+
+    def __getitem__(self, key):
+        _dict = self.to_dict()
+        return _dict[key]
 
 
 # Error Message
