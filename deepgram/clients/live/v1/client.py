@@ -199,12 +199,14 @@ class LiveClient:
                     return
                 else:
                     error: ErrorResponse = {
-                    "type": "Exception",
-                    "description": "Unknown error _listening",
-                    "message": f"{e}",
-                    "variant": "",
-                }
-                    self.logger.error(f"WebSocket connection closed with code {e.code}: {e.reason}")
+                        "type": "Exception",
+                        "description": "Unknown error _listening",
+                        "message": f"{e}",
+                        "variant": "",
+                    }
+                    self.logger.error(
+                        f"WebSocket connection closed with code {e.code}: {e.reason}"
+                    )
                     self._emit(LiveTranscriptionEvents.Error, error)
                     self.logger.debug("LiveClient._listening LEAVE")
                     raise
