@@ -164,9 +164,44 @@ class AsyncLiveClient:
                         )
                         await self._emit(LiveTranscriptionEvents.Error, error=error)
             except json.JSONDecodeError as e:
-                await self._emit(LiveTranscriptionEvents.Error, e.code)
+                error: ErrorResponse = {
+                    "type": "Exception",
+                    "description": "Unknown error _listening",
+                    "message": f"{e}",
+                    "variant": "",
+                }
                 self.logger.error("exception: json.JSONDecodeError: %s", str(e))
+                await self._emit(LiveTranscriptionEvents.Error, error=error)
                 self.logger.debug("AsyncLiveClient._start LEAVE")
+            except websockets.exceptions.ConnectionClosedOK as e:
+                if e.code == 1000:
+                    self.logger.notice("_start(1000) exiting gracefully")
+                    self.logger.debug("AsyncLiveClient._start LEAVE")
+                    return
+                else:
+                    error: ErrorResponse = {
+                        "type": "Exception",
+                        "description": "Unknown error _start",
+                        "message": f"{e}",
+                        "variant": "",
+                    }
+                    self.logger.error(
+                        f"WebSocket connection closed with code {e.code}: {e.reason}"
+                    )
+                    self._emit(LiveTranscriptionEvents.Error, error=error)
+                    self.logger.debug("AsyncLiveClient._start LEAVE")
+                    raise
+            except Exception as e:
+                error: ErrorResponse = {
+                    "type": "Exception",
+                    "description": "Unknown error _start",
+                    "message": f"{e}",
+                    "variant": "",
+                }
+                self._emit(LiveTranscriptionEvents.Error, error)
+                self.logger.error("Exception in _start: %s", error=error)
+                self.logger.debug("AsyncLiveClient._start LEAVE")
+                raise
 
     async def send(self, data):
         """
