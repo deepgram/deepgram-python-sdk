@@ -44,6 +44,7 @@ class LiveOptions:
     tag: Optional[list] = None
     tier: Optional[str] = None
     utterance_end_ms: Optional[str] = None
+    vad_events: Optional[bool] = None
     version: Optional[str] = None
 
     def __getitem__(self, key):

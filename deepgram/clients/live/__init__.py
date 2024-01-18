@@ -9,6 +9,7 @@ from .client import LiveTranscriptionEvents
 from .client import (
     LiveResultResponse,
     MetadataResponse,
+    SpeechStartedResponse,
     UtteranceEndResponse,
     ErrorResponse,
 )

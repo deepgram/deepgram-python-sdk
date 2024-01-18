@@ -14,8 +14,7 @@ load_dotenv()
 API_KEY = os.getenv("DG_API_KEY")
 
 options = LiveOptions(
-    model="nova",
-    interim_results=False,
+    model="nova-2",
     language="en-US",
 )
 
@@ -39,7 +38,10 @@ async def main():
         async def on_metadata(self, metadata, **kwargs):
             print(f"\n\n{metadata}\n\n")
 
-        def on_utterance_end(self, utterance_end, **kwargs):
+        async def on_speech_started(self, speech_started, **kwargs):
+            print(f"\n\n{speech_started}\n\n")
+
+        async def on_utterance_end(self, utterance_end, **kwargs):
             print(f"\n\n{utterance_end}\n\n")
 
         async def on_error(self, error, **kwargs):
@@ -47,6 +49,7 @@ async def main():
 
         dg_connection.on(LiveTranscriptionEvents.Transcript, on_message)
         dg_connection.on(LiveTranscriptionEvents.Metadata, on_metadata)
+        dg_connection.on(LiveTranscriptionEvents.SpeechStarted, on_speech_started)
         dg_connection.on(LiveTranscriptionEvents.UtteranceEnd, on_utterance_end)
         dg_connection.on(LiveTranscriptionEvents.Error, on_error)
 

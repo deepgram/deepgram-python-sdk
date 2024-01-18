@@ -20,6 +20,7 @@ from .client import LiveOptions
 from .client import (
     LiveResultResponse,
     MetadataResponse,
+    SpeechStartedResponse,
     UtteranceEndResponse,
     ErrorResponse,
 )

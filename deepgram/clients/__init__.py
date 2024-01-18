@@ -13,6 +13,7 @@ from .live import LiveTranscriptionEvents
 from .live import (
     LiveResultResponse,
     MetadataResponse,
+    SpeechStartedResponse,
     UtteranceEndResponse,
     ErrorResponse,
 )
