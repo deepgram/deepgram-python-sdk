@@ -2,8 +2,8 @@
 # Use of this source code is governed by a MIT license that can be found in the LICENSE file.
 # SPDX-License-Identifier: MIT
 
-from dataclasses import dataclass
-from dataclasses_json import dataclass_json
+from dataclasses import dataclass, field
+from dataclasses_json import config, dataclass_json
 from typing import List, Optional, TypedDict, Dict
 from ..enums import Sentiment
 
@@ -78,10 +78,18 @@ class Metadata:
     request_id: Optional[str] = ""
     created: Optional[str] = ""
     language: Optional[str] = ""
-    intents_info: Optional[IntentsInfo] = None
-    sentiment_info: Optional[SentimentInfo] = None
-    summary_info: Optional[SummaryInfo] = None
-    topics_info: Optional[TopicsInfo] = None
+    intents_info: Optional[IntentsInfo] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
+    sentiment_info: Optional[SentimentInfo] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
+    summary_info: Optional[SummaryInfo] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
+    topics_info: Optional[TopicsInfo] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
 
     def __getitem__(self, key):
         _dict = self.to_dict()
@@ -147,8 +155,12 @@ class Segment:
     end_word: Optional[int] = 0
     sentiment: Optional[Sentiment] = ""
     sentiment_score: Optional[float] = 0
-    intents: Optional[List[Intent]] = None
-    topics: Optional[List[Topic]] = None
+    intents: Optional[List[Intent]] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
+    topics: Optional[List[Topic]] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
 
     def __getitem__(self, key):
         _dict = self.to_dict()
@@ -207,10 +219,18 @@ class Intents:
 @dataclass_json
 @dataclass
 class Results:
-    summary: Optional[Summary] = None
-    sentiments: Optional[Sentiments] = None
-    topics: Optional[Topics] = None
-    intents: Optional[Intents] = None
+    summary: Optional[Summary] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
+    sentiments: Optional[Sentiments] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
+    topics: Optional[Topics] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
+    intents: Optional[Intents] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
 
     def __getitem__(self, key):
         _dict = self.to_dict()
