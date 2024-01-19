@@ -22,11 +22,12 @@ TEXT_FILE = "conversation.txt"
 def main():
     try:
         # STEP 1 Create a Deepgram client using the API key in the environment variables
-        config = DeepgramClientOptions(
-            # verbose=logging.SPAM,
-            url="api.beta.deepgram.com",
-        )
-        deepgram = DeepgramClient("", config)
+        # config = DeepgramClientOptions(
+        #     verbose=logging.SPAM,
+        # )
+        # deepgram = DeepgramClient("", config)
+        # OR use defaults
+        deepgram = DeepgramClient()
 
         # STEP 2 Call the transcribe_file method on the prerecorded class
         with open(TEXT_FILE, "r") as file:
