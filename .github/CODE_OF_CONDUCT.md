@@ -1,4 +1,3 @@
-
 # Code of Conduct
 
 The Deepgram developer community is filled with amazing, clever and creative people, and we're excited for you to join us. Our goal is to create safe and inclusive spaces, have meaningful conversations, and explore ways to make sure that every voice is heard and understood.
