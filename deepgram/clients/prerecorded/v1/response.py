@@ -99,6 +99,7 @@ class Metadata:
     intents_info: Optional[IntentsInfo] = None
     sentiment_info: Optional[SentimentInfo] = None
     topics_info: Optional[TopicsInfo] = None
+    extra: Optional[str] = ""
 
     def __getitem__(self, key):
         _dict = self.to_dict()
