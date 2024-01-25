@@ -103,7 +103,7 @@ from .errors import DeepgramApiKeyError, DeepgramModuleError
 
 
 class Deepgram:
-    def __init__(self):
+    def __init__(self, *anything):
         raise Exception(
             """
             FATAL ERROR:
