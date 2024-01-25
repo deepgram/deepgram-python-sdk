@@ -62,7 +62,7 @@ def main():
         )
         dg_connection.start(options, addons=dict(myattr="hello"), test="hello")
 
-        # Open a microphone stream
+        # Open a microphone stream on the default input device
         microphone = Microphone(dg_connection.send)
 
         # start microphone
