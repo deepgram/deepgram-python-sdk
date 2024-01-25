@@ -67,10 +67,6 @@ class PrerecordedOptions:
         prev = logger.level
         logger.setLevel(logging.ERROR)
 
-        if self.numerals:
-            logger.error(
-                "WARNING: Numerals is deprecated. Will be removed in a future version. Please use smart_format instead."
-            )
         if self.tier:
             logger.error(
                 "WARNING: Tier is deprecated. Will be removed in a future version."
