@@ -9,5 +9,4 @@ typing_extensions
 verboselogs
 
 # Async functionality, likely to be already installed
-asyncio
 aiohttp

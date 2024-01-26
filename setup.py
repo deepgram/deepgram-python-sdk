@@ -31,7 +31,6 @@ setup(
         "websockets>=12.0",
         "dataclasses-json>=0.6.3",
         "typing_extensions>=4.9.0",
-        "asyncio>=3.4.3",
         "aiohttp>=3.9.1",
         "verboselogs>=1.7",
     ],
