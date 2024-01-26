@@ -109,6 +109,7 @@ class AsyncLiveClient:
                         if result is None:
                             self.logger.error("LiveResultResponse.from_json is None")
                             continue
+                        self.logger.verbose("result: %s", result)
                         await self._emit(
                             LiveTranscriptionEvents.Transcript,
                             result=result,
@@ -122,6 +123,7 @@ class AsyncLiveClient:
                         if result is None:
                             self.logger.error("MetadataResponse.from_json is None")
                             continue
+                        self.logger.verbose("result: %s", result)
                         await self._emit(
                             LiveTranscriptionEvents.Metadata,
                             metadata=result,
@@ -135,6 +137,7 @@ class AsyncLiveClient:
                         if result is None:
                             self.logger.error("UtteranceEndResponse.from_json is None")
                             continue
+                        self.logger.verbose("result: %s", result)
                         await self._emit(
                             LiveTranscriptionEvents.UtteranceEnd,
                             utterance_end=result,
@@ -148,6 +151,7 @@ class AsyncLiveClient:
                         if result is None:
                             self.logger.error("ErrorResponse.from_json is None")
                             continue
+                        self.logger.verbose("result: %s", result)
                         await self._emit(
                             LiveTranscriptionEvents.Error,
                             error=result,
