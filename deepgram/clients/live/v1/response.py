@@ -75,7 +75,6 @@ class Metadata:
     model_info: Optional[ModelInfo] = None
     model_uuid: Optional[str] = ""
 
-
     def __getitem__(self, key):
         _dict = self.to_dict()
         if _dict["model_info"] is not None:
@@ -147,7 +146,7 @@ class MetadataResponse:
     channels: Optional[int] = 0
     models: Optional[List[str]] = None
     model_info: Optional[Dict[str, ModelInfo]] = None
-    extra: Optional[str] = ""
+    extra: Optional[Dict[str, str]] = None
 
     def __getitem__(self, key):
         _dict = self.to_dict()
@@ -158,6 +157,8 @@ class MetadataResponse:
                 ModelInfo.from_dict(model_info)
                 for _, model_info in _dict["model_info"].items()
             ]
+        if _dict["extra"] is not None:
+            _dict["extra"] = [str(extra) for _, extra in _dict["extra"].items()]
         return _dict[key]
 
 
