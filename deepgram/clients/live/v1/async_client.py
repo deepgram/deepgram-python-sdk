@@ -14,6 +14,7 @@ from ..errors import DeepgramError
 from .response import (
     LiveResultResponse,
     MetadataResponse,
+    SpeechStartedResponse,
     UtteranceEndResponse,
     ErrorResponse,
 )
@@ -127,6 +128,19 @@ class AsyncLiveClient:
                         await self._emit(
                             LiveTranscriptionEvents.Metadata,
                             metadata=result,
+                            **dict(self.kwargs),
+                        )
+                    case LiveTranscriptionEvents.SpeechStarted.value:
+                        self.logger.debug(
+                            "response_type: %s, data: %s", response_type, data
+                        )
+                        result = SpeechStartedResponse.from_json(message)
+                        if result is None:
+                            self.logger.error("SpeechStartedResponse.from_json is None")
+                            continue
+                        await self._emit(
+                            LiveTranscriptionEvents.SpeechStarted,
+                            speech_started=result,
                             **dict(self.kwargs),
                         )
                     case LiveTranscriptionEvents.UtteranceEnd.value:

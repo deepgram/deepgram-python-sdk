@@ -39,6 +39,9 @@ def main():
         def on_metadata(self, metadata, **kwargs):
             print(f"\n\n{metadata}\n\n")
 
+        def on_speech_started(self, speech_started, **kwargs):
+            print(f"\n\n{speech_started}\n\n")
+
         def on_utterance_end(self, utterance_end, **kwargs):
             print(f"\n\n{utterance_end}\n\n")
 
@@ -47,10 +50,12 @@ def main():
 
         dg_connection.on(LiveTranscriptionEvents.Transcript, on_message)
         dg_connection.on(LiveTranscriptionEvents.Metadata, on_metadata)
+        dg_connection.on(LiveTranscriptionEvents.SpeechStarted, on_speech_started)
         dg_connection.on(LiveTranscriptionEvents.UtteranceEnd, on_utterance_end)
         dg_connection.on(LiveTranscriptionEvents.Error, on_error)
 
         options = LiveOptions(
+            model="nova-2",
             punctuate=True,
             language="en-US",
             encoding="linear16",
@@ -59,6 +64,7 @@ def main():
             # To get UtteranceEnd, the following must be set:
             interim_results=True,
             utterance_end_ms="1000",
+            vad_events=True,
         )
         dg_connection.start(options, addons=dict(myattr="hello"), test="hello")
 

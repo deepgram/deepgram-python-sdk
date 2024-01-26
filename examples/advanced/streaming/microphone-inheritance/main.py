@@ -14,6 +14,7 @@ from deepgram import (
     Microphone,
     LiveResultResponse,
     MetadataResponse,
+    SpeechStartedResponse,
     UtteranceEndResponse,
     ErrorResponse,
 )
@@ -27,6 +28,7 @@ class MyLiveClient(LiveClient):
         super().__init__(config)
         super().on(LiveTranscriptionEvents.Transcript, self.on_message)
         super().on(LiveTranscriptionEvents.Metadata, self.on_metadata)
+        super().on(LiveTranscriptionEvents.SpeechStarted, self.on_speech_started)
         super().on(LiveTranscriptionEvents.UtteranceEnd, self.on_utterance_end)
         super().on(LiveTranscriptionEvents.Error, self.on_error)
         # self.test = "child"
@@ -54,6 +56,9 @@ class MyLiveClient(LiveClient):
     def on_metadata(self, parent, metadata, **kwargs):
         print(f"\n\n{metadata}\n\n")
 
+    def on_speech_started(self, parent, speech_started, **kwargs):
+        print(f"\n\n{speech_started}\n\n")
+
     def on_utterance_end(self, parent, utterance_end, **kwargs):
         print(f"\n\n{utterance_end}\n\n")
 
@@ -73,6 +78,7 @@ def main():
         liveClient = MyLiveClient(ClientOptionsFromEnv())
 
         options = LiveOptions(
+            model="nova-2",
             punctuate=True,
             language="en-US",
             encoding="linear16",
@@ -81,6 +87,7 @@ def main():
             # To get UtteranceEnd, the following must be set:
             interim_results=True,
             utterance_end_ms="1000",
+            vad_events=True,
         )
         liveClient.start(options, addons=dict(myattr="hello"), test="hello")
 

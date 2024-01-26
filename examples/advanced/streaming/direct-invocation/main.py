@@ -39,6 +39,9 @@ def main():
         def on_metadata(self, metadata, **kwargs):
             print(f"\n\n{metadata}\n\n")
 
+        def on_speech_started(self, speech_started, **kwargs):
+            print(f"\n\n{speech_started}\n\n")
+
         def on_utterance_end(self, utterance_end, **kwargs):
             print(f"\n\n{utterance_end}\n\n")
 
@@ -47,11 +50,12 @@ def main():
 
         liveClient.on(LiveTranscriptionEvents.Transcript, on_message)
         liveClient.on(LiveTranscriptionEvents.Metadata, on_metadata)
+        liveClient.on(LiveTranscriptionEvents.SpeechStarted, on_speech_started)
         liveClient.on(LiveTranscriptionEvents.UtteranceEnd, on_utterance_end)
         liveClient.on(LiveTranscriptionEvents.Error, on_error)
 
         # connect to websocket
-        options = LiveOptions(model="nova", interim_results=False, language="en-US")
+        options = LiveOptions(model="nova-2", language="en-US")
         liveClient.start(options)
 
         lock_exit = threading.Lock()

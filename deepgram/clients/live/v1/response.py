@@ -161,6 +161,25 @@ class MetadataResponse:
         return _dict[key]
 
 
+# Speech Started Message
+
+
+@dataclass_json
+@dataclass
+class SpeechStartedResponse:
+    """
+    SpeechStartedResponse Message from the Deepgram Platform
+    """
+
+    type: Optional[str] = ""
+    channel: Optional[List[int]] = None
+    timestamp: Optional[float] = 0
+
+    def __getitem__(self, key):
+        _dict = self.to_dict()
+        return _dict[key]
+
+
 # Utterance End Message
 
 
