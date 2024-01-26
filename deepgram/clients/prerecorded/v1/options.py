@@ -31,7 +31,7 @@ class PrerecordedOptions:
     diarize: Optional[bool] = None
     diarize_version: Optional[str] = None
     dictation: Optional[bool] = None
-    extra: Optional[str] = None
+    extra: Optional[Union[list, str]] = None
     filler_words: Optional[bool] = None
     intents: Optional[bool] = None
     keywords: Optional[Union[list, str]] = None

@@ -109,7 +109,7 @@ class Metadata:
     topics_info: Optional[TopicsInfo] = field(
         default=None, metadata=config(exclude=lambda f: f is None)
     )
-    extra: Optional[str] = ""
+    extra: Optional[Dict[str, str]] = None
 
     def __getitem__(self, key):
         _dict = self.to_dict()
@@ -132,6 +132,8 @@ class Metadata:
             _dict["sentiment_info"] = SentimentInfo.from_dict(_dict["sentiment_info"])
         if _dict["topics_info"] is not None:
             _dict["topics_info"] = TopicsInfo.from_dict(_dict["topics_info"])
+        if _dict["extra"] is not None:
+            _dict["extra"] = [str(extra) for _, extra in _dict["extra"].items()]
         return _dict[key]
 
 
