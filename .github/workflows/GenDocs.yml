@@ -34,7 +34,7 @@ jobs:
       - name: Install dependencies
         run: | # Execute bash script for installing dependencies
           python -m pip install --upgrade pip # Upgrades pip
-          pip install pdoc3 # Install pdoc3 for documentation generation
+          pip install pdoc # Install pdoc3 for documentation generation
           pip install --upgrade py2app # Upgrade py2app which is assumed necessary for the project
           pip install python-dotenv # Install python-dotenv to manage environment variables
           pip install -r requirements.txt # Install other dependencies from the requirements.txt file
@@ -46,54 +46,6 @@ jobs:
       # Generate Documentation for the current tag
       - name: Generate Documentation for the current tag
         run: | # This bash script performs several actions to generate and organize documentation
-          TAG_NAME_PATTERN='^v[0-9]+(\.[0-9]+)*(\.[0-9]+)*$' # Regex to match semver tag format
-          EXCLUDED_DIRS="__pycache__|^.git$|^node_modules$|${TAG_NAME_PATTERN}" # Directories to exclude from documentation
-          mkdir -p ./docs/${{ env.CURRENT_TAG_NAME }} # Create a directory for the current tag's documentation
-          # Generate documentations using pdoc and save in the appropriate directory
-          pdoc --html $(ls -d */ | grep -vE "${EXCLUDED_DIRS}" | cut -f1 -d'/') --output-dir ./docs/${{ env.CURRENT_TAG_NAME }} --force
-          # Optionally prints the tree structure of the documentation directory
-          if command -v tree >/dev/null 2>&1; then
-            tree ./docs/${{ env.CURRENT_TAG_NAME }}
-          else
-            ls -R ./docs/${{ env.CURRENT_TAG_NAME }}
-          fi
-
-      # Deploy the generated documentation to GitHub Pages
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3 # Utilizes a third-party GitHub Action for deployment
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }} # Authorization token
-          publish_dir: ./docs # The documentation directory to publish
-          publish_branch: gh-pages # Specifying 'gh-pages' as the target branch for GitHub Pages
-
-      # Ensure that the correct URL of the GitHub Pages site is outputted for verification purposes
-      - name: Print the GitHub Pages URL
-        run: |
-          echo "Documentation URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/${{ env.CURRENT_TAG_NAME }}/deepgram/index.html"
-
-      # Introduce a delay to wait for GitHub Pages to process and host the new documentation
-      - name: Wait for GitHub Pages to become ready
-        run: sleep 60 # Pauses the workflow for 60 seconds
-
-      # Check if the documentation is available at the expected URL
-      # Acts as a basic health check for the deployment
-      - name: Check documentation availability
-        id: availability_check
-        run: |
-          URL="https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/${{ env.CURRENT_TAG_NAME }}/deepgram/index.html"
-          HTTP_STATUS=$(curl -o /dev/null -s -w "%{http_code}\n" "$URL") # Fetches the HTTP status code 
-          echo "::set-output name=status::$HTTP_STATUS" # Saves the HTTP status for the next step to use
-
-      # Verifies the deployment by checking the health check status
-      # Alerts if the documentation is not available
-      - name: Verify documentation deployment
-        if: steps.availability_check.outputs.status != '200' # Conditional step based on the HTTP status code
-        run: |
-          echo "Documentation not available yet, actual HTTP status: ${{ steps.availability_check.outputs.status }}"
-          exit 1 # Exits with a non-zero status to indicate failure
-
-      # If the previous step indicates the documentation is available, this confirms successful deployment
-      - name: Documentation is available
-        if: steps.availability_check.outputs.status == '200' # Conditional step based on the HTTP status code being '200'
-        run: |
-          echo "Documentation is successfully published and available."
+          pwd | xargs echo
+          
+ 
