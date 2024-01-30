@@ -1,0 +1,51 @@
+# Define the name of the GitHub Action workflow
+name: GenerateDocumentationForDeepgramPythonSDK
+
+# Trigger the workflow on 'push' events specifically for tags that match 'v*'
+on:
+  push:
+    tags:
+      - 'v*'
+
+# Define the jobs that the workflow will execute
+jobs:
+  # Define a job with the identifier 'build-and-deploy'
+  build-and-deploy:
+    # This job runs on the latest Ubuntu runner provided by GitHub Actions
+    runs-on: ubuntu-latest
+    
+    # Steps define a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checkout the code from the main branch if the 'gh-pages' branch doesn't exist
+      # This is the first step to be executed
+      - name: Checkout code from main if gh-pages doesn't exist        
+        uses: actions/checkout@v3 # Utilizes the GitHub Action for checking out a repo
+        with: # Specifies additional parameters
+          ref: main # Reference to the main branch
+          repository: ${{ github.repository }} # The repository to checkout from
+
+      # Setup Python environment, specifies which version of Python to use
+      - name: Set up Python  
+        uses: actions/setup-python@v2 # Uses the setup-python GitHub Action
+        with:
+          python-version: '3.11' # Specifies Python version as 3.11
+
+      # Install dependencies required for the project
+      - name: Install dependencies
+        run: | # Execute bash script for installing dependencies
+          python -m pip install --upgrade pip # Upgrades pip
+          pip install pdoc # Install pdoc3 for documentation generation
+          pip install --upgrade py2app # Upgrade py2app which is assumed necessary for the project
+          pip install python-dotenv # Install python-dotenv to manage environment variables
+          pip install -r requirements.txt # Install other dependencies from the requirements.txt file
+
+      # Retrieves the tag name associated with the current commit
+      - name: Get the current tag name
+        run: echo "CURRENT_TAG_NAME=$(git describe --tags --abbrev=0)" >> $GITHUB_ENV # Stores the current tag name in the GITHUB_ENV environment variable
+
+      # Generate Documentation for the current tag
+      - name: Generate Documentation for the current tag
+        run: | # This bash script performs several actions to generate and organize documentation
+          pwd | xargs echo
+          
+ 
