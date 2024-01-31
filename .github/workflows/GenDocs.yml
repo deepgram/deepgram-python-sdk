@@ -1,0 +1,81 @@
+name: GenDocDeepgramPySDK
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code from main branch        
+        uses: actions/checkout@v3
+        with:
+          ref: main
+          repository: ${{ github.repository }}
+
+      - name: Set up Python  
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pdoc
+          pip install --upgrade py2app
+          pip install python-dotenv
+          pip install -r requirements.txt
+          
+      - name: Get the current tag name
+        run: echo "TAG_NAME=${GITHUB_REF##*/}" >> "$GITHUB_ENV" # Note: Changed to use GITHUB_ENV for dynamic environment variable
+
+      - name: Generate Documentation for the current tag
+        run: |
+          mkdir -p docs/$TAG_NAME # Note: Changed to use the environment variable directly
+          ROOT_PATH=$(pwd)
+          cd $ROOT_PATH/deepgram
+          pdoc $ROOT_PATH/deepgram -o $ROOT_PATH/docs/$TAG_NAME # Simplified path using environment variable
+
+      - name: Checkout the gh-pages branch
+        uses: actions/checkout@v3
+        with:
+          ref: gh-pages
+          path: gh-pages
+
+      - name: Prepare gh-pages directory structure
+        run: |
+          mkdir -p gh-pages/docs/$TAG_NAME # Ensures that the directory exists before copying
+      
+      - name: Copy documentation to the gh-pages branch directory
+        run: |
+          cp -r docs/$TAG_NAME gh-pages/docs # Copies the newly generated docs to the gh-pages directory structure
+      
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./gh-pages # Note: Change to publish the entire gh-pages directory
+          publish_branch: gh-pages
+          keep_files: true # Ensures that previous documentation versions are not deleted
+
+      - name: Print the GitHub Pages URL for the current tag
+        run: |
+          echo "Documentation URL for $TAG_NAME: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/docs/$TAG_NAME/index.html"
+
+      - name: Wait for GitHub Pages to become ready
+        run: sleep 60
+
+      - name: Check documentation availability for the current tag
+        run: |
+          URL="https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/docs/$TAG_NAME/index.html"
+          HTTP_STATUS=$(curl -o /dev/null -s -w "%{http_code}\n" "$URL")
+          if [ "$HTTP_STATUS" != "200" ]; then
+            echo "Documentation for $TAG_NAME not available yet, actual HTTP status: $HTTP_STATUS"
+            exit 1
+          else
+            echo "Documentation for $TAG_NAME is successfully published and available."
+          fi
