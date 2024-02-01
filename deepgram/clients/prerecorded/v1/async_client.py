@@ -57,7 +57,7 @@ class AsyncPreRecordedClient(AbstractAsyncRestClient):
         if options is not None and options.callback is not None:
             self.logger.debug("PreRecordedClient.transcribe_url LEAVE")
             return await self.transcribe_url_callback(
-                source, options["callback"], options, addons, timeout, endpoint
+                source, options.callback, options, addons, timeout, endpoint
             )
 
         url = f"{self.config.url}/{endpoint}"
@@ -120,7 +120,7 @@ class AsyncPreRecordedClient(AbstractAsyncRestClient):
         url = f"{self.config.url}/{endpoint}"
         if options is None:
             options = {}
-        options["callback"] = callback
+        options.callback = callback
         if is_url_source(source):
             body = source
         else:
@@ -178,7 +178,7 @@ class AsyncPreRecordedClient(AbstractAsyncRestClient):
         if options is not None and options.callback is not None:
             self.logger.debug("PreRecordedClient.transcribe_file LEAVE")
             return await self.transcribe_file_callback(
-                source, options["callback"], options, addons, timeout, endpoint
+                source, options.callback, options, addons, timeout, endpoint
             )
 
         url = f"{self.config.url}/{endpoint}"
@@ -242,7 +242,7 @@ class AsyncPreRecordedClient(AbstractAsyncRestClient):
         url = f"{self.config.url}/{endpoint}"
         if options is None:
             options = {}
-        options["callback"] = callback
+        options.callback = callback
         if is_buffer_source(source):
             body = source["buffer"]
         elif is_readstream_source(source):
@@ -264,7 +264,7 @@ class AsyncPreRecordedClient(AbstractAsyncRestClient):
         self.logger.info("options: %s", options)
         self.logger.info("addons: %s", addons)
         result = await self.post(
-            url, options=options, addons=addons, json=body, timeout=timeout
+            url, options=options, addons=addons, content=body, timeout=timeout
         )
         self.logger.info("json: %s", result)
         res = AsyncPrerecordedResponse.from_json(result)
