@@ -158,12 +158,13 @@ class DeepgramClient:
         self.logger = logging.getLogger(__name__)
         self.logger.addHandler(logging.StreamHandler())
 
-        if config is not None:
+        if api_key == "" and config is not None:
+            self.logger.info("Attempting to set API key from config object")
             api_key = config.api_key
-        if not api_key:
-            # Default to `None` for on-prem instances where an API key is not required
-            api_key = os.getenv("DEEPGRAM_API_KEY", None)
-        if not api_key:
+        if api_key == "":
+            self.logger.info("Attempting to set API key from environment variable")
+            api_key = os.getenv("DEEPGRAM_API_KEY", "")
+        if api_key == "":
             self.logger.warning("WARNING: API key is missing")
 
         self.api_key = api_key
