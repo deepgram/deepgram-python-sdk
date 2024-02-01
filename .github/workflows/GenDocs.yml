@@ -31,14 +31,18 @@ jobs:
           pip install -r requirements.txt
           
       - name: Get the current tag name
-        run: echo "TAG_NAME=${GITHUB_REF##*/}" >> "$GITHUB_ENV" # Note: Changed to use GITHUB_ENV for dynamic environment variable
+        run: echo "TAG_NAME=${GITHUB_REF##*/}" >> "$GITHUB_ENV"
+
+      # New Step: Extracting Major Version Number
+      - name: Set the current major version
+        run: echo "MAJOR_VERSION=$(echo $TAG_NAME | cut -d '.' -f 1)" >> "$GITHUB_ENV" # This extracts the major version assuming a 'vX.Y.Z' format
 
       - name: Generate Documentation for the current tag
         run: |
-          mkdir -p docs/$TAG_NAME # Note: Changed to use the environment variable directly
+          mkdir -p docs/$MAJOR_VERSION # Note: Changed to use MAJOR_VERSION to create/update the major version folder
           ROOT_PATH=$(pwd)
           cd $ROOT_PATH/deepgram
-          pdoc $ROOT_PATH/deepgram -o $ROOT_PATH/docs/$TAG_NAME # Simplified path using environment variable
+          pdoc $ROOT_PATH/deepgram -o $ROOT_PATH/docs/$MAJOR_VERSION # Documentation is generated/updated in the major version folder
 
       - name: Checkout the gh-pages branch
         uses: actions/checkout@v3
@@ -48,30 +52,30 @@ jobs:
 
       - name: Prepare gh-pages directory structure
         run: |
-          mkdir -p gh-pages/docs/$TAG_NAME # Ensures that the directory exists before copying
+          mkdir -p gh-pages/docs/$MAJOR_VERSION
       
       - name: Copy documentation to the gh-pages branch directory
         run: |
-          cp -r docs/$TAG_NAME gh-pages/docs # Copies the newly generated docs to the gh-pages directory structure
+          cp -r docs/$MAJOR_VERSION gh-pages/docs
       
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./gh-pages # Note: Change to publish the entire gh-pages directory
+          publish_dir: ./gh-pages
           publish_branch: gh-pages
-          keep_files: true # Ensures that previous documentation versions are not deleted
+          keep_files: true
 
       - name: Print the GitHub Pages URL for the current tag
         run: |
-          echo "Documentation URL for $TAG_NAME: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/docs/$TAG_NAME/index.html"
+          echo "Documentation URL for $TAG_NAME: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/docs/$MAJOR_VERSION/index.html"
 
       - name: Wait for GitHub Pages to become ready
         run: sleep 60
 
       - name: Check documentation availability for the current tag
         run: |
-          URL="https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/docs/$TAG_NAME/index.html"
+          URL="https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/docs/$MAJOR_VERSION/index.html"
           HTTP_STATUS=$(curl -o /dev/null -s -w "%{http_code}\n" "$URL")
           if [ "$HTTP_STATUS" != "200" ]; then
             echo "Documentation for $TAG_NAME not available yet, actual HTTP status: $HTTP_STATUS"
