@@ -5,8 +5,6 @@
 
 Official Python SDK for [Deepgram](https://www.deepgram.com/). Power your apps with world-class speech and Language AI models.
 
-> This SDK only supports hosted usage of api.deepgram.com.
-
 - [Deepgram Python SDK](#deepgram-python-sdk)
 - [Documentation](#documentation)
 - [Getting an API Key](#getting-an-api-key)
