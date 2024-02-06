@@ -50,13 +50,20 @@ class LiveClient:
         self._event_handlers = {event: [] for event in LiveTranscriptionEvents}
         self.websocket_url = convert_to_websocket_url(self.config.url, self.endpoint)
 
-    def start(self, options: LiveOptions = None, addons: dict = None, **kwargs):
+    def start(
+        self,
+        options: LiveOptions = None,
+        addons: dict = None,
+        members: dict = None,
+        **kwargs,
+    ):
         """
         Starts the WebSocket connection for live transcription.
         """
         self.logger.debug("LiveClient.start ENTER")
         self.logger.info("kwargs: %s", options)
-        self.logger.info("addon: %s", addons)
+        self.logger.info("addons: %s", addons)
+        self.logger.info("members: %s", members)
         self.logger.info("options: %s", kwargs)
 
         if options is not None and not options.check():
@@ -65,8 +72,13 @@ class LiveClient:
             raise DeepgramError("Fatal transcription options error")
 
         self.options = options
-        if addons is not None:
-            self.__dict__.update(addons)
+        self.addons = addons
+
+        # add "members" as members of the class
+        if members is not None:
+            self.__dict__.update(members)
+
+        # set kwargs as members of the class
         if kwargs is not None:
             self.kwargs = kwargs
         else:
@@ -81,7 +93,14 @@ class LiveClient:
             self.logger.debug("LiveClient.start LEAVE")
             raise DeepgramWebsocketError("Websocket already started")
 
-        url_with_params = append_query_params(self.websocket_url, self.options)
+        combined_options = dict(self.options)
+        if addons is not None:
+            self.logger.info("merging addons to options")
+            combined_options.update(addons)
+            self.logger.info("new options: %s", combined_options)
+        self.logger.debug("combined_options: %s", combined_options)
+
+        url_with_params = append_query_params(self.websocket_url, combined_options)
         self._socket = connect(url_with_params, additional_headers=self.config.headers)
 
         self.exit = False

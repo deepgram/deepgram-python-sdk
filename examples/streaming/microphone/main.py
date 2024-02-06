@@ -66,7 +66,7 @@ def main():
             utterance_end_ms="1000",
             vad_events=True,
         )
-        dg_connection.start(options, addons=dict(myattr="hello"), test="hello")
+        dg_connection.start(options)
 
         # Open a microphone stream on the default input device
         microphone = Microphone(dg_connection.send)

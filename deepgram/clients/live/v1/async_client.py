@@ -45,10 +45,17 @@ class AsyncLiveClient:
         self._event_handlers = {event: [] for event in LiveTranscriptionEvents}
         self.websocket_url = convert_to_websocket_url(self.config.url, self.endpoint)
 
-    async def start(self, options: LiveOptions = None, addons: dict = None, **kwargs):
+    async def start(
+        self,
+        options: LiveOptions = None,
+        addons: dict = None,
+        members: dict = None,
+        **kwargs,
+    ):
         self.logger.debug("AsyncLiveClient.start ENTER")
         self.logger.info("kwargs: %s", options)
         self.logger.info("addons: %s", addons)
+        self.logger.info("members: %s", members)
         self.logger.info("options: %s", kwargs)
 
         if options is not None and not options.check():
@@ -57,8 +64,13 @@ class AsyncLiveClient:
             raise DeepgramError("Fatal transcription options error")
 
         self.options = options
-        if addons is not None:
-            self.__dict__.update(addons)
+        self.addons = addons
+
+        # add "members" as members of the class
+        if members is not None:
+            self.__dict__.update(members)
+
+        # add "kwargs" as members of the class
         if kwargs is not None:
             self.kwargs = kwargs
         else:
@@ -68,7 +80,14 @@ class AsyncLiveClient:
             self.logger.info("LiveOptions switching class -> json")
             self.options = self.options.to_dict()
 
-        url_with_params = append_query_params(self.websocket_url, self.options)
+        combined_options = dict(self.options)
+        if addons is not None:
+            self.logger.info("merging addons to options")
+            combined_options.update(addons)
+            self.logger.info("new options: %s", combined_options)
+        self.logger.debug("combined_options: %s", combined_options)
+
+        url_with_params = append_query_params(self.websocket_url, combined_options)
         try:
             self._socket = await _socket_connect(url_with_params, self.config.headers)
             asyncio.create_task(self._start())
