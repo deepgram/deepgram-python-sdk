@@ -13,11 +13,6 @@ load_dotenv()
 
 API_KEY = os.getenv("DG_API_KEY")
 
-options = LiveOptions(
-    model="nova-2",
-    language="en-US",
-)
-
 # URL for the realtime streaming audio you would like to transcribe
 URL = "http://stream.live.vc.bbcmedia.co.uk/bbc_world_service"
 
@@ -54,6 +49,11 @@ async def main():
         dg_connection.on(LiveTranscriptionEvents.Error, on_error)
 
         # connect to websocket
+        options = LiveOptions(
+            model="nova-2",
+            language="en-US",
+        )
+
         await dg_connection.start(options)
 
         # Send streaming audio from the URL to Deepgram

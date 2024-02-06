@@ -89,7 +89,12 @@ def main():
             utterance_end_ms="1000",
             vad_events=True,
         )
-        liveClient.start(options, addons=dict(myattr="hello"), test="hello")
+        liveClient.start(
+            options,
+            members=dict(myattr="hello", mytest="goodbye"),
+            addons=dict(smart_format=True),
+            test="hello",
+        )
 
         # Open a microphone stream
         microphone = Microphone(liveClient.send)
