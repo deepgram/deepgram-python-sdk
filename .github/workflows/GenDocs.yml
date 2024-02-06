@@ -1,4 +1,4 @@
-name: GenDocDeepgramPySDK
+name: Generate PyDocs
 
 on:
   push:
@@ -37,26 +37,19 @@ jobs:
       - name: Set the current major version
         run: echo "MAJOR_VERSION=$(echo $TAG_NAME | cut -d '.' -f 1)" >> "$GITHUB_ENV" # This extracts the major version assuming a 'vX.Y.Z' format
 
-      - name: Generate Documentation for the current tag
-        run: |
-          mkdir -p docs/$MAJOR_VERSION # Note: Changed to use MAJOR_VERSION to create/update the major version folder
-          ROOT_PATH=$(pwd)
-          cd $ROOT_PATH/deepgram
-          pdoc $ROOT_PATH/deepgram -o $ROOT_PATH/docs/$MAJOR_VERSION # Documentation is generated/updated in the major version folder
-
       - name: Checkout the gh-pages branch
         uses: actions/checkout@v3
         with:
           ref: gh-pages
           path: gh-pages
 
-      - name: Prepare gh-pages directory structure
+      - name: Generate Documentation for the current tag
         run: |
-          mkdir -p gh-pages/docs/$MAJOR_VERSION
-      
-      - name: Copy documentation to the gh-pages branch directory
-        run: |
-          cp -r docs/$MAJOR_VERSION gh-pages/docs
+          rm -rf $ROOT_PATH/gh-pages/docs/$MAJOR_VERSION
+          mkdir -p $ROOT_PATH/gh-pages/docs/$MAJOR_VERSION # Note: Changed to use MAJOR_VERSION to create/update the major version folder
+          ROOT_PATH=$(pwd)
+          cd $ROOT_PATH/deepgram
+          pdoc $ROOT_PATH/deepgram -o $ROOT_PATH/gh-pages/docs/$MAJOR_VERSION # Documentation is generated/updated in the major version folder
       
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
