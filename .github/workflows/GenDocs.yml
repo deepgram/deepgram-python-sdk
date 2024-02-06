@@ -45,9 +45,9 @@ jobs:
 
       - name: Generate Documentation for the current tag
         run: |
-          rm -rf $ROOT_PATH/gh-pages/docs/$MAJOR_VERSION
-          mkdir -p $ROOT_PATH/gh-pages/docs/$MAJOR_VERSION # Note: Changed to use MAJOR_VERSION to create/update the major version folder
-          ROOT_PATH=$(pwd)
+          ROOT_PATH=$(pwd) # Moved this line up to ensure ROOT_PATH is set before its usage
+          rm -rf $ROOT_PATH/gh-pages/docs/$MAJOR_VERSION          
+          mkdir -p $ROOT_PATH/gh-pages/docs/$MAJOR_VERSION # Note: Changed to use MAJOR_VERSION to create/update the major version folder         
           cd $ROOT_PATH/deepgram
           pdoc $ROOT_PATH/deepgram -o $ROOT_PATH/gh-pages/docs/$MAJOR_VERSION # Documentation is generated/updated in the major version folder
       
