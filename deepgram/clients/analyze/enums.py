@@ -9,8 +9,8 @@ Constants mapping to events from the Deepgram API
 """
 
 
-class Sentiment(Enum):
-    UNKNOWN = ""
-    NEGATIVE = "negative"
-    NEUTRAL = "neutral"
-    POSITIVE = "positive"
+class Sentiment(str, Enum):
+    UNKNOWN: str = ""
+    NEGATIVE: str = "negative"
+    NEUTRAL: str = "neutral"
+    POSITIVE: str = "positive"
