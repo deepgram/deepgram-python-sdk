@@ -2,8 +2,8 @@
 # Use of this source code is governed by a MIT license that can be found in the LICENSE file.
 # SPDX-License-Identifier: MIT
 
-from dataclasses import dataclass
-from dataclasses_json import dataclass_json
+from dataclasses import dataclass, field
+from dataclasses_json import config, dataclass_json
 from datetime import datetime
 from typing import List, Optional, Dict
 
@@ -18,11 +18,16 @@ class Word:
     end: Optional[float] = 0
     confidence: Optional[float] = 0
     punctuated_word: Optional[str] = ""
-    speaker: Optional[int] = 0
+    speaker: Optional[int] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
 
     def __getitem__(self, key):
         _dict = self.to_dict()
         return _dict[key]
+
+    def __str__(self) -> str:
+        return self.to_json(indent=4)
 
 
 @dataclass_json
@@ -30,30 +35,38 @@ class Word:
 class Alternative:
     transcript: Optional[str] = ""
     confidence: Optional[float] = 0
-    words: Optional[List[Word]] = None
+    words: Optional[List[Word]] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
 
     def __getitem__(self, key):
         _dict = self.to_dict()
-        if _dict["words"] is not None:
-            _dict["words"] = [
-                Word.from_dict(words) for _, words in _dict["words"].items()
-            ]
+        if "words" in _dict:
+            _dict["words"] = [Word.from_dict(words) for words in _dict["words"]]
         return _dict[key]
+
+    def __str__(self) -> str:
+        return self.to_json(indent=4)
 
 
 @dataclass_json
 @dataclass
 class Channel:
-    alternatives: Optional[List[Alternative]] = None
+    alternatives: Optional[List[Alternative]] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
 
     def __getitem__(self, key):
         _dict = self.to_dict()
-        if _dict["alternatives"] is not None:
+        if "alternatives" in _dict:
             _dict["alternatives"] = [
                 Alternative.from_dict(alternatives)
-                for _, alternatives in _dict["alternatives"].items()
+                for alternatives in _dict["alternatives"]
             ]
         return _dict[key]
+
+    def __str__(self) -> str:
+        return self.to_json(indent=4)
 
 
 @dataclass_json
@@ -67,22 +80,29 @@ class ModelInfo:
         _dict = self.to_dict()
         return _dict[key]
 
+    def __str__(self) -> str:
+        return self.to_json(indent=4)
+
 
 @dataclass_json
 @dataclass
 class Metadata:
     request_id: Optional[str] = ""
-    model_info: Optional[ModelInfo] = None
+    model_info: Optional[ModelInfo] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
     model_uuid: Optional[str] = ""
 
     def __getitem__(self, key):
         _dict = self.to_dict()
-        if _dict["model_info"] is not None:
+        if "model_info" in _dict:
             _dict["model_info"] = [
-                ModelInfo.from_dict(model_info)
-                for _, model_info in _dict["model_info"].items()
+                ModelInfo.from_dict(model_info) for model_info in _dict["model_info"]
             ]
         return _dict[key]
+
+    def __str__(self) -> str:
+        return self.to_json(indent=4)
 
 
 @dataclass_json
@@ -98,21 +118,27 @@ class LiveResultResponse:
     start: Optional[float] = 0
     is_final: Optional[bool] = False
     speech_final: Optional[bool] = False
-    channel: Optional[Channel] = None
-    metadata: Optional[Metadata] = None
+    channel: Optional[Channel] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
+    metadata: Optional[Metadata] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
 
     def __getitem__(self, key):
         _dict = self.to_dict()
-        if _dict["channel"] is not None:
+        if "channel" in _dict:
             _dict["channel"] = [
-                Channel.from_dict(channel) for _, channel in _dict["channel"].items()
+                Channel.from_dict(channel) for channel in _dict["channel"]
             ]
-        if _dict["metadata"] is not None:
+        if "metadata" in _dict:
             _dict["metadata"] = [
-                Metadata.from_dict(metadata)
-                for _, metadata in _dict["metadata"].items()
+                Metadata.from_dict(metadata) for metadata in _dict["metadata"]
             ]
         return _dict[key]
+
+    def __str__(self) -> str:
+        return self.to_json(indent=4)
 
 
 # Metadata Message
@@ -129,6 +155,9 @@ class ModelInfo:
         _dict = self.to_dict()
         return _dict[key]
 
+    def __str__(self) -> str:
+        return self.to_json(indent=4)
+
 
 @dataclass_json
 @dataclass
@@ -144,22 +173,31 @@ class MetadataResponse:
     created: Optional[str] = ""
     duration: Optional[float] = 0
     channels: Optional[int] = 0
-    models: Optional[List[str]] = None
-    model_info: Optional[Dict[str, ModelInfo]] = None
-    extra: Optional[Dict[str, str]] = None
+    models: Optional[List[str]] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
+    model_info: Optional[Dict[str, ModelInfo]] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
+    extra: Optional[Dict[str, str]] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
 
     def __getitem__(self, key):
         _dict = self.to_dict()
-        if _dict["models"] is not None:
+        if "models" in _dict:
             _dict["models"] = [str(models) for models in _dict["models"]]
-        if _dict["model_info"] is not None:
+        if "model_info" in _dict:
             _dict["model_info"] = [
                 ModelInfo.from_dict(model_info)
                 for _, model_info in _dict["model_info"].items()
             ]
-        if _dict["extra"] is not None:
+        if "extra" in _dict:
             _dict["extra"] = [str(extra) for _, extra in _dict["extra"].items()]
         return _dict[key]
+
+    def __str__(self) -> str:
+        return self.to_json(indent=4)
 
 
 # Speech Started Message
@@ -180,6 +218,9 @@ class SpeechStartedResponse:
         _dict = self.to_dict()
         return _dict[key]
 
+    def __str__(self) -> str:
+        return self.to_json(indent=4)
+
 
 # Utterance End Message
 
@@ -198,6 +239,9 @@ class UtteranceEndResponse:
     def __getitem__(self, key):
         _dict = self.to_dict()
         return _dict[key]
+
+    def __str__(self) -> str:
+        return self.to_json(indent=4)
 
 
 # Error Message
@@ -218,3 +262,6 @@ class ErrorResponse:
     def __getitem__(self, key):
         _dict = self.to_dict()
         return _dict[key]
+
+    def __str__(self) -> str:
+        return self.to_json(indent=4)

@@ -20,6 +20,9 @@ class AsyncAnalyzeResponse:
         _dict = self.to_dict()
         return _dict[key]
 
+    def __str__(self) -> str:
+        return self.to_json(indent=4)
+
 
 # Analyze Response Types:
 
@@ -35,6 +38,9 @@ class IntentsInfo:
         _dict = self.to_dict()
         return _dict[key]
 
+    def __str__(self) -> str:
+        return self.to_json(indent=4)
+
 
 @dataclass_json
 @dataclass
@@ -46,6 +52,9 @@ class SentimentInfo:
     def __getitem__(self, key):
         _dict = self.to_dict()
         return _dict[key]
+
+    def __str__(self) -> str:
+        return self.to_json(indent=4)
 
 
 @dataclass_json
@@ -59,6 +68,9 @@ class SummaryInfo:
         _dict = self.to_dict()
         return _dict[key]
 
+    def __str__(self) -> str:
+        return self.to_json(indent=4)
+
 
 @dataclass_json
 @dataclass
@@ -70,6 +82,9 @@ class TopicsInfo:
     def __getitem__(self, key):
         _dict = self.to_dict()
         return _dict[key]
+
+    def __str__(self) -> str:
+        return self.to_json(indent=4)
 
 
 @dataclass_json
@@ -93,26 +108,36 @@ class Metadata:
 
     def __getitem__(self, key):
         _dict = self.to_dict()
-        if _dict["intents_info"] is not None:
+        if "intents_info" in _dict:
             _dict["intents_info"] = IntentsInfo.from_dict(_dict["intents_info"])
-        if _dict["sentiment_info"] is not None:
+        if "sentiment_info" in _dict:
             _dict["sentiment_info"] = SentimentInfo.from_dict(_dict["sentiment_info"])
-        if _dict["summary_info"] is not None:
+        if "summary_info" in _dict:
             _dict["summary_info"] = SummaryInfo.from_dict(_dict["summary_info"])
-        if _dict["topics_info"] is not None:
+        if "topics_info" in _dict:
             _dict["topics_info"] = TopicsInfo.from_dict(_dict["topics_info"])
         return _dict[key]
+
+    def __str__(self) -> str:
+        return self.to_json(indent=4)
 
 
 @dataclass_json
 @dataclass
 class Average:
-    sentiment: Optional[Sentiment] = ""
+    sentiment: Optional[Sentiment] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
     sentiment_score: Optional[float] = 0
 
     def __getitem__(self, key):
         _dict = self.to_dict()
+        if "sentiment" in _dict:
+            _dict["sentiment"] = Sentiment.from_dict(_dict["sentiment"])
         return _dict[key]
+
+    def __str__(self) -> str:
+        return self.to_json(indent=4)
 
 
 @dataclass_json
@@ -123,6 +148,9 @@ class Summary:
     def __getitem__(self, key):
         _dict = self.to_dict()
         return _dict[key]
+
+    def __str__(self) -> str:
+        return self.to_json(indent=4)
 
 
 @dataclass_json
@@ -135,6 +163,9 @@ class Topic:
         _dict = self.to_dict()
         return _dict[key]
 
+    def __str__(self) -> str:
+        return self.to_json(indent=4)
+
 
 @dataclass_json
 @dataclass
@@ -146,6 +177,9 @@ class Intent:
         _dict = self.to_dict()
         return _dict[key]
 
+    def __str__(self) -> str:
+        return self.to_json(indent=4)
+
 
 @dataclass_json
 @dataclass
@@ -153,7 +187,9 @@ class Segment:
     text: Optional[str] = ""
     start_word: Optional[int] = 0
     end_word: Optional[int] = 0
-    sentiment: Optional[Sentiment] = ""
+    sentiment: Optional[Sentiment] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
     sentiment_score: Optional[float] = 0
     intents: Optional[List[Intent]] = field(
         default=None, metadata=config(exclude=lambda f: f is None)
@@ -164,56 +200,78 @@ class Segment:
 
     def __getitem__(self, key):
         _dict = self.to_dict()
-        if _dict["intents"] is not None:
+        if "sentiment" in _dict:
+            _dict["sentiment"] = Sentiment.from_dict(_dict["sentiment"])
+        if "intents" in _dict:
             _dict["intents"] = Intent.from_dict(_dict["intents"])
-        if _dict["topics"] is not None:
+        if "topics" in _dict:
             _dict["topics"] = Topic.from_dict(_dict["topics"])
         return _dict[key]
+
+    def __str__(self) -> str:
+        return self.to_json(indent=4)
 
 
 @dataclass_json
 @dataclass
 class Sentiments:
-    segments: Optional[List[Segment]] = None
-    average: Optional[Average] = None
+    segments: Optional[List[Segment]] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
+    average: Optional[Average] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
 
     def __getitem__(self, key):
         _dict = self.to_dict()
-        if _dict["segments"] is not None:
+        if "segments" in _dict:
             _dict["segments"] = [
-                Segment.from_dict(segments) for _, segments in _dict["segments"].items()
+                Segment.from_dict(segments) for segments in _dict["segments"]
             ]
-        if _dict["average"] is not None:
+        if "average" in _dict:
             _dict["average"] = Average.from_dict(_dict["average"])
         return _dict[key]
+
+    def __str__(self) -> str:
+        return self.to_json(indent=4)
 
 
 @dataclass_json
 @dataclass
 class Topics:
-    segments: Optional[List[Segment]] = None
+    segments: Optional[List[Segment]] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
 
     def __getitem__(self, key):
         _dict = self.to_dict()
-        if _dict["segments"] is not None:
+        if "segments" in _dict:
             _dict["segments"] = [
-                Segment.from_dict(segments) for _, segments in _dict["segments"].items()
+                Segment.from_dict(segments) for segments in _dict["segments"]
             ]
         return _dict[key]
+
+    def __str__(self) -> str:
+        return self.to_json(indent=4)
 
 
 @dataclass_json
 @dataclass
 class Intents:
-    segments: Optional[List[Segment]] = None
+    segments: Optional[List[Segment]] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
 
     def __getitem__(self, key):
         _dict = self.to_dict()
-        if _dict["segments"] is not None:
+        if "segments" in _dict:
             _dict["segments"] = [
-                Segment.from_dict(segments) for _, segments in _dict["segments"].items()
+                Segment.from_dict(segments) for segments in _dict["segments"]
             ]
         return _dict[key]
+
+    def __str__(self) -> str:
+        return self.to_json(indent=4)
 
 
 @dataclass_json
@@ -234,15 +292,18 @@ class Results:
 
     def __getitem__(self, key):
         _dict = self.to_dict()
-        if _dict["summary"] is not None:
+        if "summary" in _dict:
             _dict["summary"] = Summary.from_dict(_dict["summary"])
-        if _dict["sentiments"] is not None:
+        if "sentiments" in _dict:
             _dict["sentiments"] = Sentiments.from_dict(_dict["sentiments"])
-        if _dict["topics"] is not None:
+        if "topics" in _dict:
             _dict["topics"] = Topics.from_dict(_dict["topics"])
-        if _dict["intents"] is not None:
+        if "intents" in _dict:
             _dict["intents"] = Intents.from_dict(_dict["intents"])
         return _dict[key]
+
+    def __str__(self) -> str:
+        return self.to_json(indent=4)
 
 
 # Analyze Response Result:
@@ -251,16 +312,23 @@ class Results:
 @dataclass_json
 @dataclass
 class AnalyzeResponse:
-    metadata: Optional[Metadata] = None
-    results: Optional[Results] = None
+    metadata: Optional[Metadata] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
+    results: Optional[Results] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
 
     def __getitem__(self, key):
         _dict = self.to_dict()
-        if _dict["metadata"] is not None:
+        if "metadata" in _dict:
             _dict["metadata"] = Metadata.from_dict(_dict["metadata"])
-        if _dict["results"] is not None:
+        if "results" in _dict:
             _dict["results"] = Results.from_dict(_dict["results"])
         return _dict[key]
+
+    def __str__(self) -> str:
+        return self.to_json(indent=4)
 
 
 @dataclass_json
