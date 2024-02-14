@@ -9,12 +9,12 @@ Constants mapping to events from the Deepgram API
 """
 
 
-class LiveTranscriptionEvents(Enum):
-    Open = "Open"
-    Close = "Close"
-    Transcript = "Results"
-    Metadata = "Metadata"
-    UtteranceEnd = "UtteranceEnd"
-    SpeechStarted = "SpeechStarted"
-    Error = "Error"
-    Warning = "Warning"
+class LiveTranscriptionEvents(str, Enum):
+    Open: str = "Open"
+    Close: str = "Close"
+    Transcript: str = "Results"
+    Metadata: str = "Metadata"
+    UtteranceEnd: str = "UtteranceEnd"
+    SpeechStarted: str = "SpeechStarted"
+    Error: str = "Error"
+    Warning: str = "Warning"
