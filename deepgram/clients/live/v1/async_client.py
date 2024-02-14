@@ -225,7 +225,7 @@ class AsyncLiveClient:
                     self.logger.error(
                         f"WebSocket connection closed with code {e.code}: {e.reason}"
                     )
-                    self._emit(LiveTranscriptionEvents.Error, error=error)
+                    await self._emit(LiveTranscriptionEvents.Error, error=error)
                     self.logger.debug("AsyncLiveClient._start LEAVE")
                     raise
             except Exception as e:
@@ -235,7 +235,7 @@ class AsyncLiveClient:
                     "message": f"{e}",
                     "variant": "",
                 }
-                self._emit(LiveTranscriptionEvents.Error, error)
+                await self._emit(LiveTranscriptionEvents.Error, error)
                 self.logger.error("Exception in _start: %s", error=error)
                 self.logger.debug("AsyncLiveClient._start LEAVE")
                 raise
