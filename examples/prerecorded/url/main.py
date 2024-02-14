@@ -26,12 +26,17 @@ def main():
 
         # STEP 2 Call the transcribe_url method on the prerecorded class
         options = PrerecordedOptions(
-            model="nova",
+            model="nova-2",
             smart_format=True,
-            summarize="v2",
         )
         response = deepgram.listen.prerecorded.v("1").transcribe_url(AUDIO_URL, options)
-        print(response.to_json(indent=4))
+        print(f"response: {response}\n\n")
+        # print(f"metadata: {response['metadata']}\n\n")
+        # print(
+        #     f"transcript: {response.results.channels[0].alternatives[0]['transcript']}\n\n"
+        # )
+        # for word in response.results.channels[0].alternatives[0].words:
+        #     print(f"Word: {word.word}, Start: {word.start}, End: {word.end}")
 
     except Exception as e:
         print(f"Exception: {e}")

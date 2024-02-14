@@ -19,6 +19,9 @@ class AsyncPrerecordedResponse:
         _dict = self.to_dict()
         return _dict[key]
 
+    def __str__(self) -> str:
+        return self.to_json(indent=4)
+
 
 # Prerecorded Response Types:
 
@@ -34,6 +37,9 @@ class SummaryInfo:
         _dict = self.to_dict()
         return _dict[key]
 
+    def __str__(self) -> str:
+        return self.to_json(indent=4)
+
 
 @dataclass_json
 @dataclass
@@ -45,6 +51,9 @@ class ModelInfo:
     def __getitem__(self, key):
         _dict = self.to_dict()
         return _dict[key]
+
+    def __str__(self) -> str:
+        return self.to_json(indent=4)
 
 
 @dataclass_json
@@ -58,6 +67,9 @@ class IntentsInfo:
         _dict = self.to_dict()
         return _dict[key]
 
+    def __str__(self) -> str:
+        return self.to_json(indent=4)
+
 
 @dataclass_json
 @dataclass
@@ -69,6 +81,9 @@ class SentimentInfo:
     def __getitem__(self, key):
         _dict = self.to_dict()
         return _dict[key]
+
+    def __str__(self) -> str:
+        return self.to_json(indent=4)
 
 
 @dataclass_json
@@ -82,6 +97,9 @@ class TopicsInfo:
         _dict = self.to_dict()
         return _dict[key]
 
+    def __str__(self) -> str:
+        return self.to_json(indent=4)
+
 
 @dataclass_json
 @dataclass
@@ -92,11 +110,15 @@ class Metadata:
     created: Optional[str] = ""
     duration: Optional[float] = 0
     channels: Optional[int] = 0
-    models: Optional[List[str]] = None
+    models: Optional[List[str]] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
     warnings: Optional[List[Warning]] = field(
         default=None, metadata=config(exclude=lambda f: f is None)
     )
-    model_info: Optional[Dict[str, ModelInfo]] = None
+    model_info: Optional[Dict[str, ModelInfo]] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
     summary_info: Optional[SummaryInfo] = field(
         default=None, metadata=config(exclude=lambda f: f is None)
     )
@@ -109,32 +131,37 @@ class Metadata:
     topics_info: Optional[TopicsInfo] = field(
         default=None, metadata=config(exclude=lambda f: f is None)
     )
-    extra: Optional[Dict[str, str]] = None
+    extra: Optional[Dict[str, str]] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
 
     def __getitem__(self, key):
         _dict = self.to_dict()
-        if _dict["models"] is not None:
+        if "models" in _dict:
             _dict["models"] = [str(models) for models in _dict["models"]]
-        if _dict["warnings"] is not None:
+        if "warnings" in _dict:
             _dict["warnings"] = [
-                Warning.from_dict(warnings) for _, warnings in _dict["warnings"].items()
+                Warning.from_dict(warnings) for warnings in _dict["warnings"]
             ]
-        if _dict["model_info"] is not None:
+        if "model_info" in _dict:
             _dict["model_info"] = [
                 ModelInfo.from_dict(model_info)
                 for _, model_info in _dict["model_info"].items()
             ]
-        if _dict["summary_info"] is not None:
+        if "summary_info" in _dict:
             _dict["summary_info"] = SummaryInfo.from_dict(_dict["summary_info"])
-        if _dict["intents_info"] is not None:
+        if "intents_info" in _dict:
             _dict["intents_info"] = IntentsInfo.from_dict(_dict["intents_info"])
-        if _dict["sentiment_info"] is not None:
+        if "sentiment_info" in _dict:
             _dict["sentiment_info"] = SentimentInfo.from_dict(_dict["sentiment_info"])
-        if _dict["topics_info"] is not None:
+        if "topics_info" in _dict:
             _dict["topics_info"] = TopicsInfo.from_dict(_dict["topics_info"])
-        if _dict["extra"] is not None:
+        if "extra" in _dict:
             _dict["extra"] = [str(extra) for _, extra in _dict["extra"].items()]
         return _dict[key]
+
+    def __str__(self) -> str:
+        return self.to_json(indent=4)
 
 
 @dataclass_json
@@ -147,6 +174,9 @@ class SummaryV1:
     def __getitem__(self, key):
         _dict = self.to_dict()
         return _dict[key]
+
+    def __str__(self) -> str:
+        return self.to_json(indent=4)
 
 
 @dataclass_json
@@ -164,6 +194,9 @@ class SummaryV2:
     def __getitem__(self, key):
         _dict = self.to_dict()
         return _dict[key]
+
+    def __str__(self) -> str:
+        return self.to_json(indent=4)
 
 
 @dataclass_json
@@ -184,6 +217,9 @@ class Hit:
         _dict = self.to_dict()
         return _dict[key]
 
+    def __str__(self) -> str:
+        return self.to_json(indent=4)
+
 
 @dataclass_json
 @dataclass
@@ -193,14 +229,27 @@ class Word:
     end: Optional[float] = 0
     confidence: Optional[float] = 0
     punctuated_word: Optional[str] = ""
-    speaker: Optional[int] = 0
-    speaker_confidence: Optional[float] = 0
-    sentiment: Optional[Sentiment] = ""
-    sentiment_score: Optional[float] = 0
+    speaker: Optional[int] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
+    speaker_confidence: Optional[float] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
+    sentiment: Optional[Sentiment] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
+    sentiment_score: Optional[float] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
 
     def __getitem__(self, key):
         _dict = self.to_dict()
+        if "sentiment" in _dict:
+            _dict["sentiment"] = Sentiment.from_dict(_dict["sentiment"])
         return _dict[key]
+
+    def __str__(self) -> str:
+        return self.to_json(indent=4)
 
 
 @dataclass_json
@@ -209,49 +258,74 @@ class Sentence:
     text: Optional[str] = ""
     start: Optional[float] = 0
     end: Optional[float] = 0
-    sentiment: Optional[Sentiment] = ""
-    sentiment_score: Optional[float] = None
+    sentiment: Optional[Sentiment] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
+    sentiment_score: Optional[float] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
 
     def __getitem__(self, key):
         _dict = self.to_dict()
+        if "sentiment" in _dict:
+            _dict["sentiment"] = Sentiment.from_dict(_dict["sentiment"])
         return _dict[key]
+
+    def __str__(self) -> str:
+        return self.to_json(indent=4)
 
 
 @dataclass_json
 @dataclass
 class Paragraph:
-    sentences: Optional[List[Sentence]] = None
+    sentences: Optional[List[Sentence]] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
     start: Optional[float] = 0
     end: Optional[float] = 0
     num_words: Optional[float] = 0
-    speaker: Optional[int] = 0
-    sentiment: Optional[Sentiment] = ""
-    sentiment_score: Optional[float] = 0
+    speaker: Optional[int] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
+    sentiment: Optional[Sentiment] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
+    sentiment_score: Optional[float] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
 
     def __getitem__(self, key):
         _dict = self.to_dict()
-        if _dict["sentences"] is not None:
+        if "sentences" in _dict:
             _dict["sentences"] = [
-                Sentence.from_dict(sentences)
-                for _, sentences in _dict["sentences"].items()
+                Sentence.from_dict(sentences) for sentences in _dict["sentences"]
             ]
+        if "sentiment" in _dict:
+            _dict["sentiment"] = Sentiment.from_dict(_dict["sentiment"])
         return _dict[key]
+
+    def __str__(self) -> str:
+        return self.to_json(indent=4)
 
 
 @dataclass_json
 @dataclass
 class Paragraphs:
     transcript: Optional[str] = ""
-    paragraphs: Optional[List[Paragraph]] = None
+    paragraphs: Optional[List[Paragraph]] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
 
     def __getitem__(self, key):
         _dict = self.to_dict()
-        if _dict["paragraphs"] is not None:
+        if "paragraphs" in _dict:
             _dict["paragraphs"] = [
-                Paragraph.from_dict(paragraphs)
-                for _, paragraphs in _dict["paragraphs"].items()
+                Paragraph.from_dict(paragraphs) for paragraphs in _dict["paragraphs"]
             ]
         return _dict[key]
+
+    def __str__(self) -> str:
+        return self.to_json(indent=4)
 
 
 @dataclass_json
@@ -263,6 +337,9 @@ class Translation:
     def __getitem__(self, key):
         _dict = self.to_dict()
         return _dict[key]
+
+    def __str__(self) -> str:
+        return self.to_json(indent=4)
 
 
 @dataclass_json
@@ -276,18 +353,26 @@ class Warning:
         _dict = self.to_dict()
         return _dict[key]
 
+    def __str__(self) -> str:
+        return self.to_json(indent=4)
+
 
 @dataclass_json
 @dataclass
 class Search:
     query: Optional[str] = ""
-    hits: Optional[List[Hit]] = None
+    hits: Optional[List[Hit]] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
 
     def __getitem__(self, key):
         _dict = self.to_dict()
-        if _dict["hits"] is not None:
-            _dict["hits"] = [Hit.from_dict(hits) for _, hits in _dict["hits"].items()]
+        if "hits" in _dict:
+            _dict["hits"] = [Hit.from_dict(hits) for hits in _dict["hits"]]
         return _dict[key]
+
+    def __str__(self) -> str:
+        return self.to_json(indent=4)
 
 
 @dataclass_json
@@ -298,19 +383,30 @@ class Utterance:
     confidence: Optional[float] = 0
     channel: Optional[int] = 0
     transcript: Optional[str] = ""
-    words: Optional[List[Word]] = None
-    speaker: Optional[int] = 0
-    sentiment: Optional[Sentiment] = ""
-    sentiment_score: Optional[float] = 0
+    words: Optional[List[Word]] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
+    speaker: Optional[int] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
+    sentiment: Optional[Sentiment] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
+    sentiment_score: Optional[float] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
     id: Optional[str] = ""
 
     def __getitem__(self, key):
         _dict = self.to_dict()
-        if _dict["words"] is not None:
-            _dict["words"] = [
-                Word.from_dict(words) for _, words in _dict["words"].items()
-            ]
+        if "words" in _dict:
+            _dict["words"] = [Word.from_dict(words) for words in _dict["words"]]
+        if "sentiment" in _dict:
+            _dict["sentiment"] = Sentiment.from_dict(_dict["sentiment"])
         return _dict[key]
+
+    def __str__(self) -> str:
+        return self.to_json(indent=4)
 
 
 @dataclass_json
@@ -326,17 +422,24 @@ class Entity:
         _dict = self.to_dict()
         return _dict[key]
 
+    def __str__(self) -> str:
+        return self.to_json(indent=4)
+
 
 @dataclass_json
 @dataclass
 class Alternative:
     transcript: Optional[str] = ""
     confidence: Optional[float] = 0
-    words: Optional[List[Word]] = None
+    words: Optional[List[Word]] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
     summaries: Optional[List[SummaryV1]] = field(
         default=None, metadata=config(exclude=lambda f: f is None)
     )
-    paragraphs: Optional[Paragraphs] = None
+    paragraphs: Optional[Paragraphs] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
     entities: Optional[List[Entity]] = field(
         default=None, metadata=config(exclude=lambda f: f is None)
     )
@@ -346,27 +449,27 @@ class Alternative:
 
     def __getitem__(self, key):
         _dict = self.to_dict()
-        if _dict["words"] is not None:
-            _dict["words"] = [
-                Word.from_dict(words) for _, words in _dict["words"].items()
-            ]
-        if _dict["summaries"] is not None:
+        if "words" in _dict:
+            _dict["words"] = [Word.from_dict(words) for words in _dict["words"]]
+        if "summaries" in _dict:
             _dict["summaries"] = [
-                SummaryV1.from_dict(summaries)
-                for _, summaries in _dict["summaries"].items()
+                SummaryV1.from_dict(summaries) for summaries in _dict["summaries"]
             ]
-        if _dict["paragraphs"] is not None:
+        if "paragraphs" in _dict:
             _dict["paragraphs"] = Paragraphs.from_dict(_dict["paragraphs"])
-        if _dict["entities"] is not None:
+        if "entities" in _dict:
             _dict["entities"] = [
-                Entity.from_dict(entities) for _, entities in _dict["entities"].items()
+                Entity.from_dict(entities) for entities in _dict["entities"]
             ]
-        if _dict["translations"] is not None:
+        if "translations" in _dict:
             _dict["translations"] = [
                 Translation.from_dict(translations)
-                for _, translations in _dict["translations"].items()
+                for translations in _dict["translations"]
             ]
         return _dict[key]
+
+    def __str__(self) -> str:
+        return self.to_json(indent=4)
 
 
 @dataclass_json
@@ -375,22 +478,25 @@ class Channel:
     search: Optional[List[Search]] = field(
         default=None, metadata=config(exclude=lambda f: f is None)
     )
-    alternatives: Optional[List[Alternative]] = None
+    alternatives: Optional[List[Alternative]] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
     detected_language: Optional[str] = ""
     language_confidence: Optional[float] = 0
 
     def __getitem__(self, key):
         _dict = self.to_dict()
-        if _dict["search"] is not None:
-            _dict["search"] = [
-                Search.from_dict(search) for _, search in _dict["search"].items()
-            ]
-        if _dict["alternatives"] is not None:
+        if "search" in _dict:
+            _dict["search"] = [Search.from_dict(search) for search in _dict["search"]]
+        if "alternatives" in _dict:
             _dict["alternatives"] = [
                 Alternative.from_dict(alternatives)
-                for _, alternatives in _dict["alternatives"].items()
+                for alternatives in _dict["alternatives"]
             ]
         return _dict[key]
+
+    def __str__(self) -> str:
+        return self.to_json(indent=4)
 
 
 @dataclass_json
@@ -403,16 +509,28 @@ class Intent:
         _dict = self.to_dict()
         return _dict[key]
 
+    def __str__(self) -> str:
+        return self.to_json(indent=4)
+
 
 @dataclass_json
 @dataclass
 class Average:
-    sentiment: Optional[Sentiment] = ""
-    sentiment_score: Optional[float] = 0
+    sentiment: Optional[Sentiment] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
+    sentiment_score: Optional[float] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
 
     def __getitem__(self, key):
         _dict = self.to_dict()
+        if "sentiment" in _dict:
+            _dict["sentiment"] = Sentiment.from_dict(_dict["sentiment"])
         return _dict[key]
+
+    def __str__(self) -> str:
+        return self.to_json(indent=4)
 
 
 @dataclass_json
@@ -425,6 +543,9 @@ class Topic:
         _dict = self.to_dict()
         return _dict[key]
 
+    def __str__(self) -> str:
+        return self.to_json(indent=4)
+
 
 @dataclass_json
 @dataclass
@@ -432,8 +553,12 @@ class Segment:
     text: Optional[str] = ""
     start_word: Optional[int] = 0
     end_word: Optional[int] = 0
-    sentiment: Optional[Sentiment] = ""
-    sentiment_score: Optional[float] = 0
+    sentiment: Optional[Sentiment] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
+    sentiment_score: Optional[float] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
     intents: Optional[List[Intent]] = field(
         default=None, metadata=config(exclude=lambda f: f is None)
     )
@@ -443,62 +568,88 @@ class Segment:
 
     def __getitem__(self, key):
         _dict = self.to_dict()
-        if _dict["intents"] is not None:
-            _dict["intents"] = Intent.from_dict(_dict["intents"])
-        if _dict["topics"] is not None:
-            _dict["topics"] = Topic.from_dict(_dict["topics"])
+        if "sentiment" in _dict:
+            _dict["sentiment"] = Sentiment.from_dict(_dict["sentiment"])
+        if "intents" in _dict:
+            _dict["intents"] = [
+                Intent.from_dict(intents) for intents in _dict["intents"]
+            ]
+        if "topics" in _dict:
+            _dict["topics"] = [Topic.from_dict(topics) for topics in _dict["topics"]]
         return _dict[key]
+
+    def __str__(self) -> str:
+        return self.to_json(indent=4)
 
 
 @dataclass_json
 @dataclass
 class Sentiments:
-    segments: Optional[List[Segment]] = None
-    average: Optional[Average] = None
+    segments: Optional[List[Segment]] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
+    average: Optional[Average] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
 
     def __getitem__(self, key):
         _dict = self.to_dict()
-        if _dict["segments"] is not None:
+        if "segments" in _dict:
             _dict["segments"] = [
-                Segment.from_dict(segments) for _, segments in _dict["segments"].items()
+                Segment.from_dict(segments) for segments in _dict["segments"]
             ]
-        if _dict["average"] is not None:
+        if "average" in _dict:
             _dict["average"] = Average.from_dict(_dict["average"])
         return _dict[key]
+
+    def __str__(self) -> str:
+        return self.to_json(indent=4)
 
 
 @dataclass_json
 @dataclass
 class Topics:
-    segments: Optional[List[Segment]] = None
+    segments: Optional[List[Segment]] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
 
     def __getitem__(self, key):
         _dict = self.to_dict()
-        if _dict["segments"] is not None:
+        if "segments" in _dict:
             _dict["segments"] = [
-                Segment.from_dict(segments) for _, segments in _dict["segments"].items()
+                Segment.from_dict(segments) for segments in _dict["segments"]
             ]
         return _dict[key]
+
+    def __str__(self) -> str:
+        return self.to_json(indent=4)
 
 
 @dataclass_json
 @dataclass
 class Intents:
-    segments: Optional[List[Segment]] = None
+    segments: Optional[List[Segment]] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
 
     def __getitem__(self, key):
         _dict = self.to_dict()
-        if _dict["segments"] is not None:
+        if "segments" in _dict:
             _dict["segments"] = [
-                Segment.from_dict(segments) for _, segments in _dict["segments"].items()
+                Segment.from_dict(segments) for segments in _dict["segments"]
             ]
         return _dict[key]
+
+    def __str__(self) -> str:
+        return self.to_json(indent=4)
 
 
 @dataclass_json
 @dataclass
 class Results:
-    channels: Optional[List[Channel]] = None
+    channels: Optional[List[Channel]] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
     utterances: Optional[List[Utterance]] = field(
         default=None, metadata=config(exclude=lambda f: f is None)
     )
@@ -517,24 +668,26 @@ class Results:
 
     def __getitem__(self, key):
         _dict = self.to_dict()
-        if _dict["channels"] is not None:
+        if "channels" in _dict:
             _dict["channels"] = [
-                Channel.from_dict(channels) for _, channels in _dict["channels"].items()
+                Channel.from_dict(channels) for channels in _dict["channels"]
             ]
-        if _dict["utterances"] is not None:
+        if "utterances" in _dict:
             _dict["utterances"] = [
-                Utterance.from_dict(utterances)
-                for _, utterances in _dict["utterances"].items()
+                Utterance.from_dict(utterances) for utterances in _dict["utterances"]
             ]
-        if _dict["summary"] is not None:
+        if "summary" in _dict:
             _dict["summary"] = SummaryV2.from_dict(_dict["summary"])
-        if _dict["sentiments"] is not None:
+        if "sentiments" in _dict:
             _dict["sentiments"] = Sentiments.from_dict(_dict["sentiments"])
-        if _dict["topics"] is not None:
+        if "topics" in _dict:
             _dict["topics"] = Topics.from_dict(_dict["topics"])
-        if _dict["intents"] is not None:
+        if "intents" in _dict:
             _dict["intents"] = Intents.from_dict(_dict["intents"])
         return _dict[key]
+
+    def __str__(self) -> str:
+        return self.to_json(indent=4)
 
 
 # Prerecorded Response Result:
@@ -543,16 +696,23 @@ class Results:
 @dataclass_json
 @dataclass
 class PrerecordedResponse:
-    metadata: Optional[Metadata] = None
-    results: Optional[Results] = None
+    metadata: Optional[Metadata] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
+    results: Optional[Results] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
 
     def __getitem__(self, key):
         _dict = self.to_dict()
-        if _dict["metadata"] is not None:
+        if "metadata" in _dict:
             _dict["metadata"] = Metadata.from_dict(_dict["metadata"])
-        if _dict["results"] is not None:
+        if "results" in _dict:
             _dict["results"] = Results.from_dict(_dict["results"])
         return _dict[key]
+
+    def __str__(self) -> str:
+        return self.to_json(indent=4)
 
 
 @dataclass_json

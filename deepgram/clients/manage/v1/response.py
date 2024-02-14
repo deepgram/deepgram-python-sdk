@@ -20,6 +20,9 @@ class Message:
         _dict = self.to_dict()
         return _dict[key]
 
+    def __str__(self) -> str:
+        return self.to_json(indent=4)
+
 
 # Projects
 
@@ -34,6 +37,9 @@ class Project:
         _dict = self.to_dict()
         return _dict[key]
 
+    def __str__(self) -> str:
+        return self.to_json(indent=4)
+
 
 @dataclass_json
 @dataclass
@@ -42,11 +48,14 @@ class ProjectsResponse:
 
     def __getitem__(self, key):
         _dict = self.to_dict()
-        if _dict["projects"] is not None:
+        if "projects" in _dict:
             _dict["projects"] = [
-                Project.from_dict(projects) for _, projects in _dict["projects"].items()
+                Project.from_dict(projects) for projects in _dict["projects"]
             ]
         return _dict[key]
+
+    def __str__(self) -> str:
+        return self.to_json(indent=4)
 
 
 # Members
@@ -64,6 +73,9 @@ class Member:
         _dict = self.to_dict()
         return _dict[key]
 
+    def __str__(self) -> str:
+        return self.to_json(indent=4)
+
 
 @dataclass_json
 @dataclass
@@ -72,11 +84,14 @@ class MembersResponse:
 
     def __getitem__(self, key):
         _dict = self.to_dict()
-        if _dict["members"] is not None:
+        if "members" in _dict:
             _dict["members"] = [
-                Member.from_dict(members) for _, members in _dict["members"].items()
+                Member.from_dict(members) for members in _dict["members"]
             ]
         return _dict[key]
+
+    def __str__(self) -> str:
+        return self.to_json(indent=4)
 
 
 # Keys
@@ -92,9 +107,12 @@ class Key:
 
     def __getitem__(self, key):
         _dict = self.to_dict()
-        if _dict["scopes"] is not None:
+        if "scopes" in _dict:
             _dict["scopes"] = [str(scopes) for scopes in _dict["scopes"]]
         return _dict[key]
+
+    def __str__(self) -> str:
+        return self.to_json(indent=4)
 
 
 @dataclass_json
@@ -105,11 +123,14 @@ class KeyResponse:
 
     def __getitem__(self, key):
         _dict = self.to_dict()
-        if _dict["api_key"] is not None:
+        if "api_key" in _dict:
             _dict["api_key"] = Key.from_dict(_dict["api_key"])
-        if _dict["member"] is not None:
+        if "member" in _dict:
             _dict["member"] = Member.from_dict(_dict["member"])
         return _dict[key]
+
+    def __str__(self) -> str:
+        return self.to_json(indent=4)
 
 
 @dataclass_json
@@ -119,12 +140,14 @@ class KeysResponse:
 
     def __getitem__(self, key):
         _dict = self.to_dict()
-        if _dict["api_keys"] is not None:
+        if "api_keys" in _dict:
             _dict["api_keys"] = [
-                KeyResponse.from_dict(api_keys)
-                for _, api_keys in _dict["api_keys"].items()
+                KeyResponse.from_dict(api_keys) for api_keys in _dict["api_keys"]
             ]
         return _dict[key]
+
+    def __str__(self) -> str:
+        return self.to_json(indent=4)
 
 
 # Scopes
@@ -137,9 +160,12 @@ class ScopesResponse:
 
     def __getitem__(self, key):
         _dict = self.to_dict()
-        if _dict["scopes"] is not None:
+        if "scopes" in _dict:
             _dict["scopes"] = [str(scopes) for scopes in _dict["scopes"]]
         return _dict[key]
+
+    def __str__(self) -> str:
+        return self.to_json(indent=4)
 
 
 # Invites
@@ -155,6 +181,9 @@ class Invite:
         _dict = self.to_dict()
         return _dict[key]
 
+    def __str__(self) -> str:
+        return self.to_json(indent=4)
+
 
 @dataclass_json
 @dataclass
@@ -163,11 +192,14 @@ class InvitesResponse:
 
     def __getitem__(self, key):
         _dict = self.to_dict()
-        if _dict["invites"] is not None:
+        if "invites" in _dict:
             _dict["invites"] = [
-                Invite.from_dict(invites) for _, invites in _dict["invites"].items()
+                Invite.from_dict(invites) for invites in _dict["invites"]
             ]
         return _dict[key]
+
+    def __str__(self) -> str:
+        return self.to_json(indent=4)
 
 
 # Usage
@@ -188,6 +220,10 @@ class Config:
         _dict = self.to_dict()
         return _dict[key]
 
+    def __str__(self) -> str:
+        return self.to_json(indent=4)
+
+
 @dataclass_json
 @dataclass
 class Details:
@@ -203,18 +239,20 @@ class Details:
     config: Optional[Config] = None
     tier: Optional[str] = ""
 
-
     def __getitem__(self, key):
         _dict = self.to_dict()
-        if _dict["models"] is not None:
+        if "models" in _dict:
             _dict["models"] = [str(models) for models in _dict["models"]]
-        if _dict["tags"] is not None:
+        if "tags" in _dict:
             _dict["tags"] = [str(tags) for tags in _dict["tags"]]
-        if _dict["features"] is not None:
+        if "features" in _dict:
             _dict["features"] = [str(features) for features in _dict["features"]]
-        if _dict["config"] is not None:
+        if "config" in _dict:
             _dict["config"] = Config.from_dict(_dict["config"])
         return _dict[key]
+
+    def __str__(self) -> str:
+        return self.to_json(indent=4)
 
 
 @dataclass_json
@@ -228,6 +266,10 @@ class Callback:
         _dict = self.to_dict()
         return _dict[key]
 
+    def __str__(self) -> str:
+        return self.to_json(indent=4)
+
+
 @dataclass_json
 @dataclass
 class TokenDetail:
@@ -239,7 +281,11 @@ class TokenDetail:
     def __getitem__(self, key):
         _dict = self.to_dict()
         return _dict[key]
-    
+
+    def __str__(self) -> str:
+        return self.to_json(indent=4)
+
+
 @dataclass_json
 @dataclass
 class Response:
@@ -250,13 +296,17 @@ class Response:
 
     def __getitem__(self, key):
         _dict = self.to_dict()
-        if _dict["details"] is not None:
+        if "details" in _dict:
             _dict["details"] = Details.from_dict(_dict["details"])
-        if _dict["token_details"] is not None:
+        if "token_details" in _dict:
             _dict["token_details"] = [
-                TokenDetail.from_dict(token_details) for _, token_details in _dict["token_details"].items()
+                TokenDetail.from_dict(token_details)
+                for token_details in _dict["token_details"]
             ]
         return _dict[key]
+
+    def __str__(self) -> str:
+        return self.to_json(indent=4)
 
 
 @dataclass_json
@@ -273,11 +323,14 @@ class UsageRequest:
 
     def __getitem__(self, key):
         _dict = self.to_dict()
-        if _dict["response"] is not None:
+        if "response" in _dict:
             _dict["response"] = Response.from_dict(_dict["response"])
-        if _dict["callback"] is not None:
+        if "callback" in _dict:
             _dict["callback"] = Callback.from_dict(_dict["callback"])
         return _dict[key]
+
+    def __str__(self) -> str:
+        return self.to_json(indent=4)
 
 
 @dataclass_json
@@ -289,13 +342,18 @@ class UsageRequestsResponse:
 
     def __getitem__(self, key):
         _dict = self.to_dict()
-        if _dict["requests"] is not None:
+        if "requests" in _dict:
             _dict["requests"] = [
-                UsageRequest.from_dict(requests)
-                for _, requests in _dict["requests"].items()
+                UsageRequest.from_dict(requests) for requests in _dict["requests"]
             ]
         return _dict[key]
 
+    def __str__(self) -> str:
+        return self.to_json(indent=4)
+
+
+@dataclass_json
+@dataclass
 class Tokens:
     tokens_in: Optional[int] = 0
     out: Optional[int] = 0
@@ -303,6 +361,10 @@ class Tokens:
     def __getitem__(self, key):
         _dict = self.to_dict()
         return _dict[key]
+
+    def __str__(self) -> str:
+        return self.to_json(indent=4)
+
 
 @dataclass_json
 @dataclass
@@ -316,11 +378,12 @@ class Results:
 
     def __getitem__(self, key):
         _dict = self.to_dict()
-        if _dict["tokens"] is not None:
-            _dict["tokens"] = [
-                Tokens.from_dict(tokens) for _, tokens in _dict["tokens"].items()
-            ]
+        if "tokens" in _dict:
+            _dict["tokens"] = [Tokens.from_dict(tokens) for tokens in _dict["tokens"]]
         return _dict[key]
+
+    def __str__(self) -> str:
+        return self.to_json(indent=4)
 
 
 @dataclass_json
@@ -333,6 +396,9 @@ class Resolution:
         _dict = self.to_dict()
         return _dict[key]
 
+    def __str__(self) -> str:
+        return self.to_json(indent=4)
+
 
 @dataclass_json
 @dataclass
@@ -344,13 +410,16 @@ class UsageSummaryResponse:
 
     def __getitem__(self, key):
         _dict = self.to_dict()
-        if _dict["resolution"] is not None:
+        if "resolution" in _dict:
             _dict["resolution"] = Resolution.from_dict(_dict["resolution"])
-        if _dict["results"] is not None:
+        if "results" in _dict:
             _dict["results"] = [
-                Results.from_dict(results) for _, results in _dict["results"].items()
+                Results.from_dict(results) for results in _dict["results"]
             ]
         return _dict[key]
+
+    def __str__(self) -> str:
+        return self.to_json(indent=4)
 
 
 @dataclass_json
@@ -365,6 +434,9 @@ class UsageModel:
         _dict = self.to_dict()
         return _dict[key]
 
+    def __str__(self) -> str:
+        return self.to_json(indent=4)
+
 
 @dataclass_json
 @dataclass
@@ -377,22 +449,25 @@ class UsageFieldsResponse:
 
     def __getitem__(self, key):
         _dict = self.to_dict()
-        if _dict["tags"] is not None:
+        if "tags" in _dict:
             _dict["tags"] = [str(tags) for tags in _dict["tags"]]
-        if _dict["models"] is not None:
+        if "models" in _dict:
             _dict["models"] = [
-                UsageModel.from_dict(models) for _, models in _dict["models"].items()
+                UsageModel.from_dict(models) for models in _dict["models"]
             ]
-        if _dict["processing_methods"] is not None:
+        if "processing_methods" in _dict:
             _dict["processing_methods"] = [
                 str(processing_methods)
                 for processing_methods in _dict["processing_methods"]
             ]
-        if _dict["features"] is not None:
+        if "features" in _dict:
             _dict["features"] = [str(features) for features in _dict["features"]]
-        if _dict["languages"] is not None:
+        if "languages" in _dict:
             _dict["languages"] = [str(languages) for languages in _dict["languages"]]
         return _dict[key]
+
+    def __str__(self) -> str:
+        return self.to_json(indent=4)
 
 
 # Billing
@@ -410,6 +485,9 @@ class Balance:
         _dict = self.to_dict()
         return _dict[key]
 
+    def __str__(self) -> str:
+        return self.to_json(indent=4)
+
 
 @dataclass_json
 @dataclass
@@ -418,8 +496,11 @@ class BalancesResponse:
 
     def __getitem__(self, key):
         _dict = self.to_dict()
-        if _dict["balances"] is not None:
+        if "balances" in _dict:
             _dict["balances"] = [
-                Balance.from_dict(balances) for _, balances in _dict["balances"].items()
+                Balance.from_dict(balances) for balances in _dict["balances"]
             ]
         return _dict[key]
+
+    def __str__(self) -> str:
+        return self.to_json(indent=4)
