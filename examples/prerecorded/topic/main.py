@@ -9,7 +9,7 @@ from datetime import datetime, timedelta
 
 from deepgram import (
     DeepgramClient,
-    DeepgramClientOptions,
+    ClientOptionsFromEnv,
     PrerecordedOptions,
     FileSource,
 )
