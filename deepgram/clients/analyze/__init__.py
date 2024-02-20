@@ -2,8 +2,8 @@
 # Use of this source code is governed by a MIT license that can be found in the LICENSE file.
 # SPDX-License-Identifier: MIT
 
-from .client import AnalyzeClient
-from .client import AsyncAnalyzeClient
+from .client import AnalyzeClient, AsyncAnalyzeClient
+from .client import ReadClient, AsyncReadClient
 from .client import AnalyzeOptions
 from .client import (
     UrlSource,

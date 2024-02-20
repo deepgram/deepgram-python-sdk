@@ -14,12 +14,13 @@ load_dotenv()
 
 def main():
     try:
-        # Create a Deepgram client using the API key
+        # STEP 1 Create a Deepgram client using the API key in the environment variables
         config: DeepgramClientOptions = DeepgramClientOptions(
             verbose=logging.SPAM,
         )
-
         deepgram: DeepgramClient = DeepgramClient("", config)
+        # OR use defaults
+        # deepgram: DeepgramClient = DeepgramClient()
 
         # get projects
         projectResp = deepgram.manage.v("1").get_projects()
