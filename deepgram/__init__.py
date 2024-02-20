@@ -43,6 +43,7 @@ from .client import (
 )
 
 # read
+from .client import ReadClient, AsyncReadClient
 from .client import AnalyzeClient, AsyncAnalyzeClient
 from .client import (
     AnalyzeSource,
@@ -58,6 +59,11 @@ from .client import (
     AnalyzeResponse,
     SyncAnalyzeResponse,
 )
+
+# speak
+from .client import SpeakClient, AsyncSpeakClient
+from .client import SpeakSource, TextSource, SpeakOptions
+from .client import SpeakResponse
 
 # manage
 from .client import ManageClient, AsyncManageClient

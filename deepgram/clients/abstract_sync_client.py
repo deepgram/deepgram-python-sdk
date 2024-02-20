@@ -4,7 +4,7 @@
 
 import httpx
 import json
-from typing import Dict
+from typing import Dict, List
 
 from .helpers import append_query_params
 from ..options import DeepgramClientOptions
@@ -40,7 +40,7 @@ class AbstractSyncRestClient:
         options: Dict = None,
         addons: Dict = None,
         timeout: httpx.Timeout = None,
-        **kwargs
+        **kwargs,
     ) -> str:
         return self._handle_request(
             "GET",
@@ -49,7 +49,7 @@ class AbstractSyncRestClient:
             addons=addons,
             headers=self.config.headers,
             timeout=timeout,
-            **kwargs
+            **kwargs,
         )
 
     def post(
@@ -58,16 +58,18 @@ class AbstractSyncRestClient:
         options: Dict = None,
         addons: Dict = None,
         timeout: httpx.Timeout = None,
-        **kwargs
-    ) -> str:
+        file_result: List = None,
+        **kwargs,
+    ):
         return self._handle_request(
             "POST",
             url,
+            file_result=file_result,
             params=options,
             addons=addons,
             headers=self.config.headers,
             timeout=timeout,
-            **kwargs
+            **kwargs,
         )
 
     def put(
@@ -76,7 +78,7 @@ class AbstractSyncRestClient:
         options: Dict = None,
         addons: Dict = None,
         timeout: httpx.Timeout = None,
-        **kwargs
+        **kwargs,
     ) -> str:
         return self._handle_request(
             "PUT",
@@ -85,7 +87,7 @@ class AbstractSyncRestClient:
             addons=addons,
             headers=self.config.headers,
             timeout=timeout,
-            **kwargs
+            **kwargs,
         )
 
     def patch(
@@ -94,7 +96,7 @@ class AbstractSyncRestClient:
         options: Dict = None,
         addons: Dict = None,
         timeout: httpx.Timeout = None,
-        **kwargs
+        **kwargs,
     ) -> str:
         return self._handle_request(
             "PATCH",
@@ -103,7 +105,7 @@ class AbstractSyncRestClient:
             addons=addons,
             headers=self.config.headers,
             timeout=timeout,
-            **kwargs
+            **kwargs,
         )
 
     def delete(
@@ -112,7 +114,7 @@ class AbstractSyncRestClient:
         options: Dict = None,
         addons: Dict = None,
         timeout: httpx.Timeout = None,
-        **kwargs
+        **kwargs,
     ) -> str:
         return self._handle_request(
             "DELETE",
@@ -121,7 +123,7 @@ class AbstractSyncRestClient:
             addons=addons,
             headers=self.config.headers,
             timeout=timeout,
-            **kwargs
+            **kwargs,
         )
 
     def _handle_request(
@@ -132,8 +134,9 @@ class AbstractSyncRestClient:
         addons: Dict = None,
         timeout: httpx.Timeout = None,
         headers: Dict = None,
-        **kwargs
-    ) -> str:
+        file_result=None,
+        **kwargs,
+    ):
         new_url = url
         if params is not None:
             new_url = append_query_params(new_url, params)
@@ -147,7 +150,23 @@ class AbstractSyncRestClient:
             with httpx.Client(timeout=timeout) as client:
                 response = client.request(method, new_url, headers=headers, **kwargs)
                 response.raise_for_status()
+
+                # handle file response
+                if file_result is not None:
+                    ret = dict()
+                    for item in file_result:
+                        if item in response.headers:
+                            ret[item] = response.headers[item]
+                            continue
+                        tmpItem = f"x-dg-{item}"
+                        if tmpItem in response.headers:
+                            ret[tmpItem] = response.headers[tmpItem]
+                    ret["stream"] = response.content
+                    return ret
+
+                # standard response
                 return response.text
+
         except httpx._exceptions.HTTPError as e:
             if isinstance(e, httpx.HTTPStatusError):
                 status_code = e.response.status_code or 500
