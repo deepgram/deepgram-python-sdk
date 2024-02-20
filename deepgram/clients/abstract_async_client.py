@@ -4,7 +4,8 @@
 
 import httpx
 import json
-from typing import Dict, Optional
+import io
+from typing import Dict, Optional, List
 
 from .helpers import append_query_params
 from ..options import DeepgramClientOptions
@@ -41,7 +42,7 @@ class AbstractAsyncRestClient:
         options: Optional[Dict] = None,
         addons: Optional[Dict] = None,
         timeout: Optional[httpx.Timeout] = None,
-        **kwargs
+        **kwargs,
     ) -> str:
         return await self._handle_request(
             "GET",
@@ -50,7 +51,27 @@ class AbstractAsyncRestClient:
             addons=addons,
             timeout=timeout,
             headers=self.config.headers,
-            **kwargs
+            **kwargs,
+        )
+
+    async def post_file(
+        self,
+        url: str,
+        options: Optional[Dict] = None,
+        addons: Optional[Dict] = None,
+        timeout: Optional[httpx.Timeout] = None,
+        file_result: Optional[List] = None,
+        **kwargs,
+    ) -> Dict:
+        return await self._handle_request(
+            "POST",
+            url,
+            file_result=file_result,
+            params=options,
+            addons=addons,
+            timeout=timeout,
+            headers=self.config.headers,
+            **kwargs,
         )
 
     async def post(
@@ -59,7 +80,7 @@ class AbstractAsyncRestClient:
         options: Optional[Dict] = None,
         addons: Optional[Dict] = None,
         timeout: Optional[httpx.Timeout] = None,
-        **kwargs
+        **kwargs,
     ) -> str:
         return await self._handle_request(
             "POST",
@@ -68,7 +89,7 @@ class AbstractAsyncRestClient:
             addons=addons,
             timeout=timeout,
             headers=self.config.headers,
-            **kwargs
+            **kwargs,
         )
 
     async def put(
@@ -77,7 +98,7 @@ class AbstractAsyncRestClient:
         options: Optional[Dict] = None,
         addons: Optional[Dict] = None,
         timeout: Optional[httpx.Timeout] = None,
-        **kwargs
+        **kwargs,
     ) -> str:
         return await self._handle_request(
             "PUT",
@@ -86,7 +107,7 @@ class AbstractAsyncRestClient:
             addons=addons,
             timeout=timeout,
             headers=self.config.headers,
-            **kwargs
+            **kwargs,
         )
 
     async def patch(
@@ -95,7 +116,7 @@ class AbstractAsyncRestClient:
         options: Optional[Dict] = None,
         addons: Optional[Dict] = None,
         timeout: Optional[httpx.Timeout] = None,
-        **kwargs
+        **kwargs,
     ) -> str:
         return await self._handle_request(
             "PATCH",
@@ -104,7 +125,7 @@ class AbstractAsyncRestClient:
             addons=addons,
             timeout=timeout,
             headers=self.config.headers,
-            **kwargs
+            **kwargs,
         )
 
     async def delete(
@@ -113,7 +134,7 @@ class AbstractAsyncRestClient:
         options: Optional[Dict] = None,
         addons: Optional[Dict] = None,
         timeout: Optional[httpx.Timeout] = None,
-        **kwargs
+        **kwargs,
     ) -> str:
         return await self._handle_request(
             "DELETE",
@@ -122,7 +143,7 @@ class AbstractAsyncRestClient:
             addons=addons,
             timeout=timeout,
             headers=self.config.headers,
-            **kwargs
+            **kwargs,
         )
 
     async def _handle_request(
@@ -133,8 +154,9 @@ class AbstractAsyncRestClient:
         addons: Optional[Dict] = None,
         timeout: Optional[httpx.Timeout] = None,
         headers: Optional[Dict] = None,
-        **kwargs
-    ) -> str:
+        file_result: Optional[List] = None,
+        **kwargs,
+    ):
         new_url = url
         if params is not None:
             new_url = append_query_params(new_url, params)
@@ -150,7 +172,27 @@ class AbstractAsyncRestClient:
                     method, new_url, headers=headers, **kwargs
                 )
                 response.raise_for_status()
+
+                # handle file response
+                if file_result is not None:
+                    ret = dict()
+                    for item in file_result:
+                        if item in response.headers:
+                            ret[item] = response.headers[item]
+                            continue
+                        tmpItem = f"dg-{item}"
+                        if tmpItem in response.headers:
+                            ret[item] = response.headers[tmpItem]
+                            continue
+                        tmpItem = f"x-dg-{item}"
+                        if tmpItem in response.headers:
+                            ret[item] = response.headers[tmpItem]
+                    ret["stream"] = io.BytesIO(response.content)
+                    return ret
+
+                # standard response
                 return response.text
+
         except httpx._exceptions.HTTPError as e:
             if isinstance(e, httpx.HTTPStatusError):
                 status_code = e.response.status_code or 500
