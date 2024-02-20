@@ -32,6 +32,7 @@ setup(
         "dataclasses-json>=0.6.3",
         "typing_extensions>=4.9.0",
         "aiohttp>=3.9.1",
+        "aiofiles>=23.2.1",
         "verboselogs>=1.7",
     ],
     keywords=["deepgram", "deepgram speech-to-text"],

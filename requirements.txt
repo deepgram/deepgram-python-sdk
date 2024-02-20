@@ -10,3 +10,4 @@ verboselogs
 
 # Async functionality, likely to be already installed
 aiohttp
+aiofiles

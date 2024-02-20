@@ -25,8 +25,9 @@ def main():
         config: DeepgramClientOptions = DeepgramClientOptions(
             verbose=logging.SPAM,
         )
-
         deepgram: DeepgramClient = DeepgramClient("", config)
+        # OR use defaults
+        # deepgram: DeepgramClient = DeepgramClient()
 
         # STEP 2 Call the transcribe_file method on the prerecorded class
         with open(AUDIO_FILE, "rb") as file:

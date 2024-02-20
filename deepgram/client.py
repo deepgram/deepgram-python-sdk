@@ -45,7 +45,8 @@ from .clients import (
     SyncPrerecordedResponse,
 )
 
-# analyze
+# read
+from .clients import ReadClient, AsyncReadClient
 from .clients import AnalyzeClient, AsyncAnalyzeClient
 from .clients import (
     AnalyzeSource,
@@ -63,6 +64,14 @@ from .clients import (
     AnalyzeResponse,
     SyncAnalyzeResponse,
 )
+
+# speak client classes/input
+from .clients import SpeakClient, AsyncSpeakClient
+from .clients import SpeakOptions
+from .clients import SpeakSource, TextSource
+
+# speak client responses
+from .clients import SpeakResponse
 
 # manage client classes/input
 from .clients import ManageClient, AsyncManageClient
@@ -183,6 +192,14 @@ class DeepgramClient:
         return Read(self.config)
 
     @property
+    def speak(self):
+        return self.Version(self.config, "speak")
+
+    @property
+    def asyncspeak(self):
+        return self.Version(self.config, "asyncspeak")
+
+    @property
     def manage(self):
         return self.Version(self.config, "manage")
 
@@ -239,6 +256,14 @@ class DeepgramClient:
                     parent = "manage"
                     fileName = "async_client"
                     className = "AsyncManageClient"
+                case "speak":
+                    parent = "speak"
+                    fileName = "client"
+                    className = "SpeakClient"
+                case "asyncspeak":
+                    parent = "speak"
+                    fileName = "async_client"
+                    className = "AsyncSpeakClient"
                 case "onprem":
                     parent = "onprem"
                     fileName = "client"
