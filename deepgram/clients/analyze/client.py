@@ -108,3 +108,22 @@ class AsyncAnalyzeClient(AsyncAnalyzeClientLatest):
 
     def __init__(self, config):
         super().__init__(config)
+
+
+class ReadClient(AnalyzeClientLatest):
+    """
+    Just an alias for the Analyze Client
+    """
+
+    def __init__(self, config):
+        self.config = config
+        super().__init__(config)
+
+
+class AsyncReadClient(AsyncAnalyzeClientLatest):
+    """
+    Just an alias for the Async Analyze Client
+    """
+
+    def __init__(self, config):
+        super().__init__(config)
