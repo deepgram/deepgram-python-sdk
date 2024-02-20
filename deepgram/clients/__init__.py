@@ -37,7 +37,8 @@ from .prerecorded import (
     SyncPrerecordedResponse,
 )
 
-# analyze
+# read
+from .analyze import ReadClient, AsyncReadClient
 from .analyze import AnalyzeClient, AsyncAnalyzeClient
 from .analyze import AnalyzeOptions
 from .analyze import Sentiment
@@ -53,6 +54,15 @@ from .analyze import (
     AnalyzeResponse,
     SyncAnalyzeResponse,
 )
+
+# speak
+from .speak import SpeakClient, AsyncSpeakClient
+from .speak import SpeakOptions
+from .speak import (
+    SpeakSource,
+    TextSource,
+)
+from .speak import SpeakResponse
 
 # manage
 from .manage import ManageClient, AsyncManageClient
