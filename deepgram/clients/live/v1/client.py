@@ -331,9 +331,8 @@ class LiveClient:
         self.logger.spam("LiveClient.send_ping ENTER")
 
         if self._socket:
-            self.lock_send.acquire()
-            self._socket.ping()
-            self.lock_send.release()
+            with self.lock_send:
+                self._socket.ping()
 
         self.logger.spam("LiveClient.send_ping LEAVE")
 
