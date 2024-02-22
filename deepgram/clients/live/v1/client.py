@@ -313,9 +313,8 @@ class LiveClient:
         self.logger.spam("data: %s", data)
 
         if self._socket:
-            self.lock_send.acquire()
-            ret = self._socket.send(data)
-            self.lock_send.release()
+            with self.lock_send:
+                ret = self._socket.send(data)
 
             self.logger.spam(f"send bytes: {ret}")
             self.logger.spam("LiveClient.send LEAVE")
