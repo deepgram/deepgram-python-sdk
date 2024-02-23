@@ -150,73 +150,44 @@ class LiveClient:
 
                 data = json.loads(message)
                 response_type = data.get("type")
-                self.logger.verbose("response_type: %s", response_type)
+                self.logger.debug("response_type: %s, data: %s", response_type, data)
 
                 match response_type:
                     case LiveTranscriptionEvents.Transcript.value:
-                        self.logger.debug(
-                            "response_type: %s, data: %s", response_type, data
-                        )
                         result = LiveResultResponse.from_json(message)
-                        if result is None:
-                            self.logger.error("LiveResultResponse.from_json is None")
-                            continue
-                        self.logger.verbose("result: %s", result)
+                        self.logger.verbose("LiveResultResponse: %s", result)
                         self._emit(
                             LiveTranscriptionEvents.Transcript,
                             result=result,
                             **dict(self.kwargs),
                         )
                     case LiveTranscriptionEvents.Metadata.value:
-                        self.logger.debug(
-                            "response_type: %s, data: %s", response_type, data
-                        )
                         result = MetadataResponse.from_json(message)
-                        if result is None:
-                            self.logger.error("MetadataResponse.from_json is None")
-                            continue
-                        self.logger.verbose("result: %s", result)
+                        self.logger.verbose("MetadataResponse: %s", result)
                         self._emit(
                             LiveTranscriptionEvents.Metadata,
                             metadata=result,
                             **dict(self.kwargs),
                         )
                     case LiveTranscriptionEvents.SpeechStarted.value:
-                        self.logger.debug(
-                            "response_type: %s, data: %s", response_type, data
-                        )
                         result = SpeechStartedResponse.from_json(message)
-                        if result is None:
-                            self.logger.error("SpeechStartedResponse.from_json is None")
-                            continue
+                        self.logger.verbose("SpeechStartedResponse: %s", result)
                         self._emit(
                             LiveTranscriptionEvents.SpeechStarted,
                             speech_started=result,
                             **dict(self.kwargs),
                         )
                     case LiveTranscriptionEvents.UtteranceEnd.value:
-                        self.logger.debug(
-                            "response_type: %s, data: %s", response_type, data
-                        )
                         result = UtteranceEndResponse.from_json(message)
-                        if result is None:
-                            self.logger.error("UtteranceEndResponse.from_json is None")
-                            continue
-                        self.logger.verbose("result: %s", result)
+                        self.logger.verbose("UtteranceEndResponse: %s", result)
                         self._emit(
                             LiveTranscriptionEvents.UtteranceEnd,
                             utterance_end=result,
                             **dict(self.kwargs),
                         )
                     case LiveTranscriptionEvents.Error.value:
-                        self.logger.debug(
-                            "response_type: %s, data: %s", response_type, data
-                        )
                         result = ErrorResponse.from_json(message)
-                        if result is None:
-                            self.logger.error("ErrorResponse.from_json is None")
-                            continue
-                        self.logger.verbose("result: %s", result)
+                        self.logger.verbose("ErrorResponse: %s", result)
                         self._emit(
                             LiveTranscriptionEvents.Error,
                             error=result,

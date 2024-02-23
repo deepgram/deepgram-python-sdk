@@ -3,25 +3,32 @@
 # SPDX-License-Identifier: MIT
 
 import asyncio
-import aiohttp
-import os
 from dotenv import load_dotenv
+import logging, verboselogs
+from time import sleep
 
-from deepgram import DeepgramClient, LiveTranscriptionEvents, LiveOptions
+from deepgram import (
+    DeepgramClient,
+    DeepgramClientOptions,
+    LiveTranscriptionEvents,
+    LiveOptions,
+    Microphone,
+)
 
 load_dotenv()
 
-API_KEY = os.getenv("DG_API_KEY")
-
-# URL for the realtime streaming audio you would like to transcribe
-URL = "http://stream.live.vc.bbcmedia.co.uk/bbc_world_service"
-
 
 async def main():
-    deepgram = DeepgramClient(API_KEY)
-
-    # Create a websocket connection to Deepgram
     try:
+        # example of setting up a client config. logging values: WARNING, VERBOSE, DEBUG, SPAM
+        # config = DeepgramClientOptions(
+        #     verbose=logging.DEBUG,
+        #     options={"keepalive": "true"}
+        # )
+        # deepgram: DeepgramClient = DeepgramClient("", config)
+        # otherwise, use default config
+        deepgram = DeepgramClient()
+
         dg_connection = deepgram.listen.asynclive.v("1")
 
         async def on_message(self, result, **kwargs):
@@ -48,27 +55,39 @@ async def main():
         dg_connection.on(LiveTranscriptionEvents.UtteranceEnd, on_utterance_end)
         dg_connection.on(LiveTranscriptionEvents.Error, on_error)
 
-        # connect to websocket
         options = LiveOptions(
             model="nova-2",
+            punctuate=True,
             language="en-US",
+            encoding="linear16",
+            channels=1,
+            sample_rate=16000,
+            # To get UtteranceEnd, the following must be set:
+            interim_results=True,
+            utterance_end_ms="1000",
+            vad_events=True,
         )
 
         await dg_connection.start(options)
 
-        # Send streaming audio from the URL to Deepgram
-        async with aiohttp.ClientSession() as session:
-            async with session.get(URL) as audio:
-                while True:
-                    data = await audio.content.readany()
-                    # send audio data through the socket
-                    await dg_connection.send(data)
-                    # If no data is being sent from the live stream, then break out of the loop.
-                    if not data:
-                        break
+        # Open a microphone stream on the default input device
+        microphone = Microphone(dg_connection.send)
 
-        # Indicate that we've finished sending data by sending the {"type": "CloseStream"}
-        await dg_connection.finish()
+        # start microphone
+        microphone.start()
+
+        while True:
+            if not microphone.is_active():
+                break
+            await asyncio.sleep(1)
+
+        # Wait for the microphone to close
+        microphone.finish()
+
+        # Indicate that we've finished
+        dg_connection.finish()
+
+        print("Finished")
 
     except Exception as e:
         print(f"Could not open socket: {e}")

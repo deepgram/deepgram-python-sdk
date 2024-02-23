@@ -9,7 +9,7 @@ import logging, verboselogs
 from ....options import DeepgramClientOptions
 from ..enums import LiveTranscriptionEvents
 from ..helpers import convert_to_websocket_url, append_query_params
-from ..errors import DeepgramError
+from ..errors import DeepgramError, DeepgramWebsocketError
 
 from .response import (
     LiveResultResponse,
@@ -63,6 +63,11 @@ class AsyncLiveClient:
             self.logger.debug("AsyncLiveClient.start LEAVE")
             raise DeepgramError("Fatal transcription options error")
 
+        if self._socket is not None:
+            self.logger.error("socket is already initialized")
+            self.logger.debug("LiveClient.start LEAVE")
+            raise DeepgramWebsocketError("Websocket already started")
+
         self.options = options
         self.addons = addons
 
@@ -111,133 +116,107 @@ class AsyncLiveClient:
         self, event, *args, **kwargs
     ):  # triggers the registered event handlers for a specific event
         for handler in self._event_handlers[event]:
-            await handler(self, *args, **kwargs)
+            asyncio.create_task(handler(self, *args, **kwargs))
 
     async def _start(self) -> None:
         self.logger.debug("AsyncLiveClient._start ENTER")
 
-        async for message in self._socket:
-            try:
+        try:
+            async for message in self._socket:
                 data = json.loads(message)
                 response_type = data.get("type")
+                self.logger.debug("response_type: %s, data: %s", response_type, data)
+
                 match response_type:
                     case LiveTranscriptionEvents.Transcript.value:
-                        self.logger.debug(
-                            "response_type: %s, data: %s", response_type, data
-                        )
                         result = LiveResultResponse.from_json(message)
-                        if result is None:
-                            self.logger.error("LiveResultResponse.from_json is None")
-                            continue
-                        self.logger.verbose("result: %s", result)
+                        self.logger.verbose("LiveResultResponse: %s", result)
                         await self._emit(
                             LiveTranscriptionEvents.Transcript,
                             result=result,
                             **dict(self.kwargs),
                         )
                     case LiveTranscriptionEvents.Metadata.value:
-                        self.logger.debug(
-                            "response_type: %s, data: %s", response_type, data
-                        )
                         result = MetadataResponse.from_json(message)
-                        if result is None:
-                            self.logger.error("MetadataResponse.from_json is None")
-                            continue
-                        self.logger.verbose("result: %s", result)
+                        self.logger.verbose("MetadataResponse: %s", result)
                         await self._emit(
                             LiveTranscriptionEvents.Metadata,
                             metadata=result,
                             **dict(self.kwargs),
                         )
                     case LiveTranscriptionEvents.SpeechStarted.value:
-                        self.logger.debug(
-                            "response_type: %s, data: %s", response_type, data
-                        )
                         result = SpeechStartedResponse.from_json(message)
-                        if result is None:
-                            self.logger.error("SpeechStartedResponse.from_json is None")
-                            continue
+                        self.logger.verbose("SpeechStartedResponse: %s", result)
                         await self._emit(
                             LiveTranscriptionEvents.SpeechStarted,
                             speech_started=result,
                             **dict(self.kwargs),
                         )
                     case LiveTranscriptionEvents.UtteranceEnd.value:
-                        self.logger.debug(
-                            "response_type: %s, data: %s", response_type, data
-                        )
                         result = UtteranceEndResponse.from_json(message)
-                        if result is None:
-                            self.logger.error("UtteranceEndResponse.from_json is None")
-                            continue
-                        self.logger.verbose("result: %s", result)
+                        self.logger.verbose("UtteranceEndResponse: %s", result)
                         await self._emit(
                             LiveTranscriptionEvents.UtteranceEnd,
                             utterance_end=result,
                             **dict(self.kwargs),
                         )
                     case LiveTranscriptionEvents.Error.value:
-                        self.logger.debug(
-                            "response_type: %s, data: %s", response_type, data
-                        )
                         result = ErrorResponse.from_json(message)
-                        if result is None:
-                            self.logger.error("ErrorResponse.from_json is None")
-                            continue
-                        self.logger.verbose("result: %s", result)
+                        self.logger.verbose("LiveTranscriptionEvents: %s", result)
                         await self._emit(
                             LiveTranscriptionEvents.Error,
                             error=result,
                             **dict(self.kwargs),
                         )
                     case _:
-                        self.logger.error(
-                            "response_type: %s, data: %s", response_type, data
-                        )
                         error = ErrorResponse(
                             type="UnhandledMessage",
                             description="Unknown message type",
                             message=f"Unhandle message type: {response_type}",
                         )
                         await self._emit(LiveTranscriptionEvents.Error, error=error)
-            except json.JSONDecodeError as e:
-                error: ErrorResponse = {
-                    "type": "Exception",
-                    "description": "Unknown error _listening",
-                    "message": f"{e}",
-                    "variant": "",
-                }
-                self.logger.error("exception: json.JSONDecodeError: %s", str(e))
-                await self._emit(LiveTranscriptionEvents.Error, error=error)
-                self.logger.debug("AsyncLiveClient._start LEAVE")
-            except websockets.exceptions.ConnectionClosedOK as e:
-                if e.code == 1000:
-                    self.logger.notice("_start(1000) exiting gracefully")
-                    self.logger.debug("AsyncLiveClient._start LEAVE")
-                    return
-                else:
-                    error: ErrorResponse = {
-                        "type": "Exception",
-                        "description": "Unknown error _start",
-                        "message": f"{e}",
-                        "variant": "",
-                    }
-                    self.logger.error(
-                        f"WebSocket connection closed with code {e.code}: {e.reason}"
-                    )
-                    await self._emit(LiveTranscriptionEvents.Error, error=error)
-                    self.logger.debug("AsyncLiveClient._start LEAVE")
-                    raise
-            except Exception as e:
-                error: ErrorResponse = {
-                    "type": "Exception",
-                    "description": "Unknown error _start",
-                    "message": f"{e}",
-                    "variant": "",
-                }
-                await self._emit(LiveTranscriptionEvents.Error, error)
-                self.logger.error("Exception in _start: %s", error=error)
-                self.logger.debug("AsyncLiveClient._start LEAVE")
+
+        except websockets.exceptions.ConnectionClosedOK as e:
+            self.logger.notice(f"_start({e.code}) exiting gracefully")
+            self.logger.debug("AsyncLiveClient._start LEAVE")
+            return
+
+        except websockets.exceptions.ConnectionClosedError as e:
+            error: ErrorResponse = {
+                "type": "Exception",
+                "description": "ConnectionClosedError in _start",
+                "message": f"{e}",
+                "variant": "",
+            }
+            self.logger.error(
+                f"WebSocket connection closed with code {e.code}: {e.reason}"
+            )
+            await self._emit(LiveTranscriptionEvents.Error, error)
+
+            self.logger.debug("AsyncLiveClient._start LEAVE")
+
+            if (
+                "termination_exception" in self.options
+                and self.options["termination_exception"] == "true"
+            ):
+                raise
+
+        except Exception as e:
+            error: ErrorResponse = {
+                "type": "Exception",
+                "description": "Exception in _start",
+                "message": f"{e}",
+                "variant": "",
+            }
+            await self._emit(LiveTranscriptionEvents.Error, error)
+
+            self.logger.error("Exception in _start: %s", error=error)
+            self.logger.debug("AsyncLiveClient._start LEAVE")
+
+            if (
+                "termination_exception" in self.options
+                and self.options["termination_exception"] == "true"
+            ):
                 raise
 
     async def send(self, data):
@@ -265,7 +244,6 @@ class AsyncLiveClient:
             self.logger.notice("socket.wait_closed...")
             await self._socket.wait_closed()
             self.logger.notice("socket.wait_closed succeeded")
-
         self._socket = None
 
         self.logger.notice("finish succeeded")
