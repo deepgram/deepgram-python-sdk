@@ -20,6 +20,10 @@ from .response import (
 )
 from .options import LiveOptions
 
+ONE_SECOND = 1
+DEEPGRAM_INTERVAL = 5
+PING_INTERVAL = 20
+
 
 class AsyncLiveClient:
     """
@@ -96,6 +100,7 @@ class AsyncLiveClient:
         try:
             self._socket = await _socket_connect(url_with_params, self.config.headers)
             asyncio.create_task(self._start())
+            asyncio.create_task(self._keep_alive())
 
             self.logger.notice("start succeeded")
             self.logger.debug("AsyncLiveClient.start LEAVE")
@@ -218,6 +223,34 @@ class AsyncLiveClient:
                 and self.options["termination_exception"] == "true"
             ):
                 raise
+
+    async def _keep_alive(self) -> None:
+        self.logger.debug("AsyncLiveClient._keep_alive ENTER")
+
+        counter = 0
+        while True:
+            counter += 1
+            await asyncio.sleep(ONE_SECOND)
+
+            if self._socket is None:
+                self.logger.notice("socket is None, exiting keep_alive")
+                self.logger.debug("AsyncLiveClient._keep_alive LEAVE")
+                break
+
+            # deepgram keepalive
+            if (
+                counter % DEEPGRAM_INTERVAL == 0
+                and self.config.options.get("keepalive") == "true"
+            ):
+                self.logger.verbose("Sending KeepAlive...")
+                await self.send(json.dumps({"type": "KeepAlive"}))
+
+            # protocol level ping
+            if counter % PING_INTERVAL == 0:
+                self.logger.verbose("Sending Protocol Ping...")
+                await self._socket.ping()
+
+        self.logger.debug("AsyncLiveClient._keep_alive LEAVE")
 
     async def send(self, data):
         """

@@ -22,7 +22,9 @@ from .response import (
 )
 from .options import LiveOptions
 
-PING_INTERVAL = 5
+ONE_SECOND = 1
+DEEPGRAM_INTERVAL = 5
+PING_INTERVAL = 20
 
 
 class LiveClient:
@@ -112,7 +114,7 @@ class LiveClient:
         self.listening.start()
 
         # keepalive thread
-        self.processing = threading.Thread(target=self._processing)
+        self.processing = threading.Thread(target=self._keep_alive)
         self.processing.start()
 
         self.logger.notice("start succeeded")
@@ -254,47 +256,50 @@ class LiveClient:
                     raise
                 return
 
-    def _processing(self) -> None:
-        self.logger.debug("LiveClient._processing ENTER")
+    def _keep_alive(self) -> None:
+        self.logger.debug("LiveClient._keep_alive ENTER")
 
         counter = 0
 
         while True:
             try:
-                time.sleep(PING_INTERVAL)
                 counter += 1
+                time.sleep(ONE_SECOND)
 
                 with self.lock_exit:
                     myExit = self.exit
 
                 if myExit:
-                    self.logger.notice("_processing exiting gracefully")
-                    self.logger.debug("LiveClient._processing LEAVE")
+                    self.logger.notice("_keep_alive exiting gracefully")
+                    self.logger.debug("LiveClient._keep_alive LEAVE")
                     return
 
                 # deepgram keepalive
-                if self.config.options.get("keepalive") == "true":
-                    self.logger.debug("Sending KeepAlive...")
+                if (
+                    counter % DEEPGRAM_INTERVAL == 0
+                    and self.config.options.get("keepalive") == "true"
+                ):
+                    self.logger.verbose("Sending KeepAlive...")
                     self.send(json.dumps({"type": "KeepAlive"}))
 
                 # websocket keepalive
-                if counter % 4 == 0:
-                    self.logger.debug("Sending Ping...")
+                if counter % PING_INTERVAL == 0:
+                    self.logger.verbose("Sending Protocol Ping...")
                     self.send_ping()
 
             except websockets.exceptions.ConnectionClosedOK as e:
-                self.logger.notice("_processing({e.code}) exiting gracefully")
+                self.logger.notice("_keep_alive({e.code}) exiting gracefully")
 
                 # signal exit and close
                 self.signal_exit()
 
-                self.logger.debug("LiveClient._processing LEAVE")
+                self.logger.debug("LiveClient._keep_alive LEAVE")
                 return
 
             except websockets.exceptions.ConnectionClosedError as e:
                 error: ErrorResponse = {
                     "type": "Exception",
-                    "description": "ConnectionClosedError in _processing",
+                    "description": "ConnectionClosedError in _keep_alive",
                     "message": f"{e}",
                     "variant": "",
                 }
@@ -306,7 +311,7 @@ class LiveClient:
                 # signal exit and close
                 self.signal_exit()
 
-                self.logger.debug("LiveClient._processing LEAVE")
+                self.logger.debug("LiveClient._keep_alive LEAVE")
 
                 if (
                     "termination_exception" in self.options
@@ -318,17 +323,17 @@ class LiveClient:
             except Exception as e:
                 error: ErrorResponse = {
                     "type": "Exception",
-                    "description": "Exception in _processing",
+                    "description": "Exception in _keep_alive",
                     "message": f"{e}",
                     "variant": "",
                 }
                 self._emit(LiveTranscriptionEvents.Error, error)
-                self.logger.error("Exception in _processing: %s", str(e))
+                self.logger.error("Exception in _keep_alive: %s", str(e))
 
                 # signal exit and close
                 self.signal_exit()
 
-                self.logger.debug("LiveClient._processing LEAVE")
+                self.logger.debug("LiveClient._keep_alive LEAVE")
 
                 if (
                     "termination_exception" in self.options

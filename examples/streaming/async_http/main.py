@@ -7,17 +7,29 @@ import aiohttp
 import os
 from dotenv import load_dotenv
 
-from deepgram import DeepgramClient, LiveTranscriptionEvents, LiveOptions
+from deepgram import (
+    DeepgramClient,
+    DeepgramClientOptions,
+    LiveTranscriptionEvents,
+    LiveOptions,
+)
 
 load_dotenv()
 
-API_KEY = os.getenv("DG_API_KEY")
+API_KEY = os.getenv("DEEPGRAM_API_KEY")
 
 # URL for the realtime streaming audio you would like to transcribe
 URL = "http://stream.live.vc.bbcmedia.co.uk/bbc_world_service"
 
 
 async def main():
+    # example of setting up a client config. logging values: WARNING, VERBOSE, DEBUG, SPAM
+    # config = DeepgramClientOptions(
+    #     verbose=logging.DEBUG,
+    #     options={"keepalive": "true"}
+    # )
+    # deepgram: DeepgramClient = DeepgramClient(API_KEY, config)
+    # otherwise, use default config
     deepgram = DeepgramClient(API_KEY)
 
     # Create a websocket connection to Deepgram
