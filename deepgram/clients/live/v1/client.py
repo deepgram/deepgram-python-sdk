@@ -71,6 +71,11 @@ class LiveClient:
             self.logger.debug("LiveClient.start LEAVE")
             raise DeepgramError("Fatal transcription options error")
 
+        if self._socket is not None:
+            self.logger.error("socket is already initialized")
+            self.logger.debug("LiveClient.start LEAVE")
+            raise DeepgramWebsocketError("Websocket already started")
+
         self.options = options
         self.addons = addons
 
@@ -87,11 +92,6 @@ class LiveClient:
         if isinstance(options, LiveOptions):
             self.logger.info("LiveOptions switching class -> json")
             self.options = self.options.to_dict()
-
-        if self._socket is not None:
-            self.logger.error("socket is already initialized")
-            self.logger.debug("LiveClient.start LEAVE")
-            raise DeepgramWebsocketError("Websocket already started")
 
         combined_options = dict(self.options)
         if addons is not None:
@@ -135,18 +135,18 @@ class LiveClient:
 
         while True:
             try:
-                self.lock_exit.acquire()
-                myExit = self.exit
-                self.lock_exit.release()
-                if myExit:
-                    self.logger.notice("_listening exiting gracefully")
-                    self.logger.debug("LiveClient._listening LEAVE")
-                    return
-
                 message = self._socket.recv()
                 if len(message) == 0:
                     self.logger.info("message is empty")
                     continue
+
+                with self.lock_exit:
+                    myExit = self.exit
+
+                if myExit:
+                    self.logger.notice("_listening exiting gracefully")
+                    self.logger.debug("LiveClient._listening LEAVE")
+                    return
 
                 data = json.loads(message)
                 response_type = data.get("type")
@@ -230,35 +230,58 @@ class LiveClient:
                         )
 
             except websockets.exceptions.ConnectionClosedOK as e:
-                if e.code == 1000:
-                    self.logger.notice("_listening(1000) exiting gracefully")
-                    self.logger.debug("LiveClient._listening LEAVE")
-                    return
-                else:
-                    error: ErrorResponse = {
-                        "type": "Exception",
-                        "description": "Unknown error _listening",
-                        "message": f"{e}",
-                        "variant": "",
-                    }
-                    self.logger.error(
-                        f"WebSocket connection closed with code {e.code}: {e.reason}"
-                    )
-                    self._emit(LiveTranscriptionEvents.Error, error)
-                    self.logger.debug("LiveClient._listening LEAVE")
+                self.logger.notice(f"_listening({e.code}) exiting gracefully")
+
+                # signal exit and close
+                self.signal_exit()
+
+                self.logger.debug("LiveClient._listening LEAVE")
+                return
+
+            except websockets.exceptions.ConnectionClosedError as e:
+                error: ErrorResponse = {
+                    "type": "Exception",
+                    "description": "ConnectionClosedError in _listening",
+                    "message": f"{e}",
+                    "variant": "",
+                }
+                self.logger.error(
+                    f"WebSocket connection closed with code {e.code}: {e.reason}"
+                )
+                self._emit(LiveTranscriptionEvents.Error, error)
+
+                # signal exit and close
+                self.signal_exit()
+
+                self.logger.debug("LiveClient._listening LEAVE")
+
+                if (
+                    "termination_exception" in self.options
+                    and self.options["termination_exception"] == "true"
+                ):
                     raise
+                return
 
             except Exception as e:
                 error: ErrorResponse = {
                     "type": "Exception",
-                    "description": "Unknown error _listening",
+                    "description": "Exception in _listening",
                     "message": f"{e}",
                     "variant": "",
                 }
                 self._emit(LiveTranscriptionEvents.Error, error)
                 self.logger.error("Exception in _listening: %s", str(e))
+
+                # signal exit and close
+                self.signal_exit()
+
                 self.logger.debug("LiveClient._listening LEAVE")
-                raise
+                if (
+                    "termination_exception" in self.options
+                    and self.options["termination_exception"] == "true"
+                ):
+                    raise
+                return
 
     def _processing(self) -> None:
         self.logger.debug("LiveClient._processing ENTER")
@@ -270,9 +293,9 @@ class LiveClient:
                 time.sleep(PING_INTERVAL)
                 counter += 1
 
-                self.lock_exit.acquire()
-                myExit = self.exit
-                self.lock_exit.release()
+                with self.lock_exit:
+                    myExit = self.exit
+
                 if myExit:
                     self.logger.notice("_processing exiting gracefully")
                     self.logger.debug("LiveClient._processing LEAVE")
@@ -288,22 +311,60 @@ class LiveClient:
                     self.logger.debug("Sending Ping...")
                     self.send_ping()
 
-            except Exception as e:
-                if e.code == 1000:
-                    self.logger.notice("_processing(1000) exiting gracefully")
-                    self.logger.debug("LiveClient._processing LEAVE")
-                    return
+            except websockets.exceptions.ConnectionClosedOK as e:
+                self.logger.notice("_processing({e.code}) exiting gracefully")
 
+                # signal exit and close
+                self.signal_exit()
+
+                self.logger.debug("LiveClient._processing LEAVE")
+                return
+
+            except websockets.exceptions.ConnectionClosedError as e:
                 error: ErrorResponse = {
                     "type": "Exception",
-                    "description": "Unknown error in _processing",
+                    "description": "ConnectionClosedError in _processing",
+                    "message": f"{e}",
+                    "variant": "",
+                }
+                self.logger.error(
+                    f"WebSocket connection closed with code {e.code}: {e.reason}"
+                )
+                self._emit(LiveTranscriptionEvents.Error, error)
+
+                # signal exit and close
+                self.signal_exit()
+
+                self.logger.debug("LiveClient._processing LEAVE")
+
+                if (
+                    "termination_exception" in self.options
+                    and self.options["termination_exception"] == "true"
+                ):
+                    raise
+                return
+
+            except Exception as e:
+                error: ErrorResponse = {
+                    "type": "Exception",
+                    "description": "Exception in _processing",
                     "message": f"{e}",
                     "variant": "",
                 }
                 self._emit(LiveTranscriptionEvents.Error, error)
-
                 self.logger.error("Exception in _processing: %s", str(e))
+
+                # signal exit and close
+                self.signal_exit()
+
                 self.logger.debug("LiveClient._processing LEAVE")
+
+                if (
+                    "termination_exception" in self.options
+                    and self.options["termination_exception"] == "true"
+                ):
+                    raise
+                return
 
     def send(self, data) -> int:
         """
@@ -347,10 +408,8 @@ class LiveClient:
             self.send(json.dumps({"type": "CloseStream"}))
             time.sleep(0.5)
 
-        self.lock_exit.acquire()
-        self.logger.notice("signal exit")
-        self.exit = True
-        self.lock_exit.release()
+        # signal exit
+        self.signal_exit()
 
         if self.processing is not None:
             self.processing.join()
@@ -372,3 +431,15 @@ class LiveClient:
 
         self.logger.notice("finish succeeded")
         self.logger.spam("LiveClient.finish LEAVE")
+
+    def signal_exit(self):
+        # signal exit
+        with self.lock_exit:
+            self.logger.notice("signal exit")
+            self.exit = True
+
+        self.logger.notice("closing socket...")
+        if self._socket:
+            self.logger.debug("calling socket.close()")
+            self._socket.close()
+        self._socket = None
