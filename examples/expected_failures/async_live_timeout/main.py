@@ -6,8 +6,8 @@ from deepgram import DeepgramClient, DeepgramClientOptions, LiveOptions
 
 
 async def main():
-    config = DeepgramClientOptions(verbose=logging.DEBUG)
-    deepgram = DeepgramClient("", config)
+    config: DeepgramClientOptions = DeepgramClientOptions(verbose=logging.DEBUG)
+    deepgram: DeepgramClient = DeepgramClient("", config)
 
     deepgram_connection = deepgram.listen.asynclive.v("1")
 

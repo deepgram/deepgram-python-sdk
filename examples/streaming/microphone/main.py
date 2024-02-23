@@ -20,13 +20,13 @@ load_dotenv()
 def main():
     try:
         # example of setting up a client config. logging values: WARNING, VERBOSE, DEBUG, SPAM
-        # config = DeepgramClientOptions(
+        # config: DeepgramClientOptions = DeepgramClientOptions(
         #     verbose=logging.DEBUG,
         #     options={"keepalive": "true"}
         # )
         # deepgram: DeepgramClient = DeepgramClient("", config)
         # otherwise, use default config
-        deepgram = DeepgramClient()
+        deepgram: DeepgramClient = DeepgramClient()
 
         dg_connection = deepgram.listen.live.v("1")
 
@@ -54,7 +54,7 @@ def main():
         dg_connection.on(LiveTranscriptionEvents.UtteranceEnd, on_utterance_end)
         dg_connection.on(LiveTranscriptionEvents.Error, on_error)
 
-        options = LiveOptions(
+        options: LiveOptions = LiveOptions(
             model="nova-2",
             punctuate=True,
             language="en-US",

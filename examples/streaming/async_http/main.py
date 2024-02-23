@@ -24,13 +24,13 @@ URL = "http://stream.live.vc.bbcmedia.co.uk/bbc_world_service"
 
 async def main():
     # example of setting up a client config. logging values: WARNING, VERBOSE, DEBUG, SPAM
-    # config = DeepgramClientOptions(
+    # config: DeepgramClientOptions = DeepgramClientOptions(
     #     verbose=logging.DEBUG,
     #     options={"keepalive": "true"}
     # )
     # deepgram: DeepgramClient = DeepgramClient(API_KEY, config)
     # otherwise, use default config
-    deepgram = DeepgramClient(API_KEY)
+    deepgram: DeepgramClient = DeepgramClient(API_KEY)
 
     # Create a websocket connection to Deepgram
     try:
@@ -61,7 +61,7 @@ async def main():
         dg_connection.on(LiveTranscriptionEvents.Error, on_error)
 
         # connect to websocket
-        options = LiveOptions(
+        options: LiveOptions = LiveOptions(
             model="nova-2",
             language="en-US",
         )

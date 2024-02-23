@@ -12,14 +12,14 @@ from deepgram import DeepgramClient, InviteOptions
 load_dotenv()
 
 # environment variables
-API_KEY = os.getenv("DG_API_KEY")
-
-# Create a Deepgram client using the API key
-deepgram = DeepgramClient()
+API_KEY = os.getenv("DEEPGRAM_API_KEY")
 
 
 async def main():
     try:
+        # Create a Deepgram client using the API key
+        deepgram: DeepgramClient = DeepgramClient()
+
         # get projects
         projectResp = await deepgram.asyncmanage.v("1").get_projects()
         if projectResp is None:

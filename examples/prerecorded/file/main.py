@@ -22,11 +22,11 @@ AUDIO_FILE = "preamble.wav"
 def main():
     try:
         # STEP 1 Create a Deepgram client using the API key in the environment variables
-        config = DeepgramClientOptions(
+        config: DeepgramClientOptions = DeepgramClientOptions(
             verbose=logging.SPAM,
         )
 
-        deepgram = DeepgramClient("", config)
+        deepgram: DeepgramClient = DeepgramClient("", config)
 
         # STEP 2 Call the transcribe_file method on the prerecorded class
         with open(AUDIO_FILE, "rb") as file:
@@ -36,7 +36,7 @@ def main():
             "buffer": buffer_data,
         }
 
-        options = PrerecordedOptions(
+        options: PrerecordedOptions = PrerecordedOptions(
             model="nova",
             smart_format=True,
             utterances=True,

@@ -22,12 +22,12 @@ AUDIO_FILE = "CallCenterPhoneCall.mp3"
 def main():
     try:
         # STEP 1 Create a Deepgram client using the API key in the environment variables
-        # config = DeepgramClientOptions(
+        # config: DeepgramClientOptions = DeepgramClientOptions(
         #     verbose=logging.SPAM,
         # )
-        # deepgram = DeepgramClient("", config)
+        # deepgram: DeepgramClient = DeepgramClient("", config)
         # OR use defaults
-        deepgram = DeepgramClient()
+        deepgram: DeepgramClient = DeepgramClient()
 
         # STEP 2 Call the transcribe_file method on the prerecorded class
         with open(AUDIO_FILE, "rb") as file:

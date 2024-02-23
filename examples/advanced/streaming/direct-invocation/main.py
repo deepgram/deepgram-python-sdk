@@ -23,12 +23,12 @@ URL = "http://stream.live.vc.bbcmedia.co.uk/bbc_world_service"
 def main():
     try:
         # STEP 1 Create a Deepgram LiveClient using a specific config
-        # config = ClientOptionsFromEnv(
+        # config: ClientOptionsFromEnv = ClientOptionsFromEnv(
         #     verbose=logging.DEBUG, options={"keepalive": "true"}
         # )
-        # liveClient = LiveClient("", config)
+        # liveClient: LiveClient = LiveClient("", config)
         # OR just use the default config
-        liveClient = LiveClient(ClientOptionsFromEnv())
+        liveClient: LiveClient = LiveClient(ClientOptionsFromEnv())
 
         def on_message(self, result, **kwargs):
             sentence = result.channel.alternatives[0].transcript
@@ -55,7 +55,7 @@ def main():
         liveClient.on(LiveTranscriptionEvents.Error, on_error)
 
         # connect to websocket
-        options = LiveOptions(model="nova-2", language="en-US")
+        options: LiveOptions = LiveOptions(model="nova-2", language="en-US")
         liveClient.start(options)
 
         lock_exit = threading.Lock()

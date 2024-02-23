@@ -69,15 +69,15 @@ class MyLiveClient(LiveClient):
 def main():
     try:
         # example of setting up a client config. logging values: WARNING, VERBOSE, DEBUG, SPAM
-        # config = ClientOptionsFromEnv(
+        # config: ClientOptionsFromEnv = ClientOptionsFromEnv(
         #     verbose=logging.DEBUG,
         #     options={"keepalive": "true"}
         # )
-        # liveClient = MyLiveClient(config)
+        # liveClient: MyLiveClient = MyLiveClient(config)
         # otherwise, use default config
-        liveClient = MyLiveClient(ClientOptionsFromEnv())
+        liveClient: MyLiveClient = MyLiveClient(ClientOptionsFromEnv())
 
-        options = LiveOptions(
+        options: LiveOptions = LiveOptions(
             model="nova-2",
             punctuate=True,
             language="en-US",
@@ -97,7 +97,7 @@ def main():
         )
 
         # Open a microphone stream
-        microphone = Microphone(liveClient.send)
+        microphone: Microphone = Microphone(liveClient.send)
 
         # start microphone
         microphone.start()

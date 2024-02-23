@@ -21,10 +21,12 @@ load_dotenv()
 async def main():
     try:
         # example of setting up a client config. logging values: WARNING, VERBOSE, DEBUG, SPAM
-        config = DeepgramClientOptions(options={"keepalive": "true"})
+        config: DeepgramClientOptions = DeepgramClientOptions(
+            options={"keepalive": "true"}
+        )
         deepgram: DeepgramClient = DeepgramClient("", config)
         # otherwise, use default config
-        # deepgram = DeepgramClient()
+        # deepgram: DeepgramClient = DeepgramClient()
 
         dg_connection = deepgram.listen.asynclive.v("1")
 
@@ -52,7 +54,7 @@ async def main():
         dg_connection.on(LiveTranscriptionEvents.UtteranceEnd, on_utterance_end)
         dg_connection.on(LiveTranscriptionEvents.Error, on_error)
 
-        options = LiveOptions(
+        options: LiveOptions = LiveOptions(
             model="nova-2",
             punctuate=True,
             language="en-US",
