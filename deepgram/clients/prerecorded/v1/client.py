@@ -5,6 +5,7 @@
 import httpx
 import logging, verboselogs
 import json
+from typing import Dict
 
 from ...abstract_sync_client import AbstractSyncRestClient
 from ..errors import DeepgramError, DeepgramTypeError
@@ -48,7 +49,7 @@ class PreRecordedClient(AbstractSyncRestClient):
         self,
         source: UrlSource,
         options: PrerecordedOptions = None,
-        addons: dict = None,
+        addons: Dict = None,
         timeout: httpx.Timeout = None,
         endpoint: str = "v1/listen",
     ) -> PrerecordedResponse:
@@ -111,7 +112,7 @@ class PreRecordedClient(AbstractSyncRestClient):
         source: UrlSource,
         callback: str,
         options: PrerecordedOptions = None,
-        addons: dict = None,
+        addons: Dict = None,
         timeout: httpx.Timeout = None,
         endpoint: str = "v1/listen",
     ) -> AsyncPrerecordedResponse:
@@ -169,7 +170,7 @@ class PreRecordedClient(AbstractSyncRestClient):
         self,
         source: FileSource,
         options: PrerecordedOptions = None,
-        addons: dict = None,
+        addons: Dict = None,
         timeout: httpx.Timeout = None,
         endpoint: str = "v1/listen",
     ) -> PrerecordedResponse:
@@ -233,7 +234,7 @@ class PreRecordedClient(AbstractSyncRestClient):
         source: FileSource,
         callback: str,
         options: PrerecordedOptions = None,
-        addons: dict = None,
+        addons: Dict = None,
         timeout: httpx.Timeout = None,
         endpoint: str = "v1/listen",
     ) -> AsyncPrerecordedResponse:

@@ -3,8 +3,11 @@
 # SPDX-License-Identifier: MIT
 
 from urllib.parse import urlparse, urlunparse, parse_qs, urlencode
+from typing import Dict
 
-def append_query_params(url, params):
+
+# appends query parameters to a URL
+def append_query_params(url: str, params: Dict) -> str:
     parsed_url = urlparse(url)
     query_params = parse_qs(parsed_url.query)
 

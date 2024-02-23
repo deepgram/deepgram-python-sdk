@@ -3,6 +3,7 @@
 # SPDX-License-Identifier: MIT
 
 import logging, verboselogs
+from typing import Dict
 
 from ....options import DeepgramClientOptions
 from ...abstract_async_client import AbstractAsyncRestClient
@@ -59,13 +60,17 @@ class AsyncManageClient(AbstractAsyncRestClient):
         super().__init__(config)
 
     # projects
-    async def list_projects(self, addons: dict = None, **kwargs) -> ProjectsResponse:
+    async def list_projects(
+        self, addons: Dict = None, **kwargs
+    ) -> ProjectsResponse:
         """
         Please see get_projects for more information.
         """
         return self.get_projects(addons=addons, **kwargs)
 
-    async def get_projects(self, addons: dict = None, **kwargs) -> ProjectsResponse:
+    async def get_projects(
+        self, addons: Dict = None, **kwargs
+    ) -> ProjectsResponse:
         """
         Gets a list of projects for the authenticated user.
 
@@ -85,7 +90,7 @@ class AsyncManageClient(AbstractAsyncRestClient):
         return res
 
     async def get_project(
-        self, project_id: str, addons: dict = None, **kwargs
+        self, project_id: str, addons: Dict = None, **kwargs
     ) -> Project:
         """
         Gets details for a specific project.
@@ -107,7 +112,11 @@ class AsyncManageClient(AbstractAsyncRestClient):
         return res
 
     async def update_project_option(
-        self, project_id: str, options: ProjectOptions, addons: dict = None, **kwargs
+        self,
+        project_id: str,
+        options: ProjectOptions,
+        addons: Dict = None,
+        **kwargs,
     ) -> Message:
         """
         Updates a project's settings.
@@ -130,7 +139,7 @@ class AsyncManageClient(AbstractAsyncRestClient):
         return res
 
     async def update_project(
-        self, project_id: str, name="", addons: dict = None, **kwargs
+        self, project_id: str, name="", addons: Dict = None, **kwargs
     ) -> Message:
         """
         Updates a project's settings.
@@ -156,7 +165,7 @@ class AsyncManageClient(AbstractAsyncRestClient):
         return res
 
     async def delete_project(
-        self, project_id: str, addons: dict = None, **kwargs
+        self, project_id: str, addons: Dict = None, **kwargs
     ) -> Message:
         """
         Deletes a project.
@@ -177,7 +186,7 @@ class AsyncManageClient(AbstractAsyncRestClient):
 
     # keys
     async def list_keys(
-        self, project_id: str, addons: dict = None, **kwargs
+        self, project_id: str, addons: Dict = None, **kwargs
     ) -> KeysResponse:
         """
         Please see get_keys for more information.
@@ -185,7 +194,7 @@ class AsyncManageClient(AbstractAsyncRestClient):
         return self.get_keys(project_id, addons=addons, **kwargs)
 
     async def get_keys(
-        self, project_id: str, addons: dict = None, **kwargs
+        self, project_id: str, addons: Dict = None, **kwargs
     ) -> KeysResponse:
         """
         Gets a list of keys for a project.
@@ -207,7 +216,7 @@ class AsyncManageClient(AbstractAsyncRestClient):
         return res
 
     async def get_key(
-        self, project_id: str, key_id: str, addons: dict = None, **kwargs
+        self, project_id: str, key_id: str, addons: Dict = None, **kwargs
     ) -> KeyResponse:
         """
         Gets details for a specific key.
@@ -230,7 +239,11 @@ class AsyncManageClient(AbstractAsyncRestClient):
         return res
 
     async def create_key(
-        self, project_id: str, options: KeyOptions, addons: dict = None, **kwargs
+        self,
+        project_id: str,
+        options: KeyOptions,
+        addons: Dict = None,
+        **kwargs,
     ) -> Key:
         """
         Creates a new key.
@@ -253,7 +266,7 @@ class AsyncManageClient(AbstractAsyncRestClient):
         return res
 
     async def delete_key(
-        self, project_id: str, key_id: str, addons: dict = None, **kwargs
+        self, project_id: str, key_id: str, addons: Dict = None, **kwargs
     ) -> Message:
         """
         Deletes a key.
@@ -277,7 +290,7 @@ class AsyncManageClient(AbstractAsyncRestClient):
 
     # members
     async def list_members(
-        self, project_id: str, addons: dict = None, **kwargs
+        self, project_id: str, addons: Dict = None, **kwargs
     ) -> MembersResponse:
         """
         Please see get_members for more information.
@@ -285,7 +298,7 @@ class AsyncManageClient(AbstractAsyncRestClient):
         return self.get_members(project_id, addons=addons, **kwargs)
 
     async def get_members(
-        self, project_id: str, addons: dict = None, **kwargs
+        self, project_id: str, addons: Dict = None, **kwargs
     ) -> MembersResponse:
         """
         Gets a list of members for a project.
@@ -307,7 +320,7 @@ class AsyncManageClient(AbstractAsyncRestClient):
         return res
 
     async def remove_member(
-        self, project_id: str, member_id: str, addons: dict = None, **kwargs
+        self, project_id: str, member_id: str, addons: Dict = None, **kwargs
     ) -> Message:
         """
         Removes a member from a project.
@@ -331,7 +344,7 @@ class AsyncManageClient(AbstractAsyncRestClient):
 
     # scopes
     async def get_member_scopes(
-        self, project_id: str, member_id: str, addons: dict = None, **kwargs
+        self, project_id: str, member_id: str, addons: Dict = None, **kwargs
     ) -> ScopesResponse:
         """
         Gets a list of scopes for a member.
@@ -360,7 +373,7 @@ class AsyncManageClient(AbstractAsyncRestClient):
         project_id: str,
         member_id: str,
         options: ScopeOptions,
-        addons: dict = None,
+        addons: Dict = None,
         **kwargs,
     ) -> Message:
         """
@@ -387,7 +400,7 @@ class AsyncManageClient(AbstractAsyncRestClient):
 
     # invites
     async def list_invites(
-        self, project_id: str, addons: dict = None, **kwargs
+        self, project_id: str, addons: Dict = None, **kwargs
     ) -> InvitesResponse:
         """
         Please see get_invites for more information.
@@ -395,7 +408,7 @@ class AsyncManageClient(AbstractAsyncRestClient):
         return self.get_invites(project_id, addons=addons, **kwargs)
 
     async def get_invites(
-        self, project_id: str, addons: dict = None, **kwargs
+        self, project_id: str, addons: Dict = None, **kwargs
     ) -> InvitesResponse:
         """
         Gets a list of invites for a project.
@@ -417,7 +430,11 @@ class AsyncManageClient(AbstractAsyncRestClient):
         return res
 
     async def send_invite_options(
-        self, project_id: str, options: InviteOptions, addons: dict = None, **kwargs
+        self,
+        project_id: str,
+        options: InviteOptions,
+        addons: Dict = None,
+        **kwargs,
     ) -> Message:
         """
         Sends an invite to a project.
@@ -440,7 +457,12 @@ class AsyncManageClient(AbstractAsyncRestClient):
         return res
 
     async def send_invite(
-        self, project_id: str, email: str, scope="member", addons: dict = None, **kwargs
+        self,
+        project_id: str,
+        email: str,
+        scope="member",
+        addons: Dict = None,
+        **kwargs,
     ) -> Message:
         """
         Sends an invite to a project.
@@ -467,7 +489,7 @@ class AsyncManageClient(AbstractAsyncRestClient):
         return res
 
     async def delete_invite(
-        self, project_id: str, email: str, addons: dict = None, **kwargs
+        self, project_id: str, email: str, addons: Dict = None, **kwargs
     ) -> Message:
         """
         Deletes an invite from a project.
@@ -490,7 +512,7 @@ class AsyncManageClient(AbstractAsyncRestClient):
         return res
 
     async def leave_project(
-        self, project_id: str, addons: dict = None, **kwargs
+        self, project_id: str, addons: Dict = None, **kwargs
     ) -> Message:
         """
         Leaves a project.
@@ -516,7 +538,7 @@ class AsyncManageClient(AbstractAsyncRestClient):
         self,
         project_id: str,
         options: UsageRequestOptions,
-        addons: dict = None,
+        addons: Dict = None,
         **kwargs,
     ) -> UsageRequestsResponse:
         """
@@ -540,7 +562,7 @@ class AsyncManageClient(AbstractAsyncRestClient):
         return res
 
     async def get_usage_request(
-        self, project_id: str, request_id: str, addons: dict = None, **kwargs
+        self, project_id: str, request_id: str, addons: Dict = None, **kwargs
     ) -> UsageRequest:
         """
         Gets details for a specific usage request.
@@ -566,7 +588,7 @@ class AsyncManageClient(AbstractAsyncRestClient):
         self,
         project_id: str,
         options: UsageSummaryOptions,
-        addons: dict = None,
+        addons: Dict = None,
         **kwargs,
     ) -> UsageSummaryResponse:
         """
@@ -593,7 +615,7 @@ class AsyncManageClient(AbstractAsyncRestClient):
         self,
         project_id: str,
         options: UsageFieldsOptions,
-        addons: dict = None,
+        addons: Dict = None,
         **kwargs,
     ) -> UsageFieldsResponse:
         """
@@ -618,7 +640,7 @@ class AsyncManageClient(AbstractAsyncRestClient):
 
     # balances
     async def list_balances(
-        self, project_id: str, addons: dict = None, **kwargs
+        self, project_id: str, addons: Dict = None, **kwargs
     ) -> BalancesResponse:
         """
         Please see get_balances for more information.
@@ -626,7 +648,7 @@ class AsyncManageClient(AbstractAsyncRestClient):
         return self.get_balances(project_id, addons=addons, **kwargs)
 
     async def get_balances(
-        self, project_id: str, addons: dict = None, **kwargs
+        self, project_id: str, addons: Dict = None, **kwargs
     ) -> BalancesResponse:
         """
         Gets a list of balances for a project.
@@ -648,7 +670,7 @@ class AsyncManageClient(AbstractAsyncRestClient):
         return res
 
     async def get_balance(
-        self, project_id: str, balance_id: str, addons: dict = None, **kwargs
+        self, project_id: str, balance_id: str, addons: Dict = None, **kwargs
     ) -> Balance:
         """
         Gets details for a specific balance.

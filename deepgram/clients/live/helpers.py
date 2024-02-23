@@ -3,9 +3,11 @@
 # SPDX-License-Identifier: MIT
 
 from urllib.parse import urlparse, urlunparse, parse_qs, urlencode
+from typing import Dict
 
 
-def append_query_params(url, params):
+# This function appends query parameters to a URL
+def append_query_params(url: str, params: Dict):
     parsed_url = urlparse(url)
     query_params = parse_qs(parsed_url.query)
 
@@ -25,7 +27,8 @@ def append_query_params(url, params):
     return updated_url
 
 
-def convert_to_websocket_url(base_url, endpoint):
+# This function converts a URL to a WebSocket URL
+def convert_to_websocket_url(base_url: str, endpoint: str):
     parsed_url = urlparse(base_url)
     domain = parsed_url.netloc
     if parsed_url.scheme == "https":

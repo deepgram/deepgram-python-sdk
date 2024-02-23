@@ -4,6 +4,7 @@
 
 from importlib import import_module
 import logging, verboselogs
+from typing import Union
 
 from ..options import DeepgramClientOptions
 from .errors import DeepgramModuleError
@@ -70,19 +71,19 @@ class Listen:
         self.config = config
 
     @property
-    def prerecorded(self):
+    def prerecorded(self) -> PreRecordedClient:
         return self.Version(self.config, "prerecorded")
 
     @property
-    def asyncprerecorded(self):
+    def asyncprerecorded(self) -> AsyncPreRecordedClient:
         return self.Version(self.config, "asyncprerecorded")
 
     @property
-    def live(self):
+    def live(self) -> LiveClient:
         return self.Version(self.config, "live")
 
     @property
-    def asynclive(self):
+    def asynclive(self) -> AsyncLiveClient:
         return self.Version(self.config, "asynclive")
 
     # INTERNAL CLASSES
@@ -106,7 +107,11 @@ class Listen:
         #         case _:
         #             raise DeepgramModuleError("Invalid parent")
 
-        def v(self, version: str = ""):
+        def v(
+            self, version: str = ""
+        ) -> Union[
+            LiveClient, AsyncLiveClient, PreRecordedClient, AsyncPreRecordedClient
+        ]:
             self.logger.debug("Version.v ENTER")
             self.logger.info("version: %s", version)
             if len(version) == 0:

@@ -5,6 +5,7 @@
 import httpx
 import logging, verboselogs
 import json
+from typing import Dict
 
 from ...abstract_sync_client import AbstractSyncRestClient
 from ..errors import DeepgramError, DeepgramTypeError
@@ -48,7 +49,7 @@ class AnalyzeClient(AbstractSyncRestClient):
         self,
         source: UrlSource,
         options: AnalyzeOptions = None,
-        addons: dict = None,
+        addons: Dict = None,
         timeout: httpx.Timeout = None,
         endpoint: str = "v1/read",
     ) -> AnalyzeResponse:
@@ -111,7 +112,7 @@ class AnalyzeClient(AbstractSyncRestClient):
         source: UrlSource,
         callback: str,
         options: AnalyzeOptions = None,
-        addons: dict = None,
+        addons: Dict = None,
         timeout: httpx.Timeout = None,
         endpoint: str = "v1/read",
     ) -> AsyncAnalyzeResponse:
@@ -169,7 +170,7 @@ class AnalyzeClient(AbstractSyncRestClient):
         self,
         source: TextSource,
         options: AnalyzeOptions = None,
-        addons: dict = None,
+        addons: Dict = None,
         timeout: httpx.Timeout = None,
         endpoint: str = "v1/read",
     ) -> AnalyzeResponse:
@@ -233,7 +234,7 @@ class AnalyzeClient(AbstractSyncRestClient):
         source: TextSource,
         callback: str,
         options: AnalyzeOptions = None,
-        addons: dict = None,
+        addons: Dict = None,
         timeout: httpx.Timeout = None,
         endpoint: str = "v1/read",
     ) -> AsyncAnalyzeResponse:

@@ -4,6 +4,7 @@
 
 import httpx
 import json
+from typing import Dict
 
 from .helpers import append_query_params
 from ..options import DeepgramClientOptions
@@ -18,7 +19,7 @@ class AbstractSyncRestClient:
     It handles error responses and provides basic JSON parsing.
 
     Args:
-        url (Dict[str, str]): The base URL for the RESTful API, including any path segments.
+        url (Dict): The base URL for the RESTful API, including any path segments.
         headers (Optional[Dict[str, Any]]): Optional HTTP headers to include in requests.
         params (Optional[Dict[str, Any]]): Optional query parameters to include in requests.
         timeout (Optional[httpx.Timeout]): Optional timeout configuration for requests.
@@ -33,7 +34,14 @@ class AbstractSyncRestClient:
             raise DeepgramError("Config are required")
         self.config = config
 
-    def get(self, url: str, options=None, addons=None, timeout=None, **kwargs):
+    def get(
+        self,
+        url: str,
+        options: Dict = None,
+        addons: Dict = None,
+        timeout: httpx.Timeout = None,
+        **kwargs
+    ) -> str:
         return self._handle_request(
             "GET",
             url,
@@ -44,7 +52,14 @@ class AbstractSyncRestClient:
             **kwargs
         )
 
-    def post(self, url: str, options=None, addons=None, timeout=None, **kwargs):
+    def post(
+        self,
+        url: str,
+        options: Dict = None,
+        addons: Dict = None,
+        timeout: httpx.Timeout = None,
+        **kwargs
+    ) -> str:
         return self._handle_request(
             "POST",
             url,
@@ -55,7 +70,14 @@ class AbstractSyncRestClient:
             **kwargs
         )
 
-    def put(self, url: str, options=None, addons=None, timeout=None, **kwargs):
+    def put(
+        self,
+        url: str,
+        options: Dict = None,
+        addons: Dict = None,
+        timeout: httpx.Timeout = None,
+        **kwargs
+    ) -> str:
         return self._handle_request(
             "PUT",
             url,
@@ -66,7 +88,14 @@ class AbstractSyncRestClient:
             **kwargs
         )
 
-    def patch(self, url: str, options=None, addons=None, timeout=None, **kwargs):
+    def patch(
+        self,
+        url: str,
+        options: Dict = None,
+        addons: Dict = None,
+        timeout: httpx.Timeout = None,
+        **kwargs
+    ) -> str:
         return self._handle_request(
             "PATCH",
             url,
@@ -77,7 +106,14 @@ class AbstractSyncRestClient:
             **kwargs
         )
 
-    def delete(self, url: str, options=None, addons=None, timeout=None, **kwargs):
+    def delete(
+        self,
+        url: str,
+        options: Dict = None,
+        addons: Dict = None,
+        timeout: httpx.Timeout = None,
+        **kwargs
+    ) -> str:
         return self._handle_request(
             "DELETE",
             url,
@@ -88,7 +124,16 @@ class AbstractSyncRestClient:
             **kwargs
         )
 
-    def _handle_request(self, method, url, params, addons, headers, timeout, **kwargs):
+    def _handle_request(
+        self,
+        method: str,
+        url: str,
+        params: Dict = None,
+        addons: Dict = None,
+        timeout: httpx.Timeout = None,
+        headers: Dict = None,
+        **kwargs
+    ) -> str:
         new_url = url
         if params is not None:
             new_url = append_query_params(new_url, params)

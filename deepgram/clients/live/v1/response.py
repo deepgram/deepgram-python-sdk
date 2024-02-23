@@ -179,7 +179,7 @@ class MetadataResponse:
     model_info: Optional[Dict[str, ModelInfo]] = field(
         default=None, metadata=config(exclude=lambda f: f is None)
     )
-    extra: Optional[Dict[str, str]] = field(
+    extra: Optional[Dict] = field(
         default=None, metadata=config(exclude=lambda f: f is None)
     )
 

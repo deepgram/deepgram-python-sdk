@@ -4,6 +4,7 @@
 
 from importlib import import_module
 import logging, verboselogs
+from typing import Union
 
 from ..options import DeepgramClientOptions
 from .errors import DeepgramModuleError
@@ -49,11 +50,11 @@ class Read:
         self.config = config
 
     @property
-    def analyze(self):
+    def analyze(self) -> AnalyzeClient:
         return self.Version(self.config, "analyze")
 
     @property
-    def asyncanalyze(self):
+    def asyncanalyze(self) -> AsyncAnalyzeClient:
         return self.Version(self.config, "asyncanalyze")
 
     # INTERNAL CLASSES
@@ -75,7 +76,7 @@ class Read:
         #         case _:
         #             raise DeepgramModuleError("Invalid parent")
 
-        def v(self, version: str = ""):
+        def v(self, version: str = "") -> Union[AnalyzeClient, AsyncAnalyzeClient]:
             self.logger.debug("Version.v ENTER")
             self.logger.info("version: %s", version)
             if len(version) == 0:

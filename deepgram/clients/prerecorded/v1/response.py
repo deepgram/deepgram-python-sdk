@@ -131,7 +131,7 @@ class Metadata:
     topics_info: Optional[TopicsInfo] = field(
         default=None, metadata=config(exclude=lambda f: f is None)
     )
-    extra: Optional[Dict[str, str]] = field(
+    extra: Optional[Dict] = field(
         default=None, metadata=config(exclude=lambda f: f is None)
     )
 
