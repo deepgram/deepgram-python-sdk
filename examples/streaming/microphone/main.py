@@ -21,8 +21,7 @@ def main():
     try:
         # example of setting up a client config. logging values: WARNING, VERBOSE, DEBUG, SPAM
         # config = DeepgramClientOptions(
-        #     verbose=logging.DEBUG,
-        #     options={"keepalive": "true"}
+        #     verbose=logging.DEBUG, options={"keepalive": "true"}
         # )
         # deepgram: DeepgramClient = DeepgramClient("", config)
         # otherwise, use default config
