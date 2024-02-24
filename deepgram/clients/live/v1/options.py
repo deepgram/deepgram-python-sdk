@@ -51,6 +51,12 @@ class LiveOptions:
         _dict = self.to_dict()
         return _dict[key]
 
+    def __setitem__(self, key, val):
+        self.__dict__[key] = val
+
+    def __str__(self) -> str:
+        return self.to_json(indent=4)
+
     def check(self):
         verboselogs.install()
         logger = logging.getLogger(__name__)

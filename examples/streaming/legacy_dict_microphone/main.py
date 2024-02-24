@@ -26,7 +26,7 @@ def main():
         # )
         # deepgram: DeepgramClient = DeepgramClient("", config)
         # otherwise, use default config
-        deepgram: DeepgramClient = DeepgramClient()
+        deepgram = DeepgramClient()
 
         dg_connection = deepgram.listen.live.v("1")
 
@@ -54,18 +54,18 @@ def main():
         dg_connection.on(LiveTranscriptionEvents.UtteranceEnd, on_utterance_end)
         dg_connection.on(LiveTranscriptionEvents.Error, on_error)
 
-        options: LiveOptions = LiveOptions(
-            model="nova-2",
-            punctuate=True,
-            language="en-US",
-            encoding="linear16",
-            channels=1,
-            sample_rate=16000,
+        options = {
+            "model": "nova-2",
+            "punctuate": True,
+            "language": "en-US",
+            "encoding": "linear16",
+            "channels": 1,
+            "sample_rate": 16000,
             # To get UtteranceEnd, the following must be set:
-            interim_results=True,
-            utterance_end_ms="1000",
-            vad_events=True,
-        )
+            "interim_results": True,
+            "utterance_end_ms": "1000",
+            "vad_events": True,
+        }
         dg_connection.start(options)
 
         # Open a microphone stream on the default input device

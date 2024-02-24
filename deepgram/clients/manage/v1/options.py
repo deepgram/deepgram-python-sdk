@@ -19,6 +19,12 @@ class ProjectOptions:
         _dict = self.to_dict()
         return _dict[key]
 
+    def __setitem__(self, key, val):
+        self.__dict__[key] = val
+
+    def __str__(self) -> str:
+        return self.to_json(indent=4)
+
 
 @dataclass_json
 @dataclass
@@ -37,6 +43,12 @@ class KeyOptions:
             _dict["tags"] = [str(tags) for tags in _dict["tags"]]
         return _dict[key]
 
+    def __setitem__(self, key, val):
+        self.__dict__[key] = val
+
+    def __str__(self) -> str:
+        return self.to_json(indent=4)
+
 
 @dataclass_json
 @dataclass
@@ -46,6 +58,12 @@ class ScopeOptions:
     def __getitem__(self, key):
         _dict = self.to_dict()
         return _dict[key]
+
+    def __setitem__(self, key, val):
+        self.__dict__[key] = val
+
+    def __str__(self) -> str:
+        return self.to_json(indent=4)
 
 
 @dataclass_json
@@ -57,6 +75,12 @@ class InviteOptions:
     def __getitem__(self, key):
         _dict = self.to_dict()
         return _dict[key]
+
+    def __setitem__(self, key, val):
+        self.__dict__[key] = val
+
+    def __str__(self) -> str:
+        return self.to_json(indent=4)
 
 
 @dataclass_json
@@ -70,6 +94,12 @@ class UsageRequestOptions:
     def __getitem__(self, key):
         _dict = self.to_dict()
         return _dict[key]
+
+    def __setitem__(self, key, val):
+        self.__dict__[key] = val
+
+    def __str__(self) -> str:
+        return self.to_json(indent=4)
 
 
 @dataclass_json
@@ -101,6 +131,12 @@ class UsageSummaryOptions:
         _dict = self.to_dict()
         return _dict[key]
 
+    def __setitem__(self, key, val):
+        self.__dict__[key] = val
+
+    def __str__(self) -> str:
+        return self.to_json(indent=4)
+
 
 @dataclass_json
 @dataclass
@@ -111,3 +147,9 @@ class UsageFieldsOptions:
     def __getitem__(self, key):
         _dict = self.to_dict()
         return _dict[key]
+
+    def __setitem__(self, key, val):
+        self.__dict__[key] = val
+
+    def __str__(self) -> str:
+        return self.to_json(indent=4)

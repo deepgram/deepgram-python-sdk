@@ -2,10 +2,18 @@
 # Use of this source code is governed by a MIT license that can be found in the LICENSE file.
 # SPDX-License-Identifier: MIT
 
+from typing import Union
+
 from .v1.client import AnalyzeClient as AnalyzeClientLatest
 from .v1.async_client import AsyncAnalyzeClient as AsyncAnalyzeClientLatest
-from .v1.options import AnalyzeOptions as AnalyzeOptionsLatest
-from .source import AnalyzeSource, TextSource, UrlSource
+from .v1.options import (
+    AnalyzeOptions as AnalyzeOptionsLatest,
+    StreamSource as StreamSourceLatest,
+    BufferSource as BufferSourceLatest,
+    UrlSource as UrlSourceLatest,
+    AnalyzeSource as AnalyzeSourceLatest,
+    TextSource as TextSourceLatest,
+)
 from .v1.response import (
     SyncAnalyzeResponse as SyncAnalyzeResponseLatest,
     AnalyzeResponse as AnalyzeResponseLatest,
@@ -26,6 +34,37 @@ class AnalyzeOptions(AnalyzeOptionsLatest):
     """
 
     pass
+
+
+class StreamSource(StreamSourceLatest):
+    """
+    Please see StreamSourceLatest for details
+    """
+
+    pass
+
+
+class BufferSource(BufferSourceLatest):
+    """
+    Please see BufferSourceLatest for details
+    """
+
+    pass
+
+
+class UrlSource(UrlSourceLatest):
+    """
+    Please see UrlSourceLatest for details
+    """
+
+    pass
+
+
+AnalyzeSource = AnalyzeSourceLatest
+TextSource = TextSourceLatest
+
+
+# responses
 
 
 class AsyncAnalyzeResponse(AsyncAnalyzeResponseLatest):

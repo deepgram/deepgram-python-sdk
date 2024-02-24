@@ -26,6 +26,9 @@ class Word:
         _dict = self.to_dict()
         return _dict[key]
 
+    def __setitem__(self, key, val):
+        self.__dict__[key] = val
+
     def __str__(self) -> str:
         return self.to_json(indent=4)
 
@@ -44,6 +47,9 @@ class Alternative:
         if "words" in _dict:
             _dict["words"] = [Word.from_dict(words) for words in _dict["words"]]
         return _dict[key]
+
+    def __setitem__(self, key, val):
+        self.__dict__[key] = val
 
     def __str__(self) -> str:
         return self.to_json(indent=4)
@@ -65,6 +71,9 @@ class Channel:
             ]
         return _dict[key]
 
+    def __setitem__(self, key, val):
+        self.__dict__[key] = val
+
     def __str__(self) -> str:
         return self.to_json(indent=4)
 
@@ -79,6 +88,9 @@ class ModelInfo:
     def __getitem__(self, key):
         _dict = self.to_dict()
         return _dict[key]
+
+    def __setitem__(self, key, val):
+        self.__dict__[key] = val
 
     def __str__(self) -> str:
         return self.to_json(indent=4)
@@ -100,6 +112,9 @@ class Metadata:
                 ModelInfo.from_dict(model_info) for model_info in _dict["model_info"]
             ]
         return _dict[key]
+
+    def __setitem__(self, key, val):
+        self.__dict__[key] = val
 
     def __str__(self) -> str:
         return self.to_json(indent=4)
@@ -137,6 +152,9 @@ class LiveResultResponse:
             ]
         return _dict[key]
 
+    def __setitem__(self, key, val):
+        self.__dict__[key] = val
+
     def __str__(self) -> str:
         return self.to_json(indent=4)
 
@@ -154,6 +172,9 @@ class ModelInfo:
     def __getitem__(self, key):
         _dict = self.to_dict()
         return _dict[key]
+
+    def __setitem__(self, key, val):
+        self.__dict__[key] = val
 
     def __str__(self) -> str:
         return self.to_json(indent=4)
@@ -196,6 +217,9 @@ class MetadataResponse:
             _dict["extra"] = [str(extra) for _, extra in _dict["extra"].items()]
         return _dict[key]
 
+    def __setitem__(self, key, val):
+        self.__dict__[key] = val
+
     def __str__(self) -> str:
         return self.to_json(indent=4)
 
@@ -217,6 +241,9 @@ class SpeechStartedResponse:
     def __getitem__(self, key):
         _dict = self.to_dict()
         return _dict[key]
+
+    def __setitem__(self, key, val):
+        self.__dict__[key] = val
 
     def __str__(self) -> str:
         return self.to_json(indent=4)
@@ -240,6 +267,9 @@ class UtteranceEndResponse:
         _dict = self.to_dict()
         return _dict[key]
 
+    def __setitem__(self, key, val):
+        self.__dict__[key] = val
+
     def __str__(self) -> str:
         return self.to_json(indent=4)
 
@@ -262,6 +292,9 @@ class ErrorResponse:
     def __getitem__(self, key):
         _dict = self.to_dict()
         return _dict[key]
+
+    def __setitem__(self, key, val):
+        self.__dict__[key] = val
 
     def __str__(self) -> str:
         return self.to_json(indent=4)

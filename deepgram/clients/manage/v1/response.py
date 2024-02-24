@@ -20,6 +20,9 @@ class Message:
         _dict = self.to_dict()
         return _dict[key]
 
+    def __setitem__(self, key, val):
+        self.__dict__[key] = val
+
     def __str__(self) -> str:
         return self.to_json(indent=4)
 
@@ -37,6 +40,9 @@ class Project:
         _dict = self.to_dict()
         return _dict[key]
 
+    def __setitem__(self, key, val):
+        self.__dict__[key] = val
+
     def __str__(self) -> str:
         return self.to_json(indent=4)
 
@@ -53,6 +59,9 @@ class ProjectsResponse:
                 Project.from_dict(projects) for projects in _dict["projects"]
             ]
         return _dict[key]
+
+    def __setitem__(self, key, val):
+        self.__dict__[key] = val
 
     def __str__(self) -> str:
         return self.to_json(indent=4)
@@ -73,6 +82,9 @@ class Member:
         _dict = self.to_dict()
         return _dict[key]
 
+    def __setitem__(self, key, val):
+        self.__dict__[key] = val
+
     def __str__(self) -> str:
         return self.to_json(indent=4)
 
@@ -89,6 +101,9 @@ class MembersResponse:
                 Member.from_dict(members) for members in _dict["members"]
             ]
         return _dict[key]
+
+    def __setitem__(self, key, val):
+        self.__dict__[key] = val
 
     def __str__(self) -> str:
         return self.to_json(indent=4)
@@ -111,6 +126,9 @@ class Key:
             _dict["scopes"] = [str(scopes) for scopes in _dict["scopes"]]
         return _dict[key]
 
+    def __setitem__(self, key, val):
+        self.__dict__[key] = val
+
     def __str__(self) -> str:
         return self.to_json(indent=4)
 
@@ -129,6 +147,9 @@ class KeyResponse:
             _dict["member"] = Member.from_dict(_dict["member"])
         return _dict[key]
 
+    def __setitem__(self, key, val):
+        self.__dict__[key] = val
+
     def __str__(self) -> str:
         return self.to_json(indent=4)
 
@@ -145,6 +166,9 @@ class KeysResponse:
                 KeyResponse.from_dict(api_keys) for api_keys in _dict["api_keys"]
             ]
         return _dict[key]
+
+    def __setitem__(self, key, val):
+        self.__dict__[key] = val
 
     def __str__(self) -> str:
         return self.to_json(indent=4)
@@ -164,6 +188,9 @@ class ScopesResponse:
             _dict["scopes"] = [str(scopes) for scopes in _dict["scopes"]]
         return _dict[key]
 
+    def __setitem__(self, key, val):
+        self.__dict__[key] = val
+
     def __str__(self) -> str:
         return self.to_json(indent=4)
 
@@ -181,6 +208,9 @@ class Invite:
         _dict = self.to_dict()
         return _dict[key]
 
+    def __setitem__(self, key, val):
+        self.__dict__[key] = val
+
     def __str__(self) -> str:
         return self.to_json(indent=4)
 
@@ -197,6 +227,9 @@ class InvitesResponse:
                 Invite.from_dict(invites) for invites in _dict["invites"]
             ]
         return _dict[key]
+
+    def __setitem__(self, key, val):
+        self.__dict__[key] = val
 
     def __str__(self) -> str:
         return self.to_json(indent=4)
@@ -219,6 +252,9 @@ class Config:
     def __getitem__(self, key):
         _dict = self.to_dict()
         return _dict[key]
+
+    def __setitem__(self, key, val):
+        self.__dict__[key] = val
 
     def __str__(self) -> str:
         return self.to_json(indent=4)
@@ -251,6 +287,9 @@ class Details:
             _dict["config"] = Config.from_dict(_dict["config"])
         return _dict[key]
 
+    def __setitem__(self, key, val):
+        self.__dict__[key] = val
+
     def __str__(self) -> str:
         return self.to_json(indent=4)
 
@@ -265,6 +304,9 @@ class Callback:
     def __getitem__(self, key):
         _dict = self.to_dict()
         return _dict[key]
+
+    def __setitem__(self, key, val):
+        self.__dict__[key] = val
 
     def __str__(self) -> str:
         return self.to_json(indent=4)
@@ -281,6 +323,9 @@ class TokenDetail:
     def __getitem__(self, key):
         _dict = self.to_dict()
         return _dict[key]
+
+    def __setitem__(self, key, val):
+        self.__dict__[key] = val
 
     def __str__(self) -> str:
         return self.to_json(indent=4)
@@ -304,6 +349,9 @@ class Response:
                 for token_details in _dict["token_details"]
             ]
         return _dict[key]
+
+    def __setitem__(self, key, val):
+        self.__dict__[key] = val
 
     def __str__(self) -> str:
         return self.to_json(indent=4)
@@ -329,6 +377,9 @@ class UsageRequest:
             _dict["callback"] = Callback.from_dict(_dict["callback"])
         return _dict[key]
 
+    def __setitem__(self, key, val):
+        self.__dict__[key] = val
+
     def __str__(self) -> str:
         return self.to_json(indent=4)
 
@@ -348,6 +399,9 @@ class UsageRequestsResponse:
             ]
         return _dict[key]
 
+    def __setitem__(self, key, val):
+        self.__dict__[key] = val
+
     def __str__(self) -> str:
         return self.to_json(indent=4)
 
@@ -361,6 +415,9 @@ class Tokens:
     def __getitem__(self, key):
         _dict = self.to_dict()
         return _dict[key]
+
+    def __setitem__(self, key, val):
+        self.__dict__[key] = val
 
     def __str__(self) -> str:
         return self.to_json(indent=4)
@@ -382,6 +439,9 @@ class Results:
             _dict["tokens"] = [Tokens.from_dict(tokens) for tokens in _dict["tokens"]]
         return _dict[key]
 
+    def __setitem__(self, key, val):
+        self.__dict__[key] = val
+
     def __str__(self) -> str:
         return self.to_json(indent=4)
 
@@ -395,6 +455,9 @@ class Resolution:
     def __getitem__(self, key):
         _dict = self.to_dict()
         return _dict[key]
+
+    def __setitem__(self, key, val):
+        self.__dict__[key] = val
 
     def __str__(self) -> str:
         return self.to_json(indent=4)
@@ -418,6 +481,9 @@ class UsageSummaryResponse:
             ]
         return _dict[key]
 
+    def __setitem__(self, key, val):
+        self.__dict__[key] = val
+
     def __str__(self) -> str:
         return self.to_json(indent=4)
 
@@ -433,6 +499,9 @@ class UsageModel:
     def __getitem__(self, key):
         _dict = self.to_dict()
         return _dict[key]
+
+    def __setitem__(self, key, val):
+        self.__dict__[key] = val
 
     def __str__(self) -> str:
         return self.to_json(indent=4)
@@ -466,6 +535,9 @@ class UsageFieldsResponse:
             _dict["languages"] = [str(languages) for languages in _dict["languages"]]
         return _dict[key]
 
+    def __setitem__(self, key, val):
+        self.__dict__[key] = val
+
     def __str__(self) -> str:
         return self.to_json(indent=4)
 
@@ -485,6 +557,9 @@ class Balance:
         _dict = self.to_dict()
         return _dict[key]
 
+    def __setitem__(self, key, val):
+        self.__dict__[key] = val
+
     def __str__(self) -> str:
         return self.to_json(indent=4)
 
@@ -501,6 +576,9 @@ class BalancesResponse:
                 Balance.from_dict(balances) for balances in _dict["balances"]
             ]
         return _dict[key]
+
+    def __setitem__(self, key, val):
+        self.__dict__[key] = val
 
     def __str__(self) -> str:
         return self.to_json(indent=4)

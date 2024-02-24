@@ -28,11 +28,11 @@ from .client import (
 # prerecorded
 from .client import PreRecordedClient, AsyncPreRecordedClient
 from .client import (
-    PrerecordedSource,
     FileSource,
+    PrerecordedSource,
     UrlSource,
     BufferSource,
-    ReadStreamSource,
+    StreamSource,
     PrerecordedOptions,
     Sentiment,
 )
@@ -49,7 +49,7 @@ from .client import (
     TextSource,
     UrlSource,
     BufferSource,
-    AnalyzeStreamSource,
+    StreamSource,
     AnalyzeOptions,
     Sentiment,
 )

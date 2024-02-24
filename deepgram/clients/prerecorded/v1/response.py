@@ -19,6 +19,9 @@ class AsyncPrerecordedResponse:
         _dict = self.to_dict()
         return _dict[key]
 
+    def __setitem__(self, key, val):
+        self.__dict__[key] = val
+
     def __str__(self) -> str:
         return self.to_json(indent=4)
 
@@ -37,6 +40,9 @@ class SummaryInfo:
         _dict = self.to_dict()
         return _dict[key]
 
+    def __setitem__(self, key, val):
+        self.__dict__[key] = val
+
     def __str__(self) -> str:
         return self.to_json(indent=4)
 
@@ -51,6 +57,9 @@ class ModelInfo:
     def __getitem__(self, key):
         _dict = self.to_dict()
         return _dict[key]
+
+    def __setitem__(self, key, val):
+        self.__dict__[key] = val
 
     def __str__(self) -> str:
         return self.to_json(indent=4)
@@ -67,6 +76,9 @@ class IntentsInfo:
         _dict = self.to_dict()
         return _dict[key]
 
+    def __setitem__(self, key, val):
+        self.__dict__[key] = val
+
     def __str__(self) -> str:
         return self.to_json(indent=4)
 
@@ -82,6 +94,9 @@ class SentimentInfo:
         _dict = self.to_dict()
         return _dict[key]
 
+    def __setitem__(self, key, val):
+        self.__dict__[key] = val
+
     def __str__(self) -> str:
         return self.to_json(indent=4)
 
@@ -96,6 +111,9 @@ class TopicsInfo:
     def __getitem__(self, key):
         _dict = self.to_dict()
         return _dict[key]
+
+    def __setitem__(self, key, val):
+        self.__dict__[key] = val
 
     def __str__(self) -> str:
         return self.to_json(indent=4)
@@ -160,6 +178,9 @@ class Metadata:
             _dict["extra"] = [str(extra) for _, extra in _dict["extra"].items()]
         return _dict[key]
 
+    def __setitem__(self, key, val):
+        self.__dict__[key] = val
+
     def __str__(self) -> str:
         return self.to_json(indent=4)
 
@@ -174,6 +195,9 @@ class SummaryV1:
     def __getitem__(self, key):
         _dict = self.to_dict()
         return _dict[key]
+
+    def __setitem__(self, key, val):
+        self.__dict__[key] = val
 
     def __str__(self) -> str:
         return self.to_json(indent=4)
@@ -194,6 +218,9 @@ class SummaryV2:
     def __getitem__(self, key):
         _dict = self.to_dict()
         return _dict[key]
+
+    def __setitem__(self, key, val):
+        self.__dict__[key] = val
 
     def __str__(self) -> str:
         return self.to_json(indent=4)
@@ -216,6 +243,9 @@ class Hit:
     def __getitem__(self, key):
         _dict = self.to_dict()
         return _dict[key]
+
+    def __setitem__(self, key, val):
+        self.__dict__[key] = val
 
     def __str__(self) -> str:
         return self.to_json(indent=4)
@@ -248,6 +278,9 @@ class Word:
             _dict["sentiment"] = Sentiment.from_dict(_dict["sentiment"])
         return _dict[key]
 
+    def __setitem__(self, key, val):
+        self.__dict__[key] = val
+
     def __str__(self) -> str:
         return self.to_json(indent=4)
 
@@ -270,6 +303,9 @@ class Sentence:
         if "sentiment" in _dict:
             _dict["sentiment"] = Sentiment.from_dict(_dict["sentiment"])
         return _dict[key]
+
+    def __setitem__(self, key, val):
+        self.__dict__[key] = val
 
     def __str__(self) -> str:
         return self.to_json(indent=4)
@@ -304,6 +340,9 @@ class Paragraph:
             _dict["sentiment"] = Sentiment.from_dict(_dict["sentiment"])
         return _dict[key]
 
+    def __setitem__(self, key, val):
+        self.__dict__[key] = val
+
     def __str__(self) -> str:
         return self.to_json(indent=4)
 
@@ -324,6 +363,9 @@ class Paragraphs:
             ]
         return _dict[key]
 
+    def __setitem__(self, key, val):
+        self.__dict__[key] = val
+
     def __str__(self) -> str:
         return self.to_json(indent=4)
 
@@ -337,6 +379,9 @@ class Translation:
     def __getitem__(self, key):
         _dict = self.to_dict()
         return _dict[key]
+
+    def __setitem__(self, key, val):
+        self.__dict__[key] = val
 
     def __str__(self) -> str:
         return self.to_json(indent=4)
@@ -352,6 +397,9 @@ class Warning:
     def __getitem__(self, key):
         _dict = self.to_dict()
         return _dict[key]
+
+    def __setitem__(self, key, val):
+        self.__dict__[key] = val
 
     def __str__(self) -> str:
         return self.to_json(indent=4)
@@ -370,6 +418,9 @@ class Search:
         if "hits" in _dict:
             _dict["hits"] = [Hit.from_dict(hits) for hits in _dict["hits"]]
         return _dict[key]
+
+    def __setitem__(self, key, val):
+        self.__dict__[key] = val
 
     def __str__(self) -> str:
         return self.to_json(indent=4)
@@ -405,6 +456,9 @@ class Utterance:
             _dict["sentiment"] = Sentiment.from_dict(_dict["sentiment"])
         return _dict[key]
 
+    def __setitem__(self, key, val):
+        self.__dict__[key] = val
+
     def __str__(self) -> str:
         return self.to_json(indent=4)
 
@@ -421,6 +475,9 @@ class Entity:
     def __getitem__(self, key):
         _dict = self.to_dict()
         return _dict[key]
+
+    def __setitem__(self, key, val):
+        self.__dict__[key] = val
 
     def __str__(self) -> str:
         return self.to_json(indent=4)
@@ -468,6 +525,9 @@ class Alternative:
             ]
         return _dict[key]
 
+    def __setitem__(self, key, val):
+        self.__dict__[key] = val
+
     def __str__(self) -> str:
         return self.to_json(indent=4)
 
@@ -495,6 +555,9 @@ class Channel:
             ]
         return _dict[key]
 
+    def __setitem__(self, key, val):
+        self.__dict__[key] = val
+
     def __str__(self) -> str:
         return self.to_json(indent=4)
 
@@ -508,6 +571,9 @@ class Intent:
     def __getitem__(self, key):
         _dict = self.to_dict()
         return _dict[key]
+
+    def __setitem__(self, key, val):
+        self.__dict__[key] = val
 
     def __str__(self) -> str:
         return self.to_json(indent=4)
@@ -529,6 +595,9 @@ class Average:
             _dict["sentiment"] = Sentiment.from_dict(_dict["sentiment"])
         return _dict[key]
 
+    def __setitem__(self, key, val):
+        self.__dict__[key] = val
+
     def __str__(self) -> str:
         return self.to_json(indent=4)
 
@@ -542,6 +611,9 @@ class Topic:
     def __getitem__(self, key):
         _dict = self.to_dict()
         return _dict[key]
+
+    def __setitem__(self, key, val):
+        self.__dict__[key] = val
 
     def __str__(self) -> str:
         return self.to_json(indent=4)
@@ -578,6 +650,9 @@ class Segment:
             _dict["topics"] = [Topic.from_dict(topics) for topics in _dict["topics"]]
         return _dict[key]
 
+    def __setitem__(self, key, val):
+        self.__dict__[key] = val
+
     def __str__(self) -> str:
         return self.to_json(indent=4)
 
@@ -602,6 +677,9 @@ class Sentiments:
             _dict["average"] = Average.from_dict(_dict["average"])
         return _dict[key]
 
+    def __setitem__(self, key, val):
+        self.__dict__[key] = val
+
     def __str__(self) -> str:
         return self.to_json(indent=4)
 
@@ -621,6 +699,9 @@ class Topics:
             ]
         return _dict[key]
 
+    def __setitem__(self, key, val):
+        self.__dict__[key] = val
+
     def __str__(self) -> str:
         return self.to_json(indent=4)
 
@@ -639,6 +720,9 @@ class Intents:
                 Segment.from_dict(segments) for segments in _dict["segments"]
             ]
         return _dict[key]
+
+    def __setitem__(self, key, val):
+        self.__dict__[key] = val
 
     def __str__(self) -> str:
         return self.to_json(indent=4)
@@ -686,6 +770,9 @@ class Results:
             _dict["intents"] = Intents.from_dict(_dict["intents"])
         return _dict[key]
 
+    def __setitem__(self, key, val):
+        self.__dict__[key] = val
+
     def __str__(self) -> str:
         return self.to_json(indent=4)
 
@@ -710,6 +797,9 @@ class PrerecordedResponse:
         if "results" in _dict:
             _dict["results"] = Results.from_dict(_dict["results"])
         return _dict[key]
+
+    def __setitem__(self, key, val):
+        self.__dict__[key] = val
 
     def __str__(self) -> str:
         return self.to_json(indent=4)

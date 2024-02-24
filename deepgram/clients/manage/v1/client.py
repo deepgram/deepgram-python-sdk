@@ -5,7 +5,7 @@
 import httpx
 import logging, verboselogs
 import json
-from typing import Dict
+from typing import Dict, Union
 
 from ....options import DeepgramClientOptions
 from ...abstract_sync_client import AbstractSyncRestClient
@@ -121,7 +121,7 @@ class ManageClient(AbstractSyncRestClient):
     def update_project_option(
         self,
         project_id: str,
-        options: ProjectOptions,
+        options: Union[Dict, ProjectOptions],
         timeout: httpx.Timeout = None,
         addons: Dict = None,
         **kwargs,
@@ -274,7 +274,7 @@ class ManageClient(AbstractSyncRestClient):
     def create_key(
         self,
         project_id: str,
-        options: KeyOptions,
+        options: Union[Dict, KeyOptions],
         timeout: httpx.Timeout = None,
         addons: Dict = None,
         **kwargs,
@@ -432,7 +432,7 @@ class ManageClient(AbstractSyncRestClient):
         self,
         project_id: str,
         member_id: str,
-        options: ScopeOptions,
+        options: Union[Dict, ScopeOptions],
         timeout: httpx.Timeout = None,
         addons: Dict = None,
         **kwargs,
@@ -504,7 +504,7 @@ class ManageClient(AbstractSyncRestClient):
     def send_invite_options(
         self,
         project_id: str,
-        options: InviteOptions,
+        options: Union[Dict, InviteOptions],
         timeout: httpx.Timeout = None,
         addons: Dict = None,
         **kwargs,
@@ -623,7 +623,7 @@ class ManageClient(AbstractSyncRestClient):
     def get_usage_requests(
         self,
         project_id: str,
-        options: UsageRequestOptions,
+        options: Union[Dict, UsageRequestOptions],
         timeout: httpx.Timeout = None,
         addons: Dict = None,
         **kwargs,
@@ -684,7 +684,7 @@ class ManageClient(AbstractSyncRestClient):
     def get_usage_summary(
         self,
         project_id: str,
-        options: UsageSummaryOptions,
+        options: Union[Dict, UsageSummaryOptions],
         timeout: httpx.Timeout = None,
         addons: Dict = None,
         **kwargs,
@@ -717,7 +717,7 @@ class ManageClient(AbstractSyncRestClient):
     def get_usage_fields(
         self,
         project_id: str,
-        options: UsageFieldsOptions,
+        options: Union[Dict, UsageFieldsOptions],
         timeout: httpx.Timeout = None,
         addons: Dict = None,
         **kwargs,

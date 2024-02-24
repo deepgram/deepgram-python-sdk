@@ -4,8 +4,14 @@
 
 from .v1.client import PreRecordedClient as PreRecordedClientLatest
 from .v1.async_client import AsyncPreRecordedClient as AsyncPreRecordedClientLatest
-from .v1.options import PrerecordedOptions as PrerecordedOptionsLatest
-from .source import PrerecordedSource, FileSource, UrlSource
+from .v1.options import (
+    PrerecordedOptions as PrerecordedOptionsLatest,
+    UrlSource as UrlSourceLatest,
+    BufferSource as BufferSourceLatest,
+    StreamSource as StreamSourceLatest,
+    FileSource as FileSourceLatest,
+    PrerecordedSource as PrerecordedSourceLatest,
+)
 from .v1.response import (
     AsyncPrerecordedResponse as AsyncPrerecordedResponseLatest,
     PrerecordedResponse as PrerecordedResponseLatest,
@@ -26,6 +32,34 @@ class PrerecordedOptions(PrerecordedOptionsLatest):
     """
 
     pass
+
+
+class UrlSource(UrlSourceLatest):
+    """
+    Please see UrlSourceLatest for details
+    """
+
+    pass
+
+
+class BufferSource(BufferSourceLatest):
+    """
+    Please see BufferSourceLatest for details
+    """
+
+    pass
+
+
+class StreamSource(StreamSourceLatest):
+    """
+    Please see StreamSourceLatest for details
+    """
+
+    pass
+
+
+FileSource = FileSourceLatest
+PrerecordedSource = PrerecordedSourceLatest
 
 
 # output

@@ -5,14 +5,14 @@
 from .client import AnalyzeClient
 from .client import AsyncAnalyzeClient
 from .client import AnalyzeOptions
-from .client import Sentiment
-from .source import (
-    AnalyzeSource,
-    TextSource,
+from .client import (
     UrlSource,
     BufferSource,
-    AnalyzeStreamSource,
+    StreamSource,
+    AnalyzeSource,
+    TextSource,
 )
+from .client import Sentiment
 from .client import AsyncAnalyzeResponse, AnalyzeResponse, SyncAnalyzeResponse
 
 from ...options import DeepgramClientOptions

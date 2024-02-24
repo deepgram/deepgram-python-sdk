@@ -56,7 +56,7 @@ class LiveClient:
     # starts the WebSocket connection for live transcription
     def start(
         self,
-        options: LiveOptions = None,
+        options: Union[LiveOptions, Dict] = None,
         addons: Dict = None,
         members: Dict = None,
         **kwargs,
@@ -70,7 +70,7 @@ class LiveClient:
         self.logger.info("members: %s", members)
         self.logger.info("options: %s", kwargs)
 
-        if options is not None and not options.check():
+        if isinstance(options, LiveOptions) and not options.check():
             self.logger.error("options.check failed")
             self.logger.debug("LiveClient.start LEAVE")
             raise DeepgramError("Fatal transcription options error")
@@ -94,10 +94,10 @@ class LiveClient:
             self.kwargs = dict()
 
         if isinstance(options, LiveOptions):
-            self.logger.info("LiveOptions switching class -> json")
+            self.logger.info("LiveOptions switching class -> dict")
             self.options = self.options.to_dict()
 
-        combined_options = dict(self.options)
+        combined_options = self.options
         if addons is not None:
             self.logger.info("merging addons to options")
             combined_options.update(addons)
