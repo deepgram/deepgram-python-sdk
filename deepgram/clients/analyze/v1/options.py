@@ -2,8 +2,8 @@
 # Use of this source code is governed by a MIT license that can be found in the LICENSE file.
 # SPDX-License-Identifier: MIT
 
-from dataclasses import dataclass
-from dataclasses_json import dataclass_json
+from dataclasses import dataclass, field
+from dataclasses_json import dataclass_json, config
 
 from io import BufferedReader
 from typing import Union, Optional
@@ -20,17 +20,39 @@ class AnalyzeOptions:
     https://developers.deepgram.com/reference/text-intelligence-apis
     """
 
-    callback: Optional[str] = None
-    callback_method: Optional[str] = None
-    custom_intent: Optional[Union[list, str]] = None
-    custom_intent_mode: Optional[str] = None
-    custom_topic: Optional[Union[list, str]] = None
-    custom_topic_mode: Optional[str] = None
-    intents: Optional[bool] = None
-    language: Optional[str] = None
-    sentiment: Optional[bool] = None
-    summarize: Optional[bool] = None
-    topics: Optional[bool] = None
+    callback: Optional[str] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
+    callback_method: Optional[str] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
+    custom_intent: Optional[Union[list, str]] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
+    custom_intent_mode: Optional[str] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
+    custom_topic: Optional[Union[list, str]] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
+    custom_topic_mode: Optional[str] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
+    intents: Optional[bool] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
+    language: Optional[str] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
+    sentiment: Optional[bool] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
+    summarize: Optional[bool] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
+    topics: Optional[bool] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
 
     def __getitem__(self, key):
         _dict = self.to_dict()
@@ -69,7 +91,7 @@ class StreamSource:
         stream (BufferedReader): A BufferedReader object for reading binary data.
     """
 
-    stream: BufferedReader
+    stream: BufferedReader = None
 
     def __getitem__(self, key):
         _dict = self.to_dict()
@@ -95,7 +117,7 @@ class UrlSource:
         url (str): The URL pointing to the hosted file.
     """
 
-    url: str
+    url: str = ""
 
     def __getitem__(self, key):
         _dict = self.to_dict()
@@ -121,7 +143,7 @@ class BufferSource:
         buffer (bytes): The binary data.
     """
 
-    buffer: bytes
+    buffer: bytes = b""
 
     def __getitem__(self, key):
         _dict = self.to_dict()

@@ -13,11 +13,13 @@ from typing import List, Optional, Dict
 @dataclass_json
 @dataclass
 class Word:
-    word: Optional[str] = ""
-    start: Optional[float] = 0
-    end: Optional[float] = 0
-    confidence: Optional[float] = 0
-    punctuated_word: Optional[str] = ""
+    word: str = ""
+    start: float = 0
+    end: float = 0
+    confidence: float = 0
+    punctuated_word: Optional[str] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
     speaker: Optional[int] = field(
         default=None, metadata=config(exclude=lambda f: f is None)
     )
@@ -36,11 +38,9 @@ class Word:
 @dataclass_json
 @dataclass
 class Alternative:
-    transcript: Optional[str] = ""
-    confidence: Optional[float] = 0
-    words: Optional[List[Word]] = field(
-        default=None, metadata=config(exclude=lambda f: f is None)
-    )
+    transcript: str = ""
+    confidence: float = 0
+    words: List[Word] = None
 
     def __getitem__(self, key):
         _dict = self.to_dict()
@@ -58,9 +58,7 @@ class Alternative:
 @dataclass_json
 @dataclass
 class Channel:
-    alternatives: Optional[List[Alternative]] = field(
-        default=None, metadata=config(exclude=lambda f: f is None)
-    )
+    alternatives: List[Alternative] = None
 
     def __getitem__(self, key):
         _dict = self.to_dict()
@@ -81,9 +79,9 @@ class Channel:
 @dataclass_json
 @dataclass
 class ModelInfo:
-    name: Optional[str] = ""
-    version: Optional[str] = ""
-    arch: Optional[str] = ""
+    name: str = ""
+    version: str = ""
+    arch: str = ""
 
     def __getitem__(self, key):
         _dict = self.to_dict()
@@ -99,11 +97,11 @@ class ModelInfo:
 @dataclass_json
 @dataclass
 class Metadata:
-    request_id: Optional[str] = ""
-    model_info: Optional[ModelInfo] = field(
+    request_id: str = ""
+    model_info: ModelInfo = field(
         default=None, metadata=config(exclude=lambda f: f is None)
     )
-    model_uuid: Optional[str] = ""
+    model_uuid: str = ""
     extra: Optional[Dict[str, str]] = field(
         default=None, metadata=config(exclude=lambda f: f is None)
     )
@@ -132,18 +130,14 @@ class LiveResultResponse:
     Result Message from the Deepgram Platform
     """
 
-    type: Optional[str] = ""
-    channel_index: Optional[List[int]] = None
-    duration: Optional[float] = 0
-    start: Optional[float] = 0
-    is_final: Optional[bool] = False
-    speech_final: Optional[bool] = False
-    channel: Optional[Channel] = field(
-        default=None, metadata=config(exclude=lambda f: f is None)
-    )
-    metadata: Optional[Metadata] = field(
-        default=None, metadata=config(exclude=lambda f: f is None)
-    )
+    type: str = ""
+    channel_index: List[int] = None
+    duration: float = 0
+    start: float = 0
+    is_final: bool = False
+    speech_final: bool = False
+    channel: Channel = None
+    metadata: Metadata = None
 
     def __getitem__(self, key):
         _dict = self.to_dict()
@@ -170,9 +164,9 @@ class LiveResultResponse:
 @dataclass_json
 @dataclass
 class ModelInfo:
-    name: Optional[str] = ""
-    version: Optional[str] = ""
-    arch: Optional[str] = ""
+    name: str = ""
+    version: str = ""
+    arch: str = ""
 
     def __getitem__(self, key):
         _dict = self.to_dict()
@@ -192,19 +186,15 @@ class MetadataResponse:
     Metadata Message from the Deepgram Platform
     """
 
-    type: Optional[str] = ""
-    transaction_key: Optional[str] = ""
-    request_id: Optional[str] = ""
-    sha256: Optional[str] = ""
-    created: Optional[str] = ""
-    duration: Optional[float] = 0
-    channels: Optional[int] = 0
-    models: Optional[List[str]] = field(
-        default=None, metadata=config(exclude=lambda f: f is None)
-    )
-    model_info: Optional[Dict[str, ModelInfo]] = field(
-        default=None, metadata=config(exclude=lambda f: f is None)
-    )
+    type: str = ""
+    transaction_key: str = ""
+    request_id: str = ""
+    sha256: str = ""
+    created: str = ""
+    duration: float = 0
+    channels: int = 0
+    models: List[str] = None
+    model_info: Dict[str, ModelInfo] = None
     extra: Optional[Dict] = field(
         default=None, metadata=config(exclude=lambda f: f is None)
     )
@@ -239,9 +229,9 @@ class SpeechStartedResponse:
     SpeechStartedResponse Message from the Deepgram Platform
     """
 
-    type: Optional[str] = ""
-    channel: Optional[List[int]] = None
-    timestamp: Optional[float] = 0
+    type: str = ""
+    channel: List[int] = None
+    timestamp: float = 0
 
     def __getitem__(self, key):
         _dict = self.to_dict()
@@ -264,9 +254,9 @@ class UtteranceEndResponse:
     UtteranceEnd Message from the Deepgram Platform
     """
 
-    type: Optional[str] = ""
-    channel: Optional[List[int]] = None
-    last_word_end: Optional[float] = 0
+    type: str = ""
+    channel: List[int] = None
+    last_word_end: float = 0
 
     def __getitem__(self, key):
         _dict = self.to_dict()
@@ -289,9 +279,9 @@ class ErrorResponse:
     Error Message from the Deepgram Platform
     """
 
-    description: Optional[str] = ""
-    message: Optional[str] = ""
-    type: Optional[str] = ""
+    description: str = ""
+    message: str = ""
+    type: str = ""
     variant: Optional[str] = ""
 
     def __getitem__(self, key):

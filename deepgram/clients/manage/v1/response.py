@@ -2,8 +2,8 @@
 # Use of this source code is governed by a MIT license that can be found in the LICENSE file.
 # SPDX-License-Identifier: MIT
 
-from dataclasses import dataclass
-from dataclasses_json import dataclass_json
+from dataclasses import dataclass, field
+from dataclasses_json import dataclass_json, config
 from datetime import datetime
 from typing import TypedDict, List, Optional
 
@@ -14,7 +14,7 @@ from typing import TypedDict, List, Optional
 @dataclass_json
 @dataclass
 class Message:
-    message: Optional[str] = ""
+    message: str = ""
 
     def __getitem__(self, key):
         _dict = self.to_dict()
@@ -33,8 +33,8 @@ class Message:
 @dataclass_json
 @dataclass
 class Project:
-    project_id: Optional[str] = ""
-    name: Optional[str] = ""
+    project_id: str = ""
+    name: str = ""
 
     def __getitem__(self, key):
         _dict = self.to_dict()
@@ -50,7 +50,7 @@ class Project:
 @dataclass_json
 @dataclass
 class ProjectsResponse:
-    projects: Optional[List[Project]] = None
+    projects: List[Project] = None
 
     def __getitem__(self, key):
         _dict = self.to_dict()
@@ -73,10 +73,10 @@ class ProjectsResponse:
 @dataclass_json
 @dataclass
 class Member:
-    email: Optional[str] = ""
-    first_name: Optional[str] = ""
-    last_name: Optional[str] = ""
-    member_id: Optional[str] = ""
+    email: str = ""
+    first_name: str = ""
+    last_name: str = ""
+    member_id: str = ""
 
     def __getitem__(self, key):
         _dict = self.to_dict()
@@ -92,7 +92,7 @@ class Member:
 @dataclass_json
 @dataclass
 class MembersResponse:
-    members: Optional[List[Member]] = None
+    members: List[Member] = None
 
     def __getitem__(self, key):
         _dict = self.to_dict()
@@ -115,10 +115,10 @@ class MembersResponse:
 @dataclass_json
 @dataclass
 class Key:
-    api_key_id: Optional[str] = ""
+    api_key_id: str = ""
     comment: Optional[str] = ""
-    created: Optional[str] = ""
-    scopes: Optional[List[str]] = None
+    created: str = ""
+    scopes: List[str] = None
 
     def __getitem__(self, key):
         _dict = self.to_dict()
@@ -136,8 +136,8 @@ class Key:
 @dataclass_json
 @dataclass
 class KeyResponse:
-    api_key: Optional[Key] = None
-    member: Optional[Member] = None
+    api_key: Key = None
+    member: Member = None
 
     def __getitem__(self, key):
         _dict = self.to_dict()
@@ -157,7 +157,7 @@ class KeyResponse:
 @dataclass_json
 @dataclass
 class KeysResponse:
-    api_keys: Optional[List[KeyResponse]] = None
+    api_keys: List[KeyResponse] = None
 
     def __getitem__(self, key):
         _dict = self.to_dict()
@@ -180,7 +180,7 @@ class KeysResponse:
 @dataclass_json
 @dataclass
 class ScopesResponse:
-    scopes: Optional[List[str]] = None
+    scopes: List[str] = None
 
     def __getitem__(self, key):
         _dict = self.to_dict()
@@ -201,8 +201,8 @@ class ScopesResponse:
 @dataclass_json
 @dataclass
 class Invite:
-    email: Optional[str] = ""
-    scope: Optional[str] = ""
+    email: str = ""
+    scope: str = ""
 
     def __getitem__(self, key):
         _dict = self.to_dict()
@@ -218,7 +218,7 @@ class Invite:
 @dataclass_json
 @dataclass
 class InvitesResponse:
-    invites: Optional[List[Invite]] = None
+    invites: List[Invite] = None
 
     def __getitem__(self, key):
         _dict = self.to_dict()
@@ -241,8 +241,8 @@ class InvitesResponse:
 @dataclass_json
 @dataclass
 class Config:
-    language: Optional[str] = ""
-    model: Optional[str] = ""
+    language: str = ""
+    model: str = ""
     punctuate: Optional[bool] = False
     utterances: Optional[bool] = False
     diarize: Optional[bool] = False
@@ -263,16 +263,18 @@ class Config:
 @dataclass_json
 @dataclass
 class Details:
-    usd: Optional[float] = 0
-    duration: Optional[float] = 0
-    total_audio: Optional[float] = 0
-    channels: Optional[int] = 0
-    streams: Optional[int] = 0
-    method: Optional[str] = ""
-    models: Optional[List[str]] = None
-    tags: Optional[List[str]] = None
-    features: Optional[List[str]] = None
-    config: Optional[Config] = None
+    usd: float = 0
+    duration: float = 0
+    total_audio: float = 0
+    channels: int = 0
+    streams: int = 0
+    method: str = ""
+    models: List[str] = None
+    tags: Optional[List[str]] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
+    features: List[str] = None
+    config: Config = None
     tier: Optional[str] = ""
 
     def __getitem__(self, key):
@@ -297,9 +299,9 @@ class Details:
 @dataclass_json
 @dataclass
 class Callback:
-    attempts: Optional[int] = 0
-    code: Optional[int] = 0
-    completed: Optional[str] = ""
+    attempts: int = 0
+    code: int = 0
+    completed: str = ""
 
     def __getitem__(self, key):
         _dict = self.to_dict()
@@ -315,10 +317,10 @@ class Callback:
 @dataclass_json
 @dataclass
 class TokenDetail:
-    feature: Optional[str] = ""
-    input: Optional[int] = 0
-    model: Optional[str] = ""
-    output: Optional[int] = 0
+    feature: str = ""
+    input: int = 0
+    model: str = ""
+    output: int = 0
 
     def __getitem__(self, key):
         _dict = self.to_dict()
@@ -334,10 +336,10 @@ class TokenDetail:
 @dataclass_json
 @dataclass
 class Response:
-    code: Optional[int] = 0
-    completed: Optional[str] = ""
-    details: Optional[Details] = None
-    token_details: Optional[List[TokenDetail]] = None
+    code: int = 0
+    completed: str = ""
+    details: Details = None
+    token_details: List[TokenDetail] = None
 
     def __getitem__(self, key):
         _dict = self.to_dict()
@@ -360,14 +362,18 @@ class Response:
 @dataclass_json
 @dataclass
 class UsageRequest:
-    project_uuid: Optional[str] = ""
-    request_id: Optional[str] = ""
-    created: Optional[str] = ""
-    path: Optional[str] = ""
-    api_key_id: Optional[str] = ""
-    response: Optional[Response] = None
-    callback: Optional[Callback] = None
-    accessor: Optional[str] = ""
+    project_uuid: str = ""
+    request_id: str = ""
+    created: str = ""
+    path: str = ""
+    api_key_id: str = ""
+    response: Response = None
+    callback: Optional[Callback] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
+    accessor: Optional[str] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
 
     def __getitem__(self, key):
         _dict = self.to_dict()
@@ -387,9 +393,9 @@ class UsageRequest:
 @dataclass_json
 @dataclass
 class UsageRequestsResponse:
-    page: Optional[int] = 0
-    limit: Optional[int] = 0
-    requests: Optional[List[UsageRequest]] = None
+    page: int = 0
+    limit: int = 0
+    requests: List[UsageRequest] = None
 
     def __getitem__(self, key):
         _dict = self.to_dict()
@@ -409,8 +415,8 @@ class UsageRequestsResponse:
 @dataclass_json
 @dataclass
 class Tokens:
-    tokens_in: Optional[int] = 0
-    out: Optional[int] = 0
+    tokens_in: int = 0
+    out: int = 0
 
     def __getitem__(self, key):
         _dict = self.to_dict()
@@ -426,12 +432,12 @@ class Tokens:
 @dataclass_json
 @dataclass
 class Results:
-    start: Optional[str] = ""
-    end: Optional[str] = ""
-    hours: Optional[int] = 0
-    total_hours: Optional[int] = 0
-    requests: Optional[int] = 0
-    tokens: Optional[Tokens] = None
+    start: str = ""
+    end: str = ""
+    hours: int = 0
+    total_hours: int = 0
+    requests: int = 0
+    tokens: Tokens = None
 
     def __getitem__(self, key):
         _dict = self.to_dict()
@@ -449,8 +455,8 @@ class Results:
 @dataclass_json
 @dataclass
 class Resolution:
-    units: Optional[str] = ""
-    amount: Optional[int] = 0
+    units: str = ""
+    amount: int = 0
 
     def __getitem__(self, key):
         _dict = self.to_dict()
@@ -466,10 +472,10 @@ class Resolution:
 @dataclass_json
 @dataclass
 class UsageSummaryResponse:
-    start: Optional[str] = ""
-    end: Optional[str] = ""
-    resolution: Optional[Resolution] = None
-    results: Optional[List[Results]] = None
+    start: str = ""
+    end: str = ""
+    resolution: Resolution = None
+    results: List[Results] = None
 
     def __getitem__(self, key):
         _dict = self.to_dict()
@@ -491,10 +497,10 @@ class UsageSummaryResponse:
 @dataclass_json
 @dataclass
 class UsageModel:
-    name: Optional[str] = ""
-    language: Optional[str] = ""
-    version: Optional[str] = ""
-    model_id: Optional[str] = ""
+    name: str = ""
+    language: str = ""
+    version: str = ""
+    model_id: str = ""
 
     def __getitem__(self, key):
         _dict = self.to_dict()
@@ -510,11 +516,15 @@ class UsageModel:
 @dataclass_json
 @dataclass
 class UsageFieldsResponse:
-    tags: Optional[List[str]] = None
-    models: Optional[List[UsageModel]] = None
-    processing_methods: Optional[List[str]] = None
-    features: Optional[List[str]] = None
-    languages: Optional[List[str]] = None
+    tags: Optional[List[str]] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
+    models: List[UsageModel] = None
+    processing_methods: List[str] = None
+    features: List[str] = None
+    languages: List[str] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
 
     def __getitem__(self, key):
         _dict = self.to_dict()
@@ -548,10 +558,10 @@ class UsageFieldsResponse:
 @dataclass_json
 @dataclass
 class Balance:
-    balance_id: Optional[str] = ""
-    amount: Optional[str] = ""
-    units: Optional[str] = ""
-    purchase_order_id: Optional[str] = ""
+    balance_id: str = ""
+    amount: str = ""
+    units: str = ""
+    purchase_order_id: str = ""
 
     def __getitem__(self, key):
         _dict = self.to_dict()
@@ -567,7 +577,7 @@ class Balance:
 @dataclass_json
 @dataclass
 class BalancesResponse:
-    balances: Optional[List[Balance]] = None
+    balances: List[Balance] = None
 
     def __getitem__(self, key):
         _dict = self.to_dict()

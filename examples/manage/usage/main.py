@@ -33,6 +33,7 @@ def main():
             myId = project.project_id
             myName = project.name
             print(f"ListProjects() - ID: {myId}, Name: {myName}")
+            break
 
         # list requests
         requestId = None
@@ -41,9 +42,10 @@ def main():
         if listResp is None:
             print("No requests found")
         else:
+            print(f"GetUsageRequests() - listResp: {listResp}")
             for request in listResp.requests:
                 requestId = request.request_id
-                print(f"GetUsageRequests() - ID: {requestId}, Path: {request.path}")
+                break
         print(f"request_id: {requestId}")
         print("")
 
@@ -52,10 +54,7 @@ def main():
         if reqResp is None:
             print("No request found")
         else:
-            for request in listResp.requests:
-                print(
-                    f"GetUsageRequest() - ID: {request.request_id}, Path: {request.path}"
-                )
+            print(f"GetUsageRequest() - listResp: {listResp}")
         print("")
 
         # get fields
@@ -65,12 +64,7 @@ def main():
             print(f"UsageFields not found.")
             sys.exit(1)
         else:
-            for model in listResp.models:
-                print(
-                    f"GetUsageFields Models - ID: {model.model_id}, Name: {model.name}"
-                )
-            for method in listResp.processing_methods:
-                print(f"GetUsageFields Methods: {method}")
+            print(f"GetUsageFields Models - listResp: {listResp}")
         print("")
 
         # list usage
@@ -79,8 +73,7 @@ def main():
         if listResp is None:
             print("UsageSummary not found")
         else:
-            for item in listResp.results:
-                print(f"GetSummary - {item.requests} Calls/{listResp.resolution.units}")
+            print(f"GetSummary - listResp: {listResp}")
     except Exception as e:
         print(f"Exception: {e}")
 

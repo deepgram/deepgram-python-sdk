@@ -13,7 +13,7 @@ from ..enums import Sentiment
 @dataclass_json
 @dataclass
 class AsyncPrerecordedResponse:
-    request_id: Optional[str] = ""
+    request_id: str = ""
 
     def __getitem__(self, key):
         _dict = self.to_dict()
@@ -32,9 +32,9 @@ class AsyncPrerecordedResponse:
 @dataclass_json
 @dataclass
 class SummaryInfo:
-    input_tokens: Optional[int] = 0
-    output_tokens: Optional[int] = 0
-    model_uuid: Optional[str] = ""
+    input_tokens: int = 0
+    output_tokens: int = 0
+    model_uuid: str = ""
 
     def __getitem__(self, key):
         _dict = self.to_dict()
@@ -50,9 +50,9 @@ class SummaryInfo:
 @dataclass_json
 @dataclass
 class ModelInfo:
-    name: Optional[str] = ""
-    version: Optional[str] = ""
-    arch: Optional[str] = ""
+    name: str = ""
+    version: str = ""
+    arch: str = ""
 
     def __getitem__(self, key):
         _dict = self.to_dict()
@@ -68,9 +68,9 @@ class ModelInfo:
 @dataclass_json
 @dataclass
 class IntentsInfo:
-    model_uuid: Optional[str] = ""
-    input_tokens: Optional[int] = 0
-    output_tokens: Optional[int] = 0
+    model_uuid: str = ""
+    input_tokens: int = 0
+    output_tokens: int = 0
 
     def __getitem__(self, key):
         _dict = self.to_dict()
@@ -86,9 +86,9 @@ class IntentsInfo:
 @dataclass_json
 @dataclass
 class SentimentInfo:
-    model_uuid: Optional[str] = 0
-    input_tokens: Optional[int] = 0
-    output_tokens: Optional[int] = 0
+    model_uuid: str = 0
+    input_tokens: int = 0
+    output_tokens: int = 0
 
     def __getitem__(self, key):
         _dict = self.to_dict()
@@ -104,9 +104,9 @@ class SentimentInfo:
 @dataclass_json
 @dataclass
 class TopicsInfo:
-    model_uuid: Optional[str] = ""
-    input_tokens: Optional[int] = 0
-    output_tokens: Optional[int] = 0
+    model_uuid: str = ""
+    input_tokens: int = 0
+    output_tokens: int = 0
 
     def __getitem__(self, key):
         _dict = self.to_dict()
@@ -122,12 +122,12 @@ class TopicsInfo:
 @dataclass_json
 @dataclass
 class Metadata:
-    transaction_key: Optional[str] = ""
-    request_id: Optional[str] = ""
-    sha256: Optional[str] = ""
-    created: Optional[str] = ""
-    duration: Optional[float] = 0
-    channels: Optional[int] = 0
+    transaction_key: str = ""
+    request_id: str = ""
+    sha256: str = ""
+    created: str = ""
+    duration: float = 0
+    channels: int = 0
     models: Optional[List[str]] = field(
         default=None, metadata=config(exclude=lambda f: f is None)
     )
@@ -188,9 +188,9 @@ class Metadata:
 @dataclass_json
 @dataclass
 class SummaryV1:
-    summary: Optional[str] = ""
-    start_word: Optional[float] = 0
-    end_word: Optional[float] = 0
+    summary: str = ""
+    start_word: float = 0
+    end_word: float = 0
 
     def __getitem__(self, key):
         _dict = self.to_dict()
@@ -212,8 +212,8 @@ class Summaries(SummaryV1):  # internal reference to old name
 @dataclass_json
 @dataclass
 class SummaryV2:
-    result: Optional[str] = ""
-    short: Optional[str] = ""
+    result: str = ""
+    short: str = ""
 
     def __getitem__(self, key):
         _dict = self.to_dict()
@@ -235,9 +235,9 @@ class Summary(SummaryV2):  # internal reference to old name
 @dataclass_json
 @dataclass
 class Hit:
-    confidence: Optional[float] = 0
-    start: Optional[float] = 0
-    end: Optional[float] = 0
+    confidence: float = 0
+    start: float = 0
+    end: float = 0
     snippet: Optional[str] = ""
 
     def __getitem__(self, key):
@@ -254,11 +254,13 @@ class Hit:
 @dataclass_json
 @dataclass
 class Word:
-    word: Optional[str] = ""
-    start: Optional[float] = 0
-    end: Optional[float] = 0
-    confidence: Optional[float] = 0
-    punctuated_word: Optional[str] = ""
+    word: str = ""
+    start: float = 0
+    end: float = 0
+    confidence: float = 0
+    punctuated_word: Optional[str] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
     speaker: Optional[int] = field(
         default=None, metadata=config(exclude=lambda f: f is None)
     )
@@ -288,9 +290,9 @@ class Word:
 @dataclass_json
 @dataclass
 class Sentence:
-    text: Optional[str] = ""
-    start: Optional[float] = 0
-    end: Optional[float] = 0
+    text: str = ""
+    start: float = 0
+    end: float = 0
     sentiment: Optional[Sentiment] = field(
         default=None, metadata=config(exclude=lambda f: f is None)
     )
@@ -314,12 +316,10 @@ class Sentence:
 @dataclass_json
 @dataclass
 class Paragraph:
-    sentences: Optional[List[Sentence]] = field(
-        default=None, metadata=config(exclude=lambda f: f is None)
-    )
-    start: Optional[float] = 0
-    end: Optional[float] = 0
-    num_words: Optional[float] = 0
+    sentences: List[Sentence] = None
+    start: float = 0
+    end: float = 0
+    num_words: float = 0
     speaker: Optional[int] = field(
         default=None, metadata=config(exclude=lambda f: f is None)
     )
@@ -390,9 +390,9 @@ class Translation:
 @dataclass_json
 @dataclass
 class Warning:
-    parameter: Optional[str] = ""
-    type: Optional[str] = ""
-    message: Optional[str] = ""
+    parameter: str = ""
+    type: str = ""
+    message: str = ""
 
     def __getitem__(self, key):
         _dict = self.to_dict()
@@ -408,10 +408,8 @@ class Warning:
 @dataclass_json
 @dataclass
 class Search:
-    query: Optional[str] = ""
-    hits: Optional[List[Hit]] = field(
-        default=None, metadata=config(exclude=lambda f: f is None)
-    )
+    query: str = ""
+    hits: List[Hit] = None
 
     def __getitem__(self, key):
         _dict = self.to_dict()
@@ -429,14 +427,12 @@ class Search:
 @dataclass_json
 @dataclass
 class Utterance:
-    start: Optional[float] = 0
-    end: Optional[float] = 0
-    confidence: Optional[float] = 0
-    channel: Optional[int] = 0
-    transcript: Optional[str] = ""
-    words: Optional[List[Word]] = field(
-        default=None, metadata=config(exclude=lambda f: f is None)
-    )
+    start: float = 0
+    end: float = 0
+    confidence: float = 0
+    channel: int = 0
+    transcript: str = ""
+    words: List[Word] = None
     speaker: Optional[int] = field(
         default=None, metadata=config(exclude=lambda f: f is None)
     )
@@ -446,7 +442,7 @@ class Utterance:
     sentiment_score: Optional[float] = field(
         default=None, metadata=config(exclude=lambda f: f is None)
     )
-    id: Optional[str] = ""
+    id: str = ""
 
     def __getitem__(self, key):
         _dict = self.to_dict()
@@ -466,11 +462,11 @@ class Utterance:
 @dataclass_json
 @dataclass
 class Entity:
-    label: Optional[str] = ""
-    value: Optional[str] = ""
-    confidence: Optional[float] = 0
-    start_word: Optional[float] = 0
-    end_word: Optional[float] = 0
+    label: str = ""
+    value: str = ""
+    confidence: float = 0
+    start_word: float = 0
+    end_word: float = 0
 
     def __getitem__(self, key):
         _dict = self.to_dict()
@@ -486,11 +482,9 @@ class Entity:
 @dataclass_json
 @dataclass
 class Alternative:
-    transcript: Optional[str] = ""
-    confidence: Optional[float] = 0
-    words: Optional[List[Word]] = field(
-        default=None, metadata=config(exclude=lambda f: f is None)
-    )
+    transcript: str = ""
+    confidence: float = 0
+    words: List[Word] = None
     summaries: Optional[List[SummaryV1]] = field(
         default=None, metadata=config(exclude=lambda f: f is None)
     )
@@ -538,11 +532,13 @@ class Channel:
     search: Optional[List[Search]] = field(
         default=None, metadata=config(exclude=lambda f: f is None)
     )
-    alternatives: Optional[List[Alternative]] = field(
+    alternatives: List[Alternative] = None
+    detected_language: Optional[str] = field(
         default=None, metadata=config(exclude=lambda f: f is None)
     )
-    detected_language: Optional[str] = ""
-    language_confidence: Optional[float] = 0
+    language_confidence: Optional[float] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
 
     def __getitem__(self, key):
         _dict = self.to_dict()
@@ -565,8 +561,8 @@ class Channel:
 @dataclass_json
 @dataclass
 class Intent:
-    intent: Optional[str] = ""
-    confidence_score: Optional[float] = 0
+    intent: str = ""
+    confidence_score: float = 0
 
     def __getitem__(self, key):
         _dict = self.to_dict()
@@ -582,12 +578,8 @@ class Intent:
 @dataclass_json
 @dataclass
 class Average:
-    sentiment: Optional[Sentiment] = field(
-        default=None, metadata=config(exclude=lambda f: f is None)
-    )
-    sentiment_score: Optional[float] = field(
-        default=None, metadata=config(exclude=lambda f: f is None)
-    )
+    sentiment: Sentiment = None
+    sentiment_score: float = None
 
     def __getitem__(self, key):
         _dict = self.to_dict()
@@ -605,8 +597,8 @@ class Average:
 @dataclass_json
 @dataclass
 class Topic:
-    topic: Optional[str] = ""
-    confidence_score: Optional[float] = 0
+    topic: str = ""
+    confidence_score: float = 0
 
     def __getitem__(self, key):
         _dict = self.to_dict()
@@ -622,9 +614,9 @@ class Topic:
 @dataclass_json
 @dataclass
 class Segment:
-    text: Optional[str] = ""
-    start_word: Optional[int] = 0
-    end_word: Optional[int] = 0
+    text: str = ""
+    start_word: int = 0
+    end_word: int = 0
     sentiment: Optional[Sentiment] = field(
         default=None, metadata=config(exclude=lambda f: f is None)
     )

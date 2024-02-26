@@ -2,8 +2,8 @@
 # Use of this source code is governed by a MIT license that can be found in the LICENSE file.
 # SPDX-License-Identifier: MIT
 
-from dataclasses import dataclass
-from dataclasses_json import dataclass_json
+from dataclasses import dataclass, field
+from dataclasses_json import dataclass_json, config
 
 from io import BufferedReader
 from typing import Union, List, Optional
@@ -20,43 +20,117 @@ class PrerecordedOptions:
     https://developers.deepgram.com/reference/pre-recorded
     """
 
-    alternatives: Optional[int] = None
-    callback: Optional[str] = None
-    callback_method: Optional[str] = None
-    custom_intent: Optional[Union[list, str]] = None
-    custom_intent_mode: Optional[str] = None
-    custom_topics: Optional[Union[list, str]] = None
-    custom_topic_mode: Optional[str] = None
-    detect_entities: Optional[bool] = None
-    detect_language: Optional[bool] = None
-    detect_topics: Optional[bool] = None
-    diarize: Optional[bool] = None
-    diarize_version: Optional[str] = None
-    dictation: Optional[bool] = None
-    extra: Optional[Union[list, str]] = None
-    filler_words: Optional[bool] = None
-    intents: Optional[bool] = None
-    keywords: Optional[Union[list, str]] = None
-    language: Optional[str] = None
-    measurements: Optional[bool] = None
-    model: Optional[str] = None
-    multichannel: Optional[bool] = None
-    numerals: Optional[bool] = None
-    paragraphs: Optional[bool] = None
-    profanity_filter: Optional[bool] = None
-    punctuate: Optional[bool] = None
-    redact: Optional[Union[List[str], bool, str]] = None
-    replace: Optional[Union[list, str]] = None
-    search: Optional[Union[list, str]] = None
-    sentiment: Optional[bool] = None
-    smart_format: Optional[bool] = None
-    summarize: Optional[Union[bool, str]] = None
-    tag: Optional[list] = None
-    tier: Optional[str] = None
-    topics: Optional[bool] = None
-    utt_split: Optional[int] = None
-    utterances: Optional[bool] = None
-    version: Optional[str] = None
+    alternatives: Optional[int] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
+    callback: Optional[str] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
+    callback_method: Optional[str] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
+    custom_intent: Optional[Union[list, str]] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
+    custom_intent_mode: Optional[str] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
+    custom_topics: Optional[Union[list, str]] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
+    custom_topic_mode: Optional[str] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
+    detect_entities: Optional[bool] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
+    detect_language: Optional[bool] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
+    detect_topics: Optional[bool] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
+    diarize: Optional[bool] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
+    diarize_version: Optional[str] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
+    dictation: Optional[bool] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
+    extra: Optional[Union[list, str]] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
+    filler_words: Optional[bool] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
+    intents: Optional[bool] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
+    keywords: Optional[Union[list, str]] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
+    language: Optional[str] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
+    measurements: Optional[bool] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
+    model: Optional[str] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
+    multichannel: Optional[bool] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
+    numerals: Optional[bool] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
+    paragraphs: Optional[bool] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
+    profanity_filter: Optional[bool] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
+    punctuate: Optional[bool] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
+    redact: Optional[Union[List[str], bool, str]] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
+    replace: Optional[Union[list, str]] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
+    search: Optional[Union[list, str]] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
+    sentiment: Optional[bool] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
+    smart_format: Optional[bool] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
+    summarize: Optional[Union[bool, str]] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
+    tag: Optional[list] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
+    tier: Optional[str] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
+    topics: Optional[bool] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
+    utt_split: Optional[int] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
+    utterances: Optional[bool] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
+    version: Optional[str] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
 
     def __getitem__(self, key):
         _dict = self.to_dict()

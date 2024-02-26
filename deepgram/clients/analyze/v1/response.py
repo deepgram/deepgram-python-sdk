@@ -14,7 +14,7 @@ from ..enums import Sentiment
 @dataclass_json
 @dataclass
 class AsyncAnalyzeResponse:
-    request_id: Optional[str] = ""
+    request_id: str = ""
 
     def __getitem__(self, key):
         _dict = self.to_dict()
@@ -30,9 +30,9 @@ class AsyncAnalyzeResponse:
 @dataclass_json
 @dataclass
 class IntentsInfo:
-    model_uuid: Optional[str] = ""
-    input_tokens: Optional[int] = 0
-    output_tokens: Optional[int] = 0
+    model_uuid: str = ""
+    input_tokens: int = 0
+    output_tokens: int = 0
 
     def __getitem__(self, key):
         _dict = self.to_dict()
@@ -45,9 +45,9 @@ class IntentsInfo:
 @dataclass_json
 @dataclass
 class SentimentInfo:
-    model_uuid: Optional[str] = ""
-    input_tokens: Optional[int] = 0
-    output_tokens: Optional[int] = 0
+    model_uuid: str = ""
+    input_tokens: int = 0
+    output_tokens: int = 0
 
     def __getitem__(self, key):
         _dict = self.to_dict()
@@ -60,9 +60,9 @@ class SentimentInfo:
 @dataclass_json
 @dataclass
 class SummaryInfo:
-    model_uuid: Optional[str] = ""
-    input_tokens: Optional[int] = 0
-    output_tokens: Optional[int] = 0
+    model_uuid: str = ""
+    input_tokens: int = 0
+    output_tokens: int = 0
 
     def __getitem__(self, key):
         _dict = self.to_dict()
@@ -75,9 +75,9 @@ class SummaryInfo:
 @dataclass_json
 @dataclass
 class TopicsInfo:
-    model_uuid: Optional[str] = ""
-    input_tokens: Optional[int] = 0
-    output_tokens: Optional[int] = 0
+    model_uuid: str = ""
+    input_tokens: int = 0
+    output_tokens: int = 0
 
     def __getitem__(self, key):
         _dict = self.to_dict()
@@ -90,9 +90,9 @@ class TopicsInfo:
 @dataclass_json
 @dataclass
 class Metadata:
-    request_id: Optional[str] = ""
-    created: Optional[str] = ""
-    language: Optional[str] = ""
+    request_id: str = ""
+    created: str = ""
+    language: str = ""
     intents_info: Optional[IntentsInfo] = field(
         default=None, metadata=config(exclude=lambda f: f is None)
     )
@@ -125,10 +125,8 @@ class Metadata:
 @dataclass_json
 @dataclass
 class Average:
-    sentiment: Optional[Sentiment] = field(
-        default=None, metadata=config(exclude=lambda f: f is None)
-    )
-    sentiment_score: Optional[float] = 0
+    sentiment: Sentiment = None
+    sentiment_score: float = 0
 
     def __getitem__(self, key):
         _dict = self.to_dict()
@@ -143,7 +141,7 @@ class Average:
 @dataclass_json
 @dataclass
 class Summary:
-    text: Optional[str] = ""
+    text: str = ""
 
     def __getitem__(self, key):
         _dict = self.to_dict()
@@ -156,8 +154,8 @@ class Summary:
 @dataclass_json
 @dataclass
 class Topic:
-    topic: Optional[str] = ""
-    confidence_score: Optional[float] = 0
+    topic: str = ""
+    confidence_score: float = 0
 
     def __getitem__(self, key):
         _dict = self.to_dict()
@@ -170,8 +168,8 @@ class Topic:
 @dataclass_json
 @dataclass
 class Intent:
-    intent: Optional[str] = ""
-    confidence_score: Optional[float] = 0
+    intent: str = ""
+    confidence_score: float = 0
 
     def __getitem__(self, key):
         _dict = self.to_dict()
@@ -184,9 +182,9 @@ class Intent:
 @dataclass_json
 @dataclass
 class Segment:
-    text: Optional[str] = ""
-    start_word: Optional[int] = 0
-    end_word: Optional[int] = 0
+    text: str = ""
+    start_word: int = 0
+    end_word: int = 0
     sentiment: Optional[Sentiment] = field(
         default=None, metadata=config(exclude=lambda f: f is None)
     )
@@ -215,12 +213,8 @@ class Segment:
 @dataclass_json
 @dataclass
 class Sentiments:
-    segments: Optional[List[Segment]] = field(
-        default=None, metadata=config(exclude=lambda f: f is None)
-    )
-    average: Optional[Average] = field(
-        default=None, metadata=config(exclude=lambda f: f is None)
-    )
+    segments: List[Segment] = None
+    average: Average = None
 
     def __getitem__(self, key):
         _dict = self.to_dict()
@@ -239,9 +233,7 @@ class Sentiments:
 @dataclass_json
 @dataclass
 class Topics:
-    segments: Optional[List[Segment]] = field(
-        default=None, metadata=config(exclude=lambda f: f is None)
-    )
+    segments: List[Segment] = None
 
     def __getitem__(self, key):
         _dict = self.to_dict()
@@ -258,9 +250,7 @@ class Topics:
 @dataclass_json
 @dataclass
 class Intents:
-    segments: Optional[List[Segment]] = field(
-        default=None, metadata=config(exclude=lambda f: f is None)
-    )
+    segments: List[Segment] = None
 
     def __getitem__(self, key):
         _dict = self.to_dict()
