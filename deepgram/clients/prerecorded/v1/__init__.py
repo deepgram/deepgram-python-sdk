@@ -4,7 +4,14 @@
 
 from .client import PreRecordedClient
 from .async_client import AsyncPreRecordedClient
-from .options import PrerecordedOptions
+from .options import (
+    PrerecordedOptions,
+    UrlSource,
+    BufferSource,
+    StreamSource,
+    FileSource,
+    PrerecordedSource,
+)
 from ..enums import Sentiment
 from .response import (
     AsyncPrerecordedResponse,

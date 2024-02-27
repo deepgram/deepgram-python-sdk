@@ -5,15 +5,21 @@
 import httpx
 import logging, verboselogs
 import json
-from typing import Dict
+from typing import Dict, Union
 
 from ...abstract_sync_client import AbstractSyncRestClient
 from ..errors import DeepgramError, DeepgramTypeError
-from ..helpers import is_buffer_source, is_readstream_source, is_url_source
-from ..source import UrlSource, FileSource
+from .helpers import is_buffer_source, is_readstream_source, is_url_source
 from ..enums import Sentiment
 
-from .options import PrerecordedOptions
+from .options import (
+    PrerecordedOptions,
+    UrlSource,
+    BufferSource,
+    StreamSource,
+    FileSource,
+    PrerecordedSource,
+)
 from .response import AsyncPrerecordedResponse, PrerecordedResponse
 
 
@@ -48,14 +54,16 @@ class PreRecordedClient(AbstractSyncRestClient):
     def transcribe_url(
         self,
         source: UrlSource,
-        options: PrerecordedOptions = None,
+        options: Union[Dict, PrerecordedOptions] = None,
         addons: Dict = None,
         timeout: httpx.Timeout = None,
         endpoint: str = "v1/listen",
     ) -> PrerecordedResponse:
         self.logger.debug("PreRecordedClient.transcribe_url ENTER")
 
-        if options is not None and options.callback is not None:
+        if (options is Dict and "callback" in options is not None) or (
+            isinstance(options, PrerecordedOptions) and options.callback is not None
+        ):
             self.logger.debug("PreRecordedClient.transcribe_url LEAVE")
             return self.transcribe_url_callback(
                 source, options.callback, options, addons, timeout, endpoint
@@ -69,7 +77,7 @@ class PreRecordedClient(AbstractSyncRestClient):
             self.logger.debug("PreRecordedClient.transcribe_url LEAVE")
             raise DeepgramTypeError("Unknown transcription source type")
 
-        if options is not None and not options.check():
+        if isinstance(options, PrerecordedOptions) and not options.check():
             self.logger.error("options.check failed")
             self.logger.debug("PreRecordedClient.transcribe_url LEAVE")
             raise DeepgramError("Fatal transcription options error")
@@ -111,7 +119,7 @@ class PreRecordedClient(AbstractSyncRestClient):
         self,
         source: UrlSource,
         callback: str,
-        options: PrerecordedOptions = None,
+        options: Union[Dict, PrerecordedOptions] = None,
         addons: Dict = None,
         timeout: httpx.Timeout = None,
         endpoint: str = "v1/listen",
@@ -121,7 +129,10 @@ class PreRecordedClient(AbstractSyncRestClient):
         url = f"{self.config.url}/{endpoint}"
         if options is None:
             options = {}
-        options.callback = callback
+        if isinstance(options, PrerecordedOptions):
+            options.callback = callback
+        else:
+            options["callback"] = callback
         if is_url_source(source):
             body = source
         else:
@@ -129,7 +140,7 @@ class PreRecordedClient(AbstractSyncRestClient):
             self.logger.debug("PreRecordedClient.transcribe_url_callback LEAVE")
             raise DeepgramTypeError("Unknown transcription source type")
 
-        if options is not None and not options.check():
+        if isinstance(options, PrerecordedOptions) and not options.check():
             self.logger.error("options.check failed")
             self.logger.debug("PreRecordedClient.transcribe_url_callback LEAVE")
             raise DeepgramError("Fatal transcription options error")
@@ -169,14 +180,16 @@ class PreRecordedClient(AbstractSyncRestClient):
     def transcribe_file(
         self,
         source: FileSource,
-        options: PrerecordedOptions = None,
+        options: Union[Dict, PrerecordedOptions] = None,
         addons: Dict = None,
         timeout: httpx.Timeout = None,
         endpoint: str = "v1/listen",
     ) -> PrerecordedResponse:
         self.logger.debug("PreRecordedClient.transcribe_file ENTER")
 
-        if options is not None and options.callback is not None:
+        if (options is Dict and "callback" in options is not None) or (
+            isinstance(options, PrerecordedOptions) and options.callback is not None
+        ):
             self.logger.debug("PreRecordedClient.transcribe_file LEAVE")
             return self.transcribe_file_callback(
                 source, options.callback, options, addons, timeout, endpoint
@@ -192,7 +205,7 @@ class PreRecordedClient(AbstractSyncRestClient):
             self.logger.debug("PreRecordedClient.transcribe_file LEAVE")
             raise DeepgramTypeError("Unknown transcription source type")
 
-        if options is not None and not options.check():
+        if isinstance(options, PrerecordedOptions) and not options.check():
             self.logger.error("options.check failed")
             self.logger.debug("PreRecordedClient.transcribe_file LEAVE")
             raise DeepgramError("Fatal transcription options error")
@@ -233,7 +246,7 @@ class PreRecordedClient(AbstractSyncRestClient):
         self,
         source: FileSource,
         callback: str,
-        options: PrerecordedOptions = None,
+        options: Union[Dict, PrerecordedOptions] = None,
         addons: Dict = None,
         timeout: httpx.Timeout = None,
         endpoint: str = "v1/listen",
@@ -243,7 +256,10 @@ class PreRecordedClient(AbstractSyncRestClient):
         url = f"{self.config.url}/{endpoint}"
         if options is None:
             options = {}
-        options.callback = callback
+        if isinstance(options, PrerecordedOptions):
+            options.callback = callback
+        else:
+            options["callback"] = callback
         if is_buffer_source(source):
             body = source["buffer"]
         elif is_readstream_source(source):
@@ -253,7 +269,7 @@ class PreRecordedClient(AbstractSyncRestClient):
             self.logger.debug("PreRecordedClient.transcribe_file_callback LEAVE")
             raise DeepgramTypeError("Unknown transcription source type")
 
-        if options is not None and not options.check():
+        if isinstance(options, PrerecordedOptions) and not options.check():
             self.logger.error("options.check failed")
             self.logger.debug("PreRecordedClient.transcribe_file_callback LEAVE")
             raise DeepgramError("Fatal transcription options error")

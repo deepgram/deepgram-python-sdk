@@ -5,15 +5,21 @@
 import httpx
 import logging, verboselogs
 import json
-from typing import Dict
+from typing import Dict, Union
 
 from ...abstract_sync_client import AbstractSyncRestClient
 from ..errors import DeepgramError, DeepgramTypeError
-from ..helpers import is_buffer_source, is_readstream_source, is_url_source
-from ..source import UrlSource, TextSource
+from .helpers import is_buffer_source, is_readstream_source, is_url_source
 from ..enums import Sentiment
 
-from .options import AnalyzeOptions
+from .options import (
+    AnalyzeOptions,
+    UrlSource,
+    BufferSource,
+    StreamSource,
+    TextSource,
+    AnalyzeSource,
+)
 from .response import AsyncAnalyzeResponse, AnalyzeResponse
 
 
@@ -48,14 +54,16 @@ class AnalyzeClient(AbstractSyncRestClient):
     def analyze_url(
         self,
         source: UrlSource,
-        options: AnalyzeOptions = None,
+        options: Union[AnalyzeOptions, Dict] = None,
         addons: Dict = None,
         timeout: httpx.Timeout = None,
         endpoint: str = "v1/read",
     ) -> AnalyzeResponse:
         self.logger.debug("AnalyzeClient.analyze_url ENTER")
 
-        if options is not None and options.callback is not None:
+        if (options is Dict and "callback" in options is not None) or (
+            isinstance(options, AnalyzeOptions) and options.callback is not None
+        ):
             self.logger.debug("AnalyzeClient.analyze_url LEAVE")
             return self.analyze_url_callback(
                 source, options["callback"], options, addons, timeout, endpoint
@@ -69,7 +77,7 @@ class AnalyzeClient(AbstractSyncRestClient):
             self.logger.debug("AnalyzeClient.analyze_url LEAVE")
             raise DeepgramTypeError("Unknown transcription source type")
 
-        if options is not None and not options.check():
+        if isinstance(options, AnalyzeOptions) and not options.check():
             self.logger.error("options.check failed")
             self.logger.debug("AnalyzeClient.analyze_url LEAVE")
             raise DeepgramError("Fatal transcription options error")
@@ -111,7 +119,7 @@ class AnalyzeClient(AbstractSyncRestClient):
         self,
         source: UrlSource,
         callback: str,
-        options: AnalyzeOptions = None,
+        options: Union[AnalyzeOptions, Dict] = None,
         addons: Dict = None,
         timeout: httpx.Timeout = None,
         endpoint: str = "v1/read",
@@ -121,7 +129,10 @@ class AnalyzeClient(AbstractSyncRestClient):
         url = f"{self.config.url}/{endpoint}"
         if options is None:
             options = {}
-        options["callback"] = callback
+        if isinstance(options, AnalyzeOptions):
+            options.callback = callback
+        else:
+            options["callback"] = callback
         if is_url_source(source):
             body = source
         else:
@@ -129,7 +140,7 @@ class AnalyzeClient(AbstractSyncRestClient):
             self.logger.debug("AnalyzeClient.analyze_url_callback LEAVE")
             raise DeepgramTypeError("Unknown transcription source type")
 
-        if options is not None and not options.check():
+        if isinstance(options, AnalyzeOptions) and not options.check():
             self.logger.error("options.check failed")
             self.logger.debug("AnalyzeClient.analyze_url_callback LEAVE")
             raise DeepgramError("Fatal transcription options error")
@@ -169,14 +180,16 @@ class AnalyzeClient(AbstractSyncRestClient):
     def analyze_text(
         self,
         source: TextSource,
-        options: AnalyzeOptions = None,
+        options: Union[AnalyzeOptions, Dict] = None,
         addons: Dict = None,
         timeout: httpx.Timeout = None,
         endpoint: str = "v1/read",
     ) -> AnalyzeResponse:
         self.logger.debug("AnalyzeClient.analyze_text ENTER")
 
-        if options is not None and options.callback is not None:
+        if (options is Dict and "callback" in options is not None) or (
+            isinstance(options, AnalyzeOptions) and options.callback is not None
+        ):
             self.logger.debug("AnalyzeClient.analyze_text LEAVE")
             return self.analyze_text_callback(
                 source, options["callback"], options, addons, timeout, endpoint
@@ -192,7 +205,7 @@ class AnalyzeClient(AbstractSyncRestClient):
             self.logger.debug("AnalyzeClient.analyze_text LEAVE")
             raise DeepgramTypeError("Unknown transcription source type")
 
-        if options is not None and not options.check():
+        if isinstance(options, AnalyzeOptions) and not options.check():
             self.logger.error("options.check failed")
             self.logger.debug("AnalyzeClient.analyze_text LEAVE")
             raise DeepgramError("Fatal transcription options error")
@@ -233,7 +246,7 @@ class AnalyzeClient(AbstractSyncRestClient):
         self,
         source: TextSource,
         callback: str,
-        options: AnalyzeOptions = None,
+        options: Union[AnalyzeOptions, Dict] = None,
         addons: Dict = None,
         timeout: httpx.Timeout = None,
         endpoint: str = "v1/read",
@@ -243,7 +256,10 @@ class AnalyzeClient(AbstractSyncRestClient):
         url = f"{self.config.url}/{endpoint}"
         if options is None:
             options = {}
-        options["callback"] = callback
+        if isinstance(options, AnalyzeOptions):
+            options.callback = callback
+        else:
+            options["callback"] = callback
         if is_buffer_source(source):
             body = source["buffer"]
         elif is_readstream_source(source):
@@ -253,7 +269,7 @@ class AnalyzeClient(AbstractSyncRestClient):
             self.logger.debug("AnalyzeClient.analyze_file_callback LEAVE")
             raise DeepgramTypeError("Unknown transcription source type")
 
-        if options is not None and not options.check():
+        if isinstance(options, AnalyzeOptions) and not options.check():
             self.logger.error("options.check failed")
             self.logger.debug("AnalyzeClient.analyze_file_callback LEAVE")
             raise DeepgramError("Fatal transcription options error")

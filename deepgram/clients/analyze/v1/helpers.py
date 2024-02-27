@@ -2,7 +2,7 @@
 # Use of this source code is governed by a MIT license that can be found in the LICENSE file.
 # SPDX-License-Identifier: MIT
 
-from .source import AnalyzeSource
+from .options import AnalyzeSource
 
 
 def is_buffer_source(provided_source: AnalyzeSource) -> bool:

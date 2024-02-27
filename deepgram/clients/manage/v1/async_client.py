@@ -3,7 +3,8 @@
 # SPDX-License-Identifier: MIT
 
 import logging, verboselogs
-from typing import Dict
+from typing import Dict, Union
+import json
 
 from ....options import DeepgramClientOptions
 from ...abstract_async_client import AbstractAsyncRestClient
@@ -60,17 +61,13 @@ class AsyncManageClient(AbstractAsyncRestClient):
         super().__init__(config)
 
     # projects
-    async def list_projects(
-        self, addons: Dict = None, **kwargs
-    ) -> ProjectsResponse:
+    async def list_projects(self, addons: Dict = None, **kwargs) -> ProjectsResponse:
         """
         Please see get_projects for more information.
         """
         return self.get_projects(addons=addons, **kwargs)
 
-    async def get_projects(
-        self, addons: Dict = None, **kwargs
-    ) -> ProjectsResponse:
+    async def get_projects(self, addons: Dict = None, **kwargs) -> ProjectsResponse:
         """
         Gets a list of projects for the authenticated user.
 
@@ -114,7 +111,7 @@ class AsyncManageClient(AbstractAsyncRestClient):
     async def update_project_option(
         self,
         project_id: str,
-        options: ProjectOptions,
+        options: Union[Dict, ProjectOptions],
         addons: Dict = None,
         **kwargs,
     ) -> Message:
@@ -128,6 +125,9 @@ class AsyncManageClient(AbstractAsyncRestClient):
         url = f"{self.config.url}/{self.endpoint}/{project_id}"
         self.logger.info("url: %s", url)
         self.logger.info("project_id: %s", project_id)
+        if isinstance(options, ProjectOptions):
+            self.logger.info("ProjectOptions switching class -> json")
+            options = json.loads(options.to_json())
         self.logger.info("options: %s", options)
         self.logger.info("addons: %s", addons)
         result = await self.patch(url, json=options, addons=addons, **kwargs)
@@ -241,7 +241,7 @@ class AsyncManageClient(AbstractAsyncRestClient):
     async def create_key(
         self,
         project_id: str,
-        options: KeyOptions,
+        options: Union[Dict, KeyOptions],
         addons: Dict = None,
         **kwargs,
     ) -> Key:
@@ -255,6 +255,9 @@ class AsyncManageClient(AbstractAsyncRestClient):
         url = f"{self.config.url}/{self.endpoint}/{project_id}/keys"
         self.logger.info("url: %s", url)
         self.logger.info("project_id: %s", project_id)
+        if isinstance(options, KeyOptions):
+            self.logger.info("KeyOptions switching class -> json")
+            options = json.loads(options.to_json())
         self.logger.info("options: %s", options)
         self.logger.info("addons: %s", addons)
         result = await self.post(url, json=options, addons=addons, **kwargs)
@@ -372,7 +375,7 @@ class AsyncManageClient(AbstractAsyncRestClient):
         self,
         project_id: str,
         member_id: str,
-        options: ScopeOptions,
+        options: Union[Dict, ScopeOptions],
         addons: Dict = None,
         **kwargs,
     ) -> Message:
@@ -388,6 +391,9 @@ class AsyncManageClient(AbstractAsyncRestClient):
         )
         self.logger.info("url: %s", url)
         self.logger.info("project_id: %s", project_id)
+        if isinstance(options, ScopeOptions):
+            self.logger.info("ScopeOptions switching class -> json")
+            options = json.loads(options.to_json())
         self.logger.info("options: %s", options)
         self.logger.info("addons: %s", addons)
         result = await self.put(url, json=options, addons=addons, **kwargs)
@@ -432,7 +438,7 @@ class AsyncManageClient(AbstractAsyncRestClient):
     async def send_invite_options(
         self,
         project_id: str,
-        options: InviteOptions,
+        options: Union[Dict, InviteOptions],
         addons: Dict = None,
         **kwargs,
     ) -> Message:
@@ -446,6 +452,9 @@ class AsyncManageClient(AbstractAsyncRestClient):
         url = f"{self.config.url}/{self.endpoint}/{project_id}/invites"
         self.logger.info("url: %s", url)
         self.logger.info("project_id: %s", project_id)
+        if isinstance(options, InviteOptions):
+            self.logger.info("InviteOptions switching class -> json")
+            options = json.loads(options.to_json())
         self.logger.info("options: %s", options)
         self.logger.info("addons: %s", addons)
         result = await self.post(url, json=options, addons=addons, **kwargs)
@@ -537,7 +546,7 @@ class AsyncManageClient(AbstractAsyncRestClient):
     async def get_usage_requests(
         self,
         project_id: str,
-        options: UsageRequestOptions,
+        options: [Dict, UsageRequestOptions],
         addons: Dict = None,
         **kwargs,
     ) -> UsageRequestsResponse:
@@ -551,6 +560,9 @@ class AsyncManageClient(AbstractAsyncRestClient):
         url = f"{self.config.url}/{self.endpoint}/{project_id}/requests"
         self.logger.info("url: %s", url)
         self.logger.info("project_id: %s", project_id)
+        if isinstance(options, UsageRequestOptions):
+            self.logger.info("UsageRequestOptions switching class -> json")
+            options = json.loads(options.to_json())
         self.logger.info("options: %s", options)
         self.logger.info("addons: %s", addons)
         result = await self.get(url, options=options, addons=addons, **kwargs)
@@ -587,7 +599,7 @@ class AsyncManageClient(AbstractAsyncRestClient):
     async def get_usage_summary(
         self,
         project_id: str,
-        options: UsageSummaryOptions,
+        options: Union[Dict, UsageSummaryOptions],
         addons: Dict = None,
         **kwargs,
     ) -> UsageSummaryResponse:
@@ -601,6 +613,9 @@ class AsyncManageClient(AbstractAsyncRestClient):
         url = f"{self.config.url}/{self.endpoint}/{project_id}/usage"
         self.logger.info("url: %s", url)
         self.logger.info("project_id: %s", project_id)
+        if isinstance(options, UsageSummaryOptions):
+            self.logger.info("UsageSummaryOptions switching class -> json")
+            options = json.loads(options.to_json())
         self.logger.info("options: %s", options)
         self.logger.info("addons: %s", addons)
         result = await self.get(url, options=options, addons=addons, **kwargs)
@@ -614,7 +629,7 @@ class AsyncManageClient(AbstractAsyncRestClient):
     async def get_usage_fields(
         self,
         project_id: str,
-        options: UsageFieldsOptions,
+        options: Union[Dict, UsageFieldsOptions],
         addons: Dict = None,
         **kwargs,
     ) -> UsageFieldsResponse:
@@ -628,6 +643,9 @@ class AsyncManageClient(AbstractAsyncRestClient):
         url = f"{self.config.url}/{self.endpoint}/{project_id}/usage/fields"
         self.logger.info("url: %s", url)
         self.logger.info("project_id: %s", project_id)
+        if isinstance(options, UsageFieldsOptions):
+            self.logger.info("UsageFieldsOptions switching class -> json")
+            options = json.loads(options.to_json())
         self.logger.info("options: %s", options)
         self.logger.info("addons: %s", addons)
         result = await self.get(url, options=options, addons=addons, **kwargs)

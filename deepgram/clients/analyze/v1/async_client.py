@@ -5,15 +5,21 @@
 import httpx
 import logging, verboselogs
 import json
-from typing import Dict
+from typing import Dict, Union
 
 from ...abstract_async_client import AbstractAsyncRestClient
 from ..errors import DeepgramError, DeepgramTypeError
-from ..helpers import is_buffer_source, is_readstream_source, is_url_source
-from ..source import UrlSource, TextSource
+from .helpers import is_buffer_source, is_readstream_source, is_url_source
 from ..enums import Sentiment
 
-from .options import AnalyzeOptions
+from .options import (
+    AnalyzeOptions,
+    UrlSource,
+    BufferSource,
+    StreamSource,
+    TextSource,
+    AnalyzeSource,
+)
 from .response import AsyncAnalyzeResponse, AnalyzeResponse
 
 
@@ -48,14 +54,14 @@ class AsyncAnalyzeClient(AbstractAsyncRestClient):
     async def analyze_url(
         self,
         source: UrlSource,
-        options: AnalyzeOptions = None,
+        options: Union[AnalyzeOptions, Dict] = None,
         addons: Dict = None,
         timeout: httpx.Timeout = None,
         endpoint: str = "v1/read",
     ) -> AnalyzeResponse:
         self.logger.debug("AsyncAnalyzeClient.analyze_url ENTER")
 
-        if options is not None and options.callback is not None:
+        if options is not None and options["callback"] is not None:
             self.logger.debug("AsyncAnalyzeClient.analyze_url LEAVE")
             return await self.analyze_url_callback(
                 source, options["callback"], options, addons, timeout, endpoint
@@ -69,7 +75,7 @@ class AsyncAnalyzeClient(AbstractAsyncRestClient):
             self.logger.debug("AsyncAnalyzeClient.analyze_url LEAVE")
             raise DeepgramTypeError("Unknown transcription source type")
 
-        if options is not None and not options.check():
+        if isinstance(options, AnalyzeOptions) and not options.check():
             self.logger.error("options.check failed")
             self.logger.debug("AsyncAnalyzeClient.analyze_url LEAVE")
             raise DeepgramError("Fatal transcription options error")
@@ -111,7 +117,7 @@ class AsyncAnalyzeClient(AbstractAsyncRestClient):
         self,
         source: UrlSource,
         callback: str,
-        options: AnalyzeOptions = None,
+        options: Union[AnalyzeOptions, Dict] = None,
         addons: Dict = None,
         timeout: httpx.Timeout = None,
         endpoint: str = "v1/read",
@@ -120,8 +126,11 @@ class AsyncAnalyzeClient(AbstractAsyncRestClient):
 
         url = f"{self.config.url}/{endpoint}"
         if options is None:
-            options = {}
-        options["callback"] = callback
+            options = dict()
+        if isinstance(options, AnalyzeOptions):
+            options.callback = callback
+        else:
+            options["callback"] = callback
         if is_url_source(source):
             body = source
         else:
@@ -129,7 +138,7 @@ class AsyncAnalyzeClient(AbstractAsyncRestClient):
             self.logger.debug("AnalyzeClient.analyze_url_callback LEAVE")
             raise DeepgramTypeError("Unknown transcription source type")
 
-        if options is not None and not options.check():
+        if isinstance(options, AnalyzeOptions) and not options.check():
             self.logger.error("options.check failed")
             self.logger.debug("AnalyzeClient.analyze_url_callback LEAVE")
             raise DeepgramError("Fatal transcription options error")
@@ -166,19 +175,19 @@ class AsyncAnalyzeClient(AbstractAsyncRestClient):
         DeepgramTypeError: Raised for known API errors.
     """
 
-    async def analyze_file(
+    async def analyze_text(
         self,
         source: TextSource,
-        options: AnalyzeOptions = None,
+        options: Union[AnalyzeOptions, Dict] = None,
         addons: Dict = None,
         timeout: httpx.Timeout = None,
         endpoint: str = "v1/read",
     ) -> AnalyzeResponse:
-        self.logger.debug("AsyncAnalyzeClient.analyze_file ENTER")
+        self.logger.debug("AsyncAnalyzeClient.analyze_text ENTER")
 
-        if options is not None and options.callback is not None:
-            self.logger.debug("AsyncAnalyzeClient.analyze_file LEAVE")
-            return await self.analyze_file_callback(
+        if options is not None and options["callback"] is not None:
+            self.logger.debug("AsyncAnalyzeClient.analyze_text LEAVE")
+            return await self.analyze_text_callback(
                 source, options["callback"], options, addons, timeout, endpoint
             )
 
@@ -189,12 +198,12 @@ class AsyncAnalyzeClient(AbstractAsyncRestClient):
             body = source["stream"]
         else:
             self.logger.error("Unknown transcription source type")
-            self.logger.debug("AsyncAnalyzeClient.analyze_file LEAVE")
+            self.logger.debug("AsyncAnalyzeClient.analyze_text LEAVE")
             raise DeepgramTypeError("Unknown transcription source type")
 
-        if options is not None and not options.check():
+        if isinstance(options, AnalyzeOptions) and not options.check():
             self.logger.error("options.check failed")
-            self.logger.debug("AsyncAnalyzeClient.analyze_file LEAVE")
+            self.logger.debug("AsyncAnalyzeClient.analyze_text LEAVE")
             raise DeepgramError("Fatal transcription options error")
 
         self.logger.info("url: %s", url)
@@ -209,8 +218,8 @@ class AsyncAnalyzeClient(AbstractAsyncRestClient):
         self.logger.info("json: %s", result)
         res = AnalyzeResponse.from_json(result)
         self.logger.verbose("result: %s", res)
-        self.logger.notice("analyze_file succeeded")
-        self.logger.debug("AsyncAnalyzeClient.analyze_file LEAVE")
+        self.logger.notice("analyze_text succeeded")
+        self.logger.debug("AsyncAnalyzeClient.analyze_text LEAVE")
         return res
 
     """
@@ -229,33 +238,36 @@ class AsyncAnalyzeClient(AbstractAsyncRestClient):
         DeepgramTypeError: Raised for known API errors.
     """
 
-    async def analyze_file_callback(
+    async def analyze_text_callback(
         self,
         source: TextSource,
         callback: str,
-        options: AnalyzeOptions = None,
+        options: Union[AnalyzeOptions, Dict] = None,
         addons: Dict = None,
         timeout: httpx.Timeout = None,
         endpoint: str = "v1/read",
     ) -> AsyncAnalyzeResponse:
-        self.logger.debug("AnalyzeClient.analyze_file_callback ENTER")
+        self.logger.debug("AnalyzeClient.analyze_text_callback ENTER")
 
         url = f"{self.config.url}/{endpoint}"
         if options is None:
-            options = {}
-        options["callback"] = callback
+            options = dict()
+        if isinstance(options, AnalyzeOptions):
+            options.callback = callback
+        else:
+            options["callback"] = callback
         if is_buffer_source(source):
             body = source["buffer"]
         elif is_readstream_source(source):
             body = source["stream"]
         else:
             self.logger.error("Unknown transcription source type")
-            self.logger.debug("AnalyzeClient.analyze_file_callback LEAVE")
+            self.logger.debug("AnalyzeClient.analyze_text_callback LEAVE")
             raise DeepgramTypeError("Unknown transcription source type")
 
-        if options is not None and not options.check():
+        if isinstance(options, AnalyzeOptions) and not options.check():
             self.logger.error("options.check failed")
-            self.logger.debug("AnalyzeClient.analyze_file_callback LEAVE")
+            self.logger.debug("AnalyzeClient.analyze_text_callback LEAVE")
             raise DeepgramError("Fatal transcription options error")
 
         self.logger.info("url: %s", url)
@@ -270,6 +282,6 @@ class AsyncAnalyzeClient(AbstractAsyncRestClient):
         self.logger.info("json: %s", result)
         res = AsyncAnalyzeResponse.from_json(result)
         self.logger.verbose("result: %s", res)
-        self.logger.notice("analyze_file_callback succeeded")
-        self.logger.debug("AnalyzeClient.analyze_file_callback LEAVE")
+        self.logger.notice("analyze_text_callback succeeded")
+        self.logger.debug("AnalyzeClient.analyze_text_callback LEAVE")
         return res

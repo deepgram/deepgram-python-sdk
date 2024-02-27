@@ -53,7 +53,7 @@ class AsyncLiveClient:
     # starts the WebSocket connection for live transcription
     async def start(
         self,
-        options: LiveOptions = None,
+        options: Union[LiveOptions, Dict] = None,
         addons: Dict = None,
         members: Dict = None,
         **kwargs,
@@ -64,7 +64,7 @@ class AsyncLiveClient:
         self.logger.info("members: %s", members)
         self.logger.info("options: %s", kwargs)
 
-        if options is not None and not options.check():
+        if isinstance(options, LiveOptions) and not options.check():
             self.logger.error("options.check failed")
             self.logger.debug("AsyncLiveClient.start LEAVE")
             raise DeepgramError("Fatal transcription options error")
@@ -88,10 +88,10 @@ class AsyncLiveClient:
             self.kwargs = dict()
 
         if isinstance(options, LiveOptions):
-            self.logger.info("LiveOptions switching class -> json")
+            self.logger.info("LiveOptions switching class -> dict")
             self.options = self.options.to_dict()
 
-        combined_options = dict(self.options)
+        combined_options = self.options
         if addons is not None:
             self.logger.info("merging addons to options")
             combined_options.update(addons)
@@ -114,9 +114,6 @@ class AsyncLiveClient:
 
     # registers event handlers for specific events
     def on(self, event: LiveTranscriptionEvents, handler) -> None:
-        """
-        Registers event handlers for specific events.
-        """
         if event in LiveTranscriptionEvents and callable(handler):
             self._event_handlers[event].append(handler)
 

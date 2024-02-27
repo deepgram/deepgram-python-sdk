@@ -23,11 +23,11 @@ from .prerecorded import PreRecordedClient, AsyncPreRecordedClient
 from .prerecorded import PrerecordedOptions
 from .prerecorded import Sentiment
 from .prerecorded import (
-    PrerecordedSource,
     FileSource,
+    PrerecordedSource,
     UrlSource,
     BufferSource,
-    ReadStreamSource,
+    StreamSource,
 )
 from .prerecorded import (
     AsyncPrerecordedResponse,
@@ -44,7 +44,7 @@ from .analyze import (
     TextSource,
     UrlSource,
     BufferSource,
-    AnalyzeStreamSource,
+    StreamSource,
 )
 from .analyze import (
     AsyncAnalyzeResponse,
