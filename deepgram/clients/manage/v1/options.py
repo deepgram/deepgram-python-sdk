@@ -2,8 +2,8 @@
 # Use of this source code is governed by a MIT license that can be found in the LICENSE file.
 # SPDX-License-Identifier: MIT
 
-from dataclasses import dataclass
-from dataclasses_json import dataclass_json
+from dataclasses import dataclass, field
+from dataclasses_json import dataclass_json, config
 from datetime import datetime
 from typing import TypedDict, List, Optional
 
@@ -13,7 +13,7 @@ from typing import TypedDict, List, Optional
 @dataclass_json
 @dataclass
 class ProjectOptions:
-    name: Optional[str] = ""
+    name: str = ""
 
     def __getitem__(self, key):
         _dict = self.to_dict()
@@ -30,10 +30,16 @@ class ProjectOptions:
 @dataclass
 class KeyOptions:
     comment: Optional[str] = ""
-    time_to_live_in_seconds: Optional[int] = 0
-    expiration_date: Optional[str] = ""
-    scopes: Optional[List[str]] = None
-    tags: Optional[List[str]] = None
+    time_to_live_in_seconds: Optional[int] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
+    expiration_date: Optional[str] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
+    scopes: List[str] = None
+    tags: Optional[List[str]] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
 
     def __getitem__(self, key):
         _dict = self.to_dict()
@@ -53,7 +59,7 @@ class KeyOptions:
 @dataclass_json
 @dataclass
 class ScopeOptions:
-    scope: Optional[str] = ""
+    scope: str = ""
 
     def __getitem__(self, key):
         _dict = self.to_dict()
@@ -69,8 +75,8 @@ class ScopeOptions:
 @dataclass_json
 @dataclass
 class InviteOptions:
-    email: Optional[str] = ""
-    scope: Optional[str] = ""
+    email: str = ""
+    scope: str = ""
 
     def __getitem__(self, key):
         _dict = self.to_dict()
@@ -86,10 +92,18 @@ class InviteOptions:
 @dataclass_json
 @dataclass
 class UsageRequestOptions:
-    start: Optional[str] = ""
-    end: Optional[str] = ""
-    limit: Optional[int] = 0
-    status: Optional[str] = ""
+    start: Optional[str] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
+    end: Optional[str] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
+    limit: Optional[int] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
+    status: Optional[str] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
 
     def __getitem__(self, key):
         _dict = self.to_dict()
@@ -105,27 +119,69 @@ class UsageRequestOptions:
 @dataclass_json
 @dataclass
 class UsageSummaryOptions:
-    start: Optional[str] = ""
-    end: Optional[str] = ""
-    accessor: Optional[str] = ""
-    tag: Optional[str] = ""
-    method: Optional[str] = ""
-    model: Optional[str] = ""
-    multichannel: Optional[bool] = False
-    interim_results: Optional[bool] = False
-    punctuate: Optional[bool] = False
-    ner: Optional[bool] = False
-    utterances: Optional[bool] = False
-    replace: Optional[bool] = False
-    profanity_filter: Optional[bool] = False
-    keywords: Optional[bool] = False
-    detect_topics: Optional[bool] = False
-    diarize: Optional[bool] = False
-    search: Optional[bool] = False
-    redact: Optional[bool] = False
-    alternatives: Optional[bool] = False
-    numerals: Optional[bool] = False
-    smart_format: Optional[bool] = False
+    start: Optional[str] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
+    end: Optional[str] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
+    accessor: Optional[str] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
+    tag: Optional[str] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
+    method: Optional[str] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
+    model: Optional[str] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
+    multichannel: Optional[bool] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
+    interim_results: Optional[bool] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
+    punctuate: Optional[bool] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
+    ner: Optional[bool] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
+    utterances: Optional[bool] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
+    replace: Optional[bool] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
+    profanity_filter: Optional[bool] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
+    keywords: Optional[bool] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
+    detect_topics: Optional[bool] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
+    diarize: Optional[bool] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
+    search: Optional[bool] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
+    redact: Optional[bool] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
+    alternatives: Optional[bool] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
+    numerals: Optional[bool] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
+    smart_format: Optional[bool] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
 
     def __getitem__(self, key):
         _dict = self.to_dict()

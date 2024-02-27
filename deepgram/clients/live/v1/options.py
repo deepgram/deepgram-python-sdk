@@ -2,8 +2,8 @@
 # Use of this source code is governed by a MIT license that can be found in the LICENSE file.
 # SPDX-License-Identifier: MIT
 
-from dataclasses import dataclass
-from dataclasses_json import dataclass_json
+from dataclasses import dataclass, field
+from dataclasses_json import dataclass_json, config
 from typing import List, Optional, Union
 import logging, verboselogs
 
@@ -18,34 +18,90 @@ class LiveOptions:
     https://developers.deepgram.com/reference/streaming
     """
 
-    alternatives: Optional[int] = None
-    callback: Optional[str] = None
-    callback_method: Optional[str] = None
-    channels: Optional[int] = None
-    diarize: Optional[bool] = None
-    diarize_version: Optional[str] = None
-    encoding: Optional[str] = None
-    endpointing: Optional[str] = None
-    extra: Optional[Union[list, str]] = None
-    filler_words: Optional[bool] = None
-    interim_results: Optional[bool] = None
-    keywords: Optional[str] = None
-    language: Optional[str] = None
-    model: Optional[str] = None
-    multichannel: Optional[bool] = None
-    numerals: Optional[bool] = None
-    punctuate: Optional[bool] = None
-    profanity_filter: Optional[bool] = None
-    redact: Optional[bool] = None
-    replace: Optional[str] = None
-    sample_rate: Optional[int] = None
-    search: Optional[str] = None
-    smart_format: Optional[bool] = None
-    tag: Optional[list] = None
-    tier: Optional[str] = None
-    utterance_end_ms: Optional[str] = None
-    vad_events: Optional[bool] = None
-    version: Optional[str] = None
+    alternatives: Optional[int] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
+    callback: Optional[str] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
+    callback_method: Optional[str] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
+    channels: Optional[int] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
+    diarize: Optional[bool] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
+    diarize_version: Optional[str] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
+    encoding: Optional[str] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
+    endpointing: Optional[str] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
+    extra: Optional[Union[list, str]] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
+    filler_words: Optional[bool] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
+    interim_results: Optional[bool] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
+    keywords: Optional[str] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
+    language: Optional[str] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
+    model: Optional[str] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
+    multichannel: Optional[bool] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
+    numerals: Optional[bool] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
+    punctuate: Optional[bool] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
+    profanity_filter: Optional[bool] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
+    redact: Optional[bool] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
+    replace: Optional[str] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
+    sample_rate: Optional[int] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
+    search: Optional[str] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
+    smart_format: Optional[bool] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
+    tag: Optional[list] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
+    tier: Optional[str] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
+    utterance_end_ms: Optional[str] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
+    vad_events: Optional[bool] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
+    version: Optional[str] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
 
     def __getitem__(self, key):
         _dict = self.to_dict()
