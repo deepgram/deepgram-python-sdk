@@ -19,15 +19,15 @@ AUDIO_URL = {
 def main():
     try:
         # STEP 1 Create a Deepgram PreRecordedClient using a specific config
-        # config = ClientOptionsFromEnv(
+        # config: ClientOptionsFromEnv = ClientOptionsFromEnv(
         #     verbose=verboselogs.NOTICE,
         # )
-        # asyncClient = PreRecordedClient(config)
+        # asyncClient: PreRecordedClient = PreRecordedClient(config)
         # OR just use the default config
-        asyncClient = PreRecordedClient(ClientOptionsFromEnv())
+        asyncClient: PreRecordedClient = PreRecordedClient(ClientOptionsFromEnv())
 
         # STEP 2 Call the transcribe_url method on the prerecorded class
-        options = PrerecordedOptions(
+        options: PrerecordedOptions = PrerecordedOptions(
             model="nova",
             smart_format=True,
             summarize="v2",

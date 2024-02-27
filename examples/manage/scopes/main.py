@@ -13,10 +13,11 @@ load_dotenv()
 # environment variables
 MEMBER_BY_EMAIL = "enter-your-email@gmail.com"
 
+
 def main():
     try:
         # Create a Deepgram client using the API key
-        deepgram = DeepgramClient()
+        deepgram: DeepgramClient = DeepgramClient()
 
         # get projects
         projectResp = deepgram.manage.v("1").get_projects()

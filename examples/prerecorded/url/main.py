@@ -22,10 +22,10 @@ AUDIO_URL = {
 def main():
     try:
         # STEP 1 Create a Deepgram client using the API key from environment variables
-        deepgram = DeepgramClient("", ClientOptionsFromEnv())
+        deepgram: DeepgramClient = DeepgramClient("", ClientOptionsFromEnv())
 
         # STEP 2 Call the transcribe_url method on the prerecorded class
-        options = PrerecordedOptions(
+        options: PrerecordedOptions = PrerecordedOptions(
             model="nova-2",
             smart_format=True,
         )
