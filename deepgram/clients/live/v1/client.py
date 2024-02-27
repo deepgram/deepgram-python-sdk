@@ -7,6 +7,7 @@ import websockets
 import threading
 import time
 import logging, verboselogs
+from typing import Dict, Union
 
 from ....options import DeepgramClientOptions
 from ..enums import LiveTranscriptionEvents
@@ -52,13 +53,14 @@ class LiveClient:
         self._event_handlers = {event: [] for event in LiveTranscriptionEvents}
         self.websocket_url = convert_to_websocket_url(self.config.url, self.endpoint)
 
+    # starts the WebSocket connection for live transcription
     def start(
         self,
         options: LiveOptions = None,
-        addons: dict = None,
-        members: dict = None,
+        addons: Dict = None,
+        members: Dict = None,
         **kwargs,
-    ):
+    ) -> bool:
         """
         Starts the WebSocket connection for live transcription.
         """
@@ -119,7 +121,9 @@ class LiveClient:
 
         self.logger.notice("start succeeded")
         self.logger.debug("LiveClient.start LEAVE")
+        return True
 
+    # registers event handlers for specific events
     def on(self, event, handler):
         """
         Registers event handlers for specific events.
@@ -128,10 +132,12 @@ class LiveClient:
         if event in LiveTranscriptionEvents and callable(handler):
             self._event_handlers[event].append(handler)
 
+    # unregisters event handlers for specific events
     def _emit(self, event, *args, **kwargs):
         for handler in self._event_handlers[event]:
             handler(self, *args, **kwargs)
 
+    # main loop for handling incoming messages
     def _listening(self) -> None:
         self.logger.debug("LiveClient._listening ENTER")
 
@@ -342,7 +348,8 @@ class LiveClient:
                     raise
                 return
 
-    def send(self, data) -> int:
+    # sends data over the WebSocket connection
+    def send(self, data: Union[str, bytes]) -> int:
         """
         Sends data over the WebSocket connection.
         """
@@ -351,16 +358,17 @@ class LiveClient:
 
         if self._socket:
             with self.lock_send:
-                ret = self._socket.send(data)
+                cnt = self._socket.send(data)
 
-            self.logger.spam(f"send bytes: {ret}")
+            self.logger.spam(f"send() succeeded. bytes: {cnt}")
             self.logger.spam("LiveClient.send LEAVE")
-            return ret
+            return cnt
 
-        self.logger.spam("message is empty")
+        self.logger.spam("send() failed. socket is empty")
         self.logger.spam("LiveClient.send LEAVE")
         return 0
 
+    # sends a ping over the WebSocket connection
     def send_ping(self) -> None:
         """
         Sends a ping over the WebSocket connection.
@@ -369,11 +377,13 @@ class LiveClient:
 
         if self._socket:
             with self.lock_send:
+                self.logger.debug("socket.ping() succeeded.")
                 self._socket.ping()
 
         self.logger.spam("LiveClient.send_ping LEAVE")
 
-    def finish(self):
+    # closes the WebSocket connection gracefully
+    def finish(self) -> bool:
         """
         Closes the WebSocket connection gracefully.
         """
@@ -407,8 +417,10 @@ class LiveClient:
 
         self.logger.notice("finish succeeded")
         self.logger.spam("LiveClient.finish LEAVE")
+        return True
 
-    def signal_exit(self):
+    # signals the WebSocket connection to exit
+    def signal_exit(self) -> None:
         # signal exit
         with self.lock_exit:
             self.logger.notice("signal exit")

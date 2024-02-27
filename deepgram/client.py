@@ -2,7 +2,7 @@
 # Use of this source code is governed by a MIT license that can be found in the LICENSE file.
 # SPDX-License-Identifier: MIT
 
-from typing import Optional
+from typing import Union
 from importlib import import_module
 import logging, verboselogs
 import os
@@ -152,7 +152,7 @@ class DeepgramClient:
     def __init__(
         self,
         api_key: str = "",
-        config: Optional[DeepgramClientOptions] = None,
+        config: DeepgramClientOptions = None,
     ):
         verboselogs.install()
         self.logger = logging.getLogger(__name__)
@@ -175,27 +175,27 @@ class DeepgramClient:
             self.config = config
 
     @property
-    def listen(self):
+    def listen(self) -> Listen:
         return Listen(self.config)
 
     @property
-    def read(self):
+    def read(self) -> Read:
         return Read(self.config)
 
     @property
-    def manage(self):
+    def manage(self) -> ManageClient:
         return self.Version(self.config, "manage")
 
     @property
-    def asyncmanage(self):
+    def asyncmanage(self) -> AsyncManageClient:
         return self.Version(self.config, "asyncmanage")
 
     @property
-    def onprem(self):
+    def onprem(self) -> OnPremClient:
         return self.Version(self.config, "onprem")
 
     @property
-    def asynconprem(self):
+    def asynconprem(self) -> AsyncOnPremClient:
         return self.Version(self.config, "asynconprem")
 
     # INTERNAL CLASSES
@@ -219,7 +219,9 @@ class DeepgramClient:
         #         case _:
         #             raise DeepgramModuleError("Invalid parent")
 
-        def v(self, version: str = ""):
+        def v(
+            self, version: str = ""
+        ) -> Union[ManageClient, AsyncManageClient, OnPremClient, AsyncOnPremClient]:
             self.logger.debug("Version.v ENTER")
             self.logger.info("version: %s", version)
             if len(version) == 0:

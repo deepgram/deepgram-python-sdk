@@ -5,6 +5,7 @@ import asyncio
 import json
 import websockets
 import logging, verboselogs
+from typing import Dict, Union
 
 from ....options import DeepgramClientOptions
 from ..enums import LiveTranscriptionEvents
@@ -49,13 +50,14 @@ class AsyncLiveClient:
         self._event_handlers = {event: [] for event in LiveTranscriptionEvents}
         self.websocket_url = convert_to_websocket_url(self.config.url, self.endpoint)
 
+    # starts the WebSocket connection for live transcription
     async def start(
         self,
         options: LiveOptions = None,
-        addons: dict = None,
-        members: dict = None,
+        addons: Dict = None,
+        members: Dict = None,
         **kwargs,
-    ):
+    ) -> bool:
         self.logger.debug("AsyncLiveClient.start ENTER")
         self.logger.info("kwargs: %s", options)
         self.logger.info("addons: %s", addons)
@@ -99,32 +101,33 @@ class AsyncLiveClient:
         url_with_params = append_query_params(self.websocket_url, combined_options)
         try:
             self._socket = await _socket_connect(url_with_params, self.config.headers)
-            asyncio.create_task(self._start())
+            asyncio.create_task(self._listening())
             asyncio.create_task(self._keep_alive())
 
             self.logger.notice("start succeeded")
             self.logger.debug("AsyncLiveClient.start LEAVE")
-            return self
+            return True
         except websockets.ConnectionClosed as e:
             await self._emit(LiveTranscriptionEvents.Close, e.code)
             self.logger.notice("exception: websockets.ConnectionClosed")
             self.logger.debug("AsyncLiveClient.start LEAVE")
 
-    def on(self, event, handler):
+    # registers event handlers for specific events
+    def on(self, event: LiveTranscriptionEvents, handler) -> None:
         """
         Registers event handlers for specific events.
         """
         if event in LiveTranscriptionEvents and callable(handler):
             self._event_handlers[event].append(handler)
 
-    async def _emit(
-        self, event, *args, **kwargs
-    ):  # triggers the registered event handlers for a specific event
+    # triggers the registered event handlers for a specific event
+    async def _emit(self, event: LiveTranscriptionEvents, *args, **kwargs) -> None:
         for handler in self._event_handlers[event]:
             asyncio.create_task(handler(self, *args, **kwargs))
 
-    async def _start(self) -> None:
-        self.logger.debug("AsyncLiveClient._start ENTER")
+    # main loop for handling incoming messages
+    async def _listening(self) -> None:
+        self.logger.debug("AsyncLiveClient._listening ENTER")
 
         try:
             async for message in self._socket:
@@ -182,14 +185,14 @@ class AsyncLiveClient:
                         await self._emit(LiveTranscriptionEvents.Error, error=error)
 
         except websockets.exceptions.ConnectionClosedOK as e:
-            self.logger.notice(f"_start({e.code}) exiting gracefully")
-            self.logger.debug("AsyncLiveClient._start LEAVE")
+            self.logger.notice(f"_listening({e.code}) exiting gracefully")
+            self.logger.debug("AsyncLiveClient._listening LEAVE")
             return
 
         except websockets.exceptions.ConnectionClosedError as e:
             error: ErrorResponse = {
                 "type": "Exception",
-                "description": "ConnectionClosedError in _start",
+                "description": "ConnectionClosedError in _listening",
                 "message": f"{e}",
                 "variant": "",
             }
@@ -198,7 +201,7 @@ class AsyncLiveClient:
             )
             await self._emit(LiveTranscriptionEvents.Error, error)
 
-            self.logger.debug("AsyncLiveClient._start LEAVE")
+            self.logger.debug("AsyncLiveClient._listening LEAVE")
 
             if (
                 "termination_exception" in self.options
@@ -209,14 +212,14 @@ class AsyncLiveClient:
         except Exception as e:
             error: ErrorResponse = {
                 "type": "Exception",
-                "description": "Exception in _start",
+                "description": "Exception in _listening",
                 "message": f"{e}",
                 "variant": "",
             }
             await self._emit(LiveTranscriptionEvents.Error, error)
 
-            self.logger.error("Exception in _start: %s", error=error)
-            self.logger.debug("AsyncLiveClient._start LEAVE")
+            self.logger.error("Exception in _listening: %s", error=error)
+            self.logger.debug("AsyncLiveClient._listening LEAVE")
 
             if (
                 "termination_exception" in self.options
@@ -224,6 +227,7 @@ class AsyncLiveClient:
             ):
                 raise
 
+    # keep the connection alive by sending keepalive messages
     async def _keep_alive(self) -> None:
         self.logger.debug("AsyncLiveClient._keep_alive ENTER")
 
@@ -252,20 +256,25 @@ class AsyncLiveClient:
 
         self.logger.debug("AsyncLiveClient._keep_alive LEAVE")
 
-    async def send(self, data):
+    # sends data over the WebSocket connection
+    async def send(self, data: Union[str, bytes]) -> int:
         """
         Sends data over the WebSocket connection.
         """
         self.logger.spam("AsyncLiveClient.send ENTER")
         self.logger.spam("data: %s", data)
 
-        if self._socket:
-            await self._socket.send(data)
-            self.logger.spam("data sent")
+        if self._socket is not None:
+            cnt = await self._socket.send(data)
+            self.logger.spam(f"send() succeeded. bytes: {cnt}")
+            self.logger.spam("AsyncLiveClient.send LEAVE")
+            return cnt
 
+        self.logger.error("send() failed. socket is None")
         self.logger.spam("AsyncLiveClient.send LEAVE")
+        return 0
 
-    async def finish(self):
+    async def finish(self) -> bool:
         """
         Closes the WebSocket connection gracefully.
         """
@@ -281,9 +290,10 @@ class AsyncLiveClient:
 
         self.logger.notice("finish succeeded")
         self.logger.debug("AsyncLiveClient.finish LEAVE")
+        return True
 
 
-async def _socket_connect(websocket_url, headers):
+async def _socket_connect(websocket_url, headers) -> websockets.WebSocketClientProtocol:
     destination = websocket_url
     updated_headers = headers
     return await websockets.connect(

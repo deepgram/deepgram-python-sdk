@@ -28,8 +28,8 @@ class DeepgramClientOptions:
         api_key: str = "",
         url: str = "",
         verbose: int = logging.WARNING,
-        headers: Dict[str, str] = None,
-        options: Dict[str, str] = None,
+        headers: Dict = None,
+        options: Dict = None,
     ):
         verboselogs.install()
         self.logger = logging.getLogger(__name__)
@@ -56,7 +56,7 @@ class DeepgramClientOptions:
             url = "https://" + url
         return url.strip("/")
 
-    def _update_headers(self, headers: Optional[Dict[str, str]] = None):
+    def _update_headers(self, headers: Optional[Dict] = None):
         if not hasattr(self, "headers") or self.headers is None:
             self.headers = {}
         self.headers["Accept"] = "application/json"
@@ -75,8 +75,8 @@ class ClientOptionsFromEnv(DeepgramClientOptions):
         api_key: str = "",
         url: str = "",
         verbose: int = logging.WARNING,
-        headers: Dict[str, str] = None,
-        options: Dict[str, str] = None,
+        headers: Dict = None,
+        options: Dict = None,
     ):
         verboselogs.install()
         self.logger = logging.getLogger(__name__)

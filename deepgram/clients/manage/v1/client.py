@@ -5,6 +5,7 @@
 import httpx
 import logging, verboselogs
 import json
+from typing import Dict
 
 from ....options import DeepgramClientOptions
 from ...abstract_sync_client import AbstractSyncRestClient
@@ -63,7 +64,7 @@ class ManageClient(AbstractSyncRestClient):
 
     # projects
     def list_projects(
-        self, timeout: httpx.Timeout = None, addons: dict = None, **kwargs
+        self, timeout: httpx.Timeout = None, addons: Dict = None, **kwargs
     ) -> ProjectsResponse:
         """
         List all projects for the current user.
@@ -71,7 +72,7 @@ class ManageClient(AbstractSyncRestClient):
         return self.get_projects(timeout=timeout, addons=addons, **kwargs)
 
     def get_projects(
-        self, timeout: httpx.Timeout = None, addons: dict = None, **kwargs
+        self, timeout: httpx.Timeout = None, addons: Dict = None, **kwargs
     ) -> ProjectsResponse:
         """
         Gets a list of projects for the authenticated user.
@@ -95,7 +96,7 @@ class ManageClient(AbstractSyncRestClient):
         self,
         project_id: str,
         timeout: httpx.Timeout = None,
-        addons: dict = None,
+        addons: Dict = None,
         **kwargs,
     ) -> Project:
         """
@@ -122,7 +123,7 @@ class ManageClient(AbstractSyncRestClient):
         project_id: str,
         options: ProjectOptions,
         timeout: httpx.Timeout = None,
-        addons: dict = None,
+        addons: Dict = None,
         **kwargs,
     ) -> Message:
         """
@@ -151,9 +152,9 @@ class ManageClient(AbstractSyncRestClient):
     def update_project(
         self,
         project_id: str,
-        name="",
+        name: str,
         timeout: httpx.Timeout = None,
-        addons: dict = None,
+        addons: Dict = None,
         **kwargs,
     ) -> Message:
         """
@@ -183,7 +184,7 @@ class ManageClient(AbstractSyncRestClient):
         self,
         project_id: str,
         timeout: httpx.Timeout = None,
-        addons: dict = None,
+        addons: Dict = None,
         **kwargs,
     ) -> Message:
         """
@@ -208,7 +209,7 @@ class ManageClient(AbstractSyncRestClient):
         self,
         project_id: str,
         timeout: httpx.Timeout = None,
-        addons: dict = None,
+        addons: Dict = None,
         **kwargs,
     ) -> KeysResponse:
         """
@@ -220,7 +221,7 @@ class ManageClient(AbstractSyncRestClient):
         self,
         project_id: str,
         timeout: httpx.Timeout = None,
-        addons: dict = None,
+        addons: Dict = None,
         **kwargs,
     ) -> KeysResponse:
         """
@@ -247,7 +248,7 @@ class ManageClient(AbstractSyncRestClient):
         project_id: str,
         key_id: str,
         timeout: httpx.Timeout = None,
-        addons: dict = None,
+        addons: Dict = None,
         **kwargs,
     ) -> KeyResponse:
         """
@@ -275,7 +276,7 @@ class ManageClient(AbstractSyncRestClient):
         project_id: str,
         options: KeyOptions,
         timeout: httpx.Timeout = None,
-        addons: dict = None,
+        addons: Dict = None,
         **kwargs,
     ) -> Key:
         """
@@ -306,7 +307,7 @@ class ManageClient(AbstractSyncRestClient):
         project_id: str,
         key_id: str,
         timeout: httpx.Timeout = None,
-        addons: dict = None,
+        addons: Dict = None,
         **kwargs,
     ) -> Message:
         """
@@ -334,7 +335,7 @@ class ManageClient(AbstractSyncRestClient):
         self,
         project_id: str,
         timeout: httpx.Timeout = None,
-        addons: dict = None,
+        addons: Dict = None,
         **kwargs,
     ) -> MembersResponse:
         """
@@ -346,7 +347,7 @@ class ManageClient(AbstractSyncRestClient):
         self,
         project_id: str,
         timeout: httpx.Timeout = None,
-        addons: dict = None,
+        addons: Dict = None,
         **kwargs,
     ) -> MembersResponse:
         """
@@ -373,7 +374,7 @@ class ManageClient(AbstractSyncRestClient):
         project_id: str,
         member_id: str,
         timeout: httpx.Timeout = None,
-        addons: dict = None,
+        addons: Dict = None,
         **kwargs,
     ) -> Message:
         """
@@ -402,7 +403,7 @@ class ManageClient(AbstractSyncRestClient):
         project_id: str,
         member_id: str,
         timeout: httpx.Timeout = None,
-        addons: dict = None,
+        addons: Dict = None,
         **kwargs,
     ) -> ScopesResponse:
         """
@@ -433,7 +434,7 @@ class ManageClient(AbstractSyncRestClient):
         member_id: str,
         options: ScopeOptions,
         timeout: httpx.Timeout = None,
-        addons: dict = None,
+        addons: Dict = None,
         **kwargs,
     ) -> Message:
         """
@@ -466,7 +467,7 @@ class ManageClient(AbstractSyncRestClient):
         self,
         project_id: str,
         timeout: httpx.Timeout = None,
-        addons: dict = None,
+        addons: Dict = None,
         **kwargs,
     ) -> InvitesResponse:
         """
@@ -478,7 +479,7 @@ class ManageClient(AbstractSyncRestClient):
         self,
         project_id: str,
         timeout: httpx.Timeout = None,
-        addons: dict = None,
+        addons: Dict = None,
         **kwargs,
     ) -> InvitesResponse:
         """
@@ -505,7 +506,7 @@ class ManageClient(AbstractSyncRestClient):
         project_id: str,
         options: InviteOptions,
         timeout: httpx.Timeout = None,
-        addons: dict = None,
+        addons: Dict = None,
         **kwargs,
     ) -> Message:
         """
@@ -537,7 +538,7 @@ class ManageClient(AbstractSyncRestClient):
         email: str,
         scope="member",
         timeout: httpx.Timeout = None,
-        addons: dict = None,
+        addons: Dict = None,
         **kwargs,
     ) -> Message:
         """
@@ -569,7 +570,7 @@ class ManageClient(AbstractSyncRestClient):
         project_id: str,
         email: str,
         timeout: httpx.Timeout = None,
-        addons: dict = None,
+        addons: Dict = None,
         **kwargs,
     ) -> Message:
         """
@@ -596,7 +597,7 @@ class ManageClient(AbstractSyncRestClient):
         self,
         project_id: str,
         timeout: httpx.Timeout = None,
-        addons: dict = None,
+        addons: Dict = None,
         **kwargs,
     ) -> Message:
         """
@@ -624,7 +625,7 @@ class ManageClient(AbstractSyncRestClient):
         project_id: str,
         options: UsageRequestOptions,
         timeout: httpx.Timeout = None,
-        addons: dict = None,
+        addons: Dict = None,
         **kwargs,
     ) -> UsageRequestsResponse:
         """
@@ -657,7 +658,7 @@ class ManageClient(AbstractSyncRestClient):
         project_id: str,
         request_id: str,
         timeout: httpx.Timeout = None,
-        addons: dict = None,
+        addons: Dict = None,
         **kwargs,
     ) -> UsageRequest:
         """
@@ -685,7 +686,7 @@ class ManageClient(AbstractSyncRestClient):
         project_id: str,
         options: UsageSummaryOptions,
         timeout: httpx.Timeout = None,
-        addons: dict = None,
+        addons: Dict = None,
         **kwargs,
     ) -> UsageSummaryResponse:
         """
@@ -718,7 +719,7 @@ class ManageClient(AbstractSyncRestClient):
         project_id: str,
         options: UsageFieldsOptions,
         timeout: httpx.Timeout = None,
-        addons: dict = None,
+        addons: Dict = None,
         **kwargs,
     ) -> UsageFieldsResponse:
         """
@@ -751,7 +752,7 @@ class ManageClient(AbstractSyncRestClient):
         self,
         project_id: str,
         timeout: httpx.Timeout = None,
-        addons: dict = None,
+        addons: Dict = None,
         **kwargs,
     ) -> BalancesResponse:
         """
@@ -763,7 +764,7 @@ class ManageClient(AbstractSyncRestClient):
         self,
         project_id: str,
         timeout: httpx.Timeout = None,
-        addons: dict = None,
+        addons: Dict = None,
         **kwargs,
     ) -> BalancesResponse:
         """
@@ -790,7 +791,7 @@ class ManageClient(AbstractSyncRestClient):
         project_id: str,
         balance_id: str,
         timeout: httpx.Timeout = None,
-        addons: dict = None,
+        addons: Dict = None,
         **kwargs,
     ) -> Balance:
         """

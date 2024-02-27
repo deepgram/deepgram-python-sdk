@@ -59,7 +59,6 @@ class AnalyzeClient(AnalyzeClientLatest):
     """
 
     def __init__(self, config):
-        self.config = config
         super().__init__(config)
 
 

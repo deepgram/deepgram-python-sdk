@@ -20,11 +20,11 @@ class Microphone:
     def __init__(
         self,
         push_callback,
-        verbose=LOGGING,
-        rate=RATE,
-        chunk=CHUNK,
-        channels=CHANNELS,
-        input_device_index=None,
+        verbose: int = LOGGING,
+        rate: int = RATE,
+        chunk: int = CHUNK,
+        channels: int = CHANNELS,
+        input_device_index: int = None,
     ):
         # dynamic import of pyaudio as not to force the requirements on the SDK (and users)
         import pyaudio
@@ -58,11 +58,11 @@ class Microphone:
 
         self.stream = None
 
-    def _start_asyncio_loop(self):
+    def _start_asyncio_loop(self) -> None:
         self.asyncio_loop = asyncio.new_event_loop()
         self.asyncio_loop.run_forever()
 
-    def is_active(self):
+    def is_active(self) -> bool:
         """
         returns True if the stream is active, False otherwise
         """
@@ -78,16 +78,16 @@ class Microphone:
         self.logger.debug("Microphone.is_active LEAVE")
         return val
 
-    def start(self):
+    def start(self) -> bool:
         """
         starts the microphone stream
         """
         self.logger.debug("Microphone.start ENTER")
 
         if self.stream is not None:
-            self.logger.error("stream is None")
+            self.logger.error("start() failed. Library already initialized.")
             self.logger.debug("Microphone.start LEAVE")
-            raise DeepgramMicrophoneError("Microphone already started")
+            return False
 
         self.logger.info("format: %s", self.format)
         self.logger.info("channels: %d", self.channels)
@@ -108,8 +108,9 @@ class Microphone:
         self.exit.clear()
         self.stream.start_stream()
 
-        self.logger.notice("start succeeded")
+        self.logger.notice("start() succeeded")
         self.logger.debug("Microphone.start LEAVE")
+        return True
 
     def _callback(self, input_data, frame_count, time_info, status_flags):
         """
@@ -140,7 +141,7 @@ class Microphone:
         self.logger.debug("Microphone._callback LEAVE")
         return input_data, pyaudio.paContinue
 
-    def finish(self):
+    def finish(self) -> bool:
         """
         Stops the microphone stream
         """
@@ -163,3 +164,5 @@ class Microphone:
 
         self.logger.notice("finish succeeded")
         self.logger.debug("Microphone.finish LEAVE")
+
+        return True
