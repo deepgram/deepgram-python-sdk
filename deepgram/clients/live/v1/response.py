@@ -104,6 +104,9 @@ class Metadata:
         default=None, metadata=config(exclude=lambda f: f is None)
     )
     model_uuid: Optional[str] = ""
+    extra: Optional[Dict[str, str]] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
 
     def __getitem__(self, key):
         _dict = self.to_dict()
@@ -111,6 +114,8 @@ class Metadata:
             _dict["model_info"] = [
                 ModelInfo.from_dict(model_info) for model_info in _dict["model_info"]
             ]
+        if "extra" in _dict:
+            _dict["extra"] = [str(extra) for _, extra in _dict["extra"].items()]
         return _dict[key]
 
     def __setitem__(self, key, val):
