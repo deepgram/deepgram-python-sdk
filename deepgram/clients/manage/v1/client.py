@@ -5,7 +5,7 @@
 import httpx
 import logging, verboselogs
 import json
-from typing import Dict, Union
+from typing import Dict, Union, Optional
 
 from ....options import DeepgramClientOptions
 from ...abstract_sync_client import AbstractSyncRestClient
@@ -64,7 +64,10 @@ class ManageClient(AbstractSyncRestClient):
 
     # projects
     def list_projects(
-        self, timeout: httpx.Timeout = None, addons: Dict = None, **kwargs
+        self,
+        timeout: Optional[httpx.Timeout] = None,
+        addons: Optional[Dict] = None,
+        **kwargs,
     ) -> ProjectsResponse:
         """
         List all projects for the current user.
@@ -72,7 +75,10 @@ class ManageClient(AbstractSyncRestClient):
         return self.get_projects(timeout=timeout, addons=addons, **kwargs)
 
     def get_projects(
-        self, timeout: httpx.Timeout = None, addons: Dict = None, **kwargs
+        self,
+        timeout: Optional[httpx.Timeout] = None,
+        addons: Optional[Dict] = None,
+        **kwargs,
     ) -> ProjectsResponse:
         """
         Gets a list of projects for the authenticated user.
@@ -95,8 +101,8 @@ class ManageClient(AbstractSyncRestClient):
     def get_project(
         self,
         project_id: str,
-        timeout: httpx.Timeout = None,
-        addons: Dict = None,
+        timeout: Optional[httpx.Timeout] = None,
+        addons: Optional[Dict] = None,
         **kwargs,
     ) -> Project:
         """
@@ -122,8 +128,8 @@ class ManageClient(AbstractSyncRestClient):
         self,
         project_id: str,
         options: Union[Dict, ProjectOptions],
-        timeout: httpx.Timeout = None,
-        addons: Dict = None,
+        timeout: Optional[httpx.Timeout] = None,
+        addons: Optional[Dict] = None,
         **kwargs,
     ) -> Message:
         """
@@ -153,8 +159,8 @@ class ManageClient(AbstractSyncRestClient):
         self,
         project_id: str,
         name: str,
-        timeout: httpx.Timeout = None,
-        addons: Dict = None,
+        timeout: Optional[httpx.Timeout] = None,
+        addons: Optional[Dict] = None,
         **kwargs,
     ) -> Message:
         """
@@ -183,8 +189,8 @@ class ManageClient(AbstractSyncRestClient):
     def delete_project(
         self,
         project_id: str,
-        timeout: httpx.Timeout = None,
-        addons: Dict = None,
+        timeout: Optional[httpx.Timeout] = None,
+        addons: Optional[Dict] = None,
         **kwargs,
     ) -> Message:
         """
@@ -208,8 +214,8 @@ class ManageClient(AbstractSyncRestClient):
     def list_keys(
         self,
         project_id: str,
-        timeout: httpx.Timeout = None,
-        addons: Dict = None,
+        timeout: Optional[httpx.Timeout] = None,
+        addons: Optional[Dict] = None,
         **kwargs,
     ) -> KeysResponse:
         """
@@ -220,8 +226,8 @@ class ManageClient(AbstractSyncRestClient):
     def get_keys(
         self,
         project_id: str,
-        timeout: httpx.Timeout = None,
-        addons: Dict = None,
+        timeout: Optional[httpx.Timeout] = None,
+        addons: Optional[Dict] = None,
         **kwargs,
     ) -> KeysResponse:
         """
@@ -247,8 +253,8 @@ class ManageClient(AbstractSyncRestClient):
         self,
         project_id: str,
         key_id: str,
-        timeout: httpx.Timeout = None,
-        addons: Dict = None,
+        timeout: Optional[httpx.Timeout] = None,
+        addons: Optional[Dict] = None,
         **kwargs,
     ) -> KeyResponse:
         """
@@ -275,8 +281,8 @@ class ManageClient(AbstractSyncRestClient):
         self,
         project_id: str,
         options: Union[Dict, KeyOptions],
-        timeout: httpx.Timeout = None,
-        addons: Dict = None,
+        timeout: Optional[httpx.Timeout] = None,
+        addons: Optional[Dict] = None,
         **kwargs,
     ) -> Key:
         """
@@ -306,8 +312,8 @@ class ManageClient(AbstractSyncRestClient):
         self,
         project_id: str,
         key_id: str,
-        timeout: httpx.Timeout = None,
-        addons: Dict = None,
+        timeout: Optional[httpx.Timeout] = None,
+        addons: Optional[Dict] = None,
         **kwargs,
     ) -> Message:
         """
@@ -334,8 +340,8 @@ class ManageClient(AbstractSyncRestClient):
     def list_members(
         self,
         project_id: str,
-        timeout: httpx.Timeout = None,
-        addons: Dict = None,
+        timeout: Optional[httpx.Timeout] = None,
+        addons: Optional[Dict] = None,
         **kwargs,
     ) -> MembersResponse:
         """
@@ -346,8 +352,8 @@ class ManageClient(AbstractSyncRestClient):
     def get_members(
         self,
         project_id: str,
-        timeout: httpx.Timeout = None,
-        addons: Dict = None,
+        timeout: Optional[httpx.Timeout] = None,
+        addons: Optional[Dict] = None,
         **kwargs,
     ) -> MembersResponse:
         """
@@ -373,8 +379,8 @@ class ManageClient(AbstractSyncRestClient):
         self,
         project_id: str,
         member_id: str,
-        timeout: httpx.Timeout = None,
-        addons: Dict = None,
+        timeout: Optional[httpx.Timeout] = None,
+        addons: Optional[Dict] = None,
         **kwargs,
     ) -> Message:
         """
@@ -402,8 +408,8 @@ class ManageClient(AbstractSyncRestClient):
         self,
         project_id: str,
         member_id: str,
-        timeout: httpx.Timeout = None,
-        addons: Dict = None,
+        timeout: Optional[httpx.Timeout] = None,
+        addons: Optional[Dict] = None,
         **kwargs,
     ) -> ScopesResponse:
         """
@@ -433,8 +439,8 @@ class ManageClient(AbstractSyncRestClient):
         project_id: str,
         member_id: str,
         options: Union[Dict, ScopeOptions],
-        timeout: httpx.Timeout = None,
-        addons: Dict = None,
+        timeout: Optional[httpx.Timeout] = None,
+        addons: Optional[Dict] = None,
         **kwargs,
     ) -> Message:
         """
@@ -466,8 +472,8 @@ class ManageClient(AbstractSyncRestClient):
     def list_invites(
         self,
         project_id: str,
-        timeout: httpx.Timeout = None,
-        addons: Dict = None,
+        timeout: Optional[httpx.Timeout] = None,
+        addons: Optional[Dict] = None,
         **kwargs,
     ) -> InvitesResponse:
         """
@@ -478,8 +484,8 @@ class ManageClient(AbstractSyncRestClient):
     def get_invites(
         self,
         project_id: str,
-        timeout: httpx.Timeout = None,
-        addons: Dict = None,
+        timeout: Optional[httpx.Timeout] = None,
+        addons: Optional[Dict] = None,
         **kwargs,
     ) -> InvitesResponse:
         """
@@ -505,8 +511,8 @@ class ManageClient(AbstractSyncRestClient):
         self,
         project_id: str,
         options: Union[Dict, InviteOptions],
-        timeout: httpx.Timeout = None,
-        addons: Dict = None,
+        timeout: Optional[httpx.Timeout] = None,
+        addons: Optional[Dict] = None,
         **kwargs,
     ) -> Message:
         """
@@ -537,8 +543,8 @@ class ManageClient(AbstractSyncRestClient):
         project_id: str,
         email: str,
         scope="member",
-        timeout: httpx.Timeout = None,
-        addons: Dict = None,
+        timeout: Optional[httpx.Timeout] = None,
+        addons: Optional[Dict] = None,
         **kwargs,
     ) -> Message:
         """
@@ -569,8 +575,8 @@ class ManageClient(AbstractSyncRestClient):
         self,
         project_id: str,
         email: str,
-        timeout: httpx.Timeout = None,
-        addons: Dict = None,
+        timeout: Optional[httpx.Timeout] = None,
+        addons: Optional[Dict] = None,
         **kwargs,
     ) -> Message:
         """
@@ -596,8 +602,8 @@ class ManageClient(AbstractSyncRestClient):
     def leave_project(
         self,
         project_id: str,
-        timeout: httpx.Timeout = None,
-        addons: Dict = None,
+        timeout: Optional[httpx.Timeout] = None,
+        addons: Optional[Dict] = None,
         **kwargs,
     ) -> Message:
         """
@@ -624,8 +630,8 @@ class ManageClient(AbstractSyncRestClient):
         self,
         project_id: str,
         options: Union[Dict, UsageRequestOptions],
-        timeout: httpx.Timeout = None,
-        addons: Dict = None,
+        timeout: Optional[httpx.Timeout] = None,
+        addons: Optional[Dict] = None,
         **kwargs,
     ) -> UsageRequestsResponse:
         """
@@ -657,8 +663,8 @@ class ManageClient(AbstractSyncRestClient):
         self,
         project_id: str,
         request_id: str,
-        timeout: httpx.Timeout = None,
-        addons: Dict = None,
+        timeout: Optional[httpx.Timeout] = None,
+        addons: Optional[Dict] = None,
         **kwargs,
     ) -> UsageRequest:
         """
@@ -685,8 +691,8 @@ class ManageClient(AbstractSyncRestClient):
         self,
         project_id: str,
         options: Union[Dict, UsageSummaryOptions],
-        timeout: httpx.Timeout = None,
-        addons: Dict = None,
+        timeout: Optional[httpx.Timeout] = None,
+        addons: Optional[Dict] = None,
         **kwargs,
     ) -> UsageSummaryResponse:
         """
@@ -718,8 +724,8 @@ class ManageClient(AbstractSyncRestClient):
         self,
         project_id: str,
         options: Union[Dict, UsageFieldsOptions],
-        timeout: httpx.Timeout = None,
-        addons: Dict = None,
+        timeout: Optional[httpx.Timeout] = None,
+        addons: Optional[Dict] = None,
         **kwargs,
     ) -> UsageFieldsResponse:
         """
@@ -751,8 +757,8 @@ class ManageClient(AbstractSyncRestClient):
     def list_balances(
         self,
         project_id: str,
-        timeout: httpx.Timeout = None,
-        addons: Dict = None,
+        timeout: Optional[httpx.Timeout] = None,
+        addons: Optional[Dict] = None,
         **kwargs,
     ) -> BalancesResponse:
         """
@@ -763,8 +769,8 @@ class ManageClient(AbstractSyncRestClient):
     def get_balances(
         self,
         project_id: str,
-        timeout: httpx.Timeout = None,
-        addons: Dict = None,
+        timeout: Optional[httpx.Timeout] = None,
+        addons: Optional[Dict] = None,
         **kwargs,
     ) -> BalancesResponse:
         """
@@ -790,8 +796,8 @@ class ManageClient(AbstractSyncRestClient):
         self,
         project_id: str,
         balance_id: str,
-        timeout: httpx.Timeout = None,
-        addons: Dict = None,
+        timeout: Optional[httpx.Timeout] = None,
+        addons: Optional[Dict] = None,
         **kwargs,
     ) -> Balance:
         """

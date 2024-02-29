@@ -7,7 +7,7 @@ import websockets
 import threading
 import time
 import logging, verboselogs
-from typing import Dict, Union
+from typing import Dict, Union, Optional
 
 from ....options import DeepgramClientOptions
 from ..enums import LiveTranscriptionEvents
@@ -56,9 +56,9 @@ class LiveClient:
     # starts the WebSocket connection for live transcription
     def start(
         self,
-        options: Union[LiveOptions, Dict] = None,
-        addons: Dict = None,
-        members: Dict = None,
+        options: Optional[Union[LiveOptions, Dict]] = None,
+        addons: Optional[Dict] = None,
+        members: Optional[Dict] = None,
         **kwargs,
     ) -> bool:
         """

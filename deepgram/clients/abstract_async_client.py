@@ -4,7 +4,7 @@
 
 import httpx
 import json
-from typing import Dict
+from typing import Dict, Optional
 
 from .helpers import append_query_params
 from ..options import DeepgramClientOptions
@@ -38,9 +38,9 @@ class AbstractAsyncRestClient:
     async def get(
         self,
         url: str,
-        options: Dict = None,
-        addons: Dict = None,
-        timeout: httpx.Timeout = None,
+        options: Optional[Dict] = None,
+        addons: Optional[Dict] = None,
+        timeout: Optional[httpx.Timeout] = None,
         **kwargs
     ) -> str:
         return await self._handle_request(
@@ -56,9 +56,9 @@ class AbstractAsyncRestClient:
     async def post(
         self,
         url: str,
-        options: Dict = None,
-        addons: Dict = None,
-        timeout: httpx.Timeout = None,
+        options: Optional[Dict] = None,
+        addons: Optional[Dict] = None,
+        timeout: Optional[httpx.Timeout] = None,
         **kwargs
     ) -> str:
         return await self._handle_request(
@@ -74,9 +74,9 @@ class AbstractAsyncRestClient:
     async def put(
         self,
         url: str,
-        options: Dict = None,
-        addons: Dict = None,
-        timeout: httpx.Timeout = None,
+        options: Optional[Dict] = None,
+        addons: Optional[Dict] = None,
+        timeout: Optional[httpx.Timeout] = None,
         **kwargs
     ) -> str:
         return await self._handle_request(
@@ -92,9 +92,9 @@ class AbstractAsyncRestClient:
     async def patch(
         self,
         url: str,
-        options: Dict = None,
-        addons: Dict = None,
-        timeout: httpx.Timeout = None,
+        options: Optional[Dict] = None,
+        addons: Optional[Dict] = None,
+        timeout: Optional[httpx.Timeout] = None,
         **kwargs
     ) -> str:
         return await self._handle_request(
@@ -110,9 +110,9 @@ class AbstractAsyncRestClient:
     async def delete(
         self,
         url: str,
-        options: Dict = None,
-        addons: Dict = None,
-        timeout: httpx.Timeout = None,
+        options: Optional[Dict] = None,
+        addons: Optional[Dict] = None,
+        timeout: Optional[httpx.Timeout] = None,
         **kwargs
     ) -> str:
         return await self._handle_request(
@@ -129,10 +129,10 @@ class AbstractAsyncRestClient:
         self,
         method: str,
         url: str,
-        params: Dict = None,
-        addons: Dict = None,
-        timeout: httpx.Timeout = None,
-        headers: Dict = None,
+        params: Optional[Dict] = None,
+        addons: Optional[Dict] = None,
+        timeout: Optional[httpx.Timeout] = None,
+        headers: Optional[Dict] = None,
         **kwargs
     ) -> str:
         new_url = url

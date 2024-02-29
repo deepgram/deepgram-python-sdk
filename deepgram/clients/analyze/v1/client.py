@@ -5,7 +5,7 @@
 import httpx
 import logging, verboselogs
 import json
-from typing import Dict, Union
+from typing import Dict, Union, Optional
 
 from ...abstract_sync_client import AbstractSyncRestClient
 from ..errors import DeepgramError, DeepgramTypeError
@@ -54,11 +54,11 @@ class AnalyzeClient(AbstractSyncRestClient):
     def analyze_url(
         self,
         source: UrlSource,
-        options: Union[AnalyzeOptions, Dict] = None,
-        addons: Dict = None,
-        timeout: httpx.Timeout = None,
+        options: Optional[Union[AnalyzeOptions, Dict]] = None,
+        addons: Optional[Dict] = None,
+        timeout: Optional[httpx.Timeout] = None,
         endpoint: str = "v1/read",
-    ) -> AnalyzeResponse:
+    ) -> Union[AnalyzeResponse, AsyncAnalyzeResponse]:
         self.logger.debug("AnalyzeClient.analyze_url ENTER")
 
         if (options is Dict and "callback" in options is not None) or (
@@ -119,9 +119,9 @@ class AnalyzeClient(AbstractSyncRestClient):
         self,
         source: UrlSource,
         callback: str,
-        options: Union[AnalyzeOptions, Dict] = None,
-        addons: Dict = None,
-        timeout: httpx.Timeout = None,
+        options: Optional[Union[AnalyzeOptions, Dict]] = None,
+        addons: Optional[Dict] = None,
+        timeout: Optional[httpx.Timeout] = None,
         endpoint: str = "v1/read",
     ) -> AsyncAnalyzeResponse:
         self.logger.debug("AnalyzeClient.analyze_url_callback ENTER")
@@ -180,11 +180,11 @@ class AnalyzeClient(AbstractSyncRestClient):
     def analyze_text(
         self,
         source: TextSource,
-        options: Union[AnalyzeOptions, Dict] = None,
-        addons: Dict = None,
-        timeout: httpx.Timeout = None,
+        options: Optional[Union[AnalyzeOptions, Dict]] = None,
+        addons: Optional[Dict] = None,
+        timeout: Optional[httpx.Timeout] = None,
         endpoint: str = "v1/read",
-    ) -> AnalyzeResponse:
+    ) -> Union[AnalyzeResponse, AsyncAnalyzeResponse]:
         self.logger.debug("AnalyzeClient.analyze_text ENTER")
 
         if (options is Dict and "callback" in options is not None) or (
@@ -246,9 +246,9 @@ class AnalyzeClient(AbstractSyncRestClient):
         self,
         source: TextSource,
         callback: str,
-        options: Union[AnalyzeOptions, Dict] = None,
-        addons: Dict = None,
-        timeout: httpx.Timeout = None,
+        options: Optional[Union[AnalyzeOptions, Dict]] = None,
+        addons: Optional[Dict] = None,
+        timeout: Optional[httpx.Timeout] = None,
         endpoint: str = "v1/read",
     ) -> AsyncAnalyzeResponse:
         self.logger.debug("AnalyzeClient.analyze_file_callback ENTER")
