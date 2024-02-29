@@ -5,7 +5,7 @@
 import inspect
 import asyncio
 import threading
-from array import array
+from typing import Optional
 import logging, verboselogs
 
 from .errors import DeepgramMicrophoneError
@@ -24,7 +24,7 @@ class Microphone:
         rate: int = RATE,
         chunk: int = CHUNK,
         channels: int = CHANNELS,
-        input_device_index: int = None,
+        input_device_index: Optional[int] = None,
     ):
         # dynamic import of pyaudio as not to force the requirements on the SDK (and users)
         import pyaudio

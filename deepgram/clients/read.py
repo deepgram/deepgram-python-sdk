@@ -50,11 +50,11 @@ class Read:
         self.config = config
 
     @property
-    def analyze(self) -> AnalyzeClient:
+    def analyze(self):
         return self.Version(self.config, "analyze")
 
     @property
-    def asyncanalyze(self) -> AsyncAnalyzeClient:
+    def asyncanalyze(self):
         return self.Version(self.config, "asyncanalyze")
 
     # INTERNAL CLASSES
@@ -76,7 +76,7 @@ class Read:
         #         case _:
         #             raise DeepgramModuleError("Invalid parent")
 
-        def v(self, version: str = "") -> Union[AnalyzeClient, AsyncAnalyzeClient]:
+        def v(self, version: str = ""):
             self.logger.debug("Version.v ENTER")
             self.logger.info("version: %s", version)
             if len(version) == 0:

@@ -5,7 +5,7 @@ import asyncio
 import json
 import websockets
 import logging, verboselogs
-from typing import Dict, Union
+from typing import Dict, Union, Optional
 
 from ....options import DeepgramClientOptions
 from ..enums import LiveTranscriptionEvents
@@ -53,9 +53,9 @@ class AsyncLiveClient:
     # starts the WebSocket connection for live transcription
     async def start(
         self,
-        options: Union[LiveOptions, Dict] = None,
-        addons: Dict = None,
-        members: Dict = None,
+        options: Optional[Union[LiveOptions, Dict]] = None,
+        addons: Optional[Dict] = None,
+        members: Optional[Dict] = None,
         **kwargs,
     ) -> bool:
         self.logger.debug("AsyncLiveClient.start ENTER")

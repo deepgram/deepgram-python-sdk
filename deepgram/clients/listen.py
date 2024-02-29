@@ -71,19 +71,19 @@ class Listen:
         self.config = config
 
     @property
-    def prerecorded(self) -> PreRecordedClient:
+    def prerecorded(self):
         return self.Version(self.config, "prerecorded")
 
     @property
-    def asyncprerecorded(self) -> AsyncPreRecordedClient:
+    def asyncprerecorded(self):
         return self.Version(self.config, "asyncprerecorded")
 
     @property
-    def live(self) -> LiveClient:
+    def live(self):
         return self.Version(self.config, "live")
 
     @property
-    def asynclive(self) -> AsyncLiveClient:
+    def asynclive(self):
         return self.Version(self.config, "asynclive")
 
     # INTERNAL CLASSES
@@ -107,11 +107,7 @@ class Listen:
         #         case _:
         #             raise DeepgramModuleError("Invalid parent")
 
-        def v(
-            self, version: str = ""
-        ) -> Union[
-            LiveClient, AsyncLiveClient, PreRecordedClient, AsyncPreRecordedClient
-        ]:
+        def v(self, version: str = ""):
             self.logger.debug("Version.v ENTER")
             self.logger.info("version: %s", version)
             if len(version) == 0:

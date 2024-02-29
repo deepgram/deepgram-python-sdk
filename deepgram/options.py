@@ -28,8 +28,8 @@ class DeepgramClientOptions:
         api_key: str = "",
         url: str = "",
         verbose: int = logging.WARNING,
-        headers: Dict = None,
-        options: Dict = None,
+        headers: Optional[Dict] = None,
+        options: Optional[Dict] = None,
     ):
         verboselogs.install()
         self.logger = logging.getLogger(__name__)
@@ -75,8 +75,8 @@ class ClientOptionsFromEnv(DeepgramClientOptions):
         api_key: str = "",
         url: str = "",
         verbose: int = logging.WARNING,
-        headers: Dict = None,
-        options: Dict = None,
+        headers: Optional[Dict] = None,
+        options: Optional[Dict] = None,
     ):
         verboselogs.install()
         self.logger = logging.getLogger(__name__)
@@ -84,8 +84,8 @@ class ClientOptionsFromEnv(DeepgramClientOptions):
         self.logger.setLevel(logging.WARNING)  # temporary set for setup
 
         if api_key == "":
-            api_key = os.getenv("DEEPGRAM_API_KEY", None)
-            if api_key is None:
+            api_key = os.getenv("DEEPGRAM_API_KEY", "")
+            if api_key == "":
                 self.logger.critical("Deepgram API KEY is not set")
                 raise DeepgramApiKeyError("Deepgram API KEY is not set")
 
@@ -94,7 +94,9 @@ class ClientOptionsFromEnv(DeepgramClientOptions):
             self.logger.notice(f"Deepgram host is set to {url}")
 
         if verbose == logging.WARNING:
-            verbose = os.getenv("DEEPGRAM_LOGGING", logging.WARNING)
+            _loglevel = os.getenv("DEEPGRAM_LOGGING", "")
+            if _loglevel != "":
+                verbose = int(_loglevel)
             if type(verbose) != int:
                 match verbose:
                     case "NOTSET":

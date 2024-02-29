@@ -5,7 +5,7 @@
 import httpx
 import logging, verboselogs
 import json
-from typing import Dict, Union
+from typing import Dict, Union, Optional
 
 from ...abstract_sync_client import AbstractSyncRestClient
 from ..errors import DeepgramError, DeepgramTypeError
@@ -54,9 +54,9 @@ class PreRecordedClient(AbstractSyncRestClient):
     def transcribe_url(
         self,
         source: UrlSource,
-        options: Union[Dict, PrerecordedOptions] = None,
-        addons: Dict = None,
-        timeout: httpx.Timeout = None,
+        options: Optional[Union[Dict, PrerecordedOptions]] = None,
+        addons: Optional[Dict] = None,
+        timeout: Optional[httpx.Timeout] = None,
         endpoint: str = "v1/listen",
     ) -> PrerecordedResponse:
         self.logger.debug("PreRecordedClient.transcribe_url ENTER")
@@ -119,9 +119,9 @@ class PreRecordedClient(AbstractSyncRestClient):
         self,
         source: UrlSource,
         callback: str,
-        options: Union[Dict, PrerecordedOptions] = None,
-        addons: Dict = None,
-        timeout: httpx.Timeout = None,
+        options: Optional[Union[Dict, PrerecordedOptions]] = None,
+        addons: Optional[Dict] = None,
+        timeout: Optional[httpx.Timeout] = None,
         endpoint: str = "v1/listen",
     ) -> AsyncPrerecordedResponse:
         self.logger.debug("PreRecordedClient.transcribe_url_callback ENTER")
@@ -180,9 +180,9 @@ class PreRecordedClient(AbstractSyncRestClient):
     def transcribe_file(
         self,
         source: FileSource,
-        options: Union[Dict, PrerecordedOptions] = None,
-        addons: Dict = None,
-        timeout: httpx.Timeout = None,
+        options: Optional[Union[Dict, PrerecordedOptions]] = None,
+        addons: Optional[Dict] = None,
+        timeout: Optional[httpx.Timeout] = None,
         endpoint: str = "v1/listen",
     ) -> PrerecordedResponse:
         self.logger.debug("PreRecordedClient.transcribe_file ENTER")
@@ -246,9 +246,9 @@ class PreRecordedClient(AbstractSyncRestClient):
         self,
         source: FileSource,
         callback: str,
-        options: Union[Dict, PrerecordedOptions] = None,
-        addons: Dict = None,
-        timeout: httpx.Timeout = None,
+        options: Optional[Union[Dict, PrerecordedOptions]] = None,
+        addons: Optional[Dict] = None,
+        timeout: Optional[httpx.Timeout] = None,
         endpoint: str = "v1/listen",
     ) -> AsyncPrerecordedResponse:
         self.logger.debug("PreRecordedClient.transcribe_file_callback ENTER")

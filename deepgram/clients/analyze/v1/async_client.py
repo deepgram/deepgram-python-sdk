@@ -5,7 +5,7 @@
 import httpx
 import logging, verboselogs
 import json
-from typing import Dict, Union
+from typing import Dict, Union, Optional
 
 from ...abstract_async_client import AbstractAsyncRestClient
 from ..errors import DeepgramError, DeepgramTypeError
@@ -54,9 +54,9 @@ class AsyncAnalyzeClient(AbstractAsyncRestClient):
     async def analyze_url(
         self,
         source: UrlSource,
-        options: Union[AnalyzeOptions, Dict] = None,
-        addons: Dict = None,
-        timeout: httpx.Timeout = None,
+        options: Optional[Union[AnalyzeOptions, Dict]] = None,
+        addons: Optional[Dict] = None,
+        timeout: Optional[httpx.Timeout] = None,
         endpoint: str = "v1/read",
     ) -> AnalyzeResponse:
         self.logger.debug("AsyncAnalyzeClient.analyze_url ENTER")
@@ -117,9 +117,9 @@ class AsyncAnalyzeClient(AbstractAsyncRestClient):
         self,
         source: UrlSource,
         callback: str,
-        options: Union[AnalyzeOptions, Dict] = None,
-        addons: Dict = None,
-        timeout: httpx.Timeout = None,
+        options: Optional[Union[AnalyzeOptions, Dict]] = None,
+        addons: Optional[Dict] = None,
+        timeout: Optional[httpx.Timeout] = None,
         endpoint: str = "v1/read",
     ) -> AsyncAnalyzeResponse:
         self.logger.debug("AnalyzeClient.analyze_url_callback ENTER")
@@ -178,9 +178,9 @@ class AsyncAnalyzeClient(AbstractAsyncRestClient):
     async def analyze_text(
         self,
         source: TextSource,
-        options: Union[AnalyzeOptions, Dict] = None,
-        addons: Dict = None,
-        timeout: httpx.Timeout = None,
+        options: Optional[Union[AnalyzeOptions, Dict]] = None,
+        addons: Optional[Dict] = None,
+        timeout: Optional[httpx.Timeout] = None,
         endpoint: str = "v1/read",
     ) -> AnalyzeResponse:
         self.logger.debug("AsyncAnalyzeClient.analyze_text ENTER")
@@ -242,9 +242,9 @@ class AsyncAnalyzeClient(AbstractAsyncRestClient):
         self,
         source: TextSource,
         callback: str,
-        options: Union[AnalyzeOptions, Dict] = None,
-        addons: Dict = None,
-        timeout: httpx.Timeout = None,
+        options: Optional[Union[AnalyzeOptions, Dict]] = None,
+        addons: Optional[Dict] = None,
+        timeout: Optional[httpx.Timeout] = None,
         endpoint: str = "v1/read",
     ) -> AsyncAnalyzeResponse:
         self.logger.debug("AnalyzeClient.analyze_text_callback ENTER")

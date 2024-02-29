@@ -86,7 +86,7 @@ class IntentsInfo:
 @dataclass_json
 @dataclass
 class SentimentInfo:
-    model_uuid: str = 0
+    model_uuid: str = ""
     input_tokens: int = 0
     output_tokens: int = 0
 
