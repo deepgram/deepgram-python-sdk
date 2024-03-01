@@ -38,21 +38,12 @@
             </li>
             <li>
                     <a class="class" href="#UrlSource">UrlSource</a>
-                            <ul class="memberlist">
-                </ul>
-
             </li>
             <li>
                     <a class="class" href="#BufferSource">BufferSource</a>
-                            <ul class="memberlist">
-                </ul>
-
             </li>
             <li>
-                    <a class="class" href="#StreamSource">StreamSource</a>
-                            <ul class="memberlist">
-                </ul>
-
+                    <a class="class" href="#ReadStreamSource">ReadStreamSource</a>
             </li>
             <li>
                     <a class="variable" href="#FileSource">FileSource</a>
@@ -130,7 +121,7 @@
 </span><span id="L-8"><a href="#L-8"><span class="linenos">  8</span></a>    <span class="n">PrerecordedOptions</span> <span class="k">as</span> <span class="n">PrerecordedOptionsLatest</span><span class="p">,</span>
 </span><span id="L-9"><a href="#L-9"><span class="linenos">  9</span></a>    <span class="n">UrlSource</span> <span class="k">as</span> <span class="n">UrlSourceLatest</span><span class="p">,</span>
 </span><span id="L-10"><a href="#L-10"><span class="linenos"> 10</span></a>    <span class="n">BufferSource</span> <span class="k">as</span> <span class="n">BufferSourceLatest</span><span class="p">,</span>
-</span><span id="L-11"><a href="#L-11"><span class="linenos"> 11</span></a>    <span class="n">StreamSource</span> <span class="k">as</span> <span class="n">StreamSourceLatest</span><span class="p">,</span>
+</span><span id="L-11"><a href="#L-11"><span class="linenos"> 11</span></a>    <span class="n">ReadStreamSource</span> <span class="k">as</span> <span class="n">ReadStreamSourceLatest</span><span class="p">,</span>
 </span><span id="L-12"><a href="#L-12"><span class="linenos"> 12</span></a>    <span class="n">FileSource</span> <span class="k">as</span> <span class="n">FileSourceLatest</span><span class="p">,</span>
 </span><span id="L-13"><a href="#L-13"><span class="linenos"> 13</span></a>    <span class="n">PrerecordedSource</span> <span class="k">as</span> <span class="n">PrerecordedSourceLatest</span><span class="p">,</span>
 </span><span id="L-14"><a href="#L-14"><span class="linenos"> 14</span></a><span class="p">)</span>
@@ -172,9 +163,9 @@
 </span><span id="L-50"><a href="#L-50"><span class="linenos"> 50</span></a>    <span class="k">pass</span>
 </span><span id="L-51"><a href="#L-51"><span class="linenos"> 51</span></a>
 </span><span id="L-52"><a href="#L-52"><span class="linenos"> 52</span></a>
-</span><span id="L-53"><a href="#L-53"><span class="linenos"> 53</span></a><span class="k">class</span> <span class="nc">StreamSource</span><span class="p">(</span><span class="n">StreamSourceLatest</span><span class="p">):</span>
+</span><span id="L-53"><a href="#L-53"><span class="linenos"> 53</span></a><span class="k">class</span> <span class="nc">ReadStreamSource</span><span class="p">(</span><span class="n">ReadStreamSourceLatest</span><span class="p">):</span>
 </span><span id="L-54"><a href="#L-54"><span class="linenos"> 54</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="L-55"><a href="#L-55"><span class="linenos"> 55</span></a><span class="sd">    Please see StreamSourceLatest for details</span>
+</span><span id="L-55"><a href="#L-55"><span class="linenos"> 55</span></a><span class="sd">    Please see ReadStreamSourceLatest for details</span>
 </span><span id="L-56"><a href="#L-56"><span class="linenos"> 56</span></a><span class="sd">    &quot;&quot;&quot;</span>
 </span><span id="L-57"><a href="#L-57"><span class="linenos"> 57</span></a>
 </span><span id="L-58"><a href="#L-58"><span class="linenos"> 58</span></a>    <span class="k">pass</span>
@@ -336,13 +327,21 @@
                                 <h5>Inherited Members</h5>
                                 <dl>
                                     <div><dt><a href="v1/options.html#UrlSource">deepgram.clients.prerecorded.v1.options.UrlSource</a></dt>
-                                <dd id="UrlSource.__init__" class="function"><a href="v1/options.html#UrlSource.__init__">UrlSource</a></dd>
-                <dd id="UrlSource.url" class="variable"><a href="v1/options.html#UrlSource.url">url</a></dd>
-                <dd id="UrlSource.to_json" class="function"><a href="v1/options.html#UrlSource.to_json">to_json</a></dd>
-                <dd id="UrlSource.from_json" class="function"><a href="v1/options.html#UrlSource.from_json">from_json</a></dd>
-                <dd id="UrlSource.to_dict" class="function"><a href="v1/options.html#UrlSource.to_dict">to_dict</a></dd>
-                <dd id="UrlSource.from_dict" class="function"><a href="v1/options.html#UrlSource.from_dict">from_dict</a></dd>
-                <dd id="UrlSource.schema" class="function"><a href="v1/options.html#UrlSource.schema">schema</a></dd>
+                                <dd id="UrlSource.url" class="variable"><a href="v1/options.html#UrlSource.url">url</a></dd>
+
+            </div>
+            <div><dt>builtins.dict</dt>
+                                <dd id="UrlSource.get" class="function">get</dd>
+                <dd id="UrlSource.setdefault" class="function">setdefault</dd>
+                <dd id="UrlSource.pop" class="function">pop</dd>
+                <dd id="UrlSource.popitem" class="function">popitem</dd>
+                <dd id="UrlSource.keys" class="function">keys</dd>
+                <dd id="UrlSource.items" class="function">items</dd>
+                <dd id="UrlSource.values" class="function">values</dd>
+                <dd id="UrlSource.update" class="function">update</dd>
+                <dd id="UrlSource.fromkeys" class="function">fromkeys</dd>
+                <dd id="UrlSource.clear" class="function">clear</dd>
+                <dd id="UrlSource.copy" class="function">copy</dd>
 
             </div>
                                 </dl>
@@ -376,53 +375,69 @@
                                 <h5>Inherited Members</h5>
                                 <dl>
                                     <div><dt><a href="v1/options.html#BufferSource">deepgram.clients.prerecorded.v1.options.BufferSource</a></dt>
-                                <dd id="BufferSource.__init__" class="function"><a href="v1/options.html#BufferSource.__init__">BufferSource</a></dd>
-                <dd id="BufferSource.buffer" class="variable"><a href="v1/options.html#BufferSource.buffer">buffer</a></dd>
-                <dd id="BufferSource.to_json" class="function"><a href="v1/options.html#BufferSource.to_json">to_json</a></dd>
-                <dd id="BufferSource.from_json" class="function"><a href="v1/options.html#BufferSource.from_json">from_json</a></dd>
-                <dd id="BufferSource.to_dict" class="function"><a href="v1/options.html#BufferSource.to_dict">to_dict</a></dd>
-                <dd id="BufferSource.from_dict" class="function"><a href="v1/options.html#BufferSource.from_dict">from_dict</a></dd>
-                <dd id="BufferSource.schema" class="function"><a href="v1/options.html#BufferSource.schema">schema</a></dd>
+                                <dd id="BufferSource.buffer" class="variable"><a href="v1/options.html#BufferSource.buffer">buffer</a></dd>
+
+            </div>
+            <div><dt>builtins.dict</dt>
+                                <dd id="BufferSource.get" class="function">get</dd>
+                <dd id="BufferSource.setdefault" class="function">setdefault</dd>
+                <dd id="BufferSource.pop" class="function">pop</dd>
+                <dd id="BufferSource.popitem" class="function">popitem</dd>
+                <dd id="BufferSource.keys" class="function">keys</dd>
+                <dd id="BufferSource.items" class="function">items</dd>
+                <dd id="BufferSource.values" class="function">values</dd>
+                <dd id="BufferSource.update" class="function">update</dd>
+                <dd id="BufferSource.fromkeys" class="function">fromkeys</dd>
+                <dd id="BufferSource.clear" class="function">clear</dd>
+                <dd id="BufferSource.copy" class="function">copy</dd>
 
             </div>
                                 </dl>
                             </div>
                 </section>
-                <section id="StreamSource">
-                            <input id="StreamSource-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+                <section id="ReadStreamSource">
+                            <input id="ReadStreamSource-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
 <div class="attr class">
             
     <span class="def">class</span>
-    <span class="name">StreamSource</span><wbr>(<span class="base"><a href="v1/options.html#StreamSource">deepgram.clients.prerecorded.v1.options.StreamSource</a></span>):
+    <span class="name">ReadStreamSource</span><wbr>(<span class="base"><a href="v1/options.html#ReadStreamSource">deepgram.clients.prerecorded.v1.options.ReadStreamSource</a></span>):
 
-                <label class="view-source-button" for="StreamSource-view-source"><span>View Source</span></label>
+                <label class="view-source-button" for="ReadStreamSource-view-source"><span>View Source</span></label>
 
     </div>
-    <a class="headerlink" href="#StreamSource"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="StreamSource-54"><a href="#StreamSource-54"><span class="linenos">54</span></a><span class="k">class</span> <span class="nc">StreamSource</span><span class="p">(</span><span class="n">StreamSourceLatest</span><span class="p">):</span>
-</span><span id="StreamSource-55"><a href="#StreamSource-55"><span class="linenos">55</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="StreamSource-56"><a href="#StreamSource-56"><span class="linenos">56</span></a><span class="sd">    Please see StreamSourceLatest for details</span>
-</span><span id="StreamSource-57"><a href="#StreamSource-57"><span class="linenos">57</span></a><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="StreamSource-58"><a href="#StreamSource-58"><span class="linenos">58</span></a>
-</span><span id="StreamSource-59"><a href="#StreamSource-59"><span class="linenos">59</span></a>    <span class="k">pass</span>
+    <a class="headerlink" href="#ReadStreamSource"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="ReadStreamSource-54"><a href="#ReadStreamSource-54"><span class="linenos">54</span></a><span class="k">class</span> <span class="nc">ReadStreamSource</span><span class="p">(</span><span class="n">ReadStreamSourceLatest</span><span class="p">):</span>
+</span><span id="ReadStreamSource-55"><a href="#ReadStreamSource-55"><span class="linenos">55</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="ReadStreamSource-56"><a href="#ReadStreamSource-56"><span class="linenos">56</span></a><span class="sd">    Please see ReadStreamSourceLatest for details</span>
+</span><span id="ReadStreamSource-57"><a href="#ReadStreamSource-57"><span class="linenos">57</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="ReadStreamSource-58"><a href="#ReadStreamSource-58"><span class="linenos">58</span></a>
+</span><span id="ReadStreamSource-59"><a href="#ReadStreamSource-59"><span class="linenos">59</span></a>    <span class="k">pass</span>
 </span></pre></div>
 
 
-            <div class="docstring"><p>Please see StreamSourceLatest for details</p>
+            <div class="docstring"><p>Please see ReadStreamSourceLatest for details</p>
 </div>
 
 
                             <div class="inherited">
                                 <h5>Inherited Members</h5>
                                 <dl>
-                                    <div><dt><a href="v1/options.html#StreamSource">deepgram.clients.prerecorded.v1.options.StreamSource</a></dt>
-                                <dd id="StreamSource.__init__" class="function"><a href="v1/options.html#StreamSource.__init__">StreamSource</a></dd>
-                <dd id="StreamSource.stream" class="variable"><a href="v1/options.html#StreamSource.stream">stream</a></dd>
-                <dd id="StreamSource.to_json" class="function"><a href="v1/options.html#StreamSource.to_json">to_json</a></dd>
-                <dd id="StreamSource.from_json" class="function"><a href="v1/options.html#StreamSource.from_json">from_json</a></dd>
-                <dd id="StreamSource.to_dict" class="function"><a href="v1/options.html#StreamSource.to_dict">to_dict</a></dd>
-                <dd id="StreamSource.from_dict" class="function"><a href="v1/options.html#StreamSource.from_dict">from_dict</a></dd>
-                <dd id="StreamSource.schema" class="function"><a href="v1/options.html#StreamSource.schema">schema</a></dd>
+                                    <div><dt><a href="v1/options.html#ReadStreamSource">deepgram.clients.prerecorded.v1.options.ReadStreamSource</a></dt>
+                                <dd id="ReadStreamSource.stream" class="variable"><a href="v1/options.html#ReadStreamSource.stream">stream</a></dd>
+
+            </div>
+            <div><dt>builtins.dict</dt>
+                                <dd id="ReadStreamSource.get" class="function">get</dd>
+                <dd id="ReadStreamSource.setdefault" class="function">setdefault</dd>
+                <dd id="ReadStreamSource.pop" class="function">pop</dd>
+                <dd id="ReadStreamSource.popitem" class="function">popitem</dd>
+                <dd id="ReadStreamSource.keys" class="function">keys</dd>
+                <dd id="ReadStreamSource.items" class="function">items</dd>
+                <dd id="ReadStreamSource.values" class="function">values</dd>
+                <dd id="ReadStreamSource.update" class="function">update</dd>
+                <dd id="ReadStreamSource.fromkeys" class="function">fromkeys</dd>
+                <dd id="ReadStreamSource.clear" class="function">clear</dd>
+                <dd id="ReadStreamSource.copy" class="function">copy</dd>
 
             </div>
                                 </dl>
@@ -432,7 +447,7 @@
                     <div class="attr variable">
             <span class="name">FileSource</span>        =
 <input id="FileSource-view-value" class="view-value-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
-            <label class="view-value-button pdoc-button" for="FileSource-view-value"></label><span class="default_value">typing.Union[<a href="v1/options.html#BufferSource">deepgram.clients.prerecorded.v1.options.BufferSource</a>, <a href="v1/options.html#StreamSource">deepgram.clients.prerecorded.v1.options.StreamSource</a>]</span>
+            <label class="view-value-button pdoc-button" for="FileSource-view-value"></label><span class="default_value">typing.Union[<a href="v1/options.html#BufferSource">deepgram.clients.prerecorded.v1.options.BufferSource</a>, <a href="v1/options.html#ReadStreamSource">deepgram.clients.prerecorded.v1.options.ReadStreamSource</a>]</span>
 
         
     </div>
@@ -445,7 +460,7 @@
                     <div class="attr variable">
             <span class="name">PrerecordedSource</span>        =
 <input id="PrerecordedSource-view-value" class="view-value-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
-            <label class="view-value-button pdoc-button" for="PrerecordedSource-view-value"></label><span class="default_value">typing.Union[<a href="v1/options.html#UrlSource">deepgram.clients.prerecorded.v1.options.UrlSource</a>, <a href="v1/options.html#BufferSource">deepgram.clients.prerecorded.v1.options.BufferSource</a>, <a href="v1/options.html#StreamSource">deepgram.clients.prerecorded.v1.options.StreamSource</a>]</span>
+            <label class="view-value-button pdoc-button" for="PrerecordedSource-view-value"></label><span class="default_value">typing.Union[<a href="v1/options.html#UrlSource">deepgram.clients.prerecorded.v1.options.UrlSource</a>, <a href="v1/options.html#BufferSource">deepgram.clients.prerecorded.v1.options.BufferSource</a>, <a href="v1/options.html#ReadStreamSource">deepgram.clients.prerecorded.v1.options.ReadStreamSource</a>]</span>
 
         
     </div>
