@@ -8,7 +8,7 @@ from .client import PrerecordedOptions
 from .client import (
     UrlSource,
     BufferSource,
-    StreamSource,
+    ReadStreamSource,
     FileSource,
     PrerecordedSource,
 )

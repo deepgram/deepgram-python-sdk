@@ -32,7 +32,7 @@ from .client import (
     PrerecordedSource,
     UrlSource,
     BufferSource,
-    StreamSource,
+    ReadStreamSource,
     PrerecordedOptions,
     Sentiment,
 )
@@ -49,7 +49,7 @@ from .client import (
     TextSource,
     UrlSource,
     BufferSource,
-    StreamSource,
+    AnalyzeStreamSource,
     AnalyzeOptions,
     Sentiment,
 )

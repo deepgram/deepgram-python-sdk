@@ -16,7 +16,7 @@ from .options import (
     AnalyzeOptions,
     UrlSource,
     BufferSource,
-    StreamSource,
+    AnalyzeStreamSource,
     TextSource,
     AnalyzeSource,
 )

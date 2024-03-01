@@ -8,7 +8,7 @@ from .v1.client import AnalyzeClient as AnalyzeClientLatest
 from .v1.async_client import AsyncAnalyzeClient as AsyncAnalyzeClientLatest
 from .v1.options import (
     AnalyzeOptions as AnalyzeOptionsLatest,
-    StreamSource as StreamSourceLatest,
+    AnalyzeStreamSource as AnalyzeStreamSourceLatest,
     BufferSource as BufferSourceLatest,
     UrlSource as UrlSourceLatest,
     AnalyzeSource as AnalyzeSourceLatest,
@@ -36,9 +36,9 @@ class AnalyzeOptions(AnalyzeOptionsLatest):
     pass
 
 
-class StreamSource(StreamSourceLatest):
+class AnalyzeStreamSource(AnalyzeStreamSourceLatest):
     """
-    Please see StreamSourceLatest for details
+    Please see AnalyzeStreamSourceLatest for details
     """
 
     pass

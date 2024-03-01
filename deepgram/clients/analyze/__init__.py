@@ -8,7 +8,7 @@ from .client import AnalyzeOptions
 from .client import (
     UrlSource,
     BufferSource,
-    StreamSource,
+    AnalyzeStreamSource,
     AnalyzeSource,
     TextSource,
 )
