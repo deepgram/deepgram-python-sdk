@@ -27,7 +27,7 @@ from .prerecorded import (
     PrerecordedSource,
     UrlSource,
     BufferSource,
-    StreamSource,
+    ReadStreamSource,
 )
 from .prerecorded import (
     AsyncPrerecordedResponse,
@@ -44,7 +44,7 @@ from .analyze import (
     TextSource,
     UrlSource,
     BufferSource,
-    StreamSource,
+    AnalyzeStreamSource,
 )
 from .analyze import (
     AsyncAnalyzeResponse,

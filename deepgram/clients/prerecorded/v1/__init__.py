@@ -8,7 +8,7 @@ from .options import (
     PrerecordedOptions,
     UrlSource,
     BufferSource,
-    StreamSource,
+    ReadStreamSource,
     FileSource,
     PrerecordedSource,
 )

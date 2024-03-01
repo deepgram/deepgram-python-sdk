@@ -7,6 +7,7 @@ from dataclasses_json import dataclass_json, config
 
 from io import BufferedReader
 from typing import Union, List, Optional
+from typing_extensions import TypedDict
 import logging, verboselogs
 
 
@@ -159,9 +160,7 @@ class PrerecordedOptions:
         return True
 
 
-@dataclass_json
-@dataclass
-class StreamSource:
+class ReadStreamSource(TypedDict):
     """
     Represents a data source for reading binary data from a stream-like source.
 
@@ -174,20 +173,8 @@ class StreamSource:
 
     stream: BufferedReader
 
-    def __getitem__(self, key):
-        _dict = self.to_dict()
-        return _dict[key]
 
-    def __setitem__(self, key, val):
-        self.__dict__[key] = val
-
-    def __str__(self) -> str:
-        return self.to_json(indent=4)
-
-
-@dataclass_json
-@dataclass
-class UrlSource:
+class UrlSource(TypedDict):
     """
     Represents a data source for specifying the location of a file via a URL.
 
@@ -200,20 +187,8 @@ class UrlSource:
 
     url: str
 
-    def __getitem__(self, key):
-        _dict = self.to_dict()
-        return _dict[key]
 
-    def __setitem__(self, key, val):
-        self.__dict__[key] = val
-
-    def __str__(self) -> str:
-        return self.to_json(indent=4)
-
-
-@dataclass_json
-@dataclass
-class BufferSource:
+class BufferSource(TypedDict):
     """
     Represents a data source for handling raw binary data.
 
@@ -226,16 +201,6 @@ class BufferSource:
 
     buffer: bytes
 
-    def __getitem__(self, key):
-        _dict = self.to_dict()
-        return _dict[key]
 
-    def __setitem__(self, key, val):
-        self.__dict__[key] = val
-
-    def __str__(self) -> str:
-        return self.to_json(indent=4)
-
-
-PrerecordedSource = Union[UrlSource, BufferSource, StreamSource]
-FileSource = Union[BufferSource, StreamSource]
+PrerecordedSource = Union[UrlSource, BufferSource, ReadStreamSource]
+FileSource = Union[BufferSource, ReadStreamSource]

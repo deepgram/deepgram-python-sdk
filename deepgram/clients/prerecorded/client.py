@@ -8,7 +8,7 @@ from .v1.options import (
     PrerecordedOptions as PrerecordedOptionsLatest,
     UrlSource as UrlSourceLatest,
     BufferSource as BufferSourceLatest,
-    StreamSource as StreamSourceLatest,
+    ReadStreamSource as ReadStreamSourceLatest,
     FileSource as FileSourceLatest,
     PrerecordedSource as PrerecordedSourceLatest,
 )
@@ -50,9 +50,9 @@ class BufferSource(BufferSourceLatest):
     pass
 
 
-class StreamSource(StreamSourceLatest):
+class ReadStreamSource(ReadStreamSourceLatest):
     """
-    Please see StreamSourceLatest for details
+    Please see ReadStreamSourceLatest for details
     """
 
     pass
