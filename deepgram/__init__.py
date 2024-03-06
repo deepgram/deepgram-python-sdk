@@ -18,11 +18,13 @@ from .client import LiveTranscriptionEvents
 from .client import LiveClient, AsyncLiveClient
 from .client import LiveOptions
 from .client import (
+    OpenResponse,
     LiveResultResponse,
     MetadataResponse,
     SpeechStartedResponse,
     UtteranceEndResponse,
     ErrorResponse,
+    CloseResponse,
 )
 
 # prerecorded

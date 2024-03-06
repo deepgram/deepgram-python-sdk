@@ -24,6 +24,9 @@ class PrerecordedOptions:
     alternatives: Optional[int] = field(
         default=None, metadata=config(exclude=lambda f: f is None)
     )
+    channels: Optional[int] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
     callback: Optional[str] = field(
         default=None, metadata=config(exclude=lambda f: f is None)
     )
@@ -58,6 +61,9 @@ class PrerecordedOptions:
         default=None, metadata=config(exclude=lambda f: f is None)
     )
     dictation: Optional[bool] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
+    encoding: Optional[str] = field(
         default=None, metadata=config(exclude=lambda f: f is None)
     )
     extra: Optional[Union[list, str]] = field(
@@ -100,6 +106,9 @@ class PrerecordedOptions:
         default=None, metadata=config(exclude=lambda f: f is None)
     )
     replace: Optional[Union[list, str]] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
+    sample_rate: Optional[int] = field(
         default=None, metadata=config(exclude=lambda f: f is None)
     )
     search: Optional[Union[list, str]] = field(

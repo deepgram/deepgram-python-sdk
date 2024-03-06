@@ -15,11 +15,13 @@ from ..helpers import convert_to_websocket_url, append_query_params
 from ..errors import DeepgramError, DeepgramWebsocketError
 
 from .response import (
+    OpenResponse,
     LiveResultResponse,
     MetadataResponse,
     SpeechStartedResponse,
     UtteranceEndResponse,
     ErrorResponse,
+    CloseResponse,
 )
 from .options import LiveOptions
 
@@ -49,7 +51,7 @@ class LiveClient:
         self.config = config
         self.endpoint = "v1/listen"
         self._socket = None
-        self.exit = False
+        self.exit_event = None
         self._event_handlers = {event: [] for event in LiveTranscriptionEvents}
         self.websocket_url = convert_to_websocket_url(self.config.url, self.endpoint)
 
@@ -107,8 +109,7 @@ class LiveClient:
         url_with_params = append_query_params(self.websocket_url, combined_options)
         self._socket = connect(url_with_params, additional_headers=self.config.headers)
 
-        self.exit = False
-        self.lock_exit = threading.Lock()
+        self.exit_event = threading.Event()
         self.lock_send = threading.Lock()
 
         # listening thread
@@ -118,6 +119,12 @@ class LiveClient:
         # keepalive thread
         self.processing = threading.Thread(target=self._keep_alive)
         self.processing.start()
+
+        # push open event
+        self._emit(
+            LiveTranscriptionEvents.Open,
+            OpenResponse(type=LiveTranscriptionEvents.Open.value),
+        )
 
         self.logger.notice("start succeeded")
         self.logger.debug("LiveClient.start LEAVE")
@@ -144,23 +151,29 @@ class LiveClient:
         while True:
             try:
                 message = self._socket.recv()
-                if len(message) == 0:
-                    self.logger.info("message is empty")
-                    continue
 
-                with self.lock_exit:
-                    myExit = self.exit
-
-                if myExit:
+                if self.exit_event.is_set():
                     self.logger.notice("_listening exiting gracefully")
                     self.logger.debug("LiveClient._listening LEAVE")
                     return
+
+                if len(message) == 0:
+                    self.logger.info("message is empty")
+                    continue
 
                 data = json.loads(message)
                 response_type = data.get("type")
                 self.logger.debug("response_type: %s, data: %s", response_type, data)
 
                 match response_type:
+                    case LiveTranscriptionEvents.Open.value:
+                        result = OpenResponse.from_json(message)
+                        self.logger.verbose("OpenResponse: %s", result)
+                        self._emit(
+                            LiveTranscriptionEvents.Open,
+                            open=result,
+                            **dict(self.kwargs),
+                        )
                     case LiveTranscriptionEvents.Transcript.value:
                         result = LiveResultResponse.from_json(message)
                         self.logger.verbose("LiveResultResponse: %s", result)
@@ -201,6 +214,14 @@ class LiveClient:
                             error=result,
                             **dict(self.kwargs),
                         )
+                    case LiveTranscriptionEvents.Close.value:
+                        result = CloseResponse.from_json(message)
+                        self.logger.verbose("CloseResponse: %s", result)
+                        self._emit(
+                            LiveTranscriptionEvents.Close,
+                            close=result,
+                            **dict(self.kwargs),
+                        )
                     case _:
                         self.logger.warning(
                             "Unknown Message: response_type: %s, data: %s",
@@ -224,8 +245,8 @@ class LiveClient:
                     "message": f"{e}",
                     "variant": "",
                 }
-                self.logger.error(
-                    f"WebSocket connection closed with code {e.code}: {e.reason}"
+                self.logger.notice(
+                    f"WebSocket connection in _listening closed with code {e.code}: {e.reason}"
                 )
                 self._emit(LiveTranscriptionEvents.Error, error)
 
@@ -248,8 +269,8 @@ class LiveClient:
                     "message": f"{e}",
                     "variant": "",
                 }
-                self._emit(LiveTranscriptionEvents.Error, error)
                 self.logger.error("Exception in _listening: %s", str(e))
+                self._emit(LiveTranscriptionEvents.Error, error)
 
                 # signal exit and close
                 self.signal_exit()
@@ -270,12 +291,9 @@ class LiveClient:
         while True:
             try:
                 counter += 1
-                time.sleep(ONE_SECOND)
 
-                with self.lock_exit:
-                    myExit = self.exit
-
-                if myExit:
+                self.exit_event.wait(timeout=ONE_SECOND)
+                if self.exit_event.is_set():
                     self.logger.notice("_keep_alive exiting gracefully")
                     self.logger.debug("LiveClient._keep_alive LEAVE")
                     return
@@ -286,7 +304,10 @@ class LiveClient:
                     and self.config.options.get("keepalive") == "true"
                 ):
                     self.logger.verbose("Sending KeepAlive...")
-                    self.send(json.dumps({"type": "KeepAlive"}))
+                    try:
+                        self.send(json.dumps({"type": "KeepAlive"}))
+                    except websockets.exceptions.WebSocketException as e:
+                        self.logger.error("KeepAlive failed: %s", e)
 
                 # websocket keepalive
                 if counter % PING_INTERVAL == 0:
@@ -294,7 +315,7 @@ class LiveClient:
                     self.send_ping()
 
             except websockets.exceptions.ConnectionClosedOK as e:
-                self.logger.notice("_keep_alive({e.code}) exiting gracefully")
+                self.logger.notice(f"_keep_alive({e.code}) exiting gracefully")
 
                 # signal exit and close
                 self.signal_exit()
@@ -310,7 +331,7 @@ class LiveClient:
                     "variant": "",
                 }
                 self.logger.error(
-                    f"WebSocket connection closed with code {e.code}: {e.reason}"
+                    f"WebSocket connection closed in _keep_alive with code {e.code}: {e.reason}"
                 )
                 self._emit(LiveTranscriptionEvents.Error, error)
 
@@ -392,7 +413,14 @@ class LiveClient:
         if self._socket:
             self.logger.notice("sending CloseStream...")
             self.send(json.dumps({"type": "CloseStream"}))
+
             time.sleep(0.5)
+
+            # push close event
+            self._emit(
+                LiveTranscriptionEvents.Close,
+                CloseResponse(type=LiveTranscriptionEvents.Close.value),
+            )
 
         # signal exit
         self.signal_exit()
@@ -412,7 +440,7 @@ class LiveClient:
             self._socket.close()
 
         self._socket = None
-        self.lock_exit = None
+        self.exit_event = None
         self.lock_send = None
 
         self.logger.notice("finish succeeded")
@@ -422,9 +450,7 @@ class LiveClient:
     # signals the WebSocket connection to exit
     def signal_exit(self) -> None:
         # signal exit
-        with self.lock_exit:
-            self.logger.notice("signal exit")
-            self.exit = True
+        self.exit_event.set()
 
         self.logger.notice("closing socket...")
         if self._socket:

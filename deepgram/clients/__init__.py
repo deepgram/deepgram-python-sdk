@@ -11,11 +11,13 @@ from .live import LiveClient, AsyncLiveClient
 from .live import LiveOptions
 from .live import LiveTranscriptionEvents
 from .live import (
+    OpenResponse,
     LiveResultResponse,
     MetadataResponse,
     SpeechStartedResponse,
     UtteranceEndResponse,
     ErrorResponse,
+    CloseResponse,
 )
 
 # prerecorded

@@ -30,6 +30,9 @@ def main():
 
         dg_connection = deepgram.listen.live.v("1")
 
+        def on_open(self, open, **kwargs):
+            print(f"\n\n{open}\n\n")
+
         def on_message(self, result, **kwargs):
             sentence = result.channel.alternatives[0].transcript
             if len(sentence) == 0:
@@ -48,11 +51,16 @@ def main():
         def on_error(self, error, **kwargs):
             print(f"\n\n{error}\n\n")
 
+        def on_close(self, close, **kwargs):
+            print(f"\n\n{close}\n\n")
+
+        dg_connection.on(LiveTranscriptionEvents.Open, on_open)
         dg_connection.on(LiveTranscriptionEvents.Transcript, on_message)
         dg_connection.on(LiveTranscriptionEvents.Metadata, on_metadata)
         dg_connection.on(LiveTranscriptionEvents.SpeechStarted, on_speech_started)
         dg_connection.on(LiveTranscriptionEvents.UtteranceEnd, on_utterance_end)
         dg_connection.on(LiveTranscriptionEvents.Error, on_error)
+        dg_connection.on(LiveTranscriptionEvents.Open, on_close)
 
         options = {
             "model": "nova-2",

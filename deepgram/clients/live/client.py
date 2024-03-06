@@ -7,11 +7,13 @@ from .v1.async_client import AsyncLiveClient as AsyncLiveClientLatest
 from .v1.options import LiveOptions as LiveOptionsLatest
 from .enums import LiveTranscriptionEvents
 from .v1.response import (
+    OpenResponse as OpenResponseLatest,
     LiveResultResponse as LiveResultResponseLatest,
     MetadataResponse as MetadataResponseLatest,
     SpeechStartedResponse as SpeechStartedResponseLatest,
     UtteranceEndResponse as UtteranceEndResponseLatest,
     ErrorResponse as ErrorResponseLatest,
+    CloseResponse as CloseResponseLatest,
 )
 
 """
@@ -30,6 +32,14 @@ class LiveOptions(LiveOptionsLatest):
 
 
 # responses
+class OpenResponse(OpenResponseLatest):
+    """
+    pass through for OpenResponse based on API version
+    """
+
+    pass
+
+
 class LiveResultResponse(LiveResultResponseLatest):
     """
     pass through for LiveResultResponse based on API version
@@ -65,6 +75,14 @@ class UtteranceEndResponse(UtteranceEndResponseLatest):
 class ErrorResponse(ErrorResponseLatest):
     """
     pass through for ErrorResponse based on API version
+    """
+
+    pass
+
+
+class CloseResponse(CloseResponseLatest):
+    """
+    pass through for CloseResponse based on API version
     """
 
     pass

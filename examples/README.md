@@ -4,7 +4,10 @@ The example projects are meant to be used to test features locally by contributo
 
 ## Prerequisites
 
-In order to run the code in the `examples` folder, you first need to install/pip the dependencies contained in the `requirements-examples.txt` for the examples.
+In order to run the code in the `examples` folder, you first need to:
+
+1. install/pip the dependencies contained in the `requirements-examples.txt` for the examples
+2. be using a MacOS or Linux. These examples are geared towards non-windows platforms only.
 
 ```bash
 pip install -r requirements-examples.txt
