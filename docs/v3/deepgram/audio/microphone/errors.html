@@ -66,25 +66,27 @@
 
                         <label class="view-source-button" for="mod-errors-view-source"><span>View Source</span></label>
 
-                        <div class="pdoc-code codehilite"><pre><span></span><span id="L-1"><a href="#L-1"><span class="linenos"> 1</span></a><span class="c1"># Copyright 2023 Deepgram SDK contributors. All Rights Reserved.</span>
+                        <div class="pdoc-code codehilite"><pre><span></span><span id="L-1"><a href="#L-1"><span class="linenos"> 1</span></a><span class="c1"># Copyright 2023-2024 Deepgram SDK contributors. All Rights Reserved.</span>
 </span><span id="L-2"><a href="#L-2"><span class="linenos"> 2</span></a><span class="c1"># Use of this source code is governed by a MIT license that can be found in the LICENSE file.</span>
 </span><span id="L-3"><a href="#L-3"><span class="linenos"> 3</span></a><span class="c1"># SPDX-License-Identifier: MIT</span>
 </span><span id="L-4"><a href="#L-4"><span class="linenos"> 4</span></a>
-</span><span id="L-5"><a href="#L-5"><span class="linenos"> 5</span></a><span class="c1"># exceptions for microphone</span>
-</span><span id="L-6"><a href="#L-6"><span class="linenos"> 6</span></a><span class="k">class</span> <span class="nc">DeepgramMicrophoneError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
-</span><span id="L-7"><a href="#L-7"><span class="linenos"> 7</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="L-8"><a href="#L-8"><span class="linenos"> 8</span></a><span class="sd">    Exception raised for known errors related to Microphone library.</span>
-</span><span id="L-9"><a href="#L-9"><span class="linenos"> 9</span></a>
-</span><span id="L-10"><a href="#L-10"><span class="linenos">10</span></a><span class="sd">    Attributes:</span>
-</span><span id="L-11"><a href="#L-11"><span class="linenos">11</span></a><span class="sd">        message (str): The error message describing the exception.</span>
-</span><span id="L-12"><a href="#L-12"><span class="linenos">12</span></a><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="L-13"><a href="#L-13"><span class="linenos">13</span></a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
-</span><span id="L-14"><a href="#L-14"><span class="linenos">14</span></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
-</span><span id="L-15"><a href="#L-15"><span class="linenos">15</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;DeepgramMicrophoneError&quot;</span>
-</span><span id="L-16"><a href="#L-16"><span class="linenos">16</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">message</span> <span class="o">=</span> <span class="n">message</span>
-</span><span id="L-17"><a href="#L-17"><span class="linenos">17</span></a>
-</span><span id="L-18"><a href="#L-18"><span class="linenos">18</span></a>    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="L-19"><a href="#L-19"><span class="linenos">19</span></a>        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">message</span><span class="si">}</span><span class="s2">&quot;</span>
+</span><span id="L-5"><a href="#L-5"><span class="linenos"> 5</span></a>
+</span><span id="L-6"><a href="#L-6"><span class="linenos"> 6</span></a><span class="c1"># exceptions for microphone</span>
+</span><span id="L-7"><a href="#L-7"><span class="linenos"> 7</span></a><span class="k">class</span> <span class="nc">DeepgramMicrophoneError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+</span><span id="L-8"><a href="#L-8"><span class="linenos"> 8</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="L-9"><a href="#L-9"><span class="linenos"> 9</span></a><span class="sd">    Exception raised for known errors related to Microphone library.</span>
+</span><span id="L-10"><a href="#L-10"><span class="linenos">10</span></a>
+</span><span id="L-11"><a href="#L-11"><span class="linenos">11</span></a><span class="sd">    Attributes:</span>
+</span><span id="L-12"><a href="#L-12"><span class="linenos">12</span></a><span class="sd">        message (str): The error message describing the exception.</span>
+</span><span id="L-13"><a href="#L-13"><span class="linenos">13</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="L-14"><a href="#L-14"><span class="linenos">14</span></a>
+</span><span id="L-15"><a href="#L-15"><span class="linenos">15</span></a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+</span><span id="L-16"><a href="#L-16"><span class="linenos">16</span></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+</span><span id="L-17"><a href="#L-17"><span class="linenos">17</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;DeepgramMicrophoneError&quot;</span>
+</span><span id="L-18"><a href="#L-18"><span class="linenos">18</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">message</span> <span class="o">=</span> <span class="n">message</span>
+</span><span id="L-19"><a href="#L-19"><span class="linenos">19</span></a>
+</span><span id="L-20"><a href="#L-20"><span class="linenos">20</span></a>    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="L-21"><a href="#L-21"><span class="linenos">21</span></a>        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">message</span><span class="si">}</span><span class="s2">&quot;</span>
 </span></pre></div>
 
 
@@ -100,20 +102,21 @@
 
     </div>
     <a class="headerlink" href="#DeepgramMicrophoneError"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="DeepgramMicrophoneError-7"><a href="#DeepgramMicrophoneError-7"><span class="linenos"> 7</span></a><span class="k">class</span> <span class="nc">DeepgramMicrophoneError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
-</span><span id="DeepgramMicrophoneError-8"><a href="#DeepgramMicrophoneError-8"><span class="linenos"> 8</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="DeepgramMicrophoneError-9"><a href="#DeepgramMicrophoneError-9"><span class="linenos"> 9</span></a><span class="sd">    Exception raised for known errors related to Microphone library.</span>
-</span><span id="DeepgramMicrophoneError-10"><a href="#DeepgramMicrophoneError-10"><span class="linenos">10</span></a>
-</span><span id="DeepgramMicrophoneError-11"><a href="#DeepgramMicrophoneError-11"><span class="linenos">11</span></a><span class="sd">    Attributes:</span>
-</span><span id="DeepgramMicrophoneError-12"><a href="#DeepgramMicrophoneError-12"><span class="linenos">12</span></a><span class="sd">        message (str): The error message describing the exception.</span>
-</span><span id="DeepgramMicrophoneError-13"><a href="#DeepgramMicrophoneError-13"><span class="linenos">13</span></a><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="DeepgramMicrophoneError-14"><a href="#DeepgramMicrophoneError-14"><span class="linenos">14</span></a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
-</span><span id="DeepgramMicrophoneError-15"><a href="#DeepgramMicrophoneError-15"><span class="linenos">15</span></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
-</span><span id="DeepgramMicrophoneError-16"><a href="#DeepgramMicrophoneError-16"><span class="linenos">16</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;DeepgramMicrophoneError&quot;</span>
-</span><span id="DeepgramMicrophoneError-17"><a href="#DeepgramMicrophoneError-17"><span class="linenos">17</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">message</span> <span class="o">=</span> <span class="n">message</span>
-</span><span id="DeepgramMicrophoneError-18"><a href="#DeepgramMicrophoneError-18"><span class="linenos">18</span></a>
-</span><span id="DeepgramMicrophoneError-19"><a href="#DeepgramMicrophoneError-19"><span class="linenos">19</span></a>    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="DeepgramMicrophoneError-20"><a href="#DeepgramMicrophoneError-20"><span class="linenos">20</span></a>        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">message</span><span class="si">}</span><span class="s2">&quot;</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="DeepgramMicrophoneError-8"><a href="#DeepgramMicrophoneError-8"><span class="linenos"> 8</span></a><span class="k">class</span> <span class="nc">DeepgramMicrophoneError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+</span><span id="DeepgramMicrophoneError-9"><a href="#DeepgramMicrophoneError-9"><span class="linenos"> 9</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="DeepgramMicrophoneError-10"><a href="#DeepgramMicrophoneError-10"><span class="linenos">10</span></a><span class="sd">    Exception raised for known errors related to Microphone library.</span>
+</span><span id="DeepgramMicrophoneError-11"><a href="#DeepgramMicrophoneError-11"><span class="linenos">11</span></a>
+</span><span id="DeepgramMicrophoneError-12"><a href="#DeepgramMicrophoneError-12"><span class="linenos">12</span></a><span class="sd">    Attributes:</span>
+</span><span id="DeepgramMicrophoneError-13"><a href="#DeepgramMicrophoneError-13"><span class="linenos">13</span></a><span class="sd">        message (str): The error message describing the exception.</span>
+</span><span id="DeepgramMicrophoneError-14"><a href="#DeepgramMicrophoneError-14"><span class="linenos">14</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="DeepgramMicrophoneError-15"><a href="#DeepgramMicrophoneError-15"><span class="linenos">15</span></a>
+</span><span id="DeepgramMicrophoneError-16"><a href="#DeepgramMicrophoneError-16"><span class="linenos">16</span></a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+</span><span id="DeepgramMicrophoneError-17"><a href="#DeepgramMicrophoneError-17"><span class="linenos">17</span></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+</span><span id="DeepgramMicrophoneError-18"><a href="#DeepgramMicrophoneError-18"><span class="linenos">18</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;DeepgramMicrophoneError&quot;</span>
+</span><span id="DeepgramMicrophoneError-19"><a href="#DeepgramMicrophoneError-19"><span class="linenos">19</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">message</span> <span class="o">=</span> <span class="n">message</span>
+</span><span id="DeepgramMicrophoneError-20"><a href="#DeepgramMicrophoneError-20"><span class="linenos">20</span></a>
+</span><span id="DeepgramMicrophoneError-21"><a href="#DeepgramMicrophoneError-21"><span class="linenos">21</span></a>    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="DeepgramMicrophoneError-22"><a href="#DeepgramMicrophoneError-22"><span class="linenos">22</span></a>        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">message</span><span class="si">}</span><span class="s2">&quot;</span>
 </span></pre></div>
 
 
@@ -134,10 +137,10 @@
 
     </div>
     <a class="headerlink" href="#DeepgramMicrophoneError.__init__"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="DeepgramMicrophoneError.__init__-14"><a href="#DeepgramMicrophoneError.__init__-14"><span class="linenos">14</span></a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
-</span><span id="DeepgramMicrophoneError.__init__-15"><a href="#DeepgramMicrophoneError.__init__-15"><span class="linenos">15</span></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
-</span><span id="DeepgramMicrophoneError.__init__-16"><a href="#DeepgramMicrophoneError.__init__-16"><span class="linenos">16</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;DeepgramMicrophoneError&quot;</span>
-</span><span id="DeepgramMicrophoneError.__init__-17"><a href="#DeepgramMicrophoneError.__init__-17"><span class="linenos">17</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">message</span> <span class="o">=</span> <span class="n">message</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="DeepgramMicrophoneError.__init__-16"><a href="#DeepgramMicrophoneError.__init__-16"><span class="linenos">16</span></a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+</span><span id="DeepgramMicrophoneError.__init__-17"><a href="#DeepgramMicrophoneError.__init__-17"><span class="linenos">17</span></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+</span><span id="DeepgramMicrophoneError.__init__-18"><a href="#DeepgramMicrophoneError.__init__-18"><span class="linenos">18</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;DeepgramMicrophoneError&quot;</span>
+</span><span id="DeepgramMicrophoneError.__init__-19"><a href="#DeepgramMicrophoneError.__init__-19"><span class="linenos">19</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">message</span> <span class="o">=</span> <span class="n">message</span>
 </span></pre></div>
 
 
