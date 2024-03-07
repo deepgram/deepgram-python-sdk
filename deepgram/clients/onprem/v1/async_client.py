@@ -1,4 +1,4 @@
-# Copyright 2023 Deepgram SDK contributors. All Rights Reserved.
+# Copyright 2023-2024 Deepgram SDK contributors. All Rights Reserved.
 # Use of this source code is governed by a MIT license that can be found in the LICENSE file.
 # SPDX-License-Identifier: MIT
 
@@ -16,6 +16,7 @@ class AsyncOnPremClient(AbstractAsyncRestClient):
     Args:
         config (DeepgramClientOptions): all the options for the client.
     """
+
     def __init__(self, config):
         self.logger = logging.getLogger(__name__)
         self.logger.addHandler(logging.StreamHandler())

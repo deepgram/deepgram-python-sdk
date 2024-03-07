@@ -1,4 +1,4 @@
-# Copyright 2023 Deepgram SDK contributors. All Rights Reserved.
+# Copyright 2023-2024 Deepgram SDK contributors. All Rights Reserved.
 # Use of this source code is governed by a MIT license that can be found in the LICENSE file.
 # SPDX-License-Identifier: MIT
 
@@ -17,6 +17,7 @@ class OnPremClient(AbstractSyncRestClient):
     Args:
         config (DeepgramClientOptions): all the options for the client.
     """
+
     def __init__(self, config):
         self.logger = logging.getLogger(__name__)
         self.logger.addHandler(logging.StreamHandler())
@@ -36,7 +37,12 @@ class OnPremClient(AbstractSyncRestClient):
         self.logger.debug("OnPremClient.list_onprem_credentials LEAVE")
         return res
 
-    def get_onprem_credentials(self, project_id: str, distribution_credentials_id: str, timeout: httpx.Timeout = None):
+    def get_onprem_credentials(
+        self,
+        project_id: str,
+        distribution_credentials_id: str,
+        timeout: httpx.Timeout = None,
+    ):
         self.logger.debug("OnPremClient.get_onprem_credentials ENTER")
         url = f"{self.config.url}/{self.endpoint}/{project_id}/onprem/distribution/credentials/{distribution_credentials_id}"
         self.logger.info("url: %s", url)
@@ -48,7 +54,9 @@ class OnPremClient(AbstractSyncRestClient):
         self.logger.debug("OnPremClient.get_onprem_credentials LEAVE")
         return res
 
-    def create_onprem_credentials(self, project_id: str, options, timeout: httpx.Timeout = None):
+    def create_onprem_credentials(
+        self, project_id: str, options, timeout: httpx.Timeout = None
+    ):
         self.logger.debug("OnPremClient.create_onprem_credentials ENTER")
         url = f"{self.config.url}/{self.endpoint}/{project_id}/onprem/distribution/credentials/"
         self.logger.info("url: %s", url)
@@ -61,7 +69,10 @@ class OnPremClient(AbstractSyncRestClient):
         return res
 
     def delete_onprem_credentials(
-        self, project_id: str, distribution_credentials_id: str, timeout: httpx.Timeout = None
+        self,
+        project_id: str,
+        distribution_credentials_id: str,
+        timeout: httpx.Timeout = None,
     ):
         self.logger.debug("OnPremClient.delete_onprem_credentials ENTER")
         url = f"{self.config.url}/{self.endpoint}/{project_id}/onprem/distribution/credentials/{distribution_credentials_id}"
