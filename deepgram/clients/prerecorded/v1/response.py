@@ -319,7 +319,7 @@ class Paragraph:
     sentences: List[Sentence] = None
     start: float = 0
     end: float = 0
-    num_words: float = 0
+    num_words: int = 0
     speaker: Optional[int] = field(
         default=None, metadata=config(exclude=lambda f: f is None)
     )

@@ -2,6 +2,7 @@
 # Use of this source code is governed by a MIT license that can be found in the LICENSE file.
 # SPDX-License-Identifier: MIT
 
+from signal import SIGINT, SIGTERM
 import asyncio
 from dotenv import load_dotenv
 import logging, verboselogs
@@ -20,6 +21,16 @@ load_dotenv()
 
 async def main():
     try:
+        loop = asyncio.get_event_loop()
+
+        for signal in (SIGTERM, SIGINT):
+            loop.add_signal_handler(
+                signal,
+                lambda: asyncio.create_task(
+                    shutdown(signal, loop, dg_connection, microphone)
+                ),
+            )
+
         # example of setting up a client config. logging values: WARNING, VERBOSE, DEBUG, SPAM
         config: DeepgramClientOptions = DeepgramClientOptions(
             options={"keepalive": "true"}
@@ -29,6 +40,9 @@ async def main():
         # deepgram: DeepgramClient = DeepgramClient()
 
         dg_connection = deepgram.listen.asynclive.v("1")
+
+        async def on_open(self, open, **kwargs):
+            print(f"\n\n{open}\n\n")
 
         async def on_message(self, result, **kwargs):
             sentence = result.channel.alternatives[0].transcript
@@ -48,12 +62,18 @@ async def main():
         async def on_error(self, error, **kwargs):
             print(f"\n\n{error}\n\n")
 
+        async def on_close(self, close, **kwargs):
+            print(f"\n\n{close}\n\n")
+
+        dg_connection.on(LiveTranscriptionEvents.Open, on_open)
         dg_connection.on(LiveTranscriptionEvents.Transcript, on_message)
         dg_connection.on(LiveTranscriptionEvents.Metadata, on_metadata)
         dg_connection.on(LiveTranscriptionEvents.SpeechStarted, on_speech_started)
         dg_connection.on(LiveTranscriptionEvents.UtteranceEnd, on_utterance_end)
         dg_connection.on(LiveTranscriptionEvents.Error, on_error)
+        dg_connection.on(LiveTranscriptionEvents.Close, on_close)
 
+        # connect to websocket
         options: LiveOptions = LiveOptions(
             model="nova-2",
             punctuate=True,
@@ -75,22 +95,35 @@ async def main():
         # start microphone
         microphone.start()
 
-        while True:
-            if not microphone.is_active():
-                break
-            await asyncio.sleep(1)
-
-        # Wait for the microphone to close
-        microphone.finish()
-
-        # Indicate that we've finished
-        dg_connection.finish()
+        # wait until cancelled
+        print("Start talking! Press Ctrl+C to stop...")
+        try:
+            while True:
+                await asyncio.sleep(1)
+        except asyncio.CancelledError:
+            # This block will be executed when the shutdown coroutine cancels all tasks
+            pass
+        finally:
+            microphone.finish()
+            await dg_connection.finish()
 
         print("Finished")
 
     except Exception as e:
         print(f"Could not open socket: {e}")
         return
+
+
+async def shutdown(signal, loop, dg_connection, microphone):
+    print(f"Received exit signal {signal.name}...")
+    microphone.finish()
+    await dg_connection.finish()
+    tasks = [t for t in asyncio.all_tasks() if t is not asyncio.current_task()]
+    [task.cancel() for task in tasks]
+    print(f"Cancelling {len(tasks)} outstanding tasks")
+    await asyncio.gather(*tasks, return_exceptions=True)
+    loop.stop()
+    print("Shutdown complete.")
 
 
 asyncio.run(main())

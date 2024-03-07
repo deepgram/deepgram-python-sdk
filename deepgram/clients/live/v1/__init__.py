@@ -7,9 +7,11 @@ from .async_client import AsyncLiveClient
 from .options import LiveOptions
 from ....options import DeepgramClientOptions
 from .response import (
+    OpenResponse,
     LiveResultResponse,
     MetadataResponse,
     SpeechStartedResponse,
     UtteranceEndResponse,
     ErrorResponse,
+    CloseResponse,
 )

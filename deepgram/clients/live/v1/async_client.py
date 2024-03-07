@@ -13,11 +13,13 @@ from ..helpers import convert_to_websocket_url, append_query_params
 from ..errors import DeepgramError, DeepgramWebsocketError
 
 from .response import (
+    OpenResponse,
     LiveResultResponse,
     MetadataResponse,
     SpeechStartedResponse,
     UtteranceEndResponse,
     ErrorResponse,
+    CloseResponse,
 )
 from .options import LiveOptions
 
@@ -71,7 +73,7 @@ class AsyncLiveClient:
 
         if self._socket is not None:
             self.logger.error("socket is already initialized")
-            self.logger.debug("LiveClient.start LEAVE")
+            self.logger.debug("AsyncLiveClient.start LEAVE")
             raise DeepgramWebsocketError("Websocket already started")
 
         self.options = options
@@ -101,8 +103,15 @@ class AsyncLiveClient:
         url_with_params = append_query_params(self.websocket_url, combined_options)
         try:
             self._socket = await _socket_connect(url_with_params, self.config.headers)
-            asyncio.create_task(self._listening())
-            asyncio.create_task(self._keep_alive())
+
+            self._listen_thread = asyncio.create_task(self._listening())
+            self._keep_alive_thread = asyncio.create_task(self._keep_alive())
+
+            # push open event
+            await self._emit(
+                LiveTranscriptionEvents.Open,
+                OpenResponse(type=LiveTranscriptionEvents.Open.value),
+            )
 
             self.logger.notice("start succeeded")
             self.logger.debug("AsyncLiveClient.start LEAVE")
@@ -133,6 +142,14 @@ class AsyncLiveClient:
                 self.logger.debug("response_type: %s, data: %s", response_type, data)
 
                 match response_type:
+                    case LiveTranscriptionEvents.Open.value:
+                        result = OpenResponse.from_json(message)
+                        self.logger.verbose("OpenResponse: %s", result)
+                        await self._emit(
+                            LiveTranscriptionEvents.Open,
+                            open=result,
+                            **dict(self.kwargs),
+                        )
                     case LiveTranscriptionEvents.Transcript.value:
                         result = LiveResultResponse.from_json(message)
                         self.logger.verbose("LiveResultResponse: %s", result)
@@ -173,6 +190,14 @@ class AsyncLiveClient:
                             error=result,
                             **dict(self.kwargs),
                         )
+                    case LiveTranscriptionEvents.Close.value:
+                        result = CloseResponse.from_json(message)
+                        self.logger.verbose("CloseResponse: %s", result)
+                        await self._emit(
+                            LiveTranscriptionEvents.Close,
+                            close=result,
+                            **dict(self.kwargs),
+                        )
                     case _:
                         error = ErrorResponse(
                             type="UnhandledMessage",
@@ -186,15 +211,15 @@ class AsyncLiveClient:
             self.logger.debug("AsyncLiveClient._listening LEAVE")
             return
 
-        except websockets.exceptions.ConnectionClosedError as e:
+        except websockets.exceptions.WebSocketException as e:
             error: ErrorResponse = {
                 "type": "Exception",
-                "description": "ConnectionClosedError in _listening",
+                "description": "WebSocketException in _listening",
                 "message": f"{e}",
                 "variant": "",
             }
-            self.logger.error(
-                f"WebSocket connection closed with code {e.code}: {e.reason}"
+            self.logger.notice(
+                f"WebSocket exception in _listening with code {e.code}: {e.reason}"
             )
             await self._emit(LiveTranscriptionEvents.Error, error)
 
@@ -213,9 +238,9 @@ class AsyncLiveClient:
                 "message": f"{e}",
                 "variant": "",
             }
+            self.logger.error("Exception in _listening: %s", str(e))
             await self._emit(LiveTranscriptionEvents.Error, error)
 
-            self.logger.error("Exception in _listening: %s", error=error)
             self.logger.debug("AsyncLiveClient._listening LEAVE")
 
             if (
@@ -230,26 +255,70 @@ class AsyncLiveClient:
 
         counter = 0
         while True:
-            counter += 1
-            await asyncio.sleep(ONE_SECOND)
+            try:
+                counter += 1
+                await asyncio.sleep(ONE_SECOND)
 
-            if self._socket is None:
-                self.logger.notice("socket is None, exiting keep_alive")
+                if self._socket is None:
+                    self.logger.notice("socket is None, exiting keep_alive")
+                    self.logger.debug("AsyncLiveClient._keep_alive LEAVE")
+                    break
+
+                # deepgram keepalive
+                if (
+                    counter % DEEPGRAM_INTERVAL == 0
+                    and self.config.options.get("keepalive") == "true"
+                ):
+                    self.logger.verbose("Sending KeepAlive...")
+                    try:
+                        await self.send(json.dumps({"type": "KeepAlive"}))
+                    except websockets.exceptions.WebSocketException as e:
+                        self.logger.error("KeepAlive failed: %s", e)
+
+            except websockets.exceptions.ConnectionClosedOK as e:
+                self.logger.notice(f"_keep_alive({e.code}) exiting gracefully")
                 self.logger.debug("AsyncLiveClient._keep_alive LEAVE")
-                break
+                return
 
-            # deepgram keepalive
-            if (
-                counter % DEEPGRAM_INTERVAL == 0
-                and self.config.options.get("keepalive") == "true"
-            ):
-                self.logger.verbose("Sending KeepAlive...")
-                await self.send(json.dumps({"type": "KeepAlive"}))
+            except websockets.exceptions.ConnectionClosedError as e:
+                error: ErrorResponse = {
+                    "type": "Exception",
+                    "description": "ConnectionClosedError in _keep_alive",
+                    "message": f"{e}",
+                    "variant": "",
+                }
+                self.logger.error(
+                    f"WebSocket connection closed in _keep_alive with code {e.code}: {e.reason}"
+                )
+                await self._emit(LiveTranscriptionEvents.Error, error)
 
-            # protocol level ping
-            if counter % PING_INTERVAL == 0:
-                self.logger.verbose("Sending Protocol Ping...")
-                await self._socket.ping()
+                self.logger.debug("AsyncLiveClient._keep_alive LEAVE")
+
+                if (
+                    "termination_exception" in self.options
+                    and self.options["termination_exception"] == "true"
+                ):
+                    raise
+                return
+
+            except Exception as e:
+                error: ErrorResponse = {
+                    "type": "Exception",
+                    "description": "Exception in _keep_alive",
+                    "message": f"{e}",
+                    "variant": "",
+                }
+                await self._emit(LiveTranscriptionEvents.Error, error)
+                self.logger.error("Exception in _keep_alive: %s", str(e))
+
+                self.logger.debug("AsyncLiveClient._keep_alive LEAVE")
+
+                if (
+                    "termination_exception" in self.options
+                    and self.options["termination_exception"] == "true"
+                ):
+                    raise
+                return
 
         self.logger.debug("AsyncLiveClient._keep_alive LEAVE")
 
@@ -275,14 +344,46 @@ class AsyncLiveClient:
         """
         Closes the WebSocket connection gracefully.
         """
-        self.logger.debug("AsyncLiveClient.finish LEAVE")
+        self.logger.debug("AsyncLiveClient.finish ENTER")
 
         if self._socket:
             self.logger.notice("send CloseStream...")
             await self._socket.send(json.dumps({"type": "CloseStream"}))
+
+            await asyncio.sleep(0.5)
+
+            # push close event
+            await self._emit(
+                LiveTranscriptionEvents.Close,
+                CloseResponse(type=LiveTranscriptionEvents.Close.value),
+            )
+
             self.logger.notice("socket.wait_closed...")
-            await self._socket.wait_closed()
+            try:
+                await self._socket.wait_closed()
+            except websockets.exceptions.WebSocketException as e:
+                self.logger.error("socket.wait_closed failed: %s", e)
             self.logger.notice("socket.wait_closed succeeded")
+
+        self.logger.notice("cancelling tasks...")
+        try:
+            # Before cancelling, check if the tasks were created
+            if self._listen_thread is not None:
+                self._listen_thread.cancel()
+            if self._keep_alive_thread is not None:
+                self._keep_alive_thread.cancel()
+
+            # Use asyncio.gather to wait for tasks to be cancelled
+            tasks = [self._listen_thread, self._keep_alive_thread]
+            await asyncio.gather(*filter(None, tasks), return_exceptions=True)
+
+        except asyncio.CancelledError as e:
+            self.logger.error("tasks cancelled error: %s", e)
+
+        if self._socket is not None:
+            self.logger.notice("closing socket...")
+            await self._socket.close()
+
         self._socket = None
 
         self.logger.notice("finish succeeded")
@@ -294,5 +395,5 @@ async def _socket_connect(websocket_url, headers) -> websockets.WebSocketClientP
     destination = websocket_url
     updated_headers = headers
     return await websockets.connect(
-        destination, extra_headers=updated_headers, ping_interval=5
+        destination, extra_headers=updated_headers, ping_interval=PING_INTERVAL
     )

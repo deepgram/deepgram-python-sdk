@@ -19,11 +19,13 @@ from .clients import (
 
 # live client responses
 from .clients import (
+    OpenResponse,
     LiveResultResponse,
     MetadataResponse,
     SpeechStartedResponse,
     UtteranceEndResponse,
     ErrorResponse,
+    CloseResponse,
 )
 
 # prerecorded

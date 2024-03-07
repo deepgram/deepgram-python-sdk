@@ -79,16 +79,15 @@ AUDIO_URL = {
 }
 
 # STEP 1 Create a Deepgram client using the API key from environment variables
-deepgram = DeepgramClient()
+deepgram: DeepgramClient = DeepgramClient("", ClientOptionsFromEnv())
 
 # STEP 2 Call the transcribe_url method on the prerecorded class
-options = PrerecordedOptions(
-    model="nova",
+options: PrerecordedOptions = PrerecordedOptions(
+    model="nova-2",
     smart_format=True,
-    summarize="v2",
 )
-url_response = deepgram.listen.prerecorded.v("1").transcribe_url(AUDIO_URL, options)
-print(url_response)
+response = deepgram.listen.prerecorded.v("1").transcribe_url(AUDIO_URL, options)
+print(f"response: {response}\n\n")
 ```
 
 ## Live Audio Transcription Quickstart
@@ -96,42 +95,55 @@ print(url_response)
 You can find a [walkthrough](https://developers.deepgram.com/docs/live-streaming-audio-transcription) on our documentation site. Transcribing Live Audio can be done using the following sample code:
 
 ```python
-deepgram = DeepgramClient()
+deepgram: DeepgramClient = DeepgramClient()
 
-# Create a websocket connection to Deepgram
-options = LiveOptions(
-    punctuate=True,
-    language="en-US",
-    encoding="linear16",
-    channels=1,
-    sample_rate=16000,
-)
+dg_connection = deepgram.listen.live.v("1")
 
-def on_message(result=None):
-    if result is None:
-        return
+def on_open(self, open, **kwargs):
+    print(f"\n\n{open}\n\n")
+
+def on_message(self, result, **kwargs):
     sentence = result.channel.alternatives[0].transcript
     if len(sentence) == 0:
         return
     print(f"speaker: {sentence}")
 
-def on_metadata(metadata=None):
-    if metadata is None:
-        return
-    print(f"\n{metadata}\n")
+def on_metadata(self, metadata, **kwargs):
+    print(f"\n\n{metadata}\n\n")
 
+def on_speech_started(self, speech_started, **kwargs):
+    print(f"\n\n{speech_started}\n\n")
 
-def on_error(error=None):
-    if error is None:
-        return
-    print(f"\n{error}\n")
+def on_utterance_end(self, utterance_end, **kwargs):
+    print(f"\n\n{utterance_end}\n\n")
 
-dg_connection = deepgram.listen.live.v("1")
-dg_connection.start(options)
+def on_error(self, error, **kwargs):
+    print(f"\n\n{error}\n\n")
 
+def on_close(self, close, **kwargs):
+    print(f"\n\n{close}\n\n")
+
+dg_connection.on(LiveTranscriptionEvents.Open, on_open)
 dg_connection.on(LiveTranscriptionEvents.Transcript, on_message)
 dg_connection.on(LiveTranscriptionEvents.Metadata, on_metadata)
+dg_connection.on(LiveTranscriptionEvents.SpeechStarted, on_speech_started)
+dg_connection.on(LiveTranscriptionEvents.UtteranceEnd, on_utterance_end)
 dg_connection.on(LiveTranscriptionEvents.Error, on_error)
+dg_connection.on(LiveTranscriptionEvents.Close, on_close)
+
+options: LiveOptions = LiveOptions(
+    model="nova-2",
+    punctuate=True,
+    language="en-US",
+    encoding="linear16",
+    channels=1,
+    sample_rate=16000,
+    # To get UtteranceEnd, the following must be set:
+    interim_results=True,
+    utterance_end_ms="1000",
+    vad_events=True,
+)
+dg_connection.start(options)
 
 # create microphone
 microphone = Microphone(dg_connection.send)
@@ -157,10 +169,22 @@ There are examples for **every** API call in this SDK. You can find all of these
 
 These examples provide:
 
-- PreRecorded Audio Transcription:
+- Analyze Text:
 
-    - From an Audio File - [examples/prerecorded/file](https://github.com/deepgram/deepgram-python-sdk/blob/main/examples/prerecorded/file/main.py)
-    - From an URL - [examples/prerecorded/url](https://github.com/deepgram/deepgram-python-sdk/blob/main/examples/prerecorded/url/main.py)
+    - Intent Recognition - [examples/analyze/intent](https://github.com/deepgram/deepgram-python-sdk/blob/main/examples/analyze/intent/main.py)
+    - Sentiment Analysis - [examples/sentiment/intent](https://github.com/deepgram/deepgram-python-sdk/blob/main/examples/analyze/sentiment/main.py)
+    - Summarization - [examples/analyze/intent](https://github.com/deepgram/deepgram-python-sdk/blob/main/examples/analyze/summary/main.py)
+    - Topic Detection - [examples/analyze/intent](https://github.com/deepgram/deepgram-python-sdk/blob/main/examples/analyze/topic/main.py)
+
+
+- PreRecorded Audio:
+
+    - Transcription From an Audio File - [examples/prerecorded/file](https://github.com/deepgram/deepgram-python-sdk/blob/main/examples/prerecorded/file/main.py)
+    - Transcrption From an URL - [examples/prerecorded/url](https://github.com/deepgram/deepgram-python-sdk/blob/main/examples/prerecorded/url/main.py)
+    - Intent Recognition - [examples/analyze/intent](https://github.com/deepgram/deepgram-python-sdk/blob/main/examples/prerecorded/intent/main.py)
+    - Sentiment Analysis - [examples/sentiment/intent](https://github.com/deepgram/deepgram-python-sdk/blob/main/examples/prerecorded/sentiment/main.py)
+    - Summarization - [examples/analyze/intent](https://github.com/deepgram/deepgram-python-sdk/blob/main/examples/prerecorded/summary/main.py)
+    - Topic Detection - [examples/analyze/intent](https://github.com/deepgram/deepgram-python-sdk/blob/main/examples/prerecorded/topic/main.py)
 
 - Live Audio Transcription:
 

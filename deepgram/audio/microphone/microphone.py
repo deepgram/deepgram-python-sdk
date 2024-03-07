@@ -153,12 +153,12 @@ class Microphone:
         if self.stream is not None:
             self.stream.stop_stream()
             self.stream.close()
-            self.stream = None
+        self.stream = None
 
         if self.asyncio_thread is not None:
             self.asyncio_loop.call_soon_threadsafe(self.asyncio_loop.stop)
             self.asyncio_thread.join()  # Clean up.
-            self.asyncio_thread = None
+        self.asyncio_thread = None
 
         self.logger.notice("stream/recv thread joined")
 

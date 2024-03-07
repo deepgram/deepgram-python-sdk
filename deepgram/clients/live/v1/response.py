@@ -12,6 +12,26 @@ from typing import List, Optional, Dict
 
 @dataclass_json
 @dataclass
+class OpenResponse:
+    """
+    Open Message from the Deepgram Platform
+    """
+
+    type: str = ""
+
+    def __getitem__(self, key):
+        _dict = self.to_dict()
+        return _dict[key]
+
+    def __setitem__(self, key, val):
+        self.__dict__[key] = val
+
+    def __str__(self) -> str:
+        return self.to_json(indent=4)
+
+
+@dataclass_json
+@dataclass
 class Word:
     word: str = ""
     start: float = 0
@@ -283,6 +303,26 @@ class ErrorResponse:
     message: str = ""
     type: str = ""
     variant: Optional[str] = ""
+
+    def __getitem__(self, key):
+        _dict = self.to_dict()
+        return _dict[key]
+
+    def __setitem__(self, key, val):
+        self.__dict__[key] = val
+
+    def __str__(self) -> str:
+        return self.to_json(indent=4)
+
+
+@dataclass_json
+@dataclass
+class CloseResponse:
+    """
+    Close Message from the Deepgram Platform
+    """
+
+    type: str = ""
 
     def __getitem__(self, key):
         _dict = self.to_dict()

@@ -6,6 +6,7 @@
 venv/
 venv.bak/
 .vscode/
+.DS_Store
 
 # python artifacts
 __pycache__
