@@ -118,9 +118,7 @@ class ModelInfo:
 @dataclass
 class Metadata:
     request_id: str = ""
-    model_info: ModelInfo = field(
-        default=None, metadata=config(exclude=lambda f: f is None)
-    )
+    model_info: ModelInfo = None
     model_uuid: str = ""
     extra: Optional[Dict[str, str]] = field(
         default=None, metadata=config(exclude=lambda f: f is None)
@@ -213,8 +211,12 @@ class MetadataResponse:
     created: str = ""
     duration: float = 0
     channels: int = 0
-    models: List[str] = None
-    model_info: Dict[str, ModelInfo] = None
+    models: Optional[List[str]] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
+    model_info: Optional[Dict[str, ModelInfo]] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
     extra: Optional[Dict] = field(
         default=None, metadata=config(exclude=lambda f: f is None)
     )

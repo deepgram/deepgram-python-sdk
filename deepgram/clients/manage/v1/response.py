@@ -522,7 +522,7 @@ class UsageFieldsResponse:
     models: List[UsageModel] = None
     processing_methods: List[str] = None
     features: List[str] = None
-    languages: List[str] = field(
+    languages: Optional[List[str]] = field(
         default=None, metadata=config(exclude=lambda f: f is None)
     )
 
