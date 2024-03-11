@@ -101,67 +101,73 @@ deepgram    </h1>
 </span><span id="L-45"><a href="#L-45"><span class="linenos"> 45</span></a><span class="p">)</span>
 </span><span id="L-46"><a href="#L-46"><span class="linenos"> 46</span></a>
 </span><span id="L-47"><a href="#L-47"><span class="linenos"> 47</span></a><span class="c1"># read</span>
-</span><span id="L-48"><a href="#L-48"><span class="linenos"> 48</span></a><span class="kn">from</span> <span class="nn">.client</span> <span class="kn">import</span> <span class="n">AnalyzeClient</span><span class="p">,</span> <span class="n">AsyncAnalyzeClient</span>
-</span><span id="L-49"><a href="#L-49"><span class="linenos"> 49</span></a><span class="kn">from</span> <span class="nn">.client</span> <span class="kn">import</span> <span class="p">(</span>
-</span><span id="L-50"><a href="#L-50"><span class="linenos"> 50</span></a>    <span class="n">AnalyzeSource</span><span class="p">,</span>
-</span><span id="L-51"><a href="#L-51"><span class="linenos"> 51</span></a>    <span class="n">TextSource</span><span class="p">,</span>
-</span><span id="L-52"><a href="#L-52"><span class="linenos"> 52</span></a>    <span class="n">UrlSource</span><span class="p">,</span>
-</span><span id="L-53"><a href="#L-53"><span class="linenos"> 53</span></a>    <span class="n">BufferSource</span><span class="p">,</span>
-</span><span id="L-54"><a href="#L-54"><span class="linenos"> 54</span></a>    <span class="n">AnalyzeStreamSource</span><span class="p">,</span>
-</span><span id="L-55"><a href="#L-55"><span class="linenos"> 55</span></a>    <span class="n">AnalyzeOptions</span><span class="p">,</span>
-</span><span id="L-56"><a href="#L-56"><span class="linenos"> 56</span></a>    <span class="n">Sentiment</span><span class="p">,</span>
-</span><span id="L-57"><a href="#L-57"><span class="linenos"> 57</span></a><span class="p">)</span>
-</span><span id="L-58"><a href="#L-58"><span class="linenos"> 58</span></a><span class="kn">from</span> <span class="nn">.client</span> <span class="kn">import</span> <span class="p">(</span>
-</span><span id="L-59"><a href="#L-59"><span class="linenos"> 59</span></a>    <span class="n">AsyncAnalyzeResponse</span><span class="p">,</span>
-</span><span id="L-60"><a href="#L-60"><span class="linenos"> 60</span></a>    <span class="n">AnalyzeResponse</span><span class="p">,</span>
-</span><span id="L-61"><a href="#L-61"><span class="linenos"> 61</span></a>    <span class="n">SyncAnalyzeResponse</span><span class="p">,</span>
-</span><span id="L-62"><a href="#L-62"><span class="linenos"> 62</span></a><span class="p">)</span>
-</span><span id="L-63"><a href="#L-63"><span class="linenos"> 63</span></a>
-</span><span id="L-64"><a href="#L-64"><span class="linenos"> 64</span></a><span class="c1"># manage</span>
-</span><span id="L-65"><a href="#L-65"><span class="linenos"> 65</span></a><span class="kn">from</span> <span class="nn">.client</span> <span class="kn">import</span> <span class="n">ManageClient</span><span class="p">,</span> <span class="n">AsyncManageClient</span>
-</span><span id="L-66"><a href="#L-66"><span class="linenos"> 66</span></a><span class="kn">from</span> <span class="nn">.client</span> <span class="kn">import</span> <span class="p">(</span>
-</span><span id="L-67"><a href="#L-67"><span class="linenos"> 67</span></a>    <span class="n">ProjectOptions</span><span class="p">,</span>
-</span><span id="L-68"><a href="#L-68"><span class="linenos"> 68</span></a>    <span class="n">KeyOptions</span><span class="p">,</span>
-</span><span id="L-69"><a href="#L-69"><span class="linenos"> 69</span></a>    <span class="n">ScopeOptions</span><span class="p">,</span>
-</span><span id="L-70"><a href="#L-70"><span class="linenos"> 70</span></a>    <span class="n">InviteOptions</span><span class="p">,</span>
-</span><span id="L-71"><a href="#L-71"><span class="linenos"> 71</span></a>    <span class="n">UsageRequestOptions</span><span class="p">,</span>
-</span><span id="L-72"><a href="#L-72"><span class="linenos"> 72</span></a>    <span class="n">UsageSummaryOptions</span><span class="p">,</span>
-</span><span id="L-73"><a href="#L-73"><span class="linenos"> 73</span></a>    <span class="n">UsageFieldsOptions</span><span class="p">,</span>
-</span><span id="L-74"><a href="#L-74"><span class="linenos"> 74</span></a><span class="p">)</span>
-</span><span id="L-75"><a href="#L-75"><span class="linenos"> 75</span></a>
-</span><span id="L-76"><a href="#L-76"><span class="linenos"> 76</span></a><span class="c1"># manage client responses</span>
-</span><span id="L-77"><a href="#L-77"><span class="linenos"> 77</span></a><span class="kn">from</span> <span class="nn">.client</span> <span class="kn">import</span> <span class="p">(</span>
-</span><span id="L-78"><a href="#L-78"><span class="linenos"> 78</span></a>    <span class="n">Message</span><span class="p">,</span>
-</span><span id="L-79"><a href="#L-79"><span class="linenos"> 79</span></a>    <span class="n">Project</span><span class="p">,</span>
-</span><span id="L-80"><a href="#L-80"><span class="linenos"> 80</span></a>    <span class="n">ProjectsResponse</span><span class="p">,</span>
-</span><span id="L-81"><a href="#L-81"><span class="linenos"> 81</span></a>    <span class="n">MembersResponse</span><span class="p">,</span>
-</span><span id="L-82"><a href="#L-82"><span class="linenos"> 82</span></a>    <span class="n">Key</span><span class="p">,</span>
-</span><span id="L-83"><a href="#L-83"><span class="linenos"> 83</span></a>    <span class="n">KeyResponse</span><span class="p">,</span>
-</span><span id="L-84"><a href="#L-84"><span class="linenos"> 84</span></a>    <span class="n">KeysResponse</span><span class="p">,</span>
-</span><span id="L-85"><a href="#L-85"><span class="linenos"> 85</span></a>    <span class="n">ScopesResponse</span><span class="p">,</span>
-</span><span id="L-86"><a href="#L-86"><span class="linenos"> 86</span></a>    <span class="n">InvitesResponse</span><span class="p">,</span>
-</span><span id="L-87"><a href="#L-87"><span class="linenos"> 87</span></a>    <span class="n">UsageRequest</span><span class="p">,</span>
-</span><span id="L-88"><a href="#L-88"><span class="linenos"> 88</span></a>    <span class="n">UsageRequestsResponse</span><span class="p">,</span>
-</span><span id="L-89"><a href="#L-89"><span class="linenos"> 89</span></a>    <span class="n">UsageSummaryResponse</span><span class="p">,</span>
-</span><span id="L-90"><a href="#L-90"><span class="linenos"> 90</span></a>    <span class="n">UsageFieldsResponse</span><span class="p">,</span>
-</span><span id="L-91"><a href="#L-91"><span class="linenos"> 91</span></a>    <span class="n">Balance</span><span class="p">,</span>
-</span><span id="L-92"><a href="#L-92"><span class="linenos"> 92</span></a>    <span class="n">BalancesResponse</span><span class="p">,</span>
-</span><span id="L-93"><a href="#L-93"><span class="linenos"> 93</span></a><span class="p">)</span>
-</span><span id="L-94"><a href="#L-94"><span class="linenos"> 94</span></a>
-</span><span id="L-95"><a href="#L-95"><span class="linenos"> 95</span></a><span class="c1"># onprem</span>
-</span><span id="L-96"><a href="#L-96"><span class="linenos"> 96</span></a><span class="kn">from</span> <span class="nn">.client</span> <span class="kn">import</span> <span class="p">(</span>
-</span><span id="L-97"><a href="#L-97"><span class="linenos"> 97</span></a>    <span class="n">OnPremClient</span><span class="p">,</span>
-</span><span id="L-98"><a href="#L-98"><span class="linenos"> 98</span></a>    <span class="n">AsyncOnPremClient</span><span class="p">,</span>
+</span><span id="L-48"><a href="#L-48"><span class="linenos"> 48</span></a><span class="kn">from</span> <span class="nn">.client</span> <span class="kn">import</span> <span class="n">ReadClient</span><span class="p">,</span> <span class="n">AsyncReadClient</span>
+</span><span id="L-49"><a href="#L-49"><span class="linenos"> 49</span></a><span class="kn">from</span> <span class="nn">.client</span> <span class="kn">import</span> <span class="n">AnalyzeClient</span><span class="p">,</span> <span class="n">AsyncAnalyzeClient</span>
+</span><span id="L-50"><a href="#L-50"><span class="linenos"> 50</span></a><span class="kn">from</span> <span class="nn">.client</span> <span class="kn">import</span> <span class="p">(</span>
+</span><span id="L-51"><a href="#L-51"><span class="linenos"> 51</span></a>    <span class="n">AnalyzeSource</span><span class="p">,</span>
+</span><span id="L-52"><a href="#L-52"><span class="linenos"> 52</span></a>    <span class="n">TextSource</span><span class="p">,</span>
+</span><span id="L-53"><a href="#L-53"><span class="linenos"> 53</span></a>    <span class="n">UrlSource</span><span class="p">,</span>
+</span><span id="L-54"><a href="#L-54"><span class="linenos"> 54</span></a>    <span class="n">BufferSource</span><span class="p">,</span>
+</span><span id="L-55"><a href="#L-55"><span class="linenos"> 55</span></a>    <span class="n">AnalyzeStreamSource</span><span class="p">,</span>
+</span><span id="L-56"><a href="#L-56"><span class="linenos"> 56</span></a>    <span class="n">AnalyzeOptions</span><span class="p">,</span>
+</span><span id="L-57"><a href="#L-57"><span class="linenos"> 57</span></a>    <span class="n">Sentiment</span><span class="p">,</span>
+</span><span id="L-58"><a href="#L-58"><span class="linenos"> 58</span></a><span class="p">)</span>
+</span><span id="L-59"><a href="#L-59"><span class="linenos"> 59</span></a><span class="kn">from</span> <span class="nn">.client</span> <span class="kn">import</span> <span class="p">(</span>
+</span><span id="L-60"><a href="#L-60"><span class="linenos"> 60</span></a>    <span class="n">AsyncAnalyzeResponse</span><span class="p">,</span>
+</span><span id="L-61"><a href="#L-61"><span class="linenos"> 61</span></a>    <span class="n">AnalyzeResponse</span><span class="p">,</span>
+</span><span id="L-62"><a href="#L-62"><span class="linenos"> 62</span></a>    <span class="n">SyncAnalyzeResponse</span><span class="p">,</span>
+</span><span id="L-63"><a href="#L-63"><span class="linenos"> 63</span></a><span class="p">)</span>
+</span><span id="L-64"><a href="#L-64"><span class="linenos"> 64</span></a>
+</span><span id="L-65"><a href="#L-65"><span class="linenos"> 65</span></a><span class="c1"># speak</span>
+</span><span id="L-66"><a href="#L-66"><span class="linenos"> 66</span></a><span class="kn">from</span> <span class="nn">.client</span> <span class="kn">import</span> <span class="n">SpeakClient</span><span class="p">,</span> <span class="n">AsyncSpeakClient</span>
+</span><span id="L-67"><a href="#L-67"><span class="linenos"> 67</span></a><span class="kn">from</span> <span class="nn">.client</span> <span class="kn">import</span> <span class="n">SpeakSource</span><span class="p">,</span> <span class="n">TextSource</span><span class="p">,</span> <span class="n">SpeakStreamSource</span><span class="p">,</span> <span class="n">SpeakOptions</span>
+</span><span id="L-68"><a href="#L-68"><span class="linenos"> 68</span></a><span class="kn">from</span> <span class="nn">.client</span> <span class="kn">import</span> <span class="n">SpeakResponse</span>
+</span><span id="L-69"><a href="#L-69"><span class="linenos"> 69</span></a>
+</span><span id="L-70"><a href="#L-70"><span class="linenos"> 70</span></a><span class="c1"># manage</span>
+</span><span id="L-71"><a href="#L-71"><span class="linenos"> 71</span></a><span class="kn">from</span> <span class="nn">.client</span> <span class="kn">import</span> <span class="n">ManageClient</span><span class="p">,</span> <span class="n">AsyncManageClient</span>
+</span><span id="L-72"><a href="#L-72"><span class="linenos"> 72</span></a><span class="kn">from</span> <span class="nn">.client</span> <span class="kn">import</span> <span class="p">(</span>
+</span><span id="L-73"><a href="#L-73"><span class="linenos"> 73</span></a>    <span class="n">ProjectOptions</span><span class="p">,</span>
+</span><span id="L-74"><a href="#L-74"><span class="linenos"> 74</span></a>    <span class="n">KeyOptions</span><span class="p">,</span>
+</span><span id="L-75"><a href="#L-75"><span class="linenos"> 75</span></a>    <span class="n">ScopeOptions</span><span class="p">,</span>
+</span><span id="L-76"><a href="#L-76"><span class="linenos"> 76</span></a>    <span class="n">InviteOptions</span><span class="p">,</span>
+</span><span id="L-77"><a href="#L-77"><span class="linenos"> 77</span></a>    <span class="n">UsageRequestOptions</span><span class="p">,</span>
+</span><span id="L-78"><a href="#L-78"><span class="linenos"> 78</span></a>    <span class="n">UsageSummaryOptions</span><span class="p">,</span>
+</span><span id="L-79"><a href="#L-79"><span class="linenos"> 79</span></a>    <span class="n">UsageFieldsOptions</span><span class="p">,</span>
+</span><span id="L-80"><a href="#L-80"><span class="linenos"> 80</span></a><span class="p">)</span>
+</span><span id="L-81"><a href="#L-81"><span class="linenos"> 81</span></a>
+</span><span id="L-82"><a href="#L-82"><span class="linenos"> 82</span></a><span class="c1"># manage client responses</span>
+</span><span id="L-83"><a href="#L-83"><span class="linenos"> 83</span></a><span class="kn">from</span> <span class="nn">.client</span> <span class="kn">import</span> <span class="p">(</span>
+</span><span id="L-84"><a href="#L-84"><span class="linenos"> 84</span></a>    <span class="n">Message</span><span class="p">,</span>
+</span><span id="L-85"><a href="#L-85"><span class="linenos"> 85</span></a>    <span class="n">Project</span><span class="p">,</span>
+</span><span id="L-86"><a href="#L-86"><span class="linenos"> 86</span></a>    <span class="n">ProjectsResponse</span><span class="p">,</span>
+</span><span id="L-87"><a href="#L-87"><span class="linenos"> 87</span></a>    <span class="n">MembersResponse</span><span class="p">,</span>
+</span><span id="L-88"><a href="#L-88"><span class="linenos"> 88</span></a>    <span class="n">Key</span><span class="p">,</span>
+</span><span id="L-89"><a href="#L-89"><span class="linenos"> 89</span></a>    <span class="n">KeyResponse</span><span class="p">,</span>
+</span><span id="L-90"><a href="#L-90"><span class="linenos"> 90</span></a>    <span class="n">KeysResponse</span><span class="p">,</span>
+</span><span id="L-91"><a href="#L-91"><span class="linenos"> 91</span></a>    <span class="n">ScopesResponse</span><span class="p">,</span>
+</span><span id="L-92"><a href="#L-92"><span class="linenos"> 92</span></a>    <span class="n">InvitesResponse</span><span class="p">,</span>
+</span><span id="L-93"><a href="#L-93"><span class="linenos"> 93</span></a>    <span class="n">UsageRequest</span><span class="p">,</span>
+</span><span id="L-94"><a href="#L-94"><span class="linenos"> 94</span></a>    <span class="n">UsageRequestsResponse</span><span class="p">,</span>
+</span><span id="L-95"><a href="#L-95"><span class="linenos"> 95</span></a>    <span class="n">UsageSummaryResponse</span><span class="p">,</span>
+</span><span id="L-96"><a href="#L-96"><span class="linenos"> 96</span></a>    <span class="n">UsageFieldsResponse</span><span class="p">,</span>
+</span><span id="L-97"><a href="#L-97"><span class="linenos"> 97</span></a>    <span class="n">Balance</span><span class="p">,</span>
+</span><span id="L-98"><a href="#L-98"><span class="linenos"> 98</span></a>    <span class="n">BalancesResponse</span><span class="p">,</span>
 </span><span id="L-99"><a href="#L-99"><span class="linenos"> 99</span></a><span class="p">)</span>
 </span><span id="L-100"><a href="#L-100"><span class="linenos">100</span></a>
-</span><span id="L-101"><a href="#L-101"><span class="linenos">101</span></a><span class="c1"># utilities</span>
-</span><span id="L-102"><a href="#L-102"><span class="linenos">102</span></a><span class="kn">from</span> <span class="nn">.audio</span> <span class="kn">import</span> <span class="n">Microphone</span>
-</span><span id="L-103"><a href="#L-103"><span class="linenos">103</span></a><span class="kn">from</span> <span class="nn">.audio</span> <span class="kn">import</span> <span class="p">(</span>
-</span><span id="L-104"><a href="#L-104"><span class="linenos">104</span></a>    <span class="n">LOGGING</span><span class="p">,</span>
-</span><span id="L-105"><a href="#L-105"><span class="linenos">105</span></a>    <span class="n">CHANNELS</span><span class="p">,</span>
-</span><span id="L-106"><a href="#L-106"><span class="linenos">106</span></a>    <span class="n">RATE</span><span class="p">,</span>
-</span><span id="L-107"><a href="#L-107"><span class="linenos">107</span></a>    <span class="n">CHUNK</span><span class="p">,</span>
-</span><span id="L-108"><a href="#L-108"><span class="linenos">108</span></a><span class="p">)</span>
+</span><span id="L-101"><a href="#L-101"><span class="linenos">101</span></a><span class="c1"># onprem</span>
+</span><span id="L-102"><a href="#L-102"><span class="linenos">102</span></a><span class="kn">from</span> <span class="nn">.client</span> <span class="kn">import</span> <span class="p">(</span>
+</span><span id="L-103"><a href="#L-103"><span class="linenos">103</span></a>    <span class="n">OnPremClient</span><span class="p">,</span>
+</span><span id="L-104"><a href="#L-104"><span class="linenos">104</span></a>    <span class="n">AsyncOnPremClient</span><span class="p">,</span>
+</span><span id="L-105"><a href="#L-105"><span class="linenos">105</span></a><span class="p">)</span>
+</span><span id="L-106"><a href="#L-106"><span class="linenos">106</span></a>
+</span><span id="L-107"><a href="#L-107"><span class="linenos">107</span></a><span class="c1"># utilities</span>
+</span><span id="L-108"><a href="#L-108"><span class="linenos">108</span></a><span class="kn">from</span> <span class="nn">.audio</span> <span class="kn">import</span> <span class="n">Microphone</span>
+</span><span id="L-109"><a href="#L-109"><span class="linenos">109</span></a><span class="kn">from</span> <span class="nn">.audio</span> <span class="kn">import</span> <span class="p">(</span>
+</span><span id="L-110"><a href="#L-110"><span class="linenos">110</span></a>    <span class="n">LOGGING</span><span class="p">,</span>
+</span><span id="L-111"><a href="#L-111"><span class="linenos">111</span></a>    <span class="n">CHANNELS</span><span class="p">,</span>
+</span><span id="L-112"><a href="#L-112"><span class="linenos">112</span></a>    <span class="n">RATE</span><span class="p">,</span>
+</span><span id="L-113"><a href="#L-113"><span class="linenos">113</span></a>    <span class="n">CHUNK</span><span class="p">,</span>
+</span><span id="L-114"><a href="#L-114"><span class="linenos">114</span></a><span class="p">)</span>
 </span></pre></div>
 
 

@@ -87,6 +87,27 @@
                 </ul>
 
             </li>
+            <li>
+                    <a class="class" href="#ReadClient">ReadClient</a>
+                            <ul class="memberlist">
+                        <li>
+                                <a class="function" href="#ReadClient.__init__">ReadClient</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#ReadClient.config">config</a>
+                        </li>
+                </ul>
+
+            </li>
+            <li>
+                    <a class="class" href="#AsyncReadClient">AsyncReadClient</a>
+                            <ul class="memberlist">
+                        <li>
+                                <a class="function" href="#AsyncReadClient.__init__">AsyncReadClient</a>
+                        </li>
+                </ul>
+
+            </li>
     </ul>
 
 
@@ -218,6 +239,25 @@
 </span><span id="L-108"><a href="#L-108"><span class="linenos">108</span></a>
 </span><span id="L-109"><a href="#L-109"><span class="linenos">109</span></a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
 </span><span id="L-110"><a href="#L-110"><span class="linenos">110</span></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+</span><span id="L-111"><a href="#L-111"><span class="linenos">111</span></a>
+</span><span id="L-112"><a href="#L-112"><span class="linenos">112</span></a>
+</span><span id="L-113"><a href="#L-113"><span class="linenos">113</span></a><span class="k">class</span> <span class="nc">ReadClient</span><span class="p">(</span><span class="n">AnalyzeClientLatest</span><span class="p">):</span>
+</span><span id="L-114"><a href="#L-114"><span class="linenos">114</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="L-115"><a href="#L-115"><span class="linenos">115</span></a><span class="sd">    Just an alias for the Analyze Client</span>
+</span><span id="L-116"><a href="#L-116"><span class="linenos">116</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="L-117"><a href="#L-117"><span class="linenos">117</span></a>
+</span><span id="L-118"><a href="#L-118"><span class="linenos">118</span></a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
+</span><span id="L-119"><a href="#L-119"><span class="linenos">119</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">config</span> <span class="o">=</span> <span class="n">config</span>
+</span><span id="L-120"><a href="#L-120"><span class="linenos">120</span></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+</span><span id="L-121"><a href="#L-121"><span class="linenos">121</span></a>
+</span><span id="L-122"><a href="#L-122"><span class="linenos">122</span></a>
+</span><span id="L-123"><a href="#L-123"><span class="linenos">123</span></a><span class="k">class</span> <span class="nc">AsyncReadClient</span><span class="p">(</span><span class="n">AsyncAnalyzeClientLatest</span><span class="p">):</span>
+</span><span id="L-124"><a href="#L-124"><span class="linenos">124</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="L-125"><a href="#L-125"><span class="linenos">125</span></a><span class="sd">    Just an alias for the Async Analyze Client</span>
+</span><span id="L-126"><a href="#L-126"><span class="linenos">126</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="L-127"><a href="#L-127"><span class="linenos">127</span></a>
+</span><span id="L-128"><a href="#L-128"><span class="linenos">128</span></a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
+</span><span id="L-129"><a href="#L-129"><span class="linenos">129</span></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
 </span></pre></div>
 
 
@@ -625,6 +665,7 @@
             </div>
             <div><dt><a href="../abstract_sync_client.html#AbstractSyncRestClient">deepgram.clients.abstract_sync_client.AbstractSyncRestClient</a></dt>
                                 <dd id="AnalyzeClient.get" class="function"><a href="../abstract_sync_client.html#AbstractSyncRestClient.get">get</a></dd>
+                <dd id="AnalyzeClient.post_file" class="function"><a href="../abstract_sync_client.html#AbstractSyncRestClient.post_file">post_file</a></dd>
                 <dd id="AnalyzeClient.post" class="function"><a href="../abstract_sync_client.html#AbstractSyncRestClient.post">post</a></dd>
                 <dd id="AnalyzeClient.put" class="function"><a href="../abstract_sync_client.html#AbstractSyncRestClient.put">put</a></dd>
                 <dd id="AnalyzeClient.patch" class="function"><a href="../abstract_sync_client.html#AbstractSyncRestClient.patch">patch</a></dd>
@@ -691,10 +732,157 @@
             </div>
             <div><dt><a href="../abstract_async_client.html#AbstractAsyncRestClient">deepgram.clients.abstract_async_client.AbstractAsyncRestClient</a></dt>
                                 <dd id="AsyncAnalyzeClient.get" class="function"><a href="../abstract_async_client.html#AbstractAsyncRestClient.get">get</a></dd>
+                <dd id="AsyncAnalyzeClient.post_file" class="function"><a href="../abstract_async_client.html#AbstractAsyncRestClient.post_file">post_file</a></dd>
                 <dd id="AsyncAnalyzeClient.post" class="function"><a href="../abstract_async_client.html#AbstractAsyncRestClient.post">post</a></dd>
                 <dd id="AsyncAnalyzeClient.put" class="function"><a href="../abstract_async_client.html#AbstractAsyncRestClient.put">put</a></dd>
                 <dd id="AsyncAnalyzeClient.patch" class="function"><a href="../abstract_async_client.html#AbstractAsyncRestClient.patch">patch</a></dd>
                 <dd id="AsyncAnalyzeClient.delete" class="function"><a href="../abstract_async_client.html#AbstractAsyncRestClient.delete">delete</a></dd>
+
+            </div>
+                                </dl>
+                            </div>
+                </section>
+                <section id="ReadClient">
+                            <input id="ReadClient-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+<div class="attr class">
+            
+    <span class="def">class</span>
+    <span class="name">ReadClient</span><wbr>(<span class="base"><a href="v1/client.html#AnalyzeClient">deepgram.clients.analyze.v1.client.AnalyzeClient</a></span>):
+
+                <label class="view-source-button" for="ReadClient-view-source"><span>View Source</span></label>
+
+    </div>
+    <a class="headerlink" href="#ReadClient"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="ReadClient-114"><a href="#ReadClient-114"><span class="linenos">114</span></a><span class="k">class</span> <span class="nc">ReadClient</span><span class="p">(</span><span class="n">AnalyzeClientLatest</span><span class="p">):</span>
+</span><span id="ReadClient-115"><a href="#ReadClient-115"><span class="linenos">115</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="ReadClient-116"><a href="#ReadClient-116"><span class="linenos">116</span></a><span class="sd">    Just an alias for the Analyze Client</span>
+</span><span id="ReadClient-117"><a href="#ReadClient-117"><span class="linenos">117</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="ReadClient-118"><a href="#ReadClient-118"><span class="linenos">118</span></a>
+</span><span id="ReadClient-119"><a href="#ReadClient-119"><span class="linenos">119</span></a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
+</span><span id="ReadClient-120"><a href="#ReadClient-120"><span class="linenos">120</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">config</span> <span class="o">=</span> <span class="n">config</span>
+</span><span id="ReadClient-121"><a href="#ReadClient-121"><span class="linenos">121</span></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+</span></pre></div>
+
+
+            <div class="docstring"><p>Just an alias for the Analyze Client</p>
+</div>
+
+
+                            <div id="ReadClient.__init__" class="classattr">
+                                        <input id="ReadClient.__init__-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+<div class="attr function">
+            
+        <span class="name">ReadClient</span><span class="signature pdoc-code condensed">(<span class="param"><span class="n">config</span></span>)</span>
+
+                <label class="view-source-button" for="ReadClient.__init__-view-source"><span>View Source</span></label>
+
+    </div>
+    <a class="headerlink" href="#ReadClient.__init__"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="ReadClient.__init__-119"><a href="#ReadClient.__init__-119"><span class="linenos">119</span></a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
+</span><span id="ReadClient.__init__-120"><a href="#ReadClient.__init__-120"><span class="linenos">120</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">config</span> <span class="o">=</span> <span class="n">config</span>
+</span><span id="ReadClient.__init__-121"><a href="#ReadClient.__init__-121"><span class="linenos">121</span></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+</span></pre></div>
+
+
+    
+
+                            </div>
+                            <div id="ReadClient.config" class="classattr">
+                                <div class="attr variable">
+            <span class="name">config</span>
+
+        
+    </div>
+    <a class="headerlink" href="#ReadClient.config"></a>
+    
+    
+
+                            </div>
+                            <div class="inherited">
+                                <h5>Inherited Members</h5>
+                                <dl>
+                                    <div><dt><a href="v1/client.html#AnalyzeClient">deepgram.clients.analyze.v1.client.AnalyzeClient</a></dt>
+                                <dd id="ReadClient.logger" class="variable"><a href="v1/client.html#AnalyzeClient.logger">logger</a></dd>
+                <dd id="ReadClient.analyze_url" class="function"><a href="v1/client.html#AnalyzeClient.analyze_url">analyze_url</a></dd>
+                <dd id="ReadClient.analyze_url_callback" class="function"><a href="v1/client.html#AnalyzeClient.analyze_url_callback">analyze_url_callback</a></dd>
+                <dd id="ReadClient.analyze_text" class="function"><a href="v1/client.html#AnalyzeClient.analyze_text">analyze_text</a></dd>
+                <dd id="ReadClient.analyze_file_callback" class="function"><a href="v1/client.html#AnalyzeClient.analyze_file_callback">analyze_file_callback</a></dd>
+
+            </div>
+            <div><dt><a href="../abstract_sync_client.html#AbstractSyncRestClient">deepgram.clients.abstract_sync_client.AbstractSyncRestClient</a></dt>
+                                <dd id="ReadClient.get" class="function"><a href="../abstract_sync_client.html#AbstractSyncRestClient.get">get</a></dd>
+                <dd id="ReadClient.post_file" class="function"><a href="../abstract_sync_client.html#AbstractSyncRestClient.post_file">post_file</a></dd>
+                <dd id="ReadClient.post" class="function"><a href="../abstract_sync_client.html#AbstractSyncRestClient.post">post</a></dd>
+                <dd id="ReadClient.put" class="function"><a href="../abstract_sync_client.html#AbstractSyncRestClient.put">put</a></dd>
+                <dd id="ReadClient.patch" class="function"><a href="../abstract_sync_client.html#AbstractSyncRestClient.patch">patch</a></dd>
+                <dd id="ReadClient.delete" class="function"><a href="../abstract_sync_client.html#AbstractSyncRestClient.delete">delete</a></dd>
+
+            </div>
+                                </dl>
+                            </div>
+                </section>
+                <section id="AsyncReadClient">
+                            <input id="AsyncReadClient-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+<div class="attr class">
+            
+    <span class="def">class</span>
+    <span class="name">AsyncReadClient</span><wbr>(<span class="base"><a href="v1/async_client.html#AsyncAnalyzeClient">deepgram.clients.analyze.v1.async_client.AsyncAnalyzeClient</a></span>):
+
+                <label class="view-source-button" for="AsyncReadClient-view-source"><span>View Source</span></label>
+
+    </div>
+    <a class="headerlink" href="#AsyncReadClient"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="AsyncReadClient-124"><a href="#AsyncReadClient-124"><span class="linenos">124</span></a><span class="k">class</span> <span class="nc">AsyncReadClient</span><span class="p">(</span><span class="n">AsyncAnalyzeClientLatest</span><span class="p">):</span>
+</span><span id="AsyncReadClient-125"><a href="#AsyncReadClient-125"><span class="linenos">125</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="AsyncReadClient-126"><a href="#AsyncReadClient-126"><span class="linenos">126</span></a><span class="sd">    Just an alias for the Async Analyze Client</span>
+</span><span id="AsyncReadClient-127"><a href="#AsyncReadClient-127"><span class="linenos">127</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="AsyncReadClient-128"><a href="#AsyncReadClient-128"><span class="linenos">128</span></a>
+</span><span id="AsyncReadClient-129"><a href="#AsyncReadClient-129"><span class="linenos">129</span></a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
+</span><span id="AsyncReadClient-130"><a href="#AsyncReadClient-130"><span class="linenos">130</span></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+</span></pre></div>
+
+
+            <div class="docstring"><p>Just an alias for the Async Analyze Client</p>
+</div>
+
+
+                            <div id="AsyncReadClient.__init__" class="classattr">
+                                        <input id="AsyncReadClient.__init__-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+<div class="attr function">
+            
+        <span class="name">AsyncReadClient</span><span class="signature pdoc-code condensed">(<span class="param"><span class="n">config</span></span>)</span>
+
+                <label class="view-source-button" for="AsyncReadClient.__init__-view-source"><span>View Source</span></label>
+
+    </div>
+    <a class="headerlink" href="#AsyncReadClient.__init__"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="AsyncReadClient.__init__-129"><a href="#AsyncReadClient.__init__-129"><span class="linenos">129</span></a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
+</span><span id="AsyncReadClient.__init__-130"><a href="#AsyncReadClient.__init__-130"><span class="linenos">130</span></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+</span></pre></div>
+
+
+    
+
+                            </div>
+                            <div class="inherited">
+                                <h5>Inherited Members</h5>
+                                <dl>
+                                    <div><dt><a href="v1/async_client.html#AsyncAnalyzeClient">deepgram.clients.analyze.v1.async_client.AsyncAnalyzeClient</a></dt>
+                                <dd id="AsyncReadClient.logger" class="variable"><a href="v1/async_client.html#AsyncAnalyzeClient.logger">logger</a></dd>
+                <dd id="AsyncReadClient.config" class="variable"><a href="v1/async_client.html#AsyncAnalyzeClient.config">config</a></dd>
+                <dd id="AsyncReadClient.analyze_url" class="function"><a href="v1/async_client.html#AsyncAnalyzeClient.analyze_url">analyze_url</a></dd>
+                <dd id="AsyncReadClient.analyze_url_callback" class="function"><a href="v1/async_client.html#AsyncAnalyzeClient.analyze_url_callback">analyze_url_callback</a></dd>
+                <dd id="AsyncReadClient.analyze_text" class="function"><a href="v1/async_client.html#AsyncAnalyzeClient.analyze_text">analyze_text</a></dd>
+                <dd id="AsyncReadClient.analyze_text_callback" class="function"><a href="v1/async_client.html#AsyncAnalyzeClient.analyze_text_callback">analyze_text_callback</a></dd>
+
+            </div>
+            <div><dt><a href="../abstract_async_client.html#AbstractAsyncRestClient">deepgram.clients.abstract_async_client.AbstractAsyncRestClient</a></dt>
+                                <dd id="AsyncReadClient.get" class="function"><a href="../abstract_async_client.html#AbstractAsyncRestClient.get">get</a></dd>
+                <dd id="AsyncReadClient.post_file" class="function"><a href="../abstract_async_client.html#AbstractAsyncRestClient.post_file">post_file</a></dd>
+                <dd id="AsyncReadClient.post" class="function"><a href="../abstract_async_client.html#AbstractAsyncRestClient.post">post</a></dd>
+                <dd id="AsyncReadClient.put" class="function"><a href="../abstract_async_client.html#AbstractAsyncRestClient.put">put</a></dd>
+                <dd id="AsyncReadClient.patch" class="function"><a href="../abstract_async_client.html#AbstractAsyncRestClient.patch">patch</a></dd>
+                <dd id="AsyncReadClient.delete" class="function"><a href="../abstract_async_client.html#AbstractAsyncRestClient.delete">delete</a></dd>
 
             </div>
                                 </dl>
