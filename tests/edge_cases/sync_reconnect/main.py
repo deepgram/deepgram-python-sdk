@@ -1,14 +1,20 @@
 import time
 import logging, verboselogs
 
-from deepgram import DeepgramClient, DeepgramClientOptions, LiveOptions
+from deepgram import DeepgramClient, DeepgramClientOptions, LiveOptions, Microphone
 
 
 def main():
-    # config: DeepgramClientOptions = DeepgramClientOptions(verbose=logging.DEBUG)
-    config: DeepgramClientOptions = DeepgramClientOptions()
+    config: DeepgramClientOptions = DeepgramClientOptions(verbose=logging.DEBUG)
+    # config: DeepgramClientOptions = DeepgramClientOptions()
     deepgram: DeepgramClient = DeepgramClient("", config)
-    options: LiveOptions = LiveOptions()
+    options: LiveOptions = LiveOptions(
+        model="nova-2",
+        language="en-US",
+        encoding="linear16",
+        channels=1,
+        sample_rate=16000,
+    )
 
     dg_connection = deepgram.listen.live.v("1")
 
@@ -23,8 +29,14 @@ def main():
             print(f"Restarting connection #{x}...")
 
         dg_connection.start(options)
+
+        microphone = Microphone(dg_connection.send)
+        microphone.start()
+
         time.sleep(15)
+
         print("Calling stop...")
+        microphone.finish()
         dg_connection.finish()
 
     print("Finished")

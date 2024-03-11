@@ -40,22 +40,10 @@ class Microphone:
         self.format = pyaudio.paInt16
         self.channels = channels
         self.input_device_index = input_device_index
+        self.push_callback_org = push_callback
+
         self.asyncio_loop = None
         self.asyncio_thread = None
-
-        if inspect.iscoroutinefunction(push_callback):
-            self.logger.verbose("async/await callback - wrapping")
-            # Run our own asyncio loop.
-            self.asyncio_thread = threading.Thread(target=self._start_asyncio_loop)
-            self.asyncio_thread.start()
-
-            self.push_callback = lambda data: asyncio.run_coroutine_threadsafe(
-                push_callback(data), self.asyncio_loop
-            ).result()
-        else:
-            self.logger.verbose("regular threaded callback")
-            self.push_callback = push_callback
-
         self.stream = None
 
     def _start_asyncio_loop(self) -> None:
@@ -105,6 +93,19 @@ class Microphone:
             stream_callback=self._callback,
         )
 
+        if inspect.iscoroutinefunction(self.push_callback_org):
+            self.logger.verbose("async/await callback - wrapping")
+            # Run our own asyncio loop.
+            self.asyncio_thread = threading.Thread(target=self._start_asyncio_loop)
+            self.asyncio_thread.start()
+
+            self.push_callback = lambda data: asyncio.run_coroutine_threadsafe(
+                self.push_callback_org(data), self.asyncio_loop
+            ).result()
+        else:
+            self.logger.verbose("regular threaded callback")
+            self.push_callback = self.push_callback_org
+
         self.exit.clear()
         self.stream.start_stream()
 
@@ -150,16 +151,17 @@ class Microphone:
         self.logger.notice("signal exit")
         self.exit.set()
 
+        # Stop the stream.
         if self.stream is not None:
             self.stream.stop_stream()
             self.stream.close()
         self.stream = None
 
+        # clean up the thread
         if self.asyncio_thread is not None:
             self.asyncio_loop.call_soon_threadsafe(self.asyncio_loop.stop)
-            self.asyncio_thread.join()  # Clean up.
-        self.asyncio_thread = None
-
+            self.asyncio_thread.join()
+            self.asyncio_thread = None
         self.logger.notice("stream/recv thread joined")
 
         self.logger.notice("finish succeeded")
