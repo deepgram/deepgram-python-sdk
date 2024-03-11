@@ -243,11 +243,33 @@ class InvitesResponse:
 class Config:
     language: str = ""
     model: str = ""
-    punctuate: Optional[bool] = False
-    utterances: Optional[bool] = False
-    diarize: Optional[bool] = False
-    smart_format: Optional[bool] = False
-    interim_results: Optional[bool] = False
+    punctuate: Optional[bool] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
+    utterances: Optional[bool] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
+    diarize: Optional[bool] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
+    smart_format: Optional[bool] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
+    interim_results: Optional[bool] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
+    topics: Optional[bool] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
+    intents: Optional[bool] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
+    sentiment: Optional[bool] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
+    summarize: Optional[bool] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
 
     def __getitem__(self, key):
         _dict = self.to_dict()
@@ -335,16 +357,64 @@ class TokenDetail:
 
 @dataclass_json
 @dataclass
+class SpeechSegment:
+    characters: int = 0
+    model: str = ""
+    tier: str = ""
+
+    def __getitem__(self, key):
+        _dict = self.to_dict()
+        return _dict[key]
+
+    def __setitem__(self, key, val):
+        self.__dict__[key] = val
+
+    def __str__(self) -> str:
+        return self.to_json(indent=4)
+
+
+@dataclass_json
+@dataclass
+class TTSDetails:
+    duration: float = 0
+    speech_segments: List[SpeechSegment] = None
+    # TODO: audio_metadata: None
+
+    def __getitem__(self, key):
+        _dict = self.to_dict()
+        if "speech_segments" in _dict:
+            _dict["speech_segments"] = [
+                SpeechSegment.from_dict(speech_segments)
+                for speech_segments in _dict["speech_segments"]
+            ]
+        return _dict[key]
+
+    def __setitem__(self, key, val):
+        self.__dict__[key] = val
+
+    def __str__(self) -> str:
+        return self.to_json(indent=4)
+
+
+@dataclass_json
+@dataclass
 class Response:
     code: int = 0
     completed: str = ""
     details: Details = None
-    token_details: List[TokenDetail] = None
+    tts_details: Optional[TTSDetails] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
+    token_details: List[TokenDetail] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
 
     def __getitem__(self, key):
         _dict = self.to_dict()
         if "details" in _dict:
             _dict["details"] = Details.from_dict(_dict["details"])
+        if "tts_details" in _dict:
+            _dict["tts_details"] = TTSDetails.from_dict(_dict["tts_details"])
         if "token_details" in _dict:
             _dict["token_details"] = [
                 TokenDetail.from_dict(token_details)
@@ -431,6 +501,23 @@ class Tokens:
 
 @dataclass_json
 @dataclass
+class TTS:
+    characters: int = 0
+    requests: int = 0
+
+    def __getitem__(self, key):
+        _dict = self.to_dict()
+        return _dict[key]
+
+    def __setitem__(self, key, val):
+        self.__dict__[key] = val
+
+    def __str__(self) -> str:
+        return self.to_json(indent=4)
+
+
+@dataclass_json
+@dataclass
 class Results:
     start: str = ""
     end: str = ""
@@ -438,12 +525,15 @@ class Results:
     total_hours: int = 0
     requests: int = 0
     tokens: Tokens = None
+    tts: TTS = None
 
     def __getitem__(self, key):
         _dict = self.to_dict()
         if "tokens" in _dict:
-            _dict["tokens"] = [Tokens.from_dict(tokens) for tokens in _dict["tokens"]]
-        return _dict[key]
+            _dict["tokens"] = Tokens.from_dict(_dict["tokens"])
+        if "tts" in _dict:
+            _dict["tts"] = TTS.from_dict(_dict["tts"])
+            return _dict[key]
 
     def __setitem__(self, key, val):
         self.__dict__[key] = val

@@ -5,9 +5,11 @@
 import os
 import sys
 from dotenv import load_dotenv
+import logging, verboselogs
 
 from deepgram import (
     DeepgramClient,
+    DeepgramClientOptions,
     UsageFieldsOptions,
     UsageSummaryOptions,
     UsageRequestOptions,
@@ -19,7 +21,9 @@ load_dotenv()
 def main():
     try:
         # Create a Deepgram client using the API key
-        deepgram: DeepgramClient = DeepgramClient()
+        # config: DeepgramClientOptions = DeepgramClientOptions(verbose=logging.SPAM)
+        config: DeepgramClientOptions = DeepgramClientOptions()
+        deepgram: DeepgramClient = DeepgramClient("", config)
 
         # get projects
         projectResp = deepgram.manage.v("1").get_projects()

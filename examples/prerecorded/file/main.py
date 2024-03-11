@@ -5,7 +5,8 @@
 import os
 from dotenv import load_dotenv
 import logging, verboselogs
-from datetime import datetime, timedelta
+from datetime import datetime
+import httpx
 
 from deepgram import (
     DeepgramClient,
@@ -25,8 +26,9 @@ def main():
         config: DeepgramClientOptions = DeepgramClientOptions(
             verbose=logging.SPAM,
         )
-
         deepgram: DeepgramClient = DeepgramClient("", config)
+        # OR use defaults
+        # deepgram: DeepgramClient = DeepgramClient()
 
         # STEP 2 Call the transcribe_file method on the prerecorded class
         with open(AUDIO_FILE, "rb") as file:
@@ -45,7 +47,9 @@ def main():
         )
 
         before = datetime.now()
-        response = deepgram.listen.prerecorded.v("1").transcribe_file(payload, options)
+        response = deepgram.listen.prerecorded.v("1").transcribe_file(
+            payload, options, timeout=httpx.Timeout(300.0, connect=10.0)
+        )
         after = datetime.now()
 
         print(response.to_json(indent=4))
