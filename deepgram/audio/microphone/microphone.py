@@ -19,7 +19,7 @@ class Microphone:
 
     def __init__(
         self,
-        push_callback,
+        push_callback=None,
         verbose: int = LOGGING,
         rate: int = RATE,
         chunk: int = CHUNK,
@@ -45,6 +45,7 @@ class Microphone:
         self.asyncio_loop = None
         self.asyncio_thread = None
         self.stream = None
+        self.is_muted = False
 
     def _start_asyncio_loop(self) -> None:
         self.asyncio_loop = asyncio.new_event_loop()
@@ -66,6 +67,12 @@ class Microphone:
         self.logger.debug("Microphone.is_active LEAVE")
         return val
 
+    def set_callback(self, push_callback) -> None:
+        """
+        Set the callback function to be called when data is received.
+        """
+        self.push_callback_org = push_callback
+
     def start(self) -> bool:
         """
         starts the microphone stream
@@ -83,16 +90,6 @@ class Microphone:
         self.logger.info("chunk: %d", self.chunk)
         self.logger.info("input_device_id: %d", self.input_device_index)
 
-        self.stream = self.audio.open(
-            format=self.format,
-            channels=self.channels,
-            rate=self.rate,
-            input=True,
-            frames_per_buffer=self.chunk,
-            input_device_index=self.input_device_index,
-            stream_callback=self._callback,
-        )
-
         if inspect.iscoroutinefunction(self.push_callback_org):
             self.logger.verbose("async/await callback - wrapping")
             # Run our own asyncio loop.
@@ -105,6 +102,16 @@ class Microphone:
         else:
             self.logger.verbose("regular threaded callback")
             self.push_callback = self.push_callback_org
+
+        self.stream = self.audio.open(
+            format=self.format,
+            channels=self.channels,
+            rate=self.rate,
+            input=True,
+            frames_per_buffer=self.chunk,
+            input_device_index=self.input_device_index,
+            stream_callback=self._callback,
+        )
 
         self.exit.clear()
         self.stream.start_stream()
@@ -133,6 +140,10 @@ class Microphone:
             return None, pyaudio.paContinue
 
         try:
+            if self.is_muted:
+                size = len(input_data)
+                input_data = b"\x00" * size
+
             self.push_callback(input_data)
         except Exception as e:
             self.logger.error("Error while sending: %s", str(e))
@@ -141,6 +152,40 @@ class Microphone:
 
         self.logger.debug("Microphone._callback LEAVE")
         return input_data, pyaudio.paContinue
+
+    def mute(self) -> bool:
+        """
+        Mutes the microphone stream
+        """
+        self.logger.debug("Microphone.mute ENTER")
+
+        if self.stream is None:
+            self.logger.error("mute() failed. Library not initialized.")
+            self.logger.debug("Microphone.mute LEAVE")
+            return False
+
+        self.is_muted = True
+
+        self.logger.notice("mute() succeeded")
+        self.logger.debug("Microphone.mute LEAVE")
+        return True
+
+    def unmute(self) -> bool:
+        """
+        Unmutes the microphone stream
+        """
+        self.logger.debug("Microphone.unmute ENTER")
+
+        if self.stream is None:
+            self.logger.error("unmute() failed. Library not initialized.")
+            self.logger.debug("Microphone.unmute LEAVE")
+            return False
+
+        self.is_muted = False
+
+        self.logger.notice("unmute() succeeded")
+        self.logger.debug("Microphone.unmute LEAVE")
+        return True
 
     def finish(self) -> bool:
         """
