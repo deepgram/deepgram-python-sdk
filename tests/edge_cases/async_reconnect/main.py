@@ -48,7 +48,10 @@ async def main():
         await dg_connection.start(options)
 
         microphone = Microphone(dg_connection.send)
-        microphone.start()
+
+        if microphone.start() is False:
+            print("Failed to start microphone")
+            continue
 
         # wait until cancelled
         cnt = 0

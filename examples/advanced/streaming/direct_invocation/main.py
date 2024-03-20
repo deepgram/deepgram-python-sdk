@@ -56,7 +56,10 @@ def main():
 
         # connect to websocket
         options: LiveOptions = LiveOptions(model="nova-2", language="en-US")
-        liveClient.start(options)
+
+        if liveClient.start(options) is False:
+            print("Failed to connect to Deepgram")
+            return
 
         lock_exit = threading.Lock()
         exit = False

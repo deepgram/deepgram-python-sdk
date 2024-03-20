@@ -65,7 +65,11 @@ def main():
 
         # connect to websocket
         options = LiveOptions(model="nova-2", language="en-US")
-        dg_connection.start(options)
+
+        print("\n\nPress Enter to stop recording...\n\n")
+        if dg_connection.start(options) is False:
+            print("Failed to start connection")
+            return
 
         lock_exit = threading.Lock()
         exit = False
@@ -86,7 +90,7 @@ def main():
         myHttp.start()
 
         # signal finished
-        input("Press Enter to stop recording...\n\n")
+        input("")
         lock_exit.acquire()
         exit = True
         lock_exit.release()

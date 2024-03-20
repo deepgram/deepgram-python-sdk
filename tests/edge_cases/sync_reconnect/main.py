@@ -28,7 +28,9 @@ def main():
         else:
             print(f"Restarting connection #{x}...")
 
-        dg_connection.start(options)
+        if dg_connection.start(options) is False:
+            print("Failed to connect to Deepgram")
+            continue
 
         microphone = Microphone(dg_connection.send)
         microphone.start()

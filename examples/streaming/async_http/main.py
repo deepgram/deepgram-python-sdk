@@ -7,6 +7,7 @@ import asyncio
 import aiohttp
 import os
 from dotenv import load_dotenv
+import logging, verboselogs
 
 from deepgram import (
     DeepgramClient,
@@ -26,8 +27,7 @@ URL = "http://stream.live.vc.bbcmedia.co.uk/bbc_world_service"
 async def main():
     # example of setting up a client config. logging values: WARNING, VERBOSE, DEBUG, SPAM
     # config: DeepgramClientOptions = DeepgramClientOptions(
-    #     verbose=logging.DEBUG,
-    #     options={"keepalive": "true"}
+    #     verbose=logging.DEBUG, options={"keepalive": "true"}
     # )
     # deepgram: DeepgramClient = DeepgramClient(API_KEY, config)
     # otherwise, use default config
@@ -83,10 +83,12 @@ async def main():
             language="en-US",
         )
 
-        await dg_connection.start(options)
+        print("\n\nPress Ctrl+C to stop...\n")
+        if await dg_connection.start(options) is False:
+            print("Failed to connect to Deepgram")
+            return
 
         # Send streaming audio from the URL to Deepgram and  wait until cancelled
-        print("Press Ctrl+C to stop...")
         try:
             async with aiohttp.ClientSession() as session:
                 async with session.get(URL) as audio:
