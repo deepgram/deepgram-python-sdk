@@ -119,7 +119,7 @@ class AsyncLiveClient:
 
             # keepalive thread
             if self.config.options.get("keepalive") == "true":
-                self.logger.notice("keepalive is disabled")
+                self.logger.notice("keepalive is enabled")
                 self._keep_alive_thread = asyncio.create_task(self._keep_alive())
             else:
                 self.logger.notice("keepalive is disabled")
