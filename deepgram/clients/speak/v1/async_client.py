@@ -108,6 +108,17 @@ class AsyncSpeakClient(AbstractAsyncRestClient):
         self.logger.debug("AsyncSpeakClient.stream LEAVE")
         return sResp
 
+    async def file(
+        self,
+        filename: str,
+        source: SpeakSource,
+        options: Optional[Union[Dict, SpeakOptions]] = None,
+        addons: Optional[Dict] = None,
+        timeout: Optional[httpx.Timeout] = None,
+        endpoint: str = "v1/speak",
+    ) -> SpeakResponse:
+        return await self.save(filename, source, options, addons, timeout, endpoint)
+
     async def save(
         self,
         filename: str,
