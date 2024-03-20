@@ -60,7 +60,7 @@ def main():
         dg_connection.on(LiveTranscriptionEvents.SpeechStarted, on_speech_started)
         dg_connection.on(LiveTranscriptionEvents.UtteranceEnd, on_utterance_end)
         dg_connection.on(LiveTranscriptionEvents.Error, on_error)
-        dg_connection.on(LiveTranscriptionEvents.Open, on_close)
+        dg_connection.on(LiveTranscriptionEvents.Close, on_close)
 
         options = {
             "model": "nova-2",
@@ -74,7 +74,11 @@ def main():
             "utterance_end_ms": "1000",
             "vad_events": True,
         }
-        dg_connection.start(options)
+
+        print("\n\nPress Enter to stop recording...\n\n")
+        if dg_connection.start(options) is False:
+            print("Failed to connect to Deepgram")
+            return
 
         # Open a microphone stream on the default input device
         microphone = Microphone(dg_connection.send)
@@ -83,7 +87,7 @@ def main():
         microphone.start()
 
         # wait until finished
-        input("Press Enter to stop recording...\n\n")
+        input("")
 
         # Wait for the microphone to close
         microphone.finish()

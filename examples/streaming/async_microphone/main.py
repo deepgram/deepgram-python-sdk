@@ -87,7 +87,10 @@ async def main():
             vad_events=True,
         )
 
-        await dg_connection.start(options)
+        print("\n\nStart talking! Press Ctrl+C to stop...\n")
+        if await dg_connection.start(options) is False:
+            print("Failed to connect to Deepgram")
+            return
 
         # Open a microphone stream on the default input device
         microphone = Microphone(dg_connection.send)
@@ -96,7 +99,6 @@ async def main():
         microphone.start()
 
         # wait until cancelled
-        print("Start talking! Press Ctrl+C to stop...")
         try:
             while True:
                 await asyncio.sleep(1)

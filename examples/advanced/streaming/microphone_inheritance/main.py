@@ -89,12 +89,18 @@ def main():
             utterance_end_ms="1000",
             vad_events=True,
         )
-        liveClient.start(
-            options,
-            members=dict(myattr="hello", mytest="goodbye"),
-            addons=dict(smart_format=True),
-            test="hello",
-        )
+
+        if (
+            liveClient.start(
+                options,
+                members=dict(myattr="hello", mytest="goodbye"),
+                addons=dict(smart_format=True),
+                test="hello",
+            )
+            is False
+        ):
+            print("Failed to connect to Deepgram")
+            return
 
         # Open a microphone stream
         microphone: Microphone = Microphone(liveClient.send)

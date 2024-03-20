@@ -73,7 +73,11 @@ def main():
             utterance_end_ms="1000",
             vad_events=True,
         )
-        dg_connection.start(options)
+
+        print("\n\nPress Enter to stop recording...\n\n")
+        if dg_connection.start(options) is False:
+            print("Failed to connect to Deepgram")
+            return
 
         # Open a microphone stream on the default input device
         microphone = Microphone(dg_connection.send)
@@ -82,7 +86,7 @@ def main():
         microphone.start()
 
         # wait until finished
-        input("Press Enter to stop recording...\n\n")
+        input("")
 
         # Wait for the microphone to close
         microphone.finish()

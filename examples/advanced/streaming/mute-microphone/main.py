@@ -78,7 +78,10 @@ def main():
             utterance_end_ms="1000",
             vad_events=True,
         )
-        dg_connection.start(options)
+
+        if dg_connection.start(options) is False:
+            print("Failed to connect to Deepgram")
+            return
 
         # set the callback on the microphone
         microphone.set_callback(dg_connection.send)
