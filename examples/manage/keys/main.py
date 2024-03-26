@@ -4,17 +4,23 @@
 
 import os
 import sys
+import logging, verboselogs
 from dotenv import load_dotenv
 
-from deepgram import DeepgramClient, KeyOptions
+from deepgram import DeepgramClient, DeepgramClientOptions, KeyOptions
 
 load_dotenv()
 
 
 def main():
     try:
-        # Create a Deepgram client using the API key
-        deepgram: DeepgramClient = DeepgramClient()
+        # example of setting up a client config. logging values: WARNING, VERBOSE, DEBUG, SPAM
+        config = DeepgramClientOptions(
+            verbose=logging.DEBUG,
+        )
+        deepgram: DeepgramClient = DeepgramClient("", config)
+        # otherwise, use default config
+        # deepgram: DeepgramClient = DeepgramClient()
 
         # get projects
         projectResp = deepgram.manage.v("1").get_projects()
