@@ -2,30 +2,32 @@
 # Use of this source code is governed by a MIT license that can be found in the LICENSE file.
 # SPDX-License-Identifier: MIT
 
+import asyncio
 import time
 import logging, verboselogs
 
 from deepgram import DeepgramClient, DeepgramClientOptions, LiveOptions
 
 
-def main():
+async def main():
+    # for debugging
     config: DeepgramClientOptions = DeepgramClientOptions(verbose=logging.DEBUG)
     deepgram: DeepgramClient = DeepgramClient("", config)
+    # OR
+    # deepgram: DeepgramClient = DeepgramClient()
 
-    deepgram_connection = deepgram.listen.live.v("1")
+    deepgram_connection = deepgram.listen.asynclive.v("1")
 
-    deepgram_connection.start(LiveOptions())
+    await deepgram_connection.start(LiveOptions())
 
-    time.sleep(
-        30
-    )  # Deepgram will close the connection after 10-15s of silence, followed with another 5 seconds for a ping
+    # Deepgram will close the connection after 10-15s of silence, followed with another 5 seconds for a ping
+    await asyncio.sleep(30)
 
     print("deadlock!")
     try:
-        deepgram_connection.finish()
+        await deepgram_connection.finish()
     finally:
         print("no deadlock...")
 
 
-if __name__ == "__main__":
-    main()
+asyncio.run(main())
