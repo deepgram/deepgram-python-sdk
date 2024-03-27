@@ -41,6 +41,7 @@ class AbstractAsyncRestClient:
         url: str,
         options: Optional[Dict] = None,
         addons: Optional[Dict] = None,
+        headers: Optional[Dict] = None,
         timeout: Optional[httpx.Timeout] = None,
         **kwargs,
     ) -> str:
@@ -49,8 +50,8 @@ class AbstractAsyncRestClient:
             url,
             params=options,
             addons=addons,
+            headers=headers,
             timeout=timeout,
-            headers=self.config.headers,
             **kwargs,
         )
 
@@ -59,6 +60,7 @@ class AbstractAsyncRestClient:
         url: str,
         options: Optional[Dict] = None,
         addons: Optional[Dict] = None,
+        headers: Optional[Dict] = None,
         timeout: Optional[httpx.Timeout] = None,
         file_result: Optional[List] = None,
         **kwargs,
@@ -69,8 +71,8 @@ class AbstractAsyncRestClient:
             file_result=file_result,
             params=options,
             addons=addons,
+            headers=headers,
             timeout=timeout,
-            headers=self.config.headers,
             **kwargs,
         )
 
@@ -79,6 +81,7 @@ class AbstractAsyncRestClient:
         url: str,
         options: Optional[Dict] = None,
         addons: Optional[Dict] = None,
+        headers: Optional[Dict] = None,
         timeout: Optional[httpx.Timeout] = None,
         **kwargs,
     ) -> str:
@@ -87,8 +90,8 @@ class AbstractAsyncRestClient:
             url,
             params=options,
             addons=addons,
+            headers=headers,
             timeout=timeout,
-            headers=self.config.headers,
             **kwargs,
         )
 
@@ -97,6 +100,7 @@ class AbstractAsyncRestClient:
         url: str,
         options: Optional[Dict] = None,
         addons: Optional[Dict] = None,
+        headers: Optional[Dict] = None,
         timeout: Optional[httpx.Timeout] = None,
         **kwargs,
     ) -> str:
@@ -105,8 +109,8 @@ class AbstractAsyncRestClient:
             url,
             params=options,
             addons=addons,
+            headers=headers,
             timeout=timeout,
-            headers=self.config.headers,
             **kwargs,
         )
 
@@ -115,6 +119,7 @@ class AbstractAsyncRestClient:
         url: str,
         options: Optional[Dict] = None,
         addons: Optional[Dict] = None,
+        headers: Optional[Dict] = None,
         timeout: Optional[httpx.Timeout] = None,
         **kwargs,
     ) -> str:
@@ -123,8 +128,8 @@ class AbstractAsyncRestClient:
             url,
             params=options,
             addons=addons,
+            headers=headers,
             timeout=timeout,
-            headers=self.config.headers,
             **kwargs,
         )
 
@@ -133,6 +138,7 @@ class AbstractAsyncRestClient:
         url: str,
         options: Optional[Dict] = None,
         addons: Optional[Dict] = None,
+        headers: Optional[Dict] = None,
         timeout: Optional[httpx.Timeout] = None,
         **kwargs,
     ) -> str:
@@ -141,8 +147,8 @@ class AbstractAsyncRestClient:
             url,
             params=options,
             addons=addons,
+            headers=headers,
             timeout=timeout,
-            headers=self.config.headers,
             **kwargs,
         )
 
@@ -152,24 +158,26 @@ class AbstractAsyncRestClient:
         url: str,
         params: Optional[Dict] = None,
         addons: Optional[Dict] = None,
-        timeout: Optional[httpx.Timeout] = None,
         headers: Optional[Dict] = None,
+        timeout: Optional[httpx.Timeout] = None,
         file_result: Optional[List] = None,
         **kwargs,
     ):
-        new_url = url
+        _url = url
         if params is not None:
-            new_url = append_query_params(new_url, params)
+            _url = append_query_params(_url, params)
         if addons is not None:
-            new_url = append_query_params(new_url, addons)
-
+            _url = append_query_params(_url, addons)
+        _headers = self.config.headers
+        if headers is not None:
+            _headers.update(headers)
         if timeout is None:
             timeout = httpx.Timeout(30.0, connect=10.0)
 
         try:
             async with httpx.AsyncClient(timeout=timeout) as client:
                 response = await client.request(
-                    method, new_url, headers=headers, **kwargs
+                    method, _url, headers=_headers, **kwargs
                 )
                 response.raise_for_status()
 

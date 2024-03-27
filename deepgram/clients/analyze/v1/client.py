@@ -56,6 +56,7 @@ class AnalyzeClient(AbstractSyncRestClient):
         source: UrlSource,
         options: Optional[Union[AnalyzeOptions, Dict]] = None,
         addons: Optional[Dict] = None,
+        headers: Optional[Dict] = None,
         timeout: Optional[httpx.Timeout] = None,
         endpoint: str = "v1/read",
     ) -> Union[AnalyzeResponse, AsyncAnalyzeResponse]:
@@ -66,7 +67,13 @@ class AnalyzeClient(AbstractSyncRestClient):
         ):
             self.logger.debug("AnalyzeClient.analyze_url LEAVE")
             return self.analyze_url_callback(
-                source, options["callback"], options, addons, timeout, endpoint
+                source,
+                callback=options.callback,
+                options=options,
+                addons=addons,
+                headers=headers,
+                timeout=timeout,
+                endpoint=endpoint,
             )
 
         url = f"{self.config.url}/{endpoint}"
@@ -89,8 +96,14 @@ class AnalyzeClient(AbstractSyncRestClient):
             options = json.loads(options.to_json())
         self.logger.info("options: %s", options)
         self.logger.info("addons: %s", addons)
+        self.logger.info("headers: %s", headers)
         result = self.post(
-            url, options=options, addons=addons, json=body, timeout=timeout
+            url,
+            options=options,
+            addons=addons,
+            headers=headers,
+            json=body,
+            timeout=timeout,
         )
         self.logger.info("json: %s", result)
         res = AnalyzeResponse.from_json(result)
@@ -121,6 +134,7 @@ class AnalyzeClient(AbstractSyncRestClient):
         callback: str,
         options: Optional[Union[AnalyzeOptions, Dict]] = None,
         addons: Optional[Dict] = None,
+        headers: Optional[Dict] = None,
         timeout: Optional[httpx.Timeout] = None,
         endpoint: str = "v1/read",
     ) -> AsyncAnalyzeResponse:
@@ -152,8 +166,14 @@ class AnalyzeClient(AbstractSyncRestClient):
             options = json.loads(options.to_json())
         self.logger.info("options: %s", options)
         self.logger.info("addons: %s", addons)
+        self.logger.info("headers: %s", headers)
         result = self.post(
-            url, options=options, addons=addons, json=body, timeout=timeout
+            url,
+            options=options,
+            addons=addons,
+            headers=headers,
+            json=body,
+            timeout=timeout,
         )
         self.logger.info("json: %s", result)
         res = AsyncAnalyzeResponse.from_json(result)
@@ -182,6 +202,7 @@ class AnalyzeClient(AbstractSyncRestClient):
         source: TextSource,
         options: Optional[Union[AnalyzeOptions, Dict]] = None,
         addons: Optional[Dict] = None,
+        headers: Optional[Dict] = None,
         timeout: Optional[httpx.Timeout] = None,
         endpoint: str = "v1/read",
     ) -> Union[AnalyzeResponse, AsyncAnalyzeResponse]:
@@ -192,7 +213,13 @@ class AnalyzeClient(AbstractSyncRestClient):
         ):
             self.logger.debug("AnalyzeClient.analyze_text LEAVE")
             return self.analyze_text_callback(
-                source, options["callback"], options, addons, timeout, endpoint
+                source,
+                callback=options.callback,
+                options=options,
+                addons=addons,
+                headers=headers,
+                timeout=timeout,
+                endpoint=endpoint,
             )
 
         url = f"{self.config.url}/{endpoint}"
@@ -216,8 +243,14 @@ class AnalyzeClient(AbstractSyncRestClient):
             options = json.loads(options.to_json())
         self.logger.info("options: %s", options)
         self.logger.info("addons: %s", addons)
+        self.logger.info("headers: %s", headers)
         result = self.post(
-            url, options=options, addons=addons, content=body, timeout=timeout
+            url,
+            options=options,
+            addons=addons,
+            headers=headers,
+            content=body,
+            timeout=timeout,
         )
         self.logger.info("json: %s", result)
         res = AnalyzeResponse.from_json(result)
@@ -248,6 +281,7 @@ class AnalyzeClient(AbstractSyncRestClient):
         callback: str,
         options: Optional[Union[AnalyzeOptions, Dict]] = None,
         addons: Optional[Dict] = None,
+        headers: Optional[Dict] = None,
         timeout: Optional[httpx.Timeout] = None,
         endpoint: str = "v1/read",
     ) -> AsyncAnalyzeResponse:
@@ -280,8 +314,14 @@ class AnalyzeClient(AbstractSyncRestClient):
             options = json.loads(options.to_json())
         self.logger.info("options: %s", options)
         self.logger.info("addons: %s", addons)
+        self.logger.info("headers: %s", headers)
         result = self.post(
-            url, options=options, addons=addons, json=body, timeout=timeout
+            url,
+            options=options,
+            addons=addons,
+            headers=headers,
+            json=body,
+            timeout=timeout,
         )
         self.logger.info("json: %s", result)
         res = AsyncAnalyzeResponse.from_json(result)

@@ -60,6 +60,7 @@ class LiveClient:
         self,
         options: Optional[Union[LiveOptions, Dict]] = None,
         addons: Optional[Dict] = None,
+        headers: Optional[Dict] = None,
         members: Optional[Dict] = None,
         **kwargs,
     ) -> bool:
@@ -69,6 +70,7 @@ class LiveClient:
         self.logger.debug("LiveClient.start ENTER")
         self.logger.info("options: %s", options)
         self.logger.info("addons: %s", addons)
+        self.logger.info("headers: %s", headers)
         self.logger.info("members: %s", members)
         self.logger.info("kwargs: %s", kwargs)
 
@@ -84,6 +86,7 @@ class LiveClient:
 
         self.options = options
         self.addons = addons
+        self.headers = headers
 
         # add "members" as members of the class
         if members is not None:
@@ -102,15 +105,20 @@ class LiveClient:
         combined_options = self.options
         if addons is not None:
             self.logger.info("merging addons to options")
-            combined_options.update(addons)
+            combined_options.update(self.addons)
             self.logger.info("new options: %s", combined_options)
         self.logger.debug("combined_options: %s", combined_options)
 
+        combined_headers = self.config.headers
+        if headers is not None:
+            self.logger.info("merging headers to options")
+            combined_headers.update(self.headers)
+            self.logger.info("new headers: %s", combined_headers)
+        self.logger.debug("combined_headers: %s", combined_headers)
+
         url_with_params = append_query_params(self.websocket_url, combined_options)
         try:
-            self._socket = connect(
-                url_with_params, additional_headers=self.config.headers
-            )
+            self._socket = connect(url_with_params, additional_headers=combined_headers)
             self._exit_event = threading.Event()
             self._lock_send = threading.Lock()
 

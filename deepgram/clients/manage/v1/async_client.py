@@ -66,17 +66,21 @@ class AsyncManageClient(AbstractAsyncRestClient):
         self,
         timeout: Optional[httpx.Timeout] = None,
         addons: Optional[Dict] = None,
+        headers: Optional[Dict] = None,
         **kwargs,
     ) -> ProjectsResponse:
         """
         Please see get_projects for more information.
         """
-        return await self.get_projects(timeout=timeout, addons=addons, **kwargs)
+        return await self.get_projects(
+            timeout=timeout, addons=addons, headers=headers, **kwargs
+        )
 
     async def get_projects(
         self,
         timeout: Optional[httpx.Timeout] = None,
         addons: Optional[Dict] = None,
+        headers: Optional[Dict] = None,
         **kwargs,
     ) -> ProjectsResponse:
         """
@@ -89,7 +93,10 @@ class AsyncManageClient(AbstractAsyncRestClient):
         url = f"{self.config.url}/{self.endpoint}"
         self.logger.info("url: %s", url)
         self.logger.info("addons: %s", addons)
-        result = await self.get(url, timeout=timeout, addons=addons, **kwargs)
+        self.logger.info("headers: %s", headers)
+        result = await self.get(
+            url, timeout=timeout, addons=addons, headers=headers, **kwargs
+        )
         self.logger.info("result: %s", result)
         res = ProjectsResponse.from_json(result)
         self.logger.verbose("result: %s", res)
@@ -102,6 +109,7 @@ class AsyncManageClient(AbstractAsyncRestClient):
         project_id: str,
         timeout: Optional[httpx.Timeout] = None,
         addons: Optional[Dict] = None,
+        headers: Optional[Dict] = None,
         **kwargs,
     ) -> Project:
         """
@@ -115,7 +123,10 @@ class AsyncManageClient(AbstractAsyncRestClient):
         self.logger.info("url: %s", url)
         self.logger.info("project_id: %s", project_id)
         self.logger.info("addons: %s", addons)
-        result = await self.get(url, timeout=timeout, addons=addons, **kwargs)
+        self.logger.info("headers: %s", headers)
+        result = await self.get(
+            url, timeout=timeout, addons=addons, headers=headers, **kwargs
+        )
         self.logger.info("result: %s", result)
         res = Project.from_json(result)
         self.logger.verbose("result: %s", res)
@@ -129,6 +140,7 @@ class AsyncManageClient(AbstractAsyncRestClient):
         options: Union[Dict, ProjectOptions],
         timeout: Optional[httpx.Timeout] = None,
         addons: Optional[Dict] = None,
+        headers: Optional[Dict] = None,
         **kwargs,
     ) -> Message:
         """
@@ -146,8 +158,9 @@ class AsyncManageClient(AbstractAsyncRestClient):
             options = json.loads(options.to_json())
         self.logger.info("options: %s", options)
         self.logger.info("addons: %s", addons)
+        self.logger.info("headers: %s", headers)
         result = await self.patch(
-            url, json=options, timeout=timeout, addons=addons, **kwargs
+            url, json=options, timeout=timeout, addons=addons, headers=headers, **kwargs
         )
         self.logger.info("result: %s", result)
         res = Message.from_json(result)
@@ -162,6 +175,7 @@ class AsyncManageClient(AbstractAsyncRestClient):
         name="",
         timeout: Optional[httpx.Timeout] = None,
         addons: Optional[Dict] = None,
+        headers: Optional[Dict] = None,
         **kwargs,
     ) -> Message:
         """
@@ -179,8 +193,9 @@ class AsyncManageClient(AbstractAsyncRestClient):
         self.logger.info("project_id: %s", project_id)
         self.logger.info("options: %s", options)
         self.logger.info("addons: %s", addons)
+        self.logger.info("headers: %s", headers)
         result = await self.patch(
-            url, json=options, timeout=timeout, addons=addons, **kwargs
+            url, json=options, timeout=timeout, addons=addons, headers=headers, **kwargs
         )
         self.logger.info("result: %s", result)
         res = Message.from_json(result)
@@ -194,6 +209,7 @@ class AsyncManageClient(AbstractAsyncRestClient):
         project_id: str,
         timeout: Optional[httpx.Timeout] = None,
         addons: Optional[Dict] = None,
+        headers: Optional[Dict] = None,
         **kwargs,
     ) -> Message:
         """
@@ -205,7 +221,10 @@ class AsyncManageClient(AbstractAsyncRestClient):
         self.logger.debug("ManageClient.delete_project ENTER")
         url = f"{self.config.url}/{self.endpoint}/{project_id}"
         self.logger.info("addons: %s", addons)
-        result = await self.delete(url, timeout=timeout, addons=addons, **kwargs)
+        self.logger.info("headers: %s", headers)
+        result = await self.delete(
+            url, timeout=timeout, addons=addons, headers=headers, **kwargs
+        )
         self.logger.info("result: %s", result)
         res = Message.from_json(result)
         self.logger.verbose("result: %s", res)
@@ -219,18 +238,22 @@ class AsyncManageClient(AbstractAsyncRestClient):
         project_id: str,
         timeout: Optional[httpx.Timeout] = None,
         addons: Optional[Dict] = None,
+        headers: Optional[Dict] = None,
         **kwargs,
     ) -> KeysResponse:
         """
         Please see get_keys for more information.
         """
-        return await self.get_keys(project_id, timeout=timeout, addons=addons, **kwargs)
+        return await self.get_keys(
+            project_id, timeout=timeout, addons=addons, headers=headers, **kwargs
+        )
 
     async def get_keys(
         self,
         project_id: str,
         timeout: Optional[httpx.Timeout] = None,
         addons: Optional[Dict] = None,
+        headers: Optional[Dict] = None,
         **kwargs,
     ) -> KeysResponse:
         """
@@ -244,7 +267,10 @@ class AsyncManageClient(AbstractAsyncRestClient):
         self.logger.info("url: %s", url)
         self.logger.info("project_id: %s", project_id)
         self.logger.info("addons: %s", addons)
-        result = await self.get(url, timeout=timeout, addons=addons, **kwargs)
+        self.logger.info("headers: %s", headers)
+        result = await self.get(
+            url, timeout=timeout, addons=addons, headers=headers, **kwargs
+        )
         self.logger.info("result: %s", result)
         res = KeysResponse.from_json(result)
         self.logger.verbose("result: %s", res)
@@ -258,6 +284,7 @@ class AsyncManageClient(AbstractAsyncRestClient):
         key_id: str,
         timeout: Optional[httpx.Timeout] = None,
         addons: Optional[Dict] = None,
+        headers: Optional[Dict] = None,
         **kwargs,
     ) -> KeyResponse:
         """
@@ -272,7 +299,10 @@ class AsyncManageClient(AbstractAsyncRestClient):
         self.logger.info("project_id: %s", project_id)
         self.logger.info("key_id: %s", key_id)
         self.logger.info("addons: %s", addons)
-        result = await self.get(url, timeout=timeout, addons=addons, **kwargs)
+        self.logger.info("headers: %s", headers)
+        result = await self.get(
+            url, timeout=timeout, addons=addons, headers=headers, **kwargs
+        )
         self.logger.info("result: %s", result)
         res = KeyResponse.from_json(result)
         self.logger.verbose("result: %s", res)
@@ -286,6 +316,7 @@ class AsyncManageClient(AbstractAsyncRestClient):
         options: Union[Dict, KeyOptions],
         timeout: Optional[httpx.Timeout] = None,
         addons: Optional[Dict] = None,
+        headers: Optional[Dict] = None,
         **kwargs,
     ) -> Key:
         """
@@ -303,8 +334,9 @@ class AsyncManageClient(AbstractAsyncRestClient):
             options = json.loads(options.to_json())
         self.logger.info("options: %s", options)
         self.logger.info("addons: %s", addons)
+        self.logger.info("headers: %s", headers)
         result = await self.post(
-            url, json=options, timeout=timeout, addons=addons, **kwargs
+            url, json=options, timeout=timeout, addons=addons, headers=headers, **kwargs
         )
         self.logger.info("result: %s", result)
         res = Key.from_json(result)
@@ -319,6 +351,7 @@ class AsyncManageClient(AbstractAsyncRestClient):
         key_id: str,
         timeout: Optional[httpx.Timeout] = None,
         addons: Optional[Dict] = None,
+        headers: Optional[Dict] = None,
         **kwargs,
     ) -> Message:
         """
@@ -333,7 +366,10 @@ class AsyncManageClient(AbstractAsyncRestClient):
         self.logger.info("project_id: %s", project_id)
         self.logger.info("key_id: %s", key_id)
         self.logger.info("addons: %s", addons)
-        result = await self.delete(url, timeout=timeout, addons=addons, **kwargs)
+        self.logger.info("headers: %s", headers)
+        result = await self.delete(
+            url, timeout=timeout, addons=addons, headers=headers, **kwargs
+        )
         self.logger.info("result: %s", result)
         res = Message.from_json(result)
         self.logger.verbose("result: %s", res)
@@ -347,13 +383,14 @@ class AsyncManageClient(AbstractAsyncRestClient):
         project_id: str,
         timeout: Optional[httpx.Timeout] = None,
         addons: Optional[Dict] = None,
+        headers: Optional[Dict] = None,
         **kwargs,
     ) -> MembersResponse:
         """
         Please see get_members for more information.
         """
         return await self.get_members(
-            project_id, timeout=timeout, addons=addons, **kwargs
+            project_id, timeout=timeout, addons=addons, headers=headers, **kwargs
         )
 
     async def get_members(
@@ -361,6 +398,7 @@ class AsyncManageClient(AbstractAsyncRestClient):
         project_id: str,
         timeout: Optional[httpx.Timeout] = None,
         addons: Optional[Dict] = None,
+        headers: Optional[Dict] = None,
         **kwargs,
     ) -> MembersResponse:
         """
@@ -374,7 +412,10 @@ class AsyncManageClient(AbstractAsyncRestClient):
         self.logger.info("url: %s", url)
         self.logger.info("project_id: %s", project_id)
         self.logger.info("addons: %s", addons)
-        result = await self.get(url, timeout=timeout, addons=addons, **kwargs)
+        self.logger.info("headers: %s", headers)
+        result = await self.get(
+            url, timeout=timeout, addons=addons, headers=headers, **kwargs
+        )
         self.logger.info("result: %s", result)
         res = MembersResponse.from_json(result)
         self.logger.verbose("result: %s", res)
@@ -388,6 +429,7 @@ class AsyncManageClient(AbstractAsyncRestClient):
         member_id: str,
         timeout: Optional[httpx.Timeout] = None,
         addons: Optional[Dict] = None,
+        headers: Optional[Dict] = None,
         **kwargs,
     ) -> Message:
         """
@@ -402,7 +444,10 @@ class AsyncManageClient(AbstractAsyncRestClient):
         self.logger.info("project_id: %s", project_id)
         self.logger.info("member_id: %s", member_id)
         self.logger.info("addons: %s", addons)
-        result = await self.delete(url, timeout=timeout, addons=addons, **kwargs)
+        self.logger.info("headers: %s", headers)
+        result = await self.delete(
+            url, timeout=timeout, addons=addons, headers=headers, **kwargs
+        )
         self.logger.info("result: %s", result)
         res = Message.from_json(result)
         self.logger.verbose("result: %s", res)
@@ -417,6 +462,7 @@ class AsyncManageClient(AbstractAsyncRestClient):
         member_id: str,
         timeout: Optional[httpx.Timeout] = None,
         addons: Optional[Dict] = None,
+        headers: Optional[Dict] = None,
         **kwargs,
     ) -> ScopesResponse:
         """
@@ -433,7 +479,10 @@ class AsyncManageClient(AbstractAsyncRestClient):
         self.logger.info("project_id: %s", project_id)
         self.logger.info("member_id: %s", member_id)
         self.logger.info("addons: %s", addons)
-        result = await self.get(url, timeout=timeout, addons=addons, **kwargs)
+        self.logger.info("headers: %s", headers)
+        result = await self.get(
+            url, timeout=timeout, addons=addons, headers=headers, **kwargs
+        )
         self.logger.info("result: %s", result)
         res = ScopesResponse.from_json(result)
         self.logger.verbose("result: %s", res)
@@ -448,6 +497,7 @@ class AsyncManageClient(AbstractAsyncRestClient):
         options: Union[Dict, ScopeOptions],
         timeout: Optional[httpx.Timeout] = None,
         addons: Optional[Dict] = None,
+        headers: Optional[Dict] = None,
         **kwargs,
     ) -> Message:
         """
@@ -467,8 +517,9 @@ class AsyncManageClient(AbstractAsyncRestClient):
             options = json.loads(options.to_json())
         self.logger.info("options: %s", options)
         self.logger.info("addons: %s", addons)
+        self.logger.info("headers: %s", headers)
         result = await self.put(
-            url, json=options, timeout=timeout, addons=addons, **kwargs
+            url, json=options, timeout=timeout, addons=addons, headers=headers, **kwargs
         )
         self.logger.info("result: %s", result)
         res = Message.from_json(result)
@@ -483,13 +534,14 @@ class AsyncManageClient(AbstractAsyncRestClient):
         project_id: str,
         timeout: Optional[httpx.Timeout] = None,
         addons: Optional[Dict] = None,
+        headers: Optional[Dict] = None,
         **kwargs,
     ) -> InvitesResponse:
         """
         Please see get_invites for more information.
         """
         return await self.get_invites(
-            project_id, timeout=timeout, addons=addons, **kwargs
+            project_id, timeout=timeout, addons=addons, headers=headers, **kwargs
         )
 
     async def get_invites(
@@ -497,6 +549,7 @@ class AsyncManageClient(AbstractAsyncRestClient):
         project_id: str,
         timeout: Optional[httpx.Timeout] = None,
         addons: Optional[Dict] = None,
+        headers: Optional[Dict] = None,
         **kwargs,
     ) -> InvitesResponse:
         """
@@ -510,7 +563,10 @@ class AsyncManageClient(AbstractAsyncRestClient):
         self.logger.info("url: %s", url)
         self.logger.info("project_id: %s", project_id)
         self.logger.info("addons: %s", addons)
-        result = await self.get(url, timeout=timeout, addons=addons, **kwargs)
+        self.logger.info("headers: %s", headers)
+        result = await self.get(
+            url, timeout=timeout, addons=addons, headers=headers, **kwargs
+        )
         self.logger.info("result: %s", result)
         res = InvitesResponse.from_json(result)
         self.logger.verbose("result: %s", res)
@@ -524,6 +580,7 @@ class AsyncManageClient(AbstractAsyncRestClient):
         options: Union[Dict, InviteOptions],
         timeout: Optional[httpx.Timeout] = None,
         addons: Optional[Dict] = None,
+        headers: Optional[Dict] = None,
         **kwargs,
     ) -> Message:
         """
@@ -541,8 +598,9 @@ class AsyncManageClient(AbstractAsyncRestClient):
             options = json.loads(options.to_json())
         self.logger.info("options: %s", options)
         self.logger.info("addons: %s", addons)
+        self.logger.info("headers: %s", headers)
         result = await self.post(
-            url, json=options, timeout=timeout, addons=addons, **kwargs
+            url, json=options, timeout=timeout, addons=addons, headers=headers, **kwargs
         )
         self.logger.info("result: %s", result)
         res = Message.from_json(result)
@@ -558,6 +616,7 @@ class AsyncManageClient(AbstractAsyncRestClient):
         scope="member",
         timeout: Optional[httpx.Timeout] = None,
         addons: Optional[Dict] = None,
+        headers: Optional[Dict] = None,
         **kwargs,
     ) -> Message:
         """
@@ -576,8 +635,9 @@ class AsyncManageClient(AbstractAsyncRestClient):
         self.logger.info("project_id: %s", project_id)
         self.logger.info("options: %s", options)
         self.logger.info("addons: %s", addons)
+        self.logger.info("headers: %s", headers)
         result = await self.post(
-            url, json=options, timeout=timeout, addons=addons, **kwargs
+            url, json=options, timeout=timeout, addons=addons, headers=headers, **kwargs
         )
         self.logger.info("result: %s", result)
         res = Message.from_json(result)
@@ -592,6 +652,7 @@ class AsyncManageClient(AbstractAsyncRestClient):
         email: str,
         timeout: Optional[httpx.Timeout] = None,
         addons: Optional[Dict] = None,
+        headers: Optional[Dict] = None,
         **kwargs,
     ) -> Message:
         """
@@ -606,7 +667,10 @@ class AsyncManageClient(AbstractAsyncRestClient):
         self.logger.info("project_id: %s", project_id)
         self.logger.info("email: %s", email)
         self.logger.info("addons: %s", addons)
-        result = await self.delete(url, timeout=timeout, addons=addons, **kwargs)
+        self.logger.info("headers: %s", headers)
+        result = await self.delete(
+            url, timeout=timeout, addons=addons, headers=headers, **kwargs
+        )
         self.logger.info("result: %s", result)
         res = Message.from_json(result)
         self.logger.verbose("result: %s", res)
@@ -619,6 +683,7 @@ class AsyncManageClient(AbstractAsyncRestClient):
         project_id: str,
         timeout: Optional[httpx.Timeout] = None,
         addons: Optional[Dict] = None,
+        headers: Optional[Dict] = None,
         **kwargs,
     ) -> Message:
         """
@@ -632,7 +697,10 @@ class AsyncManageClient(AbstractAsyncRestClient):
         self.logger.info("url: %s", url)
         self.logger.info("project_id: %s", project_id)
         self.logger.info("addons: %s", addons)
-        result = await self.delete(url, timeout=timeout, addons=addons, **kwargs)
+        self.logger.info("headers: %s", headers)
+        result = await self.delete(
+            url, timeout=timeout, addons=addons, headers=headers, **kwargs
+        )
         self.logger.info("result: %s", result)
         res = Message.from_json(result)
         self.logger.verbose("result: %s", res)
@@ -647,6 +715,7 @@ class AsyncManageClient(AbstractAsyncRestClient):
         options: Union[Dict, UsageRequestOptions],
         timeout: Optional[httpx.Timeout] = None,
         addons: Optional[Dict] = None,
+        headers: Optional[Dict] = None,
         **kwargs,
     ) -> UsageRequestsResponse:
         """
@@ -664,8 +733,14 @@ class AsyncManageClient(AbstractAsyncRestClient):
             options = json.loads(options.to_json())
         self.logger.info("options: %s", options)
         self.logger.info("addons: %s", addons)
+        self.logger.info("headers: %s", headers)
         result = await self.get(
-            url, options=options, timeout=timeout, addons=addons, **kwargs
+            url,
+            options=options,
+            timeout=timeout,
+            addons=addons,
+            headers=headers,
+            **kwargs,
         )
         self.logger.info("result: %s", result)
         res = UsageRequestsResponse.from_json(result)
@@ -680,6 +755,7 @@ class AsyncManageClient(AbstractAsyncRestClient):
         request_id: str,
         timeout: Optional[httpx.Timeout] = None,
         addons: Optional[Dict] = None,
+        headers: Optional[Dict] = None,
         **kwargs,
     ) -> UsageRequest:
         """
@@ -694,7 +770,10 @@ class AsyncManageClient(AbstractAsyncRestClient):
         self.logger.info("project_id: %s", project_id)
         self.logger.info("request_id: %s", request_id)
         self.logger.info("addons: %s", addons)
-        result = await self.get(url, timeout=timeout, addons=addons, **kwargs)
+        self.logger.info("headers: %s", headers)
+        result = await self.get(
+            url, timeout=timeout, addons=addons, headers=headers, **kwargs
+        )
         self.logger.info("result: %s", result)
         res = UsageRequest.from_json(result)
         self.logger.verbose("result: %s", res)
@@ -708,6 +787,7 @@ class AsyncManageClient(AbstractAsyncRestClient):
         options: Union[Dict, UsageSummaryOptions],
         timeout: Optional[httpx.Timeout] = None,
         addons: Optional[Dict] = None,
+        headers: Optional[Dict] = None,
         **kwargs,
     ) -> UsageSummaryResponse:
         """
@@ -725,8 +805,14 @@ class AsyncManageClient(AbstractAsyncRestClient):
             options = json.loads(options.to_json())
         self.logger.info("options: %s", options)
         self.logger.info("addons: %s", addons)
+        self.logger.info("headers: %s", headers)
         result = await self.get(
-            url, options=options, timeout=timeout, addons=addons, **kwargs
+            url,
+            options=options,
+            timeout=timeout,
+            addons=addons,
+            headers=headers,
+            **kwargs,
         )
         self.logger.info("result: %s", result)
         res = UsageSummaryResponse.from_json(result)
@@ -741,6 +827,7 @@ class AsyncManageClient(AbstractAsyncRestClient):
         options: Union[Dict, UsageFieldsOptions],
         timeout: Optional[httpx.Timeout] = None,
         addons: Optional[Dict] = None,
+        headers: Optional[Dict] = None,
         **kwargs,
     ) -> UsageFieldsResponse:
         """
@@ -758,8 +845,14 @@ class AsyncManageClient(AbstractAsyncRestClient):
             options = json.loads(options.to_json())
         self.logger.info("options: %s", options)
         self.logger.info("addons: %s", addons)
+        self.logger.info("headers: %s", headers)
         result = await self.get(
-            url, options=options, timeout=timeout, addons=addons, **kwargs
+            url,
+            options=options,
+            timeout=timeout,
+            addons=addons,
+            headers=headers,
+            **kwargs,
         )
         self.logger.info("result: %s", result)
         res = UsageFieldsResponse.from_json(result)
@@ -774,13 +867,14 @@ class AsyncManageClient(AbstractAsyncRestClient):
         project_id: str,
         timeout: Optional[httpx.Timeout] = None,
         addons: Optional[Dict] = None,
+        headers: Optional[Dict] = None,
         **kwargs,
     ) -> BalancesResponse:
         """
         Please see get_balances for more information.
         """
         return await self.get_balances(
-            project_id, timeout=timeout, addons=addons, **kwargs
+            project_id, timeout=timeout, addons=addons, headers=headers, **kwargs
         )
 
     async def get_balances(
@@ -788,6 +882,7 @@ class AsyncManageClient(AbstractAsyncRestClient):
         project_id: str,
         timeout: Optional[httpx.Timeout] = None,
         addons: Optional[Dict] = None,
+        headers: Optional[Dict] = None,
         **kwargs,
     ) -> BalancesResponse:
         """
@@ -801,7 +896,10 @@ class AsyncManageClient(AbstractAsyncRestClient):
         self.logger.info("url: %s", url)
         self.logger.info("project_id: %s", project_id)
         self.logger.info("addons: %s", addons)
-        result = await self.get(url, timeout=timeout, addons=addons, **kwargs)
+        self.logger.info("headers: %s", headers)
+        result = await self.get(
+            url, timeout=timeout, addons=addons, headers=headers, **kwargs
+        )
         self.logger.info("result: %s", result)
         res = BalancesResponse.from_json(result)
         self.logger.verbose("result: %s", res)
@@ -815,6 +913,7 @@ class AsyncManageClient(AbstractAsyncRestClient):
         balance_id: str,
         timeout: Optional[httpx.Timeout] = None,
         addons: Optional[Dict] = None,
+        headers: Optional[Dict] = None,
         **kwargs,
     ) -> Balance:
         """
@@ -829,7 +928,10 @@ class AsyncManageClient(AbstractAsyncRestClient):
         self.logger.info("project_id: %s", project_id)
         self.logger.info("balance_id: %s", balance_id)
         self.logger.info("addons: %s", addons)
-        result = await self.get(url, timeout=timeout, addons=addons, **kwargs)
+        self.logger.info("headers: %s", headers)
+        result = await self.get(
+            url, timeout=timeout, addons=addons, headers=headers, **kwargs
+        )
         self.logger.info("result: %s", result)
         res = Balance.from_json(result)
         self.logger.verbose("result: %s", res)
