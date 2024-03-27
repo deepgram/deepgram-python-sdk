@@ -56,6 +56,7 @@ class PreRecordedClient(AbstractSyncRestClient):
         source: UrlSource,
         options: Optional[Union[Dict, PrerecordedOptions]] = None,
         addons: Optional[Dict] = None,
+        headers: Optional[Dict] = None,
         timeout: Optional[httpx.Timeout] = None,
         endpoint: str = "v1/listen",
     ) -> PrerecordedResponse:
@@ -66,7 +67,13 @@ class PreRecordedClient(AbstractSyncRestClient):
         ):
             self.logger.debug("PreRecordedClient.transcribe_url LEAVE")
             return self.transcribe_url_callback(
-                source, options.callback, options, addons, timeout, endpoint
+                source,
+                callback=options.callback,
+                options=options,
+                addons=addons,
+                headers=headers,
+                timeout=timeout,
+                endpoint=endpoint,
             )
 
         url = f"{self.config.url}/{endpoint}"
@@ -89,8 +96,14 @@ class PreRecordedClient(AbstractSyncRestClient):
             options = json.loads(options.to_json())
         self.logger.info("options: %s", options)
         self.logger.info("addons: %s", addons)
+        self.logger.info("headers: %s", headers)
         result = self.post(
-            url, options=options, addons=addons, json=body, timeout=timeout
+            url,
+            options=options,
+            addons=addons,
+            headers=headers,
+            json=body,
+            timeout=timeout,
         )
         self.logger.info("json: %s", result)
         res = PrerecordedResponse.from_json(result)
@@ -121,6 +134,7 @@ class PreRecordedClient(AbstractSyncRestClient):
         callback: str,
         options: Optional[Union[Dict, PrerecordedOptions]] = None,
         addons: Optional[Dict] = None,
+        headers: Optional[Dict] = None,
         timeout: Optional[httpx.Timeout] = None,
         endpoint: str = "v1/listen",
     ) -> AsyncPrerecordedResponse:
@@ -152,8 +166,14 @@ class PreRecordedClient(AbstractSyncRestClient):
             options = json.loads(options.to_json())
         self.logger.info("options: %s", options)
         self.logger.info("addons: %s", addons)
+        self.logger.info("headers: %s", headers)
         result = self.post(
-            url, options=options, addons=addons, json=body, timeout=timeout
+            url,
+            options=options,
+            addons=addons,
+            headers=headers,
+            json=body,
+            timeout=timeout,
         )
         self.logger.info("json: %s", result)
         res = AsyncPrerecordedResponse.from_json(result)
@@ -182,6 +202,7 @@ class PreRecordedClient(AbstractSyncRestClient):
         source: FileSource,
         options: Optional[Union[Dict, PrerecordedOptions]] = None,
         addons: Optional[Dict] = None,
+        headers: Optional[Dict] = None,
         timeout: Optional[httpx.Timeout] = None,
         endpoint: str = "v1/listen",
     ) -> PrerecordedResponse:
@@ -192,7 +213,13 @@ class PreRecordedClient(AbstractSyncRestClient):
         ):
             self.logger.debug("PreRecordedClient.transcribe_file LEAVE")
             return self.transcribe_file_callback(
-                source, options.callback, options, addons, timeout, endpoint
+                source,
+                callback=options.callback,
+                options=options,
+                addons=addons,
+                headers=headers,
+                timeout=timeout,
+                endpoint=endpoint,
             )
 
         url = f"{self.config.url}/{endpoint}"
@@ -216,8 +243,14 @@ class PreRecordedClient(AbstractSyncRestClient):
             options = json.loads(options.to_json())
         self.logger.info("options: %s", options)
         self.logger.info("addons: %s", addons)
+        self.logger.info("headers: %s", headers)
         result = self.post(
-            url, options=options, addons=addons, content=body, timeout=timeout
+            url,
+            options=options,
+            addons=addons,
+            headers=headers,
+            content=body,
+            timeout=timeout,
         )
         self.logger.info("json: %s", result)
         res = PrerecordedResponse.from_json(result)
@@ -248,6 +281,7 @@ class PreRecordedClient(AbstractSyncRestClient):
         callback: str,
         options: Optional[Union[Dict, PrerecordedOptions]] = None,
         addons: Optional[Dict] = None,
+        headers: Optional[Dict] = None,
         timeout: Optional[httpx.Timeout] = None,
         endpoint: str = "v1/listen",
     ) -> AsyncPrerecordedResponse:
@@ -280,8 +314,14 @@ class PreRecordedClient(AbstractSyncRestClient):
             options = json.loads(options.to_json())
         self.logger.info("options: %s", options)
         self.logger.info("addons: %s", addons)
+        self.logger.info("headers: %s", headers)
         result = self.post(
-            url, options=options, addons=addons, content=body, timeout=timeout
+            url,
+            options=options,
+            addons=addons,
+            headers=headers,
+            content=body,
+            timeout=timeout,
         )
         self.logger.info("json: %s", result)
         res = AsyncPrerecordedResponse.from_json(result)

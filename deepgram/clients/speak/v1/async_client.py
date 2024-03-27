@@ -49,6 +49,7 @@ class AsyncSpeakClient(AbstractAsyncRestClient):
         source: SpeakSource,
         options: Optional[Union[Dict, SpeakOptions]] = None,
         addons: Optional[Dict] = None,
+        headers: Optional[Dict] = None,
         timeout: Optional[httpx.Timeout] = None,
         endpoint: str = "v1/speak",
     ) -> SpeakResponse:
@@ -74,6 +75,7 @@ class AsyncSpeakClient(AbstractAsyncRestClient):
             options = json.loads(options.to_json())
         self.logger.info("options: %s", options)
         self.logger.info("addons: %s", addons)
+        self.logger.info("headers: %s", headers)
 
         returnVals = [
             "content-type",
@@ -88,6 +90,7 @@ class AsyncSpeakClient(AbstractAsyncRestClient):
             url,
             options=options,
             addons=addons,
+            headers=headers,
             json=body,
             timeout=timeout,
             file_result=returnVals,
@@ -114,12 +117,20 @@ class AsyncSpeakClient(AbstractAsyncRestClient):
         source: SpeakSource,
         options: Optional[Union[Dict, SpeakOptions]] = None,
         addons: Optional[Dict] = None,
+        headers: Optional[Dict] = None,
         timeout: Optional[httpx.Timeout] = None,
         endpoint: str = "v1/speak",
     ) -> SpeakResponse:
         self.logger.debug("AsyncSpeakClient.save ENTER")
 
-        res = await self.stream(source, options, addons, timeout, endpoint)
+        res = await self.stream(
+            source,
+            options=options,
+            addons=addons,
+            headers=headers,
+            timeout=timeout,
+            endpoint=endpoint,
+        )
 
         # save to file
         async with aiofiles.open(filename, "wb") as out:

@@ -58,6 +58,7 @@ class AsyncLiveClient:
         self,
         options: Optional[Union[LiveOptions, Dict]] = None,
         addons: Optional[Dict] = None,
+        headers: Optional[Dict] = None,
         members: Optional[Dict] = None,
         **kwargs,
     ) -> bool:
@@ -67,6 +68,7 @@ class AsyncLiveClient:
         self.logger.debug("AsyncLiveClient.start ENTER")
         self.logger.info("options: %s", options)
         self.logger.info("addons: %s", addons)
+        self.logger.info("headers: %s", headers)
         self.logger.info("members: %s", members)
         self.logger.info("kwargs: %s", kwargs)
 
@@ -82,6 +84,7 @@ class AsyncLiveClient:
 
         self.options = options
         self.addons = addons
+        self.headers = headers
 
         # add "members" as members of the class
         if members is not None:
@@ -100,16 +103,23 @@ class AsyncLiveClient:
         combined_options = self.options
         if addons is not None:
             self.logger.info("merging addons to options")
-            combined_options.update(addons)
+            combined_options.update(self.addons)
             self.logger.info("new options: %s", combined_options)
         self.logger.debug("combined_options: %s", combined_options)
+
+        combined_headers = self.config.headers
+        if headers is not None:
+            self.logger.info("merging headers to options")
+            combined_headers.update(self.headers)
+            self.logger.info("new headers: %s", combined_headers)
+        self.logger.debug("combined_headers: %s", combined_headers)
 
         url_with_params = append_query_params(self.websocket_url, combined_options)
 
         try:
             self._socket = await websockets.connect(
                 url_with_params,
-                extra_headers=self.config.headers,
+                extra_headers=combined_headers,
                 ping_interval=PING_INTERVAL,
             )
             self._exit_event = asyncio.Event()
