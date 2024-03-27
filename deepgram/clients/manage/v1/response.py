@@ -116,6 +116,9 @@ class MembersResponse:
 @dataclass
 class Key:
     api_key_id: str = ""
+    key: Optional[str] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
     comment: Optional[str] = ""
     created: str = ""
     scopes: List[str] = None
