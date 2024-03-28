@@ -72,7 +72,7 @@ class LiveOptions:
     profanity_filter: Optional[bool] = field(
         default=None, metadata=config(exclude=lambda f: f is None)
     )
-    redact: Optional[bool] = field(
+    redact: Optional[Union[List[str], bool, str]] = field(
         default=None, metadata=config(exclude=lambda f: f is None)
     )
     replace: Optional[str] = field(
