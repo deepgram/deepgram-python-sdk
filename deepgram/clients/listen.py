@@ -35,11 +35,14 @@ from .live import (
 
 # responses
 from .live import (
+    OpenResponse,
     LiveResultResponse,
     MetadataResponse,
     SpeechStartedResponse,
     UtteranceEndResponse,
+    CloseResponse,
     ErrorResponse,
+    UnhandledResponse,
 )
 
 

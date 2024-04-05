@@ -12,8 +12,9 @@ from .v1.response import (
     MetadataResponse as MetadataResponseLatest,
     SpeechStartedResponse as SpeechStartedResponseLatest,
     UtteranceEndResponse as UtteranceEndResponseLatest,
-    ErrorResponse as ErrorResponseLatest,
     CloseResponse as CloseResponseLatest,
+    ErrorResponse as ErrorResponseLatest,
+    UnhandledResponse as UnhandledResponseLatest,
 )
 
 """
@@ -72,6 +73,14 @@ class UtteranceEndResponse(UtteranceEndResponseLatest):
     pass
 
 
+class CloseResponse(CloseResponseLatest):
+    """
+    pass through for CloseResponse based on API version
+    """
+
+    pass
+
+
 class ErrorResponse(ErrorResponseLatest):
     """
     pass through for ErrorResponse based on API version
@@ -80,9 +89,9 @@ class ErrorResponse(ErrorResponseLatest):
     pass
 
 
-class CloseResponse(CloseResponseLatest):
+class UnhandledResponse(UnhandledResponseLatest):
     """
-    pass through for CloseResponse based on API version
+    pass through for UnhandledResponse based on API version
     """
 
     pass

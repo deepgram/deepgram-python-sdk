@@ -12,8 +12,9 @@ from .client import (
     MetadataResponse,
     SpeechStartedResponse,
     UtteranceEndResponse,
-    ErrorResponse,
     CloseResponse,
+    ErrorResponse,
+    UnhandledResponse,
 )
 
 from ...options import DeepgramClientOptions

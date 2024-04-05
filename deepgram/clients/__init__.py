@@ -16,8 +16,9 @@ from .live import (
     MetadataResponse,
     SpeechStartedResponse,
     UtteranceEndResponse,
-    ErrorResponse,
     CloseResponse,
+    ErrorResponse,
+    UnhandledResponse,
 )
 
 # prerecorded

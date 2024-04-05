@@ -59,19 +59,23 @@ async def main():
         async def on_utterance_end(self, utterance_end, **kwargs):
             print(f"\n\n{utterance_end}\n\n")
 
-        async def on_error(self, error, **kwargs):
+        def on_close(self, close, **kwargs):
+            print(f"\n\n{close}\n\n")
+
+        def on_error(self, error, **kwargs):
             print(f"\n\n{error}\n\n")
 
-        async def on_close(self, close, **kwargs):
-            print(f"\n\n{close}\n\n")
+        def on_unhandled(self, unhandled, **kwargs):
+            print(f"\n\n{unhandled}\n\n")
 
         dg_connection.on(LiveTranscriptionEvents.Open, on_open)
         dg_connection.on(LiveTranscriptionEvents.Transcript, on_message)
         dg_connection.on(LiveTranscriptionEvents.Metadata, on_metadata)
         dg_connection.on(LiveTranscriptionEvents.SpeechStarted, on_speech_started)
         dg_connection.on(LiveTranscriptionEvents.UtteranceEnd, on_utterance_end)
-        dg_connection.on(LiveTranscriptionEvents.Error, on_error)
         dg_connection.on(LiveTranscriptionEvents.Close, on_close)
+        dg_connection.on(LiveTranscriptionEvents.Error, on_error)
+        dg_connection.on(LiveTranscriptionEvents.Unhandled, on_unhandled)
 
         # connect to websocket
         options: LiveOptions = LiveOptions(

@@ -23,8 +23,9 @@ from .client import (
     MetadataResponse,
     SpeechStartedResponse,
     UtteranceEndResponse,
-    ErrorResponse,
     CloseResponse,
+    UnhandledResponse,
+    ErrorResponse,
 )
 
 # prerecorded

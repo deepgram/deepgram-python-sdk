@@ -18,8 +18,9 @@ from .response import (
     MetadataResponse,
     SpeechStartedResponse,
     UtteranceEndResponse,
-    ErrorResponse,
     CloseResponse,
+    ErrorResponse,
+    UnhandledResponse,
 )
 from .options import LiveOptions
 
@@ -244,14 +245,6 @@ class AsyncLiveClient:
                             utterance_end=result,
                             **dict(self.kwargs),
                         )
-                    case LiveTranscriptionEvents.Error.value:
-                        result = ErrorResponse.from_json(message)
-                        self.logger.verbose("LiveTranscriptionEvents: %s", result)
-                        await self._emit(
-                            LiveTranscriptionEvents.Error,
-                            error=result,
-                            **dict(self.kwargs),
-                        )
                     case LiveTranscriptionEvents.Close.value:
                         result = CloseResponse.from_json(message)
                         self.logger.verbose("CloseResponse: %s", result)
@@ -260,18 +253,29 @@ class AsyncLiveClient:
                             close=result,
                             **dict(self.kwargs),
                         )
+                    case LiveTranscriptionEvents.Error.value:
+                        result = ErrorResponse.from_json(message)
+                        self.logger.verbose("LiveTranscriptionEvents: %s", result)
+                        await self._emit(
+                            LiveTranscriptionEvents.Error,
+                            error=result,
+                            **dict(self.kwargs),
+                        )
                     case _:
                         self.logger.warning(
                             "Unknown Message: response_type: %s, data: %s",
                             response_type,
                             data,
                         )
-                        error = ErrorResponse(
-                            type="UnhandledMessage",
-                            description="Unknown message type",
-                            message=f"Unhandle message type: {response_type}",
+                        unhandled = UnhandledResponse(
+                            type=LiveTranscriptionEvents.Unhandled.value,
+                            raw=message,
                         )
-                        await self._emit(LiveTranscriptionEvents.Error, error=error)
+                        self._emit(
+                            LiveTranscriptionEvents.Unhandled,
+                            unhandled=unhandled,
+                            **dict(self.kwargs),
+                        )
 
             except websockets.exceptions.ConnectionClosedOK as e:
                 self.logger.notice(f"_listening({e.code}) exiting gracefully")
@@ -495,13 +499,17 @@ class AsyncLiveClient:
             except Exception as e:
                 self.logger.error(f"_signal_exit - Exception: {str(e)}")
 
-            await asyncio.sleep(0.5)
-
             # push close event
-            await self._emit(
-                LiveTranscriptionEvents.Close,
-                CloseResponse(type=LiveTranscriptionEvents.Close.value),
-            )
+            try:
+                await self._emit(
+                    LiveTranscriptionEvents.Close,
+                    CloseResponse(type=LiveTranscriptionEvents.Close.value),
+                )
+            except Exception as e:
+                self.logger.error(f"_signal_exit - Exception: {str(e)}")
+
+            # wait for task to send
+            await asyncio.sleep(0.5)
 
         # signal exit
         self._exit_event.set()
