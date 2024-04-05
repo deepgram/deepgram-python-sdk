@@ -473,7 +473,15 @@ class LiveClient:
         self.logger.notice("closing socket...")
         if self._socket is not None:
             self.logger.notice("sending CloseStream...")
-            self.send(json.dumps({"type": "CloseStream"}))
+            try:
+                # if the socket connection is closed, the following line might throw an error
+                self._socket.send(json.dumps({"type": "CloseStream"}))
+            except websockets.exceptions.ConnectionClosedOK as e:
+                self.logger.notice(f"_signal_exit  - connection closed: {e.code}")
+            except websockets.exceptions.WebSocketException as e:
+                self.logger.error(f"_signal_exit - WebSocketException: {str(e)}")
+            except Exception as e:
+                self.logger.error(f"_signal_exit - Exception: {str(e)}")
 
             time.sleep(0.5)
 

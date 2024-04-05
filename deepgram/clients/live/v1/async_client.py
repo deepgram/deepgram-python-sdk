@@ -488,8 +488,12 @@ class AsyncLiveClient:
             try:
                 # if the socket connection is closed, the following line might throw an error
                 await self._socket.send(json.dumps({"type": "CloseStream"}))
+            except websockets.exceptions.ConnectionClosedOK as e:
+                self.logger.notice(f"_signal_exit  - connection closed: {e.code}")
+            except websockets.exceptions.WebSocketException as e:
+                self.logger.error(f"_signal_exit - WebSocketException: {str(e)}")
             except Exception as e:
-                self.logger.error("Exception in AsyncLiveClient._signal_exit, %s", e)
+                self.logger.error(f"_signal_exit - Exception: {str(e)}")
 
             await asyncio.sleep(0.5)
 
