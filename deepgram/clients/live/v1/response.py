@@ -291,6 +291,29 @@ class UtteranceEndResponse:
         return self.to_json(indent=4)
 
 
+# Close Message
+
+
+@dataclass_json
+@dataclass
+class CloseResponse:
+    """
+    Close Message from the Deepgram Platform
+    """
+
+    type: str = ""
+
+    def __getitem__(self, key):
+        _dict = self.to_dict()
+        return _dict[key]
+
+    def __setitem__(self, key, val):
+        self.__dict__[key] = val
+
+    def __str__(self) -> str:
+        return self.to_json(indent=4)
+
+
 # Error Message
 
 
@@ -317,14 +340,18 @@ class ErrorResponse:
         return self.to_json(indent=4)
 
 
+# Unhandled Message
+
+
 @dataclass_json
 @dataclass
-class CloseResponse:
+class UnhandledResponse:
     """
-    Close Message from the Deepgram Platform
+    Unhandled Message from the Deepgram Platform
     """
 
     type: str = ""
+    raw: str = ""
 
     def __getitem__(self, key):
         _dict = self.to_dict()

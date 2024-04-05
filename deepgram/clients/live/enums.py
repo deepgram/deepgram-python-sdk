@@ -17,4 +17,5 @@ class LiveTranscriptionEvents(str, Enum):
     UtteranceEnd: str = "UtteranceEnd"
     SpeechStarted: str = "SpeechStarted"
     Error: str = "Error"
+    Unhandled: str = "Unhandled"
     Warning: str = "Warning"
