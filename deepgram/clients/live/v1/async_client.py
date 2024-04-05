@@ -485,7 +485,11 @@ class AsyncLiveClient:
         self.logger.verbose("closing socket...")
         if self._socket is not None:
             self.logger.verbose("send CloseStream...")
-            await self._socket.send(json.dumps({"type": "CloseStream"}))
+            try:
+                # if the socket connection is closed, the following line might throw an error
+                await self._socket.send(json.dumps({"type": "CloseStream"}))
+            except Exception as e:
+                self.logger.error("Exception in AsyncLiveClient._signal_exit, %s", e)
 
             await asyncio.sleep(0.5)
 
