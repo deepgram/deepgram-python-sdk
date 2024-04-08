@@ -33,13 +33,13 @@ class PrerecordedOptions:
     callback_method: Optional[str] = field(
         default=None, metadata=config(exclude=lambda f: f is None)
     )
-    custom_intent: Optional[Union[list, str]] = field(
+    custom_intent: Optional[Union[List[str], str]] = field(
         default=None, metadata=config(exclude=lambda f: f is None)
     )
     custom_intent_mode: Optional[str] = field(
         default=None, metadata=config(exclude=lambda f: f is None)
     )
-    custom_topics: Optional[Union[list, str]] = field(
+    custom_topics: Optional[Union[List[str], str]] = field(
         default=None, metadata=config(exclude=lambda f: f is None)
     )
     custom_topic_mode: Optional[str] = field(
@@ -66,7 +66,7 @@ class PrerecordedOptions:
     encoding: Optional[str] = field(
         default=None, metadata=config(exclude=lambda f: f is None)
     )
-    extra: Optional[Union[list, str]] = field(
+    extra: Optional[Union[List[str], str]] = field(
         default=None, metadata=config(exclude=lambda f: f is None)
     )
     filler_words: Optional[bool] = field(
@@ -75,7 +75,7 @@ class PrerecordedOptions:
     intents: Optional[bool] = field(
         default=None, metadata=config(exclude=lambda f: f is None)
     )
-    keywords: Optional[Union[list, str]] = field(
+    keywords: Optional[Union[List[str], str]] = field(
         default=None, metadata=config(exclude=lambda f: f is None)
     )
     language: Optional[str] = field(
@@ -105,13 +105,13 @@ class PrerecordedOptions:
     redact: Optional[Union[List[str], bool, str]] = field(
         default=None, metadata=config(exclude=lambda f: f is None)
     )
-    replace: Optional[Union[list, str]] = field(
+    replace: Optional[Union[List[str], str]] = field(
         default=None, metadata=config(exclude=lambda f: f is None)
     )
     sample_rate: Optional[int] = field(
         default=None, metadata=config(exclude=lambda f: f is None)
     )
-    search: Optional[Union[list, str]] = field(
+    search: Optional[Union[List[str], str]] = field(
         default=None, metadata=config(exclude=lambda f: f is None)
     )
     sentiment: Optional[bool] = field(
@@ -123,7 +123,7 @@ class PrerecordedOptions:
     summarize: Optional[Union[bool, str]] = field(
         default=None, metadata=config(exclude=lambda f: f is None)
     )
-    tag: Optional[list] = field(
+    tag: Optional[List[str]] = field(
         default=None, metadata=config(exclude=lambda f: f is None)
     )
     tier: Optional[str] = field(

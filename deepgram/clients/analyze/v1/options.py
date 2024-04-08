@@ -6,7 +6,7 @@ from dataclasses import dataclass, field
 from dataclasses_json import dataclass_json, config
 
 from io import BufferedReader
-from typing import Union, Optional
+from typing import List, Union, Optional
 from typing_extensions import TypedDict
 import logging, verboselogs
 
@@ -27,13 +27,13 @@ class AnalyzeOptions:
     callback_method: Optional[str] = field(
         default=None, metadata=config(exclude=lambda f: f is None)
     )
-    custom_intent: Optional[Union[list, str]] = field(
+    custom_intent: Optional[Union[List[str], str]] = field(
         default=None, metadata=config(exclude=lambda f: f is None)
     )
     custom_intent_mode: Optional[str] = field(
         default=None, metadata=config(exclude=lambda f: f is None)
     )
-    custom_topic: Optional[Union[list, str]] = field(
+    custom_topic: Optional[Union[List[str], str]] = field(
         default=None, metadata=config(exclude=lambda f: f is None)
     )
     custom_topic_mode: Optional[str] = field(
