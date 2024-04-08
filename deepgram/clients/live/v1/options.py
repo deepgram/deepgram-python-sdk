@@ -42,7 +42,7 @@ class LiveOptions:
     endpointing: Optional[str] = field(
         default=None, metadata=config(exclude=lambda f: f is None)
     )
-    extra: Optional[Union[list, str]] = field(
+    extra: Optional[Union[List[str], str]] = field(
         default=None, metadata=config(exclude=lambda f: f is None)
     )
     filler_words: Optional[bool] = field(
@@ -51,7 +51,7 @@ class LiveOptions:
     interim_results: Optional[bool] = field(
         default=None, metadata=config(exclude=lambda f: f is None)
     )
-    keywords: Optional[str] = field(
+    keywords: Optional[Union[List[str], str]] = field(
         default=None, metadata=config(exclude=lambda f: f is None)
     )
     language: Optional[str] = field(
@@ -75,19 +75,19 @@ class LiveOptions:
     redact: Optional[Union[List[str], bool, str]] = field(
         default=None, metadata=config(exclude=lambda f: f is None)
     )
-    replace: Optional[str] = field(
+    replace: Optional[Union[List[str], str]] = field(
         default=None, metadata=config(exclude=lambda f: f is None)
     )
     sample_rate: Optional[int] = field(
         default=None, metadata=config(exclude=lambda f: f is None)
     )
-    search: Optional[str] = field(
+    search: Optional[Union[List[str], str]] = field(
         default=None, metadata=config(exclude=lambda f: f is None)
     )
     smart_format: Optional[bool] = field(
         default=None, metadata=config(exclude=lambda f: f is None)
     )
-    tag: Optional[list] = field(
+    tag: Optional[List[str]] = field(
         default=None, metadata=config(exclude=lambda f: f is None)
     )
     tier: Optional[str] = field(
