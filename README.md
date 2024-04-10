@@ -14,6 +14,7 @@ Official Python SDK for [Deepgram](https://www.deepgram.com/). Power your apps w
   - [PreRecorded Audio Transcription Quickstart](#prerecorded-audio-transcription-quickstart)
   - [Live Audio Transcription Quickstart](#live-audio-transcription-quickstart)
 - [Examples](#examples)
+- [Logging](#logging)
 - [Development and Contributing](#development-and-contributing)
 - [Getting Help](#getting-help)
 
@@ -202,6 +203,24 @@ These examples provide:
     - Usage - [examples/manage/usage](https://github.com/deepgram/deepgram-python-sdk/blob/main/examples/manage/usage/main.py)
 
 To run each example set the `DEEPGRAM_API_KEY` as an environment variable, then `cd` into each example folder and execute the example: `go run main.py`.
+
+
+# Logging
+
+This SDK provides logging as a means to troubleshoot and debug issues encountered. By default, this SDK will enable `Information` level messages and higher (ie `Warning`, `Error`, etc) when you initialize the library as follows:
+
+```python
+deepgram: DeepgramClient = DeepgramClient()
+```
+
+To increase the logging output/verbosity for debug or troubleshooting purposes, you can set the `DEBUG` level but using this code:
+
+```python
+config: DeepgramClientOptions = DeepgramClientOptions(
+    verbose=logging.DEBUG,
+)
+deepgram: DeepgramClient = DeepgramClient("", config)
+```
 
 # Development and Contributing
 
