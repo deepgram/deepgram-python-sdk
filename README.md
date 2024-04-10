@@ -15,6 +15,7 @@ Official Python SDK for [Deepgram](https://www.deepgram.com/). Power your apps w
   - [Live Audio Transcription Quickstart](#live-audio-transcription-quickstart)
 - [Examples](#examples)
 - [Logging](#logging)
+- [Backwards Compatibility](#backwards-compatibility)
 - [Development and Contributing](#development-and-contributing)
 - [Getting Help](#getting-help)
 
@@ -221,6 +222,9 @@ config: DeepgramClientOptions = DeepgramClientOptions(
 )
 deepgram: DeepgramClient = DeepgramClient("", config)
 ```
+# Backwards Compatibility
+
+Older SDK versions will receive Priority 1 (P1) bug support only. Security issues, both in our code and dependencies, are promptly addressed. Significant bugs without clear workarounds are also given priority attention.
 
 # Development and Contributing
 
