@@ -44,20 +44,24 @@ def main():
                     utterance = ' '.join(is_finals)
                     print(f"Speech Final: {utterance}")
                     is_finals = []
+                else:
+                    # These are useful if you need real time captioning and update what the Interim Results produced
+                    print(f"Is Final: {sentence}")
             else:
+                # These are useful if you need real time captioning of what is being spoken
                 print(f"Interim Results: {sentence}")
 
         def on_metadata(self, metadata, **kwargs):
             print(f"Deepgram Metadata: {metadata}")
 
         def on_speech_started(self, speech_started, **kwargs):
-            print(f"Speech Started")
+            print(f"Deepgram Speech Started")
 
         def on_utterance_end(self, utterance_end, **kwargs):
             global is_finals
             if len(is_finals) > 0:
                 utterance = ' '.join(is_finals)
-                print(f"Utterance End: {utterance}")
+                print(f"Deepgram Utterance End: {utterance}")
                 is_finals = []
 
         def on_close(self, close, **kwargs):
