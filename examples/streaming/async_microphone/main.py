@@ -18,6 +18,8 @@ from deepgram import (
 
 load_dotenv()
 
+# We will collect the is_final=true messages here so we can use them when the person finishes speaking
+is_finals = []
 
 async def main():
     try:
@@ -42,31 +44,52 @@ async def main():
         dg_connection = deepgram.listen.asynclive.v("1")
 
         async def on_open(self, open, **kwargs):
-            print(f"\n\n{open}\n\n")
+            print(f"Deepgram Connection Open")
 
         async def on_message(self, result, **kwargs):
+            global is_finals
             sentence = result.channel.alternatives[0].transcript
             if len(sentence) == 0:
                 return
-            print(f"speaker: {sentence}")
+            if result.is_final:
+                # We need to collect these and concatenate them together when we get a speech_final=true
+                # See docs: https://developers.deepgram.com/docs/understand-endpointing-interim-results
+                is_finals.append(sentence)
+
+                # Speech Final means we have detected sufficent silence to consider this end of speech
+                # Speech final is the lowest latency result as it triggers as soon an the endpointing value has triggered
+                if result.speech_final:
+                    utterance = ' '.join(is_finals)
+                    print(f"Speech Final: {utterance}")
+                    is_finals = []
+                else:
+                    # These are useful if you need real time captioning and update what the Interim Results produced
+                    print(f"Is Final: {sentence}")
+            else:
+                # These are useful if you need real time captioning of what is being spoken
+                print(f"Interim Results: {sentence}")
 
         async def on_metadata(self, metadata, **kwargs):
-            print(f"\n\n{metadata}\n\n")
+            print(f"Deepgram Metadata: {metadata}")
 
         async def on_speech_started(self, speech_started, **kwargs):
-            print(f"\n\n{speech_started}\n\n")
+            print(f"Deepgram Speech Started")
 
         async def on_utterance_end(self, utterance_end, **kwargs):
-            print(f"\n\n{utterance_end}\n\n")
+            global is_finals
+            if len(is_finals) > 0:
+                utterance = ' '.join(is_finals)
+                print(f"Deepgram Utterance End: {utterance}")
+                is_finals = []
 
-        def on_close(self, close, **kwargs):
-            print(f"\n\n{close}\n\n")
+        async def on_close(self, close, **kwargs):
+            print(f"Deepgram Connection Closed")
 
-        def on_error(self, error, **kwargs):
-            print(f"\n\n{error}\n\n")
+        async def on_error(self, error, **kwargs):
+            print(f"Deepgram Handled Error: {error}")
 
-        def on_unhandled(self, unhandled, **kwargs):
-            print(f"\n\n{unhandled}\n\n")
+        async def on_unhandled(self, unhandled, **kwargs):
+            print(f"Deepgram Unhandled Websocket Message: {unhandled}")
 
         dg_connection.on(LiveTranscriptionEvents.Open, on_open)
         dg_connection.on(LiveTranscriptionEvents.Transcript, on_message)
@@ -80,8 +103,10 @@ async def main():
         # connect to websocket
         options: LiveOptions = LiveOptions(
             model="nova-2",
-            punctuate=True,
             language="en-US",
+            # Apply smart formatting to the output
+            smart_format=True,
+            # Raw audio format deatils
             encoding="linear16",
             channels=1,
             sample_rate=16000,
@@ -89,10 +114,17 @@ async def main():
             interim_results=True,
             utterance_end_ms="1000",
             vad_events=True,
+            # Time in milliseconds of silence to wait for before finalizing speech
+            endpointing=300
         )
 
+        addons = {
+            # Prevent waiting for additional numbers
+            "no_delay": "true"
+        }
+
         print("\n\nStart talking! Press Ctrl+C to stop...\n")
-        if await dg_connection.start(options) is False:
+        if await dg_connection.start(options, addons=addons) is False:
             print("Failed to connect to Deepgram")
             return
 
