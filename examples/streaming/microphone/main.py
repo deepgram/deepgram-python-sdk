@@ -16,6 +16,7 @@ from deepgram import (
 
 load_dotenv()
 
+# We will collect the is_final=true messages here so we can use them when the person finishes speaking
 is_finals = []
 
 def main():
