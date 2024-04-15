@@ -16,6 +16,7 @@ from deepgram import (
 
 load_dotenv()
 
+is_finals = []
 
 def main():
     try:
@@ -30,31 +31,43 @@ def main():
         dg_connection = deepgram.listen.live.v("1")
 
         def on_open(self, open, **kwargs):
-            print(f"\n\n{open}\n\n")
+            print(f"Deepgram Connection Open")
 
         def on_message(self, result, **kwargs):
+            global is_finals
             sentence = result.channel.alternatives[0].transcript
             if len(sentence) == 0:
                 return
-            print(f"speaker: {sentence}")
+            if result.is_final:
+                is_finals.append(sentence)
+                if result.speech_final:
+                    utterance = ' '.join(is_finals)
+                    print(f"Speech Final: {utterance}")
+                    is_finals = []
+            else:
+                print(f"Interim Results: {sentence}")
 
         def on_metadata(self, metadata, **kwargs):
-            print(f"\n\n{metadata}\n\n")
+            print(f"Deepgram Metadata: {metadata}")
 
         def on_speech_started(self, speech_started, **kwargs):
-            print(f"\n\n{speech_started}\n\n")
+            print(f"Speech Started")
 
         def on_utterance_end(self, utterance_end, **kwargs):
-            print(f"\n\n{utterance_end}\n\n")
+            global is_finals
+            if len(is_finals) > 0:
+                utterance = ' '.join(is_finals)
+                print(f"Utterance End: {utterance}")
+                is_finals = []
 
         def on_close(self, close, **kwargs):
-            print(f"\n\n{close}\n\n")
+            print(f"Deepgram Connection Closed")
 
         def on_error(self, error, **kwargs):
-            print(f"\n\n{error}\n\n")
+            print(f"Deepgram Handled Error: {error}")
 
         def on_unhandled(self, unhandled, **kwargs):
-            print(f"\n\n{unhandled}\n\n")
+            print(f"Deepgram Unhandled Error: {unhandled}")
 
         dg_connection.on(LiveTranscriptionEvents.Open, on_open)
         dg_connection.on(LiveTranscriptionEvents.Transcript, on_message)
@@ -67,8 +80,10 @@ def main():
 
         options: LiveOptions = LiveOptions(
             model="nova-2",
-            punctuate=True,
             language="en-US",
+            # Apply smart formatting to the output
+            smart_format=True,
+            # Raw audio format deatils
             encoding="linear16",
             channels=1,
             sample_rate=16000,
@@ -76,6 +91,10 @@ def main():
             interim_results=True,
             utterance_end_ms="1000",
             vad_events=True,
+            # Time in milliseconds of silence to wait for before finalizing speech
+            endpointing=300,
+            # Prevent waiting for additional numbers
+            # no_delay=True
         )
 
         print("\n\nPress Enter to stop recording...\n\n")
