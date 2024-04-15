@@ -101,13 +101,16 @@ def main():
             utterance_end_ms="1000",
             vad_events=True,
             # Time in milliseconds of silence to wait for before finalizing speech
-            endpointing=300,
-            # Prevent waiting for additional numbers
-            # no_delay=True
+            endpointing=300
         )
 
+        addons = {
+            # Prevent waiting for additional numbers
+            "no_delay": "true"
+        }
+
         print("\n\nPress Enter to stop recording...\n\n")
-        if dg_connection.start(options) is False:
+        if dg_connection.start(options, addons=addons) is False:
             print("Failed to connect to Deepgram")
             return
 
