@@ -39,7 +39,12 @@ def main():
             if len(sentence) == 0:
                 return
             if result.is_final:
+                # We need to collect these and concatenate them together when we get a speech_final=true
+                # See docs: https://developers.deepgram.com/docs/understand-endpointing-interim-results
                 is_finals.append(sentence)
+
+                # Speech Final means we have detected sufficent silence to consider this end of speech
+                # Speech final is the lowest latency result as it triggers as soon an the endpointing value has triggered
                 if result.speech_final:
                     utterance = ' '.join(is_finals)
                     print(f"Speech Final: {utterance}")
