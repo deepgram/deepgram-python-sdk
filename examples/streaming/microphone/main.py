@@ -76,7 +76,7 @@ def main():
             print(f"Deepgram Handled Error: {error}")
 
         def on_unhandled(self, unhandled, **kwargs):
-            print(f"Deepgram Unhandled Error: {unhandled}")
+            print(f"Deepgram Unhandled Websocket Message: {unhandled}")
 
         dg_connection.on(LiveTranscriptionEvents.Open, on_open)
         dg_connection.on(LiveTranscriptionEvents.Transcript, on_message)
