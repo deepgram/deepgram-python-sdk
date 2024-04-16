@@ -184,7 +184,7 @@ class LiveClient:
 
         while True:
             try:
-                if self._exit_event.is_set():
+                if self._exit_event is not None and self._exit_event.is_set():
                     self.logger.notice("_listening exiting gracefully")
                     self.logger.debug("LiveClient._listening LEAVE")
                     return
@@ -336,7 +336,7 @@ class LiveClient:
                 counter += 1
 
                 self._exit_event.wait(timeout=ONE_SECOND)
-                if self._exit_event.is_set():
+                if self._exit_event is not None and self._exit_event.is_set():
                     self.logger.notice("_keep_alive exiting gracefully")
                     self.logger.debug("LiveClient._keep_alive LEAVE")
                     return
@@ -407,7 +407,7 @@ class LiveClient:
         """
         self.logger.spam("LiveClient.send ENTER")
 
-        if self._exit_event.is_set():
+        if self._exit_event is not None and self._exit_event.is_set():
             self.logger.notice("send exiting gracefully")
             self.logger.debug("AsyncLiveClient.send LEAVE")
             return False
