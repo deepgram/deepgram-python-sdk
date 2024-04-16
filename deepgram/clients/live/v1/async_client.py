@@ -336,7 +336,7 @@ class AsyncLiveClient:
                 counter += 1
                 await asyncio.sleep(ONE_SECOND)
 
-                if self._exit_event is not None and self._exit_event.is_set()::
+                if self._exit_event is not None and self._exit_event.is_set():
                     self.logger.notice("_keep_alive exiting gracefully")
                     self.logger.debug("AsyncLiveClient._keep_alive LEAVE")
                     return
