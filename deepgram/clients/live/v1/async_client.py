@@ -50,7 +50,7 @@ class AsyncLiveClient:
         self.config = config
         self.endpoint = "v1/listen"
         self._socket = None
-        self._exit_event = None
+        self._exit_event = asyncio.Event()
         self._event_handlers = {event: [] for event in LiveTranscriptionEvents}
         self.websocket_url = convert_to_websocket_url(self.config.url, self.endpoint)
 
@@ -123,7 +123,7 @@ class AsyncLiveClient:
                 extra_headers=combined_headers,
                 ping_interval=PING_INTERVAL,
             )
-            self._exit_event = asyncio.Event()
+            self._exit_event.clear()
 
             # listen thread
             self._listen_thread = asyncio.create_task(self._listening())
@@ -184,7 +184,7 @@ class AsyncLiveClient:
 
         while True:
             try:
-                if self._exit_event is not None and self._exit_event.is_set():
+                if self._exit_event.is_set():
                     self.logger.notice("_listening exiting gracefully")
                     self.logger.debug("AsyncLiveClient._listening LEAVE")
                     return
@@ -336,7 +336,7 @@ class AsyncLiveClient:
                 counter += 1
                 await asyncio.sleep(ONE_SECOND)
 
-                if self._exit_event is not None and self._exit_event.is_set():
+                if self._exit_event.is_set():
                     self.logger.notice("_keep_alive exiting gracefully")
                     self.logger.debug("AsyncLiveClient._keep_alive LEAVE")
                     return
@@ -409,7 +409,7 @@ class AsyncLiveClient:
         """
         self.logger.spam("AsyncLiveClient.send ENTER")
 
-        if self._exit_event is not None and self._exit_event.is_set():
+        if self._exit_event.is_set():
             self.logger.notice("send exiting gracefully")
             self.logger.debug("AsyncLiveClient.send LEAVE")
             return False
