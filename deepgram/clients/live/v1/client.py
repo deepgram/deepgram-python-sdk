@@ -52,7 +52,8 @@ class LiveClient:
         self.config = config
         self.endpoint = "v1/listen"
         self._socket = None
-        self._exit_event = None
+        self._exit_event = threading.Event()
+        self._lock_send = threading.Lock()
         self._event_handlers = {event: [] for event in LiveTranscriptionEvents}
         self.websocket_url = convert_to_websocket_url(self.config.url, self.endpoint)
 
@@ -120,8 +121,7 @@ class LiveClient:
         url_with_params = append_query_params(self.websocket_url, combined_options)
         try:
             self._socket = connect(url_with_params, additional_headers=combined_headers)
-            self._exit_event = threading.Event()
-            self._lock_send = threading.Lock()
+            self._exit_event.clear()
 
             # listening thread
             self._listen_thread = threading.Thread(target=self._listening)
@@ -184,7 +184,7 @@ class LiveClient:
 
         while True:
             try:
-                if self._exit_event is not None and self._exit_event.is_set():
+                if self._exit_event.is_set():
                     self.logger.notice("_listening exiting gracefully")
                     self.logger.debug("LiveClient._listening LEAVE")
                     return
@@ -336,7 +336,7 @@ class LiveClient:
                 counter += 1
 
                 self._exit_event.wait(timeout=ONE_SECOND)
-                if self._exit_event is not None and self._exit_event.is_set():
+                if self._exit_event.is_set():
                     self.logger.notice("_keep_alive exiting gracefully")
                     self.logger.debug("LiveClient._keep_alive LEAVE")
                     return
@@ -407,7 +407,7 @@ class LiveClient:
         """
         self.logger.spam("LiveClient.send ENTER")
 
-        if self._exit_event is not None and self._exit_event.is_set():
+        if self._exit_event.is_set():
             self.logger.notice("send exiting gracefully")
             self.logger.debug("AsyncLiveClient.send LEAVE")
             return False
