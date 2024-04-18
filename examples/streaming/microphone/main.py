@@ -93,7 +93,7 @@ def main():
             language="en-US",
             # Apply smart formatting to the output
             smart_format=True,
-            # Raw audio format deatils
+            # Raw audio format details
             encoding="linear16",
             channels=1,
             sample_rate=16000,
