@@ -283,6 +283,11 @@ class AsyncLiveClient:
                 return
 
             except websockets.exceptions.WebSocketException as e:
+                if e.code == 1000:
+                    self.logger.notice(f"_listening({e.code}) exiting gracefully")
+                    self.logger.debug("AsyncLiveClient._listening LEAVE")
+                    return
+
                 self.logger.error(
                     "WebSocketException in AsyncLiveClient._listening: %s", e
                 )
@@ -357,6 +362,11 @@ class AsyncLiveClient:
                 return
 
             except websockets.exceptions.WebSocketException as e:
+                if e.code == 1000:
+                    self.logger.notice(f"_keep_alive({e.code}) exiting gracefully")
+                    self.logger.debug("AsyncLiveClient._keep_alive LEAVE")
+                    return
+
                 self.logger.error(
                     "WebSocketException in AsyncLiveClient._keep_alive: %s", e
                 )
@@ -419,11 +429,18 @@ class AsyncLiveClient:
                 await self._socket.send(data)
             except websockets.exceptions.ConnectionClosedOK as e:
                 self.logger.notice(f"send() exiting gracefully: {e.code}")
-                self.logger.debug("AsyncLiveClient._keep_alive LEAVE")
+                self.logger.debug("AsyncLiveClient.send LEAVE")
                 if self.config.options.get("termination_exception_send") == "true":
                     raise
                 return True
             except websockets.exceptions.WebSocketException as e:
+                if e.code == 1000:
+                    self.logger.notice(f"send({e.code}) exiting gracefully")
+                    self.logger.debug("AsyncLiveClient.send LEAVE")
+                    if self.config.options.get("termination_exception_send") == "true":
+                        raise
+                    return True
+
                 self.logger.error("send() failed - WebSocketException: %s", str(e))
                 self.logger.spam("AsyncLiveClient.send LEAVE")
                 if self.config.options.get("termination_exception_send") == "true":
@@ -469,8 +486,6 @@ class AsyncLiveClient:
             # Use asyncio.gather to wait for tasks to be cancelled
             await asyncio.gather(*filter(None, tasks), return_exceptions=True)
             self.logger.notice("threads joined")
-            self._listen_thread = None
-            self._keep_alive_thread = None
 
             self._socket = None
 
