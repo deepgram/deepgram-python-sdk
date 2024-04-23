@@ -73,7 +73,7 @@ This SDK aims to reduce complexity and abtract/hide some internal Deepgram detai
 
 ## PreRecorded Audio Transcription Quickstart
 
-You can find a [walkthrough](https://developers.deepgram.com/docs/pre-recorded-audio-transcription) on our documentation site. Transcribing Pre-Recorded Audio can be done using the following sample code:
+You can find a [walkthrough](https://developers.deepgram.com/docs/python-sdk-pre-recorded-transcription) on our documentation site. Transcribing Pre-Recorded Audio can be done using the following sample code:
 
 ```python
 AUDIO_URL = {
