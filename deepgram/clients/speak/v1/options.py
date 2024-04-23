@@ -21,7 +21,7 @@ class SpeakOptions:
     """
 
     model: Optional[str] = field(
-        default=None, metadata=config(exclude=lambda f: f is None)
+        default="aura-asteria-en", metadata=config(exclude=lambda f: f is None)
     )
     encoding: Optional[str] = field(
         default=None, metadata=config(exclude=lambda f: f is None)

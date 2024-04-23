@@ -40,7 +40,7 @@ def main():
         }
 
         options = PrerecordedOptions(
-            model="nova",
+            model="nova-2",
         )
 
         response = deepgram.listen.prerecorded.v("1").transcribe_file(payload, options)
