@@ -16,7 +16,7 @@ AUDIO_URL = {
 }
 
 options: PrerecordedOptions = PrerecordedOptions(
-    model="nova",
+    model="nova-2",
     smart_format=True,
     summarize="v2",
 )

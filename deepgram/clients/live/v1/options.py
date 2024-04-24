@@ -58,7 +58,7 @@ class LiveOptions:
         default=None, metadata=config(exclude=lambda f: f is None)
     )
     model: Optional[str] = field(
-        default=None, metadata=config(exclude=lambda f: f is None)
+        default="nova-2", metadata=config(exclude=lambda f: f is None)
     )
     multichannel: Optional[bool] = field(
         default=None, metadata=config(exclude=lambda f: f is None)
