@@ -4,6 +4,7 @@
 
 from urllib.parse import urlparse, urlunparse, parse_qs, urlencode
 from typing import Dict
+import re
 
 
 # This function appends query parameters to a URL
@@ -29,11 +30,11 @@ def append_query_params(url: str, params: Dict):
 
 # This function converts a URL to a WebSocket URL
 def convert_to_websocket_url(base_url: str, endpoint: str):
+    if re.match(r"^https?://", base_url, re.IGNORECASE):
+        base_url = base_url.replace("https://", "").replace("http://", "")
+    if not re.match(r"^wss?://", base_url, re.IGNORECASE):
+        base_url = "wss://" + base_url
     parsed_url = urlparse(base_url)
     domain = parsed_url.netloc
-    if parsed_url.scheme == "https":
-        websocket_scheme = "wss"
-    else:
-        websocket_scheme = "ws"
-    websocket_url = urlunparse((websocket_scheme, domain, endpoint, "", "", ""))
+    websocket_url = urlunparse((parsed_url.scheme, domain, endpoint, "", "", ""))
     return websocket_url
