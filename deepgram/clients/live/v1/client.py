@@ -129,7 +129,7 @@ class LiveClient:
 
             # keepalive thread
             if self.config.options.get("keepalive") == "true":
-                self.logger.notice("keepalive is disabled")
+                self.logger.notice("keepalive is enabled")
                 self._keep_alive_thread = threading.Thread(target=self._keep_alive)
                 self._keep_alive_thread.start()
             else:
@@ -283,6 +283,11 @@ class LiveClient:
                 return
 
             except websockets.exceptions.WebSocketException as e:
+                if e.code == 1000:
+                    self.logger.notice(f"_listening({e.code}) exiting gracefully")
+                    self.logger.debug("LiveClient._listening LEAVE")
+                    return
+
                 self.logger.error(
                     "WebSocketException in AsyncLiveClient._listening: %s", e
                 )
@@ -357,6 +362,11 @@ class LiveClient:
                 return
 
             except websockets.exceptions.WebSocketException as e:
+                if e.code == 1000:
+                    self.logger.notice(f"_keep_alive({e.code}) exiting gracefully")
+                    self.logger.debug("LiveClient._keep_alive LEAVE")
+                    return
+
                 self.logger.error(
                     "WebSocketException in AsyncLiveClient._keep_alive: %s", e
                 )
@@ -423,6 +433,15 @@ class LiveClient:
                         raise
                     return True
                 except websockets.exceptions.WebSocketException as e:
+                    if e.code == 1000:
+                        self.logger.notice(f"send({e.code}) exiting gracefully")
+                        self.logger.debug("LiveClient.send LEAVE")
+                        if (
+                            self.config.options.get("termination_exception_send")
+                            == "true"
+                        ):
+                            raise
+                        return True
                     self.logger.error("send() failed - WebSocketException: %s", str(e))
                     self.logger.spam("LiveClient.send LEAVE")
                     if self.config.options.get("termination_exception_send") == "true":
@@ -457,12 +476,10 @@ class LiveClient:
         self.logger.verbose("cancelling tasks...")
         if self._keep_alive_thread is not None:
             self._keep_alive_thread.join()
-            self._keep_alive_thread = None
         self.logger.notice("processing thread joined")
 
         if self._listen_thread is not None:
             self._listen_thread.join()
-            self._listen_thread = None
         self.logger.notice("listening thread joined")
 
         self._socket = None
