@@ -30,6 +30,9 @@ class ProjectOptions:
 @dataclass
 class KeyOptions:
     comment: Optional[str] = ""
+    expiration_date: Optional[str] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
     time_to_live_in_seconds: Optional[int] = field(
         default=None, metadata=config(exclude=lambda f: f is None)
     )
