@@ -3,22 +3,21 @@ name: Generate PyDocs on Release
 on:
   push:
     tags:
-        - "v[0-9]+.[0-9]+.[0-9]+"
-        - "v[0-9]+.[0-9]+.[0-9]+-doc.[0-9]+"
-
+      - "v[0-9]+.[0-9]+.[0-9]+"
+      - "v[0-9]+.[0-9]+.[0-9]+-doc.[0-9]+"
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-    
+
     steps:
-      - name: Checkout code from main branch        
+      - name: Checkout code from main branch
         uses: actions/checkout@v3
         with:
           ref: main
           repository: ${{ github.repository }}
 
-      - name: Set up Python  
+      - name: Set up Python
         uses: actions/setup-python@v2
         with:
           python-version: '3.11'
@@ -30,13 +29,13 @@ jobs:
           pip install --upgrade py2app
           pip install python-dotenv
           pip install -r requirements.txt
-          
+
       - name: Get the current tag name
         run: echo "TAG_NAME=${GITHUB_REF##*/}" >> "$GITHUB_ENV"
 
       # New Step: Extracting Major Version Number
       - name: Set the current major version
-        run: echo "MAJOR_VERSION=$(echo $TAG_NAME | cut -d '.' -f 1)" >> "$GITHUB_ENV" # This extracts the major version assuming a 'vX.Y.Z' format
+        run: echo "MAJOR_VERSION=$(echo "$TAG_NAME" | cut -d '.' -f 1)" >> "$GITHUB_ENV" # This extracts the major version assuming a 'vX.Y.Z' format
 
       - name: Checkout the gh-pages branch
         uses: actions/checkout@v3
@@ -46,12 +45,12 @@ jobs:
 
       - name: Generate Documentation for the current tag
         run: |
-          ROOT_PATH=$(pwd) # Moved this line up to ensure ROOT_PATH is set before its usage
-          rm -rf $ROOT_PATH/gh-pages/docs/$MAJOR_VERSION          
-          mkdir -p $ROOT_PATH/gh-pages/docs/$MAJOR_VERSION # Note: Changed to use MAJOR_VERSION to create/update the major version folder         
-          cd $ROOT_PATH/deepgram
-          pdoc $ROOT_PATH/deepgram -o $ROOT_PATH/gh-pages/docs/$MAJOR_VERSION # Documentation is generated/updated in the major version folder
-      
+          ROOT_PATH="$(pwd)" # Moved this line up to ensure ROOT_PATH is set before its usage
+          rm -rf "$ROOT_PATH/gh-pages/docs/$MAJOR_VERSION"
+          mkdir -p "$ROOT_PATH/gh-pages/docs/$MAJOR_VERSION" # Note: Changed to use MAJOR_VERSION to create/update the major version folder
+          cd "$ROOT_PATH/deepgram"
+          pdoc "$ROOT_PATH/deepgram" -o "$ROOT_PATH/gh-pages/docs/$MAJOR_VERSION" # Documentation is generated/updated in the major version folder
+
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:

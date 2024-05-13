@@ -30,7 +30,7 @@ What would you expect to happen when following the steps above?
 We want to make sure the problem isn't specific to your operating system or programming language.
   
 - **Operating System/Version:** (ex. MacOS 14.2, Windows 10, RHEL 6, etc)
-- **Go Version:** (ex. v1.18)
+- **Python Version:** (ex. v1.18)
 -->
 
 

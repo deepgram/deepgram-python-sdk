@@ -1,0 +1,18 @@
+---
+extends: relaxed
+
+rules:
+  line-length: disable
+  trailing-spaces: enable
+  new-line-at-end-of-file: enable
+  new-lines:
+    type: unix
+  indentation: disable
+  key-duplicates: disable
+  empty-lines: enable
+  colons: disable
+  commas: disable
+
+ignore: |
+  /deepgram-python-sdk/.github/ISSUE_TEMPLATE/config.yml
+  /deepgram-python-sdk/addons/**/*/

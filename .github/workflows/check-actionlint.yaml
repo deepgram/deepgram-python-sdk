@@ -1,0 +1,31 @@
+name: Check - actionlint
+
+on:
+  pull_request:
+    types:
+      - assigned
+      - opened
+      - synchronize
+      - reopened
+    paths:
+      - ".github/workflows/**"
+
+jobs:
+  checkactionlint:
+    name: Check actionlint
+    # Only run this job if we're in the main repo, not a fork.
+    if: github.repository == 'deepgram/deepgram-python-sdk'
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Checkout code by commit
+        uses: actions/checkout@v4
+
+      - name: Ensure dependencies installed
+        shell: bash
+        run: |
+          make ensure-deps
+
+      - name: Run actionlint
+        run: |
+          make actionlint

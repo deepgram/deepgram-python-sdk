@@ -1,0 +1,33 @@
+name: Check - shell
+
+on:
+  pull_request:
+    types:
+      - assigned
+      - opened
+      - synchronize
+      - reopened
+    paths:
+      - "**/Makefile"
+      - "**.sh"
+      - "hack/check/check-shell.sh"
+
+jobs:
+  checkshell:
+    name: Check shell
+    # Only run this job if we're in the main repo, not a fork.
+    if: github.repository == 'deepgram/deepgram-python-sdk'
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Checkout code by commit
+        uses: actions/checkout@v4
+
+      - name: Ensure dependencies installed
+        shell: bash
+        run: |
+          make ensure-deps
+
+      - name: Run shellcheck
+        run: |
+          make shellcheck
