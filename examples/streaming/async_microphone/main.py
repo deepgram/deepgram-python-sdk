@@ -21,6 +21,7 @@ load_dotenv()
 # We will collect the is_final=true messages here so we can use them when the person finishes speaking
 is_finals = []
 
+
 async def main():
     try:
         loop = asyncio.get_event_loop()
@@ -44,7 +45,7 @@ async def main():
         dg_connection = deepgram.listen.asynclive.v("1")
 
         async def on_open(self, open, **kwargs):
-            print(f"Deepgram Connection Open")
+            print(f"Connection Open")
 
         async def on_message(self, result, **kwargs):
             global is_finals
@@ -59,7 +60,7 @@ async def main():
                 # Speech Final means we have detected sufficent silence to consider this end of speech
                 # Speech final is the lowest latency result as it triggers as soon an the endpointing value has triggered
                 if result.speech_final:
-                    utterance = ' '.join(is_finals)
+                    utterance = " ".join(is_finals)
                     print(f"Speech Final: {utterance}")
                     is_finals = []
                 else:
@@ -70,26 +71,27 @@ async def main():
                 print(f"Interim Results: {sentence}")
 
         async def on_metadata(self, metadata, **kwargs):
-            print(f"Deepgram Metadata: {metadata}")
+            print(f"Metadata: {metadata}")
 
         async def on_speech_started(self, speech_started, **kwargs):
-            print(f"Deepgram Speech Started")
+            print(f"Speech Started")
 
         async def on_utterance_end(self, utterance_end, **kwargs):
+            print(f"Utterance End")
             global is_finals
             if len(is_finals) > 0:
-                utterance = ' '.join(is_finals)
-                print(f"Deepgram Utterance End: {utterance}")
+                utterance = " ".join(is_finals)
+                print(f"Utterance End: {utterance}")
                 is_finals = []
 
         async def on_close(self, close, **kwargs):
-            print(f"Deepgram Connection Closed")
+            print(f"Connection Closed")
 
         async def on_error(self, error, **kwargs):
-            print(f"Deepgram Handled Error: {error}")
+            print(f"Handled Error: {error}")
 
         async def on_unhandled(self, unhandled, **kwargs):
-            print(f"Deepgram Unhandled Websocket Message: {unhandled}")
+            print(f"Unhandled Websocket Message: {unhandled}")
 
         dg_connection.on(LiveTranscriptionEvents.Open, on_open)
         dg_connection.on(LiveTranscriptionEvents.Transcript, on_message)
@@ -115,7 +117,7 @@ async def main():
             utterance_end_ms="1000",
             vad_events=True,
             # Time in milliseconds of silence to wait for before finalizing speech
-            endpointing=300
+            endpointing=300,
         )
 
         addons = {
