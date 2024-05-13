@@ -153,6 +153,9 @@ class LiveResultResponse:
     duration: float = 0
     start: float = 0
     is_final: bool = False
+    from_finalize: Optional[bool] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
     speech_final: bool = False
     channel: Channel = None
     metadata: Metadata = None
