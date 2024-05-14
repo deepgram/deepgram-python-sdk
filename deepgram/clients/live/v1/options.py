@@ -63,6 +63,9 @@ class LiveOptions:
     multichannel: Optional[bool] = field(
         default=None, metadata=config(exclude=lambda f: f is None)
     )
+    no_delay: Optional[bool] = field(
+        default=None, metadata=config(exclude=lambda f: f is None)
+    )
     numerals: Optional[bool] = field(
         default=None, metadata=config(exclude=lambda f: f is None)
     )
