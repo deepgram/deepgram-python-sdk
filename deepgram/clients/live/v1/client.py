@@ -462,6 +462,31 @@ class LiveClient:
         self.logger.spam("LiveClient.send LEAVE")
         return False
 
+    def finalize(self) -> bool:
+        """
+        Finalizes the Transcript connection by flushing it
+        """
+        self.logger.spam("LiveClient.finalize ENTER")
+
+        if self._exit_event.is_set():
+            self.logger.notice("finalize exiting gracefully")
+            self.logger.debug("LiveClient.finalize LEAVE")
+            return False
+
+        if self._socket is not None:
+            self.logger.notice("sending Finalize...")
+            ret = self.send(json.dumps({"type": "Finalize"}))
+
+            if not ret:
+                self.logger.error("finalize failed")
+                self.logger.spam("LiveClient.finalize LEAVE")
+                return False
+
+        self.logger.notice("finalize succeeded")
+        self.logger.spam("LiveClient.finalize LEAVE")
+
+        return True
+
     # closes the WebSocket connection gracefully
     def finish(self) -> bool:
         """
