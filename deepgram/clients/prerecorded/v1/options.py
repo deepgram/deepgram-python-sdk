@@ -132,7 +132,7 @@ class PrerecordedOptions:
     topics: Optional[bool] = field(
         default=None, metadata=config(exclude=lambda f: f is None)
     )
-    utt_split: Optional[int] = field(
+    utt_split: Optional[float] = field(
         default=None, metadata=config(exclude=lambda f: f is None)
     )
     utterances: Optional[bool] = field(
