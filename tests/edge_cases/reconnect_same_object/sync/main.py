@@ -1,11 +1,12 @@
 import time
-import logging, verboselogs
+import logging
+from deepgram.utils import verboselogs
 
 from deepgram import DeepgramClient, DeepgramClientOptions, LiveOptions, Microphone
 
 
 def main():
-    config: DeepgramClientOptions = DeepgramClientOptions(verbose=logging.DEBUG)
+    config: DeepgramClientOptions = DeepgramClientOptions(verbose=verboselogs.DEBUG)
     # config: DeepgramClientOptions = DeepgramClientOptions()
     deepgram: DeepgramClient = DeepgramClient("", config)
     options: LiveOptions = LiveOptions(

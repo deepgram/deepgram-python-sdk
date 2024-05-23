@@ -4,7 +4,8 @@
 
 import asyncio
 import time
-import logging, verboselogs
+import logging
+from deepgram.utils import verboselogs
 
 from deepgram import DeepgramClient, DeepgramClientOptions, LiveOptions
 
@@ -12,7 +13,7 @@ from deepgram import DeepgramClient, DeepgramClientOptions, LiveOptions
 async def main():
     # for debugging
     config: DeepgramClientOptions = DeepgramClientOptions(
-        verbose=logging.DEBUG, options={"keepalive": "true"}
+        verbose=verboselogs.DEBUG, options={"keepalive": "true"}
     )
     deepgram: DeepgramClient = DeepgramClient("", config)
 

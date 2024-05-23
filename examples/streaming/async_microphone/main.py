@@ -5,7 +5,8 @@
 from signal import SIGINT, SIGTERM
 import asyncio
 from dotenv import load_dotenv
-import logging, verboselogs
+import logging
+from deepgram.utils import verboselogs
 from time import sleep
 
 from deepgram import (

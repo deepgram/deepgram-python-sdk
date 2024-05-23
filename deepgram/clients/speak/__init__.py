@@ -7,9 +7,9 @@ from .client import AsyncSpeakClient
 from .client import SpeakOptions
 from .client import SpeakResponse
 from .client import (
-    SpeakSource,
-    TextSource,
+    FileSource,
     SpeakStreamSource,
+    SpeakSource,
 )
 
-from ...options import DeepgramClientOptions
+from ...options import DeepgramClientOptions, ClientOptionsFromEnv

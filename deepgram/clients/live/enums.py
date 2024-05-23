@@ -2,14 +2,16 @@
 # Use of this source code is governed by a MIT license that can be found in the LICENSE file.
 # SPDX-License-Identifier: MIT
 
-from enum import Enum
+from aenum import StrEnum
 
-"""
-Constants mapping to events from the Deepgram API
-"""
+# Constants mapping to events from the Deepgram API
 
 
-class LiveTranscriptionEvents(str, Enum):
+class LiveTranscriptionEvents(StrEnum):
+    """
+    Enumerates the possible events that can be received from the Deepgram API
+    """
+
     Open: str = "Open"
     Close: str = "Close"
     Transcript: str = "Results"

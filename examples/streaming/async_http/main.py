@@ -7,7 +7,8 @@ import asyncio
 import aiohttp
 import os
 from dotenv import load_dotenv
-import logging, verboselogs
+import logging
+from deepgram.utils import verboselogs
 
 from deepgram import (
     DeepgramClient,
@@ -27,7 +28,7 @@ URL = "http://stream.live.vc.bbcmedia.co.uk/bbc_world_service"
 async def main():
     # example of setting up a client config. logging values: WARNING, VERBOSE, DEBUG, SPAM
     # config: DeepgramClientOptions = DeepgramClientOptions(
-    #     verbose=logging.DEBUG, options={"keepalive": "true"}
+    #     verbose=verboselogs.DEBUG, options={"keepalive": "true"}
     # )
     # deepgram: DeepgramClient = DeepgramClient(API_KEY, config)
     # otherwise, use default config
@@ -63,13 +64,13 @@ async def main():
         async def on_utterance_end(self, utterance_end, **kwargs):
             print(f"\n\n{utterance_end}\n\n")
 
-        def on_close(self, close, **kwargs):
+        async def on_close(self, close, **kwargs):
             print(f"\n\n{close}\n\n")
 
-        def on_error(self, error, **kwargs):
+        async def on_error(self, error, **kwargs):
             print(f"\n\n{error}\n\n")
 
-        def on_unhandled(self, unhandled, **kwargs):
+        async def on_unhandled(self, unhandled, **kwargs):
             print(f"\n\n{unhandled}\n\n")
 
         dg_connection.on(LiveTranscriptionEvents.Open, on_open)

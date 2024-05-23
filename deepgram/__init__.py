@@ -6,12 +6,23 @@
 __version__ = "0.0.0"
 
 # entry point for the deepgram python sdk
+from .client import verboselogs
 from .client import Deepgram, DeepgramClient
-from .options import DeepgramClientOptions, ClientOptionsFromEnv
-import logging, verboselogs
+from .client import DeepgramClientOptions, ClientOptionsFromEnv
+from .client import DeepgramApiKeyError, DeepgramModuleError
 
-# listen client
+# listen/read client
 from .client import Listen, Read
+
+# common
+from .client import (
+    TextSource,
+    BufferSource,
+    StreamSource,
+    FileSource,
+    UrlSource,
+    Sentiment,
+)
 
 # live
 from .client import LiveTranscriptionEvents
@@ -31,13 +42,9 @@ from .client import (
 # prerecorded
 from .client import PreRecordedClient, AsyncPreRecordedClient
 from .client import (
-    FileSource,
-    PrerecordedSource,
-    UrlSource,
-    BufferSource,
-    ReadStreamSource,
     PrerecordedOptions,
-    Sentiment,
+    PreRecordedStreamSource,
+    PrerecordedSource,
 )
 from .client import (
     AsyncPrerecordedResponse,
@@ -49,13 +56,9 @@ from .client import (
 from .client import ReadClient, AsyncReadClient
 from .client import AnalyzeClient, AsyncAnalyzeClient
 from .client import (
-    AnalyzeSource,
-    TextSource,
-    UrlSource,
-    BufferSource,
-    AnalyzeStreamSource,
     AnalyzeOptions,
-    Sentiment,
+    AnalyzeStreamSource,
+    AnalyzeSource,
 )
 from .client import (
     AsyncAnalyzeResponse,
@@ -65,7 +68,7 @@ from .client import (
 
 # speak
 from .client import SpeakClient, AsyncSpeakClient
-from .client import SpeakSource, TextSource, SpeakStreamSource, SpeakOptions
+from .client import SpeakOptions, SpeakStreamSource, SpeakSource
 from .client import SpeakResponse
 
 # manage

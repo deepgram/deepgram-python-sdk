@@ -2,6 +2,16 @@
 # Use of this source code is governed by a MIT license that can be found in the LICENSE file.
 # SPDX-License-Identifier: MIT
 
+# common
+from .common import (
+    TextSource,
+    BufferSource,
+    StreamSource,
+    FileSource,
+    UrlSource,
+    Sentiment,
+)
+
 # listen
 from .listen import Listen
 from .read import Read
@@ -24,13 +34,9 @@ from .live import (
 # prerecorded
 from .prerecorded import PreRecordedClient, AsyncPreRecordedClient
 from .prerecorded import PrerecordedOptions
-from .prerecorded import Sentiment
 from .prerecorded import (
-    FileSource,
+    PreRecordedStreamSource,
     PrerecordedSource,
-    UrlSource,
-    BufferSource,
-    ReadStreamSource,
 )
 from .prerecorded import (
     AsyncPrerecordedResponse,
@@ -42,13 +48,9 @@ from .prerecorded import (
 from .analyze import ReadClient, AsyncReadClient
 from .analyze import AnalyzeClient, AsyncAnalyzeClient
 from .analyze import AnalyzeOptions
-from .analyze import Sentiment
 from .analyze import (
-    AnalyzeSource,
-    TextSource,
-    UrlSource,
-    BufferSource,
     AnalyzeStreamSource,
+    AnalyzeSource,
 )
 from .analyze import (
     AsyncAnalyzeResponse,
@@ -60,9 +62,8 @@ from .analyze import (
 from .speak import SpeakClient, AsyncSpeakClient
 from .speak import SpeakOptions
 from .speak import (
-    SpeakSource,
-    TextSource,
     SpeakStreamSource,
+    SpeakSource,
 )
 from .speak import SpeakResponse
 
@@ -97,6 +98,3 @@ from .manage import (
 
 # onprem
 from .onprem import OnPremClient, AsyncOnPremClient
-
-# client options
-from ..options import DeepgramClientOptions

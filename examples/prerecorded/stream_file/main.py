@@ -4,7 +4,8 @@
 
 import os
 from dotenv import load_dotenv
-import logging, verboselogs
+import logging
+from deepgram.utils import verboselogs
 from datetime import datetime, timedelta
 from io import BufferedReader
 from deepgram import DeepgramClientOptions
@@ -13,7 +14,7 @@ import logging
 from deepgram import (
     DeepgramClient,
     DeepgramClientOptions,
-    ReadStreamSource,
+    StreamSource,
     PrerecordedOptions,
 )
 
@@ -26,7 +27,7 @@ def main():
     try:
         # STEP 1 Create a Deepgram client using the API key in the environment variables
         config = DeepgramClientOptions(
-            verbose=logging.SPAM,
+            verbose=verboselogs.SPAM,
         )
         deepgram = DeepgramClient("", config)
         # OR use defaults
@@ -35,7 +36,7 @@ def main():
         # STEP 2 Call the transcribe_file method on the prerecorded class
         stream = open(AUDIO_FILE, "rb")
 
-        payload: ReadStreamSource = {
+        payload: StreamSource = {
             "stream": stream,
         }
 

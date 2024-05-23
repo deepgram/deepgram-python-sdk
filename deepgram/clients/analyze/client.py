@@ -2,128 +2,44 @@
 # Use of this source code is governed by a MIT license that can be found in the LICENSE file.
 # SPDX-License-Identifier: MIT
 
-from typing import Union
-
 from .v1.client import AnalyzeClient as AnalyzeClientLatest
 from .v1.async_client import AsyncAnalyzeClient as AsyncAnalyzeClientLatest
 from .v1.options import (
     AnalyzeOptions as AnalyzeOptionsLatest,
-    AnalyzeStreamSource as AnalyzeStreamSourceLatest,
-    BufferSource as BufferSourceLatest,
     UrlSource as UrlSourceLatest,
+    FileSource as FileSourceLatest,
+    AnalyzeStreamSource as AnalyzeStreamSourceLatest,
     AnalyzeSource as AnalyzeSourceLatest,
-    TextSource as TextSourceLatest,
 )
 from .v1.response import (
     SyncAnalyzeResponse as SyncAnalyzeResponseLatest,
     AnalyzeResponse as AnalyzeResponseLatest,
     AsyncAnalyzeResponse as AsyncAnalyzeResponseLatest,
 )
-from .enums import Sentiment
 
-"""
-The client.py points to the current supported version in the SDK.
-Older versions are supported in the SDK for backwards compatibility.
-"""
+# The client.py points to the current supported version in the SDK.
+# Older versions are supported in the SDK for backwards compatibility.
 
 
 # input
-class AnalyzeOptions(AnalyzeOptionsLatest):
-    """
-    Please see AnalyzeOptionsLatest for details
-    """
-
-    pass
-
-
-class AnalyzeStreamSource(AnalyzeStreamSourceLatest):
-    """
-    Please see AnalyzeStreamSourceLatest for details
-    """
-
-    pass
-
-
-class BufferSource(BufferSourceLatest):
-    """
-    Please see BufferSourceLatest for details
-    """
-
-    pass
-
-
-class UrlSource(UrlSourceLatest):
-    """
-    Please see UrlSourceLatest for details
-    """
-
-    pass
-
-
+AnalyzeOptions = AnalyzeOptionsLatest
+AnalyzeStreamSource = AnalyzeStreamSourceLatest
+FileSource = FileSourceLatest
+UrlSource = UrlSourceLatest
 AnalyzeSource = AnalyzeSourceLatest
-TextSource = TextSourceLatest
 
 
 # responses
-
-
-class AsyncAnalyzeResponse(AsyncAnalyzeResponseLatest):
-    """
-    Please see AnalyzeResponseLatest for details
-    """
-
-    pass
-
-
-class AnalyzeResponse(AnalyzeResponseLatest):
-    """
-    Please see AnalyzeResponseLatest for details
-    """
-
-    pass
-
-
-class SyncAnalyzeResponse(SyncAnalyzeResponseLatest):
-    """
-    Please see AnalyzeResponseLatest for details
-    """
-
-    pass
+AsyncAnalyzeResponse = AsyncAnalyzeResponseLatest
+AnalyzeResponse = AnalyzeResponseLatest
+SyncAnalyzeResponse = SyncAnalyzeResponseLatest
 
 
 # clients
-class AnalyzeClient(AnalyzeClientLatest):
-    """
-    Please see AnalyzeClientLatest for details
-    """
-
-    def __init__(self, config):
-        super().__init__(config)
+AnalyzeClient = AnalyzeClientLatest
+AsyncAnalyzeClient = AsyncAnalyzeClientLatest
 
 
-class AsyncAnalyzeClient(AsyncAnalyzeClientLatest):
-    """
-    Please see AsyncAnalyzeClientLatest for details
-    """
-
-    def __init__(self, config):
-        super().__init__(config)
-
-
-class ReadClient(AnalyzeClientLatest):
-    """
-    Just an alias for the Analyze Client
-    """
-
-    def __init__(self, config):
-        self.config = config
-        super().__init__(config)
-
-
-class AsyncReadClient(AsyncAnalyzeClientLatest):
-    """
-    Just an alias for the Async Analyze Client
-    """
-
-    def __init__(self, config):
-        super().__init__(config)
+# aliases
+ReadClient = AnalyzeClientLatest
+AsyncReadClient = AsyncAnalyzeClientLatest

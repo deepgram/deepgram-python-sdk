@@ -4,7 +4,8 @@
 
 import os
 from dotenv import load_dotenv
-import logging, verboselogs
+import logging
+from deepgram.utils import verboselogs
 
 from deepgram import (
     DeepgramClient,
@@ -23,9 +24,7 @@ filename = "test.mp3"
 def main():
     try:
         # STEP 1 Create a Deepgram client using the API key from environment variables
-        deepgram = DeepgramClient(
-            api_key="", config=ClientOptionsFromEnv(verbose=logging.SPAM)
-        )
+        deepgram = DeepgramClient(api_key="", config=ClientOptionsFromEnv())
 
         # STEP 2 Call the save method on the speak property
         options = SpeakOptions(

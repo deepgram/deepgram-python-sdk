@@ -3,7 +3,8 @@
 # SPDX-License-Identifier: MIT
 
 from dotenv import load_dotenv
-import logging, verboselogs
+import logging
+from deepgram.utils import verboselogs
 from time import sleep
 
 from deepgram import (
@@ -70,7 +71,7 @@ def main():
     try:
         # example of setting up a client config. logging values: WARNING, VERBOSE, DEBUG, SPAM
         # config: ClientOptionsFromEnv = ClientOptionsFromEnv(
-        #     verbose=logging.DEBUG,
+        #     verbose=verboselogs.DEBUG,
         #     options={"keepalive": "true"}
         # )
         # liveClient: MyLiveClient = MyLiveClient(config)

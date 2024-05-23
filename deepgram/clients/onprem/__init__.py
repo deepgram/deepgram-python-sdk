@@ -4,4 +4,4 @@
 
 from .v1.client import OnPremClient
 from .v1.async_client import AsyncOnPremClient
-from ...options import DeepgramClientOptions
+from ...options import DeepgramClientOptions, ClientOptionsFromEnv

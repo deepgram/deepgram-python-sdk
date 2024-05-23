@@ -2,10 +2,11 @@
 # Use of this source code is governed by a MIT license that can be found in the LICENSE file.
 # SPDX-License-Identifier: MIT
 
-import httpx
 import json
 import io
-from typing import Dict, Optional, List
+from typing import Dict, Optional, List, Union
+
+import httpx
 
 from .helpers import append_query_params
 from ..options import DeepgramClientOptions
@@ -30,10 +31,12 @@ class AbstractSyncRestClient:
         DeepgramUnknownApiError: Raised for unknown API errors.
     """
 
+    _config: DeepgramClientOptions
+
     def __init__(self, config: DeepgramClientOptions):
         if config is None:
             raise DeepgramError("Config are required")
-        self.config = config
+        self._config = config
 
     def get(
         self,
@@ -44,6 +47,9 @@ class AbstractSyncRestClient:
         timeout: Optional[httpx.Timeout] = None,
         **kwargs,
     ) -> str:
+        """
+        Make a GET request to the specified URL.
+        """
         return self._handle_request(
             "GET",
             url,
@@ -57,14 +63,17 @@ class AbstractSyncRestClient:
     def post_file(
         self,
         url: str,
+        file_result: List,
         options: Optional[Dict] = None,
         addons: Optional[Dict] = None,
         headers: Optional[Dict] = None,
         timeout: Optional[httpx.Timeout] = None,
-        file_result: Optional[List] = None,
         **kwargs,
-    ) -> Dict:
-        return self._handle_request(
+    ) -> Dict[str, Union[str, io.BytesIO, object]]:
+        """
+        Make a POST request to the specified URL and return a file response.
+        """
+        return self._handle_request_file(
             "POST",
             url,
             file_result=file_result,
@@ -84,6 +93,9 @@ class AbstractSyncRestClient:
         timeout: Optional[httpx.Timeout] = None,
         **kwargs,
     ) -> str:
+        """
+        Make a POST request to the specified URL.
+        """
         return self._handle_request(
             "POST",
             url,
@@ -103,6 +115,9 @@ class AbstractSyncRestClient:
         timeout: Optional[httpx.Timeout] = None,
         **kwargs,
     ) -> str:
+        """
+        Make a PUT request to the specified URL.
+        """
         return self._handle_request(
             "PUT",
             url,
@@ -122,6 +137,9 @@ class AbstractSyncRestClient:
         timeout: Optional[httpx.Timeout] = None,
         **kwargs,
     ) -> str:
+        """
+        Make a PATCH request to the specified URL.
+        """
         return self._handle_request(
             "PATCH",
             url,
@@ -141,6 +159,9 @@ class AbstractSyncRestClient:
         timeout: Optional[httpx.Timeout] = None,
         **kwargs,
     ) -> str:
+        """
+        Make a DELETE request to the specified URL.
+        """
         return self._handle_request(
             "DELETE",
             url,
@@ -151,6 +172,7 @@ class AbstractSyncRestClient:
             **kwargs,
         )
 
+    # pylint: disable-msg=too-many-locals,too-many-branches
     def _handle_request(
         self,
         method: str,
@@ -159,15 +181,64 @@ class AbstractSyncRestClient:
         addons: Optional[Dict] = None,
         headers: Optional[Dict] = None,
         timeout: Optional[httpx.Timeout] = None,
-        file_result: Optional[List] = None,
         **kwargs,
-    ):
+    ) -> str:
         _url = url
         if params is not None:
             _url = append_query_params(_url, params)
         if addons is not None:
             _url = append_query_params(_url, addons)
-        _headers = self.config.headers
+        _headers = self._config.headers
+        if headers is not None:
+            _headers.update(headers)
+        if timeout is None:
+            timeout = httpx.Timeout(30.0, connect=10.0)
+
+        try:
+            with httpx.Client(timeout=timeout) as client:
+                response = client.request(method, _url, headers=_headers, **kwargs)
+                response.raise_for_status()
+                return response.text
+
+        except httpx.HTTPError as e1:
+            if isinstance(e1, httpx.HTTPStatusError):
+                status_code = e1.response.status_code or 500
+                try:
+                    json_object = json.loads(e1.response.text)
+                    raise DeepgramApiError(
+                        json_object.get("err_msg"),
+                        str(status_code),
+                        json.dumps(json_object),
+                    ) from e1
+                except json.decoder.JSONDecodeError as e2:
+                    raise DeepgramUnknownApiError(e2.msg, str(status_code)) from e2
+                except ValueError as e2:
+                    raise DeepgramUnknownApiError(str(e2), str(status_code)) from e2
+            else:
+                raise  # pylint: disable-msg=try-except-raise
+        except Exception:  # pylint: disable-msg=try-except-raise
+            raise
+
+    # pylint: enable-msg=too-many-locals,too-many-branches
+
+    # pylint: disable-msg=too-many-branches,too-many-locals
+    def _handle_request_file(
+        self,
+        method: str,
+        url: str,
+        file_result: List,
+        params: Optional[Dict] = None,
+        addons: Optional[Dict] = None,
+        headers: Optional[Dict] = None,
+        timeout: Optional[httpx.Timeout] = None,
+        **kwargs,
+    ) -> Dict[str, Union[str, io.BytesIO, object]]:
+        _url = url
+        if params is not None:
+            _url = append_query_params(_url, params)
+        if addons is not None:
+            _url = append_query_params(_url, addons)
+        _headers = self._config.headers
         if headers is not None:
             _headers.update(headers)
         if timeout is None:
@@ -178,39 +249,38 @@ class AbstractSyncRestClient:
                 response = client.request(method, _url, headers=_headers, **kwargs)
                 response.raise_for_status()
 
-                # handle file response
-                if file_result is not None:
-                    ret = dict()
-                    for item in file_result:
-                        if item in response.headers:
-                            ret[item] = response.headers[item]
-                            continue
-                        tmpItem = f"dg-{item}"
-                        if tmpItem in response.headers:
-                            ret[item] = response.headers[tmpItem]
-                            continue
-                        tmpItem = f"x-dg-{item}"
-                        if tmpItem in response.headers:
-                            ret[item] = response.headers[tmpItem]
-                    ret["stream"] = io.BytesIO(response.content)
-                    return ret
+                ret: Dict[str, Union[str, object]] = {}
+                for item in file_result:
+                    if item in response.headers:
+                        ret[item] = response.headers[item]
+                        continue
+                    tmp_item = f"dg-{item}"
+                    if tmp_item in response.headers:
+                        ret[item] = response.headers[tmp_item]
+                        continue
+                    tmp_item = f"x-dg-{item}"
+                    if tmp_item in response.headers:
+                        ret[item] = response.headers[tmp_item]
+                ret["stream"] = io.BytesIO(response.content)
+                return ret
 
-                # standard response
-                return response.text
-
-        except httpx._exceptions.HTTPError as e:
-            if isinstance(e, httpx.HTTPStatusError):
-                status_code = e.response.status_code or 500
+        except httpx.HTTPError as e1:
+            if isinstance(e1, httpx.HTTPStatusError):
+                status_code = e1.response.status_code or 500
                 try:
-                    json_object = json.loads(e.response.text)
+                    json_object = json.loads(e1.response.text)
                     raise DeepgramApiError(
-                        json_object.get("err_msg"), status_code, json.dumps(json_object)
-                    ) from e
-                except json.decoder.JSONDecodeError:
-                    raise DeepgramUnknownApiError(e.response.text, status_code) from e
-                except ValueError as e:
-                    raise DeepgramUnknownApiError(e.response.text, status_code) from e
+                        json_object.get("err_msg"),
+                        str(status_code),
+                        json.dumps(json_object),
+                    ) from e1
+                except json.decoder.JSONDecodeError as e2:
+                    raise DeepgramUnknownApiError(e2.msg, str(status_code)) from e2
+                except ValueError as e2:
+                    raise DeepgramUnknownApiError(str(e2), str(status_code)) from e2
             else:
-                raise
-        except Exception as e:
+                raise  # pylint: disable-msg=try-except-raise
+        except Exception:  # pylint: disable-msg=try-except-raise
             raise
+
+    # pylint: disable-msg=too-many-branches,too-many-locals

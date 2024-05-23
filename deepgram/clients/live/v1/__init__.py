@@ -5,7 +5,7 @@
 from .client import LiveClient
 from .async_client import AsyncLiveClient
 from .options import LiveOptions
-from ....options import DeepgramClientOptions
+from ....options import DeepgramClientOptions, ClientOptionsFromEnv
 from .response import (
     OpenResponse,
     LiveResultResponse,

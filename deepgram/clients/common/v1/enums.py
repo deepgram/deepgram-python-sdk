@@ -2,14 +2,16 @@
 # Use of this source code is governed by a MIT license that can be found in the LICENSE file.
 # SPDX-License-Identifier: MIT
 
-from enum import Enum
+from aenum import StrEnum
 
-"""
-Constants mapping to events from the Deepgram API
-"""
+# Constants mapping to events from the Deepgram API
 
 
-class Sentiment(str, Enum):
+class Sentiment(StrEnum):
+    """
+    Sentiment values.
+    """
+
     UNKNOWN: str = ""
     NEGATIVE: str = "negative"
     NEUTRAL: str = "neutral"

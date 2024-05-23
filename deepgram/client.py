@@ -4,8 +4,21 @@
 
 from typing import Optional
 from importlib import import_module
-import logging, verboselogs
 import os
+
+import logging
+from deepgram.utils import verboselogs
+
+# common
+# pylint: disable=unused-import
+from .clients import (
+    TextSource,
+    BufferSource,
+    StreamSource,
+    FileSource,
+    UrlSource,
+    Sentiment,
+)
 
 # listen client
 from .clients import Listen, Read
@@ -30,15 +43,14 @@ from .clients import (
 )
 
 # prerecorded
-from .clients import PreRecordedClient, AsyncPreRecordedClient
 from .clients import (
-    FileSource,
-    PrerecordedSource,
-    UrlSource,
-    BufferSource,
-    ReadStreamSource,
+    PreRecordedClient,
+    AsyncPreRecordedClient,
+)
+from .clients import (
     PrerecordedOptions,
-    Sentiment,
+    PreRecordedStreamSource,
+    PrerecordedSource,
 )
 
 # prerecorded client responses
@@ -52,13 +64,9 @@ from .clients import (
 from .clients import ReadClient, AsyncReadClient
 from .clients import AnalyzeClient, AsyncAnalyzeClient
 from .clients import (
-    AnalyzeSource,
-    TextSource,
-    UrlSource,
-    BufferSource,
-    AnalyzeStreamSource,
     AnalyzeOptions,
-    Sentiment,
+    AnalyzeStreamSource,
+    AnalyzeSource,
 )
 
 # read client responses
@@ -71,7 +79,7 @@ from .clients import (
 # speak client classes/input
 from .clients import SpeakClient, AsyncSpeakClient
 from .clients import SpeakOptions
-from .clients import SpeakSource, TextSource, SpeakStreamSource
+from .clients import SpeakStreamSource, SpeakSource
 
 # speak client responses
 from .clients import SpeakResponse
@@ -108,14 +116,23 @@ from .clients import (
 )
 
 # on-prem
-from .clients.onprem.client import OnPremClient
-from .clients.onprem.v1.async_client import AsyncOnPremClient
+from .clients import (
+    OnPremClient,
+    AsyncOnPremClient,
+)
 
+# client errors and options
 from .options import DeepgramClientOptions, ClientOptionsFromEnv
 from .errors import DeepgramApiKeyError, DeepgramModuleError
 
+# pylint: enable=unused-import
 
-class Deepgram:
+
+class Deepgram:  # pylint: disable=broad-exception-raised
+    """
+    The Deepgram class is no longer a class in version 3 of this SDK.
+    """
+
     def __init__(self, *anything):
         raise Exception(
             """
@@ -161,145 +178,183 @@ class DeepgramClient:
         asynconprem: Returns an (Async) OnPremClient instance for interacting with Deepgram's on-premises API.
     """
 
+    _config: DeepgramClientOptions
+    _logger: verboselogs.VerboseLogger
+
     def __init__(
         self,
         api_key: str = "",
         config: Optional[DeepgramClientOptions] = None,
     ):
-        verboselogs.install()
-        self.logger = logging.getLogger(__name__)
-        self.logger.addHandler(logging.StreamHandler())
+        self._logger = verboselogs.VerboseLogger(__name__)
+        self._logger.addHandler(logging.StreamHandler())
 
         if api_key == "" and config is not None:
-            self.logger.info("Attempting to set API key from config object")
+            self._logger.info("Attempting to set API key from config object")
             api_key = config.api_key
         if api_key == "":
-            self.logger.info("Attempting to set API key from environment variable")
+            self._logger.info("Attempting to set API key from environment variable")
             api_key = os.getenv("DEEPGRAM_API_KEY", "")
         if api_key == "":
-            self.logger.warning("WARNING: API key is missing")
+            self._logger.warning("WARNING: API key is missing")
 
         self.api_key = api_key
         if config is None:  # Use default configuration
-            self.config = DeepgramClientOptions(self.api_key)
+            self._config = DeepgramClientOptions(self.api_key)
         else:
             config.set_apikey(self.api_key)
-            self.config = config
+            self._config = config
 
     @property
     def listen(self):
-        return Listen(self.config)
+        """
+        Returns a ListenClient instance for interacting with Deepgram's transcription services.
+        """
+        return Listen(self._config)
 
     @property
     def read(self):
-        return Read(self.config)
+        """
+        Returns a ReadClient instance for interacting with Deepgram's read services.
+        """
+        return Read(self._config)
 
     @property
     def speak(self):
-        return self.Version(self.config, "speak")
+        """
+        Returns a SpeakClient instance for interacting with Deepgram's speak services.
+        """
+        return self.Version(self._config, "speak")
 
     @property
     def asyncspeak(self):
-        return self.Version(self.config, "asyncspeak")
+        """
+        Returns an AsyncSpeakClient instance for interacting with Deepgram's speak services.
+        """
+        return self.Version(self._config, "asyncspeak")
 
     @property
     def manage(self):
-        return self.Version(self.config, "manage")
+        """
+        Returns a ManageClient instance for managing Deepgram resources.
+        """
+        return self.Version(self._config, "manage")
 
     @property
     def asyncmanage(self):
-        return self.Version(self.config, "asyncmanage")
+        """
+        Returns an AsyncManageClient instance for managing Deepgram resources.
+        """
+        return self.Version(self._config, "asyncmanage")
 
     @property
     def onprem(self):
-        return self.Version(self.config, "onprem")
+        """
+        Returns an OnPremClient instance for interacting with Deepgram's on-premises API.
+        """
+        return self.Version(self._config, "onprem")
 
     @property
     def asynconprem(self):
-        return self.Version(self.config, "asynconprem")
+        """
+        Returns an AsyncOnPremClient instance for interacting with Deepgram's on-premises API.
+        """
+        return self.Version(self._config, "asynconprem")
 
     # INTERNAL CLASSES
     class Version:
+        """
+        Represents a version of the Deepgram API.
+        """
+
+        _logger: verboselogs.VerboseLogger
+        _config: DeepgramClientOptions
+        _parent: str
+
         def __init__(self, config, parent: str):
-            self.logger = logging.getLogger(__name__)
-            self.logger.addHandler(logging.StreamHandler())
-            self.logger.setLevel(config.verbose)
-            self.config = config
-            self.parent = parent
+            self._logger = verboselogs.VerboseLogger(__name__)
+            self._logger.addHandler(logging.StreamHandler())
+            self._logger.setLevel(config.verbose)
+
+            self._config = config
+            self._parent = parent
 
         # FUTURE VERSIONING:
         # When v2 or v1.1beta1 or etc. This allows easy access to the latest version of the API.
         # @property
         # def latest(self):
-        #     match self.parent:
+        #     match self._parent:
         #         case "manage":
-        #             return ManageClient(self.config)
+        #             return ManageClient(self._config)
         #         case "onprem":
-        #             return OnPremClient(self.config)
+        #             return OnPremClient(self._config)
         #         case _:
         #             raise DeepgramModuleError("Invalid parent")
 
         def v(self, version: str = ""):
-            self.logger.debug("Version.v ENTER")
-            self.logger.info("version: %s", version)
+            """
+            Returns a client for the specified version of the API.
+            """
+            self._logger.debug("Version.v ENTER")
+            self._logger.info("version: %s", version)
             if len(version) == 0:
-                self.logger.error("version is empty")
-                self.logger.debug("Version.v LEAVE")
+                self._logger.error("version is empty")
+                self._logger.debug("Version.v LEAVE")
                 raise DeepgramModuleError("Invalid module version")
 
             parent = ""
-            fileName = ""
-            className = ""
-            match self.parent:
+            filename = ""
+            classname = ""
+            match self._parent:
                 case "manage":
                     parent = "manage"
-                    fileName = "client"
-                    className = "ManageClient"
+                    filename = "client"
+                    classname = "ManageClient"
                 case "asyncmanage":
                     parent = "manage"
-                    fileName = "async_client"
-                    className = "AsyncManageClient"
+                    filename = "async_client"
+                    classname = "AsyncManageClient"
                 case "speak":
                     parent = "speak"
-                    fileName = "client"
-                    className = "SpeakClient"
+                    filename = "client"
+                    classname = "SpeakClient"
                 case "asyncspeak":
                     parent = "speak"
-                    fileName = "async_client"
-                    className = "AsyncSpeakClient"
+                    filename = "async_client"
+                    classname = "AsyncSpeakClient"
                 case "onprem":
                     parent = "onprem"
-                    fileName = "client"
-                    className = "OnPremClient"
+                    filename = "client"
+                    classname = "OnPremClient"
                 case "asynconprem":
                     parent = "onprem"
-                    fileName = "async_client"
-                    className = "AsyncOnPremClient"
+                    filename = "async_client"
+                    classname = "AsyncOnPremClient"
                 case _:
-                    self.logger.error("parent unknown: %s", self.parent)
-                    self.logger.debug("Version.v LEAVE")
+                    self._logger.error("parent unknown: %s", self._parent)
+                    self._logger.debug("Version.v LEAVE")
                     raise DeepgramModuleError("Invalid parent type")
 
             # create class path
-            path = f"deepgram.clients.{parent}.v{version}.{fileName}"
-            self.logger.info("path: %s", path)
-            self.logger.info("className: %s", className)
+            path = f"deepgram.clients.{parent}.v{version}.{filename}"
+            self._logger.info("path: %s", path)
+            self._logger.info("classname: %s", classname)
 
             # import class
             mod = import_module(path)
             if mod is None:
-                self.logger.error("module path is None")
-                self.logger.debug("Version.v LEAVE")
+                self._logger.error("module path is None")
+                self._logger.debug("Version.v LEAVE")
                 raise DeepgramModuleError("Unable to find package")
 
-            my_class = getattr(mod, className)
+            my_class = getattr(mod, classname)
             if my_class is None:
-                self.logger.error("my_class is None")
-                self.logger.debug("Version.v LEAVE")
+                self._logger.error("my_class is None")
+                self._logger.debug("Version.v LEAVE")
                 raise DeepgramModuleError("Unable to find class")
 
             # instantiate class
-            myClass = my_class(self.config)
-            self.logger.notice("Version.v succeeded")
-            self.logger.debug("Version.v LEAVE")
-            return myClass
+            my_class_instance = my_class(self._config)
+            self._logger.notice("Version.v succeeded")
+            self._logger.debug("Version.v LEAVE")
+            return my_class_instance

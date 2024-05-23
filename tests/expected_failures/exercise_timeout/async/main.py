@@ -4,14 +4,15 @@
 
 import asyncio
 import time
-import logging, verboselogs
+import logging
+from deepgram.utils import verboselogs
 
 from deepgram import DeepgramClient, DeepgramClientOptions, LiveOptions
 
 
 async def main():
     # for debugging
-    config: DeepgramClientOptions = DeepgramClientOptions(verbose=logging.DEBUG)
+    config: DeepgramClientOptions = DeepgramClientOptions(verbose=verboselogs.DEBUG)
     deepgram: DeepgramClient = DeepgramClient("", config)
     # OR
     # deepgram: DeepgramClient = DeepgramClient()

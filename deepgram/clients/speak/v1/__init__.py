@@ -4,6 +4,7 @@
 
 from .client import SpeakClient
 from .async_client import AsyncSpeakClient
-from .options import SpeakOptions, SpeakSource, TextSource, SpeakStreamSource
+from .options import SpeakOptions, FileSource, SpeakStreamSource, SpeakSource
 from .response import SpeakResponse
-from ....options import DeepgramClientOptions
+
+from ....options import DeepgramClientOptions, ClientOptionsFromEnv

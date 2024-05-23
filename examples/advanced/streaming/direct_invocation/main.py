@@ -4,7 +4,8 @@
 
 import httpx
 from dotenv import load_dotenv
-import logging, verboselogs
+import logging
+from deepgram.utils import verboselogs
 import threading
 
 from deepgram import (
@@ -24,7 +25,7 @@ def main():
     try:
         # STEP 1 Create a Deepgram LiveClient using a specific config
         # config: ClientOptionsFromEnv = ClientOptionsFromEnv(
-        #     verbose=logging.DEBUG, options={"keepalive": "true"}
+        #     verbose=verboselogs.DEBUG, options={"keepalive": "true"}
         # )
         # liveClient: LiveClient = LiveClient("", config)
         # OR just use the default config

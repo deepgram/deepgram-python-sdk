@@ -2,17 +2,16 @@
 # Use of this source code is governed by a MIT license that can be found in the LICENSE file.
 # SPDX-License-Identifier: MIT
 
-from dataclasses import dataclass, field
-from dataclasses_json import config, dataclass_json
-from datetime import datetime
 from typing import List, Optional, Dict
+
+from dataclasses import dataclass, field
+from dataclasses_json import config as dataclass_config, DataClassJsonMixin
 
 # Result Message
 
 
-@dataclass_json
 @dataclass
-class OpenResponse:
+class OpenResponse(DataClassJsonMixin):
     """
     Open Message from the Deepgram Platform
     """
@@ -30,18 +29,21 @@ class OpenResponse:
         return self.to_json(indent=4)
 
 
-@dataclass_json
 @dataclass
-class Word:
+class Word(DataClassJsonMixin):
+    """
+    Word object
+    """
+
     word: str = ""
     start: float = 0
     end: float = 0
     confidence: float = 0
     punctuated_word: Optional[str] = field(
-        default=None, metadata=config(exclude=lambda f: f is None)
+        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
     speaker: Optional[int] = field(
-        default=None, metadata=config(exclude=lambda f: f is None)
+        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
 
     def __getitem__(self, key):
@@ -55,12 +57,15 @@ class Word:
         return self.to_json(indent=4)
 
 
-@dataclass_json
 @dataclass
-class Alternative:
+class Alternative(DataClassJsonMixin):
+    """
+    Alternative object
+    """
+
     transcript: str = ""
     confidence: float = 0
-    words: List[Word] = None
+    words: List[Word] = field(default_factory=list)
 
     def __getitem__(self, key):
         _dict = self.to_dict()
@@ -75,10 +80,13 @@ class Alternative:
         return self.to_json(indent=4)
 
 
-@dataclass_json
 @dataclass
-class Channel:
-    alternatives: List[Alternative] = None
+class Channel(DataClassJsonMixin):
+    """
+    Channel object
+    """
+
+    alternatives: List[Alternative] = field(default_factory=list)
 
     def __getitem__(self, key):
         _dict = self.to_dict()
@@ -96,9 +104,12 @@ class Channel:
         return self.to_json(indent=4)
 
 
-@dataclass_json
 @dataclass
-class ModelInfo:
+class ModelInfo(DataClassJsonMixin):
+    """
+    ModelInfo object
+    """
+
     name: str = ""
     version: str = ""
     arch: str = ""
@@ -114,14 +125,17 @@ class ModelInfo:
         return self.to_json(indent=4)
 
 
-@dataclass_json
 @dataclass
-class Metadata:
+class Metadata(DataClassJsonMixin):
+    """
+    Metadata object
+    """
+
+    model_info: ModelInfo
     request_id: str = ""
-    model_info: ModelInfo = None
     model_uuid: str = ""
     extra: Optional[Dict[str, str]] = field(
-        default=None, metadata=config(exclude=lambda f: f is None)
+        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
 
     def __getitem__(self, key):
@@ -141,24 +155,25 @@ class Metadata:
         return self.to_json(indent=4)
 
 
-@dataclass_json
 @dataclass
-class LiveResultResponse:
+class LiveResultResponse(
+    DataClassJsonMixin
+):  # pylint: disable=too-many-instance-attributes
     """
     Result Message from the Deepgram Platform
     """
 
+    channel: Channel
+    metadata: Metadata
     type: str = ""
-    channel_index: List[int] = None
+    channel_index: List[int] = field(default_factory=list)
     duration: float = 0
     start: float = 0
     is_final: bool = False
     from_finalize: Optional[bool] = field(
-        default=None, metadata=config(exclude=lambda f: f is None)
+        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
     speech_final: bool = False
-    channel: Channel = None
-    metadata: Metadata = None
 
     def __getitem__(self, key):
         _dict = self.to_dict()
@@ -182,27 +197,10 @@ class LiveResultResponse:
 # Metadata Message
 
 
-@dataclass_json
 @dataclass
-class ModelInfo:
-    name: str = ""
-    version: str = ""
-    arch: str = ""
-
-    def __getitem__(self, key):
-        _dict = self.to_dict()
-        return _dict[key]
-
-    def __setitem__(self, key, val):
-        self.__dict__[key] = val
-
-    def __str__(self) -> str:
-        return self.to_json(indent=4)
-
-
-@dataclass_json
-@dataclass
-class MetadataResponse:
+class MetadataResponse(
+    DataClassJsonMixin
+):  # pylint: disable=too-many-instance-attributes
     """
     Metadata Message from the Deepgram Platform
     """
@@ -215,13 +213,13 @@ class MetadataResponse:
     duration: float = 0
     channels: int = 0
     models: Optional[List[str]] = field(
-        default=None, metadata=config(exclude=lambda f: f is None)
+        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
     model_info: Optional[Dict[str, ModelInfo]] = field(
-        default=None, metadata=config(exclude=lambda f: f is None)
+        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
     extra: Optional[Dict] = field(
-        default=None, metadata=config(exclude=lambda f: f is None)
+        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
 
     def __getitem__(self, key):
@@ -247,15 +245,14 @@ class MetadataResponse:
 # Speech Started Message
 
 
-@dataclass_json
 @dataclass
-class SpeechStartedResponse:
+class SpeechStartedResponse(DataClassJsonMixin):
     """
     SpeechStartedResponse Message from the Deepgram Platform
     """
 
     type: str = ""
-    channel: List[int] = None
+    channel: List[int] = field(default_factory=list)
     timestamp: float = 0
 
     def __getitem__(self, key):
@@ -272,15 +269,14 @@ class SpeechStartedResponse:
 # Utterance End Message
 
 
-@dataclass_json
 @dataclass
-class UtteranceEndResponse:
+class UtteranceEndResponse(DataClassJsonMixin):
     """
     UtteranceEnd Message from the Deepgram Platform
     """
 
     type: str = ""
-    channel: List[int] = None
+    channel: List[int] = field(default_factory=list)
     last_word_end: float = 0
 
     def __getitem__(self, key):
@@ -297,9 +293,8 @@ class UtteranceEndResponse:
 # Close Message
 
 
-@dataclass_json
 @dataclass
-class CloseResponse:
+class CloseResponse(DataClassJsonMixin):
     """
     Close Message from the Deepgram Platform
     """
@@ -320,9 +315,8 @@ class CloseResponse:
 # Error Message
 
 
-@dataclass_json
 @dataclass
-class ErrorResponse:
+class ErrorResponse(DataClassJsonMixin):
     """
     Error Message from the Deepgram Platform
     """
@@ -346,9 +340,8 @@ class ErrorResponse:
 # Unhandled Message
 
 
-@dataclass_json
 @dataclass
-class UnhandledResponse:
+class UnhandledResponse(DataClassJsonMixin):
     """
     Unhandled Message from the Deepgram Platform
     """

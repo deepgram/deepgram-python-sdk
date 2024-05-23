@@ -10,7 +10,7 @@ from deepgram import DeepgramClient, PrerecordedOptions
 
 load_dotenv()
 
-API_KEY = os.getenv("DG_API_KEY")
+API_KEY = os.getenv("DEEPGRAM_API_KEY")
 AUDIO_URL = {
     "url": "https://static.deepgram.com/examples/Bueller-Life-moves-pretty-fast.wav"
 }

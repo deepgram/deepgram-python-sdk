@@ -2,17 +2,19 @@
 # Use of this source code is governed by a MIT license that can be found in the LICENSE file.
 # SPDX-License-Identifier: MIT
 
-from dataclasses import dataclass, field
-from dataclasses_json import dataclass_json, config
-
 from io import BufferedReader
-from typing import Union, List, TypedDict, Optional
-import logging, verboselogs
+from typing import Union, Optional
+import logging
+
+from dataclasses import dataclass, field
+from dataclasses_json import config as dataclass_config, DataClassJsonMixin
+
+from deepgram.utils import verboselogs
+from ...common import FileSource
 
 
-@dataclass_json
 @dataclass
-class SpeakOptions:
+class SpeakOptions(DataClassJsonMixin):
     """
     Contains all the options for the SpeakOptions.
 
@@ -21,19 +23,20 @@ class SpeakOptions:
     """
 
     model: Optional[str] = field(
-        default="aura-asteria-en", metadata=config(exclude=lambda f: f is None)
+        default="aura-asteria-en",
+        metadata=dataclass_config(exclude=lambda f: f is None),
     )
     encoding: Optional[str] = field(
-        default=None, metadata=config(exclude=lambda f: f is None)
+        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
     container: Optional[str] = field(
-        default=None, metadata=config(exclude=lambda f: f is None)
+        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
     sample_rate: Optional[int] = field(
-        default=None, metadata=config(exclude=lambda f: f is None)
+        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
     bit_rate: Optional[int] = field(
-        default=None, metadata=config(exclude=lambda f: f is None)
+        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
 
     def __getitem__(self, key):
@@ -47,11 +50,13 @@ class SpeakOptions:
         return self.to_json(indent=4)
 
     def check(self):
-        verboselogs.install()
-        logger = logging.getLogger(__name__)
+        """
+        Check the SpeakOptions for any missing or invalid values.
+        """
+        logger = verboselogs.VerboseLogger(__name__)
         logger.addHandler(logging.StreamHandler())
         prev = logger.level
-        logger.setLevel(logging.ERROR)
+        logger.setLevel(verboselogs.ERROR)
 
         # no op at the moment
 
@@ -60,31 +65,5 @@ class SpeakOptions:
         return True
 
 
-class SpeakStreamSource(TypedDict):
-    """
-    Represents a data source for reading binary data from a stream-like source.
-
-    This class is used to specify a source of binary data that can be read from
-    a stream, such as an audio file in .wav format.
-
-    Attributes:
-        stream (BufferedReader): A BufferedReader object for reading binary data.
-    """
-
-    stream: BufferedReader
-
-
-class TextSource(TypedDict):
-    """
-    Represents a data source for reading binary data from a text-like source.
-
-    This class is used to specify a source of text data that can be read from.
-
-    Attributes:
-        text (str): A string for reading text data.
-    """
-
-    text: str
-
-
-SpeakSource = Union[TextSource, SpeakStreamSource]
+SpeakStreamSource = BufferedReader
+SpeakSource = Union[FileSource, SpeakStreamSource]

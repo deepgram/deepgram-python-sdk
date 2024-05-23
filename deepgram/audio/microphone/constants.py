@@ -2,12 +2,11 @@
 # Use of this source code is governed by a MIT license that can be found in the LICENSE file.
 # SPDX-License-Identifier: MIT
 
-import logging, verboselogs
+from deepgram.utils import verboselogs
 
-"""
-constants for microphone
-"""
-LOGGING = logging.WARNING
+# Constants for microphone
+
+LOGGING = verboselogs.WARNING
 CHANNELS = 1
 RATE = 16000
 CHUNK = 8194

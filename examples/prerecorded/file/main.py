@@ -4,7 +4,8 @@
 
 import os
 from dotenv import load_dotenv
-import logging, verboselogs
+import logging
+from deepgram.utils import verboselogs
 from datetime import datetime
 import httpx
 
@@ -24,7 +25,7 @@ def main():
     try:
         # STEP 1 Create a Deepgram client using the API key in the environment variables
         config: DeepgramClientOptions = DeepgramClientOptions(
-            verbose=logging.SPAM,
+            verbose=verboselogs.SPAM,
         )
         deepgram: DeepgramClient = DeepgramClient("", config)
         # OR use defaults
