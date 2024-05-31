@@ -171,6 +171,11 @@ There are examples for **every** API call in this SDK. You can find all of these
 
 These examples provide:
 
+Text to Speech:
+
+- Asynchronous - [examples/speak](https://github.com/deepgram/deepgram-python-sdk/tree/main/examples/speak/file/async_hello_world/main.py)
+- Synchronous - [examples/speak](https://github.com/deepgram/deepgram-python-sdk/tree/main/examples/speak/file/hello_world/main.py)
+
 Analyze Text:
 
 - Intent Recognition - [examples/analyze/intent](https://github.com/deepgram/deepgram-python-sdk/blob/main/examples/analyze/intent/main.py)
@@ -181,7 +186,7 @@ Analyze Text:
 PreRecorded Audio:
 
 - Transcription From an Audio File - [examples/prerecorded/file](https://github.com/deepgram/deepgram-python-sdk/blob/main/examples/prerecorded/file/main.py)
-- Transcrption From an URL - [examples/prerecorded/url](https://github.com/deepgram/deepgram-python-sdk/blob/main/examples/prerecorded/url/main.py)
+- Transcription From an URL - [examples/prerecorded/url](https://github.com/deepgram/deepgram-python-sdk/blob/main/examples/prerecorded/url/main.py)
 - Intent Recognition - [examples/analyze/intent](https://github.com/deepgram/deepgram-python-sdk/blob/main/examples/prerecorded/intent/main.py)
 - Sentiment Analysis - [examples/sentiment/intent](https://github.com/deepgram/deepgram-python-sdk/blob/main/examples/prerecorded/sentiment/main.py)
 - Summarization - [examples/analyze/intent](https://github.com/deepgram/deepgram-python-sdk/blob/main/examples/prerecorded/summary/main.py)
