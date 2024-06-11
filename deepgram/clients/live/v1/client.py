@@ -6,6 +6,7 @@ import threading
 import time
 import logging
 from typing import Dict, Union, Optional, cast, Any
+from datetime import datetime
 
 from websockets.sync.client import connect, ClientConnection
 import websockets
@@ -29,6 +30,7 @@ from .response import (
 from .options import LiveOptions
 
 ONE_SECOND = 1
+HALF_SECOND = 0.5
 DEEPGRAM_INTERVAL = 5
 PING_INTERVAL = 20
 
@@ -51,9 +53,14 @@ class LiveClient:  # pylint: disable=too-many-instance-attributes
     _socket: ClientConnection
     _exit_event: threading.Event
     _lock_send: threading.Lock
+    _lock_flush: threading.Lock
     _event_handlers: Dict[LiveTranscriptionEvents, list]
-    _listen_thread: threading.Thread
-    _keep_alive_thread: threading.Thread
+
+    _last_datagram: Optional[datetime] = None
+
+    _listen_thread: Union[threading.Thread, None]
+    _keep_alive_thread: Union[threading.Thread, None]
+    _flush_thread: Union[threading.Thread, None]
 
     _kwargs: Optional[Dict] = None
     _addons: Optional[Dict] = None
@@ -70,8 +77,20 @@ class LiveClient:  # pylint: disable=too-many-instance-attributes
 
         self._config = config
         self._endpoint = "v1/listen"
-        self._exit_event = threading.Event()
         self._lock_send = threading.Lock()
+
+        self._flush_thread = None
+        self._keep_alive_thread = None
+        self._listen_thread = None
+
+        # exit
+        self._exit_event = threading.Event()
+
+        # auto flush
+        self._last_datagram = None
+        self._flush_event = threading.Event()
+        self._lock_flush = threading.Lock()
+
         self._event_handlers = {
             event: [] for event in LiveTranscriptionEvents.__members__.values()
         }
@@ -122,7 +141,7 @@ class LiveClient:  # pylint: disable=too-many-instance-attributes
         else:
             self._options = {}
 
-        combined_options: Dict = self._options
+        combined_options = self._options
         if self._addons is not None:
             self._logger.info("merging addons to options")
             combined_options.update(self._addons)
@@ -146,12 +165,20 @@ class LiveClient:  # pylint: disable=too-many-instance-attributes
             self._listen_thread.start()
 
             # keepalive thread
-            if self._config.options.get("keepalive") == "true":
+            if self._config.is_keep_alive_enabled():
                 self._logger.notice("keepalive is enabled")
                 self._keep_alive_thread = threading.Thread(target=self._keep_alive)
                 self._keep_alive_thread.start()
             else:
                 self._logger.notice("keepalive is disabled")
+
+            # flush thread
+            if self._config.is_auto_flush_enabled():
+                self._logger.notice("autoflush is enabled")
+                self._flush_thread = threading.Thread(target=self._flush)
+                self._flush_thread.start()
+            else:
+                self._logger.notice("autoflush is disabled")
 
             # push open event
             self._emit(
@@ -189,7 +216,7 @@ class LiveClient:  # pylint: disable=too-many-instance-attributes
         """
         Registers event handlers for specific events.
         """
-        self._logger.info("event fired: %s", event)
+        self._logger.info("event subscribed: %s", event)
         if event in LiveTranscriptionEvents.__members__.values() and callable(handler):
             self._event_handlers[event].append(handler)
 
@@ -197,10 +224,11 @@ class LiveClient:  # pylint: disable=too-many-instance-attributes
         """
         Emits events to the registered event handlers.
         """
+        self._logger.debug("callback handlers for: %s", event)
         for handler in self._event_handlers[event]:
             handler(self, *args, **kwargs)
 
-    # pylint: disable=too-many-return-statements,too-many-statements,too-many-locals
+    # pylint: disable=too-many-return-statements,too-many-statements,too-many-locals,too-many-branches
     def _listening(
         self,
     ) -> None:
@@ -245,6 +273,13 @@ class LiveClient:  # pylint: disable=too-many-instance-attributes
                             message
                         )
                         self._logger.verbose("LiveResultResponse: %s", msg_result)
+
+                        #  auto flush
+                        if self._config.is_inspecting_messages():
+                            inspect_res = self._inspect(msg_result)
+                            if not inspect_res:
+                                self._logger.error("inspect_res failed")
+
                         self._emit(
                             LiveTranscriptionEvents(LiveTranscriptionEvents.Transcript),
                             result=msg_result,
@@ -405,8 +440,8 @@ class LiveClient:  # pylint: disable=too-many-instance-attributes
         while True:
             try:
                 counter += 1
-
                 self._exit_event.wait(timeout=ONE_SECOND)
+
                 if self._exit_event.is_set():
                     self._logger.notice("_keep_alive exiting gracefully")
                     self._logger.debug("LiveClient._keep_alive LEAVE")
@@ -419,8 +454,7 @@ class LiveClient:  # pylint: disable=too-many-instance-attributes
 
                 # deepgram keepalive
                 if counter % DEEPGRAM_INTERVAL == 0:
-                    self._logger.verbose("Sending KeepAlive...")
-                    self.send(json.dumps({"type": "KeepAlive"}))
+                    self.keep_alive()
 
             except websockets.exceptions.ConnectionClosedOK as e:
                 self._logger.notice(f"_keep_alive({e.code}) exiting gracefully")
@@ -501,6 +535,126 @@ class LiveClient:  # pylint: disable=too-many-instance-attributes
 
     # pylint: enable=too-many-return-statements
 
+    ## pylint: disable=too-many-return-statements,too-many-statements
+    def _flush(self) -> None:
+        self._logger.debug("LiveClient._flush ENTER")
+
+        delta_in_ms_str = self._config.options.get("auto_flush_reply_delta")
+        if delta_in_ms_str is None:
+            self._logger.error("auto_flush_reply_delta is None")
+            self._logger.debug("LiveClient._flush LEAVE")
+            return
+        delta_in_ms = float(delta_in_ms_str)
+
+        while True:
+            try:
+                self._flush_event.wait(timeout=HALF_SECOND)
+
+                if self._exit_event.is_set():
+                    self._logger.notice("_flush exiting gracefully")
+                    self._logger.debug("LiveClient._flush LEAVE")
+                    return
+
+                if self._socket is None:
+                    self._logger.debug("socket is None, exiting flush")
+                    self._logger.debug("LiveClient._flush LEAVE")
+                    return
+
+                with self._lock_flush:
+                    if self._last_datagram is None:
+                        self._logger.debug("AutoFlush last_datagram is None")
+                        continue
+
+                    delta = datetime.now() - self._last_datagram
+                    diff_in_ms = delta.total_seconds() * 1000
+                    self._logger.debug("AutoFlush delta: %f", diff_in_ms)
+                    if diff_in_ms < delta_in_ms:
+                        self._logger.debug("AutoFlush delta is less than threshold")
+                        continue
+
+                    with self._lock_flush:
+                        self._last_datagram = None
+                    self.finalize()
+
+            except websockets.exceptions.ConnectionClosedOK as e:
+                self._logger.notice(f"_flush({e.code}) exiting gracefully")
+                self._logger.debug("LiveClient._flush LEAVE")
+                return
+
+            except websockets.exceptions.ConnectionClosed as e:
+                if e.code == 1000:
+                    self._logger.notice(f"_flush({e.code}) exiting gracefully")
+                    self._logger.debug("LiveClient._flush LEAVE")
+                    return
+
+                self._logger.error(
+                    "ConnectionClosed in LiveClient._flush with code %s: %s",
+                    e.code,
+                    e.reason,
+                )
+                cc_error: ErrorResponse = ErrorResponse(
+                    "ConnectionClosed in LiveClient._flush",
+                    f"{e}",
+                    "ConnectionClosed",
+                )
+                self._emit(
+                    LiveTranscriptionEvents(LiveTranscriptionEvents.Error), cc_error
+                )
+
+                # signal exit and close
+                self._signal_exit()
+
+                self._logger.debug("LiveClient._flush LEAVE")
+
+                if self._config.options.get("termination_exception") == "true":
+                    raise
+                return
+
+            except websockets.exceptions.WebSocketException as e:
+                self._logger.error(
+                    "WebSocketException in LiveClient._flush with: %s", e
+                )
+                ws_error: ErrorResponse = ErrorResponse(
+                    "WebSocketException in LiveClient._flush",
+                    f"{e}",
+                    "WebSocketException",
+                )
+                self._emit(
+                    LiveTranscriptionEvents(LiveTranscriptionEvents.Error), ws_error
+                )
+
+                # signal exit and close
+                self._signal_exit()
+
+                self._logger.debug("LiveClient._flush LEAVE")
+
+                if self._config.options.get("termination_exception") == "true":
+                    raise
+                return
+
+            except Exception as e:  # pylint: disable=broad-except
+                self._logger.error("Exception in LiveClient._flush: %s", e)
+                e_error: ErrorResponse = ErrorResponse(
+                    "Exception in LiveClient._flush",
+                    f"{e}",
+                    "Exception",
+                )
+                self._logger.error("Exception in LiveClient._flush: %s", str(e))
+                self._emit(
+                    LiveTranscriptionEvents(LiveTranscriptionEvents.Error), e_error
+                )
+
+                # signal exit and close
+                self._signal_exit()
+
+                self._logger.debug("LiveClient._flush LEAVE")
+
+                if self._config.options.get("termination_exception") == "true":
+                    raise
+                return
+
+    # pylint: enable=too-many-return-statements
+
     # pylint: disable=too-many-return-statements
     def send(self, data: Union[str, bytes]) -> bool:
         """
@@ -561,6 +715,35 @@ class LiveClient:  # pylint: disable=too-many-instance-attributes
 
     # pylint: enable=too-many-return-statements
 
+    def keep_alive(self) -> bool:
+        """
+        Sends a KeepAlive message
+        """
+        self._logger.spam("LiveClient.keep_alive ENTER")
+
+        if self._exit_event.is_set():
+            self._logger.notice("keep_alive exiting gracefully")
+            self._logger.debug("LiveClient.keep_alive LEAVE")
+            return False
+
+        if self._socket is None:
+            self._logger.notice("socket is not intialized")
+            self._logger.debug("LiveClient.keep_alive LEAVE")
+            return False
+
+        self._logger.notice("Sending KeepAlive...")
+        ret = self.send(json.dumps({"type": "KeepAlive"}))
+
+        if not ret:
+            self._logger.error("keep_alive failed")
+            self._logger.spam("LiveClient.keep_alive LEAVE")
+            return False
+
+        self._logger.notice("keep_alive succeeded")
+        self._logger.spam("LiveClient.keep_alive LEAVE")
+
+        return True
+
     def finalize(self) -> bool:
         """
         Finalizes the Transcript connection by flushing it
@@ -572,14 +755,18 @@ class LiveClient:  # pylint: disable=too-many-instance-attributes
             self._logger.debug("LiveClient.finalize LEAVE")
             return False
 
-        if self._socket is not None:
-            self._logger.notice("sending Finalize...")
-            ret = self.send(json.dumps({"type": "Finalize"}))
+        if self._socket is None:
+            self._logger.notice("socket is not intialized")
+            self._logger.debug("LiveClient.finalize LEAVE")
+            return False
 
-            if not ret:
-                self._logger.error("finalize failed")
-                self._logger.spam("LiveClient.finalize LEAVE")
-                return False
+        self._logger.notice("Sending Finalize...")
+        ret = self.send(json.dumps({"type": "Finalize"}))
+
+        if not ret:
+            self._logger.error("finalize failed")
+            self._logger.spam("LiveClient.finalize LEAVE")
+            return False
 
         self._logger.notice("finalize succeeded")
         self._logger.spam("LiveClient.finalize LEAVE")
@@ -598,15 +785,19 @@ class LiveClient:  # pylint: disable=too-many-instance-attributes
 
         # stop the threads
         self._logger.verbose("cancelling tasks...")
-        if self._config.options.get("keepalive") == "true":
-            if self._keep_alive_thread is not None:
-                self._keep_alive_thread.join()
-                self._keep_alive_thread = None  # type: ignore
-            self._logger.notice("processing thread joined")
+        if self._flush_thread is not None:
+            self._flush_thread.join()
+            self._flush_thread = None
+            self._logger.notice("processing _flush_thread thread joined")
+
+        if self._keep_alive_thread is not None:
+            self._keep_alive_thread.join()
+            self._keep_alive_thread = None
+            self._logger.notice("processing _keep_alive_thread thread joined")
 
         if self._listen_thread is not None:
             self._listen_thread.join()
-            self._listen_thread = None  # type: ignore
+            self._listen_thread = None
         self._logger.notice("listening thread joined")
 
         self._logger.notice("finish succeeded")
@@ -656,3 +847,22 @@ class LiveClient:  # pylint: disable=too-many-instance-attributes
                 self._logger.error("socket.wait_closed failed: %s", e)
 
         self._socket = None  # type: ignore
+
+    def _inspect(self, msg_result: LiveResultResponse) -> bool:
+        sentence = msg_result.channel.alternatives[0].transcript
+        if len(sentence) == 0:
+            return True
+
+        if msg_result.is_final:
+            with self._lock_flush:
+                self._logger.debug("AutoFlush is_final received")
+                self._last_datagram = None
+        else:
+            with self._lock_flush:
+                self._last_datagram = datetime.now()
+                self._logger.debug(
+                    "AutoFlush interim received: %s",
+                    str(self._last_datagram),
+                )
+
+        return True
