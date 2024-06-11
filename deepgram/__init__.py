@@ -102,10 +102,12 @@ from .client import (
     BalancesResponse,
 )
 
-# onprem
+# selfhosted
 from .client import (
     OnPremClient,
     AsyncOnPremClient,
+    SelfHostedClient,
+    AsyncSelfHostedClient,
 )
 
 # utilities

@@ -12,7 +12,7 @@ from ....options import DeepgramClientOptions
 from ...abstract_sync_client import AbstractSyncRestClient
 
 
-class OnPremClient(AbstractSyncRestClient):
+class SelfHostedClient(AbstractSyncRestClient):
     """
     Client for interacting with Deepgram's on-premises API.
 
@@ -40,14 +40,22 @@ class OnPremClient(AbstractSyncRestClient):
         """
         List all on-premises distribution credentials for a project.
         """
-        self._logger.debug("OnPremClient.list_onprem_credentials ENTER")
-        url = f"{self._config.url}/{self._endpoint}/{project_id}/onprem/distribution/credentials"
+        return self.list_selfhosted_credentials(project_id, timeout)
+
+    def list_selfhosted_credentials(
+        self, project_id: str, timeout: Optional[httpx.Timeout] = None
+    ):
+        """
+        List all on-premises distribution credentials for a project.
+        """
+        self._logger.debug("SelfHostedClient.list_selfhosted_credentials ENTER")
+        url = f"{self._config.url}/{self._endpoint}/{project_id}/selfhosted/distribution/credentials"
         self._logger.info("url: %s", url)
         self._logger.info("project_id: %s", project_id)
         res = self.get(url, timeout=timeout)
         self._logger.verbose("result: %s", res)
-        self._logger.notice("list_onprem_credentials succeeded")
-        self._logger.debug("OnPremClient.list_onprem_credentials LEAVE")
+        self._logger.notice("list_selfhosted_credentials succeeded")
+        self._logger.debug("SelfHostedClient.list_selfhosted_credentials LEAVE")
         return res
 
     def get_onprem_credentials(
@@ -59,8 +67,21 @@ class OnPremClient(AbstractSyncRestClient):
         """
         Get a specific on-premises distribution credential for a project.
         """
-        self._logger.debug("OnPremClient.get_onprem_credentials ENTER")
-        url = f"{self._config.url}/{self._endpoint}/{project_id}/onprem/distribution/credentials/{distribution_credentials_id}"
+        return self.get_selfhosted_credentials(
+            project_id, distribution_credentials_id, timeout
+        )
+
+    def get_selfhosted_credentials(
+        self,
+        project_id: str,
+        distribution_credentials_id: str,
+        timeout: Optional[httpx.Timeout] = None,
+    ):
+        """
+        Get a specific on-premises distribution credential for a project.
+        """
+        self._logger.debug("SelfHostedClient.get_selfhosted_credentials ENTER")
+        url = f"{self._config.url}/{self._endpoint}/{project_id}/selfhosted/distribution/credentials/{distribution_credentials_id}"
         self._logger.info("url: %s", url)
         self._logger.info("project_id: %s", project_id)
         self._logger.info(
@@ -68,8 +89,8 @@ class OnPremClient(AbstractSyncRestClient):
         )
         res = self.get(url, timeout=timeout)
         self._logger.verbose("result: %s", res)
-        self._logger.notice("get_onprem_credentials succeeded")
-        self._logger.debug("OnPremClient.get_onprem_credentials LEAVE")
+        self._logger.notice("get_selfhosted_credentials succeeded")
+        self._logger.debug("SelfHostedClient.get_selfhosted_credentials LEAVE")
         return res
 
     def create_onprem_credentials(
@@ -78,15 +99,23 @@ class OnPremClient(AbstractSyncRestClient):
         """
         Create a new on-premises distribution credential for a project.
         """
-        self._logger.debug("OnPremClient.create_onprem_credentials ENTER")
-        url = f"{self._config.url}/{self._endpoint}/{project_id}/onprem/distribution/credentials/"
+        return self.create_selfhosted_credentials(project_id, options, timeout)
+
+    def create_selfhosted_credentials(
+        self, project_id: str, options, timeout: Optional[httpx.Timeout] = None
+    ):
+        """
+        Create a new on-premises distribution credential for a project.
+        """
+        self._logger.debug("SelfHostedClient.create_selfhosted_credentials ENTER")
+        url = f"{self._config.url}/{self._endpoint}/{project_id}/selfhosted/distribution/credentials/"
         self._logger.info("url: %s", url)
         self._logger.info("project_id: %s", project_id)
         self._logger.info("options: %s", options)
         res = self.post(url, json=options, timeout=timeout)
         self._logger.verbose("result: %s", res)
-        self._logger.notice("create_onprem_credentials succeeded")
-        self._logger.debug("OnPremClient.create_onprem_credentials LEAVE")
+        self._logger.notice("create_selfhosted_credentials succeeded")
+        self._logger.debug("SelfHostedClient.create_selfhosted_credentials LEAVE")
         return res
 
     def delete_onprem_credentials(
@@ -98,13 +127,26 @@ class OnPremClient(AbstractSyncRestClient):
         """
         Delete an on-premises distribution credential for a project.
         """
-        self._logger.debug("OnPremClient.delete_onprem_credentials ENTER")
-        url = f"{self._config.url}/{self._endpoint}/{project_id}/onprem/distribution/credentials/{distribution_credentials_id}"
+        return self.delete_selfhosted_credentials(
+            project_id, distribution_credentials_id, timeout
+        )
+
+    def delete_selfhosted_credentials(
+        self,
+        project_id: str,
+        distribution_credentials_id: str,
+        timeout: Optional[httpx.Timeout] = None,
+    ):
+        """
+        Delete an on-premises distribution credential for a project.
+        """
+        self._logger.debug("SelfHostedClient.delete_selfhosted_credentials ENTER")
+        url = f"{self._config.url}/{self._endpoint}/{project_id}/selfhosted/distribution/credentials/{distribution_credentials_id}"
         self._logger.info("url: %s", url)
         self._logger.info("project_id: %s", project_id)
         self._logger.info("distrbution_credentials_id: %s", distribution_credentials_id)
         res = self.delete(url, timeout=timeout)
         self._logger.verbose("result: %s", res)
-        self._logger.notice("delete_onprem_credentials succeeded")
-        self._logger.debug("OnPremClient.delete_onprem_credentials LEAVE")
+        self._logger.notice("delete_selfhosted_credentials succeeded")
+        self._logger.debug("SelfHostedClient.delete_selfhosted_credentials LEAVE")
         return res

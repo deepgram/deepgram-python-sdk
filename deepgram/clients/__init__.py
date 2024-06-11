@@ -96,5 +96,10 @@ from .manage import (
     BalancesResponse,
 )
 
-# onprem
-from .onprem import OnPremClient, AsyncOnPremClient
+# selfhosted
+from .selfhosted import (
+    OnPremClient,
+    AsyncOnPremClient,
+    SelfHostedClient,
+    AsyncSelfHostedClient,
+)
