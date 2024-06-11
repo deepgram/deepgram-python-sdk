@@ -7,16 +7,14 @@ from .client import AsyncPreRecordedClient
 from .client import PrerecordedOptions
 from .client import (
     UrlSource,
-    BufferSource,
-    ReadStreamSource,
     FileSource,
+    PreRecordedStreamSource,
     PrerecordedSource,
 )
-from .client import Sentiment
 from .client import (
     AsyncPrerecordedResponse,
     PrerecordedResponse,
     SyncPrerecordedResponse,
 )
 
-from ...options import DeepgramClientOptions
+from ...options import DeepgramClientOptions, ClientOptionsFromEnv

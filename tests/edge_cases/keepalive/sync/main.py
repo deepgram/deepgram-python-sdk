@@ -3,7 +3,8 @@
 # SPDX-License-Identifier: MIT
 
 import time
-import logging, verboselogs
+import logging
+from deepgram.utils import verboselogs
 
 from deepgram import DeepgramClient, DeepgramClientOptions, LiveOptions
 
@@ -11,7 +12,7 @@ from deepgram import DeepgramClient, DeepgramClientOptions, LiveOptions
 def main():
     # for debugging
     config: DeepgramClientOptions = DeepgramClientOptions(
-        verbose=logging.DEBUG, options={"keepalive": "true"}
+        verbose=verboselogs.DEBUG, options={"keepalive": "true"}
     )
     deepgram: DeepgramClient = DeepgramClient("", config)
     # OR

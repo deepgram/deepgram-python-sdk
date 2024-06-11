@@ -30,4 +30,4 @@ from .client import (
     Balance,
     BalancesResponse,
 )
-from ...options import DeepgramClientOptions
+from ...options import DeepgramClientOptions, ClientOptionsFromEnv

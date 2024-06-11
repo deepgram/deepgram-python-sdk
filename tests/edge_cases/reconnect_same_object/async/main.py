@@ -1,6 +1,7 @@
 import asyncio
 import time
-import logging, verboselogs
+import logging
+from deepgram.utils import verboselogs
 from signal import SIGINT, SIGTERM
 
 from deepgram import DeepgramClient, DeepgramClientOptions, LiveOptions, Microphone
@@ -19,7 +20,7 @@ async def main():
         )
 
     config: DeepgramClientOptions = DeepgramClientOptions(
-        options={"keepalive": "true"}, verbose=logging.SPAM
+        options={"keepalive": "true"}, verbose=verboselogs.SPAM
     )
     # config: DeepgramClientOptions = DeepgramClientOptions()
     deepgram: DeepgramClient = DeepgramClient("", config)

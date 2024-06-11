@@ -3,14 +3,15 @@
 # SPDX-License-Identifier: MIT
 
 import time
-import logging, verboselogs
+import logging
+from deepgram.utils import verboselogs
 
 from deepgram import DeepgramClient, DeepgramClientOptions, LiveOptions
 
 
 def main():
     # for debugging
-    config: DeepgramClientOptions = DeepgramClientOptions(verbose=logging.SPAM)
+    config: DeepgramClientOptions = DeepgramClientOptions(verbose=verboselogs.SPAM)
     deepgram: DeepgramClient = DeepgramClient("", config)
     # OR
     # deepgram: DeepgramClient = DeepgramClient()

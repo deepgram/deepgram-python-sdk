@@ -5,7 +5,7 @@
 from .client import LiveClient
 from .client import AsyncLiveClient
 from .client import LiveOptions
-from .client import LiveTranscriptionEvents
+from .enums import LiveTranscriptionEvents
 from .client import (
     OpenResponse,
     LiveResultResponse,
@@ -17,4 +17,4 @@ from .client import (
     UnhandledResponse,
 )
 
-from ...options import DeepgramClientOptions
+from ...options import DeepgramClientOptions, ClientOptionsFromEnv

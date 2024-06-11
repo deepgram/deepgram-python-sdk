@@ -5,7 +5,8 @@
 import os
 import sys
 from dotenv import load_dotenv
-import logging, verboselogs
+import logging
+from deepgram.utils import verboselogs
 
 from deepgram import (
     DeepgramClient,
@@ -21,7 +22,7 @@ load_dotenv()
 def main():
     try:
         # Create a Deepgram client using the API key
-        # config: DeepgramClientOptions = DeepgramClientOptions(verbose=logging.SPAM)
+        # config: DeepgramClientOptions = DeepgramClientOptions(verbose=verboselogs.SPAM)
         config: DeepgramClientOptions = DeepgramClientOptions()
         deepgram: DeepgramClient = DeepgramClient("", config)
 

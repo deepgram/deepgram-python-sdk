@@ -4,7 +4,8 @@
 
 import os
 import sys
-import logging, verboselogs
+import logging
+from deepgram.utils import verboselogs
 from dotenv import load_dotenv
 
 from deepgram import DeepgramClient, DeepgramClientOptions, KeyOptions
@@ -16,7 +17,7 @@ def main():
     try:
         # example of setting up a client config. logging values: WARNING, VERBOSE, DEBUG, SPAM
         config = DeepgramClientOptions(
-            verbose=logging.DEBUG,
+            verbose=verboselogs.DEBUG,
         )
         deepgram: DeepgramClient = DeepgramClient("", config)
         # otherwise, use default config

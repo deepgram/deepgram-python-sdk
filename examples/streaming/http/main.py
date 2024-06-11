@@ -4,7 +4,8 @@
 
 import httpx
 from dotenv import load_dotenv
-import logging, verboselogs
+import logging
+from deepgram.utils import verboselogs
 import threading
 
 from deepgram import (
@@ -23,7 +24,7 @@ URL = "http://stream.live.vc.bbcmedia.co.uk/bbc_world_service"
 def main():
     try:
         # example of setting up a client config. logging values: WARNING, VERBOSE, DEBUG, SPAM
-        # config: DeepgramClientOptions = DeepgramClientOptions(verbose=logging.DEBUG)
+        # config: DeepgramClientOptions = DeepgramClientOptions(verbose=verboselogs.DEBUG)
         # deepgram: DeepgramClient = DeepgramClient("", config)
         # otherwise, use default config
         deepgram: DeepgramClient = DeepgramClient()

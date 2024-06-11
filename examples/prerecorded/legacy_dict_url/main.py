@@ -4,7 +4,8 @@
 
 import os
 from dotenv import load_dotenv
-import logging, verboselogs
+import logging
+from deepgram.utils import verboselogs
 
 from deepgram import (
     DeepgramClient,

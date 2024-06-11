@@ -6,7 +6,7 @@ httpx
 dataclasses-json
 dataclasses
 typing_extensions
-verboselogs
+aenum
 
 # Async functionality, likely to be already installed
 aiohttp

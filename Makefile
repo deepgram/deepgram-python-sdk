@@ -34,8 +34,8 @@ version: #### display version of components
 	@echo 'GOARCH: $(GOARCH)'
 	@echo 'go version: $(shell go version)'
 
-.PHONY: check mdlint shellcheck actionlint yamllint ### Performs all of the checks, lint'ing, etc available
-check: mdlint shellcheck actionlint yamllint
+.PHONY: check lint pylint format black blackformat lint_files lint_diff static mypy mdlint shellcheck actionlint yamllint ### Performs all of the checks, lint'ing, etc available
+check: lint static mdlint shellcheck actionlint yamllint
 
 .PHONY: ensure-deps
 ensure-deps: #### Ensure that all required dependency utilities are downloaded or installed
@@ -43,24 +43,26 @@ ensure-deps: #### Ensure that all required dependency utilities are downloaded o
 
 GO_MODULES=$(shell find . -path "*/go.mod" | xargs -I _ dirname _)
 
-# lint: tools #### Performs Golang programming lint
-# 	@for i in $(GO_MODULES); do \
-# 		echo "-- Linting $$i --"; \
-# 		working_dir=`pwd`; \
-# 		if [ "$${i}" = "." ]; then \
-# 			$(GOLANGCI_LINT) run -v --timeout=5m; \
-# 		else \
-# 			cd $${i}; \
-# 			$(MAKE) lint || exit 1; \
-# 			cd $$working_dir; \
-# 		fi; \
-# 	done; \
-# 	CHECK=$$(grep -r --include="*.go" ioutil ./); \
-# 	if [ -n "$${CHECK}" ]; then \
-# 		echo "ioutil is deprecated, use io or os replacements"; \
-# 		echo "$${CHECK}"; \
-# 		exit 1; \
-# 	fi
+# pystatic: #### Performs Python static analysis
+# 	pylint --rcfile .pylintrc deepgram
+
+PYTHON_FILES=.
+lint_files: PYTHON_FILES=deepgram/ examples/
+lint_diff: PYTHON_FILES=$(shell git diff --name-only --diff-filter=d main | grep -E '\.py$$')
+
+lint_files lint_diff: #### Performs Python formatting
+	black --target-version py310 $(PYTHON_FILES)
+
+black blackformat format: lint_files
+
+pylint: lint_files #### Performs Python linting
+	pylint --rcfile .pylintrc deepgram
+
+lint: pylint #### Performs Golang programming lint
+
+static_files: PYTHON_FILES=deepgram/
+static mypy: #### Performs static analysis
+	mypy --config-file mypy.ini --python-version 3.10 --exclude examples --exclude tests/edge_cases --exclude tests/expected_failures $(PYTHON_FILES)
 
 mdlint: #### Performs Markdown lint
 	# mdlint rules with common errors and possible fixes can be found here:

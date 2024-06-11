@@ -3,25 +3,29 @@
 # SPDX-License-Identifier: MIT
 
 from urllib.parse import urlparse, urlunparse, parse_qs, urlencode
-from typing import Dict
+from typing import Dict, Optional
 import re
 
 
 # This function appends query parameters to a URL
-def append_query_params(url: str, params: Dict):
+def append_query_params(url: str, params: Optional[Dict] = None):
+    """
+    Appends query parameters to a URL
+    """
     parsed_url = urlparse(url)
     query_params = parse_qs(parsed_url.query)
 
-    for key, value in params.items():
-        if value is None:
-            continue
-        if isinstance(value, bool):
-            value = str(value).lower()
-        if isinstance(value, list):
-            for item in value:
-                query_params[key] = query_params.get(key, []) + [str(item)]
-        else:
-            query_params[key] = [str(value)]
+    if params is not None:
+        for key, value in params.items():
+            if value is None:
+                continue
+            if isinstance(value, bool):
+                value = str(value).lower()
+            if isinstance(value, list):
+                for item in value:
+                    query_params[key] = query_params.get(key, []) + [str(item)]
+            else:
+                query_params[key] = [str(value)]
 
     updated_query_string = urlencode(query_params, doseq=True)
     updated_url = parsed_url._replace(query=updated_query_string).geturl()
@@ -30,6 +34,9 @@ def append_query_params(url: str, params: Dict):
 
 # This function converts a URL to a WebSocket URL
 def convert_to_websocket_url(base_url: str, endpoint: str):
+    """
+    Converts a URL to a WebSocket URL
+    """
     if re.match(r"^https?://", base_url, re.IGNORECASE):
         base_url = base_url.replace("https://", "").replace("http://", "")
     if not re.match(r"^wss?://", base_url, re.IGNORECASE):

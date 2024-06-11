@@ -1,5 +1,14 @@
 # pip install -r requirements.txt
 
+# lint, static, etc
+black==24.*
+pylint==3.*
+mypy==1.*
+
+# static check types
+types-pyaudio
+types-aiofiles
+
 # Testing
 pytest
 pytest-asyncio

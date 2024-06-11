@@ -5,14 +5,7 @@
 from .client import AnalyzeClient, AsyncAnalyzeClient
 from .client import ReadClient, AsyncReadClient
 from .client import AnalyzeOptions
-from .client import (
-    UrlSource,
-    BufferSource,
-    AnalyzeStreamSource,
-    AnalyzeSource,
-    TextSource,
-)
-from .client import Sentiment
+from .client import UrlSource, FileSource, AnalyzeStreamSource, AnalyzeSource
 from .client import AsyncAnalyzeResponse, AnalyzeResponse, SyncAnalyzeResponse
 
-from ...options import DeepgramClientOptions
+from ...options import DeepgramClientOptions, ClientOptionsFromEnv

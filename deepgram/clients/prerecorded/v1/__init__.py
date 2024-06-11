@@ -6,17 +6,16 @@ from .client import PreRecordedClient
 from .async_client import AsyncPreRecordedClient
 from .options import (
     PrerecordedOptions,
-    UrlSource,
-    BufferSource,
-    ReadStreamSource,
     FileSource,
+    UrlSource,
+    PreRecordedStreamSource,
     PrerecordedSource,
 )
-from ..enums import Sentiment
 from .response import (
     AsyncPrerecordedResponse,
     PrerecordedResponse,
     SyncPrerecordedResponse,
+    Sentiment,
 )
 
-from ....options import DeepgramClientOptions
+from ....options import DeepgramClientOptions, ClientOptionsFromEnv

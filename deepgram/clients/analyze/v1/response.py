@@ -2,18 +2,23 @@
 # Use of this source code is governed by a MIT license that can be found in the LICENSE file.
 # SPDX-License-Identifier: MIT
 
+from typing import List, Optional
+
 from dataclasses import dataclass, field
-from dataclasses_json import config, dataclass_json
-from typing import List, Optional, TypedDict, Dict
-from ..enums import Sentiment
+from dataclasses_json import config as dataclass_config, DataClassJsonMixin
+
+from ...common import Sentiment
 
 
 # Async Analyze Response Types:
 
 
-@dataclass_json
 @dataclass
-class AsyncAnalyzeResponse:
+class AsyncAnalyzeResponse(DataClassJsonMixin):
+    """
+    Async Analyze Response
+    """
+
     request_id: str = ""
 
     def __getitem__(self, key):
@@ -27,9 +32,12 @@ class AsyncAnalyzeResponse:
 # Analyze Response Types:
 
 
-@dataclass_json
 @dataclass
-class IntentsInfo:
+class IntentsInfo(DataClassJsonMixin):
+    """
+    Intents Info
+    """
+
     model_uuid: str = ""
     input_tokens: int = 0
     output_tokens: int = 0
@@ -42,9 +50,12 @@ class IntentsInfo:
         return self.to_json(indent=4)
 
 
-@dataclass_json
 @dataclass
-class SentimentInfo:
+class SentimentInfo(DataClassJsonMixin):
+    """
+    Sentiment Info
+    """
+
     model_uuid: str = ""
     input_tokens: int = 0
     output_tokens: int = 0
@@ -57,9 +68,12 @@ class SentimentInfo:
         return self.to_json(indent=4)
 
 
-@dataclass_json
 @dataclass
-class SummaryInfo:
+class SummaryInfo(DataClassJsonMixin):
+    """
+    Summary Info
+    """
+
     model_uuid: str = ""
     input_tokens: int = 0
     output_tokens: int = 0
@@ -72,9 +86,12 @@ class SummaryInfo:
         return self.to_json(indent=4)
 
 
-@dataclass_json
 @dataclass
-class TopicsInfo:
+class TopicsInfo(DataClassJsonMixin):
+    """
+    Topics Info
+    """
+
     model_uuid: str = ""
     input_tokens: int = 0
     output_tokens: int = 0
@@ -87,23 +104,26 @@ class TopicsInfo:
         return self.to_json(indent=4)
 
 
-@dataclass_json
 @dataclass
-class Metadata:
+class Metadata(DataClassJsonMixin):
+    """
+    Metadata
+    """
+
     request_id: str = ""
     created: str = ""
     language: str = ""
     intents_info: Optional[IntentsInfo] = field(
-        default=None, metadata=config(exclude=lambda f: f is None)
+        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
     sentiment_info: Optional[SentimentInfo] = field(
-        default=None, metadata=config(exclude=lambda f: f is None)
+        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
     summary_info: Optional[SummaryInfo] = field(
-        default=None, metadata=config(exclude=lambda f: f is None)
+        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
     topics_info: Optional[TopicsInfo] = field(
-        default=None, metadata=config(exclude=lambda f: f is None)
+        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
 
     def __getitem__(self, key):
@@ -122,10 +142,13 @@ class Metadata:
         return self.to_json(indent=4)
 
 
-@dataclass_json
 @dataclass
-class Average:
-    sentiment: Sentiment = None
+class Average(DataClassJsonMixin):
+    """
+    Average
+    """
+
+    sentiment: Sentiment
     sentiment_score: float = 0
 
     def __getitem__(self, key):
@@ -138,9 +161,12 @@ class Average:
         return self.to_json(indent=4)
 
 
-@dataclass_json
 @dataclass
-class Summary:
+class Summary(DataClassJsonMixin):
+    """
+    Summary
+    """
+
     text: str = ""
 
     def __getitem__(self, key):
@@ -151,9 +177,12 @@ class Summary:
         return self.to_json(indent=4)
 
 
-@dataclass_json
 @dataclass
-class Topic:
+class Topic(DataClassJsonMixin):
+    """
+    Topic
+    """
+
     topic: str = ""
     confidence_score: float = 0
 
@@ -165,9 +194,12 @@ class Topic:
         return self.to_json(indent=4)
 
 
-@dataclass_json
 @dataclass
-class Intent:
+class Intent(DataClassJsonMixin):
+    """
+    Intent
+    """
+
     intent: str = ""
     confidence_score: float = 0
 
@@ -179,21 +211,24 @@ class Intent:
         return self.to_json(indent=4)
 
 
-@dataclass_json
 @dataclass
-class Segment:
+class Segment(DataClassJsonMixin):
+    """
+    Segment
+    """
+
     text: str = ""
     start_word: int = 0
     end_word: int = 0
     sentiment: Optional[Sentiment] = field(
-        default=None, metadata=config(exclude=lambda f: f is None)
+        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
     sentiment_score: Optional[float] = 0
     intents: Optional[List[Intent]] = field(
-        default=None, metadata=config(exclude=lambda f: f is None)
+        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
     topics: Optional[List[Topic]] = field(
-        default=None, metadata=config(exclude=lambda f: f is None)
+        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
 
     def __getitem__(self, key):
@@ -210,11 +245,14 @@ class Segment:
         return self.to_json(indent=4)
 
 
-@dataclass_json
 @dataclass
-class Sentiments:
-    segments: List[Segment] = None
-    average: Average = None
+class Sentiments(DataClassJsonMixin):
+    """
+    Sentiments
+    """
+
+    average: Average
+    segments: List[Segment] = field(default_factory=list)
 
     def __getitem__(self, key):
         _dict = self.to_dict()
@@ -230,10 +268,13 @@ class Sentiments:
         return self.to_json(indent=4)
 
 
-@dataclass_json
 @dataclass
-class Topics:
-    segments: List[Segment] = None
+class Topics(DataClassJsonMixin):
+    """
+    Topics
+    """
+
+    segments: List[Segment] = field(default_factory=list)
 
     def __getitem__(self, key):
         _dict = self.to_dict()
@@ -247,10 +288,13 @@ class Topics:
         return self.to_json(indent=4)
 
 
-@dataclass_json
 @dataclass
-class Intents:
-    segments: List[Segment] = None
+class Intents(DataClassJsonMixin):
+    """
+    Intents
+    """
+
+    segments: List[Segment] = field(default_factory=list)
 
     def __getitem__(self, key):
         _dict = self.to_dict()
@@ -264,20 +308,23 @@ class Intents:
         return self.to_json(indent=4)
 
 
-@dataclass_json
 @dataclass
-class Results:
+class Results(DataClassJsonMixin):
+    """
+    Results
+    """
+
     summary: Optional[Summary] = field(
-        default=None, metadata=config(exclude=lambda f: f is None)
+        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
     sentiments: Optional[Sentiments] = field(
-        default=None, metadata=config(exclude=lambda f: f is None)
+        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
     topics: Optional[Topics] = field(
-        default=None, metadata=config(exclude=lambda f: f is None)
+        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
     intents: Optional[Intents] = field(
-        default=None, metadata=config(exclude=lambda f: f is None)
+        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
 
     def __getitem__(self, key):
@@ -299,14 +346,17 @@ class Results:
 # Analyze Response Result:
 
 
-@dataclass_json
 @dataclass
-class AnalyzeResponse:
+class AnalyzeResponse(DataClassJsonMixin):
+    """
+    Analyze Response
+    """
+
     metadata: Optional[Metadata] = field(
-        default=None, metadata=config(exclude=lambda f: f is None)
+        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
     results: Optional[Results] = field(
-        default=None, metadata=config(exclude=lambda f: f is None)
+        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
 
     def __getitem__(self, key):
@@ -321,7 +371,4 @@ class AnalyzeResponse:
         return self.to_json(indent=4)
 
 
-@dataclass_json
-@dataclass
-class SyncAnalyzeResponse(AnalyzeResponse):
-    pass
+SyncAnalyzeResponse = AnalyzeResponse

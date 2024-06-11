@@ -7,11 +7,9 @@ from .async_client import AsyncAnalyzeClient
 from .options import (
     AnalyzeOptions,
     UrlSource,
-    BufferSource,
+    FileSource,
     AnalyzeStreamSource,
-    TextSource,
     AnalyzeSource,
 )
-from ....options import DeepgramClientOptions
-from .response import AsyncAnalyzeResponse, AnalyzeResponse
-from ..enums import Sentiment
+from ....options import DeepgramClientOptions, ClientOptionsFromEnv
+from .response import AsyncAnalyzeResponse, AnalyzeResponse, Sentiment

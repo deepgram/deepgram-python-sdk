@@ -2,18 +2,21 @@
 # Use of this source code is governed by a MIT license that can be found in the LICENSE file.
 # SPDX-License-Identifier: MIT
 
+from typing import List, Optional
+
 from dataclasses import dataclass, field
-from dataclasses_json import dataclass_json, config
-from datetime import datetime
-from typing import TypedDict, List, Optional
+from dataclasses_json import config as dataclass_config, DataClassJsonMixin
 
 
 # Result Message
 
 
-@dataclass_json
 @dataclass
-class Message:
+class Message(DataClassJsonMixin):
+    """
+    Message from the Deepgram Platform
+    """
+
     message: str = ""
 
     def __getitem__(self, key):
@@ -30,9 +33,12 @@ class Message:
 # Projects
 
 
-@dataclass_json
 @dataclass
-class Project:
+class Project(DataClassJsonMixin):
+    """
+    Project object
+    """
+
     project_id: str = ""
     name: str = ""
 
@@ -47,10 +53,13 @@ class Project:
         return self.to_json(indent=4)
 
 
-@dataclass_json
 @dataclass
-class ProjectsResponse:
-    projects: List[Project] = None
+class ProjectsResponse(DataClassJsonMixin):
+    """
+    Projects Response object
+    """
+
+    projects: List[Project] = field(default_factory=list)
 
     def __getitem__(self, key):
         _dict = self.to_dict()
@@ -70,9 +79,12 @@ class ProjectsResponse:
 # Members
 
 
-@dataclass_json
 @dataclass
-class Member:
+class Member(DataClassJsonMixin):
+    """
+    Member object
+    """
+
     email: str = ""
     first_name: str = ""
     last_name: str = ""
@@ -89,10 +101,13 @@ class Member:
         return self.to_json(indent=4)
 
 
-@dataclass_json
 @dataclass
-class MembersResponse:
-    members: List[Member] = None
+class MembersResponse(DataClassJsonMixin):
+    """
+    Members Response object
+    """
+
+    members: List[Member] = field(default_factory=list)
 
     def __getitem__(self, key):
         _dict = self.to_dict()
@@ -112,16 +127,19 @@ class MembersResponse:
 # Keys
 
 
-@dataclass_json
 @dataclass
-class Key:
+class Key(DataClassJsonMixin):
+    """
+    Key object
+    """
+
     api_key_id: str = ""
     key: Optional[str] = field(
-        default=None, metadata=config(exclude=lambda f: f is None)
+        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
     comment: Optional[str] = ""
     created: str = ""
-    scopes: List[str] = None
+    scopes: List[str] = field(default_factory=list)
 
     def __getitem__(self, key):
         _dict = self.to_dict()
@@ -136,11 +154,14 @@ class Key:
         return self.to_json(indent=4)
 
 
-@dataclass_json
 @dataclass
-class KeyResponse:
-    api_key: Key = None
-    member: Member = None
+class KeyResponse(DataClassJsonMixin):
+    """
+    Key Response object
+    """
+
+    api_key: Key
+    member: Member
 
     def __getitem__(self, key):
         _dict = self.to_dict()
@@ -157,10 +178,13 @@ class KeyResponse:
         return self.to_json(indent=4)
 
 
-@dataclass_json
 @dataclass
-class KeysResponse:
-    api_keys: List[KeyResponse] = None
+class KeysResponse(DataClassJsonMixin):
+    """
+    Keys Response object
+    """
+
+    api_keys: List[KeyResponse] = field(default_factory=list)
 
     def __getitem__(self, key):
         _dict = self.to_dict()
@@ -180,10 +204,13 @@ class KeysResponse:
 # Scopes
 
 
-@dataclass_json
 @dataclass
-class ScopesResponse:
-    scopes: List[str] = None
+class ScopesResponse(DataClassJsonMixin):
+    """
+    Scopes Response object
+    """
+
+    scopes: List[str] = field(default_factory=list)
 
     def __getitem__(self, key):
         _dict = self.to_dict()
@@ -201,9 +228,12 @@ class ScopesResponse:
 # Invites
 
 
-@dataclass_json
 @dataclass
-class Invite:
+class Invite(DataClassJsonMixin):
+    """
+    Invite object
+    """
+
     email: str = ""
     scope: str = ""
 
@@ -218,10 +248,13 @@ class Invite:
         return self.to_json(indent=4)
 
 
-@dataclass_json
 @dataclass
-class InvitesResponse:
-    invites: List[Invite] = None
+class InvitesResponse(DataClassJsonMixin):
+    """
+    Invites Response object
+    """
+
+    invites: List[Invite] = field(default_factory=list)
 
     def __getitem__(self, key):
         _dict = self.to_dict()
@@ -241,37 +274,40 @@ class InvitesResponse:
 # Usage
 
 
-@dataclass_json
 @dataclass
-class Config:
+class Config(DataClassJsonMixin):  # pylint: disable=too-many-instance-attributes
+    """
+    Config object
+    """
+
     language: str = ""
     model: str = ""
     punctuate: Optional[bool] = field(
-        default=None, metadata=config(exclude=lambda f: f is None)
+        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
     utterances: Optional[bool] = field(
-        default=None, metadata=config(exclude=lambda f: f is None)
+        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
     diarize: Optional[bool] = field(
-        default=None, metadata=config(exclude=lambda f: f is None)
+        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
     smart_format: Optional[bool] = field(
-        default=None, metadata=config(exclude=lambda f: f is None)
+        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
     interim_results: Optional[bool] = field(
-        default=None, metadata=config(exclude=lambda f: f is None)
+        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
     topics: Optional[bool] = field(
-        default=None, metadata=config(exclude=lambda f: f is None)
+        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
     intents: Optional[bool] = field(
-        default=None, metadata=config(exclude=lambda f: f is None)
+        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
     sentiment: Optional[bool] = field(
-        default=None, metadata=config(exclude=lambda f: f is None)
+        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
     summarize: Optional[bool] = field(
-        default=None, metadata=config(exclude=lambda f: f is None)
+        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
 
     def __getitem__(self, key):
@@ -285,22 +321,25 @@ class Config:
         return self.to_json(indent=4)
 
 
-@dataclass_json
 @dataclass
-class Details:
+class Details(DataClassJsonMixin):  # pylint: disable=too-many-instance-attributes
+    """
+    Details object
+    """
+
+    config: Config
     usd: float = 0
     duration: float = 0
     total_audio: float = 0
     channels: int = 0
     streams: int = 0
     method: str = ""
-    models: List[str] = None
-    tags: Optional[List[str]] = field(
-        default=None, metadata=config(exclude=lambda f: f is None)
-    )
-    features: List[str] = None
-    config: Config = None
     tier: Optional[str] = ""
+    models: List[str] = field(default_factory=list)
+    tags: Optional[List[str]] = field(
+        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
+    )
+    features: List[str] = field(default_factory=list)
 
     def __getitem__(self, key):
         _dict = self.to_dict()
@@ -321,9 +360,12 @@ class Details:
         return self.to_json(indent=4)
 
 
-@dataclass_json
 @dataclass
-class Callback:
+class Callback(DataClassJsonMixin):
+    """
+    Callback object
+    """
+
     attempts: int = 0
     code: int = 0
     completed: str = ""
@@ -339,9 +381,12 @@ class Callback:
         return self.to_json(indent=4)
 
 
-@dataclass_json
 @dataclass
-class TokenDetail:
+class TokenDetail(DataClassJsonMixin):
+    """
+    Token Detail object
+    """
+
     feature: str = ""
     input: int = 0
     model: str = ""
@@ -358,9 +403,12 @@ class TokenDetail:
         return self.to_json(indent=4)
 
 
-@dataclass_json
 @dataclass
-class SpeechSegment:
+class SpeechSegment(DataClassJsonMixin):
+    """
+    Speech Segment object
+    """
+
     characters: int = 0
     model: str = ""
     tier: str = ""
@@ -376,12 +424,17 @@ class SpeechSegment:
         return self.to_json(indent=4)
 
 
-@dataclass_json
 @dataclass
-class TTSDetails:
+class TTSDetails(DataClassJsonMixin):
+    """
+    TTS Details object
+    """
+
     duration: float = 0
-    speech_segments: List[SpeechSegment] = None
+    speech_segments: List[SpeechSegment] = field(default_factory=list)
+    # pylint: disable=fixme
     # TODO: audio_metadata: None
+    # pylint: enable=fixme
 
     def __getitem__(self, key):
         _dict = self.to_dict()
@@ -399,17 +452,20 @@ class TTSDetails:
         return self.to_json(indent=4)
 
 
-@dataclass_json
 @dataclass
-class Response:
+class Response(DataClassJsonMixin):
+    """
+    Response object
+    """
+
+    details: Details
     code: int = 0
     completed: str = ""
-    details: Details = None
     tts_details: Optional[TTSDetails] = field(
-        default=None, metadata=config(exclude=lambda f: f is None)
+        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
     token_details: List[TokenDetail] = field(
-        default=None, metadata=config(exclude=lambda f: f is None)
+        default_factory=list, metadata=dataclass_config(exclude=lambda f: f is list)
     )
 
     def __getitem__(self, key):
@@ -432,20 +488,23 @@ class Response:
         return self.to_json(indent=4)
 
 
-@dataclass_json
 @dataclass
-class UsageRequest:
+class UsageRequest(DataClassJsonMixin):  # pylint: disable=too-many-instance-attributes
+    """
+    Usage Request object
+    """
+
+    response: Response
     project_uuid: str = ""
     request_id: str = ""
     created: str = ""
     path: str = ""
     api_key_id: str = ""
-    response: Response = None
     callback: Optional[Callback] = field(
-        default=None, metadata=config(exclude=lambda f: f is None)
+        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
     accessor: Optional[str] = field(
-        default=None, metadata=config(exclude=lambda f: f is None)
+        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
 
     def __getitem__(self, key):
@@ -463,12 +522,15 @@ class UsageRequest:
         return self.to_json(indent=4)
 
 
-@dataclass_json
 @dataclass
-class UsageRequestsResponse:
+class UsageRequestsResponse(DataClassJsonMixin):
+    """
+    Usage Requests Response object
+    """
+
     page: int = 0
     limit: int = 0
-    requests: List[UsageRequest] = None
+    requests: List[UsageRequest] = field(default_factory=list)
 
     def __getitem__(self, key):
         _dict = self.to_dict()
@@ -485,9 +547,12 @@ class UsageRequestsResponse:
         return self.to_json(indent=4)
 
 
-@dataclass_json
 @dataclass
-class Tokens:
+class Tokens(DataClassJsonMixin):
+    """
+    Tokens object
+    """
+
     tokens_in: int = 0
     out: int = 0
 
@@ -502,9 +567,12 @@ class Tokens:
         return self.to_json(indent=4)
 
 
-@dataclass_json
 @dataclass
-class TTS:
+class TTS(DataClassJsonMixin):
+    """
+    TTS object
+    """
+
     characters: int = 0
     requests: int = 0
 
@@ -519,16 +587,19 @@ class TTS:
         return self.to_json(indent=4)
 
 
-@dataclass_json
 @dataclass
-class Results:
+class Results(DataClassJsonMixin):
+    """
+    Results object
+    """
+
+    tokens: Tokens
+    tts: TTS
     start: str = ""
     end: str = ""
     hours: int = 0
     total_hours: int = 0
     requests: int = 0
-    tokens: Tokens = None
-    tts: TTS = None
 
     def __getitem__(self, key):
         _dict = self.to_dict()
@@ -536,7 +607,7 @@ class Results:
             _dict["tokens"] = Tokens.from_dict(_dict["tokens"])
         if "tts" in _dict:
             _dict["tts"] = TTS.from_dict(_dict["tts"])
-            return _dict[key]
+        return _dict[key]
 
     def __setitem__(self, key, val):
         self.__dict__[key] = val
@@ -545,9 +616,12 @@ class Results:
         return self.to_json(indent=4)
 
 
-@dataclass_json
 @dataclass
-class Resolution:
+class Resolution(DataClassJsonMixin):
+    """
+    Resolution object
+    """
+
     units: str = ""
     amount: int = 0
 
@@ -562,13 +636,16 @@ class Resolution:
         return self.to_json(indent=4)
 
 
-@dataclass_json
 @dataclass
-class UsageSummaryResponse:
+class UsageSummaryResponse(DataClassJsonMixin):
+    """
+    Usage Summary Response object
+    """
+
+    resolution: Resolution
     start: str = ""
     end: str = ""
-    resolution: Resolution = None
-    results: List[Results] = None
+    results: List[Results] = field(default_factory=list)
 
     def __getitem__(self, key):
         _dict = self.to_dict()
@@ -587,9 +664,12 @@ class UsageSummaryResponse:
         return self.to_json(indent=4)
 
 
-@dataclass_json
 @dataclass
-class UsageModel:
+class UsageModel(DataClassJsonMixin):
+    """
+    Usage Model object
+    """
+
     name: str = ""
     language: str = ""
     version: str = ""
@@ -606,17 +686,20 @@ class UsageModel:
         return self.to_json(indent=4)
 
 
-@dataclass_json
 @dataclass
-class UsageFieldsResponse:
+class UsageFieldsResponse(DataClassJsonMixin):
+    """
+    Usage Fields Response object
+    """
+
     tags: Optional[List[str]] = field(
-        default=None, metadata=config(exclude=lambda f: f is None)
+        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
-    models: List[UsageModel] = None
-    processing_methods: List[str] = None
-    features: List[str] = None
+    models: List[UsageModel] = field(default_factory=list)
+    processing_methods: List[str] = field(default_factory=list)
+    features: List[str] = field(default_factory=list)
     languages: Optional[List[str]] = field(
-        default=None, metadata=config(exclude=lambda f: f is None)
+        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
 
     def __getitem__(self, key):
@@ -648,9 +731,12 @@ class UsageFieldsResponse:
 # Billing
 
 
-@dataclass_json
 @dataclass
-class Balance:
+class Balance(DataClassJsonMixin):
+    """
+    Balance object
+    """
+
     balance_id: str = ""
     amount: str = ""
     units: str = ""
@@ -667,10 +753,13 @@ class Balance:
         return self.to_json(indent=4)
 
 
-@dataclass_json
 @dataclass
-class BalancesResponse:
-    balances: List[Balance] = None
+class BalancesResponse(DataClassJsonMixin):
+    """
+    Balances Response object
+    """
+
+    balances: List[Balance] = field(default_factory=list)
 
     def __getitem__(self, key):
         _dict = self.to_dict()

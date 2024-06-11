@@ -2,12 +2,14 @@
 # Use of this source code is governed by a MIT license that can be found in the LICENSE file.
 # SPDX-License-Identifier: MIT
 
-from urllib.parse import urlparse, urlunparse, parse_qs, urlencode
+from urllib.parse import urlparse, parse_qs, urlencode
 from typing import Dict
 
 
-# appends query parameters to a URL
 def append_query_params(url: str, params: Dict) -> str:
+    """
+    Appends query parameters to a URL.
+    """
     parsed_url = urlparse(url)
     query_params = parse_qs(parsed_url.query)
 

@@ -4,7 +4,8 @@
 
 import os
 from dotenv import load_dotenv
-import logging, verboselogs
+import logging
+from deepgram.utils import verboselogs
 import traceback
 
 from deepgram import ClientOptionsFromEnv, PrerecordedOptions, PreRecordedClient
@@ -37,7 +38,8 @@ def main():
 
     except Exception as e:
         print(f"Exception: {e}")
-        traceback.print_exc()
+        # enable the following line to print the stack trace
+        # traceback.print_exc()
 
 
 if __name__ == "__main__":

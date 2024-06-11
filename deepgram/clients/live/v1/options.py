@@ -2,15 +2,17 @@
 # Use of this source code is governed by a MIT license that can be found in the LICENSE file.
 # SPDX-License-Identifier: MIT
 
-from dataclasses import dataclass, field
-from dataclasses_json import dataclass_json, config
 from typing import List, Optional, Union
-import logging, verboselogs
+import logging
+
+from dataclasses import dataclass, field
+from dataclasses_json import config as dataclass_config, DataClassJsonMixin
+
+from deepgram.utils import verboselogs
 
 
-@dataclass_json
 @dataclass
-class LiveOptions:
+class LiveOptions(DataClassJsonMixin):  # pylint: disable=too-many-instance-attributes
     """
     Live Transcription Options for the Deepgram Platform.
 
@@ -19,91 +21,91 @@ class LiveOptions:
     """
 
     alternatives: Optional[int] = field(
-        default=None, metadata=config(exclude=lambda f: f is None)
+        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
     callback: Optional[str] = field(
-        default=None, metadata=config(exclude=lambda f: f is None)
+        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
     callback_method: Optional[str] = field(
-        default=None, metadata=config(exclude=lambda f: f is None)
+        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
     channels: Optional[int] = field(
-        default=None, metadata=config(exclude=lambda f: f is None)
+        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
     diarize: Optional[bool] = field(
-        default=None, metadata=config(exclude=lambda f: f is None)
+        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
     diarize_version: Optional[str] = field(
-        default=None, metadata=config(exclude=lambda f: f is None)
+        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
     encoding: Optional[str] = field(
-        default=None, metadata=config(exclude=lambda f: f is None)
+        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
     endpointing: Optional[str] = field(
-        default=None, metadata=config(exclude=lambda f: f is None)
+        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
     extra: Optional[Union[List[str], str]] = field(
-        default=None, metadata=config(exclude=lambda f: f is None)
+        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
     filler_words: Optional[bool] = field(
-        default=None, metadata=config(exclude=lambda f: f is None)
+        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
     interim_results: Optional[bool] = field(
-        default=None, metadata=config(exclude=lambda f: f is None)
+        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
     keywords: Optional[Union[List[str], str]] = field(
-        default=None, metadata=config(exclude=lambda f: f is None)
+        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
     language: Optional[str] = field(
-        default=None, metadata=config(exclude=lambda f: f is None)
+        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
     model: Optional[str] = field(
-        default="nova-2", metadata=config(exclude=lambda f: f is None)
+        default="nova-2", metadata=dataclass_config(exclude=lambda f: f is None)
     )
     multichannel: Optional[bool] = field(
-        default=None, metadata=config(exclude=lambda f: f is None)
+        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
     no_delay: Optional[bool] = field(
-        default=None, metadata=config(exclude=lambda f: f is None)
+        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
     numerals: Optional[bool] = field(
-        default=None, metadata=config(exclude=lambda f: f is None)
+        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
     punctuate: Optional[bool] = field(
-        default=None, metadata=config(exclude=lambda f: f is None)
+        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
     profanity_filter: Optional[bool] = field(
-        default=None, metadata=config(exclude=lambda f: f is None)
+        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
     redact: Optional[Union[List[str], bool, str]] = field(
-        default=None, metadata=config(exclude=lambda f: f is None)
+        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
     replace: Optional[Union[List[str], str]] = field(
-        default=None, metadata=config(exclude=lambda f: f is None)
+        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
     sample_rate: Optional[int] = field(
-        default=None, metadata=config(exclude=lambda f: f is None)
+        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
     search: Optional[Union[List[str], str]] = field(
-        default=None, metadata=config(exclude=lambda f: f is None)
+        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
     smart_format: Optional[bool] = field(
-        default=None, metadata=config(exclude=lambda f: f is None)
+        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
     tag: Optional[List[str]] = field(
-        default=None, metadata=config(exclude=lambda f: f is None)
+        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
     tier: Optional[str] = field(
-        default=None, metadata=config(exclude=lambda f: f is None)
+        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
     utterance_end_ms: Optional[str] = field(
-        default=None, metadata=config(exclude=lambda f: f is None)
+        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
     vad_events: Optional[bool] = field(
-        default=None, metadata=config(exclude=lambda f: f is None)
+        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
     version: Optional[str] = field(
-        default=None, metadata=config(exclude=lambda f: f is None)
+        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
 
     def __getitem__(self, key):
@@ -117,11 +119,13 @@ class LiveOptions:
         return self.to_json(indent=4)
 
     def check(self):
-        verboselogs.install()
-        logger = logging.getLogger(__name__)
+        """
+        Check the options for any deprecated or soon-to-be-deprecated options.
+        """
+        logger = verboselogs.VerboseLogger(__name__)
         logger.addHandler(logging.StreamHandler())
         prev = logger.level
-        logger.setLevel(logging.ERROR)
+        logger.setLevel(verboselogs.ERROR)
 
         if self.tier:
             logger.error(
