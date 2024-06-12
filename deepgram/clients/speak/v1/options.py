@@ -9,7 +9,7 @@ import logging
 from dataclasses import dataclass, field
 from dataclasses_json import config as dataclass_config, DataClassJsonMixin
 
-from deepgram.utils import verboselogs
+from ....utils import verboselogs
 from ...common import FileSource
 
 
