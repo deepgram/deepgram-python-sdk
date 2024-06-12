@@ -27,8 +27,7 @@ async def main():
 
         for signal in (SIGTERM, SIGINT):
             loop.add_signal_handler(
-                signal,
-                lambda: asyncio.create_task(
+                lambda signal=signal: asyncio.create_task(
                     shutdown(signal, loop, dg_connection, microphone)
                 ),
             )
