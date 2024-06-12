@@ -13,6 +13,8 @@ In order to run the code in the `examples` folder, you first need to:
 pip install -r requirements-examples.txt
 ```
 
+| **IMPORTANT:** The microphone examples may not work out-of-the-box on Windows due to the portaudio dependency. Modifications to the example code and correct installation/configuration of the portaudio library are required.
+
 ## Steps to Test Your Code
 
 If you are contributing changes to this SDK, you can test those changes by using the `prerecorded`, `streaming`, or `manage` "hello world"-style applications in the `examples` folder. Here are the steps to follow:

@@ -169,7 +169,11 @@ print("Finished")
 
 There are examples for **every** API call in this SDK. You can find all of these examples in the [examples folder](https://github.com/deepgram/deepgram-python-sdk/tree/main/examples) at the root of this repo.
 
-These examples provide:
+Before running any of these examples, then you need to take a look at the README and install the following dependencies:
+
+```bash
+pip install -r examples/requirements-examples.txt
+```
 
 Text to Speech:
 
