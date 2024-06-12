@@ -1,6 +1,10 @@
 # Live API (Real-Time) Example
 
-This example uses the Microphone as input in order to detect conversation insights in what is being said. This example required additional components (for the microphone) to be installed in order for this example to function correctly. 
+This example uses the Microphone to perform real-time transcription. This example required additional components (for the microphone) to be installed in order for this example to function correctly.
+
+## Prerequisites
+
+This example will only work on Linux and macOS. Windows platforms are not supported.
 
 ## Configuration
 
