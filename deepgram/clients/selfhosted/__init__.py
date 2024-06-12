@@ -2,6 +2,6 @@
 # Use of this source code is governed by a MIT license that can be found in the LICENSE file.
 # SPDX-License-Identifier: MIT
 
-from .client import OnPremClient
-from .async_client import AsyncOnPremClient
-from ....options import DeepgramClientOptions, ClientOptionsFromEnv
+from .client import SelfHostedClient, OnPremClient
+from .client import AsyncSelfHostedClient, AsyncOnPremClient
+from ...options import DeepgramClientOptions, ClientOptionsFromEnv

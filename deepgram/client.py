@@ -119,6 +119,8 @@ from .clients import (
 from .clients import (
     OnPremClient,
     AsyncOnPremClient,
+    SelfHostedClient,
+    AsyncSelfHostedClient,
 )
 
 # client errors and options
@@ -172,10 +174,10 @@ class DeepgramClient:
         listen: Returns a ListenClient instance for interacting with Deepgram's transcription services.
 
         manage: (Preferred) Returns a Threaded ManageClient instance for managing Deepgram resources.
-        onprem: (Preferred) Returns an Threaded OnPremClient instance for interacting with Deepgram's on-premises API.
+        selfhosted: (Preferred) Returns an Threaded SelfHostedClient instance for interacting with Deepgram's on-premises API.
 
         asyncmanage: Returns an (Async) ManageClient instance for managing Deepgram resources.
-        asynconprem: Returns an (Async) OnPremClient instance for interacting with Deepgram's on-premises API.
+        asyncselfhosted: Returns an (Async) SelfHostedClient instance for interacting with Deepgram's on-premises API.
     """
 
     _config: DeepgramClientOptions
@@ -247,19 +249,35 @@ class DeepgramClient:
         """
         return self.Version(self._config, "asyncmanage")
 
+    # for backwards compatibility
     @property
     def onprem(self):
         """
-        Returns an OnPremClient instance for interacting with Deepgram's on-premises API.
+        Returns an SelfHostedClient instance for interacting with Deepgram's on-premises API.
         """
-        return self.Version(self._config, "onprem")
+        return self.Version(self._config, "selfhosted")
 
+    @property
+    def selfhosted(self):
+        """
+        Returns an SelfHostedClient instance for interacting with Deepgram's on-premises API.
+        """
+        return self.Version(self._config, "selfhosted")
+
+    # for backwards compatibility
     @property
     def asynconprem(self):
         """
-        Returns an AsyncOnPremClient instance for interacting with Deepgram's on-premises API.
+        Returns an AsyncSelfHostedClient instance for interacting with Deepgram's on-premises API.
         """
-        return self.Version(self._config, "asynconprem")
+        return self.Version(self._config, "asyncselfhosted")
+
+    @property
+    def asyncselfhosted(self):
+        """
+        Returns an AsyncSelfHostedClient instance for interacting with Deepgram's on-premises API.
+        """
+        return self.Version(self._config, "asyncselfhosted")
 
     # INTERNAL CLASSES
     class Version:
@@ -286,8 +304,8 @@ class DeepgramClient:
         #     match self._parent:
         #         case "manage":
         #             return ManageClient(self._config)
-        #         case "onprem":
-        #             return OnPremClient(self._config)
+        #         case "selfhosted":
+        #             return SelfHostedClient(self._config)
         #         case _:
         #             raise DeepgramModuleError("Invalid parent")
 
@@ -322,14 +340,14 @@ class DeepgramClient:
                     parent = "speak"
                     filename = "async_client"
                     classname = "AsyncSpeakClient"
-                case "onprem":
-                    parent = "onprem"
+                case "selfhosted":
+                    parent = "selfhosted"
                     filename = "client"
-                    classname = "OnPremClient"
-                case "asynconprem":
-                    parent = "onprem"
+                    classname = "SelfHostedClient"
+                case "asyncselfhosted":
+                    parent = "selfhosted"
                     filename = "async_client"
-                    classname = "AsyncOnPremClient"
+                    classname = "AsyncSelfHostedClient"
                 case _:
                     self._logger.error("parent unknown: %s", self._parent)
                     self._logger.debug("Version.v LEAVE")
