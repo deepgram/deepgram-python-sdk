@@ -7,7 +7,7 @@ from typing import Optional
 
 import httpx
 
-from deepgram.utils import verboselogs
+from ....utils import verboselogs
 from ....options import DeepgramClientOptions
 from ...abstract_async_client import AbstractAsyncRestClient
 

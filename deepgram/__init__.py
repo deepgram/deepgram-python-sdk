@@ -6,7 +6,23 @@
 __version__ = "0.0.0"
 
 # entry point for the deepgram python sdk
-from .client import verboselogs
+import logging
+from .utils.verboselogs import VerboseLogger
+from .utils.verboselogs import (
+    NOTICE,
+    SPAM,
+    SUCCESS,
+    VERBOSE,
+    WARNING,
+    ERROR,
+    FATAL,
+    CRITICAL,
+    INFO,
+    DEBUG,
+    NOTSET,
+    install,
+)
+
 from .client import Deepgram, DeepgramClient
 from .client import DeepgramClientOptions, ClientOptionsFromEnv
 from .client import DeepgramApiKeyError, DeepgramModuleError
