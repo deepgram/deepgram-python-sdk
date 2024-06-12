@@ -2,13 +2,13 @@
 # Use of this source code is governed by a MIT license that can be found in the LICENSE file.
 # SPDX-License-Identifier: MIT
 
-from typing import List, Union, Optional
 import logging
+from typing import List, Union, Optional
 
 from dataclasses import dataclass, field
 from dataclasses_json import config as dataclass_config, DataClassJsonMixin
 
-from deepgram.utils import verboselogs
+from ....utils import verboselogs
 from ...common import FileSource, StreamSource, UrlSource
 
 

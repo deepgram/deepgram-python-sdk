@@ -7,7 +7,7 @@ from importlib import import_module
 import os
 
 import logging
-from deepgram.utils import verboselogs
+from .utils import verboselogs
 
 # common
 # pylint: disable=unused-import
