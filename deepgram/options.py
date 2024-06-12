@@ -7,6 +7,7 @@ import re
 import os
 from typing import Dict, Optional
 import logging
+import numbers
 
 from deepgram import __version__
 from deepgram.utils import verboselogs
@@ -27,6 +28,9 @@ class DeepgramClientOptions:
         options: (Optional) Additional options for initializing the client.
     """
 
+    _logger: verboselogs.VerboseLogger
+    _inspect: bool = False
+
     def __init__(
         self,
         api_key: str = "",
@@ -35,14 +39,17 @@ class DeepgramClientOptions:
         headers: Optional[Dict] = None,
         options: Optional[Dict] = None,
     ):
-        self.logger = verboselogs.VerboseLogger(__name__)
-        self.logger.addHandler(logging.StreamHandler())
+        self._logger = verboselogs.VerboseLogger(__name__)
+        self._logger.addHandler(logging.StreamHandler())
 
         if api_key is None:
             api_key = ""
 
         self.verbose = verbose
         self.api_key = api_key
+
+        if headers is None:
+            headers = {}
         self._update_headers(headers=headers)
 
         if len(url) == 0:
@@ -52,6 +59,9 @@ class DeepgramClientOptions:
         if options is None:
             options = {}
         self.options = options
+
+        if self.is_auto_flush_enabled():
+            self._inspect = True
 
     def set_apikey(self, api_key: str):
         """
@@ -63,7 +73,7 @@ class DeepgramClientOptions:
         self.api_key = api_key
         self._update_headers()
 
-    def _get_url(self, url):
+    def _get_url(self, url) -> str:
         if not re.match(r"^https?://", url, re.IGNORECASE):
             url = "https://" + url
         return url.strip("/")
@@ -82,6 +92,27 @@ class DeepgramClientOptions:
         if headers:
             self.headers.update(headers)
 
+    def is_keep_alive_enabled(self) -> bool:
+        """
+        is_keep_alive_enabled: Returns True if the client is configured to keep the connection alive.
+        """
+        return self.options.get("keepalive", False) or self.options.get(
+            "keep_alive", False
+        )
+
+    def is_auto_flush_enabled(self) -> bool:
+        """
+        is_auto_flush_enabled: Returns True if the client is configured to auto-flush.
+        """
+        auto_flush_delta = float(self.options.get("auto_flush_reply_delta", 0))
+        return isinstance(auto_flush_delta, numbers.Number) and auto_flush_delta > 0
+
+    def is_inspecting_messages(self) -> bool:
+        """
+        is_inspecting_messages: Returns True if the client is inspecting messages.
+        """
+        return self._inspect
+
 
 class ClientOptionsFromEnv(
     DeepgramClientOptions
@@ -89,6 +120,8 @@ class ClientOptionsFromEnv(
     """
     This class extends DeepgramClientOptions and will attempt to use environment variables first before defaults.
     """
+
+    _logger: verboselogs.VerboseLogger
 
     def __init__(
         self,
@@ -98,9 +131,9 @@ class ClientOptionsFromEnv(
         headers: Optional[Dict] = None,
         options: Optional[Dict] = None,
     ):
-        self.logger = verboselogs.VerboseLogger(__name__)
-        self.logger.addHandler(logging.StreamHandler())
-        self.logger.setLevel(verboselogs.WARNING)  # temporary set for setup
+        self._logger = verboselogs.VerboseLogger(__name__)
+        self._logger.addHandler(logging.StreamHandler())
+        self._logger.setLevel(verboselogs.WARNING)  # temporary set for setup
 
         if api_key is None:
             api_key = ""
@@ -108,12 +141,12 @@ class ClientOptionsFromEnv(
         if api_key == "":
             api_key = os.getenv("DEEPGRAM_API_KEY", "")
             if api_key == "":
-                self.logger.critical("Deepgram API KEY is not set")
+                self._logger.critical("Deepgram API KEY is not set")
                 raise DeepgramApiKeyError("Deepgram API KEY is not set")
 
         if url == "":
             url = os.getenv("DEEPGRAM_HOST", "api.deepgram.com")
-            self.logger.notice(f"Deepgram host is set to {url}")
+            self._logger.notice(f"Deepgram host is set to {url}")
 
         if verbose == verboselogs.WARNING:
             _loglevel = os.getenv("DEEPGRAM_LOGGING", "")
@@ -122,36 +155,36 @@ class ClientOptionsFromEnv(
             if isinstance(verbose, str):
                 match verbose:
                     case "NOTSET":
-                        self.logger.notice("Logging level is set to NOTSET")
+                        self._logger.notice("Logging level is set to NOTSET")
                         verbose = verboselogs.NOTSET
                     case "SPAM":
-                        self.logger.notice("Logging level is set to SPAM")
+                        self._logger.notice("Logging level is set to SPAM")
                         verbose = verboselogs.SPAM
                     case "DEBUG":
-                        self.logger.notice("Logging level is set to DEBUG")
+                        self._logger.notice("Logging level is set to DEBUG")
                         verbose = verboselogs.DEBUG
                     case "VERBOSE":
-                        self.logger.notice("Logging level is set to VERBOSE")
+                        self._logger.notice("Logging level is set to VERBOSE")
                         verbose = verboselogs.VERBOSE
                     case "NOTICE":
-                        self.logger.notice("Logging level is set to NOTICE")
+                        self._logger.notice("Logging level is set to NOTICE")
                         verbose = verboselogs.NOTICE
                     case "WARNING":
-                        self.logger.notice("Logging level is set to WARNING")
+                        self._logger.notice("Logging level is set to WARNING")
                         verbose = verboselogs.WARNING
                     case "SUCCESS":
-                        self.logger.notice("Logging level is set to SUCCESS")
+                        self._logger.notice("Logging level is set to SUCCESS")
                         verbose = verboselogs.SUCCESS
                     case "ERROR":
-                        self.logger.notice("Logging level is set to ERROR")
+                        self._logger.notice("Logging level is set to ERROR")
                         verbose = verboselogs.ERROR
                     case "CRITICAL":
-                        self.logger.notice("Logging level is set to CRITICAL")
+                        self._logger.notice("Logging level is set to CRITICAL")
                         verbose = verboselogs.CRITICAL
                     case _:
-                        self.logger.notice("Logging level is set to WARNING")
+                        self._logger.notice("Logging level is set to WARNING")
                         verbose = verboselogs.WARNING
-        self.logger.notice(f"Logging level is set to {verbose}")
+        self._logger.notice(f"Logging level is set to {verbose}")
 
         if headers is None:
             headers = {}
@@ -159,7 +192,7 @@ class ClientOptionsFromEnv(
                 header = os.getenv(f"DEEPGRAM_HEADER_{x}", None)
                 if header is not None:
                     headers[header] = os.getenv(f"DEEPGRAM_HEADER_VALUE_{x}", None)
-                    self.logger.debug(
+                    self._logger.debug(
                         "Deepgram header %s is set with value %s",
                         header,
                         headers[header],
@@ -167,7 +200,7 @@ class ClientOptionsFromEnv(
                 else:
                     break
             if len(headers) == 0:
-                self.logger.notice("Deepgram headers are not set")
+                self._logger.notice("Deepgram headers are not set")
                 headers = None
 
         if options is None:
@@ -176,13 +209,13 @@ class ClientOptionsFromEnv(
                 param = os.getenv(f"DEEPGRAM_PARAM_{x}", None)
                 if param is not None:
                     options[param] = os.getenv(f"DEEPGRAM_PARAM_VALUE_{x}", None)
-                    self.logger.debug(
+                    self._logger.debug(
                         "Deepgram option %s is set with value %s", param, options[param]
                     )
                 else:
                     break
             if len(options) == 0:
-                self.logger.notice("Deepgram options are not set")
+                self._logger.notice("Deepgram options are not set")
                 options = None
 
         super().__init__(
