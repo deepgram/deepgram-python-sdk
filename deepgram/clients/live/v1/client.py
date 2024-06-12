@@ -2,11 +2,11 @@
 # Use of this source code is governed by a MIT license that can be found in the LICENSE file.
 # SPDX-License-Identifier: MIT
 import json
-import threading
 import time
 import logging
 from typing import Dict, Union, Optional, cast, Any
 from datetime import datetime
+import threading
 
 from websockets.sync.client import connect, ClientConnection
 import websockets
@@ -160,6 +160,11 @@ class LiveClient:  # pylint: disable=too-many-instance-attributes
             self._socket = connect(url_with_params, additional_headers=combined_headers)
             self._exit_event.clear()
 
+            # debug the threads
+            for thread in threading.enumerate():
+                self._logger.debug("after running thread: %s", thread.name)
+            self._logger.debug("number of active threads: %s", threading.active_count())
+
             # listening thread
             self._listen_thread = threading.Thread(target=self._listening)
             self._listen_thread.start()
@@ -179,6 +184,11 @@ class LiveClient:  # pylint: disable=too-many-instance-attributes
                 self._flush_thread.start()
             else:
                 self._logger.notice("autoflush is disabled")
+
+            # debug the threads
+            for thread in threading.enumerate():
+                self._logger.debug("after running thread: %s", thread.name)
+            self._logger.debug("number of active threads: %s", threading.active_count())
 
             # push open event
             self._emit(
@@ -780,6 +790,11 @@ class LiveClient:  # pylint: disable=too-many-instance-attributes
         """
         self._logger.spam("LiveClient.finish ENTER")
 
+        # debug the threads
+        for thread in threading.enumerate():
+            self._logger.debug("before running thread: %s", thread.name)
+        self._logger.debug("number of active threads: %s", threading.active_count())
+
         # signal exit
         self._signal_exit()
 
@@ -799,6 +814,11 @@ class LiveClient:  # pylint: disable=too-many-instance-attributes
             self._listen_thread.join()
             self._listen_thread = None
         self._logger.notice("listening thread joined")
+
+        # debug the threads
+        for thread in threading.enumerate():
+            self._logger.debug("before running thread: %s", thread.name)
+        self._logger.debug("number of active threads: %s", threading.active_count())
 
         self._logger.notice("finish succeeded")
         self._logger.spam("LiveClient.finish LEAVE")

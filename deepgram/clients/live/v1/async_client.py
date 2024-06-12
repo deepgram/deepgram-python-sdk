@@ -6,6 +6,7 @@ import json
 import logging
 from typing import Dict, Union, Optional, cast, Any
 from datetime import datetime
+import threading
 
 import websockets
 from websockets.client import WebSocketClientProtocol
@@ -157,6 +158,11 @@ class AsyncLiveClient:  # pylint: disable=too-many-instance-attributes
             )
             self._exit_event.clear()
 
+            # debug the threads
+            for thread in threading.enumerate():
+                self._logger.debug("after running thread: %s", thread.name)
+            self._logger.debug("number of active threads: %s", threading.active_count())
+
             # listen thread
             self._listen_thread = asyncio.create_task(self._listening())
 
@@ -173,6 +179,11 @@ class AsyncLiveClient:  # pylint: disable=too-many-instance-attributes
                 self._flush_thread = asyncio.create_task(self._flush())
             else:
                 self._logger.notice("autoflush is disabled")
+
+            # debug the threads
+            for thread in threading.enumerate():
+                self._logger.debug("after running thread: %s", thread.name)
+            self._logger.debug("number of active threads: %s", threading.active_count())
 
             # push open event
             await self._emit(
@@ -217,12 +228,28 @@ class AsyncLiveClient:  # pylint: disable=too-many-instance-attributes
         """
         Emits events to the registered event handlers.
         """
+        self._logger.debug("AsyncLiveClient._emit ENTER")
         self._logger.debug("callback handlers for: %s", event)
+
+        # debug the threads
+        for thread in threading.enumerate():
+            self._logger.debug("after running thread: %s", thread.name)
+        self._logger.debug("number of active threads: %s", threading.active_count())
+
+        tasks = []
         for handler in self._event_handlers[event]:
-            if asyncio.iscoroutinefunction(handler):
-                await handler(self, *args, **kwargs)
-            else:
-                asyncio.create_task(handler(self, *args, **kwargs))
+            tasks.append(asyncio.create_task(handler(self, *args, **kwargs)))
+
+        if len(tasks) > 0:
+            self._logger.debug("waiting for tasks to finish...")
+            await asyncio.gather(*filter(None, tasks), return_exceptions=True)
+
+        # debug the threads
+        for thread in threading.enumerate():
+            self._logger.debug("after running thread: %s", thread.name)
+        self._logger.debug("number of active threads: %s", threading.active_count())
+
+        self._logger.debug("AsyncLiveClient._emit LEAVE")
 
     # pylint: disable=too-many-return-statements,too-many-statements,too-many-locals,too-many-branches
     async def _listening(self) -> None:
@@ -796,6 +823,11 @@ class AsyncLiveClient:  # pylint: disable=too-many-instance-attributes
         self._logger.verbose("cancelling tasks...")
         try:
             # Before cancelling, check if the tasks were created
+            # debug the threads
+            for thread in threading.enumerate():
+                self._logger.debug("before running thread: %s", thread.name)
+            self._logger.debug("number of active threads: %s", threading.active_count())
+
             tasks = []
             if self._keep_alive_thread is not None:
                 self._keep_alive_thread.cancel()
@@ -815,6 +847,11 @@ class AsyncLiveClient:  # pylint: disable=too-many-instance-attributes
             # Use asyncio.gather to wait for tasks to be cancelled
             await asyncio.gather(*filter(None, tasks), return_exceptions=True)
             self._logger.notice("threads joined")
+
+            # debug the threads
+            for thread in threading.enumerate():
+                self._logger.debug("after running thread: %s", thread.name)
+            self._logger.debug("number of active threads: %s", threading.active_count())
 
             self._logger.notice("finish succeeded")
             self._logger.spam("AsyncLiveClient.finish LEAVE")
