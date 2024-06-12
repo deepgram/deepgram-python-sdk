@@ -8,7 +8,7 @@ import threading
 from typing import Optional, Callable
 import logging
 
-from deepgram.utils import verboselogs
+from ...utils import verboselogs
 from .constants import LOGGING, CHANNELS, RATE, CHUNK
 
 

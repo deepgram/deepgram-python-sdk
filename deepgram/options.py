@@ -10,7 +10,7 @@ import logging
 import numbers
 
 from deepgram import __version__
-from deepgram.utils import verboselogs
+from .utils import verboselogs
 from .errors import DeepgramApiKeyError
 
 

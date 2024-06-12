@@ -9,7 +9,7 @@ import aiofiles
 
 import httpx
 
-from deepgram.utils import verboselogs
+from ....utils import verboselogs
 from ....options import DeepgramClientOptions
 from ...abstract_async_client import AbstractAsyncRestClient
 from ..errors import DeepgramError, DeepgramTypeError
