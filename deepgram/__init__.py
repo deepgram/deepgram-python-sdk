@@ -6,7 +6,8 @@
 __version__ = "0.0.0"
 
 # entry point for the deepgram python sdk
-from .client import verboselogs
+import logging
+from .utils.verboselogs import *  # pylint: disable=wildcard-import
 from .client import Deepgram, DeepgramClient
 from .client import DeepgramClientOptions, ClientOptionsFromEnv
 from .client import DeepgramApiKeyError, DeepgramModuleError

@@ -11,7 +11,7 @@ import threading
 import websockets
 from websockets.client import WebSocketClientProtocol
 
-from deepgram.utils import verboselogs
+from ....utils import verboselogs
 from ....options import DeepgramClientOptions
 from ..enums import LiveTranscriptionEvents
 from ..helpers import convert_to_websocket_url, append_query_params

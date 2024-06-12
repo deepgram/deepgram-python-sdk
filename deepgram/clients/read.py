@@ -5,7 +5,7 @@
 from importlib import import_module
 import logging
 
-from deepgram.utils import verboselogs
+from ..utils import verboselogs
 from ..options import DeepgramClientOptions
 from .errors import DeepgramModuleError
 
