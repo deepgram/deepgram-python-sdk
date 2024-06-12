@@ -8,7 +8,7 @@ import io
 
 import httpx
 
-from deepgram.utils import verboselogs
+from ....utils import verboselogs
 from ....options import DeepgramClientOptions
 from ...abstract_sync_client import AbstractSyncRestClient
 from ..errors import DeepgramError, DeepgramTypeError
