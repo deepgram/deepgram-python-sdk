@@ -5,11 +5,14 @@
 import inspect
 import asyncio
 import threading
-from typing import Optional, Callable
+from typing import Optional, Callable, TYPE_CHECKING
 import logging
 
 from ...utils import verboselogs
 from .constants import LOGGING, CHANNELS, RATE, CHUNK
+
+if TYPE_CHECKING:
+    import pyaudio
 
 
 class Microphone:  # pylint: disable=too-many-instance-attributes
@@ -20,10 +23,8 @@ class Microphone:  # pylint: disable=too-many-instance-attributes
     _logger: verboselogs.VerboseLogger
     _exit: threading.Event
 
-    import pyaudio  # pylint: disable=import-outside-toplevel
-
-    _audio: pyaudio.PyAudio
-    _stream: pyaudio.Stream
+    _audio: "pyaudio.PyAudio"
+    _stream: "pyaudio.Stream"
     _chunk: int
     _rate: int
     _format: int
