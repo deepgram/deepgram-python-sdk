@@ -65,7 +65,11 @@ from .speak import (
     SpeakStreamSource,
     SpeakSource,
 )
+from .speak import SpeakStreamEvents
 from .speak import SpeakResponse
+
+# speak-stream
+from .speak import SpeakStreamClient, AsyncSpeakStreamClient
 
 # manage
 from .manage import ManageClient, AsyncManageClient

@@ -221,7 +221,8 @@ class AsyncLiveClient:  # pylint: disable=too-many-instance-attributes
         """
         self._logger.info("event subscribed: %s", event)
         if event in LiveTranscriptionEvents.__members__.values() and callable(handler):
-            self._event_handlers[event].append(handler)
+            if handler not in self._event_handlers[event]:
+                self._event_handlers[event].append(handler)
 
     # triggers the registered event handlers for a specific event
     async def _emit(self, event: LiveTranscriptionEvents, *args, **kwargs) -> None:
@@ -238,11 +239,13 @@ class AsyncLiveClient:  # pylint: disable=too-many-instance-attributes
 
         tasks = []
         for handler in self._event_handlers[event]:
-            tasks.append(asyncio.create_task(handler(self, *args, **kwargs)))
+            task = asyncio.create_task(handler(self, *args, **kwargs))
+            tasks.append(task)
 
-        if len(tasks) > 0:
+        if tasks:
             self._logger.debug("waiting for tasks to finish...")
-            await asyncio.gather(*filter(None, tasks), return_exceptions=True)
+            await asyncio.gather(*tasks, return_exceptions=True)
+            tasks.clear()
 
         # debug the threads
         for thread in threading.enumerate():
@@ -380,7 +383,7 @@ class AsyncLiveClient:  # pylint: disable=too-many-instance-attributes
                 return
 
             except websockets.exceptions.ConnectionClosed as e:
-                if e.code == 1000:
+                if e.code in [1000, 1001]:
                     self._logger.notice(f"_listening({e.code}) exiting gracefully")
                     self._logger.debug("AsyncLiveClient._listening LEAVE")
                     return
