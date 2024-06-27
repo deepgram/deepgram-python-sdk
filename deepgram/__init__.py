@@ -83,8 +83,10 @@ from .client import (
 
 # speak
 from .client import SpeakClient, AsyncSpeakClient
+from .client import SpeakStreamClient, AsyncSpeakStreamClient
 from .client import SpeakOptions, SpeakStreamSource, SpeakSource
 from .client import SpeakResponse
+from .client import SpeakStreamEvents
 
 # manage
 from .client import ManageClient, AsyncManageClient

@@ -3,6 +3,7 @@
 # SPDX-License-Identifier: MIT
 
 from .client import SpeakClient
+from .client import SpeakStreamClient, AsyncSpeakStreamClient
 from .client import AsyncSpeakClient
 from .client import SpeakOptions
 from .client import SpeakResponse
@@ -12,4 +13,5 @@ from .client import (
     SpeakSource,
 )
 
+from .enums import SpeakStreamEvents
 from ...options import DeepgramClientOptions, ClientOptionsFromEnv

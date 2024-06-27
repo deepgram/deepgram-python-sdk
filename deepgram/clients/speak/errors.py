@@ -22,7 +22,7 @@ class DeepgramError(Exception):
 
 class DeepgramTypeError(Exception):
     """
-    Exception raised for unknown errors related to unknown Types for Transcription.
+    Exception raised for unknown errors related to unknown Types for TTS Synthesis.
 
     Attributes:
         message (str): The error message describing the exception.

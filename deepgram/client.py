@@ -78,8 +78,10 @@ from .clients import (
 
 # speak client classes/input
 from .clients import SpeakClient, AsyncSpeakClient
+from .clients import SpeakStreamClient, AsyncSpeakStreamClient
 from .clients import SpeakOptions
 from .clients import SpeakStreamSource, SpeakSource
+from .clients import SpeakStreamEvents
 
 # speak client responses
 from .clients import SpeakResponse
@@ -236,6 +238,19 @@ class DeepgramClient:
         return self.Version(self._config, "asyncspeak")
 
     @property
+    def speakstream(self):
+        """
+        Returns a SpeakStreamClient instance for interacting with Deepgram's speak services.
+        """
+        return self.Version(self._config, "speak-stream")
+
+    @property
+    def asyncspeakstream(self):
+        """
+        Returns an AsyncSpeakStreamClient instance for interacting with Deepgram's speak services.
+        """
+        return self.Version(self._config, "asyncspeak-stream")
+    @property
     def manage(self):
         """
         Returns a ManageClient instance for managing Deepgram resources.
@@ -310,6 +325,7 @@ class DeepgramClient:
         #             raise DeepgramModuleError("Invalid parent")
 
         def v(self, version: str = ""):
+            # pylint: disable-msg=too-many-statements
             """
             Returns a client for the specified version of the API.
             """
@@ -340,6 +356,14 @@ class DeepgramClient:
                     parent = "speak"
                     filename = "async_client"
                     classname = "AsyncSpeakClient"
+                case "speak-stream":
+                    parent = "speak"
+                    filename = "client_stream"
+                    classname = "SpeakStreamClient"
+                case "asyncspeak-stream":
+                    parent = "speak"
+                    filename = "async_client_stream"
+                    classname = "AsyncSpeakStreamClient"
                 case "selfhosted":
                     parent = "selfhosted"
                     filename = "client"
@@ -376,3 +400,4 @@ class DeepgramClient:
             self._logger.notice("Version.v succeeded")
             self._logger.debug("Version.v LEAVE")
             return my_class_instance
+        # pylint: enable-msg=too-many-statements

@@ -4,6 +4,8 @@
 
 from .v1.client import SpeakClient as SpeakClientLatest
 from .v1.async_client import AsyncSpeakClient as AsyncSpeakClientLatest
+from .v1.client_stream import SpeakStreamClient as SpeakStreamClientLatest
+from .v1.async_client_stream import AsyncSpeakStreamClient as AsyncSpeakStreamClientLatest
 from .v1.options import (
     SpeakOptions as SpeakOptionsLatest,
     FileSource as FileSourceLatest,
@@ -29,3 +31,5 @@ SpeakSource = SpeakSourceLatest
 SpeakResponse = SpeakResponseLatest
 SpeakClient = SpeakClientLatest
 AsyncSpeakClient = AsyncSpeakClientLatest
+SpeakStreamClient = SpeakStreamClientLatest
+AsyncSpeakStreamClient = AsyncSpeakStreamClientLatest
