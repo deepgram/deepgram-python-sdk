@@ -13,8 +13,9 @@ from .common import (
 )
 
 # listen
-from .listen import Listen
-from .read import Read
+from .listen_router import Listen
+from .read_router import Read
+from .speak_router import Speak
 
 # live
 from .live import LiveClient, AsyncLiveClient
@@ -59,17 +60,40 @@ from .analyze import (
 )
 
 # speak
-from .speak import SpeakClient, AsyncSpeakClient
-from .speak import SpeakOptions
 from .speak import (
-    SpeakStreamSource,
+    SpeakOptions,
+    FileSource,
+    SpeakWebSocketSource,
     SpeakSource,
 )
-from .speak import SpeakStreamEvents
-from .speak import SpeakResponse
 
-# speak-stream
-from .speak import SpeakStreamClient, AsyncSpeakStreamClient
+# speak REST
+from .speak import (
+    SpeakClient,  # backward compat
+    SpeakRESTClient,
+    AsyncSpeakRESTClient,
+)
+
+from .speak import (
+    SpeakResponse,  # backward compat
+    SpeakRESTResponse,
+)
+
+# speak WebSocket
+from .speak import (
+    SpeakWebSocketClient,
+    AsyncSpeakWebSocketClient,
+)
+from .speak import (
+    SpeakWebSocketResponse,
+    OpenResponse,
+    MetadataResponse,
+    FlushedResponse,
+    CloseResponse,
+    UnhandledResponse,
+    WarningResponse,
+    ErrorResponse,
+)
 
 # manage
 from .manage import ManageClient, AsyncManageClient

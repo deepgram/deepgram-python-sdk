@@ -5,20 +5,21 @@
 import logging
 from typing import Dict, Union, Optional, cast
 import io
+import aiofiles
 
 import httpx
 
-from ....utils import verboselogs
-from ....options import DeepgramClientOptions
-from ...abstract_sync_client import AbstractSyncRestClient
-from ..errors import DeepgramError, DeepgramTypeError
-from .helpers import is_text_source
+from .....utils import verboselogs
+from .....options import DeepgramClientOptions
+from ....abstract_async_client import AbstractAsyncRestClient
+from ...errors import DeepgramError, DeepgramTypeError
 
-from .options import SpeakOptions, FileSource
-from .response import SpeakResponse
+from ..helpers import is_text_source
+from ..options import SpeakOptions, FileSource
+from .response import SpeakRESTResponse
 
 
-class SpeakClient(AbstractSyncRestClient):
+class AsyncSpeakRESTClient(AbstractAsyncRestClient):
     """
     A client class for doing Text-to-Speech.
     Provides methods for speaking from text.
@@ -34,7 +35,7 @@ class SpeakClient(AbstractSyncRestClient):
         self._config = config
         super().__init__(config)
 
-    def stream(
+    async def stream(
         self,
         source: FileSource,
         options: Optional[Union[Dict, SpeakOptions]] = None,
@@ -42,7 +43,7 @@ class SpeakClient(AbstractSyncRestClient):
         headers: Optional[Dict] = None,
         timeout: Optional[httpx.Timeout] = None,
         endpoint: str = "v1/speak",
-    ) -> SpeakResponse:
+    ) -> SpeakRESTResponse:
         """
         Speak from a text source and store in memory.
 
@@ -55,24 +56,24 @@ class SpeakClient(AbstractSyncRestClient):
             endpoint (str): The endpoint to use for the request (default is "v1/speak").
 
         Returns:
-            SpeakResponse: The response from the speak request.
+            SpeakRESTResponse: The response from the speak request.
 
         Raises:
             DeepgramTypeError: Raised for known API errors.
         """
-        self._logger.debug("SpeakClient.stream ENTER")
+        self._logger.debug("AsyncSpeakClient.stream ENTER")
 
         url = f"{self._config.url}/{endpoint}"
         if is_text_source(source):
             body = source
         else:
             self._logger.error("Unknown speak source type")
-            self._logger.debug("SpeakClient.stream LEAVE")
+            self._logger.debug("AsyncSpeakClient.stream LEAVE")
             raise DeepgramTypeError("Unknown speak source type")
 
         if isinstance(options, SpeakOptions) and not options.check():
             self._logger.error("options.check failed")
-            self._logger.debug("SpeakClient.stream LEAVE")
+            self._logger.debug("AsyncSpeakClient.stream LEAVE")
             raise DeepgramError("Fatal speak options error")
 
         self._logger.info("url: %s", url)
@@ -93,7 +94,7 @@ class SpeakClient(AbstractSyncRestClient):
             "transfer-encoding",
             "date",
         ]
-        result = self.post_file(
+        result = await self.post_file(
             url,
             options=options,
             addons=addons,
@@ -102,9 +103,8 @@ class SpeakClient(AbstractSyncRestClient):
             timeout=timeout,
             file_result=return_vals,
         )
-
         self._logger.info("result: %s", result)
-        resp = SpeakResponse(
+        resp = SpeakRESTResponse(
             content_type=str(result["content-type"]),
             request_id=str(result["request-id"]),
             model_uuid=str(result["model-uuid"]),
@@ -116,7 +116,7 @@ class SpeakClient(AbstractSyncRestClient):
         )
         self._logger.verbose("result: %s", resp)
         self._logger.notice("speak succeeded")
-        self._logger.debug("SpeakClient.stream LEAVE")
+        self._logger.debug("AsyncSpeakClient.stream LEAVE")
         return resp
 
     async def file(
@@ -127,11 +127,11 @@ class SpeakClient(AbstractSyncRestClient):
         addons: Optional[Dict] = None,
         timeout: Optional[httpx.Timeout] = None,
         endpoint: str = "v1/speak",
-    ) -> SpeakResponse:
+    ) -> SpeakRESTResponse:
         """
         Speak from a text source and save to a file.
         """
-        return self.save(
+        return await self.save(
             filename,
             source,
             options=options,
@@ -140,7 +140,7 @@ class SpeakClient(AbstractSyncRestClient):
             endpoint=endpoint,
         )
 
-    def save(
+    async def save(
         self,
         filename: str,
         source: FileSource,
@@ -149,7 +149,7 @@ class SpeakClient(AbstractSyncRestClient):
         headers: Optional[Dict] = None,
         timeout: Optional[httpx.Timeout] = None,
         endpoint: str = "v1/speak",
-    ) -> SpeakResponse:
+    ) -> SpeakRESTResponse:
         """
         Speak from a text source and save to a file.
 
@@ -162,14 +162,14 @@ class SpeakClient(AbstractSyncRestClient):
             endpoint (str): The endpoint to use for the request (default is "v1/speak").
 
         Returns:
-            SpeakResponse: The response from the speak request.
+            SpeakRESTResponse: The response from the speak request.
 
         Raises:
             DeepgramTypeError: Raised for known API errors.
         """
-        self._logger.debug("SpeakClient.save ENTER")
+        self._logger.debug("AsyncSpeakClient.save ENTER")
 
-        res = self.stream(
+        res = await self.stream(
             source,
             options=options,
             addons=addons,
@@ -180,17 +180,17 @@ class SpeakClient(AbstractSyncRestClient):
 
         if res.stream is None:
             self._logger.error("stream is None")
-            self._logger.debug("SpeakClient.save LEAVE")
+            self._logger.debug("AsyncSpeakClient.save LEAVE")
             raise DeepgramError("BytesIO stream is None")
 
         # save to file
-        with open(filename, "wb+") as file:
-            file.write(res.stream.getbuffer())
-            file.flush()
+        async with aiofiles.open(filename, "wb") as out:
+            await out.write(res.stream.getbuffer())
+            await out.flush()
 
         # add filename to response
         res.stream = None
         res.filename = filename
 
-        self._logger.debug("SpeakClient.save LEAVE")
+        self._logger.debug("AsyncSpeakClient.save LEAVE")
         return res

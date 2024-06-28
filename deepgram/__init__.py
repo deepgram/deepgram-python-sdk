@@ -82,11 +82,40 @@ from .client import (
 )
 
 # speak
-from .client import SpeakClient, AsyncSpeakClient
-from .client import SpeakStreamClient, AsyncSpeakStreamClient
-from .client import SpeakOptions, SpeakStreamSource, SpeakSource
-from .client import SpeakResponse
-from .client import SpeakStreamEvents
+from .client import (
+    SpeakOptions,
+    FileSource,
+    SpeakWebSocketSource,
+    SpeakSource,
+)
+
+## speak REST
+from .client import (
+    SpeakClient,  # backward compat
+    SpeakRESTClient,
+    AsyncSpeakRESTClient,
+)
+
+from .client import (
+    SpeakResponse,  # backward compat
+    SpeakRESTResponse,
+)
+
+## speak WebSocket
+from .client import (
+    SpeakWebSocketClient,
+    AsyncSpeakWebSocketClient,
+)
+from .client import (
+    SpeakWebSocketResponse,
+    OpenResponse,
+    MetadataResponse,
+    FlushedResponse,
+    CloseResponse,
+    UnhandledResponse,
+    WarningResponse,
+    ErrorResponse,
+)
 
 # manage
 from .client import ManageClient, AsyncManageClient

@@ -21,7 +21,7 @@ from .clients import (
 )
 
 # listen client
-from .clients import Listen, Read
+from .clients import Listen, Read, Speak
 
 # live
 from .clients import LiveClient, AsyncLiveClient
@@ -76,15 +76,41 @@ from .clients import (
     SyncAnalyzeResponse,
 )
 
-# speak client classes/input
-from .clients import SpeakClient, AsyncSpeakClient
-from .clients import SpeakStreamClient, AsyncSpeakStreamClient
-from .clients import SpeakOptions
-from .clients import SpeakStreamSource, SpeakSource
-from .clients import SpeakStreamEvents
+# speak
+from .clients import (
+    SpeakOptions,
+    FileSource,
+    SpeakWebSocketSource,
+    SpeakSource,
+)
 
-# speak client responses
-from .clients import SpeakResponse
+## speak REST
+from .clients import (
+    SpeakClient,  # backward compat
+    SpeakRESTClient,
+    AsyncSpeakRESTClient,
+)
+
+from .clients import (
+    SpeakResponse,  # backward compat
+    SpeakRESTResponse,
+)
+
+## speak WebSocket
+from .clients import (
+    SpeakWebSocketClient,
+    AsyncSpeakWebSocketClient,
+)
+from .clients import (
+    SpeakWebSocketResponse,
+    OpenResponse,
+    MetadataResponse,
+    FlushedResponse,
+    CloseResponse,
+    UnhandledResponse,
+    WarningResponse,
+    ErrorResponse,
+)
 
 # manage client classes/input
 from .clients import ManageClient, AsyncManageClient
@@ -228,28 +254,16 @@ class DeepgramClient:
         """
         Returns a SpeakClient instance for interacting with Deepgram's speak services.
         """
-        return self.Version(self._config, "speak")
+        return Speak(self._config)
 
+    # TODO: legacy
     @property
     def asyncspeak(self):
         """
-        Returns an AsyncSpeakClient instance for interacting with Deepgram's speak services.
+        TODO: LEGACY - Returns an AsyncSpeakClient instance for interacting with Deepgram's speak services.
         """
         return self.Version(self._config, "asyncspeak")
 
-    @property
-    def speakstream(self):
-        """
-        Returns a SpeakStreamClient instance for interacting with Deepgram's speak services.
-        """
-        return self.Version(self._config, "speak-stream")
-
-    @property
-    def asyncspeakstream(self):
-        """
-        Returns an AsyncSpeakStreamClient instance for interacting with Deepgram's speak services.
-        """
-        return self.Version(self._config, "asyncspeak-stream")
     @property
     def manage(self):
         """
@@ -348,22 +362,17 @@ class DeepgramClient:
                     parent = "manage"
                     filename = "async_client"
                     classname = "AsyncManageClient"
-                case "speak":
-                    parent = "speak"
-                    filename = "client"
-                    classname = "SpeakClient"
                 case "asyncspeak":
-                    parent = "speak"
-                    filename = "async_client"
-                    classname = "AsyncSpeakClient"
+                    # TODO: legacy
+                    return AsyncSpeakRESTClient(self._config)
                 case "speak-stream":
                     parent = "speak"
                     filename = "client_stream"
-                    classname = "SpeakStreamClient"
+                    classname = "SpeakWebSocketClient"
                 case "asyncspeak-stream":
                     parent = "speak"
                     filename = "async_client_stream"
-                    classname = "AsyncSpeakStreamClient"
+                    classname = "AsyncSpeakWebSocketClient"
                 case "selfhosted":
                     parent = "selfhosted"
                     filename = "client"
@@ -400,4 +409,5 @@ class DeepgramClient:
             self._logger.notice("Version.v succeeded")
             self._logger.debug("Version.v LEAVE")
             return my_class_instance
+
         # pylint: enable-msg=too-many-statements

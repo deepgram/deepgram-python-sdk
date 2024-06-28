@@ -2,17 +2,29 @@
 # Use of this source code is governed by a MIT license that can be found in the LICENSE file.
 # SPDX-License-Identifier: MIT
 
-from .v1.client import SpeakClient as SpeakClientLatest
-from .v1.async_client import AsyncSpeakClient as AsyncSpeakClientLatest
-from .v1.client_stream import SpeakStreamClient as SpeakStreamClientLatest
-from .v1.async_client_stream import AsyncSpeakStreamClient as AsyncSpeakStreamClientLatest
-from .v1.options import (
+from .v1 import (
+    SpeakRESTClient as SpeakRESTClientLatest,
+    AsyncSpeakRESTClient as AsyncSpeakRESTClientLatest,
+    SpeakWebSocketClient as SpeakWebSocketClientLatest,
+    AsyncSpeakWebSocketClient as AsyncSpeakWebSocketClientLatest,
+)
+from .v1 import (
     SpeakOptions as SpeakOptionsLatest,
     FileSource as FileSourceLatest,
-    SpeakStreamSource as SpeakStreamSourceLatest,
+    SpeakWebSocketSource as SpeakWebSocketSourceLatest,
     SpeakSource as SpeakSourceLatest,
 )
-from .v1.response import SpeakResponse as SpeakResponseLatest
+from .v1 import (
+    SpeakRESTResponse as SpeakRESTResponseLatest,
+    SpeakWebSocketResponse as SpeakWebSocketResponseLatest,
+    OpenResponse as OpenResponseLatest,
+    MetadataResponse as MetadataResponseLatest,
+    FlushedResponse as MetadataResponseLatest,
+    CloseResponse as CloseResponseLatest,
+    UnhandledResponse as UnhandledResponseLatest,
+    WarningResponse as WarningResponseLatest,
+    ErrorResponse as ErrorResponseLatest,
+)
 
 # The client.py points to the current supported version in the SDK.
 # Older versions are supported in the SDK for backwards compatibility.
@@ -20,16 +32,28 @@ from .v1.response import SpeakResponse as SpeakResponseLatest
 
 # input
 SpeakOptions = SpeakOptionsLatest
-SpeakStreamSource = SpeakStreamSourceLatest
-
-
+SpeakWebSocketSource = SpeakWebSocketSourceLatest
 FileSource = FileSourceLatest
 SpeakSource = SpeakSourceLatest
 
-
 # output
-SpeakResponse = SpeakResponseLatest
-SpeakClient = SpeakClientLatest
-AsyncSpeakClient = AsyncSpeakClientLatest
-SpeakStreamClient = SpeakStreamClientLatest
-AsyncSpeakStreamClient = AsyncSpeakStreamClientLatest
+SpeakRESTResponse = SpeakRESTResponseLatest
+SpeakWebSocketResponse = SpeakWebSocketResponseLatest
+OpenResponse = OpenResponseLatest
+MetadataResponse = MetadataResponseLatest
+FlushedResponse = MetadataResponseLatest
+CloseResponse = CloseResponseLatest
+UnhandledResponse = UnhandledResponseLatest
+WarningResponse = WarningResponseLatest
+ErrorResponse = ErrorResponseLatest
+
+
+# backward compatibility
+SpeakResponse = SpeakRESTResponseLatest
+SpeakClient = SpeakRESTClientLatest
+
+# clients
+SpeakRESTClient = SpeakRESTClientLatest
+AsyncSpeakRESTClient = AsyncSpeakRESTClientLatest
+SpeakWebSocketClient = SpeakWebSocketClientLatest
+AsyncSpeakWebSocketClient = AsyncSpeakWebSocketClientLatest

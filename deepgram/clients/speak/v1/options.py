@@ -65,5 +65,5 @@ class SpeakOptions(DataClassJsonMixin):
         return True
 
 
-SpeakStreamSource = BufferedReader
-SpeakSource = Union[FileSource, SpeakStreamSource]
+SpeakWebSocketSource = BufferedReader
+SpeakSource = Union[FileSource, SpeakWebSocketSource]
