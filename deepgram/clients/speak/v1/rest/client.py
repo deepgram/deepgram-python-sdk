@@ -12,7 +12,7 @@ from .....utils import verboselogs
 from .....options import DeepgramClientOptions
 from ....abstract_sync_client import AbstractSyncRestClient
 from ...errors import DeepgramError, DeepgramTypeError
-from ..helpers import is_text_source
+from .helpers import is_text_source
 
 from ..options import SpeakOptions, FileSource
 from .response import SpeakRESTResponse

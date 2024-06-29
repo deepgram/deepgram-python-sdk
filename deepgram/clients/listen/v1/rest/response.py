@@ -7,7 +7,7 @@ from typing import List, Optional, Dict
 from dataclasses import dataclass, field
 from dataclasses_json import config as dataclass_config, DataClassJsonMixin
 
-from ...common import Sentiment
+from ....common import Sentiment
 
 # Async Prerecorded Response Types:
 

@@ -14,7 +14,7 @@ from .....options import DeepgramClientOptions
 from ....abstract_async_client import AbstractAsyncRestClient
 from ...errors import DeepgramError, DeepgramTypeError
 
-from ..helpers import is_text_source
+from .helpers import is_text_source
 from ..options import SpeakOptions, FileSource
 from .response import SpeakRESTResponse
 

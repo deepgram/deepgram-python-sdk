@@ -117,17 +117,17 @@ class Speak:
                 case "websocket":
                     type = "websocket"
                     file_name = "client"
-                    class_name = "WebSocketClient"
+                    class_name = "SpeakWebSocketClient"
                 case "asyncwebsocket":
-                    type = "asyncwebsocket"
+                    type = "websocket"
                     file_name = "async_client"
-                    class_name = "AsyncWebSocketClient"
+                    class_name = "AsyncSpeakWebSocketClient"
                 case "rest":
                     type = "rest"
                     file_name = "client"
                     class_name = "SpeakRESTClient"
                 case "asyncrest":
-                    type = "asyncrest"
+                    type = "rest"
                     file_name = "async_client"
                     class_name = "AsyncSpeakRESTClient"
                 case _:

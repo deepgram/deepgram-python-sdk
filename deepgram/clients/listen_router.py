@@ -5,6 +5,12 @@
 from importlib import import_module
 import logging
 
+from .listen.v1 import (
+    PreRecordedClient,
+    AsyncPreRecordedClient,
+    LiveClient,
+    AsyncLiveClient,
+)
 from ..utils import verboselogs
 from ..options import DeepgramClientOptions
 from .errors import DeepgramModuleError
@@ -40,33 +46,65 @@ class Listen:
         self._logger.setLevel(config.verbose)
         self._config = config
 
+    # TODO: legacy
     @property
     def prerecorded(self):
         """
-        Returns a PreRecordedClient instance for interacting with Deepgram's prerecorded transcription services.
+        TODO: Returns a PreRecordedClient instance for interacting with Deepgram's prerecorded transcription services.
         """
         return self.Version(self._config, "prerecorded")
 
+    # TODO: legacy
     @property
     def asyncprerecorded(self):
         """
-        Returns an AsyncPreRecordedClient instance for interacting with Deepgram's prerecorded transcription services.
+        TODO: Returns an AsyncPreRecordedClient instance for interacting with Deepgram's prerecorded transcription services.
         """
         return self.Version(self._config, "asyncprerecorded")
 
+    # TODO: legacy
     @property
     def live(self):
         """
-        Returns a LiveClient instance for interacting with Deepgram's transcription services.
+        TODO: Returns a LiveClient instance for interacting with Deepgram's transcription services.
         """
         return self.Version(self._config, "live")
 
+    # TODO: legacy
     @property
     def asynclive(self):
         """
-        Returns an AsyncLiveClient instance for interacting with Deepgram's transcription services.
+        TODO: Returns an AsyncLiveClient instance for interacting with Deepgram's transcription services.
         """
         return self.Version(self._config, "asynclive")
+
+    @property
+    def rest(self):
+        """
+        Returns a ListenRESTClient instance for interacting with Deepgram's prerecorded transcription services.
+        """
+        return self.Version(self._config, "rest")
+
+    @property
+    def asyncrest(self):
+        """
+        Returns an AsyncListenRESTClient instance for interacting with Deepgram's prerecorded transcription services.
+        """
+        return self.Version(self._config, "asyncrest")
+
+    @property
+    def websocket(self):
+        """
+        Returns a ListenWebSocketClient instance for interacting with Deepgram's transcription services.
+        """
+        return self.Version(self._config, "websocket")
+
+    @property
+    def asyncwebsocket(self):
+        """
+        Returns an AsyncListenWebSocketClient instance for interacting with Deepgram's transcription services.
+        """
+        return self.Version(self._config, "asyncwebsocket")
 
     # INTERNAL CLASSES
     class Version:
@@ -108,33 +146,45 @@ class Listen:
                 self._logger.debug("Version.v LEAVE")
                 raise DeepgramModuleError("Invalid module version")
 
-            parent = ""
+            protocol = ""
             file_name = ""
             class_name = ""
             match self._parent:
                 case "live":
-                    parent = "live"
-                    file_name = "client"
-                    class_name = "LiveClient"
+                    # TODO: legacy
+                    return LiveClient(self._config)
                 case "asynclive":
-                    parent = "live"
-                    file_name = "async_client"
-                    class_name = "AsyncLiveClient"
+                    # TODO: legacy
+                    return AsyncLiveClient(self._config)
                 case "prerecorded":
-                    parent = "prerecorded"
-                    file_name = "client"
-                    class_name = "PreRecordedClient"
+                    # TODO: legacy
+                    return PreRecordedClient(self._config)
                 case "asyncprerecorded":
-                    parent = "prerecorded"
+                    # TODO: legacy
+                    return AsyncPreRecordedClient(self._config)
+                case "websocket":
+                    protocol = "websocket"
+                    file_name = "client"
+                    class_name = "ListenWebSocketClient"
+                case "asyncwebsocket":
+                    protocol = "websocket"
                     file_name = "async_client"
-                    class_name = "AsyncPreRecordedClient"
+                    class_name = "AsyncListenWebSocketClient"
+                case "rest":
+                    protocol = "rest"
+                    file_name = "client"
+                    class_name = "ListenRESTClient"
+                case "asyncrest":
+                    protocol = "rest"
+                    file_name = "async_client"
+                    class_name = "AsyncListenRESTClient"
                 case _:
                     self._logger.error("parent unknown: %s", self._parent)
                     self._logger.debug("Version.v LEAVE")
                     raise DeepgramModuleError("Invalid parent type")
 
             # create class path
-            path = f"deepgram.clients.{parent}.v{version}.{file_name}"
+            path = f"deepgram.clients.listen.v{version}.{protocol}.{file_name}"
             self._logger.info("path: %s", path)
             self._logger.info("class_name: %s", class_name)
 

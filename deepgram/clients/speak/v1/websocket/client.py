@@ -14,7 +14,7 @@ import websockets
 from .....utils import verboselogs
 from .....options import DeepgramClientOptions
 from ...enums import SpeakWebSocketEvents
-from ....live.helpers import convert_to_websocket_url, append_query_params
+from .helpers import convert_to_websocket_url, append_query_params
 from ...errors import DeepgramError
 
 from .response import (

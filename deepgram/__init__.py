@@ -88,6 +88,7 @@ from .client import (
     SpeakWebSocketSource,
     SpeakSource,
 )
+from .client import SpeakWebSocketEvents
 
 ## speak REST
 from .client import (

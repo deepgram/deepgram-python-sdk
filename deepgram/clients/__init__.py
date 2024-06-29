@@ -12,16 +12,49 @@ from .common import (
     Sentiment,
 )
 
-# listen
 from .listen_router import Listen
 from .read_router import Read
 from .speak_router import Speak
 
-# live
-from .live import LiveClient, AsyncLiveClient
-from .live import LiveOptions
-from .live import LiveTranscriptionEvents
+# listen
+from .listen import LiveTranscriptionEvents
+
+## backward compat
+from .prerecorded import (
+    PreRecordedClient,
+    AsyncPreRecordedClient,
+)
 from .live import (
+    LiveClient,
+    AsyncLiveClient,
+)
+
+# rest
+## input
+from .listen import (
+    PrerecordedOptions,
+    PreRecordedStreamSource,
+    UrlSource,
+    FileSource,
+    PrerecordedSource,
+)
+
+## output
+from .listen import (
+    AsyncPrerecordedResponse,
+    PrerecordedResponse,
+    SyncPrerecordedResponse,
+)
+
+
+# websocket
+## input
+from .listen import (
+    LiveOptions,
+)
+
+## output
+from .listen import (
     OpenResponse,
     LiveResultResponse,
     MetadataResponse,
@@ -32,18 +65,12 @@ from .live import (
     UnhandledResponse,
 )
 
-# prerecorded
-from .prerecorded import PreRecordedClient, AsyncPreRecordedClient
-from .prerecorded import PrerecordedOptions
-from .prerecorded import (
-    PreRecordedStreamSource,
-    PrerecordedSource,
+## clients
+from .listen import (
+    ListenWebSocketClient,
+    AsyncListenWebSocketClient,
 )
-from .prerecorded import (
-    AsyncPrerecordedResponse,
-    PrerecordedResponse,
-    SyncPrerecordedResponse,
-)
+
 
 # read
 from .analyze import ReadClient, AsyncReadClient
@@ -60,6 +87,7 @@ from .analyze import (
 )
 
 # speak
+## common
 from .speak import (
     SpeakOptions,
     FileSource,
@@ -67,7 +95,9 @@ from .speak import (
     SpeakSource,
 )
 
-# speak REST
+from .speak import SpeakWebSocketEvents
+
+## speak REST
 from .speak import (
     SpeakClient,  # backward compat
     SpeakRESTClient,
@@ -79,7 +109,7 @@ from .speak import (
     SpeakRESTResponse,
 )
 
-# speak WebSocket
+## speak WebSocket
 from .speak import (
     SpeakWebSocketClient,
     AsyncSpeakWebSocketClient,
