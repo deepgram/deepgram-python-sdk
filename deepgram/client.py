@@ -6,6 +6,9 @@ from typing import Optional
 from importlib import import_module
 import os
 
+import deprecation
+
+from . import __version__
 import logging
 from .utils import verboselogs
 
@@ -257,11 +260,16 @@ class DeepgramClient:
         """
         return Speak(self._config)
 
-    # TODO: legacy
     @property
+    @deprecation.deprecated(
+        deprecated_in="3.4.0",
+        removed_in="4.0.0",
+        current_version=__version__,
+        details="deepgram.asyncspeak is deprecated. Use deepgram.speak.asyncrest instead.",
+    )
     def asyncspeak(self):
         """
-        TODO: LEGACY - Returns an AsyncSpeakClient instance for interacting with Deepgram's speak services.
+        DEPRECATED: deepgram.asyncspeak is deprecated. Use deepgram.speak.asyncrest instead.
         """
         return self.Version(self._config, "asyncspeak")
 
@@ -279,11 +287,16 @@ class DeepgramClient:
         """
         return self.Version(self._config, "asyncmanage")
 
-    # for backwards compatibility
     @property
+    @deprecation.deprecated(
+        deprecated_in="3.4.0",
+        removed_in="4.0.0",
+        current_version=__version__,
+        details="deepgram.onprem is deprecated. Use deepgram.speak.selfhosted instead.",
+    )
     def onprem(self):
         """
-        Returns an SelfHostedClient instance for interacting with Deepgram's on-premises API.
+        DEPRECATED: deepgram.onprem is deprecated. Use deepgram.speak.selfhosted instead.
         """
         return self.Version(self._config, "selfhosted")
 
@@ -294,11 +307,16 @@ class DeepgramClient:
         """
         return self.Version(self._config, "selfhosted")
 
-    # for backwards compatibility
     @property
+    @deprecation.deprecated(
+        deprecated_in="3.4.0",
+        removed_in="4.0.0",
+        current_version=__version__,
+        details="deepgram.asynconprem is deprecated. Use deepgram.speak.asyncselfhosted instead.",
+    )
     def asynconprem(self):
         """
-        Returns an AsyncSelfHostedClient instance for interacting with Deepgram's on-premises API.
+        DEPRECATED: deepgram.asynconprem is deprecated. Use deepgram.speak.asyncselfhosted instead.
         """
         return self.Version(self._config, "asyncselfhosted")
 
@@ -364,16 +382,7 @@ class DeepgramClient:
                     filename = "async_client"
                     classname = "AsyncManageClient"
                 case "asyncspeak":
-                    # TODO: legacy
                     return AsyncSpeakRESTClient(self._config)
-                case "speak-stream":
-                    parent = "speak"
-                    filename = "client_stream"
-                    classname = "SpeakWebSocketClient"
-                case "asyncspeak-stream":
-                    parent = "speak"
-                    filename = "async_client_stream"
-                    classname = "AsyncSpeakWebSocketClient"
                 case "selfhosted":
                     parent = "selfhosted"
                     filename = "client"

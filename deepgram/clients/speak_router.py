@@ -5,6 +5,9 @@
 from importlib import import_module
 import logging
 
+import deprecation
+
+from .. import __version__
 from .speak.v1.rest.client import SpeakRESTClient
 from ..utils import verboselogs
 from ..options import DeepgramClientOptions
@@ -35,10 +38,15 @@ class Speak:
         self._logger.setLevel(config.verbose)
         self._config = config
 
-    # TODO: legacy
+    @deprecation.deprecated(
+        deprecated_in="3.4.0",
+        removed_in="4.0.0",
+        current_version=__version__,
+        details="deepgram.speak.v1 is deprecated. Use deepgram.speak.rest or deepgram.speak.websocket instead.",
+    )
     def v(self, version: str = ""):
         """
-        TODO: legacy
+        DEPRECATED: deepgram.speak.v1 is deprecated. Use deepgram.speak.rest or deepgram.speak.websocket instead.
         """
         return SpeakRESTClient(self._config)
 

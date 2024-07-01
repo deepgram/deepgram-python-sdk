@@ -5,6 +5,9 @@
 from importlib import import_module
 import logging
 
+import deprecation
+
+from .. import __version__
 from .listen.v1 import (
     PreRecordedClient,
     AsyncPreRecordedClient,
@@ -46,35 +49,55 @@ class Listen:
         self._logger.setLevel(config.verbose)
         self._config = config
 
-    # TODO: legacy
     @property
+    @deprecation.deprecated(
+        deprecated_in="3.4.0",
+        removed_in="4.0.0",
+        current_version=__version__,
+        details="deepgram.listen.prerecorded is deprecated. Use deepgram.listen.rest instead.",
+    )
     def prerecorded(self):
         """
-        TODO: Returns a PreRecordedClient instance for interacting with Deepgram's prerecorded transcription services.
+        DEPRECATED: deepgram.listen.prerecorded is deprecated. Use deepgram.listen.rest instead.
         """
         return self.Version(self._config, "prerecorded")
 
-    # TODO: legacy
     @property
+    @deprecation.deprecated(
+        deprecated_in="3.4.0",
+        removed_in="4.0.0",
+        current_version=__version__,
+        details="deepgram.listen.asyncprerecorded is deprecated. Use deepgram.listen.asyncrest instead.",
+    )
     def asyncprerecorded(self):
         """
-        TODO: Returns an AsyncPreRecordedClient instance for interacting with Deepgram's prerecorded transcription services.
+        DEPRECATED: deepgram.listen.asyncprerecorded is deprecated. Use deepgram.listen.asyncrest instead.
         """
         return self.Version(self._config, "asyncprerecorded")
 
-    # TODO: legacy
     @property
+    @deprecation.deprecated(
+        deprecated_in="3.4.0",
+        removed_in="4.0.0",
+        current_version=__version__,
+        details="deepgram.listen.live is deprecated. Use deepgram.listen.websocket instead.",
+    )
     def live(self):
         """
-        TODO: Returns a LiveClient instance for interacting with Deepgram's transcription services.
+        DEPRECATED: deepgram.listen.live is deprecated. Use deepgram.listen.websocket instead.
         """
         return self.Version(self._config, "live")
 
-    # TODO: legacy
     @property
+    @deprecation.deprecated(
+        deprecated_in="3.4.0",
+        removed_in="4.0.0",
+        current_version=__version__,
+        details="deepgram.listen.asynclive is deprecated. Use deepgram.listen.asyncwebsocket instead.",
+    )
     def asynclive(self):
         """
-        TODO: Returns an AsyncLiveClient instance for interacting with Deepgram's transcription services.
+        DEPRECATED: deepgram.listen.asynclive is deprecated. Use deepgram.listen.asyncwebsocket instead.
         """
         return self.Version(self._config, "asynclive")
 
@@ -151,16 +174,12 @@ class Listen:
             class_name = ""
             match self._parent:
                 case "live":
-                    # TODO: legacy
                     return LiveClient(self._config)
                 case "asynclive":
-                    # TODO: legacy
                     return AsyncLiveClient(self._config)
                 case "prerecorded":
-                    # TODO: legacy
                     return PreRecordedClient(self._config)
                 case "asyncprerecorded":
-                    # TODO: legacy
                     return AsyncPreRecordedClient(self._config)
                 case "websocket":
                     protocol = "websocket"
