@@ -19,7 +19,7 @@ from .v1 import (
     SpeakWebSocketResponse as SpeakWebSocketResponseLatest,
     OpenResponse as OpenResponseLatest,
     MetadataResponse as MetadataResponseLatest,
-    FlushedResponse as MetadataResponseLatest,
+    FlushedResponse as FlushedResponseLatest,
     CloseResponse as CloseResponseLatest,
     UnhandledResponse as UnhandledResponseLatest,
     WarningResponse as WarningResponseLatest,
@@ -41,7 +41,7 @@ SpeakRESTResponse = SpeakRESTResponseLatest
 SpeakWebSocketResponse = SpeakWebSocketResponseLatest
 OpenResponse = OpenResponseLatest
 MetadataResponse = MetadataResponseLatest
-FlushedResponse = MetadataResponseLatest
+FlushedResponse = FlushedResponseLatest
 CloseResponse = CloseResponseLatest
 UnhandledResponse = UnhandledResponseLatest
 WarningResponse = WarningResponseLatest

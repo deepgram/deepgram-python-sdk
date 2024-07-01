@@ -5,15 +5,9 @@
 from .options import SpeakOptions, FileSource, SpeakWebSocketSource, SpeakSource
 from ....options import DeepgramClientOptions, ClientOptionsFromEnv
 
-# backward compatibility
-from .rest import (
-    SpeakRESTClient as SpeakClient,
-    AsyncSpeakRESTClient as AsyncSpeakClient,
-)
-from .rest import SpeakRESTResponse as SpeakResponse
-
 # rest
 from .rest import SpeakRESTClient, AsyncSpeakRESTClient
+
 from .rest import SpeakRESTResponse
 
 # websocket

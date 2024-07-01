@@ -3,7 +3,7 @@
 # SPDX-License-Identifier: MIT
 
 
-from ...options import DeepgramClientOptions, ClientOptionsFromEnv
+# from ...options import DeepgramClientOptions, ClientOptionsFromEnv
 
 # rest
 from .v1 import (

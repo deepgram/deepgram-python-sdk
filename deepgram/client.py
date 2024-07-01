@@ -5,11 +5,10 @@
 from typing import Optional
 from importlib import import_module
 import os
-
-import deprecation
+import logging
+import deprecation  # type: ignore
 
 from . import __version__
-import logging
 from .utils import verboselogs
 
 # common
@@ -21,6 +20,13 @@ from .clients import (
     FileSource,
     UrlSource,
     Sentiment,
+)
+from .clients import (
+    OpenResponse,
+    MetadataResponse,
+    CloseResponse,
+    UnhandledResponse,
+    ErrorResponse,
 )
 
 # listen client
@@ -35,14 +41,14 @@ from .clients import (
 
 # live client responses
 from .clients import (
-    OpenResponse,
+    # OpenResponse,
     LiveResultResponse,
-    MetadataResponse,
+    # MetadataResponse,
     SpeechStartedResponse,
     UtteranceEndResponse,
-    CloseResponse,
-    ErrorResponse,
-    UnhandledResponse,
+    # CloseResponse,
+    # ErrorResponse,
+    # UnhandledResponse,
 )
 
 # prerecorded
@@ -82,7 +88,7 @@ from .clients import (
 # speak
 from .clients import (
     SpeakOptions,
-    FileSource,
+    # FileSource,
     SpeakWebSocketSource,
     SpeakSource,
 )
@@ -107,13 +113,13 @@ from .clients import (
 )
 from .clients import (
     SpeakWebSocketResponse,
-    OpenResponse,
-    MetadataResponse,
+    # OpenResponse,
+    # MetadataResponse,
     FlushedResponse,
-    CloseResponse,
-    UnhandledResponse,
+    # CloseResponse,
+    # UnhandledResponse,
     WarningResponse,
-    ErrorResponse,
+    # ErrorResponse,
 )
 
 # manage client classes/input

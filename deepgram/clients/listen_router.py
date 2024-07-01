@@ -4,8 +4,7 @@
 
 from importlib import import_module
 import logging
-
-import deprecation
+import deprecation  # type: ignore
 
 from .. import __version__
 from .listen.v1 import (

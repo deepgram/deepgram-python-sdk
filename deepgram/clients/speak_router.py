@@ -4,8 +4,7 @@
 
 from importlib import import_module
 import logging
-
-import deprecation
+import deprecation  # type: ignore
 
 from .. import __version__
 from .speak.v1.rest.client import SpeakRESTClient
@@ -38,6 +37,8 @@ class Speak:
         self._logger.setLevel(config.verbose)
         self._config = config
 
+    # when this is removed, remove --disable=W0622 from Makefile
+    # pylint: disable=unused-argument
     @deprecation.deprecated(
         deprecated_in="3.4.0",
         removed_in="4.0.0",
@@ -49,6 +50,8 @@ class Speak:
         DEPRECATED: deepgram.speak.v1 is deprecated. Use deepgram.speak.rest or deepgram.speak.websocket instead.
         """
         return SpeakRESTClient(self._config)
+
+    # pylint: enable=unused-argument
 
     @property
     def rest(self):

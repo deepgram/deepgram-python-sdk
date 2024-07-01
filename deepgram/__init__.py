@@ -38,20 +38,27 @@ from .client import (
     UrlSource,
     Sentiment,
 )
+from .client import (
+    OpenResponse,
+    MetadataResponse,
+    CloseResponse,
+    UnhandledResponse,
+    ErrorResponse,
+)
 
 # live
 from .client import LiveTranscriptionEvents
 from .client import LiveClient, AsyncLiveClient
 from .client import LiveOptions
 from .client import (
-    OpenResponse,
+    # OpenResponse,
     LiveResultResponse,
-    MetadataResponse,
+    # MetadataResponse,
     SpeechStartedResponse,
     UtteranceEndResponse,
-    CloseResponse,
-    UnhandledResponse,
-    ErrorResponse,
+    # CloseResponse,
+    # UnhandledResponse,
+    # ErrorResponse,
 )
 
 # prerecorded
@@ -84,7 +91,7 @@ from .client import (
 # speak
 from .client import (
     SpeakOptions,
-    FileSource,
+    # FileSource,
     SpeakWebSocketSource,
     SpeakSource,
 )
@@ -109,13 +116,13 @@ from .client import (
 )
 from .client import (
     SpeakWebSocketResponse,
-    OpenResponse,
-    MetadataResponse,
+    # OpenResponse,
+    # MetadataResponse,
     FlushedResponse,
-    CloseResponse,
-    UnhandledResponse,
+    # CloseResponse,
+    # UnhandledResponse,
     WarningResponse,
-    ErrorResponse,
+    # ErrorResponse,
 )
 
 # manage
