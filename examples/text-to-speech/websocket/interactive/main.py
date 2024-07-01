@@ -10,7 +10,7 @@ from deepgram.utils import verboselogs
 from deepgram import (
     DeepgramClient,
     DeepgramClientOptions,
-    SpeakStreamEvents,
+    SpeakWebSocketEvents,
     SpeakOptions,
 )
 
@@ -23,14 +23,16 @@ AUDIO_FILE = "output.mp3"
 
 def main():
     try:
-       # example of setting up a client config. logging values: WARNING, VERBOSE, DEBUG, SPAM
-        # config: DeepgramClientOptions = DeepgramClientOptions(verbose=verboselogs.DEBUG)
-        # deepgram: DeepgramClient = DeepgramClient("", config)
+        # example of setting up a client config. logging values: WARNING, VERBOSE, DEBUG, SPAM
+        config: DeepgramClientOptions = DeepgramClientOptions(
+            url="api.beta.deepgram.com", verbose=verboselogs.DEBUG
+        )
+        deepgram: DeepgramClient = DeepgramClient("", config)
         # otherwise, use default config
-        deepgram: DeepgramClient = DeepgramClient()
+        # deepgram: DeepgramClient = DeepgramClient()
 
         # Create a websocket connection to Deepgram
-        dg_connection = deepgram.speakstream.v("1")
+        dg_connection = deepgram.speak.websocket.v("1")
         # print(dg_connection)
 
         def on_open(self, open, **kwargs):
@@ -40,19 +42,19 @@ def main():
             thread.join()
 
         def on_binary_data(self, data, **kwargs):
-          print("Received binary data:")
-          with open(AUDIO_FILE, "ab") as f:
-              f.write(data)
+            print("Received binary data:")
+            with open(AUDIO_FILE, "ab") as f:
+                f.write(data)
 
         def on_metadata(self, metadata, **kwargs):
             print(f"\n\n{metadata}\n\n")
 
         def on_flush(self, flush, **kwargs):
-          print(f"\n\n{flush}\n\n")
+            print(f"\n\n{flush}\n\n")
 
         def on_close(self, close, **kwargs):
             print(f"\n\n{close}\n\n")
-        
+
         def on_warning(self, warning, **kwargs):
             print(f"\n\n{warning}\n\n")
 
@@ -62,17 +64,17 @@ def main():
         def on_unhandled(self, unhandled, **kwargs):
             print(f"\n\n{unhandled}\n\n")
 
-        dg_connection.on(SpeakStreamEvents.Open, on_open)
-        dg_connection.on(SpeakStreamEvents.AudioData, on_binary_data)
-        dg_connection.on(SpeakStreamEvents.Metadata, on_metadata)
-        dg_connection.on(SpeakStreamEvents.Flush, on_flush)
-        dg_connection.on(SpeakStreamEvents.Close, on_close)
-        dg_connection.on(SpeakStreamEvents.Error, on_error)
-        dg_connection.on(SpeakStreamEvents.Warning, on_warning)
-        dg_connection.on(SpeakStreamEvents.Unhandled, on_unhandled)
+        dg_connection.on(SpeakWebSocketEvents.Open, on_open)
+        dg_connection.on(SpeakWebSocketEvents.AudioData, on_binary_data)
+        dg_connection.on(SpeakWebSocketEvents.Metadata, on_metadata)
+        dg_connection.on(SpeakWebSocketEvents.Flush, on_flush)
+        dg_connection.on(SpeakWebSocketEvents.Close, on_close)
+        dg_connection.on(SpeakWebSocketEvents.Error, on_error)
+        dg_connection.on(SpeakWebSocketEvents.Warning, on_warning)
+        dg_connection.on(SpeakWebSocketEvents.Unhandled, on_unhandled)
 
         lock = threading.Lock()
-        
+
         def send_tts_text(dg_connection):
             with lock:
                 dg_connection.send(TTS_TEXT)

@@ -11,38 +11,73 @@ from .common import (
     UrlSource,
     Sentiment,
 )
+from .listen import (
+    OpenResponse,
+    MetadataResponse,
+    CloseResponse,
+    UnhandledResponse,
+    ErrorResponse,
+)
+
+from .listen_router import Listen
+from .read_router import Read
+from .speak_router import Speak
 
 # listen
-from .listen import Listen
-from .read import Read
+from .listen import LiveTranscriptionEvents
 
-# live
-from .live import LiveClient, AsyncLiveClient
-from .live import LiveOptions
-from .live import LiveTranscriptionEvents
+## backward compat
+from .prerecorded import (
+    PreRecordedClient,
+    AsyncPreRecordedClient,
+)
 from .live import (
-    OpenResponse,
-    LiveResultResponse,
-    MetadataResponse,
-    SpeechStartedResponse,
-    UtteranceEndResponse,
-    CloseResponse,
-    ErrorResponse,
-    UnhandledResponse,
+    LiveClient,
+    AsyncLiveClient,
 )
 
-# prerecorded
-from .prerecorded import PreRecordedClient, AsyncPreRecordedClient
-from .prerecorded import PrerecordedOptions
-from .prerecorded import (
+# rest
+## input
+from .listen import (
+    PrerecordedOptions,
     PreRecordedStreamSource,
+    # UrlSource,
+    # FileSource,
     PrerecordedSource,
 )
-from .prerecorded import (
+
+## output
+from .listen import (
     AsyncPrerecordedResponse,
     PrerecordedResponse,
     SyncPrerecordedResponse,
 )
+
+
+# websocket
+## input
+from .listen import (
+    LiveOptions,
+)
+
+## output
+from .listen import (
+    # OpenResponse,
+    LiveResultResponse,
+    # MetadataResponse,
+    SpeechStartedResponse,
+    UtteranceEndResponse,
+    # CloseResponse,
+    # ErrorResponse,
+    # UnhandledResponse,
+)
+
+## clients
+from .listen import (
+    ListenWebSocketClient,
+    AsyncListenWebSocketClient,
+)
+
 
 # read
 from .analyze import ReadClient, AsyncReadClient
@@ -59,17 +94,43 @@ from .analyze import (
 )
 
 # speak
-from .speak import SpeakClient, AsyncSpeakClient
-from .speak import SpeakOptions
+## common
 from .speak import (
-    SpeakStreamSource,
+    SpeakOptions,
+    # FileSource,
+    SpeakWebSocketSource,
     SpeakSource,
 )
-from .speak import SpeakStreamEvents
-from .speak import SpeakResponse
 
-# speak-stream
-from .speak import SpeakStreamClient, AsyncSpeakStreamClient
+from .speak import SpeakWebSocketEvents
+
+## speak REST
+from .speak import (
+    SpeakClient,  # backward compat
+    SpeakRESTClient,
+    AsyncSpeakRESTClient,
+)
+
+from .speak import (
+    SpeakResponse,  # backward compat
+    SpeakRESTResponse,
+)
+
+## speak WebSocket
+from .speak import (
+    SpeakWebSocketClient,
+    AsyncSpeakWebSocketClient,
+)
+from .speak import (
+    SpeakWebSocketResponse,
+    # OpenResponse,
+    # MetadataResponse,
+    FlushedResponse,
+    # CloseResponse,
+    # UnhandledResponse,
+    WarningResponse,
+    # ErrorResponse,
+)
 
 # manage
 from .manage import ManageClient, AsyncManageClient

@@ -43,9 +43,6 @@ ensure-deps: #### Ensure that all required dependency utilities are downloaded o
 
 GO_MODULES=$(shell find . -path "*/go.mod" | xargs -I _ dirname _)
 
-# pystatic: #### Performs Python static analysis
-# 	pylint --rcfile .pylintrc deepgram
-
 PYTHON_FILES=.
 lint_files: PYTHON_FILES=deepgram/ examples/
 lint_diff: PYTHON_FILES=$(shell git diff --name-only --diff-filter=d main | grep -E '\.py$$')
@@ -56,7 +53,7 @@ lint_files lint_diff: #### Performs Python formatting
 black blackformat format: lint_files
 
 pylint: lint_files #### Performs Python linting
-	pylint --rcfile .pylintrc deepgram
+	pylint --disable=W0622 --disable=W0404 --disable=W0611 --rcfile .pylintrc deepgram
 
 lint: pylint #### Performs Golang programming lint
 

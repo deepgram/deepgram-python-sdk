@@ -11,11 +11,11 @@ import threading
 import websockets
 from websockets.client import WebSocketClientProtocol
 
-from ....utils import verboselogs
-from ....options import DeepgramClientOptions
-from ..enums import LiveTranscriptionEvents
+from .....utils import verboselogs
+from .....options import DeepgramClientOptions
+from ...enums import LiveTranscriptionEvents
 from ..helpers import convert_to_websocket_url, append_query_params
-from ..errors import DeepgramError
+from ...errors import DeepgramError
 
 from .response import (
     OpenResponse,
@@ -35,7 +35,7 @@ DEEPGRAM_INTERVAL = 5
 PING_INTERVAL = 20
 
 
-class AsyncLiveClient:  # pylint: disable=too-many-instance-attributes
+class AsyncListenWebSocketClient:  # pylint: disable=too-many-instance-attributes
     """
     Client for interacting with Deepgram's live transcription services over WebSockets.
 
@@ -101,7 +101,7 @@ class AsyncLiveClient:  # pylint: disable=too-many-instance-attributes
         """
         Starts the WebSocket connection for live transcription.
         """
-        self._logger.debug("AsyncLiveClient.start ENTER")
+        self._logger.debug("AsyncListenWebSocketClient.start ENTER")
         self._logger.info("options: %s", options)
         self._logger.info("addons: %s", addons)
         self._logger.info("headers: %s", headers)
@@ -110,7 +110,7 @@ class AsyncLiveClient:  # pylint: disable=too-many-instance-attributes
 
         if isinstance(options, LiveOptions) and not options.check():
             self._logger.error("options.check failed")
-            self._logger.debug("AsyncLiveClient.start LEAVE")
+            self._logger.debug("AsyncListenWebSocketClient.start LEAVE")
             raise DeepgramError("Fatal transcription options error")
 
         self._addons = addons
@@ -192,23 +192,29 @@ class AsyncLiveClient:  # pylint: disable=too-many-instance-attributes
             )
 
             self._logger.notice("start succeeded")
-            self._logger.debug("AsyncLiveClient.start LEAVE")
+            self._logger.debug("AsyncListenWebSocketClient.start LEAVE")
             return True
         except websockets.ConnectionClosed as e:
-            self._logger.error("ConnectionClosed in AsyncLiveClient.start: %s", e)
-            self._logger.debug("AsyncLiveClient.start LEAVE")
+            self._logger.error(
+                "ConnectionClosed in AsyncListenWebSocketClient.start: %s", e
+            )
+            self._logger.debug("AsyncListenWebSocketClient.start LEAVE")
             if self._config.options.get("termination_exception_connect") == "true":
                 raise
             return False
         except websockets.exceptions.WebSocketException as e:
-            self._logger.error("WebSocketException in AsyncLiveClient.start: %s", e)
-            self._logger.debug("AsyncLiveClient.start LEAVE")
+            self._logger.error(
+                "WebSocketException in AsyncListenWebSocketClient.start: %s", e
+            )
+            self._logger.debug("AsyncListenWebSocketClient.start LEAVE")
             if self._config.options.get("termination_exception_connect") == "true":
                 raise
             return False
         except Exception as e:  # pylint: disable=broad-except
-            self._logger.error("WebSocketException in AsyncLiveClient.start: %s", e)
-            self._logger.debug("AsyncLiveClient.start LEAVE")
+            self._logger.error(
+                "WebSocketException in AsyncListenWebSocketClient.start: %s", e
+            )
+            self._logger.debug("AsyncListenWebSocketClient.start LEAVE")
             if self._config.options.get("termination_exception_connect") == "true":
                 raise
             return False
@@ -229,7 +235,7 @@ class AsyncLiveClient:  # pylint: disable=too-many-instance-attributes
         """
         Emits events to the registered event handlers.
         """
-        self._logger.debug("AsyncLiveClient._emit ENTER")
+        self._logger.debug("AsyncListenWebSocketClient._emit ENTER")
         self._logger.debug("callback handlers for: %s", event)
 
         # debug the threads
@@ -252,25 +258,25 @@ class AsyncLiveClient:  # pylint: disable=too-many-instance-attributes
             self._logger.debug("after running thread: %s", thread.name)
         self._logger.debug("number of active threads: %s", threading.active_count())
 
-        self._logger.debug("AsyncLiveClient._emit LEAVE")
+        self._logger.debug("AsyncListenWebSocketClient._emit LEAVE")
 
     # pylint: disable=too-many-return-statements,too-many-statements,too-many-locals,too-many-branches
     async def _listening(self) -> None:
         """
         Listens for messages from the WebSocket connection.
         """
-        self._logger.debug("AsyncLiveClient._listening ENTER")
+        self._logger.debug("AsyncListenWebSocketClient._listening ENTER")
 
         while True:
             try:
                 if self._exit_event.is_set():
                     self._logger.notice("_listening exiting gracefully")
-                    self._logger.debug("AsyncLiveClient._listening LEAVE")
+                    self._logger.debug("AsyncListenWebSocketClient._listening LEAVE")
                     return
 
                 if self._socket is None:
                     self._logger.warning("socket is empty")
-                    self._logger.debug("AsyncLiveClient._listening LEAVE")
+                    self._logger.debug("AsyncListenWebSocketClient._listening LEAVE")
                     return
 
                 message = str(await self._socket.recv())
@@ -379,22 +385,22 @@ class AsyncLiveClient:  # pylint: disable=too-many-instance-attributes
 
             except websockets.exceptions.ConnectionClosedOK as e:
                 self._logger.notice(f"_listening({e.code}) exiting gracefully")
-                self._logger.debug("AsyncLiveClient._listening LEAVE")
+                self._logger.debug("AsyncListenWebSocketClient._listening LEAVE")
                 return
 
             except websockets.exceptions.ConnectionClosed as e:
                 if e.code in [1000, 1001]:
                     self._logger.notice(f"_listening({e.code}) exiting gracefully")
-                    self._logger.debug("AsyncLiveClient._listening LEAVE")
+                    self._logger.debug("AsyncListenWebSocketClient._listening LEAVE")
                     return
 
                 self._logger.error(
-                    "ConnectionClosed in AsyncLiveClient._listening with code %s: %s",
+                    "ConnectionClosed in AsyncListenWebSocketClient._listening with code %s: %s",
                     e.code,
                     e.reason,
                 )
                 cc_error: ErrorResponse = ErrorResponse(
-                    "ConnectionClosed in AsyncLiveClient._listening",
+                    "ConnectionClosed in AsyncListenWebSocketClient._listening",
                     f"{e}",
                     "ConnectionClosed",
                 )
@@ -407,7 +413,7 @@ class AsyncLiveClient:  # pylint: disable=too-many-instance-attributes
                 # signal exit and close
                 await self._signal_exit()
 
-                self._logger.debug("AsyncLiveClient._listening LEAVE")
+                self._logger.debug("AsyncListenWebSocketClient._listening LEAVE")
 
                 if self._config.options.get("termination_exception") == "true":
                     raise
@@ -415,10 +421,10 @@ class AsyncLiveClient:  # pylint: disable=too-many-instance-attributes
 
             except websockets.exceptions.WebSocketException as e:
                 self._logger.error(
-                    "WebSocketException in AsyncLiveClient._listening: %s", e
+                    "WebSocketException in AsyncListenWebSocketClient._listening: %s", e
                 )
                 ws_error: ErrorResponse = ErrorResponse(
-                    "WebSocketException in AsyncLiveClient._listening",
+                    "WebSocketException in AsyncListenWebSocketClient._listening",
                     f"{e}",
                     "WebSocketException",
                 )
@@ -431,16 +437,18 @@ class AsyncLiveClient:  # pylint: disable=too-many-instance-attributes
                 # signal exit and close
                 await self._signal_exit()
 
-                self._logger.debug("AsyncLiveClient._listening LEAVE")
+                self._logger.debug("AsyncListenWebSocketClient._listening LEAVE")
 
                 if self._config.options.get("termination_exception") == "true":
                     raise
                 return
 
             except Exception as e:  # pylint: disable=broad-except
-                self._logger.error("Exception in AsyncLiveClient._listening: %s", e)
+                self._logger.error(
+                    "Exception in AsyncListenWebSocketClient._listening: %s", e
+                )
                 e_error: ErrorResponse = ErrorResponse(
-                    "Exception in AsyncLiveClient._listening",
+                    "Exception in AsyncListenWebSocketClient._listening",
                     f"{e}",
                     "Exception",
                 )
@@ -453,7 +461,7 @@ class AsyncLiveClient:  # pylint: disable=too-many-instance-attributes
                 # signal exit and close
                 await self._signal_exit()
 
-                self._logger.debug("AsyncLiveClient._listening LEAVE")
+                self._logger.debug("AsyncListenWebSocketClient._listening LEAVE")
 
                 if self._config.options.get("termination_exception") == "true":
                     raise
@@ -466,7 +474,7 @@ class AsyncLiveClient:  # pylint: disable=too-many-instance-attributes
         """
         Sends keepalive messages to the WebSocket connection.
         """
-        self._logger.debug("AsyncLiveClient._keep_alive ENTER")
+        self._logger.debug("AsyncListenWebSocketClient._keep_alive ENTER")
 
         counter = 0
         while True:
@@ -476,12 +484,12 @@ class AsyncLiveClient:  # pylint: disable=too-many-instance-attributes
 
                 if self._exit_event.is_set():
                     self._logger.notice("_keep_alive exiting gracefully")
-                    self._logger.debug("AsyncLiveClient._keep_alive LEAVE")
+                    self._logger.debug("AsyncListenWebSocketClient._keep_alive LEAVE")
                     return
 
                 if self._socket is None:
                     self._logger.notice("socket is None, exiting keep_alive")
-                    self._logger.debug("AsyncLiveClient._keep_alive LEAVE")
+                    self._logger.debug("AsyncListenWebSocketClient._keep_alive LEAVE")
                     return
 
                 # deepgram keepalive
@@ -490,22 +498,22 @@ class AsyncLiveClient:  # pylint: disable=too-many-instance-attributes
 
             except websockets.exceptions.ConnectionClosedOK as e:
                 self._logger.notice(f"_keep_alive({e.code}) exiting gracefully")
-                self._logger.debug("AsyncLiveClient._keep_alive LEAVE")
+                self._logger.debug("AsyncListenWebSocketClient._keep_alive LEAVE")
                 return
 
             except websockets.exceptions.ConnectionClosed as e:
                 if e.code == 1000:
                     self._logger.notice(f"_keep_alive({e.code}) exiting gracefully")
-                    self._logger.debug("AsyncLiveClient._keep_alive LEAVE")
+                    self._logger.debug("AsyncListenWebSocketClient._keep_alive LEAVE")
                     return
 
                 self._logger.error(
-                    "ConnectionClosed in AsyncLiveClient._keep_alive with code %s: %s",
+                    "ConnectionClosed in AsyncListenWebSocketClient._keep_alive with code %s: %s",
                     e.code,
                     e.reason,
                 )
                 cc_error: ErrorResponse = ErrorResponse(
-                    "ConnectionClosed in AsyncLiveClient._keep_alive",
+                    "ConnectionClosed in AsyncListenWebSocketClient._keep_alive",
                     f"{e}",
                     "ConnectionClosed",
                 )
@@ -518,7 +526,7 @@ class AsyncLiveClient:  # pylint: disable=too-many-instance-attributes
                 # signal exit and close
                 await self._signal_exit()
 
-                self._logger.debug("AsyncLiveClient._keep_alive LEAVE")
+                self._logger.debug("AsyncListenWebSocketClient._keep_alive LEAVE")
 
                 if self._config.options.get("termination_exception") == "true":
                     raise
@@ -526,10 +534,11 @@ class AsyncLiveClient:  # pylint: disable=too-many-instance-attributes
 
             except websockets.exceptions.WebSocketException as e:
                 self._logger.error(
-                    "WebSocketException in AsyncLiveClient._keep_alive: %s", e
+                    "WebSocketException in AsyncListenWebSocketClient._keep_alive: %s",
+                    e,
                 )
                 ws_error: ErrorResponse = ErrorResponse(
-                    "WebSocketException in AsyncLiveClient._keep_alive",
+                    "WebSocketException in AsyncListenWebSocketClient._keep_alive",
                     f"{e}",
                     "Exception",
                 )
@@ -542,21 +551,23 @@ class AsyncLiveClient:  # pylint: disable=too-many-instance-attributes
                 # signal exit and close
                 await self._signal_exit()
 
-                self._logger.debug("AsyncLiveClient._keep_alive LEAVE")
+                self._logger.debug("AsyncListenWebSocketClient._keep_alive LEAVE")
 
                 if self._config.options.get("termination_exception") == "true":
                     raise
                 return
 
             except Exception as e:  # pylint: disable=broad-except
-                self._logger.error("Exception in AsyncLiveClient._keep_alive: %s", e)
+                self._logger.error(
+                    "Exception in AsyncListenWebSocketClient._keep_alive: %s", e
+                )
                 e_error: ErrorResponse = ErrorResponse(
-                    "Exception in AsyncLiveClient._keep_alive",
+                    "Exception in AsyncListenWebSocketClient._keep_alive",
                     f"{e}",
                     "Exception",
                 )
                 self._logger.error(
-                    "Exception in AsyncLiveClient._keep_alive: %s", str(e)
+                    "Exception in AsyncListenWebSocketClient._keep_alive: %s", str(e)
                 )
                 await self._emit(
                     LiveTranscriptionEvents(LiveTranscriptionEvents.Error),
@@ -567,7 +578,7 @@ class AsyncLiveClient:  # pylint: disable=too-many-instance-attributes
                 # signal exit and close
                 await self._signal_exit()
 
-                self._logger.debug("AsyncLiveClient._keep_alive LEAVE")
+                self._logger.debug("AsyncListenWebSocketClient._keep_alive LEAVE")
 
                 if self._config.options.get("termination_exception") == "true":
                     raise
@@ -575,12 +586,12 @@ class AsyncLiveClient:  # pylint: disable=too-many-instance-attributes
 
     ## pylint: disable=too-many-return-statements,too-many-statements
     async def _flush(self) -> None:
-        self._logger.debug("AsyncLiveClient._flush ENTER")
+        self._logger.debug("AsyncListenWebSocketClient._flush ENTER")
 
         delta_in_ms_str = self._config.options.get("auto_flush_reply_delta")
         if delta_in_ms_str is None:
             self._logger.error("auto_flush_reply_delta is None")
-            self._logger.debug("AsyncLiveClient._flush LEAVE")
+            self._logger.debug("AsyncListenWebSocketClient._flush LEAVE")
             return
         delta_in_ms = float(delta_in_ms_str)
 
@@ -590,12 +601,12 @@ class AsyncLiveClient:  # pylint: disable=too-many-instance-attributes
 
                 if self._exit_event.is_set():
                     self._logger.notice("_flush exiting gracefully")
-                    self._logger.debug("AsyncLiveClient._flush LEAVE")
+                    self._logger.debug("AsyncListenWebSocketClient._flush LEAVE")
                     return
 
                 if self._socket is None:
                     self._logger.notice("socket is None, exiting flush")
-                    self._logger.debug("AsyncLiveClient._flush LEAVE")
+                    self._logger.debug("AsyncListenWebSocketClient._flush LEAVE")
                     return
 
                 if self._last_datagram is None:
@@ -614,22 +625,22 @@ class AsyncLiveClient:  # pylint: disable=too-many-instance-attributes
 
             except websockets.exceptions.ConnectionClosedOK as e:
                 self._logger.notice(f"_flush({e.code}) exiting gracefully")
-                self._logger.debug("AsyncLiveClient._flush LEAVE")
+                self._logger.debug("AsyncListenWebSocketClient._flush LEAVE")
                 return
 
             except websockets.exceptions.ConnectionClosed as e:
                 if e.code == 1000:
                     self._logger.notice(f"_flush({e.code}) exiting gracefully")
-                    self._logger.debug("AsyncLiveClient._flush LEAVE")
+                    self._logger.debug("AsyncListenWebSocketClient._flush LEAVE")
                     return
 
                 self._logger.error(
-                    "ConnectionClosed in AsyncLiveClient._flush with code %s: %s",
+                    "ConnectionClosed in AsyncListenWebSocketClient._flush with code %s: %s",
                     e.code,
                     e.reason,
                 )
                 cc_error: ErrorResponse = ErrorResponse(
-                    "ConnectionClosed in AsyncLiveClient._flush",
+                    "ConnectionClosed in AsyncListenWebSocketClient._flush",
                     f"{e}",
                     "ConnectionClosed",
                 )
@@ -642,7 +653,7 @@ class AsyncLiveClient:  # pylint: disable=too-many-instance-attributes
                 # signal exit and close
                 await self._signal_exit()
 
-                self._logger.debug("AsyncLiveClient._flush LEAVE")
+                self._logger.debug("AsyncListenWebSocketClient._flush LEAVE")
 
                 if self._config.options.get("termination_exception") == "true":
                     raise
@@ -650,10 +661,10 @@ class AsyncLiveClient:  # pylint: disable=too-many-instance-attributes
 
             except websockets.exceptions.WebSocketException as e:
                 self._logger.error(
-                    "WebSocketException in AsyncLiveClient._flush: %s", e
+                    "WebSocketException in AsyncListenWebSocketClient._flush: %s", e
                 )
                 ws_error: ErrorResponse = ErrorResponse(
-                    "WebSocketException in AsyncLiveClient._flush",
+                    "WebSocketException in AsyncListenWebSocketClient._flush",
                     f"{e}",
                     "Exception",
                 )
@@ -666,20 +677,24 @@ class AsyncLiveClient:  # pylint: disable=too-many-instance-attributes
                 # signal exit and close
                 await self._signal_exit()
 
-                self._logger.debug("AsyncLiveClient._flush LEAVE")
+                self._logger.debug("AsyncListenWebSocketClient._flush LEAVE")
 
                 if self._config.options.get("termination_exception") == "true":
                     raise
                 return
 
             except Exception as e:  # pylint: disable=broad-except
-                self._logger.error("Exception in AsyncLiveClient._flush: %s", e)
+                self._logger.error(
+                    "Exception in AsyncListenWebSocketClient._flush: %s", e
+                )
                 e_error: ErrorResponse = ErrorResponse(
-                    "Exception in AsyncLiveClient._flush",
+                    "Exception in AsyncListenWebSocketClient._flush",
                     f"{e}",
                     "Exception",
                 )
-                self._logger.error("Exception in AsyncLiveClient._flush: %s", str(e))
+                self._logger.error(
+                    "Exception in AsyncListenWebSocketClient._flush: %s", str(e)
+                )
                 await self._emit(
                     LiveTranscriptionEvents(LiveTranscriptionEvents.Error),
                     error=e_error,
@@ -689,7 +704,7 @@ class AsyncLiveClient:  # pylint: disable=too-many-instance-attributes
                 # signal exit and close
                 await self._signal_exit()
 
-                self._logger.debug("AsyncLiveClient._flush LEAVE")
+                self._logger.debug("AsyncListenWebSocketClient._flush LEAVE")
 
                 if self._config.options.get("termination_exception") == "true":
                     raise
@@ -703,11 +718,11 @@ class AsyncLiveClient:  # pylint: disable=too-many-instance-attributes
         """
         Sends data over the WebSocket connection.
         """
-        self._logger.spam("AsyncLiveClient.send ENTER")
+        self._logger.spam("AsyncListenWebSocketClient.send ENTER")
 
         if self._exit_event.is_set():
             self._logger.notice("send exiting gracefully")
-            self._logger.debug("AsyncLiveClient.send LEAVE")
+            self._logger.debug("AsyncListenWebSocketClient.send LEAVE")
             return False
 
         if self._socket is not None:
@@ -715,42 +730,42 @@ class AsyncLiveClient:  # pylint: disable=too-many-instance-attributes
                 await self._socket.send(data)
             except websockets.exceptions.ConnectionClosedOK as e:
                 self._logger.notice(f"send() exiting gracefully: {e.code}")
-                self._logger.debug("AsyncLiveClient.send LEAVE")
+                self._logger.debug("AsyncListenWebSocketClient.send LEAVE")
                 if self._config.options.get("termination_exception_send") == "true":
                     raise
                 return True
             except websockets.exceptions.ConnectionClosed as e:
                 if e.code == 1000:
                     self._logger.notice(f"send({e.code}) exiting gracefully")
-                    self._logger.debug("AsyncLiveClient.send LEAVE")
+                    self._logger.debug("AsyncListenWebSocketClient.send LEAVE")
                     if self._config.options.get("termination_exception_send") == "true":
                         raise
                     return True
 
                 self._logger.error("send() failed - ConnectionClosed: %s", str(e))
-                self._logger.spam("AsyncLiveClient.send LEAVE")
+                self._logger.spam("AsyncListenWebSocketClient.send LEAVE")
                 if self._config.options.get("termination_exception_send") == "true":
                     raise
                 return False
             except websockets.exceptions.WebSocketException as e:
                 self._logger.error("send() failed - WebSocketException: %s", str(e))
-                self._logger.spam("AsyncLiveClient.send LEAVE")
+                self._logger.spam("AsyncListenWebSocketClient.send LEAVE")
                 if self._config.options.get("termination_exception_send") == "true":
                     raise
                 return False
             except Exception as e:  # pylint: disable=broad-except
                 self._logger.error("send() failed - Exception: %s", str(e))
-                self._logger.spam("AsyncLiveClient.send LEAVE")
+                self._logger.spam("AsyncListenWebSocketClient.send LEAVE")
                 if self._config.options.get("termination_exception_send") == "true":
                     raise
                 return False
 
             self._logger.spam("send() succeeded")
-            self._logger.spam("AsyncLiveClient.send LEAVE")
+            self._logger.spam("AsyncListenWebSocketClient.send LEAVE")
             return True
 
         self._logger.spam("send() failed. socket is None")
-        self._logger.spam("AsyncLiveClient.send LEAVE")
+        self._logger.spam("AsyncListenWebSocketClient.send LEAVE")
         return False
 
     # pylint: enable=too-many-return-statements
@@ -759,16 +774,16 @@ class AsyncLiveClient:  # pylint: disable=too-many-instance-attributes
         """
         Sends a KeepAlive message
         """
-        self._logger.spam("AsyncLiveClient.keep_alive ENTER")
+        self._logger.spam("AsyncListenWebSocketClient.keep_alive ENTER")
 
         if self._exit_event.is_set():
             self._logger.notice("keep_alive exiting gracefully")
-            self._logger.debug("AsyncLiveClient.keep_alive LEAVE")
+            self._logger.debug("AsyncListenWebSocketClient.keep_alive LEAVE")
             return False
 
         if self._socket is None:
             self._logger.notice("socket is not intialized")
-            self._logger.debug("AsyncLiveClient.keep_alive LEAVE")
+            self._logger.debug("AsyncListenWebSocketClient.keep_alive LEAVE")
             return False
 
         self._logger.notice("Sending KeepAlive...")
@@ -776,11 +791,11 @@ class AsyncLiveClient:  # pylint: disable=too-many-instance-attributes
 
         if not ret:
             self._logger.error("keep_alive failed")
-            self._logger.spam("AsyncLiveClient.keep_alive LEAVE")
+            self._logger.spam("AsyncListenWebSocketClient.keep_alive LEAVE")
             return False
 
         self._logger.notice("keep_alive succeeded")
-        self._logger.spam("AsyncLiveClient.keep_alive LEAVE")
+        self._logger.spam("AsyncListenWebSocketClient.keep_alive LEAVE")
 
         return True
 
@@ -788,16 +803,16 @@ class AsyncLiveClient:  # pylint: disable=too-many-instance-attributes
         """
         Finalizes the Transcript connection by flushing it
         """
-        self._logger.spam("AsyncLiveClient.finalize ENTER")
+        self._logger.spam("AsyncListenWebSocketClient.finalize ENTER")
 
         if self._exit_event.is_set():
             self._logger.notice("finalize exiting gracefully")
-            self._logger.debug("AsyncLiveClient.finalize LEAVE")
+            self._logger.debug("AsyncListenWebSocketClient.finalize LEAVE")
             return False
 
         if self._socket is None:
             self._logger.notice("socket is not intialized")
-            self._logger.debug("AsyncLiveClient.finalize LEAVE")
+            self._logger.debug("AsyncListenWebSocketClient.finalize LEAVE")
             return False
 
         self._logger.notice("Sending Finalize...")
@@ -805,11 +820,11 @@ class AsyncLiveClient:  # pylint: disable=too-many-instance-attributes
 
         if not ret:
             self._logger.error("finalize failed")
-            self._logger.spam("AsyncLiveClient.finalize LEAVE")
+            self._logger.spam("AsyncListenWebSocketClient.finalize LEAVE")
             return False
 
         self._logger.notice("finalize succeeded")
-        self._logger.spam("AsyncLiveClient.finalize LEAVE")
+        self._logger.spam("AsyncListenWebSocketClient.finalize LEAVE")
 
         return True
 
@@ -817,7 +832,7 @@ class AsyncLiveClient:  # pylint: disable=too-many-instance-attributes
         """
         Closes the WebSocket connection gracefully.
         """
-        self._logger.debug("AsyncLiveClient.finish ENTER")
+        self._logger.debug("AsyncListenWebSocketClient.finish ENTER")
 
         # signal exit
         await self._signal_exit()
@@ -857,12 +872,12 @@ class AsyncLiveClient:  # pylint: disable=too-many-instance-attributes
             self._logger.debug("number of active threads: %s", threading.active_count())
 
             self._logger.notice("finish succeeded")
-            self._logger.spam("AsyncLiveClient.finish LEAVE")
+            self._logger.spam("AsyncListenWebSocketClient.finish LEAVE")
             return True
 
         except asyncio.CancelledError as e:
             self._logger.error("tasks cancelled error: %s", e)
-            self._logger.debug("AsyncLiveClient.finish LEAVE")
+            self._logger.debug("AsyncListenWebSocketClient.finish LEAVE")
             return False
 
     async def _signal_exit(self) -> None:

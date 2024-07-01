@@ -7,10 +7,10 @@ from typing import Dict, Union, Optional
 
 import httpx
 
-from ....utils import verboselogs
-from ....options import DeepgramClientOptions
-from ...abstract_async_client import AbstractAsyncRestClient
-from ..errors import DeepgramError, DeepgramTypeError
+from .....utils import verboselogs
+from .....options import DeepgramClientOptions
+from ....abstract_sync_client import AbstractSyncRestClient
+from ...errors import DeepgramError, DeepgramTypeError
 
 from .helpers import is_buffer_source, is_readstream_source, is_url_source
 from .options import (
@@ -21,7 +21,7 @@ from .options import (
 from .response import AsyncPrerecordedResponse, PrerecordedResponse
 
 
-class AsyncPreRecordedClient(AbstractAsyncRestClient):
+class ListenRESTClient(AbstractSyncRestClient):
     """
     A client class for handling pre-recorded audio data.
     Provides methods for transcribing audio from URLs and files.
@@ -37,7 +37,7 @@ class AsyncPreRecordedClient(AbstractAsyncRestClient):
         self._config = config
         super().__init__(config)
 
-    async def transcribe_url(
+    def transcribe_url(
         self,
         source: UrlSource,
         options: Optional[Union[Dict, PrerecordedOptions]] = None,
@@ -60,15 +60,15 @@ class AsyncPreRecordedClient(AbstractAsyncRestClient):
         Raises:
             DeepgramTypeError: Raised for known API errors.
         """
-        self._logger.debug("PreRecordedClient.transcribe_url ENTER")
+        self._logger.debug("ListenRESTClient.transcribe_url ENTER")
 
         if (
             isinstance(options, dict)
             and "callback" in options
             and options["callback"] is not None
         ) or (isinstance(options, PrerecordedOptions) and options.callback is not None):
-            self._logger.debug("PreRecordedClient.transcribe_url LEAVE")
-            return await self.transcribe_url_callback(
+            self._logger.debug("ListenRESTClient.transcribe_url LEAVE")
+            return self.transcribe_url_callback(
                 source,
                 callback=options["callback"],
                 options=options,
@@ -83,12 +83,12 @@ class AsyncPreRecordedClient(AbstractAsyncRestClient):
             body = source
         else:
             self._logger.error("Unknown transcription source type")
-            self._logger.debug("PreRecordedClient.transcribe_url LEAVE")
+            self._logger.debug("ListenRESTClient.transcribe_url LEAVE")
             raise DeepgramTypeError("Unknown transcription source type")
 
         if isinstance(options, PrerecordedOptions) and not options.check():
             self._logger.error("options.check failed")
-            self._logger.debug("PreRecordedClient.transcribe_url LEAVE")
+            self._logger.debug("ListenRESTClient.transcribe_url LEAVE")
             raise DeepgramError("Fatal transcription options error")
 
         self._logger.info("url: %s", url)
@@ -99,7 +99,7 @@ class AsyncPreRecordedClient(AbstractAsyncRestClient):
         self._logger.info("options: %s", options)
         self._logger.info("addons: %s", addons)
         self._logger.info("headers: %s", headers)
-        result = await self.post(
+        result = self.post(
             url,
             options=options,
             addons=addons,
@@ -111,10 +111,10 @@ class AsyncPreRecordedClient(AbstractAsyncRestClient):
         res = PrerecordedResponse.from_json(result)
         self._logger.verbose("result: %s", res)
         self._logger.notice("transcribe_url succeeded")
-        self._logger.debug("PreRecordedClient.transcribe_url LEAVE")
+        self._logger.debug("ListenRESTClient.transcribe_url LEAVE")
         return res
 
-    async def transcribe_url_callback(
+    def transcribe_url_callback(
         self,
         source: UrlSource,
         callback: str,
@@ -139,7 +139,7 @@ class AsyncPreRecordedClient(AbstractAsyncRestClient):
         Raises:
             DeepgramTypeError: Raised for known API errors.
         """
-        self._logger.debug("PreRecordedClient.transcribe_url_callback ENTER")
+        self._logger.debug("ListenRESTClient.transcribe_url_callback ENTER")
 
         url = f"{self._config.url}/{endpoint}"
         if options is None:
@@ -152,12 +152,12 @@ class AsyncPreRecordedClient(AbstractAsyncRestClient):
             body = source
         else:
             self._logger.error("Unknown transcription source type")
-            self._logger.debug("PreRecordedClient.transcribe_url_callback LEAVE")
+            self._logger.debug("ListenRESTClient.transcribe_url_callback LEAVE")
             raise DeepgramTypeError("Unknown transcription source type")
 
         if isinstance(options, PrerecordedOptions) and not options.check():
             self._logger.error("options.check failed")
-            self._logger.debug("PreRecordedClient.transcribe_url_callback LEAVE")
+            self._logger.debug("ListenRESTClient.transcribe_url_callback LEAVE")
             raise DeepgramError("Fatal transcription options error")
 
         self._logger.info("url: %s", url)
@@ -168,7 +168,7 @@ class AsyncPreRecordedClient(AbstractAsyncRestClient):
         self._logger.info("options: %s", options)
         self._logger.info("addons: %s", addons)
         self._logger.info("headers: %s", headers)
-        result = await self.post(
+        result = self.post(
             url,
             options=options,
             addons=addons,
@@ -180,10 +180,10 @@ class AsyncPreRecordedClient(AbstractAsyncRestClient):
         res = AsyncPrerecordedResponse.from_json(result)
         self._logger.verbose("result: %s", res)
         self._logger.notice("transcribe_url_callback succeeded")
-        self._logger.debug("PreRecordedClient.transcribe_url_callback LEAVE")
+        self._logger.debug("ListenRESTClient.transcribe_url_callback LEAVE")
         return res
 
-    async def transcribe_file(
+    def transcribe_file(
         self,
         source: FileSource,
         options: Optional[Union[Dict, PrerecordedOptions]] = None,
@@ -206,15 +206,15 @@ class AsyncPreRecordedClient(AbstractAsyncRestClient):
         Raises:
             DeepgramTypeError: Raised for known API errors.
         """
-        self._logger.debug("PreRecordedClient.transcribe_file ENTER")
+        self._logger.debug("ListenRESTClient.transcribe_file ENTER")
 
         if (
             isinstance(options, dict)
             and "callback" in options
             and options["callback"] is not None
         ) or (isinstance(options, PrerecordedOptions) and options.callback is not None):
-            self._logger.debug("PreRecordedClient.transcribe_file LEAVE")
-            return await self.transcribe_file_callback(
+            self._logger.debug("ListenRESTClient.transcribe_file LEAVE")
+            return self.transcribe_file_callback(
                 source,
                 callback=options["callback"],
                 options=options,
@@ -225,18 +225,19 @@ class AsyncPreRecordedClient(AbstractAsyncRestClient):
             )
 
         url = f"{self._config.url}/{endpoint}"
+
         if is_buffer_source(source):
             body = source["buffer"]  # type: ignore
         elif is_readstream_source(source):
             body = source["stream"]  # type: ignore
         else:
             self._logger.error("Unknown transcription source type")
-            self._logger.debug("PreRecordedClient.transcribe_file LEAVE")
+            self._logger.debug("ListenRESTClient.transcribe_file LEAVE")
             raise DeepgramTypeError("Unknown transcription source type")
 
         if isinstance(options, PrerecordedOptions) and not options.check():
             self._logger.error("options.check failed")
-            self._logger.debug("PreRecordedClient.transcribe_file LEAVE")
+            self._logger.debug("ListenRESTClient.transcribe_file LEAVE")
             raise DeepgramError("Fatal transcription options error")
 
         self._logger.info("url: %s", url)
@@ -246,7 +247,7 @@ class AsyncPreRecordedClient(AbstractAsyncRestClient):
         self._logger.info("options: %s", options)
         self._logger.info("addons: %s", addons)
         self._logger.info("headers: %s", headers)
-        result = await self.post(
+        result = self.post(
             url,
             options=options,
             addons=addons,
@@ -258,10 +259,10 @@ class AsyncPreRecordedClient(AbstractAsyncRestClient):
         res = PrerecordedResponse.from_json(result)
         self._logger.verbose("result: %s", res)
         self._logger.notice("transcribe_file succeeded")
-        self._logger.debug("PreRecordedClient.transcribe_file LEAVE")
+        self._logger.debug("ListenRESTClient.transcribe_file LEAVE")
         return res
 
-    async def transcribe_file_callback(
+    def transcribe_file_callback(
         self,
         source: FileSource,
         callback: str,
@@ -286,7 +287,7 @@ class AsyncPreRecordedClient(AbstractAsyncRestClient):
         Raises:
             DeepgramTypeError: Raised for known API errors.
         """
-        self._logger.debug("PreRecordedClient.transcribe_file_callback ENTER")
+        self._logger.debug("ListenRESTClient.transcribe_file_callback ENTER")
 
         url = f"{self._config.url}/{endpoint}"
         if options is None:
@@ -301,12 +302,12 @@ class AsyncPreRecordedClient(AbstractAsyncRestClient):
             body = source["stream"]  # type: ignore
         else:
             self._logger.error("Unknown transcription source type")
-            self._logger.debug("PreRecordedClient.transcribe_file_callback LEAVE")
+            self._logger.debug("ListenRESTClient.transcribe_file_callback LEAVE")
             raise DeepgramTypeError("Unknown transcription source type")
 
         if isinstance(options, PrerecordedOptions) and not options.check():
             self._logger.error("options.check failed")
-            self._logger.debug("PreRecordedClient.transcribe_file_callback LEAVE")
+            self._logger.debug("ListenRESTClient.transcribe_file_callback LEAVE")
             raise DeepgramError("Fatal transcription options error")
 
         self._logger.info("url: %s", url)
@@ -316,7 +317,7 @@ class AsyncPreRecordedClient(AbstractAsyncRestClient):
         self._logger.info("options: %s", options)
         self._logger.info("addons: %s", addons)
         self._logger.info("headers: %s", headers)
-        result = await self.post(
+        result = self.post(
             url,
             options=options,
             addons=addons,
@@ -328,5 +329,5 @@ class AsyncPreRecordedClient(AbstractAsyncRestClient):
         res = AsyncPrerecordedResponse.from_json(result)
         self._logger.verbose("result: %s", res)
         self._logger.notice("transcribe_file_callback succeeded")
-        self._logger.debug("PreRecordedClient.transcribe_file_callback LEAVE")
+        self._logger.debug("ListenRESTClient.transcribe_file_callback LEAVE")
         return res

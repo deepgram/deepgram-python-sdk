@@ -37,6 +37,7 @@ dataclasses-json = "^0.6.3"
 aiohttp = "^3.9.1"
 aiofiles = "^23.2.1"
 aenum = "^3.1.0"
+deprecation = "^2.1.0"
 # needed only if you are looking to develop/work-on the SDK
 # black = "^24.0"
 # pylint = "^3.0"

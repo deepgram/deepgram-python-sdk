@@ -13,7 +13,9 @@ from dataclasses_json import config as dataclass_config, DataClassJsonMixin
 
 
 @dataclass
-class SpeakResponse(DataClassJsonMixin):  # pylint: disable=too-many-instance-attributes
+class SpeakRESTResponse(
+    DataClassJsonMixin
+):  # pylint: disable=too-many-instance-attributes
     """
     A class for representing a response from the speak endpoint.
     """
@@ -45,8 +47,11 @@ class SpeakResponse(DataClassJsonMixin):  # pylint: disable=too-many-instance-at
         my_dict = self.to_dict()
         return my_dict.__str__()
 
+
 @dataclass
-class SpeakStreamResponse(DataClassJsonMixin):  # pylint: disable=too-many-instance-attributes
+class SpeakStreamResponse(
+    DataClassJsonMixin
+):  # pylint: disable=too-many-instance-attributes
     """
     A class for representing a response from the speak (streaming) endpoint.
     """
@@ -73,6 +78,7 @@ class SpeakStreamResponse(DataClassJsonMixin):  # pylint: disable=too-many-insta
         my_dict = self.to_dict()
         return my_dict.__str__()
 
+
 @dataclass
 class OpenResponse(DataClassJsonMixin):
     """
@@ -90,6 +96,7 @@ class OpenResponse(DataClassJsonMixin):
 
     def __str__(self) -> str:
         return self.to_json(indent=4)
+
 
 @dataclass
 class MetadataResponse(DataClassJsonMixin):
@@ -109,6 +116,7 @@ class MetadataResponse(DataClassJsonMixin):
     def __str__(self) -> str:
         return self.to_json(indent=4)
 
+
 @dataclass
 class FlushedResponse(DataClassJsonMixin):
     """
@@ -127,6 +135,7 @@ class FlushedResponse(DataClassJsonMixin):
     def __str__(self) -> str:
         return self.to_json(indent=4)
 
+
 @dataclass
 class CloseResponse(DataClassJsonMixin):
     """
@@ -144,6 +153,7 @@ class CloseResponse(DataClassJsonMixin):
 
     def __str__(self) -> str:
         return self.to_json(indent=4)
+
 
 @dataclass
 class ErrorResponse(DataClassJsonMixin):
@@ -166,28 +176,9 @@ class ErrorResponse(DataClassJsonMixin):
     def __str__(self) -> str:
         return self.to_json(indent=4)
 
-@dataclass
-class WarningResponse(DataClassJsonMixin):
-    """
-    Warning Message from the Deepgram Platform
-    """
-
-    warn_code: str = ""
-    warn_msg: str = ""
-    type: str = ""
-
-    def __getitem__(self, key):
-        _dict = self.to_dict()
-        return _dict[key]
-
-    def __setitem__(self, key, val):
-        self.__dict__[key] = val
-
-    def __str__(self) -> str:
-        return self.to_json(indent=4)
-
 
 # Unhandled Message
+
 
 @dataclass
 class UnhandledResponse(DataClassJsonMixin):

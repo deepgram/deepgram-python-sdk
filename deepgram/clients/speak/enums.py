@@ -7,7 +7,7 @@ from aenum import StrEnum
 # Constants mapping to events from the Deepgram API
 
 
-class SpeakStreamEvents(StrEnum):
+class SpeakWebSocketEvents(StrEnum):
     """
     Enumerates the possible events that can be received from the Deepgram API
     """

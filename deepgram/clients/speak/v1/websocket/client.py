@@ -11,11 +11,11 @@ import threading
 from websockets.sync.client import connect, ClientConnection
 import websockets
 
-from ....utils import verboselogs
-from ....options import DeepgramClientOptions
-from ..enums import SpeakStreamEvents
-from ...live.helpers import convert_to_websocket_url, append_query_params
-from ..errors import DeepgramError
+from .....utils import verboselogs
+from .....options import DeepgramClientOptions
+from ...enums import SpeakWebSocketEvents
+from .helpers import convert_to_websocket_url, append_query_params
+from ...errors import DeepgramError
 
 from .response import (
     OpenResponse,
@@ -26,10 +26,10 @@ from .response import (
     ErrorResponse,
     UnhandledResponse,
 )
-from .options import SpeakOptions
+from ..options import SpeakOptions
 
 
-class SpeakStreamClient:  # pylint: disable=too-many-instance-attributes
+class SpeakWebSocketClient:  # pylint: disable=too-many-instance-attributes
     """
     Client for interacting with Deepgram's text-to-speech services over WebSockets.
 
@@ -47,8 +47,7 @@ class SpeakStreamClient:  # pylint: disable=too-many-instance-attributes
     _socket: ClientConnection
     _exit_event: threading.Event
     _lock_send: threading.Lock
-    _event_handlers: Dict[SpeakStreamEvents, list]
-
+    _event_handlers: Dict[SpeakWebSocketEvents, list]
 
     _listen_thread: Union[threading.Thread, None]
 
@@ -75,7 +74,7 @@ class SpeakStreamClient:  # pylint: disable=too-many-instance-attributes
         self._exit_event = threading.Event()
 
         self._event_handlers = {
-            event: [] for event in SpeakStreamEvents.__members__.values()
+            event: [] for event in SpeakWebSocketEvents.__members__.values()
         }
         self._websocket_url = convert_to_websocket_url(self._config.url, self._endpoint)
 
@@ -159,8 +158,8 @@ class SpeakStreamClient:  # pylint: disable=too-many-instance-attributes
 
             # push open event
             self._emit(
-                SpeakStreamEvents(SpeakStreamEvents.Open),
-                OpenResponse(type=SpeakStreamEvents.Open),
+                SpeakWebSocketEvents(SpeakWebSocketEvents.Open),
+                OpenResponse(type=SpeakWebSocketEvents.Open),
             )
 
             self._logger.notice("start succeeded")
@@ -188,16 +187,16 @@ class SpeakStreamClient:  # pylint: disable=too-many-instance-attributes
     # pylint: enable=too-many-statements,too-many-branches
 
     def on(
-        self, event: SpeakStreamEvents, handler
+        self, event: SpeakWebSocketEvents, handler
     ) -> None:  # registers event handlers for specific events
         """
         Registers event handlers for specific events.
         """
         self._logger.info("event subscribed: %s", event)
-        if event in SpeakStreamEvents.__members__.values() and callable(handler):
+        if event in SpeakWebSocketEvents.__members__.values() and callable(handler):
             self._event_handlers[event].append(handler)
 
-    def _emit(self, event: SpeakStreamEvents, *args, **kwargs) -> None:
+    def _emit(self, event: SpeakWebSocketEvents, *args, **kwargs) -> None:
         """
         Emits events to the registered event handlers.
         """
@@ -231,71 +230,75 @@ class SpeakStreamClient:  # pylint: disable=too-many-instance-attributes
                 if message is None:
                     self._logger.info("message is empty")
                     continue
-                
+
                 if isinstance(message, bytes):
                     self._logger.debug("Binary data received")
                     self._emit(
-                        SpeakStreamEvents(SpeakStreamEvents.AudioData),
+                        SpeakWebSocketEvents(SpeakWebSocketEvents.AudioData),
                         data=message,
                         **dict(cast(Dict[Any, Any], self._kwargs)),
-                        )
+                    )
                 else:
                     data = json.loads(message)
                     response_type = data.get("type")
-                    self._logger.debug("response_type: %s, data: %s", response_type, data)
+                    self._logger.debug(
+                        "response_type: %s, data: %s", response_type, data
+                    )
 
                     match response_type:
-                        case SpeakStreamEvents.Open:
+                        case SpeakWebSocketEvents.Open:
                             open_result: OpenResponse = OpenResponse.from_json(message)
                             self._logger.verbose("OpenResponse: %s", open_result)
                             self._emit(
-                                SpeakStreamEvents(SpeakStreamEvents.Open),
+                                SpeakWebSocketEvents(SpeakWebSocketEvents.Open),
                                 open=open_result,
                                 **dict(cast(Dict[Any, Any], self._kwargs)),
                             )
-                        case SpeakStreamEvents.Metadata:
+                        case SpeakWebSocketEvents.Metadata:
                             meta_result: MetadataResponse = MetadataResponse.from_json(
                                 message
                             )
                             self._logger.verbose("MetadataResponse: %s", meta_result)
                             self._emit(
-                                SpeakStreamEvents(SpeakStreamEvents.Metadata),
+                                SpeakWebSocketEvents(SpeakWebSocketEvents.Metadata),
                                 metadata=meta_result,
                                 **dict(cast(Dict[Any, Any], self._kwargs)),
                             )
-                        case SpeakStreamEvents.Flush:
-                            fl_result: FlushedResponse = (
-                                FlushedResponse.from_json(message)
+                        case SpeakWebSocketEvents.Flush:
+                            fl_result: FlushedResponse = FlushedResponse.from_json(
+                                message
                             )
                             self._logger.verbose("FlushedResponse: %s", fl_result)
                             self._emit(
-                                SpeakStreamEvents(
-                                    SpeakStreamEvents.Flush
-                                ),
+                                SpeakWebSocketEvents(SpeakWebSocketEvents.Flush),
                                 flushed=fl_result,
                                 **dict(cast(Dict[Any, Any], self._kwargs)),
                             )
-                        case SpeakStreamEvents.Close:
-                            close_result: CloseResponse = CloseResponse.from_json(message)
+                        case SpeakWebSocketEvents.Close:
+                            close_result: CloseResponse = CloseResponse.from_json(
+                                message
+                            )
                             self._logger.verbose("CloseResponse: %s", close_result)
                             self._emit(
-                                SpeakStreamEvents(SpeakStreamEvents.Close),
+                                SpeakWebSocketEvents(SpeakWebSocketEvents.Close),
                                 close=close_result,
                                 **dict(cast(Dict[Any, Any], self._kwargs)),
                             )
-                        case SpeakStreamEvents.Warning:
-                            war_warning: WarningResponse = WarningResponse.from_json(message)
+                        case SpeakWebSocketEvents.Warning:
+                            war_warning: WarningResponse = WarningResponse.from_json(
+                                message
+                            )
                             self._logger.verbose("WarningResponse: %s", war_warning)
                             self._emit(
-                                SpeakStreamEvents(SpeakStreamEvents.Warning),
+                                SpeakWebSocketEvents(SpeakWebSocketEvents.Warning),
                                 warning=war_warning,
                                 **dict(cast(Dict[Any, Any], self._kwargs)),
                             )
-                        case SpeakStreamEvents.Error:
+                        case SpeakWebSocketEvents.Error:
                             err_error: ErrorResponse = ErrorResponse.from_json(message)
                             self._logger.verbose("ErrorResponse: %s", err_error)
                             self._emit(
-                                SpeakStreamEvents(SpeakStreamEvents.Error),
+                                SpeakWebSocketEvents(SpeakWebSocketEvents.Error),
                                 error=err_error,
                                 **dict(cast(Dict[Any, Any], self._kwargs)),
                             )
@@ -306,13 +309,13 @@ class SpeakStreamClient:  # pylint: disable=too-many-instance-attributes
                                 data,
                             )
                             unhandled_error: UnhandledResponse = UnhandledResponse(
-                                type=SpeakStreamEvents(
-                                    SpeakStreamEvents.Unhandled
+                                type=SpeakWebSocketEvents(
+                                    SpeakWebSocketEvents.Unhandled
                                 ),
                                 raw=message,
                             )
                             self._emit(
-                                SpeakStreamEvents(SpeakStreamEvents.Unhandled),
+                                SpeakWebSocketEvents(SpeakWebSocketEvents.Unhandled),
                                 unhandled=unhandled_error,
                                 **dict(cast(Dict[Any, Any], self._kwargs)),
                             )
@@ -338,9 +341,7 @@ class SpeakStreamClient:  # pylint: disable=too-many-instance-attributes
                     f"{e}",
                     "ConnectionClosed",
                 )
-                self._emit(
-                    SpeakStreamEvents(SpeakStreamEvents.Error), cc_error
-                )
+                self._emit(SpeakWebSocketEvents(SpeakWebSocketEvents.Error), cc_error)
 
                 # signal exit and close
                 self._signal_exit()
@@ -360,9 +361,7 @@ class SpeakStreamClient:  # pylint: disable=too-many-instance-attributes
                     f"{e}",
                     "WebSocketException",
                 )
-                self._emit(
-                    SpeakStreamEvents(SpeakStreamEvents.Error), ws_error
-                )
+                self._emit(SpeakWebSocketEvents(SpeakWebSocketEvents.Error), ws_error)
 
                 # signal exit and close
                 self._signal_exit()
@@ -380,10 +379,10 @@ class SpeakStreamClient:  # pylint: disable=too-many-instance-attributes
                     f"{e}",
                     "Exception",
                 )
-                self._logger.error("Exception in SpeakStreamClient._listening: %s", str(e))
-                self._emit(
-                    SpeakStreamEvents(SpeakStreamEvents.Error), e_error
+                self._logger.error(
+                    "Exception in SpeakStreamClient._listening: %s", str(e)
                 )
+                self._emit(SpeakWebSocketEvents(SpeakWebSocketEvents.Error), e_error)
 
                 # signal exit and close
                 self._signal_exit()
@@ -393,7 +392,6 @@ class SpeakStreamClient:  # pylint: disable=too-many-instance-attributes
                 if self._config.options.get("termination_exception") == "true":
                     raise
                 return
-
 
     # pylint: disable=too-many-return-statements
     def send(self, text_input: str) -> bool:
@@ -454,7 +452,6 @@ class SpeakStreamClient:  # pylint: disable=too-many-instance-attributes
         return False
 
     # pylint: enable=too-many-return-statements
-
 
     def flush(self) -> bool:
         """
@@ -537,8 +534,8 @@ class SpeakStreamClient:  # pylint: disable=too-many-instance-attributes
             # push close event
             try:
                 self._emit(
-                    SpeakStreamEvents(SpeakStreamEvents.Close),
-                    CloseResponse(type=SpeakStreamEvents.Close),
+                    SpeakWebSocketEvents(SpeakWebSocketEvents.Close),
+                    CloseResponse(type=SpeakWebSocketEvents.Close),
                 )
             except Exception as e:  # pylint: disable=broad-except
                 self._logger.error("_signal_exit - Exception: %s", e)

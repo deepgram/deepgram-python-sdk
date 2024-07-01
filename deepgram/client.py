@@ -5,8 +5,10 @@
 from typing import Optional
 from importlib import import_module
 import os
-
 import logging
+import deprecation  # type: ignore
+
+from . import __version__
 from .utils import verboselogs
 
 # common
@@ -19,9 +21,16 @@ from .clients import (
     UrlSource,
     Sentiment,
 )
+from .clients import (
+    OpenResponse,
+    MetadataResponse,
+    CloseResponse,
+    UnhandledResponse,
+    ErrorResponse,
+)
 
 # listen client
-from .clients import Listen, Read
+from .clients import Listen, Read, Speak
 
 # live
 from .clients import LiveClient, AsyncLiveClient
@@ -32,14 +41,14 @@ from .clients import (
 
 # live client responses
 from .clients import (
-    OpenResponse,
+    # OpenResponse,
     LiveResultResponse,
-    MetadataResponse,
+    # MetadataResponse,
     SpeechStartedResponse,
     UtteranceEndResponse,
-    CloseResponse,
-    ErrorResponse,
-    UnhandledResponse,
+    # CloseResponse,
+    # ErrorResponse,
+    # UnhandledResponse,
 )
 
 # prerecorded
@@ -76,15 +85,42 @@ from .clients import (
     SyncAnalyzeResponse,
 )
 
-# speak client classes/input
-from .clients import SpeakClient, AsyncSpeakClient
-from .clients import SpeakStreamClient, AsyncSpeakStreamClient
-from .clients import SpeakOptions
-from .clients import SpeakStreamSource, SpeakSource
-from .clients import SpeakStreamEvents
+# speak
+from .clients import (
+    SpeakOptions,
+    # FileSource,
+    SpeakWebSocketSource,
+    SpeakSource,
+)
+from .clients import SpeakWebSocketEvents
 
-# speak client responses
-from .clients import SpeakResponse
+## speak REST
+from .clients import (
+    SpeakClient,  # backward compat
+    SpeakRESTClient,
+    AsyncSpeakRESTClient,
+)
+
+from .clients import (
+    SpeakResponse,  # backward compat
+    SpeakRESTResponse,
+)
+
+## speak WebSocket
+from .clients import (
+    SpeakWebSocketClient,
+    AsyncSpeakWebSocketClient,
+)
+from .clients import (
+    SpeakWebSocketResponse,
+    # OpenResponse,
+    # MetadataResponse,
+    FlushedResponse,
+    # CloseResponse,
+    # UnhandledResponse,
+    WarningResponse,
+    # ErrorResponse,
+)
 
 # manage client classes/input
 from .clients import ManageClient, AsyncManageClient
@@ -228,28 +264,21 @@ class DeepgramClient:
         """
         Returns a SpeakClient instance for interacting with Deepgram's speak services.
         """
-        return self.Version(self._config, "speak")
+        return Speak(self._config)
 
     @property
+    @deprecation.deprecated(
+        deprecated_in="3.4.0",
+        removed_in="4.0.0",
+        current_version=__version__,
+        details="deepgram.asyncspeak is deprecated. Use deepgram.speak.asyncrest instead.",
+    )
     def asyncspeak(self):
         """
-        Returns an AsyncSpeakClient instance for interacting with Deepgram's speak services.
+        DEPRECATED: deepgram.asyncspeak is deprecated. Use deepgram.speak.asyncrest instead.
         """
         return self.Version(self._config, "asyncspeak")
 
-    @property
-    def speakstream(self):
-        """
-        Returns a SpeakStreamClient instance for interacting with Deepgram's speak services.
-        """
-        return self.Version(self._config, "speak-stream")
-
-    @property
-    def asyncspeakstream(self):
-        """
-        Returns an AsyncSpeakStreamClient instance for interacting with Deepgram's speak services.
-        """
-        return self.Version(self._config, "asyncspeak-stream")
     @property
     def manage(self):
         """
@@ -264,11 +293,16 @@ class DeepgramClient:
         """
         return self.Version(self._config, "asyncmanage")
 
-    # for backwards compatibility
     @property
+    @deprecation.deprecated(
+        deprecated_in="3.4.0",
+        removed_in="4.0.0",
+        current_version=__version__,
+        details="deepgram.onprem is deprecated. Use deepgram.speak.selfhosted instead.",
+    )
     def onprem(self):
         """
-        Returns an SelfHostedClient instance for interacting with Deepgram's on-premises API.
+        DEPRECATED: deepgram.onprem is deprecated. Use deepgram.speak.selfhosted instead.
         """
         return self.Version(self._config, "selfhosted")
 
@@ -279,11 +313,16 @@ class DeepgramClient:
         """
         return self.Version(self._config, "selfhosted")
 
-    # for backwards compatibility
     @property
+    @deprecation.deprecated(
+        deprecated_in="3.4.0",
+        removed_in="4.0.0",
+        current_version=__version__,
+        details="deepgram.asynconprem is deprecated. Use deepgram.speak.asyncselfhosted instead.",
+    )
     def asynconprem(self):
         """
-        Returns an AsyncSelfHostedClient instance for interacting with Deepgram's on-premises API.
+        DEPRECATED: deepgram.asynconprem is deprecated. Use deepgram.speak.asyncselfhosted instead.
         """
         return self.Version(self._config, "asyncselfhosted")
 
@@ -348,22 +387,8 @@ class DeepgramClient:
                     parent = "manage"
                     filename = "async_client"
                     classname = "AsyncManageClient"
-                case "speak":
-                    parent = "speak"
-                    filename = "client"
-                    classname = "SpeakClient"
                 case "asyncspeak":
-                    parent = "speak"
-                    filename = "async_client"
-                    classname = "AsyncSpeakClient"
-                case "speak-stream":
-                    parent = "speak"
-                    filename = "client_stream"
-                    classname = "SpeakStreamClient"
-                case "asyncspeak-stream":
-                    parent = "speak"
-                    filename = "async_client_stream"
-                    classname = "AsyncSpeakStreamClient"
+                    return AsyncSpeakRESTClient(self._config)
                 case "selfhosted":
                     parent = "selfhosted"
                     filename = "client"
@@ -400,4 +425,5 @@ class DeepgramClient:
             self._logger.notice("Version.v succeeded")
             self._logger.debug("Version.v LEAVE")
             return my_class_instance
+
         # pylint: enable-msg=too-many-statements

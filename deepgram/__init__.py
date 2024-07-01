@@ -38,20 +38,27 @@ from .client import (
     UrlSource,
     Sentiment,
 )
+from .client import (
+    OpenResponse,
+    MetadataResponse,
+    CloseResponse,
+    UnhandledResponse,
+    ErrorResponse,
+)
 
 # live
 from .client import LiveTranscriptionEvents
 from .client import LiveClient, AsyncLiveClient
 from .client import LiveOptions
 from .client import (
-    OpenResponse,
+    # OpenResponse,
     LiveResultResponse,
-    MetadataResponse,
+    # MetadataResponse,
     SpeechStartedResponse,
     UtteranceEndResponse,
-    CloseResponse,
-    UnhandledResponse,
-    ErrorResponse,
+    # CloseResponse,
+    # UnhandledResponse,
+    # ErrorResponse,
 )
 
 # prerecorded
@@ -82,11 +89,41 @@ from .client import (
 )
 
 # speak
-from .client import SpeakClient, AsyncSpeakClient
-from .client import SpeakStreamClient, AsyncSpeakStreamClient
-from .client import SpeakOptions, SpeakStreamSource, SpeakSource
-from .client import SpeakResponse
-from .client import SpeakStreamEvents
+from .client import (
+    SpeakOptions,
+    # FileSource,
+    SpeakWebSocketSource,
+    SpeakSource,
+)
+from .client import SpeakWebSocketEvents
+
+## speak REST
+from .client import (
+    SpeakClient,  # backward compat
+    SpeakRESTClient,
+    AsyncSpeakRESTClient,
+)
+
+from .client import (
+    SpeakResponse,  # backward compat
+    SpeakRESTResponse,
+)
+
+## speak WebSocket
+from .client import (
+    SpeakWebSocketClient,
+    AsyncSpeakWebSocketClient,
+)
+from .client import (
+    SpeakWebSocketResponse,
+    # OpenResponse,
+    # MetadataResponse,
+    FlushedResponse,
+    # CloseResponse,
+    # UnhandledResponse,
+    WarningResponse,
+    # ErrorResponse,
+)
 
 # manage
 from .client import ManageClient, AsyncManageClient

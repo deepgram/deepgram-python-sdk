@@ -2,16 +2,31 @@
 # Use of this source code is governed by a MIT license that can be found in the LICENSE file.
 # SPDX-License-Identifier: MIT
 
-from .client import SpeakClient
-from .client import SpeakStreamClient, AsyncSpeakStreamClient
-from .client import AsyncSpeakClient
-from .client import SpeakOptions
-from .client import SpeakResponse
+from .enums import SpeakWebSocketEvents
+from ...options import DeepgramClientOptions, ClientOptionsFromEnv
+
 from .client import (
+    SpeakClient,  # backward compat
+    SpeakRESTClient,
+    AsyncSpeakRESTClient,
+    SpeakWebSocketClient,
+    AsyncSpeakWebSocketClient,
+)
+from .client import (
+    SpeakOptions,
     FileSource,
-    SpeakStreamSource,
+    SpeakWebSocketSource,
     SpeakSource,
 )
-
-from .enums import SpeakStreamEvents
-from ...options import DeepgramClientOptions, ClientOptionsFromEnv
+from .client import (
+    SpeakResponse,  # backward compat
+    SpeakRESTResponse,
+    SpeakWebSocketResponse,
+    OpenResponse,
+    MetadataResponse,
+    FlushedResponse,
+    CloseResponse,
+    UnhandledResponse,
+    WarningResponse,
+    ErrorResponse,
+)
