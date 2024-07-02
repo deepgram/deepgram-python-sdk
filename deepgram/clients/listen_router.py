@@ -4,7 +4,15 @@
 
 from importlib import import_module
 import logging
+import deprecation  # type: ignore
 
+from .. import __version__
+from .listen.v1 import (
+    PreRecordedClient,
+    AsyncPreRecordedClient,
+    LiveClient,
+    AsyncLiveClient,
+)
 from ..utils import verboselogs
 from ..options import DeepgramClientOptions
 from .errors import DeepgramModuleError
@@ -41,32 +49,84 @@ class Listen:
         self._config = config
 
     @property
+    @deprecation.deprecated(
+        deprecated_in="3.4.0",
+        removed_in="4.0.0",
+        current_version=__version__,
+        details="deepgram.listen.prerecorded is deprecated. Use deepgram.listen.rest instead.",
+    )
     def prerecorded(self):
         """
-        Returns a PreRecordedClient instance for interacting with Deepgram's prerecorded transcription services.
+        DEPRECATED: deepgram.listen.prerecorded is deprecated. Use deepgram.listen.rest instead.
         """
         return self.Version(self._config, "prerecorded")
 
     @property
+    @deprecation.deprecated(
+        deprecated_in="3.4.0",
+        removed_in="4.0.0",
+        current_version=__version__,
+        details="deepgram.listen.asyncprerecorded is deprecated. Use deepgram.listen.asyncrest instead.",
+    )
     def asyncprerecorded(self):
         """
-        Returns an AsyncPreRecordedClient instance for interacting with Deepgram's prerecorded transcription services.
+        DEPRECATED: deepgram.listen.asyncprerecorded is deprecated. Use deepgram.listen.asyncrest instead.
         """
         return self.Version(self._config, "asyncprerecorded")
 
     @property
+    @deprecation.deprecated(
+        deprecated_in="3.4.0",
+        removed_in="4.0.0",
+        current_version=__version__,
+        details="deepgram.listen.live is deprecated. Use deepgram.listen.websocket instead.",
+    )
     def live(self):
         """
-        Returns a LiveClient instance for interacting with Deepgram's transcription services.
+        DEPRECATED: deepgram.listen.live is deprecated. Use deepgram.listen.websocket instead.
         """
         return self.Version(self._config, "live")
 
     @property
+    @deprecation.deprecated(
+        deprecated_in="3.4.0",
+        removed_in="4.0.0",
+        current_version=__version__,
+        details="deepgram.listen.asynclive is deprecated. Use deepgram.listen.asyncwebsocket instead.",
+    )
     def asynclive(self):
         """
-        Returns an AsyncLiveClient instance for interacting with Deepgram's transcription services.
+        DEPRECATED: deepgram.listen.asynclive is deprecated. Use deepgram.listen.asyncwebsocket instead.
         """
         return self.Version(self._config, "asynclive")
+
+    @property
+    def rest(self):
+        """
+        Returns a ListenRESTClient instance for interacting with Deepgram's prerecorded transcription services.
+        """
+        return self.Version(self._config, "rest")
+
+    @property
+    def asyncrest(self):
+        """
+        Returns an AsyncListenRESTClient instance for interacting with Deepgram's prerecorded transcription services.
+        """
+        return self.Version(self._config, "asyncrest")
+
+    @property
+    def websocket(self):
+        """
+        Returns a ListenWebSocketClient instance for interacting with Deepgram's transcription services.
+        """
+        return self.Version(self._config, "websocket")
+
+    @property
+    def asyncwebsocket(self):
+        """
+        Returns an AsyncListenWebSocketClient instance for interacting with Deepgram's transcription services.
+        """
+        return self.Version(self._config, "asyncwebsocket")
 
     # INTERNAL CLASSES
     class Version:
@@ -108,33 +168,41 @@ class Listen:
                 self._logger.debug("Version.v LEAVE")
                 raise DeepgramModuleError("Invalid module version")
 
-            parent = ""
+            protocol = ""
             file_name = ""
             class_name = ""
             match self._parent:
                 case "live":
-                    parent = "live"
-                    file_name = "client"
-                    class_name = "LiveClient"
+                    return LiveClient(self._config)
                 case "asynclive":
-                    parent = "live"
-                    file_name = "async_client"
-                    class_name = "AsyncLiveClient"
+                    return AsyncLiveClient(self._config)
                 case "prerecorded":
-                    parent = "prerecorded"
-                    file_name = "client"
-                    class_name = "PreRecordedClient"
+                    return PreRecordedClient(self._config)
                 case "asyncprerecorded":
-                    parent = "prerecorded"
+                    return AsyncPreRecordedClient(self._config)
+                case "websocket":
+                    protocol = "websocket"
+                    file_name = "client"
+                    class_name = "ListenWebSocketClient"
+                case "asyncwebsocket":
+                    protocol = "websocket"
                     file_name = "async_client"
-                    class_name = "AsyncPreRecordedClient"
+                    class_name = "AsyncListenWebSocketClient"
+                case "rest":
+                    protocol = "rest"
+                    file_name = "client"
+                    class_name = "ListenRESTClient"
+                case "asyncrest":
+                    protocol = "rest"
+                    file_name = "async_client"
+                    class_name = "AsyncListenRESTClient"
                 case _:
                     self._logger.error("parent unknown: %s", self._parent)
                     self._logger.debug("Version.v LEAVE")
                     raise DeepgramModuleError("Invalid parent type")
 
             # create class path
-            path = f"deepgram.clients.{parent}.v{version}.{file_name}"
+            path = f"deepgram.clients.listen.v{version}.{protocol}.{file_name}"
             self._logger.info("path: %s", path)
             self._logger.info("class_name: %s", class_name)
 

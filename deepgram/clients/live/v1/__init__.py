@@ -2,11 +2,13 @@
 # Use of this source code is governed by a MIT license that can be found in the LICENSE file.
 # SPDX-License-Identifier: MIT
 
+from .enums import LiveTranscriptionEvents
+from .errors import DeepgramError, DeepgramTypeError, DeepgramWebsocketError
+
 from .client import LiveClient
-from .async_client import AsyncLiveClient
-from .options import LiveOptions
-from ....options import DeepgramClientOptions, ClientOptionsFromEnv
-from .response import (
+from .client import AsyncLiveClient
+from .client import LiveOptions
+from .client import (
     OpenResponse,
     LiveResultResponse,
     MetadataResponse,

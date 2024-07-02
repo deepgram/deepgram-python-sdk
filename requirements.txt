@@ -1,13 +1,14 @@
 # pip install -r requirements.txt
 
 # standard libs
-websockets
-httpx
-dataclasses-json
-dataclasses
-typing_extensions
-aenum
+websockets==12.*
+httpx==0.*
+dataclasses-json==0.*
+dataclasses==0.*
+typing_extensions==4.*
+aenum==3.*
+deprecation==2.*
 
 # Async functionality, likely to be already installed
-aiohttp
-aiofiles
+aiohttp==3.*
+aiofiles==23.*

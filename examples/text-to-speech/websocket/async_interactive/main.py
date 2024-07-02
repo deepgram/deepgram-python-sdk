@@ -5,7 +5,7 @@ from deepgram.utils import verboselogs
 from deepgram import (
     DeepgramClient,
     DeepgramClientOptions,
-    SpeakStreamEvents,
+    SpeakWebSocketEvents,
     SpeakOptions,
 )
 
@@ -14,16 +14,19 @@ load_dotenv()
 TTS_TEXT = "Hello, this is a text to speech example using Deepgram."
 AUDIO_FILE = "output.mp3"
 
+
 async def main():
     try:
         # example of setting up a client config. logging values: WARNING, VERBOSE, DEBUG, SPAM
-        # config: DeepgramClientOptions = DeepgramClientOptions(verbose=verboselogs.DEBUG)
-        # deepgram: DeepgramClient = DeepgramClient("", config)
+        config: DeepgramClientOptions = DeepgramClientOptions(
+            url="api.beta.deepgram.com", verbose=verboselogs.DEBUG
+        )
+        deepgram: DeepgramClient = DeepgramClient("", config)
         # otherwise, use default config
-        deepgram: DeepgramClient = DeepgramClient()
+        # deepgram: DeepgramClient = DeepgramClient()
 
         # Create a websocket connection to Deepgram
-        dg_connection = deepgram.asyncspeakstream.v("1")
+        dg_connection = deepgram.speak.asyncwebsocket.v("1")
 
         async def on_open(client, open_response, **kwargs):
             print(f"\n\nOpen: {open_response}\n\n")
@@ -44,7 +47,7 @@ async def main():
 
         async def on_warning(client, warning, **kwargs):
             print(f"\n\nWarning: {warning}\n\n")
-        
+
         async def on_error(client, error, **kwargs):
             print(f"\n\nError: {error}\n\n")
 
@@ -61,14 +64,14 @@ async def main():
             finally:
                 print("File operation completed.")
 
-        dg_connection.on(SpeakStreamEvents.Open, on_open)
-        dg_connection.on(SpeakStreamEvents.AudioData, on_binary_data)
-        dg_connection.on(SpeakStreamEvents.Metadata, on_metadata)
-        dg_connection.on(SpeakStreamEvents.Flush, on_flush)
-        dg_connection.on(SpeakStreamEvents.Close, on_close)
-        dg_connection.on(SpeakStreamEvents.Warning, on_warning)
-        dg_connection.on(SpeakStreamEvents.Error, on_error)
-        dg_connection.on(SpeakStreamEvents.Unhandled, on_unhandled)
+        dg_connection.on(SpeakWebSocketEvents.Open, on_open)
+        dg_connection.on(SpeakWebSocketEvents.AudioData, on_binary_data)
+        dg_connection.on(SpeakWebSocketEvents.Metadata, on_metadata)
+        dg_connection.on(SpeakWebSocketEvents.Flush, on_flush)
+        dg_connection.on(SpeakWebSocketEvents.Close, on_close)
+        dg_connection.on(SpeakWebSocketEvents.Warning, on_warning)
+        dg_connection.on(SpeakWebSocketEvents.Error, on_error)
+        dg_connection.on(SpeakWebSocketEvents.Unhandled, on_unhandled)
 
         async def send_tts_text(client):
             await client.send(TTS_TEXT)
@@ -81,7 +84,9 @@ async def main():
             return
 
         # Wait for user input to finish
-        await asyncio.get_event_loop().run_in_executor(None, input, "\n\nPress Enter to stop...\n\n")
+        await asyncio.get_event_loop().run_in_executor(
+            None, input, "\n\nPress Enter to stop...\n\n"
+        )
         await dg_connection.finish()
 
         print("Finished")
@@ -94,6 +99,7 @@ async def main():
         print(f"File operation failed: {e}")
     except Exception as e:
         print(f"An unexpected error occurred: {e}")
+
 
 if __name__ == "__main__":
     asyncio.run(main())

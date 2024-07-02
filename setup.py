@@ -34,6 +34,7 @@ setup(
         "aiohttp>=3.9.1",
         "aiofiles>=23.2.1",
         "aenum>=3.1.0",
+        "deprecation>=2.1.0",
     ],
     keywords=["deepgram", "deepgram speech-to-text"],
     classifiers=[
