@@ -33,7 +33,7 @@ def main():
 
         deepgram: DeepgramClient = DeepgramClient("", config)
 
-        # STEP 2 Call the transcribe_file method on the prerecorded class
+        # STEP 2 Call the transcribe_file method on the rest class
         with open(AUDIO_FILE, "rb") as file:
             buffer_data = file.read()
 
@@ -51,11 +51,11 @@ def main():
             utterances=True,
         )
 
-        response = deepgram.listen.prerecorded.v("1").transcribe_file_callback(
+        response = deepgram.listen.rest.v("1").transcribe_file_callback(
             payload, CALL_BACK_URL, options=options
         )
         # For URL hosted audio files, comment out the above and uncomment the below
-        # response = deepgram.listen.prerecorded.v("1").transcribe_url_callback(
+        # response = deepgram.listen.rest.v("1").transcribe_url_callback(
         #     payload, CALL_BACK_URL, options=options
         # )
         print(response.to_json(indent=4))

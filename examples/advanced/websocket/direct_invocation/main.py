@@ -9,7 +9,7 @@ from deepgram.utils import verboselogs
 import threading
 
 from deepgram import (
-    LiveClient,
+    ListenWebSocketClient,
     ClientOptionsFromEnv,
     LiveTranscriptionEvents,
     LiveOptions,
@@ -23,13 +23,15 @@ URL = "http://stream.live.vc.bbcmedia.co.uk/bbc_world_service"
 
 def main():
     try:
-        # STEP 1 Create a Deepgram LiveClient using a specific config
+        # STEP 1 Create a Deepgram ListenWebSocketClient using a specific config
         # config: ClientOptionsFromEnv = ClientOptionsFromEnv(
         #     verbose=verboselogs.DEBUG, options={"keepalive": "true"}
         # )
-        # liveClient: LiveClient = LiveClient("", config)
+        # liveClient: ListenWebSocketClient = ListenWebSocketClient("", config)
         # OR just use the default config
-        liveClient: LiveClient = LiveClient(ClientOptionsFromEnv())
+        liveClient: ListenWebSocketClient = ListenWebSocketClient(
+            ClientOptionsFromEnv()
+        )
 
         def on_message(self, result, **kwargs):
             sentence = result.channel.alternatives[0].transcript

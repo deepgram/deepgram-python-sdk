@@ -10,7 +10,7 @@ from time import sleep
 from deepgram import (
     ClientOptionsFromEnv,
     LiveTranscriptionEvents,
-    LiveClient,
+    ListenWebSocketClient,
     LiveOptions,
     Microphone,
     LiveResultResponse,
@@ -24,8 +24,8 @@ load_dotenv()
 
 
 # more complex example
-class MyLiveClient(LiveClient):
-    def __init__(self, config: LiveClient):
+class MyLiveClient(ListenWebSocketClient):
+    def __init__(self, config: ListenWebSocketClient):
         super().__init__(config)
         super().on(LiveTranscriptionEvents.Transcript, self.on_message)
         super().on(LiveTranscriptionEvents.Metadata, self.on_metadata)

@@ -43,10 +43,10 @@ async def main():
         # otherwise, use default config
         # deepgram: DeepgramClient = DeepgramClient()
 
-        dg_connection = deepgram.listen.asynclive.v("1")
+        dg_connection = deepgram.listen.asyncwebsocket.v("1")
 
         async def on_open(self, open, **kwargs):
-            print(f"Connection Open")
+            print("Connection Open")
 
         async def on_message(self, result, **kwargs):
             global is_finals
@@ -75,10 +75,10 @@ async def main():
             print(f"Metadata: {metadata}")
 
         async def on_speech_started(self, speech_started, **kwargs):
-            print(f"Speech Started")
+            print("Speech Started")
 
         async def on_utterance_end(self, utterance_end, **kwargs):
-            print(f"Utterance End")
+            print("Utterance End")
             global is_finals
             if len(is_finals) > 0:
                 utterance = " ".join(is_finals)
@@ -86,7 +86,7 @@ async def main():
                 is_finals = []
 
         async def on_close(self, close, **kwargs):
-            print(f"Connection Closed")
+            print("Connection Closed")
 
         async def on_error(self, error, **kwargs):
             print(f"Handled Error: {error}")
