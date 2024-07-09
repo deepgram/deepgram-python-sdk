@@ -304,6 +304,9 @@ class Word(DataClassJsonMixin):  # pylint: disable=too-many-instance-attributes
     sentiment_score: Optional[float] = field(
         default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
+    language: Optional[str] = field(
+        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
+    )
 
     def __getitem__(self, key):
         _dict = self.to_dict()
@@ -537,7 +540,7 @@ class Entity(DataClassJsonMixin):
 
 
 @dataclass
-class Alternative(DataClassJsonMixin):
+class Alternative(DataClassJsonMixin):  # pylint: disable=too-many-instance-attributes
     """
     The alternative information for the response.
     """
@@ -555,6 +558,9 @@ class Alternative(DataClassJsonMixin):
         default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
     translations: Optional[List[Translation]] = field(
+        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
+    )
+    languages: Optional[List[str]] = field(
         default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
 
