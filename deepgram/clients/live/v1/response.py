@@ -45,6 +45,9 @@ class Word(DataClassJsonMixin):
     speaker: Optional[int] = field(
         default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
+    language: Optional[str] = field(
+        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
+    )
 
     def __getitem__(self, key):
         _dict = self.to_dict()
@@ -66,6 +69,9 @@ class Alternative(DataClassJsonMixin):
     transcript: str = ""
     confidence: float = 0
     words: List[Word] = field(default_factory=list)
+    languages: Optional[List[str]] = field(
+        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
+    )
 
     def __getitem__(self, key):
         _dict = self.to_dict()
