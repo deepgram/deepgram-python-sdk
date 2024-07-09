@@ -24,9 +24,7 @@ AUDIO_FILE = "output.mp3"
 def main():
     try:
         # example of setting up a client config. logging values: WARNING, VERBOSE, DEBUG, SPAM
-        config: DeepgramClientOptions = DeepgramClientOptions(
-            url="api.beta.deepgram.com", verbose=verboselogs.DEBUG
-        )
+        config: DeepgramClientOptions = DeepgramClientOptions(verbose=verboselogs.SPAM)
         deepgram: DeepgramClient = DeepgramClient("", config)
         # otherwise, use default config
         # deepgram: DeepgramClient = DeepgramClient()

@@ -173,9 +173,12 @@ class PrerecordedOptions(
         return True
 
 
+ListenRESTOptions = PrerecordedOptions
+
 # PrerecordedSource for backwards compatibility
 PreRecordedStreamSource = StreamSource
 
 # UrlSource
 # FileSource
 PrerecordedSource = Union[UrlSource, FileSource]
+ListenRestSource = PrerecordedSource

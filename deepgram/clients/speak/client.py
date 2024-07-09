@@ -10,8 +10,10 @@ from .v1 import (
 )
 from .v1 import (
     SpeakOptions as SpeakOptionsLatest,
+    SpeakRESTOptions as SpeakRESTOptionsLatest,
+    SpeakWebSocketOptions as SpeakWebSocketOptionsLatest,
     FileSource as FileSourceLatest,
-    SpeakWebSocketSource as SpeakWebSocketSourceLatest,
+    SpeakRestSource as SpeakRestSourceLatest,
     SpeakSource as SpeakSourceLatest,
 )
 from .v1 import (
@@ -32,7 +34,9 @@ from .v1 import (
 
 # input
 SpeakOptions = SpeakOptionsLatest
-SpeakWebSocketSource = SpeakWebSocketSourceLatest
+SpeakRESTOptions = SpeakRESTOptionsLatest
+SpeakWebSocketOptions = SpeakWebSocketOptionsLatest
+SpeakRestSource = SpeakRestSourceLatest
 FileSource = FileSourceLatest
 SpeakSource = SpeakSourceLatest
 

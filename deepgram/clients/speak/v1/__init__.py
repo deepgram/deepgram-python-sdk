@@ -2,7 +2,18 @@
 # Use of this source code is governed by a MIT license that can be found in the LICENSE file.
 # SPDX-License-Identifier: MIT
 
-from .options import SpeakOptions, FileSource, SpeakWebSocketSource, SpeakSource
+from .options import (
+    SpeakOptions,
+)
+from .rest import (
+    SpeakRESTOptions,
+    SpeakRestSource,
+    SpeakSource,
+    FileSource,
+)
+from .websocket import (
+    SpeakWebSocketOptions,
+)
 from ....options import DeepgramClientOptions, ClientOptionsFromEnv
 
 # rest

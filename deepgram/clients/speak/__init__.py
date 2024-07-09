@@ -14,8 +14,10 @@ from .client import (
 )
 from .client import (
     SpeakOptions,
+    SpeakRESTOptions,
+    SpeakWebSocketOptions,
     FileSource,
-    SpeakWebSocketSource,
+    SpeakRestSource,
     SpeakSource,
 )
 from .client import (

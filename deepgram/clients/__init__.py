@@ -36,14 +36,18 @@ from .live import (
     AsyncLiveClient,
 )
 
-# rest
+# speech-to-text rest
+from .listen import ListenRESTClient, AsyncListenRESTClient
+
 ## input
 from .listen import (
+    ListenRESTOptions,
     PrerecordedOptions,
     PreRecordedStreamSource,
     # UrlSource,
     # FileSource,
     PrerecordedSource,
+    ListenRestSource,
 )
 
 ## output
@@ -54,9 +58,12 @@ from .listen import (
 )
 
 
-# websocket
+# speech-to-text websocket
+from .listen import ListenWebSocketClient, AsyncListenWebSocketClient
+
 ## input
 from .listen import (
+    ListenWebSocketOptions,
     LiveOptions,
 )
 
@@ -93,18 +100,20 @@ from .analyze import (
     SyncAnalyzeResponse,
 )
 
-# speak
+# text-to-speech
 ## common
 from .speak import (
     SpeakOptions,
+    SpeakRESTOptions,
+    SpeakWebSocketOptions,
     # FileSource,
-    SpeakWebSocketSource,
+    SpeakRestSource,
     SpeakSource,
 )
 
 from .speak import SpeakWebSocketEvents
 
-## speak REST
+## text-to-speech REST
 from .speak import (
     SpeakClient,  # backward compat
     SpeakRESTClient,
@@ -116,7 +125,7 @@ from .speak import (
     SpeakRESTResponse,
 )
 
-## speak WebSocket
+## text-to-speech WebSocket
 from .speak import (
     SpeakWebSocketClient,
     AsyncSpeakWebSocketClient,

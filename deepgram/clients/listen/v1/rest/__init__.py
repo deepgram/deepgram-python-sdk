@@ -5,11 +5,13 @@
 from .client import ListenRESTClient
 from .async_client import AsyncListenRESTClient
 from .options import (
+    ListenRESTOptions,
     PrerecordedOptions,
     FileSource,
     UrlSource,
     PreRecordedStreamSource,
     PrerecordedSource,
+    ListenRestSource,
 )
 from .response import (
     AsyncPrerecordedResponse,

@@ -14,6 +14,7 @@ from ...errors import DeepgramError, DeepgramTypeError
 
 from .helpers import is_buffer_source, is_readstream_source, is_url_source
 from .options import (
+    ListenRESTOptions,
     PrerecordedOptions,
     FileSource,
     UrlSource,
@@ -40,7 +41,7 @@ class ListenRESTClient(AbstractSyncRestClient):
     def transcribe_url(
         self,
         source: UrlSource,
-        options: Optional[Union[Dict, PrerecordedOptions]] = None,
+        options: Optional[Union[Dict, ListenRESTOptions]] = None,
         addons: Optional[Dict] = None,
         headers: Optional[Dict] = None,
         timeout: Optional[httpx.Timeout] = None,
@@ -51,7 +52,7 @@ class ListenRESTClient(AbstractSyncRestClient):
 
         Args:
             source (UrlSource): The URL source of the audio to transcribe.
-            options (PrerecordedOptions): Additional options for the transcription (default is None).
+            options (ListenRESTOptions): Additional options for the transcription (default is None).
             endpoint (str): The API endpoint for the transcription (default is "v1/listen").
 
         Returns:
@@ -66,7 +67,7 @@ class ListenRESTClient(AbstractSyncRestClient):
             isinstance(options, dict)
             and "callback" in options
             and options["callback"] is not None
-        ) or (isinstance(options, PrerecordedOptions) and options.callback is not None):
+        ) or (isinstance(options, ListenRESTOptions) and options.callback is not None):
             self._logger.debug("ListenRESTClient.transcribe_url LEAVE")
             return self.transcribe_url_callback(
                 source,
@@ -86,15 +87,15 @@ class ListenRESTClient(AbstractSyncRestClient):
             self._logger.debug("ListenRESTClient.transcribe_url LEAVE")
             raise DeepgramTypeError("Unknown transcription source type")
 
-        if isinstance(options, PrerecordedOptions) and not options.check():
+        if isinstance(options, ListenRESTOptions) and not options.check():
             self._logger.error("options.check failed")
             self._logger.debug("ListenRESTClient.transcribe_url LEAVE")
             raise DeepgramError("Fatal transcription options error")
 
         self._logger.info("url: %s", url)
         self._logger.info("source: %s", source)
-        if isinstance(options, PrerecordedOptions):
-            self._logger.info("PrerecordedOptions switching class -> dict")
+        if isinstance(options, ListenRESTOptions):
+            self._logger.info("ListenRESTOptions switching class -> dict")
             options = options.to_dict()
         self._logger.info("options: %s", options)
         self._logger.info("addons: %s", addons)
@@ -118,7 +119,7 @@ class ListenRESTClient(AbstractSyncRestClient):
         self,
         source: UrlSource,
         callback: str,
-        options: Optional[Union[Dict, PrerecordedOptions]] = None,
+        options: Optional[Union[Dict, ListenRESTOptions]] = None,
         addons: Optional[Dict] = None,
         headers: Optional[Dict] = None,
         timeout: Optional[httpx.Timeout] = None,
@@ -130,7 +131,7 @@ class ListenRESTClient(AbstractSyncRestClient):
         Args:
             source (UrlSource): The URL source of the audio to transcribe.
             callback (str): The callback URL where the transcription results will be sent.
-            options (PrerecordedOptions): Additional options for the transcription (default is None).
+            options (ListenRESTOptions): Additional options for the transcription (default is None).
             endpoint (str): The API endpoint for the transcription (default is "v1/listen").
 
         Returns:
@@ -144,7 +145,7 @@ class ListenRESTClient(AbstractSyncRestClient):
         url = f"{self._config.url}/{endpoint}"
         if options is None:
             options = {}
-        if isinstance(options, PrerecordedOptions):
+        if isinstance(options, ListenRESTOptions):
             options.callback = callback
         else:
             options["callback"] = callback
@@ -155,15 +156,15 @@ class ListenRESTClient(AbstractSyncRestClient):
             self._logger.debug("ListenRESTClient.transcribe_url_callback LEAVE")
             raise DeepgramTypeError("Unknown transcription source type")
 
-        if isinstance(options, PrerecordedOptions) and not options.check():
+        if isinstance(options, ListenRESTOptions) and not options.check():
             self._logger.error("options.check failed")
             self._logger.debug("ListenRESTClient.transcribe_url_callback LEAVE")
             raise DeepgramError("Fatal transcription options error")
 
         self._logger.info("url: %s", url)
         self._logger.info("source: %s", source)
-        if isinstance(options, PrerecordedOptions):
-            self._logger.info("PrerecordedOptions switching class -> dict")
+        if isinstance(options, ListenRESTOptions):
+            self._logger.info("ListenRESTOptions switching class -> dict")
             options = options.to_dict()
         self._logger.info("options: %s", options)
         self._logger.info("addons: %s", addons)
@@ -186,7 +187,7 @@ class ListenRESTClient(AbstractSyncRestClient):
     def transcribe_file(
         self,
         source: FileSource,
-        options: Optional[Union[Dict, PrerecordedOptions]] = None,
+        options: Optional[Union[Dict, ListenRESTOptions]] = None,
         addons: Optional[Dict] = None,
         headers: Optional[Dict] = None,
         timeout: Optional[httpx.Timeout] = None,
@@ -197,7 +198,7 @@ class ListenRESTClient(AbstractSyncRestClient):
 
         Args:
             source (FileSource): The local file source of the audio to transcribe.
-            options (PrerecordedOptions): Additional options for the transcription (default is None).
+            options (ListenRESTOptions): Additional options for the transcription (default is None).
             endpoint (str): The API endpoint for the transcription (default is "v1/listen").
 
         Returns:
@@ -212,7 +213,7 @@ class ListenRESTClient(AbstractSyncRestClient):
             isinstance(options, dict)
             and "callback" in options
             and options["callback"] is not None
-        ) or (isinstance(options, PrerecordedOptions) and options.callback is not None):
+        ) or (isinstance(options, ListenRESTOptions) and options.callback is not None):
             self._logger.debug("ListenRESTClient.transcribe_file LEAVE")
             return self.transcribe_file_callback(
                 source,
@@ -235,14 +236,14 @@ class ListenRESTClient(AbstractSyncRestClient):
             self._logger.debug("ListenRESTClient.transcribe_file LEAVE")
             raise DeepgramTypeError("Unknown transcription source type")
 
-        if isinstance(options, PrerecordedOptions) and not options.check():
+        if isinstance(options, ListenRESTOptions) and not options.check():
             self._logger.error("options.check failed")
             self._logger.debug("ListenRESTClient.transcribe_file LEAVE")
             raise DeepgramError("Fatal transcription options error")
 
         self._logger.info("url: %s", url)
-        if isinstance(options, PrerecordedOptions):
-            self._logger.info("PrerecordedOptions switching class -> dict")
+        if isinstance(options, ListenRESTOptions):
+            self._logger.info("ListenRESTOptions switching class -> dict")
             options = options.to_dict()
         self._logger.info("options: %s", options)
         self._logger.info("addons: %s", addons)
@@ -266,7 +267,7 @@ class ListenRESTClient(AbstractSyncRestClient):
         self,
         source: FileSource,
         callback: str,
-        options: Optional[Union[Dict, PrerecordedOptions]] = None,
+        options: Optional[Union[Dict, ListenRESTOptions]] = None,
         addons: Optional[Dict] = None,
         headers: Optional[Dict] = None,
         timeout: Optional[httpx.Timeout] = None,
@@ -278,7 +279,7 @@ class ListenRESTClient(AbstractSyncRestClient):
         Args:
             source (FileSource): The local file source of the audio to transcribe.
             callback (str): The callback URL where the transcription results will be sent.
-            options (PrerecordedOptions): Additional options for the transcription (default is None).
+            options (ListenRESTOptions): Additional options for the transcription (default is None).
             endpoint (str): The API endpoint for the transcription (default is "v1/listen").
 
         Returns:
@@ -292,7 +293,7 @@ class ListenRESTClient(AbstractSyncRestClient):
         url = f"{self._config.url}/{endpoint}"
         if options is None:
             options = {}
-        if isinstance(options, PrerecordedOptions):
+        if isinstance(options, ListenRESTOptions):
             options.callback = callback
         else:
             options["callback"] = callback
@@ -305,14 +306,14 @@ class ListenRESTClient(AbstractSyncRestClient):
             self._logger.debug("ListenRESTClient.transcribe_file_callback LEAVE")
             raise DeepgramTypeError("Unknown transcription source type")
 
-        if isinstance(options, PrerecordedOptions) and not options.check():
+        if isinstance(options, ListenRESTOptions) and not options.check():
             self._logger.error("options.check failed")
             self._logger.debug("ListenRESTClient.transcribe_file_callback LEAVE")
             raise DeepgramError("Fatal transcription options error")
 
         self._logger.info("url: %s", url)
-        if isinstance(options, PrerecordedOptions):
-            self._logger.info("PrerecordedOptions switching class -> dict")
+        if isinstance(options, ListenRESTOptions):
+            self._logger.info("ListenRESTOptions switching class -> dict")
             options = options.to_dict()
         self._logger.info("options: %s", options)
         self._logger.info("addons: %s", addons)

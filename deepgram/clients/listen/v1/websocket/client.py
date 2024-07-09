@@ -27,7 +27,7 @@ from .response import (
     ErrorResponse,
     UnhandledResponse,
 )
-from .options import LiveOptions
+from .options import LiveOptions, ListenWebSocketOptions
 
 ONE_SECOND = 1
 HALF_SECOND = 0.5
@@ -99,7 +99,7 @@ class ListenWebSocketClient:  # pylint: disable=too-many-instance-attributes
     # pylint: disable=too-many-statements,too-many-branches
     def start(
         self,
-        options: Optional[Union[LiveOptions, Dict]] = None,
+        options: Optional[Union[ListenWebSocketOptions, Dict]] = None,
         addons: Optional[Dict] = None,
         headers: Optional[Dict] = None,
         members: Optional[Dict] = None,
@@ -115,7 +115,7 @@ class ListenWebSocketClient:  # pylint: disable=too-many-instance-attributes
         self._logger.info("members: %s", members)
         self._logger.info("kwargs: %s", kwargs)
 
-        if isinstance(options, LiveOptions) and not options.check():
+        if isinstance(options, ListenWebSocketOptions) and not options.check():
             self._logger.error("options.check failed")
             self._logger.debug("ListenWebSocketClient.start LEAVE")
             raise DeepgramError("Fatal transcription options error")
@@ -133,8 +133,8 @@ class ListenWebSocketClient:  # pylint: disable=too-many-instance-attributes
         else:
             self._kwargs = {}
 
-        if isinstance(options, LiveOptions):
-            self._logger.info("LiveOptions switching class -> dict")
+        if isinstance(options, ListenWebSocketOptions):
+            self._logger.info("ListenWebSocketOptions switching class -> dict")
             self._options = options.to_dict()
         elif options is not None:
             self._options = options

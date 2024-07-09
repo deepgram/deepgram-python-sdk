@@ -26,7 +26,7 @@ from .response import (
     ErrorResponse,
     UnhandledResponse,
 )
-from ..options import SpeakOptions
+from .options import SpeakWebSocketOptions
 
 
 class SpeakWebSocketClient:  # pylint: disable=too-many-instance-attributes
@@ -81,7 +81,7 @@ class SpeakWebSocketClient:  # pylint: disable=too-many-instance-attributes
     # pylint: disable=too-many-statements,too-many-branches
     def start(
         self,
-        options: Optional[Union[SpeakOptions, Dict]] = None,
+        options: Optional[Union[SpeakWebSocketOptions, Dict]] = None,
         addons: Optional[Dict] = None,
         headers: Optional[Dict] = None,
         members: Optional[Dict] = None,
@@ -97,7 +97,7 @@ class SpeakWebSocketClient:  # pylint: disable=too-many-instance-attributes
         self._logger.info("members: %s", members)
         self._logger.info("kwargs: %s", kwargs)
 
-        if isinstance(options, SpeakOptions) and not options.check():
+        if isinstance(options, SpeakWebSocketOptions) and not options.check():
             self._logger.error("options.check failed")
             self._logger.debug("SpeakStreamClient.start LEAVE")
             raise DeepgramError("Fatal text-to-speech options error")
@@ -115,8 +115,8 @@ class SpeakWebSocketClient:  # pylint: disable=too-many-instance-attributes
         else:
             self._kwargs = {}
 
-        if isinstance(options, SpeakOptions):
-            self._logger.info("SpeakOptions switching class -> dict")
+        if isinstance(options, SpeakWebSocketOptions):
+            self._logger.info("SpeakWebSocketOptions switching class -> dict")
             self._options = options.to_dict()
         elif options is not None:
             self._options = options
