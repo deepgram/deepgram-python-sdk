@@ -141,3 +141,6 @@ class LiveOptions(DataClassJsonMixin):  # pylint: disable=too-many-instance-attr
         logger.setLevel(prev)
 
         return True
+
+
+ListenWebSocketOptions = LiveOptions

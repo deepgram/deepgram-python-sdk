@@ -15,7 +15,7 @@ from ....abstract_async_client import AbstractAsyncRestClient
 from ...errors import DeepgramError, DeepgramTypeError
 
 from .helpers import is_text_source
-from ..options import SpeakOptions, FileSource
+from .options import SpeakRESTOptions, FileSource
 from .response import SpeakRESTResponse
 
 
@@ -38,7 +38,7 @@ class AsyncSpeakRESTClient(AbstractAsyncRestClient):
     async def stream(
         self,
         source: FileSource,
-        options: Optional[Union[Dict, SpeakOptions]] = None,
+        options: Optional[Union[Dict, SpeakRESTOptions]] = None,
         addons: Optional[Dict] = None,
         headers: Optional[Dict] = None,
         timeout: Optional[httpx.Timeout] = None,
@@ -49,7 +49,7 @@ class AsyncSpeakRESTClient(AbstractAsyncRestClient):
 
         Args:
             source (TextSource): The text source to speak.
-            options (SpeakOptions): Additional options for the ingest (default is None).
+            options (SpeakRESTOptions): Additional options for the ingest (default is None).
             addons (Dict): Additional options for the request (default is None).
             headers (Dict): Additional headers for the request (default is None).
             timeout (httpx.Timeout): The timeout for the request (default is None).
@@ -71,15 +71,15 @@ class AsyncSpeakRESTClient(AbstractAsyncRestClient):
             self._logger.debug("AsyncSpeakClient.stream LEAVE")
             raise DeepgramTypeError("Unknown speak source type")
 
-        if isinstance(options, SpeakOptions) and not options.check():
+        if isinstance(options, SpeakRESTOptions) and not options.check():
             self._logger.error("options.check failed")
             self._logger.debug("AsyncSpeakClient.stream LEAVE")
             raise DeepgramError("Fatal speak options error")
 
         self._logger.info("url: %s", url)
         self._logger.info("source: %s", source)
-        if isinstance(options, SpeakOptions):
-            self._logger.info("SpeakOptions switching class -> dict")
+        if isinstance(options, SpeakRESTOptions):
+            self._logger.info("SpeakRESTOptions switching class -> dict")
             options = options.to_dict()
         self._logger.info("options: %s", options)
         self._logger.info("addons: %s", addons)
@@ -123,7 +123,7 @@ class AsyncSpeakRESTClient(AbstractAsyncRestClient):
         self,
         filename: str,
         source: FileSource,
-        options: Optional[Union[Dict, SpeakOptions]] = None,
+        options: Optional[Union[Dict, SpeakRESTOptions]] = None,
         addons: Optional[Dict] = None,
         timeout: Optional[httpx.Timeout] = None,
         endpoint: str = "v1/speak",
@@ -144,7 +144,7 @@ class AsyncSpeakRESTClient(AbstractAsyncRestClient):
         self,
         filename: str,
         source: FileSource,
-        options: Optional[Union[Dict, SpeakOptions]] = None,
+        options: Optional[Union[Dict, SpeakRESTOptions]] = None,
         addons: Optional[Dict] = None,
         headers: Optional[Dict] = None,
         timeout: Optional[httpx.Timeout] = None,
@@ -155,7 +155,7 @@ class AsyncSpeakRESTClient(AbstractAsyncRestClient):
 
         Args:
             source (TextSource): The text source to speak.
-            options (SpeakOptions): Additional options for the ingest (default is None).
+            options (SpeakRESTOptions): Additional options for the ingest (default is None).
             addons (Dict): Additional options for the request (default is None).
             headers (Dict): Additional headers for the request (default is None).
             timeout (httpx.Timeout): The timeout for the request (default is None).

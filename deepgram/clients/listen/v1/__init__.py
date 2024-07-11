@@ -16,12 +16,13 @@ from .websocket import (
 
 # rest
 from .rest import ListenRESTClient, AsyncListenRESTClient
-from .rest import PrerecordedOptions
+from .rest import ListenRESTOptions, PrerecordedOptions
 from .rest import (
     UrlSource,
     FileSource,
     PreRecordedStreamSource,
     PrerecordedSource,
+    ListenRestSource,
 )
 from .rest import (
     AsyncPrerecordedResponse,
@@ -31,7 +32,7 @@ from .rest import (
 
 # websocket
 from .websocket import ListenWebSocketClient, AsyncListenWebSocketClient
-from .websocket import LiveOptions, LiveOptions as SteamingOptions
+from .websocket import LiveOptions, ListenWebSocketOptions
 from .websocket import (
     OpenResponse,
     LiveResultResponse,

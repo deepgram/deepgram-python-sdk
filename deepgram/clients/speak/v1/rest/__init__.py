@@ -5,3 +5,9 @@
 from .client import SpeakRESTClient
 from .async_client import AsyncSpeakRESTClient
 from .response import SpeakRESTResponse
+from .options import (
+    SpeakRESTOptions,
+    SpeakSource,
+    SpeakRestSource,
+    FileSource,
+)

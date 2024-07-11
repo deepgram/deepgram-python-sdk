@@ -16,11 +16,13 @@ from .client import (
 # rest
 ## input
 from .client import (
+    ListenRESTOptions,
     PrerecordedOptions,
     PreRecordedStreamSource,
     UrlSource,
     FileSource,
     PrerecordedSource,
+    ListenRestSource,
 )
 
 ## output
@@ -34,6 +36,7 @@ from .client import (
 # websocket
 ## input
 from .client import (
+    ListenWebSocketOptions,
     LiveOptions,
 )
 
@@ -51,6 +54,8 @@ from .client import (
 
 # clients
 from .client import (
+    ListenRESTClient,
+    AsyncListenRESTClient,
     ListenWebSocketClient,
     AsyncListenWebSocketClient,
 )

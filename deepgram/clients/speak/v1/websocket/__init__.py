@@ -14,3 +14,4 @@ from .response import (
     WarningResponse,
     ErrorResponse,
 )
+from .options import SpeakWebSocketOptions

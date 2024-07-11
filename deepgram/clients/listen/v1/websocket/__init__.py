@@ -4,7 +4,7 @@
 
 from .client import ListenWebSocketClient
 from .async_client import AsyncListenWebSocketClient
-from .options import LiveOptions
+from .options import LiveOptions, ListenWebSocketOptions
 from .....options import DeepgramClientOptions, ClientOptionsFromEnv
 from .response import (
     OpenResponse,

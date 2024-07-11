@@ -14,7 +14,7 @@ from ....abstract_sync_client import AbstractSyncRestClient
 from ...errors import DeepgramError, DeepgramTypeError
 from .helpers import is_text_source
 
-from ..options import SpeakOptions, FileSource
+from .options import SpeakRESTOptions, FileSource
 from .response import SpeakRESTResponse
 
 
@@ -37,7 +37,7 @@ class SpeakRESTClient(AbstractSyncRestClient):
     def stream(
         self,
         source: FileSource,
-        options: Optional[Union[Dict, SpeakOptions]] = None,
+        options: Optional[Union[Dict, SpeakRESTOptions]] = None,
         addons: Optional[Dict] = None,
         headers: Optional[Dict] = None,
         timeout: Optional[httpx.Timeout] = None,
@@ -48,7 +48,7 @@ class SpeakRESTClient(AbstractSyncRestClient):
 
         Args:
             source (TextSource): The text source to speak.
-            options (SpeakOptions): Additional options for the ingest (default is None).
+            options (SpeakRESTOptions): Additional options for the ingest (default is None).
             addons (Dict): Additional options for the request (default is None).
             headers (Dict): Additional headers for the request (default is None).
             timeout (httpx.Timeout): The timeout for the request (default is None).
@@ -70,15 +70,15 @@ class SpeakRESTClient(AbstractSyncRestClient):
             self._logger.debug("SpeakClient.stream LEAVE")
             raise DeepgramTypeError("Unknown speak source type")
 
-        if isinstance(options, SpeakOptions) and not options.check():
+        if isinstance(options, SpeakRESTOptions) and not options.check():
             self._logger.error("options.check failed")
             self._logger.debug("SpeakClient.stream LEAVE")
             raise DeepgramError("Fatal speak options error")
 
         self._logger.info("url: %s", url)
         self._logger.info("source: %s", source)
-        if isinstance(options, SpeakOptions):
-            self._logger.info("SpeakOptions switching class -> dict")
+        if isinstance(options, SpeakRESTOptions):
+            self._logger.info("SpeakRESTOptions switching class -> dict")
             options = options.to_dict()
         self._logger.info("options: %s", options)
         self._logger.info("addons: %s", addons)
@@ -123,7 +123,7 @@ class SpeakRESTClient(AbstractSyncRestClient):
         self,
         filename: str,
         source: FileSource,
-        options: Optional[Union[Dict, SpeakOptions]] = None,
+        options: Optional[Union[Dict, SpeakRESTOptions]] = None,
         addons: Optional[Dict] = None,
         timeout: Optional[httpx.Timeout] = None,
         endpoint: str = "v1/speak",
@@ -144,7 +144,7 @@ class SpeakRESTClient(AbstractSyncRestClient):
         self,
         filename: str,
         source: FileSource,
-        options: Optional[Union[Dict, SpeakOptions]] = None,
+        options: Optional[Union[Dict, SpeakRESTOptions]] = None,
         addons: Optional[Dict] = None,
         headers: Optional[Dict] = None,
         timeout: Optional[httpx.Timeout] = None,
@@ -155,7 +155,7 @@ class SpeakRESTClient(AbstractSyncRestClient):
 
         Args:
             source (TextSource): The text source to speak.
-            options (SpeakOptions): Additional options for the ingest (default is None).
+            options (SpeakRESTOptions): Additional options for the ingest (default is None).
             addons (Dict): Additional options for the request (default is None).
             headers (Dict): Additional headers for the request (default is None).
             timeout (httpx.Timeout): The timeout for the request (default is None).

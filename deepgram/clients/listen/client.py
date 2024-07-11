@@ -10,13 +10,17 @@ from .v1 import (
     ListenRESTClient as ListenRESTClientLatest,
     AsyncListenRESTClient as AsyncListenRESTClientLatest,
 )
-from .v1 import PrerecordedOptions as PrerecordedOptionsLatest
+from .v1 import (
+    PrerecordedOptions as PrerecordedOptionsLatest,
+    ListenRESTOptions as ListenRESTOptionsLatest,
+)
 
 from .v1 import (
     UrlSource as UrlSourceLatest,
     FileSource as FileSourceLatest,
     PreRecordedStreamSource as PreRecordedStreamSourceLatest,
     PrerecordedSource as PrerecordedSourceLatest,
+    ListenRestSource as ListenRestSourceLatest,
 )
 from .v1 import (
     AsyncPrerecordedResponse as AsyncPrerecordedResponseLatest,
@@ -29,7 +33,10 @@ from .v1 import (
     ListenWebSocketClient as ListenWebSocketClientLatest,
     AsyncListenWebSocketClient as AsyncListenWebSocketClientLatest,
 )
-from .v1 import LiveOptions as LiveOptionsLatest, LiveOptions as SteamingOptionsLatest
+from .v1 import (
+    LiveOptions as LiveOptionsLatest,
+    ListenWebSocketOptions as ListenWebSocketOptionsLatest,
+)
 from .v1 import (
     OpenResponse as OpenResponseLatest,
     LiveResultResponse as LiveResultResponseLatest,
@@ -53,11 +60,13 @@ AsyncLiveClient = ListenWebSocketClientLatest
 
 # rest
 ## input
+ListenRESTOptions = ListenRESTOptionsLatest
 PrerecordedOptions = PrerecordedOptionsLatest
 PreRecordedStreamSource = PreRecordedStreamSourceLatest
 UrlSource = UrlSourceLatest
 FileSource = FileSourceLatest
 PrerecordedSource = PrerecordedSourceLatest
+ListenRestSource = ListenRestSourceLatest
 
 ## output
 AsyncPrerecordedResponse = AsyncPrerecordedResponseLatest
@@ -67,6 +76,7 @@ SyncPrerecordedResponse = SyncPrerecordedResponseLatest
 
 # websocket
 ## input
+ListenWebSocketOptions = ListenWebSocketOptionsLatest
 LiveOptions = LiveOptionsLatest
 
 ## output
@@ -81,5 +91,7 @@ UnhandledResponse = UnhandledResponseLatest
 
 
 # clients
+ListenRESTClient = ListenRESTClientLatest
+AsyncListenRESTClient = AsyncListenRESTClientLatest
 ListenWebSocketClient = ListenWebSocketClientLatest
 AsyncListenWebSocketClient = AsyncListenWebSocketClientLatest

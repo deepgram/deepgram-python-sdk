@@ -46,10 +46,11 @@ from .client import (
     ErrorResponse,
 )
 
-# live
+# speect-to-text WS
+from .client import LiveClient, AsyncLiveClient  # backward compat
+from .client import ListenWebSocketClient, AsyncListenWebSocketClient
 from .client import LiveTranscriptionEvents
-from .client import LiveClient, AsyncLiveClient
-from .client import LiveOptions
+from .client import LiveOptions, ListenWebSocketOptions
 from .client import (
     # OpenResponse,
     LiveResultResponse,
@@ -62,11 +63,14 @@ from .client import (
 )
 
 # prerecorded
-from .client import PreRecordedClient, AsyncPreRecordedClient
+from .client import PreRecordedClient, AsyncPreRecordedClient  # backward compat
+from .client import ListenRESTClient, AsyncListenRESTClient
 from .client import (
+    ListenRESTOptions,
     PrerecordedOptions,
     PreRecordedStreamSource,
     PrerecordedSource,
+    ListenRestSource,
 )
 from .client import (
     AsyncPrerecordedResponse,
@@ -91,8 +95,10 @@ from .client import (
 # speak
 from .client import (
     SpeakOptions,
+    SpeakRESTOptions,
+    SpeakWebSocketOptions,
     # FileSource,
-    SpeakWebSocketSource,
+    SpeakRestSource,
     SpeakSource,
 )
 from .client import SpeakWebSocketEvents

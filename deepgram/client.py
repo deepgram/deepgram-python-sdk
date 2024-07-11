@@ -32,9 +32,16 @@ from .clients import (
 # listen client
 from .clients import Listen, Read, Speak
 
-# live
-from .clients import LiveClient, AsyncLiveClient
+# speech-to-text
+from .clients import LiveClient, AsyncLiveClient  # backward compat
 from .clients import (
+    ListenRESTClient,
+    AsyncListenRESTClient,
+    ListenWebSocketClient,
+    AsyncListenWebSocketClient,
+)
+from .clients import (
+    ListenWebSocketOptions,
     LiveOptions,
     LiveTranscriptionEvents,
 )
@@ -57,9 +64,11 @@ from .clients import (
     AsyncPreRecordedClient,
 )
 from .clients import (
+    ListenRESTOptions,
     PrerecordedOptions,
     PreRecordedStreamSource,
     PrerecordedSource,
+    ListenRestSource,
 )
 
 # prerecorded client responses
@@ -88,8 +97,10 @@ from .clients import (
 # speak
 from .clients import (
     SpeakOptions,
+    SpeakRESTOptions,
+    SpeakWebSocketOptions,
     # FileSource,
-    SpeakWebSocketSource,
+    SpeakRestSource,
     SpeakSource,
 )
 from .clients import SpeakWebSocketEvents

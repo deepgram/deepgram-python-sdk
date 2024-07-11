@@ -2,7 +2,7 @@
 # Use of this source code is governed by a MIT license that can be found in the LICENSE file.
 # SPDX-License-Identifier: MIT
 
-from ..options import SpeakSource
+from .options import SpeakSource
 
 
 def is_text_source(provided_source: SpeakSource) -> bool:
