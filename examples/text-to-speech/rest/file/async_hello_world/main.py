@@ -29,7 +29,7 @@ async def main():
             model="aura-asteria-en",
         )
 
-        response = await deepgram.asyncspeak.v("1").save(
+        response = await deepgram.speak.asyncrest.v("1").save(
             filename, SPEAK_OPTIONS, options
         )
         print(response.to_json(indent=4))

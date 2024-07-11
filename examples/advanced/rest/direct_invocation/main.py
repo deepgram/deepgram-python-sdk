@@ -8,7 +8,7 @@ import logging
 from deepgram.utils import verboselogs
 import traceback
 
-from deepgram import ClientOptionsFromEnv, PrerecordedOptions, PreRecordedClient
+from deepgram import ClientOptionsFromEnv, PrerecordedOptions, ListenRESTClient
 
 load_dotenv()
 
@@ -19,13 +19,13 @@ AUDIO_URL = {
 
 def main():
     try:
-        # STEP 1 Create a Deepgram PreRecordedClient using a specific config
+        # STEP 1 Create a Deepgram ListenRESTClient using a specific config
         # config: ClientOptionsFromEnv = ClientOptionsFromEnv(
         #     verbose=verboselogs.NOTICE,
         # )
-        # asyncClient: PreRecordedClient = PreRecordedClient(config)
+        # asyncClient: ListenRESTClient = ListenRESTClient(config)
         # OR just use the default config
-        asyncClient: PreRecordedClient = PreRecordedClient(ClientOptionsFromEnv())
+        asyncClient: ListenRESTClient = ListenRESTClient(ClientOptionsFromEnv())
 
         # STEP 2 Call the transcribe_url method on the prerecorded class
         options: PrerecordedOptions = PrerecordedOptions(

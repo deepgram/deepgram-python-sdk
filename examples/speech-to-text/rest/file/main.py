@@ -31,7 +31,7 @@ def main():
         # OR use defaults
         # deepgram: DeepgramClient = DeepgramClient()
 
-        # STEP 2 Call the transcribe_file method on the prerecorded class
+        # STEP 2 Call the transcribe_file method on the rest class
         with open(AUDIO_FILE, "rb") as file:
             buffer_data = file.read()
 
@@ -48,7 +48,7 @@ def main():
         )
 
         before = datetime.now()
-        response = deepgram.listen.prerecorded.v("1").transcribe_file(
+        response = deepgram.listen.rest.v("1").transcribe_file(
             payload, options, timeout=httpx.Timeout(300.0, connect=10.0)
         )
         after = datetime.now()

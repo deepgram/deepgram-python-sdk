@@ -29,7 +29,7 @@ def main():
             "model": "aura-asteria-en",
         }
 
-        response = deepgram.speak.v("1").save(filename, SPEAK_OPTIONS, options)
+        response = deepgram.speak.rest.v("1").save(filename, SPEAK_OPTIONS, options)
         print(response.to_json(indent=4))
 
     except Exception as e:

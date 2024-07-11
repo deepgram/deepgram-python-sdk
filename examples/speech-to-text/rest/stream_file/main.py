@@ -33,21 +33,16 @@ def main():
         # OR use defaults
         # deepgram = DeepgramClient()
 
-        # STEP 2 Call the transcribe_file method on the prerecorded class
-        stream = open(AUDIO_FILE, "rb")
-
-        payload: StreamSource = {
-            "stream": stream,
-        }
-
-        options = PrerecordedOptions(
-            model="nova-2",
-        )
-
-        response = deepgram.listen.prerecorded.v("1").transcribe_file(payload, options)
-        print(response.to_json(indent=4))
-
-        stream.close()
+        # STEP 2 Call the transcribe_file method on the rest class
+        with open(AUDIO_FILE, "rb") as stream:
+            payload: StreamSource = {
+                "stream": stream,
+            }
+            options = PrerecordedOptions(
+                model="nova-2",
+            )
+            response = deepgram.listen.rest.v("1").transcribe_file(payload, options)
+            print(response.to_json(indent=4))
 
     except Exception as e:
         print(f"Exception: {e}")

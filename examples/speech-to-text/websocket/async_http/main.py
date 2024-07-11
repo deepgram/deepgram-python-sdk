@@ -44,7 +44,7 @@ async def main():
                 lambda: asyncio.create_task(shutdown(signal, loop, dg_connection)),
             )
 
-        dg_connection = deepgram.listen.asynclive.v("1")
+        dg_connection = deepgram.listen.asyncwebsocket.v("1")
 
         async def on_open(self, open, **kwargs):
             print(f"\n\n{open}\n\n")

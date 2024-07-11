@@ -29,7 +29,7 @@ def main():
         # otherwise, use default config
         deepgram = DeepgramClient()
 
-        dg_connection = deepgram.listen.live.v("1")
+        dg_connection = deepgram.listen.websocket.v("1")
 
         def on_open(self, open, **kwargs):
             print(f"\n\n{open}\n\n")

@@ -35,8 +35,6 @@ from .clients import Listen, Read, Speak
 # speech-to-text
 from .clients import LiveClient, AsyncLiveClient  # backward compat
 from .clients import (
-    ListenRESTClient,
-    AsyncListenRESTClient,
     ListenWebSocketClient,
     AsyncListenWebSocketClient,
 )
@@ -62,6 +60,10 @@ from .clients import (
 from .clients import (
     PreRecordedClient,
     AsyncPreRecordedClient,
+)  # backward compat
+from .clients import (
+    ListenRESTClient,
+    AsyncListenRESTClient,
 )
 from .clients import (
     ListenRESTOptions,

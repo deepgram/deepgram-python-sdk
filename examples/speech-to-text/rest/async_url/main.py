@@ -25,9 +25,9 @@ options: PrerecordedOptions = PrerecordedOptions(
 deepgram: DeepgramClient = DeepgramClient(API_KEY)
 
 
-# STEP 2 Call the transcribe_url method on the prerecorded class
+# STEP 2 Call the transcribe_url method on the rest class
 async def transcribe_url():
-    url_response = await deepgram.listen.asyncprerecorded.v("1").transcribe_url(
+    url_response = await deepgram.listen.asyncrest.v("1").transcribe_url(
         AUDIO_URL, options
     )
     return url_response

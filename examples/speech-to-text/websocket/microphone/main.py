@@ -31,10 +31,10 @@ def main():
         # otherwise, use default config
         deepgram: DeepgramClient = DeepgramClient()
 
-        dg_connection = deepgram.listen.live.v("1")
+        dg_connection = deepgram.listen.websocket.v("1")
 
         def on_open(self, open, **kwargs):
-            print(f"Connection Open")
+            print("Connection Open")
 
         def on_message(self, result, **kwargs):
             global is_finals
@@ -63,10 +63,10 @@ def main():
             print(f"Metadata: {metadata}")
 
         def on_speech_started(self, speech_started, **kwargs):
-            print(f"Speech Started")
+            print("Speech Started")
 
         def on_utterance_end(self, utterance_end, **kwargs):
-            print(f"Utterance End")
+            print("Utterance End")
             global is_finals
             if len(is_finals) > 0:
                 utterance = " ".join(is_finals)
@@ -74,7 +74,7 @@ def main():
                 is_finals = []
 
         def on_close(self, close, **kwargs):
-            print(f"Connection Closed")
+            print("Connection Closed")
 
         def on_error(self, error, **kwargs):
             print(f"Handled Error: {error}")
