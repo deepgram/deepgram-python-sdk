@@ -9,13 +9,13 @@ from .client import (
     SpeakClient,  # backward compat
     SpeakRESTClient,
     AsyncSpeakRESTClient,
-    SpeakWebSocketClient,
-    AsyncSpeakWebSocketClient,
+    # SpeakWebSocketClient,
+    # AsyncSpeakWebSocketClient,
 )
 from .client import (
     SpeakOptions,
     SpeakRESTOptions,
-    SpeakWebSocketOptions,
+    # SpeakWebSocketOptions,
     FileSource,
     SpeakRestSource,
     SpeakSource,
@@ -23,12 +23,12 @@ from .client import (
 from .client import (
     SpeakResponse,  # backward compat
     SpeakRESTResponse,
-    SpeakWebSocketResponse,
-    OpenResponse,
-    MetadataResponse,
-    FlushedResponse,
-    CloseResponse,
-    UnhandledResponse,
-    WarningResponse,
-    ErrorResponse,
+    # SpeakWebSocketResponse,
+    # OpenResponse,
+    # MetadataResponse,
+    # FlushedResponse,
+    # CloseResponse,
+    # UnhandledResponse,
+    # WarningResponse,
+    # ErrorResponse,
 )

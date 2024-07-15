@@ -11,9 +11,10 @@ from .rest import (
     SpeakSource,
     FileSource,
 )
-from .websocket import (
-    SpeakWebSocketOptions,
-)
+
+# from .websocket import (
+#     SpeakWebSocketOptions,
+# )
 from ....options import DeepgramClientOptions, ClientOptionsFromEnv
 
 # rest
@@ -21,15 +22,15 @@ from .rest import SpeakRESTClient, AsyncSpeakRESTClient
 
 from .rest import SpeakRESTResponse
 
-# websocket
-from .websocket import SpeakWebSocketClient, AsyncSpeakWebSocketClient
-from .websocket import (
-    SpeakWebSocketResponse,
-    OpenResponse,
-    MetadataResponse,
-    FlushedResponse,
-    CloseResponse,
-    UnhandledResponse,
-    WarningResponse,
-    ErrorResponse,
-)
+# # websocket
+# from .websocket import SpeakWebSocketClient, AsyncSpeakWebSocketClient
+# from .websocket import (
+#     SpeakWebSocketResponse,
+#     OpenResponse,
+#     MetadataResponse,
+#     FlushedResponse,
+#     CloseResponse,
+#     UnhandledResponse,
+#     WarningResponse,
+#     ErrorResponse,
+# )

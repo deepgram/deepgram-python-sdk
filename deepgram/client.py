@@ -100,7 +100,7 @@ from .clients import (
 from .clients import (
     SpeakOptions,
     SpeakRESTOptions,
-    SpeakWebSocketOptions,
+    # SpeakWebSocketOptions,
     # FileSource,
     SpeakRestSource,
     SpeakSource,
@@ -119,21 +119,21 @@ from .clients import (
     SpeakRESTResponse,
 )
 
-## speak WebSocket
-from .clients import (
-    SpeakWebSocketClient,
-    AsyncSpeakWebSocketClient,
-)
-from .clients import (
-    SpeakWebSocketResponse,
-    # OpenResponse,
-    # MetadataResponse,
-    FlushedResponse,
-    # CloseResponse,
-    # UnhandledResponse,
-    WarningResponse,
-    # ErrorResponse,
-)
+# ## speak WebSocket
+# from .clients import (
+#     SpeakWebSocketClient,
+#     AsyncSpeakWebSocketClient,
+# )
+# from .clients import (
+#     SpeakWebSocketResponse,
+#     # OpenResponse,
+#     # MetadataResponse,
+#     FlushedResponse,
+#     # CloseResponse,
+#     # UnhandledResponse,
+#     WarningResponse,
+#     # ErrorResponse,
+# )
 
 # manage client classes/input
 from .clients import ManageClient, AsyncManageClient
