@@ -2,10 +2,5 @@
 # Use of this source code is governed by a MIT license that can be found in the LICENSE file.
 # SPDX-License-Identifier: MIT
 
-from ...utils import verboselogs
-
-# Constants for microphone
-LOGGING = verboselogs.WARNING
-CHANNELS = 1
-RATE = 16000
-CHUNK = 8194
+from .speaker import Speaker
+from .constants import LOGGING, CHANNELS, RATE, CHUNK

@@ -1,4 +1,4 @@
-# Copyright 2023-2024 Deepgram SDK contributors. All Rights Reserved.
+# Copyright 2024 Deepgram SDK contributors. All Rights Reserved.
 # Use of this source code is governed by a MIT license that can be found in the LICENSE file.
 # SPDX-License-Identifier: MIT
 
@@ -6,6 +6,7 @@ from ...utils import verboselogs
 
 # Constants for microphone
 LOGGING = verboselogs.WARNING
+TIMEOUT = 0.050
 CHANNELS = 1
-RATE = 16000
+RATE = 48000
 CHUNK = 8194

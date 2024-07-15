@@ -9,17 +9,17 @@ import logging
 from dataclasses import dataclass, field
 from dataclasses_json import config as dataclass_config, DataClassJsonMixin
 
-from ....utils import verboselogs
-from ...common import FileSource
+from .....utils import verboselogs
+from ....common import FileSource
 
 
 @dataclass
-class SpeakOptions(DataClassJsonMixin):
+class SpeakWSOptions(DataClassJsonMixin):
     """
     Contains all the options for the SpeakOptions.
 
     Reference:
-    https://developers.deepgram.com/reference/text-to-speech-preview-api
+    TODO: add URL
     """
 
     model: Optional[str] = field(
@@ -64,8 +64,6 @@ class SpeakOptions(DataClassJsonMixin):
 
         return True
 
-
-SpeakRESTOptions = SpeakOptions
 
 SpeakSource = Union[FileSource, BufferedReader]
 SpeakRestSource = SpeakSource
