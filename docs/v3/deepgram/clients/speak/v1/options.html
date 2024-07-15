@@ -58,10 +58,13 @@
 
             </li>
             <li>
-                    <a class="variable" href="#SpeakWebSocketSource">SpeakWebSocketSource</a>
+                    <a class="variable" href="#SpeakRESTOptions">SpeakRESTOptions</a>
             </li>
             <li>
                     <a class="variable" href="#SpeakSource">SpeakSource</a>
+            </li>
+            <li>
+                    <a class="variable" href="#SpeakRestSource">SpeakRestSource</a>
             </li>
     </ul>
 
@@ -151,8 +154,10 @@
 </span><span id="L-65"><a href="#L-65"><span class="linenos">65</span></a>        <span class="k">return</span> <span class="kc">True</span>
 </span><span id="L-66"><a href="#L-66"><span class="linenos">66</span></a>
 </span><span id="L-67"><a href="#L-67"><span class="linenos">67</span></a>
-</span><span id="L-68"><a href="#L-68"><span class="linenos">68</span></a><span class="n">SpeakWebSocketSource</span> <span class="o">=</span> <span class="n">BufferedReader</span>
-</span><span id="L-69"><a href="#L-69"><span class="linenos">69</span></a><span class="n">SpeakSource</span> <span class="o">=</span> <span class="n">Union</span><span class="p">[</span><span class="n">FileSource</span><span class="p">,</span> <span class="n">SpeakWebSocketSource</span><span class="p">]</span>
+</span><span id="L-68"><a href="#L-68"><span class="linenos">68</span></a><span class="n">SpeakRESTOptions</span> <span class="o">=</span> <span class="n">SpeakOptions</span>
+</span><span id="L-69"><a href="#L-69"><span class="linenos">69</span></a>
+</span><span id="L-70"><a href="#L-70"><span class="linenos">70</span></a><span class="n">SpeakSource</span> <span class="o">=</span> <span class="n">Union</span><span class="p">[</span><span class="n">FileSource</span><span class="p">,</span> <span class="n">BufferedReader</span><span class="p">]</span>
+</span><span id="L-71"><a href="#L-71"><span class="linenos">71</span></a><span class="n">SpeakRestSource</span> <span class="o">=</span> <span class="n">SpeakSource</span>
 </span></pre></div>
 
 
@@ -349,14 +354,14 @@
                                 </dl>
                             </div>
                 </section>
-                <section id="SpeakWebSocketSource">
+                <section id="SpeakRESTOptions">
                     <div class="attr variable">
-            <span class="name">SpeakWebSocketSource</span>        =
-<span class="default_value">&lt;class &#39;_io.BufferedReader&#39;&gt;</span>
+            <span class="name">SpeakRESTOptions</span>        =
+<span class="default_value">&lt;class &#39;<a href="#SpeakOptions">SpeakOptions</a>&#39;&gt;</span>
 
         
     </div>
-    <a class="headerlink" href="#SpeakWebSocketSource"></a>
+    <a class="headerlink" href="#SpeakRESTOptions"></a>
     
     
 
@@ -370,6 +375,19 @@
         
     </div>
     <a class="headerlink" href="#SpeakSource"></a>
+    
+    
+
+                </section>
+                <section id="SpeakRestSource">
+                    <div class="attr variable">
+            <span class="name">SpeakRestSource</span>        =
+<input id="SpeakRestSource-view-value" class="view-value-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+            <label class="view-value-button pdoc-button" for="SpeakRestSource-view-value"></label><span class="default_value">typing.Union[<a href="../../common/v1/options.html#TextSource">deepgram.clients.common.v1.options.TextSource</a>, <a href="../../common/v1/options.html#BufferSource">deepgram.clients.common.v1.options.BufferSource</a>, <a href="../../common/v1/options.html#StreamSource">deepgram.clients.common.v1.options.StreamSource</a>, _io.BufferedReader]</span>
+
+        
+    </div>
+    <a class="headerlink" href="#SpeakRestSource"></a>
     
     
 

@@ -163,10 +163,16 @@
 
             </li>
             <li>
+                    <a class="variable" href="#ListenRESTOptions">ListenRESTOptions</a>
+            </li>
+            <li>
                     <a class="variable" href="#PreRecordedStreamSource">PreRecordedStreamSource</a>
             </li>
             <li>
                     <a class="variable" href="#PrerecordedSource">PrerecordedSource</a>
+            </li>
+            <li>
+                    <a class="variable" href="#ListenRestSource">ListenRestSource</a>
             </li>
     </ul>
 
@@ -364,12 +370,15 @@
 </span><span id="L-173"><a href="#L-173"><span class="linenos">173</span></a>        <span class="k">return</span> <span class="kc">True</span>
 </span><span id="L-174"><a href="#L-174"><span class="linenos">174</span></a>
 </span><span id="L-175"><a href="#L-175"><span class="linenos">175</span></a>
-</span><span id="L-176"><a href="#L-176"><span class="linenos">176</span></a><span class="c1"># PrerecordedSource for backwards compatibility</span>
-</span><span id="L-177"><a href="#L-177"><span class="linenos">177</span></a><span class="n">PreRecordedStreamSource</span> <span class="o">=</span> <span class="n">StreamSource</span>
-</span><span id="L-178"><a href="#L-178"><span class="linenos">178</span></a>
-</span><span id="L-179"><a href="#L-179"><span class="linenos">179</span></a><span class="c1"># UrlSource</span>
-</span><span id="L-180"><a href="#L-180"><span class="linenos">180</span></a><span class="c1"># FileSource</span>
-</span><span id="L-181"><a href="#L-181"><span class="linenos">181</span></a><span class="n">PrerecordedSource</span> <span class="o">=</span> <span class="n">Union</span><span class="p">[</span><span class="n">UrlSource</span><span class="p">,</span> <span class="n">FileSource</span><span class="p">]</span>
+</span><span id="L-176"><a href="#L-176"><span class="linenos">176</span></a><span class="n">ListenRESTOptions</span> <span class="o">=</span> <span class="n">PrerecordedOptions</span>
+</span><span id="L-177"><a href="#L-177"><span class="linenos">177</span></a>
+</span><span id="L-178"><a href="#L-178"><span class="linenos">178</span></a><span class="c1"># PrerecordedSource for backwards compatibility</span>
+</span><span id="L-179"><a href="#L-179"><span class="linenos">179</span></a><span class="n">PreRecordedStreamSource</span> <span class="o">=</span> <span class="n">StreamSource</span>
+</span><span id="L-180"><a href="#L-180"><span class="linenos">180</span></a>
+</span><span id="L-181"><a href="#L-181"><span class="linenos">181</span></a><span class="c1"># UrlSource</span>
+</span><span id="L-182"><a href="#L-182"><span class="linenos">182</span></a><span class="c1"># FileSource</span>
+</span><span id="L-183"><a href="#L-183"><span class="linenos">183</span></a><span class="n">PrerecordedSource</span> <span class="o">=</span> <span class="n">Union</span><span class="p">[</span><span class="n">UrlSource</span><span class="p">,</span> <span class="n">FileSource</span><span class="p">]</span>
+</span><span id="L-184"><a href="#L-184"><span class="linenos">184</span></a><span class="n">ListenRestSource</span> <span class="o">=</span> <span class="n">PrerecordedSource</span>
 </span></pre></div>
 
 
@@ -1098,6 +1107,18 @@
                                 </dl>
                             </div>
                 </section>
+                <section id="ListenRESTOptions">
+                    <div class="attr variable">
+            <span class="name">ListenRESTOptions</span>        =
+<span class="default_value">&lt;class &#39;<a href="#PrerecordedOptions">PrerecordedOptions</a>&#39;&gt;</span>
+
+        
+    </div>
+    <a class="headerlink" href="#ListenRESTOptions"></a>
+    
+    
+
+                </section>
                 <section id="PreRecordedStreamSource">
                     <div class="attr variable">
             <span class="name">PreRecordedStreamSource</span>        =
@@ -1119,6 +1140,19 @@
         
     </div>
     <a class="headerlink" href="#PrerecordedSource"></a>
+    
+    
+
+                </section>
+                <section id="ListenRestSource">
+                    <div class="attr variable">
+            <span class="name">ListenRestSource</span>        =
+<input id="ListenRestSource-view-value" class="view-value-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+            <label class="view-value-button pdoc-button" for="ListenRestSource-view-value"></label><span class="default_value">typing.Union[<a href="../../../common/v1/options.html#UrlSource">deepgram.clients.common.v1.options.UrlSource</a>, <a href="../../../common/v1/options.html#TextSource">deepgram.clients.common.v1.options.TextSource</a>, <a href="../../../common/v1/options.html#BufferSource">deepgram.clients.common.v1.options.BufferSource</a>, <a href="../../../common/v1/options.html#StreamSource">deepgram.clients.common.v1.options.StreamSource</a>]</span>
+
+        
+    </div>
+    <a class="headerlink" href="#ListenRestSource"></a>
     
     
 
