@@ -7,6 +7,17 @@ from aenum import StrEnum
 # Constants mapping to events from the Deepgram API
 
 
+class SpeakWebSocketMessage(StrEnum):
+    """
+    Enumerates the possible message types that can be received from the Deepgram API
+    """
+
+    Speak: str = "Speak"
+    Flush: str = "Flush"
+    Clear: str = "Clear"
+    Close: str = "Close"
+
+
 class SpeakWebSocketEvents(StrEnum):
     """
     Enumerates the possible events that can be received from the Deepgram API
@@ -16,7 +27,8 @@ class SpeakWebSocketEvents(StrEnum):
     Close: str = "Close"
     AudioData: str = "AudioData"
     Metadata: str = "Metadata"
-    Flush: str = "Flush"
+    Flushed: str = "Flushed"
+    Cleared: str = "Cleared"
     Unhandled: str = "Unhandled"
     Error: str = "Error"
     Warning: str = "Warning"

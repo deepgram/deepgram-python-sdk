@@ -9,17 +9,17 @@ import logging
 from dataclasses import dataclass, field
 from dataclasses_json import config as dataclass_config, DataClassJsonMixin
 
-from ....utils import verboselogs
-from ...common import FileSource
+from .....utils import verboselogs
+from ....common import FileSource
 
 
 @dataclass
-class SpeakOptions(DataClassJsonMixin):
+class SpeakWSOptions(DataClassJsonMixin):
     """
     Contains all the options for the SpeakOptions.
 
     Reference:
-    https://developers.deepgram.com/reference/text-to-speech-preview-api
+    https://developers.deepgram.com/reference/transform-text-to-speech-websocket
     """
 
     model: Optional[str] = field(
@@ -29,9 +29,9 @@ class SpeakOptions(DataClassJsonMixin):
     encoding: Optional[str] = field(
         default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
-    container: Optional[str] = field(
-        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
-    )
+    # container: Optional[str] = field(
+    #     default=None, metadata=dataclass_config(exclude=lambda f: f is None)
+    # )
     sample_rate: Optional[int] = field(
         default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
@@ -64,8 +64,6 @@ class SpeakOptions(DataClassJsonMixin):
 
         return True
 
-
-SpeakRESTOptions = SpeakOptions
 
 SpeakSource = Union[FileSource, BufferedReader]
 SpeakRestSource = SpeakSource

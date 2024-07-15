@@ -112,7 +112,7 @@ async def test_unit_async_listen_websocket(options, input, output):
     # each iteration is 0.5 seconds * 20 iterations = 10 second timeout
     timeout = 0
     exit = False
-    while dg_connection.is_connected() and timeout < 20 and not exit:
+    while await dg_connection.is_connected() and timeout < 20 and not exit:
         if response == output:
             exit = True
             break
