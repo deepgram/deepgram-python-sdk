@@ -96,12 +96,12 @@ from .client import (
 from .client import (
     SpeakOptions,
     SpeakRESTOptions,
-    # SpeakWebSocketOptions,
+    SpeakWSOptions,
     # FileSource,
     SpeakRestSource,
     SpeakSource,
 )
-from .client import SpeakWebSocketEvents
+from .client import SpeakWebSocketEvents, SpeakWebSocketMessage
 
 ## speak REST
 from .client import (
@@ -115,21 +115,23 @@ from .client import (
     SpeakRESTResponse,
 )
 
-# ## speak WebSocket
-# from .client import (
-#     SpeakWebSocketClient,
-#     AsyncSpeakWebSocketClient,
-# )
-# from .client import (
-#     SpeakWebSocketResponse,
-#     # OpenResponse,
-#     # MetadataResponse,
-#     FlushedResponse,
-#     # CloseResponse,
-#     # UnhandledResponse,
-#     WarningResponse,
-#     # ErrorResponse,
-# )
+## speak WebSocket
+from .client import (
+    SpeakWebSocketClient,
+    AsyncSpeakWebSocketClient,
+    SpeakWSClient,
+    AsyncSpeakWSClient,
+)
+from .client import (
+    # OpenResponse,
+    # MetadataResponse,
+    FlushedResponse,
+    ClearedResponse,
+    # CloseResponse,
+    # UnhandledResponse,
+    WarningResponse,
+    # ErrorResponse,
+)
 
 # manage
 from .client import ManageClient, AsyncManageClient
@@ -173,10 +175,26 @@ from .client import (
 )
 
 # utilities
+# pylint: disable=wrong-import-position
 from .audio import Microphone
 from .audio import (
-    LOGGING,
-    CHANNELS,
-    RATE,
-    CHUNK,
+    INPUT_LOGGING,
+    INPUT_CHANNELS,
+    INPUT_RATE,
+    INPUT_CHUNK,
 )
+
+LOGGING = INPUT_LOGGING
+CHANNELS = INPUT_CHANNELS
+RATE = INPUT_RATE
+CHUNK = INPUT_CHUNK
+
+from .audio import Speaker
+from .audio import (
+    OUTPUT_LOGGING,
+    OUTPUT_CHANNELS,
+    OUTPUT_RATE,
+    OUTPUT_CHUNK,
+)
+
+# pylint: enable=wrong-import-position

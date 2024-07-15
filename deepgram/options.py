@@ -14,7 +14,7 @@ from .utils import verboselogs
 from .errors import DeepgramApiKeyError
 
 
-class DeepgramClientOptions:
+class DeepgramClientOptions:  # pylint: disable=too-many-instance-attributes
     """
     Represents options for configuring a Deepgram client.
 
@@ -29,7 +29,8 @@ class DeepgramClientOptions:
     """
 
     _logger: verboselogs.VerboseLogger
-    _inspect: bool = False
+    _inspect_listen: bool = False
+    _inspect_speak: bool = False
 
     def __init__(
         self,
@@ -60,8 +61,10 @@ class DeepgramClientOptions:
             options = {}
         self.options = options
 
-        if self.is_auto_flush_enabled():
-            self._inspect = True
+        if self.is_auto_flush_reply_enabled():
+            self._inspect_listen = True
+        if self.is_auto_flush_speak_enabled():
+            self._inspect_speak = True
 
     def set_apikey(self, api_key: str):
         """
@@ -100,18 +103,37 @@ class DeepgramClientOptions:
             "keep_alive", False
         )
 
-    def is_auto_flush_enabled(self) -> bool:
+    def is_auto_flush_reply_enabled(self) -> bool:
         """
-        is_auto_flush_enabled: Returns True if the client is configured to auto-flush.
+        is_auto_flush_reply_enabled: Returns True if the client is configured to auto-flush for listen.
         """
-        auto_flush_delta = float(self.options.get("auto_flush_reply_delta", 0))
-        return isinstance(auto_flush_delta, numbers.Number) and auto_flush_delta > 0
+        auto_flush_reply_delta = float(self.options.get("auto_flush_reply_delta", 0))
+        return (
+            isinstance(auto_flush_reply_delta, numbers.Number)
+            and auto_flush_reply_delta > 0
+        )
 
-    def is_inspecting_messages(self) -> bool:
+    def is_auto_flush_speak_enabled(self) -> bool:
         """
-        is_inspecting_messages: Returns True if the client is inspecting messages.
+        is_auto_flush_speak_enabled: Returns True if the client is configured to auto-flush for speak.
         """
-        return self._inspect
+        auto_flush_speak_delta = float(self.options.get("auto_flush_speak_delta", 0))
+        return (
+            isinstance(auto_flush_speak_delta, numbers.Number)
+            and auto_flush_speak_delta > 0
+        )
+
+    def is_inspecting_listen(self) -> bool:
+        """
+        is_inspecting_listen: Returns True if the client is inspecting listen messages.
+        """
+        return self._inspect_listen
+
+    def is_inspecting_speak(self) -> bool:
+        """
+        is_inspecting_speak: Returns True if the client is inspecting speak messages.
+        """
+        return self._inspect_speak
 
 
 class ClientOptionsFromEnv(

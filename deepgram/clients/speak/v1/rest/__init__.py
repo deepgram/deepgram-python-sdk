@@ -7,6 +7,7 @@ from .async_client import AsyncSpeakRESTClient
 from .response import SpeakRESTResponse
 from .options import (
     SpeakRESTOptions,
+    SpeakOptions,
     SpeakSource,
     SpeakRestSource,
     FileSource,
