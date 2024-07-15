@@ -22,8 +22,8 @@ AUDIO_URL = {
 
 def main():
     try:
-        # STEP 1 Create a Deepgram client using the API key from environment variables
-        deepgram: DeepgramClient = DeepgramClient("", ClientOptionsFromEnv())
+        # STEP 1 Create a Deepgram client using the DEEPGRAM_API_KEY from your environment variables
+        deepgram: DeepgramClient = DeepgramClient()
 
         # STEP 2 Call the transcribe_url method on the rest class
         options: PrerecordedOptions = PrerecordedOptions(

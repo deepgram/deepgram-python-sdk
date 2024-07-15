@@ -96,12 +96,12 @@ from .client import (
 from .client import (
     SpeakOptions,
     SpeakRESTOptions,
-    # SpeakWebSocketOptions,
+    SpeakWebSocketOptions,
     # FileSource,
     SpeakRestSource,
     SpeakSource,
 )
-from .client import SpeakWebSocketEvents
+from .client import SpeakWebSocketEvents, SpeakWebSocketMessage
 
 ## speak REST
 from .client import (
@@ -115,21 +115,21 @@ from .client import (
     SpeakRESTResponse,
 )
 
-# ## speak WebSocket
-# from .client import (
-#     SpeakWebSocketClient,
-#     AsyncSpeakWebSocketClient,
-# )
-# from .client import (
-#     SpeakWebSocketResponse,
-#     # OpenResponse,
-#     # MetadataResponse,
-#     FlushedResponse,
-#     # CloseResponse,
-#     # UnhandledResponse,
-#     WarningResponse,
-#     # ErrorResponse,
-# )
+## speak WebSocket
+from .client import (
+    SpeakWebSocketClient,
+    AsyncSpeakWebSocketClient,
+)
+from .client import (
+    SpeakWebSocketResponse,
+    # OpenResponse,
+    # MetadataResponse,
+    FlushedResponse,
+    # CloseResponse,
+    # UnhandledResponse,
+    WarningResponse,
+    # ErrorResponse,
+)
 
 # manage
 from .client import ManageClient, AsyncManageClient
