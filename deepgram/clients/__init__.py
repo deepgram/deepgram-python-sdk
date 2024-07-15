@@ -105,7 +105,7 @@ from .analyze import (
 from .speak import (
     SpeakOptions,
     SpeakRESTOptions,
-    SpeakWebSocketOptions,
+    # SpeakWebSocketOptions,
     # FileSource,
     SpeakRestSource,
     SpeakSource,
@@ -125,21 +125,21 @@ from .speak import (
     SpeakRESTResponse,
 )
 
-## text-to-speech WebSocket
-from .speak import (
-    SpeakWebSocketClient,
-    AsyncSpeakWebSocketClient,
-)
-from .speak import (
-    SpeakWebSocketResponse,
-    # OpenResponse,
-    # MetadataResponse,
-    FlushedResponse,
-    # CloseResponse,
-    # UnhandledResponse,
-    WarningResponse,
-    # ErrorResponse,
-)
+# ## text-to-speech WebSocket
+# from .speak import (
+#     SpeakWebSocketClient,
+#     AsyncSpeakWebSocketClient,
+# )
+# from .speak import (
+#     SpeakWebSocketResponse,
+#     # OpenResponse,
+#     # MetadataResponse,
+#     FlushedResponse,
+#     # CloseResponse,
+#     # UnhandledResponse,
+#     WarningResponse,
+#     # ErrorResponse,
+# )
 
 # manage
 from .manage import ManageClient, AsyncManageClient
