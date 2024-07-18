@@ -9,6 +9,9 @@ import aiofiles
 
 import httpx
 
+import deprecation  # type: ignore
+from ..... import __version__
+
 from .....utils import verboselogs
 from .....options import DeepgramClientOptions
 from ....abstract_async_client import AbstractAsyncRestClient
@@ -35,7 +38,75 @@ class AsyncSpeakRESTClient(AbstractAsyncRestClient):
         self._config = config
         super().__init__(config)
 
-    async def stream(
+    async def stream_raw(
+        self,
+        source: FileSource,
+        options: Optional[Union[Dict, SpeakRESTOptions]] = None,
+        addons: Optional[Dict] = None,
+        headers: Optional[Dict] = None,
+        timeout: Optional[httpx.Timeout] = None,
+        endpoint: str = "v1/speak",
+    ) -> httpx.Response:
+        """
+        Speak from a text source and store as a Iterator[byte].
+
+        Args:
+            source (TextSource): The text source to speak.
+            options (SpeakRESTOptions): Additional options for the ingest (default is None).
+            addons (Dict): Additional options for the request (default is None).
+            headers (Dict): Additional headers for the request (default is None).
+            timeout (httpx.Timeout): The timeout for the request (default is None).
+            endpoint (str): The endpoint to use for the request (default is "v1/speak").
+
+        Returns:
+            httpx.Response: The direct httpx.Response object from the speak request.
+            For more information, see https://www.python-httpx.org/api/#response
+
+            IMPORTANT: The response object's `close()` method should be called when done
+            in order to prevent connection leaks.
+
+        Raises:
+            DeepgramTypeError: Raised for known API errors.
+        """
+        self._logger.debug("AsyncSpeakClient.stream ENTER")
+
+        url = f"{self._config.url}/{endpoint}"
+        if is_text_source(source):
+            body = source
+        else:
+            self._logger.error("Unknown speak source type")
+            self._logger.debug("AsyncSpeakClient.stream LEAVE")
+            raise DeepgramTypeError("Unknown speak source type")
+
+        if isinstance(options, SpeakRESTOptions) and not options.check():
+            self._logger.error("options.check failed")
+            self._logger.debug("AsyncSpeakClient.stream LEAVE")
+            raise DeepgramError("Fatal speak options error")
+
+        self._logger.info("url: %s", url)
+        self._logger.info("source: %s", source)
+        if isinstance(options, SpeakRESTOptions):
+            self._logger.info("SpeakRESTOptions switching class -> dict")
+            options = options.to_dict()
+        self._logger.info("options: %s", options)
+        self._logger.info("addons: %s", addons)
+        self._logger.info("headers: %s", headers)
+
+        result = await self.post_raw(
+            url,
+            options=options,
+            addons=addons,
+            headers=headers,
+            json=body,
+            timeout=timeout,
+        )
+
+        self._logger.info("result: %s", str(result))
+        self._logger.notice("speak succeeded")
+        self._logger.debug("AsyncSpeakClient.stream LEAVE")
+        return result
+
+    async def stream_memory(
         self,
         source: FileSource,
         options: Optional[Union[Dict, SpeakRESTOptions]] = None,
@@ -94,7 +165,7 @@ class AsyncSpeakRESTClient(AbstractAsyncRestClient):
             "transfer-encoding",
             "date",
         ]
-        result = await self.post_file(
+        result = await self.post_memory(
             url,
             options=options,
             addons=addons,
@@ -113,11 +184,39 @@ class AsyncSpeakRESTClient(AbstractAsyncRestClient):
             transfer_encoding=str(result["transfer-encoding"]),
             date=str(result["date"]),
             stream=cast(io.BytesIO, result["stream"]),
+            stream_memory=cast(io.BytesIO, result["stream"]),
         )
-        self._logger.verbose("result: %s", resp)
+        self._logger.verbose("resp Object: %s", str(resp))
         self._logger.notice("speak succeeded")
         self._logger.debug("AsyncSpeakClient.stream LEAVE")
         return resp
+
+    @deprecation.deprecated(
+        deprecated_in="3.4.0",
+        removed_in="4.0.0",
+        current_version=__version__,
+        details="SpeakRESTClient.stream is deprecated. Use SpeakRESTClient.stream_memory instead.",
+    )
+    async def stream(
+        self,
+        source: FileSource,
+        options: Optional[Union[Dict, SpeakRESTOptions]] = None,
+        addons: Optional[Dict] = None,
+        headers: Optional[Dict] = None,
+        timeout: Optional[httpx.Timeout] = None,
+        endpoint: str = "v1/speak",
+    ) -> SpeakRESTResponse:
+        """
+        DEPRECATED: stream() is deprecated. Use stream_memory() instead.
+        """
+        return await self.stream_memory(
+            source,
+            options=options,
+            addons=addons,
+            headers=headers,
+            timeout=timeout,
+            endpoint=endpoint,
+        )
 
     async def file(
         self,
@@ -169,7 +268,7 @@ class AsyncSpeakRESTClient(AbstractAsyncRestClient):
         """
         self._logger.debug("AsyncSpeakClient.save ENTER")
 
-        res = await self.stream(
+        res = await self.stream_memory(
             source,
             options=options,
             addons=addons,

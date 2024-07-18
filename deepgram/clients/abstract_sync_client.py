@@ -60,7 +60,29 @@ class AbstractSyncRestClient:
             **kwargs,
         )
 
-    def post_file(
+    def post_raw(
+        self,
+        url: str,
+        options: Optional[Dict] = None,
+        addons: Optional[Dict] = None,
+        headers: Optional[Dict] = None,
+        timeout: Optional[httpx.Timeout] = None,
+        **kwargs,
+    ) -> httpx.Response:
+        """
+        Make a POST request to the specified URL and return response in raw bytes.
+        """
+        return self._handle_request_raw(
+            "POST",
+            url,
+            params=options,
+            addons=addons,
+            headers=headers,
+            timeout=timeout,
+            **kwargs,
+        )
+
+    def post_memory(
         self,
         url: str,
         file_result: List,
@@ -69,11 +91,11 @@ class AbstractSyncRestClient:
         headers: Optional[Dict] = None,
         timeout: Optional[httpx.Timeout] = None,
         **kwargs,
-    ) -> Dict[str, Union[str, io.BytesIO, object]]:
+    ) -> Dict[str, Union[str, io.BytesIO]]:
         """
-        Make a POST request to the specified URL and return a file response.
+        Make a POST request to the specified URL and return response in memory.
         """
-        return self._handle_request_file(
+        return self._handle_request_memory(
             "POST",
             url,
             file_result=file_result,
@@ -222,7 +244,7 @@ class AbstractSyncRestClient:
     # pylint: enable-msg=too-many-locals,too-many-branches
 
     # pylint: disable-msg=too-many-branches,too-many-locals
-    def _handle_request_file(
+    def _handle_request_memory(
         self,
         method: str,
         url: str,
@@ -232,7 +254,7 @@ class AbstractSyncRestClient:
         headers: Optional[Dict] = None,
         timeout: Optional[httpx.Timeout] = None,
         **kwargs,
-    ) -> Dict[str, Union[str, io.BytesIO, object]]:
+    ) -> Dict[str, Union[str, io.BytesIO]]:
         _url = url
         if params is not None:
             _url = append_query_params(_url, params)
@@ -249,7 +271,7 @@ class AbstractSyncRestClient:
                 response = client.request(method, _url, headers=_headers, **kwargs)
                 response.raise_for_status()
 
-                ret: Dict[str, Union[str, object]] = {}
+                ret: Dict[str, Union[str, io.BytesIO]] = {}
                 for item in file_result:
                     if item in response.headers:
                         ret[item] = response.headers[item]
@@ -263,6 +285,54 @@ class AbstractSyncRestClient:
                         ret[item] = response.headers[tmp_item]
                 ret["stream"] = io.BytesIO(response.content)
                 return ret
+
+        except httpx.HTTPError as e1:
+            if isinstance(e1, httpx.HTTPStatusError):
+                status_code = e1.response.status_code or 500
+                try:
+                    json_object = json.loads(e1.response.text)
+                    raise DeepgramApiError(
+                        json_object.get("err_msg"),
+                        str(status_code),
+                        json.dumps(json_object),
+                    ) from e1
+                except json.decoder.JSONDecodeError as e2:
+                    raise DeepgramUnknownApiError(e2.msg, str(status_code)) from e2
+                except ValueError as e2:
+                    raise DeepgramUnknownApiError(str(e2), str(status_code)) from e2
+            else:
+                raise  # pylint: disable-msg=try-except-raise
+        except Exception:  # pylint: disable-msg=try-except-raise
+            raise
+
+    # pylint: disable-msg=too-many-branches,too-many-locals
+
+    # pylint: disable-msg=too-many-branches,too-many-locals
+    def _handle_request_raw(
+        self,
+        method: str,
+        url: str,
+        params: Optional[Dict] = None,
+        addons: Optional[Dict] = None,
+        headers: Optional[Dict] = None,
+        timeout: Optional[httpx.Timeout] = None,
+        **kwargs,
+    ) -> httpx.Response:
+        _url = url
+        if params is not None:
+            _url = append_query_params(_url, params)
+        if addons is not None:
+            _url = append_query_params(_url, addons)
+        _headers = self._config.headers
+        if headers is not None:
+            _headers.update(headers)
+        if timeout is None:
+            timeout = httpx.Timeout(30.0, connect=10.0)
+
+        try:
+            client = httpx.Client(timeout=timeout)
+            req = client.build_request(method, _url, headers=_headers, **kwargs)
+            return client.send(req, stream=True)
 
         except httpx.HTTPError as e1:
             if isinstance(e1, httpx.HTTPStatusError):
