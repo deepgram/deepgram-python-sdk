@@ -38,6 +38,9 @@ class LiveOptions(DataClassJsonMixin):  # pylint: disable=too-many-instance-attr
     diarize_version: Optional[str] = field(
         default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
+    dictation: Optional[bool] = field(
+        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
+    )
     encoding: Optional[str] = field(
         default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
