@@ -50,7 +50,8 @@ class LiveOptions(DataClassJsonMixin):  # pylint: disable=too-many-instance-attr
     # since it gets translated to a string to be placed as a query parameter, will keep `str` for now
     # but will change this to `Optional[Union[bool, int]]` in a future release
     endpointing: Optional[Union[str, bool, int]] = field(
-        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
+        default=None,
+        metadata=dataclass_config(exclude=lambda f: f is None),
     )
     # pylint: enable=W0511
     extra: Optional[Union[List[str], str]] = field(
@@ -137,8 +138,16 @@ class LiveOptions(DataClassJsonMixin):  # pylint: disable=too-many-instance-attr
         logger.setLevel(verboselogs.ERROR)
 
         if self.tier:
-            logger.error(
+            logger.warning(
                 "WARNING: Tier is deprecated. Will be removed in a future version."
+            )
+
+        if isinstance(self.endpointing) == str:
+            logger.warning(
+                "WARNING: endpointing's current type previous was `Optional[str]` which is incorrect"
+                " for backward compatibility we are keeping it as `Optional[Union[str, bool, int]]`"
+                " since it gets translated to a string to be placed as a query parameter, will keep `str` for now"
+                " but will change this to `Optional[Union[bool, int]]` in a future release"
             )
 
         logger.setLevel(prev)
