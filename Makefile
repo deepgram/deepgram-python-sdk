@@ -34,7 +34,7 @@ version: #### display version of components
 	@echo 'GOARCH: $(GOARCH)'
 	@echo 'go version: $(shell go version)'
 
-.PHONY: check lint pylint format black blackformat lint_files lint_diff static mypy mdlint shellcheck actionlint yamllint ### Performs all of the checks, lint'ing, etc available
+.PHONY: check lint pylint format black blackformat lint-files lint-diff static mypy mdlint shellcheck actionlint yamllint ### Performs all of the checks, lint'ing, etc available
 check: lint static mdlint shellcheck actionlint yamllint
 
 .PHONY: ensure-deps
@@ -44,22 +44,21 @@ ensure-deps: #### Ensure that all required dependency utilities are downloaded o
 GO_MODULES=$(shell find . -path "*/go.mod" | xargs -I _ dirname _)
 
 PYTHON_FILES=.
-lint_files: PYTHON_FILES=deepgram/ examples/
-lint_diff: PYTHON_FILES=$(shell git diff --name-only --diff-filter=d main | grep -E '\.py$$')
+lint-files: PYTHON_FILES=deepgram/ examples/
+lint-diff: PYTHON_FILES=$(shell git diff --name-only --diff-filter=d main | grep -E '\.py$$')
 
-lint_files lint_diff: #### Performs Python formatting
+lint-files lint-diff: #### Performs Python formatting
 	black --target-version py310 $(PYTHON_FILES)
 
-black blackformat format: lint_files
+black blackformat format: lint-files
 
-pylint: lint_files #### Performs Python linting
+pylint: lint-files #### Performs Python linting
 	pylint --disable=W0622 --disable=W0404 --disable=W0611 --rcfile .pylintrc deepgram
 
 lint: pylint #### Performs Golang programming lint
 
-static_files: PYTHON_FILES=deepgram/
 static mypy: #### Performs static analysis
-	mypy --config-file mypy.ini --python-version 3.10 --exclude examples --exclude tests/edge_cases --exclude tests/expected_failures $(PYTHON_FILES)
+	mypy --config-file mypy.ini --python-version 3.10 --exclude tests --exclude examples $(PYTHON_FILES)
 
 mdlint: #### Performs Markdown lint
 	# mdlint rules with common errors and possible fixes can be found here:
@@ -75,3 +74,19 @@ yamllint: #### Performs yaml lint
 actionlint: #### Performs GitHub Actions lint
 	actionlint
 ##### LINTING TARGETS
+
+##### TESTING TARGETS
+
+.PHONY: test daily-test unit-test
+test: #### Run ALL tests
+	@echo "Running ALL tests"
+	python -m pytest
+
+daily-test: #### Run daily tests
+	@echo "Running daily tests"
+	python -m pytest -k daily_test
+
+unit-test: #### Run unit tests
+	@echo "Running unit tests"
+	python -m pytest -k unit_test
+##### TESTING TARGETS

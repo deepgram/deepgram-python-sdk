@@ -15,7 +15,7 @@ from deepgram import (
 
 load_dotenv()
 
-SPEAK_OPTIONS = {"text": "Hello world!"}
+SPEAK_TEXT = {"text": "Hello world!"}
 filename = "test.mp3"
 
 
@@ -31,7 +31,7 @@ def main():
             model="aura-asteria-en",
         )
 
-        response = deepgram.speak.rest.v("1").stream_memory(SPEAK_OPTIONS, options)
+        response = deepgram.speak.rest.v("1").stream_memory(SPEAK_TEXT, options)
 
         # save to file
         with open(filename, "wb+") as file:

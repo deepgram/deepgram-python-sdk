@@ -2,20 +2,53 @@
 # Use of this source code is governed by a MIT license that can be found in the LICENSE file.
 # SPDX-License-Identifier: MIT
 
-
-from typing import Optional
+from typing import Optional, Dict, Any
 import io
 
 from dataclasses import dataclass, field
 from dataclasses_json import config as dataclass_config, DataClassJsonMixin
 
+
+# Base Classes:
+
+
+@dataclass
+class BaseResponse(DataClassJsonMixin):
+    """
+    BaseResponse class used to define the common methods and properties for all response classes.
+    """
+
+    def __getitem__(self, key):
+        _dict = self.to_dict()
+        return _dict[key]
+
+    def __setitem__(self, key, val):
+        self.__dict__[key] = val
+
+    def __str__(self) -> str:
+        return self.to_json(indent=4)
+
+    def eval(self, key: str) -> str:
+        """
+        This method is used to evaluate a key in the response object using a dot notation style method.
+        """
+        keys = key.split(".")
+        result: Dict[Any, Any] = self.to_dict()
+        for k in keys:
+            if isinstance(result, dict) and k in result:
+                result = result[k]
+            elif isinstance(result, list) and k.isdigit() and int(k) < len(result):
+                result = result[int(k)]
+            else:
+                return ""
+        return str(result)
+
+
 # Speak Response Types:
 
 
 @dataclass
-class SpeakRESTResponse(
-    DataClassJsonMixin
-):  # pylint: disable=too-many-instance-attributes
+class SpeakRESTResponse(BaseResponse):  # pylint: disable=too-many-instance-attributes
     """
     A class for representing a response from the speak endpoint.
     """
@@ -42,98 +75,45 @@ class SpeakRESTResponse(
         metadata=dataclass_config(exclude=lambda f: True),
     )
 
-    def __getitem__(self, key):
-        _dict = self.to_dict()
-        return _dict[key]
-
-    def __setitem__(self, key, val):
-        self.__dict__[key] = val
-
-    # this is a hack to make the response look like a dict because of the io.BytesIO object
-    # otherwise it will throw an exception on printing
-    def __str__(self) -> str:
-        my_dict = self.to_dict()
-        return my_dict.__str__()
-
 
 @dataclass
-class OpenResponse(DataClassJsonMixin):
+class OpenResponse(BaseResponse):
     """
     Open Message from the Deepgram Platform
     """
 
     type: str = ""
 
-    def __getitem__(self, key):
-        _dict = self.to_dict()
-        return _dict[key]
-
-    def __setitem__(self, key, val):
-        self.__dict__[key] = val
-
-    def __str__(self) -> str:
-        return self.to_json(indent=4)
-
 
 @dataclass
-class MetadataResponse(DataClassJsonMixin):
+class MetadataResponse(BaseResponse):
     """
     Metadata object
     """
 
     request_id: str = ""
 
-    def __getitem__(self, key):
-        _dict = self.to_dict()
-        return _dict[key]
-
-    def __setitem__(self, key, val):
-        self.__dict__[key] = val
-
-    def __str__(self) -> str:
-        return self.to_json(indent=4)
-
 
 @dataclass
-class FlushedResponse(DataClassJsonMixin):
+class FlushedResponse(BaseResponse):
     """
     Flushed Message from the Deepgram Platform
     """
 
     type: str = ""
 
-    def __getitem__(self, key):
-        _dict = self.to_dict()
-        return _dict[key]
-
-    def __setitem__(self, key, val):
-        self.__dict__[key] = val
-
-    def __str__(self) -> str:
-        return self.to_json(indent=4)
-
 
 @dataclass
-class CloseResponse(DataClassJsonMixin):
+class CloseResponse(BaseResponse):
     """
     Close Message from the Deepgram Platform
     """
 
     type: str = ""
 
-    def __getitem__(self, key):
-        _dict = self.to_dict()
-        return _dict[key]
-
-    def __setitem__(self, key, val):
-        self.__dict__[key] = val
-
-    def __str__(self) -> str:
-        return self.to_json(indent=4)
-
 
 @dataclass
-class ErrorResponse(DataClassJsonMixin):
+class ErrorResponse(BaseResponse):
     """
     Error Message from the Deepgram Platform
     """
@@ -143,35 +123,15 @@ class ErrorResponse(DataClassJsonMixin):
     type: str = ""
     variant: Optional[str] = ""
 
-    def __getitem__(self, key):
-        _dict = self.to_dict()
-        return _dict[key]
-
-    def __setitem__(self, key, val):
-        self.__dict__[key] = val
-
-    def __str__(self) -> str:
-        return self.to_json(indent=4)
-
 
 # Unhandled Message
 
 
 @dataclass
-class UnhandledResponse(DataClassJsonMixin):
+class UnhandledResponse(BaseResponse):
     """
     Unhandled Message from the Deepgram Platform
     """
 
     type: str = ""
     raw: str = ""
-
-    def __getitem__(self, key):
-        _dict = self.to_dict()
-        return _dict[key]
-
-    def __setitem__(self, key, val):
-        self.__dict__[key] = val
-
-    def __str__(self) -> str:
-        return self.to_json(indent=4)

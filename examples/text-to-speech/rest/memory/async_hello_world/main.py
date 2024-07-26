@@ -15,7 +15,7 @@ from deepgram import (
 
 load_dotenv()
 
-SPEAK_OPTIONS = {"text": "Hello world!"}
+SPEAK_TEXT = {"text": "Hello world!"}
 filename = "test.mp3"
 
 
@@ -30,7 +30,7 @@ async def main():
         )
 
         response = await deepgram.speak.asyncrest.v("1").stream_memory(
-            SPEAK_OPTIONS, options
+            SPEAK_TEXT, options
         )
 
         # save to file

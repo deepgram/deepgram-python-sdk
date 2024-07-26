@@ -15,7 +15,7 @@ from deepgram import (
 
 load_dotenv()
 
-SPEAK_OPTIONS = {
+SPEAK_TEXT = {
     "text": "How much wood could a woodchuck chuck? If a woodchuck could chuck wood? As much wood as a woodchuck could chuck, if a woodchuck could chuck wood."
 }
 filename = "test.mp3"
@@ -31,7 +31,7 @@ def main():
             model="aura-asteria-en",
         )
 
-        response = deepgram.speak.rest.v("1").save(filename, SPEAK_OPTIONS, options)
+        response = deepgram.speak.rest.v("1").save(filename, SPEAK_TEXT, options)
         print(response.to_json(indent=4))
 
     except Exception as e:

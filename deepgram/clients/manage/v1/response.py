@@ -2,22 +2,17 @@
 # Use of this source code is governed by a MIT license that can be found in the LICENSE file.
 # SPDX-License-Identifier: MIT
 
-from typing import List, Optional
+from typing import List, Optional, Dict, Any
 
 from dataclasses import dataclass, field
 from dataclasses_json import config as dataclass_config, DataClassJsonMixin
 
 
-# Result Message
-
-
 @dataclass
-class Message(DataClassJsonMixin):
+class BaseResponse(DataClassJsonMixin):
     """
-    Message from the Deepgram Platform
+    BaseResponse class used to define the common methods and properties for all response classes.
     """
-
-    message: str = ""
 
     def __getitem__(self, key):
         _dict = self.to_dict()
@@ -29,12 +24,39 @@ class Message(DataClassJsonMixin):
     def __str__(self) -> str:
         return self.to_json(indent=4)
 
+    def eval(self, key: str) -> str:
+        """
+        This method is used to evaluate a key in the response object using a dot notation style method.
+        """
+        keys = key.split(".")
+        result: Dict[Any, Any] = self.to_dict()
+        for k in keys:
+            if isinstance(result, dict) and k in result:
+                result = result[k]
+            elif isinstance(result, list) and k.isdigit() and int(k) < len(result):
+                result = result[int(k)]
+            else:
+                return ""
+        return str(result)
+
+
+# Result Message
+
+
+@dataclass
+class Message(BaseResponse):
+    """
+    Message from the Deepgram Platform
+    """
+
+    message: str = ""
+
 
 # Projects
 
 
 @dataclass
-class Project(DataClassJsonMixin):
+class Project(BaseResponse):
     """
     Project object
     """
@@ -42,19 +64,9 @@ class Project(DataClassJsonMixin):
     project_id: str = ""
     name: str = ""
 
-    def __getitem__(self, key):
-        _dict = self.to_dict()
-        return _dict[key]
-
-    def __setitem__(self, key, val):
-        self.__dict__[key] = val
-
-    def __str__(self) -> str:
-        return self.to_json(indent=4)
-
 
 @dataclass
-class ProjectsResponse(DataClassJsonMixin):
+class ProjectsResponse(BaseResponse):
     """
     Projects Response object
     """
@@ -69,18 +81,12 @@ class ProjectsResponse(DataClassJsonMixin):
             ]
         return _dict[key]
 
-    def __setitem__(self, key, val):
-        self.__dict__[key] = val
-
-    def __str__(self) -> str:
-        return self.to_json(indent=4)
-
 
 # Members
 
 
 @dataclass
-class Member(DataClassJsonMixin):
+class Member(BaseResponse):
     """
     Member object
     """
@@ -90,19 +96,9 @@ class Member(DataClassJsonMixin):
     last_name: str = ""
     member_id: str = ""
 
-    def __getitem__(self, key):
-        _dict = self.to_dict()
-        return _dict[key]
-
-    def __setitem__(self, key, val):
-        self.__dict__[key] = val
-
-    def __str__(self) -> str:
-        return self.to_json(indent=4)
-
 
 @dataclass
-class MembersResponse(DataClassJsonMixin):
+class MembersResponse(BaseResponse):
     """
     Members Response object
     """
@@ -117,18 +113,12 @@ class MembersResponse(DataClassJsonMixin):
             ]
         return _dict[key]
 
-    def __setitem__(self, key, val):
-        self.__dict__[key] = val
-
-    def __str__(self) -> str:
-        return self.to_json(indent=4)
-
 
 # Keys
 
 
 @dataclass
-class Key(DataClassJsonMixin):
+class Key(BaseResponse):
     """
     Key object
     """
@@ -147,15 +137,9 @@ class Key(DataClassJsonMixin):
             _dict["scopes"] = [str(scopes) for scopes in _dict["scopes"]]
         return _dict[key]
 
-    def __setitem__(self, key, val):
-        self.__dict__[key] = val
-
-    def __str__(self) -> str:
-        return self.to_json(indent=4)
-
 
 @dataclass
-class KeyResponse(DataClassJsonMixin):
+class KeyResponse(BaseResponse):
     """
     Key Response object
     """
@@ -171,15 +155,9 @@ class KeyResponse(DataClassJsonMixin):
             _dict["member"] = Member.from_dict(_dict["member"])
         return _dict[key]
 
-    def __setitem__(self, key, val):
-        self.__dict__[key] = val
-
-    def __str__(self) -> str:
-        return self.to_json(indent=4)
-
 
 @dataclass
-class KeysResponse(DataClassJsonMixin):
+class KeysResponse(BaseResponse):
     """
     Keys Response object
     """
@@ -194,18 +172,12 @@ class KeysResponse(DataClassJsonMixin):
             ]
         return _dict[key]
 
-    def __setitem__(self, key, val):
-        self.__dict__[key] = val
-
-    def __str__(self) -> str:
-        return self.to_json(indent=4)
-
 
 # Scopes
 
 
 @dataclass
-class ScopesResponse(DataClassJsonMixin):
+class ScopesResponse(BaseResponse):
     """
     Scopes Response object
     """
@@ -218,18 +190,12 @@ class ScopesResponse(DataClassJsonMixin):
             _dict["scopes"] = [str(scopes) for scopes in _dict["scopes"]]
         return _dict[key]
 
-    def __setitem__(self, key, val):
-        self.__dict__[key] = val
-
-    def __str__(self) -> str:
-        return self.to_json(indent=4)
-
 
 # Invites
 
 
 @dataclass
-class Invite(DataClassJsonMixin):
+class Invite(BaseResponse):
     """
     Invite object
     """
@@ -237,19 +203,9 @@ class Invite(DataClassJsonMixin):
     email: str = ""
     scope: str = ""
 
-    def __getitem__(self, key):
-        _dict = self.to_dict()
-        return _dict[key]
-
-    def __setitem__(self, key, val):
-        self.__dict__[key] = val
-
-    def __str__(self) -> str:
-        return self.to_json(indent=4)
-
 
 @dataclass
-class InvitesResponse(DataClassJsonMixin):
+class InvitesResponse(BaseResponse):
     """
     Invites Response object
     """
@@ -264,18 +220,12 @@ class InvitesResponse(DataClassJsonMixin):
             ]
         return _dict[key]
 
-    def __setitem__(self, key, val):
-        self.__dict__[key] = val
-
-    def __str__(self) -> str:
-        return self.to_json(indent=4)
-
 
 # Usage
 
 
 @dataclass
-class Config(DataClassJsonMixin):  # pylint: disable=too-many-instance-attributes
+class Config(BaseResponse):  # pylint: disable=too-many-instance-attributes
     """
     Config object
     """
@@ -310,19 +260,9 @@ class Config(DataClassJsonMixin):  # pylint: disable=too-many-instance-attribute
         default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
 
-    def __getitem__(self, key):
-        _dict = self.to_dict()
-        return _dict[key]
-
-    def __setitem__(self, key, val):
-        self.__dict__[key] = val
-
-    def __str__(self) -> str:
-        return self.to_json(indent=4)
-
 
 @dataclass
-class Details(DataClassJsonMixin):  # pylint: disable=too-many-instance-attributes
+class Details(BaseResponse):  # pylint: disable=too-many-instance-attributes
     """
     Details object
     """
@@ -353,15 +293,9 @@ class Details(DataClassJsonMixin):  # pylint: disable=too-many-instance-attribut
             _dict["config"] = Config.from_dict(_dict["config"])
         return _dict[key]
 
-    def __setitem__(self, key, val):
-        self.__dict__[key] = val
-
-    def __str__(self) -> str:
-        return self.to_json(indent=4)
-
 
 @dataclass
-class Callback(DataClassJsonMixin):
+class Callback(BaseResponse):
     """
     Callback object
     """
@@ -370,19 +304,9 @@ class Callback(DataClassJsonMixin):
     code: int = 0
     completed: str = ""
 
-    def __getitem__(self, key):
-        _dict = self.to_dict()
-        return _dict[key]
-
-    def __setitem__(self, key, val):
-        self.__dict__[key] = val
-
-    def __str__(self) -> str:
-        return self.to_json(indent=4)
-
 
 @dataclass
-class TokenDetail(DataClassJsonMixin):
+class TokenDetail(BaseResponse):
     """
     Token Detail object
     """
@@ -392,19 +316,9 @@ class TokenDetail(DataClassJsonMixin):
     model: str = ""
     output: int = 0
 
-    def __getitem__(self, key):
-        _dict = self.to_dict()
-        return _dict[key]
-
-    def __setitem__(self, key, val):
-        self.__dict__[key] = val
-
-    def __str__(self) -> str:
-        return self.to_json(indent=4)
-
 
 @dataclass
-class SpeechSegment(DataClassJsonMixin):
+class SpeechSegment(BaseResponse):
     """
     Speech Segment object
     """
@@ -413,19 +327,9 @@ class SpeechSegment(DataClassJsonMixin):
     model: str = ""
     tier: str = ""
 
-    def __getitem__(self, key):
-        _dict = self.to_dict()
-        return _dict[key]
-
-    def __setitem__(self, key, val):
-        self.__dict__[key] = val
-
-    def __str__(self) -> str:
-        return self.to_json(indent=4)
-
 
 @dataclass
-class TTSDetails(DataClassJsonMixin):
+class TTSDetails(BaseResponse):
     """
     TTS Details object
     """
@@ -445,15 +349,9 @@ class TTSDetails(DataClassJsonMixin):
             ]
         return _dict[key]
 
-    def __setitem__(self, key, val):
-        self.__dict__[key] = val
-
-    def __str__(self) -> str:
-        return self.to_json(indent=4)
-
 
 @dataclass
-class Response(DataClassJsonMixin):
+class Response(BaseResponse):
     """
     Response object
     """
@@ -481,15 +379,9 @@ class Response(DataClassJsonMixin):
             ]
         return _dict[key]
 
-    def __setitem__(self, key, val):
-        self.__dict__[key] = val
-
-    def __str__(self) -> str:
-        return self.to_json(indent=4)
-
 
 @dataclass
-class UsageRequest(DataClassJsonMixin):  # pylint: disable=too-many-instance-attributes
+class UsageRequest(BaseResponse):  # pylint: disable=too-many-instance-attributes
     """
     Usage Request object
     """
@@ -515,15 +407,9 @@ class UsageRequest(DataClassJsonMixin):  # pylint: disable=too-many-instance-att
             _dict["callback"] = Callback.from_dict(_dict["callback"])
         return _dict[key]
 
-    def __setitem__(self, key, val):
-        self.__dict__[key] = val
-
-    def __str__(self) -> str:
-        return self.to_json(indent=4)
-
 
 @dataclass
-class UsageRequestsResponse(DataClassJsonMixin):
+class UsageRequestsResponse(BaseResponse):
     """
     Usage Requests Response object
     """
@@ -540,15 +426,9 @@ class UsageRequestsResponse(DataClassJsonMixin):
             ]
         return _dict[key]
 
-    def __setitem__(self, key, val):
-        self.__dict__[key] = val
-
-    def __str__(self) -> str:
-        return self.to_json(indent=4)
-
 
 @dataclass
-class Tokens(DataClassJsonMixin):
+class Tokens(BaseResponse):
     """
     Tokens object
     """
@@ -556,19 +436,9 @@ class Tokens(DataClassJsonMixin):
     tokens_in: int = 0
     out: int = 0
 
-    def __getitem__(self, key):
-        _dict = self.to_dict()
-        return _dict[key]
-
-    def __setitem__(self, key, val):
-        self.__dict__[key] = val
-
-    def __str__(self) -> str:
-        return self.to_json(indent=4)
-
 
 @dataclass
-class TTS(DataClassJsonMixin):
+class TTS(BaseResponse):
     """
     TTS object
     """
@@ -576,19 +446,9 @@ class TTS(DataClassJsonMixin):
     characters: int = 0
     requests: int = 0
 
-    def __getitem__(self, key):
-        _dict = self.to_dict()
-        return _dict[key]
-
-    def __setitem__(self, key, val):
-        self.__dict__[key] = val
-
-    def __str__(self) -> str:
-        return self.to_json(indent=4)
-
 
 @dataclass
-class Results(DataClassJsonMixin):
+class Results(BaseResponse):
     """
     Results object
     """
@@ -609,15 +469,9 @@ class Results(DataClassJsonMixin):
             _dict["tts"] = TTS.from_dict(_dict["tts"])
         return _dict[key]
 
-    def __setitem__(self, key, val):
-        self.__dict__[key] = val
-
-    def __str__(self) -> str:
-        return self.to_json(indent=4)
-
 
 @dataclass
-class Resolution(DataClassJsonMixin):
+class Resolution(BaseResponse):
     """
     Resolution object
     """
@@ -625,19 +479,9 @@ class Resolution(DataClassJsonMixin):
     units: str = ""
     amount: int = 0
 
-    def __getitem__(self, key):
-        _dict = self.to_dict()
-        return _dict[key]
-
-    def __setitem__(self, key, val):
-        self.__dict__[key] = val
-
-    def __str__(self) -> str:
-        return self.to_json(indent=4)
-
 
 @dataclass
-class UsageSummaryResponse(DataClassJsonMixin):
+class UsageSummaryResponse(BaseResponse):
     """
     Usage Summary Response object
     """
@@ -657,15 +501,9 @@ class UsageSummaryResponse(DataClassJsonMixin):
             ]
         return _dict[key]
 
-    def __setitem__(self, key, val):
-        self.__dict__[key] = val
-
-    def __str__(self) -> str:
-        return self.to_json(indent=4)
-
 
 @dataclass
-class UsageModel(DataClassJsonMixin):
+class UsageModel(BaseResponse):
     """
     Usage Model object
     """
@@ -675,19 +513,9 @@ class UsageModel(DataClassJsonMixin):
     version: str = ""
     model_id: str = ""
 
-    def __getitem__(self, key):
-        _dict = self.to_dict()
-        return _dict[key]
-
-    def __setitem__(self, key, val):
-        self.__dict__[key] = val
-
-    def __str__(self) -> str:
-        return self.to_json(indent=4)
-
 
 @dataclass
-class UsageFieldsResponse(DataClassJsonMixin):
+class UsageFieldsResponse(BaseResponse):
     """
     Usage Fields Response object
     """
@@ -721,18 +549,12 @@ class UsageFieldsResponse(DataClassJsonMixin):
             _dict["languages"] = [str(languages) for languages in _dict["languages"]]
         return _dict[key]
 
-    def __setitem__(self, key, val):
-        self.__dict__[key] = val
-
-    def __str__(self) -> str:
-        return self.to_json(indent=4)
-
 
 # Billing
 
 
 @dataclass
-class Balance(DataClassJsonMixin):
+class Balance(BaseResponse):
     """
     Balance object
     """
@@ -742,19 +564,9 @@ class Balance(DataClassJsonMixin):
     units: str = ""
     purchase_order_id: str = ""
 
-    def __getitem__(self, key):
-        _dict = self.to_dict()
-        return _dict[key]
-
-    def __setitem__(self, key, val):
-        self.__dict__[key] = val
-
-    def __str__(self) -> str:
-        return self.to_json(indent=4)
-
 
 @dataclass
-class BalancesResponse(DataClassJsonMixin):
+class BalancesResponse(BaseResponse):
     """
     Balances Response object
     """
@@ -768,9 +580,3 @@ class BalancesResponse(DataClassJsonMixin):
                 Balance.from_dict(balances) for balances in _dict["balances"]
             ]
         return _dict[key]
-
-    def __setitem__(self, key, val):
-        self.__dict__[key] = val
-
-    def __str__(self) -> str:
-        return self.to_json(indent=4)

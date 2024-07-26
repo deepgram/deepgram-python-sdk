@@ -217,7 +217,12 @@ class AbstractAsyncRestClient:
             timeout = httpx.Timeout(30.0, connect=10.0)
 
         try:
-            async with httpx.AsyncClient(timeout=timeout) as client:
+            transport = kwargs.get("transport")
+            async with httpx.AsyncClient(
+                timeout=timeout, transport=transport
+            ) as client:
+                if transport:
+                    kwargs.pop("transport")
                 response = await client.request(
                     method, _url, headers=_headers, **kwargs
                 )
@@ -269,7 +274,12 @@ class AbstractAsyncRestClient:
             timeout = httpx.Timeout(30.0, connect=10.0)
 
         try:
-            async with httpx.AsyncClient(timeout=timeout) as client:
+            transport = kwargs.get("transport")
+            async with httpx.AsyncClient(
+                timeout=timeout, transport=transport
+            ) as client:
+                if transport:
+                    kwargs.pop("transport")
                 response = await client.request(
                     method, _url, headers=_headers, **kwargs
                 )
@@ -334,7 +344,11 @@ class AbstractAsyncRestClient:
             timeout = httpx.Timeout(30.0, connect=10.0)
 
         try:
-            client = httpx.AsyncClient(timeout=timeout)
+            transport = kwargs.get("transport")
+            client = httpx.AsyncClient(timeout=timeout, transport=transport)
+            if transport:
+                kwargs.pop("transport")
+            kwargs.pop("transport")
             req = client.build_request(method, _url, headers=_headers, **kwargs)
             return await client.send(req, stream=True)
 

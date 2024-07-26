@@ -46,6 +46,7 @@ class AsyncListenRESTClient(AbstractAsyncRestClient):
         headers: Optional[Dict] = None,
         timeout: Optional[httpx.Timeout] = None,
         endpoint: str = "v1/listen",
+        **kwargs,
     ) -> Union[AsyncPrerecordedResponse, PrerecordedResponse]:
         """
         Transcribes audio from a URL source.
@@ -77,6 +78,7 @@ class AsyncListenRESTClient(AbstractAsyncRestClient):
                 headers=headers,
                 timeout=timeout,
                 endpoint=endpoint,
+                **kwargs,
             )
 
         url = f"{self._config.url}/{endpoint}"
@@ -107,6 +109,7 @@ class AsyncListenRESTClient(AbstractAsyncRestClient):
             headers=headers,
             json=body,
             timeout=timeout,
+            **kwargs,
         )
         self._logger.info("json: %s", result)
         res = PrerecordedResponse.from_json(result)
@@ -124,6 +127,7 @@ class AsyncListenRESTClient(AbstractAsyncRestClient):
         headers: Optional[Dict] = None,
         timeout: Optional[httpx.Timeout] = None,
         endpoint: str = "v1/listen",
+        **kwargs,
     ) -> AsyncPrerecordedResponse:
         """
         Transcribes audio from a URL source and sends the result to a callback URL.
@@ -176,6 +180,7 @@ class AsyncListenRESTClient(AbstractAsyncRestClient):
             headers=headers,
             json=body,
             timeout=timeout,
+            **kwargs,
         )
         self._logger.info("json: %s", result)
         res = AsyncPrerecordedResponse.from_json(result)
@@ -192,6 +197,7 @@ class AsyncListenRESTClient(AbstractAsyncRestClient):
         headers: Optional[Dict] = None,
         timeout: Optional[httpx.Timeout] = None,
         endpoint: str = "v1/listen",
+        **kwargs,
     ) -> Union[AsyncPrerecordedResponse, PrerecordedResponse]:
         """
         Transcribes audio from a local file source.
@@ -223,6 +229,7 @@ class AsyncListenRESTClient(AbstractAsyncRestClient):
                 headers=headers,
                 timeout=timeout,
                 endpoint=endpoint,
+                **kwargs,
             )
 
         url = f"{self._config.url}/{endpoint}"
@@ -254,6 +261,7 @@ class AsyncListenRESTClient(AbstractAsyncRestClient):
             headers=headers,
             content=body,
             timeout=timeout,
+            **kwargs,
         )
         self._logger.info("json: %s", result)
         res = PrerecordedResponse.from_json(result)
@@ -271,6 +279,7 @@ class AsyncListenRESTClient(AbstractAsyncRestClient):
         headers: Optional[Dict] = None,
         timeout: Optional[httpx.Timeout] = None,
         endpoint: str = "v1/listen",
+        **kwargs,
     ) -> AsyncPrerecordedResponse:
         """
         Transcribes audio from a local file source and sends the result to a callback URL.
@@ -324,6 +333,7 @@ class AsyncListenRESTClient(AbstractAsyncRestClient):
             headers=headers,
             content=body,
             timeout=timeout,
+            **kwargs,
         )
         self._logger.info("json: %s", result)
         res = AsyncPrerecordedResponse.from_json(result)

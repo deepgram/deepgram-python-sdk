@@ -12,6 +12,8 @@ venv.bak/
 __pycache__
 *.egg-info
 dist/
+.mypy_cache/
+.pytest_cache/
 
 # build
 build/

@@ -142,7 +142,7 @@ class LiveOptions(DataClassJsonMixin):  # pylint: disable=too-many-instance-attr
                 "WARNING: Tier is deprecated. Will be removed in a future version."
             )
 
-        if isinstance(self.endpointing) == str:
+        if isinstance(self.endpointing, str):
             logger.warning(
                 "WARNING: endpointing's current type previous was `Optional[str]` which is incorrect"
                 " for backward compatibility we are keeping it as `Optional[Union[str, bool, int]]`"
