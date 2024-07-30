@@ -33,6 +33,8 @@ from .v1.response import (
     UsageFieldsResponse as UsageFieldsResponseLatest,
     Balance as BalanceLatest,
     BalancesResponse as BalancesResponseLatest,
+    ModelResponse as ModelResponseLatest,
+    ModelsResponse as ModelsResponseLatest,
 )
 
 
@@ -66,7 +68,8 @@ UsageSummaryResponse = UsageSummaryResponseLatest
 UsageFieldsResponse = UsageFieldsResponseLatest
 Balance = BalanceLatest
 BalancesResponse = BalancesResponseLatest
-
+ModelResponse = ModelResponseLatest
+ModelsResponse = ModelsResponseLatest
 
 # clients
 ManageClient = ManageClientLatest

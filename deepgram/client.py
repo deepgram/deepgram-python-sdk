@@ -164,6 +164,8 @@ from .clients import (
     UsageFieldsResponse,
     Balance,
     BalancesResponse,
+    ModelResponse,
+    ModelsResponse,
 )
 
 # on-prem
@@ -261,21 +263,21 @@ class DeepgramClient:
     @property
     def listen(self):
         """
-        Returns a ListenClient instance for interacting with Deepgram's transcription services.
+        Returns a Listen dot-notation router for interacting with Deepgram's transcription services.
         """
         return Listen(self._config)
 
     @property
     def read(self):
         """
-        Returns a ReadClient instance for interacting with Deepgram's read services.
+        Returns a Read dot-notation router for interacting with Deepgram's read services.
         """
         return Read(self._config)
 
     @property
     def speak(self):
         """
-        Returns a SpeakClient instance for interacting with Deepgram's speak services.
+        Returns a Speak dot-notation router for interacting with Deepgram's speak services.
         """
         return Speak(self._config)
 
