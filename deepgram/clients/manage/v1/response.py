@@ -140,6 +140,9 @@ class Key(DataClassJsonMixin):
     comment: Optional[str] = ""
     created: str = ""
     scopes: List[str] = field(default_factory=list)
+    expiration_date: str = field(
+        default="", metadata=dataclass_config(exclude=lambda f: f is None)
+    )
 
     def __getitem__(self, key):
         _dict = self.to_dict()
