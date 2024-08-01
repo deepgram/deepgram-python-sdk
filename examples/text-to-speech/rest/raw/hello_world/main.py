@@ -15,7 +15,7 @@ from deepgram import (
 
 load_dotenv()
 
-SPEAK_OPTIONS = {"text": "Hello world!"}
+SPEAK_TEXT = {"text": "Hello world!"}
 filename = "test.mp3"
 
 
@@ -32,7 +32,7 @@ def main():
             model="aura-asteria-en",
         )
 
-        response = deepgram.speak.rest.v("1").stream_raw(SPEAK_OPTIONS, options)
+        response = deepgram.speak.rest.v("1").stream_raw(SPEAK_TEXT, options)
 
         for header in response.headers:
             print(f"{header}: {response.headers[header]}")

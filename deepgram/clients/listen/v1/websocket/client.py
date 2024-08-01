@@ -222,6 +222,12 @@ class ListenWebSocketClient:  # pylint: disable=too-many-instance-attributes
                 raise e
             return False
 
+    def is_connected(self) -> bool:
+        """
+        Returns the connection status of the WebSocket.
+        """
+        return self._socket is not None
+
     # pylint: enable=too-many-statements,too-many-branches
 
     def on(

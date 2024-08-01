@@ -217,7 +217,10 @@ class AbstractSyncRestClient:
             timeout = httpx.Timeout(30.0, connect=10.0)
 
         try:
-            with httpx.Client(timeout=timeout) as client:
+            transport = kwargs.get("transport")
+            with httpx.Client(timeout=timeout, transport=transport) as client:
+                if transport:
+                    kwargs.pop("transport")
                 response = client.request(method, _url, headers=_headers, **kwargs)
                 response.raise_for_status()
                 return response.text
@@ -267,7 +270,10 @@ class AbstractSyncRestClient:
             timeout = httpx.Timeout(30.0, connect=10.0)
 
         try:
-            with httpx.Client(timeout=timeout) as client:
+            transport = kwargs.get("transport")
+            with httpx.Client(timeout=timeout, transport=transport) as client:
+                if transport:
+                    kwargs.pop("transport")
                 response = client.request(method, _url, headers=_headers, **kwargs)
                 response.raise_for_status()
 
@@ -330,7 +336,10 @@ class AbstractSyncRestClient:
             timeout = httpx.Timeout(30.0, connect=10.0)
 
         try:
-            client = httpx.Client(timeout=timeout)
+            transport = kwargs.get("transport")
+            with httpx.Client(timeout=timeout, transport=transport) as client:
+                if transport:
+                    kwargs.pop("transport")
             req = client.build_request(method, _url, headers=_headers, **kwargs)
             return client.send(req, stream=True)
 

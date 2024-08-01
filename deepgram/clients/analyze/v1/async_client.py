@@ -45,6 +45,7 @@ class AsyncAnalyzeClient(AbstractAsyncRestClient):
         headers: Optional[Dict] = None,
         timeout: Optional[httpx.Timeout] = None,
         endpoint: str = "v1/read",
+        **kwargs,
     ) -> Union[AsyncAnalyzeResponse, AnalyzeResponse]:
         """
         Analyze text from a URL source.
@@ -62,7 +63,11 @@ class AsyncAnalyzeClient(AbstractAsyncRestClient):
         """
         self._logger.debug("AsyncAnalyzeClient.analyze_url ENTER")
 
-        if options is not None and options["callback"] is not None:
+        if (
+            isinstance(options, dict)
+            and "callback" in options
+            and options["callback"] is not None
+        ) or (isinstance(options, AnalyzeOptions) and options.callback is not None):
             self._logger.debug("AsyncAnalyzeClient.analyze_url LEAVE")
             return await self.analyze_url_callback(
                 source,
@@ -72,6 +77,7 @@ class AsyncAnalyzeClient(AbstractAsyncRestClient):
                 addons=addons,
                 timeout=timeout,
                 endpoint=endpoint,
+                **kwargs,
             )
 
         url = f"{self._config.url}/{endpoint}"
@@ -102,6 +108,7 @@ class AsyncAnalyzeClient(AbstractAsyncRestClient):
             headers=headers,
             json=body,
             timeout=timeout,
+            **kwargs,
         )
         self._logger.info("json: %s", result)
         res = AnalyzeResponse.from_json(result)
@@ -119,6 +126,7 @@ class AsyncAnalyzeClient(AbstractAsyncRestClient):
         headers: Optional[Dict] = None,
         timeout: Optional[httpx.Timeout] = None,
         endpoint: str = "v1/read",
+        **kwargs,
     ) -> AsyncAnalyzeResponse:
         """
         Transcribes audio from a URL source and sends the result to a callback URL.
@@ -171,6 +179,7 @@ class AsyncAnalyzeClient(AbstractAsyncRestClient):
             headers=headers,
             json=body,
             timeout=timeout,
+            **kwargs,
         )
         self._logger.info("json: %s", result)
         res = AsyncAnalyzeResponse.from_json(result)
@@ -187,6 +196,7 @@ class AsyncAnalyzeClient(AbstractAsyncRestClient):
         headers: Optional[Dict] = None,
         timeout: Optional[httpx.Timeout] = None,
         endpoint: str = "v1/read",
+        **kwargs,
     ) -> Union[AsyncAnalyzeResponse, AnalyzeResponse]:
         """
         Analyze text from a local file source.
@@ -204,7 +214,11 @@ class AsyncAnalyzeClient(AbstractAsyncRestClient):
         """
         self._logger.debug("AsyncAnalyzeClient.analyze_text ENTER")
 
-        if options is not None and options["callback"] is not None:
+        if (
+            isinstance(options, dict)
+            and "callback" in options
+            and options["callback"] is not None
+        ) or (isinstance(options, AnalyzeOptions) and options.callback is not None):
             self._logger.debug("AsyncAnalyzeClient.analyze_text LEAVE")
             return await self.analyze_text_callback(
                 source,
@@ -214,6 +228,7 @@ class AsyncAnalyzeClient(AbstractAsyncRestClient):
                 addons=addons,
                 timeout=timeout,
                 endpoint=endpoint,
+                **kwargs,
             )
 
         url = f"{self._config.url}/{endpoint}"
@@ -245,6 +260,7 @@ class AsyncAnalyzeClient(AbstractAsyncRestClient):
             headers=headers,
             content=body,
             timeout=timeout,
+            **kwargs,
         )
         self._logger.info("json: %s", result)
         res = AnalyzeResponse.from_json(result)
@@ -262,6 +278,7 @@ class AsyncAnalyzeClient(AbstractAsyncRestClient):
         headers: Optional[Dict] = None,
         timeout: Optional[httpx.Timeout] = None,
         endpoint: str = "v1/read",
+        **kwargs,
     ) -> AsyncAnalyzeResponse:
         """
         Transcribes audio from a local file source and sends the result to a callback URL.
@@ -315,6 +332,7 @@ class AsyncAnalyzeClient(AbstractAsyncRestClient):
             headers=headers,
             json=body,
             timeout=timeout,
+            **kwargs,
         )
         self._logger.info("json: %s", result)
         res = AsyncAnalyzeResponse.from_json(result)

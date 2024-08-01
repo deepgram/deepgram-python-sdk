@@ -17,7 +17,7 @@ def main():
     try:
         # example of setting up a client config. logging values: WARNING, VERBOSE, DEBUG, SPAM
         config = DeepgramClientOptions(
-            verbose=verboselogs.DEBUG,
+            verbose=verboselogs.SPAM,
         )
         deepgram: DeepgramClient = DeepgramClient("", config)
         # otherwise, use default config
@@ -48,7 +48,11 @@ def main():
                 )
 
         # create key
-        options: KeyOptions = {"comment": "MyTestKey", "scopes": ["member"]}
+        options: KeyOptions = KeyOptions(
+            comment="MyTestKey",
+            scopes=["member:write", "project:read"],
+            time_to_live_in_seconds=3600,
+        )
 
         myKeyId = None
         createResp = deepgram.manage.v("1").create_key(myId, options)

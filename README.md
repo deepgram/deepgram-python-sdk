@@ -254,12 +254,30 @@ pip install -r requirements.txt
 pip install -e .
 ```
 
-### Testing
+### Daily and Unit Tests
 
-If you are looking to contribute or modify pytest code, then you need to install the following dependencies:
+If you are looking to use, run, contribute or modify to the daily/unit tests, then you need to install the following dependencies:
 
 ```bash
 pip install -r requirements-dev.txt
+```
+
+#### Daily Tests
+
+The daily tests invoke a series of checks against the actual/real API endpoint and save the results in the `tests/response_data` folder. This response data is updated nightly to reflect the latest response from the server. Running the daily tests does require a `DEEPGRAM_API_KEY` set in your environment variables.
+
+To run the Daily Tests:
+
+```bash
+make daily-test
+```
+
+#### Unit Tests
+
+The unit tests invoke a series of checks against mock endpoints using the responses saved in `tests/response_data` from the daily tests. These tests are meant to simulate running against the endpoint without actually reaching out to the endpoint; running the unit tests does require a `DEEPGRAM_API_KEY` set in your environment variables, but you will not actually reach out to the server.
+
+```bash
+make unit-test
 ```
 
 ## Getting Help

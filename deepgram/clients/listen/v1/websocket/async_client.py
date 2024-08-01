@@ -219,6 +219,12 @@ class AsyncListenWebSocketClient:  # pylint: disable=too-many-instance-attribute
                 raise
             return False
 
+    def is_connected(self) -> bool:
+        """
+        Returns the connection status of the WebSocket.
+        """
+        return self._socket is not None
+
     # pylint: enable=too-many-branches,too-many-statements
 
     def on(self, event: LiveTranscriptionEvents, handler) -> None:

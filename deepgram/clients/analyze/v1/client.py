@@ -45,6 +45,7 @@ class AnalyzeClient(AbstractSyncRestClient):
         headers: Optional[Dict] = None,
         timeout: Optional[httpx.Timeout] = None,
         endpoint: str = "v1/read",
+        **kwargs,
     ) -> Union[AnalyzeResponse, AsyncAnalyzeResponse]:
         """
         Analyze text from a URL source.
@@ -76,6 +77,7 @@ class AnalyzeClient(AbstractSyncRestClient):
                 headers=headers,
                 timeout=timeout,
                 endpoint=endpoint,
+                **kwargs,
             )
 
         url = f"{self._config.url}/{endpoint}"
@@ -106,6 +108,7 @@ class AnalyzeClient(AbstractSyncRestClient):
             headers=headers,
             json=body,
             timeout=timeout,
+            **kwargs,
         )
         self._logger.info("json: %s", result)
         res = AnalyzeResponse.from_json(result)
@@ -123,6 +126,7 @@ class AnalyzeClient(AbstractSyncRestClient):
         headers: Optional[Dict] = None,
         timeout: Optional[httpx.Timeout] = None,
         endpoint: str = "v1/read",
+        **kwargs,
     ) -> AsyncAnalyzeResponse:
         """
         Transcribes audio from a URL source and sends the result to a callback URL.
@@ -175,6 +179,7 @@ class AnalyzeClient(AbstractSyncRestClient):
             headers=headers,
             json=body,
             timeout=timeout,
+            **kwargs,
         )
         self._logger.info("json: %s", result)
         res = AsyncAnalyzeResponse.from_json(result)
@@ -191,6 +196,7 @@ class AnalyzeClient(AbstractSyncRestClient):
         headers: Optional[Dict] = None,
         timeout: Optional[httpx.Timeout] = None,
         endpoint: str = "v1/read",
+        **kwargs,
     ) -> Union[AnalyzeResponse, AsyncAnalyzeResponse]:
         """
         Analyze text from a local file source.
@@ -222,6 +228,7 @@ class AnalyzeClient(AbstractSyncRestClient):
                 headers=headers,
                 timeout=timeout,
                 endpoint=endpoint,
+                **kwargs,
             )
 
         url = f"{self._config.url}/{endpoint}"
@@ -253,6 +260,7 @@ class AnalyzeClient(AbstractSyncRestClient):
             headers=headers,
             content=body,
             timeout=timeout,
+            **kwargs,
         )
         self._logger.info("json: %s", result)
         res = AnalyzeResponse.from_json(result)
@@ -270,6 +278,7 @@ class AnalyzeClient(AbstractSyncRestClient):
         headers: Optional[Dict] = None,
         timeout: Optional[httpx.Timeout] = None,
         endpoint: str = "v1/read",
+        **kwargs,
     ) -> AsyncAnalyzeResponse:
         """
         Transcribes audio from a local file source and sends the result to a callback URL.
@@ -323,6 +332,7 @@ class AnalyzeClient(AbstractSyncRestClient):
             headers=headers,
             json=body,
             timeout=timeout,
+            **kwargs,
         )
         self._logger.info("json: %s", result)
         res = AsyncAnalyzeResponse.from_json(result)

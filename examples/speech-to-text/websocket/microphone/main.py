@@ -42,6 +42,7 @@ def main():
             if len(sentence) == 0:
                 return
             if result.is_final:
+                print(f"Message: {result.to_json()}")
                 # We need to collect these and concatenate them together when we get a speech_final=true
                 # See docs: https://developers.deepgram.com/docs/understand-endpointing-interim-results
                 is_finals.append(sentence)

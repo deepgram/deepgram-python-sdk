@@ -46,6 +46,7 @@ class AsyncSpeakRESTClient(AbstractAsyncRestClient):
         headers: Optional[Dict] = None,
         timeout: Optional[httpx.Timeout] = None,
         endpoint: str = "v1/speak",
+        **kwargs,
     ) -> httpx.Response:
         """
         Speak from a text source and store as a Iterator[byte].
@@ -99,6 +100,7 @@ class AsyncSpeakRESTClient(AbstractAsyncRestClient):
             headers=headers,
             json=body,
             timeout=timeout,
+            **kwargs,
         )
 
         self._logger.info("result: %s", str(result))
@@ -114,6 +116,7 @@ class AsyncSpeakRESTClient(AbstractAsyncRestClient):
         headers: Optional[Dict] = None,
         timeout: Optional[httpx.Timeout] = None,
         endpoint: str = "v1/speak",
+        **kwargs,
     ) -> SpeakRESTResponse:
         """
         Speak from a text source and store in memory.
@@ -173,6 +176,7 @@ class AsyncSpeakRESTClient(AbstractAsyncRestClient):
             json=body,
             timeout=timeout,
             file_result=return_vals,
+            **kwargs,
         )
         self._logger.info("result: %s", result)
         resp = SpeakRESTResponse(
@@ -205,6 +209,7 @@ class AsyncSpeakRESTClient(AbstractAsyncRestClient):
         headers: Optional[Dict] = None,
         timeout: Optional[httpx.Timeout] = None,
         endpoint: str = "v1/speak",
+        **kwargs,
     ) -> SpeakRESTResponse:
         """
         DEPRECATED: stream() is deprecated. Use stream_memory() instead.
@@ -216,6 +221,7 @@ class AsyncSpeakRESTClient(AbstractAsyncRestClient):
             headers=headers,
             timeout=timeout,
             endpoint=endpoint,
+            **kwargs,
         )
 
     async def file(
@@ -226,6 +232,7 @@ class AsyncSpeakRESTClient(AbstractAsyncRestClient):
         addons: Optional[Dict] = None,
         timeout: Optional[httpx.Timeout] = None,
         endpoint: str = "v1/speak",
+        **kwargs,
     ) -> SpeakRESTResponse:
         """
         Speak from a text source and save to a file.
@@ -237,6 +244,7 @@ class AsyncSpeakRESTClient(AbstractAsyncRestClient):
             addons=addons,
             timeout=timeout,
             endpoint=endpoint,
+            **kwargs,
         )
 
     async def save(
@@ -248,6 +256,7 @@ class AsyncSpeakRESTClient(AbstractAsyncRestClient):
         headers: Optional[Dict] = None,
         timeout: Optional[httpx.Timeout] = None,
         endpoint: str = "v1/speak",
+        **kwargs,
     ) -> SpeakRESTResponse:
         """
         Speak from a text source and save to a file.
@@ -275,6 +284,7 @@ class AsyncSpeakRESTClient(AbstractAsyncRestClient):
             headers=headers,
             timeout=timeout,
             endpoint=endpoint,
+            **kwargs,
         )
 
         if res.stream is None:

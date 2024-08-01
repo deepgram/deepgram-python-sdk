@@ -2,21 +2,17 @@
 # Use of this source code is governed by a MIT license that can be found in the LICENSE file.
 # SPDX-License-Identifier: MIT
 
-from typing import List, Optional, Dict
+from typing import List, Optional, Dict, Any
 
 from dataclasses import dataclass, field
 from dataclasses_json import config as dataclass_config, DataClassJsonMixin
 
-# Result Message
-
 
 @dataclass
-class OpenResponse(DataClassJsonMixin):
+class BaseResponse(DataClassJsonMixin):
     """
-    Open Message from the Deepgram Platform
+    BaseResponse class used to define the common methods and properties for all response classes.
     """
-
-    type: str = ""
 
     def __getitem__(self, key):
         _dict = self.to_dict()
@@ -28,9 +24,36 @@ class OpenResponse(DataClassJsonMixin):
     def __str__(self) -> str:
         return self.to_json(indent=4)
 
+    def eval(self, key: str) -> str:
+        """
+        This method is used to evaluate a key in the response object using a dot notation style method.
+        """
+        keys = key.split(".")
+        result: Dict[Any, Any] = self.to_dict()
+        for k in keys:
+            if isinstance(result, dict) and k in result:
+                result = result[k]
+            elif isinstance(result, list) and k.isdigit() and int(k) < len(result):
+                result = result[int(k)]
+            else:
+                return ""
+        return str(result)
+
+
+# Result Message
+
 
 @dataclass
-class Word(DataClassJsonMixin):
+class OpenResponse(BaseResponse):
+    """
+    Open Message from the Deepgram Platform
+    """
+
+    type: str = ""
+
+
+@dataclass
+class Word(BaseResponse):
     """
     Word object
     """
@@ -49,19 +72,9 @@ class Word(DataClassJsonMixin):
         default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
 
-    def __getitem__(self, key):
-        _dict = self.to_dict()
-        return _dict[key]
-
-    def __setitem__(self, key, val):
-        self.__dict__[key] = val
-
-    def __str__(self) -> str:
-        return self.to_json(indent=4)
-
 
 @dataclass
-class Alternative(DataClassJsonMixin):
+class Alternative(BaseResponse):
     """
     Alternative object
     """
@@ -79,15 +92,9 @@ class Alternative(DataClassJsonMixin):
             _dict["words"] = [Word.from_dict(words) for words in _dict["words"]]
         return _dict[key]
 
-    def __setitem__(self, key, val):
-        self.__dict__[key] = val
-
-    def __str__(self) -> str:
-        return self.to_json(indent=4)
-
 
 @dataclass
-class Channel(DataClassJsonMixin):
+class Channel(BaseResponse):
     """
     Channel object
     """
@@ -103,15 +110,9 @@ class Channel(DataClassJsonMixin):
             ]
         return _dict[key]
 
-    def __setitem__(self, key, val):
-        self.__dict__[key] = val
-
-    def __str__(self) -> str:
-        return self.to_json(indent=4)
-
 
 @dataclass
-class ModelInfo(DataClassJsonMixin):
+class ModelInfo(BaseResponse):
     """
     ModelInfo object
     """
@@ -120,19 +121,9 @@ class ModelInfo(DataClassJsonMixin):
     version: str = ""
     arch: str = ""
 
-    def __getitem__(self, key):
-        _dict = self.to_dict()
-        return _dict[key]
-
-    def __setitem__(self, key, val):
-        self.__dict__[key] = val
-
-    def __str__(self) -> str:
-        return self.to_json(indent=4)
-
 
 @dataclass
-class Metadata(DataClassJsonMixin):
+class Metadata(BaseResponse):
     """
     Metadata object
     """
@@ -153,12 +144,6 @@ class Metadata(DataClassJsonMixin):
         if "extra" in _dict:
             _dict["extra"] = [str(extra) for _, extra in _dict["extra"].items()]
         return _dict[key]
-
-    def __setitem__(self, key, val):
-        self.__dict__[key] = val
-
-    def __str__(self) -> str:
-        return self.to_json(indent=4)
 
 
 @dataclass
@@ -192,12 +177,6 @@ class LiveResultResponse(
                 Metadata.from_dict(metadata) for metadata in _dict["metadata"]
             ]
         return _dict[key]
-
-    def __setitem__(self, key, val):
-        self.__dict__[key] = val
-
-    def __str__(self) -> str:
-        return self.to_json(indent=4)
 
 
 # Metadata Message
@@ -241,18 +220,12 @@ class MetadataResponse(
             _dict["extra"] = [str(extra) for _, extra in _dict["extra"].items()]
         return _dict[key]
 
-    def __setitem__(self, key, val):
-        self.__dict__[key] = val
-
-    def __str__(self) -> str:
-        return self.to_json(indent=4)
-
 
 # Speech Started Message
 
 
 @dataclass
-class SpeechStartedResponse(DataClassJsonMixin):
+class SpeechStartedResponse(BaseResponse):
     """
     SpeechStartedResponse Message from the Deepgram Platform
     """
@@ -261,22 +234,12 @@ class SpeechStartedResponse(DataClassJsonMixin):
     channel: List[int] = field(default_factory=list)
     timestamp: float = 0
 
-    def __getitem__(self, key):
-        _dict = self.to_dict()
-        return _dict[key]
-
-    def __setitem__(self, key, val):
-        self.__dict__[key] = val
-
-    def __str__(self) -> str:
-        return self.to_json(indent=4)
-
 
 # Utterance End Message
 
 
 @dataclass
-class UtteranceEndResponse(DataClassJsonMixin):
+class UtteranceEndResponse(BaseResponse):
     """
     UtteranceEnd Message from the Deepgram Platform
     """
@@ -285,44 +248,24 @@ class UtteranceEndResponse(DataClassJsonMixin):
     channel: List[int] = field(default_factory=list)
     last_word_end: float = 0
 
-    def __getitem__(self, key):
-        _dict = self.to_dict()
-        return _dict[key]
-
-    def __setitem__(self, key, val):
-        self.__dict__[key] = val
-
-    def __str__(self) -> str:
-        return self.to_json(indent=4)
-
 
 # Close Message
 
 
 @dataclass
-class CloseResponse(DataClassJsonMixin):
+class CloseResponse(BaseResponse):
     """
     Close Message from the Deepgram Platform
     """
 
     type: str = ""
 
-    def __getitem__(self, key):
-        _dict = self.to_dict()
-        return _dict[key]
-
-    def __setitem__(self, key, val):
-        self.__dict__[key] = val
-
-    def __str__(self) -> str:
-        return self.to_json(indent=4)
-
 
 # Error Message
 
 
 @dataclass
-class ErrorResponse(DataClassJsonMixin):
+class ErrorResponse(BaseResponse):
     """
     Error Message from the Deepgram Platform
     """
@@ -332,35 +275,15 @@ class ErrorResponse(DataClassJsonMixin):
     type: str = ""
     variant: Optional[str] = ""
 
-    def __getitem__(self, key):
-        _dict = self.to_dict()
-        return _dict[key]
-
-    def __setitem__(self, key, val):
-        self.__dict__[key] = val
-
-    def __str__(self) -> str:
-        return self.to_json(indent=4)
-
 
 # Unhandled Message
 
 
 @dataclass
-class UnhandledResponse(DataClassJsonMixin):
+class UnhandledResponse(BaseResponse):
     """
     Unhandled Message from the Deepgram Platform
     """
 
     type: str = ""
     raw: str = ""
-
-    def __getitem__(self, key):
-        _dict = self.to_dict()
-        return _dict[key]
-
-    def __setitem__(self, key, val):
-        self.__dict__[key] = val
-
-    def __str__(self) -> str:
-        return self.to_json(indent=4)
