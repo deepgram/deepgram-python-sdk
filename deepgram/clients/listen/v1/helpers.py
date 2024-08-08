@@ -37,10 +37,16 @@ def convert_to_websocket_url(base_url: str, endpoint: str):
     """
     Converts a URL to a WebSocket URL
     """
+    use_ssl = True  # Default to true
     if re.match(r"^https?://", base_url, re.IGNORECASE):
+        if "http://" in base_url:
+            use_ssl = False  # Override to false if http:// is found
         base_url = base_url.replace("https://", "").replace("http://", "")
     if not re.match(r"^wss?://", base_url, re.IGNORECASE):
-        base_url = "wss://" + base_url
+        if use_ssl:
+            base_url = "wss://" + base_url
+        else:
+            base_url = "ws://" + base_url
     parsed_url = urlparse(base_url)
     domain = parsed_url.netloc
     websocket_url = urlunparse((parsed_url.scheme, domain, endpoint, "", "", ""))
