@@ -5,3 +5,5 @@ python-dotenv
 
 # streaming libs
 pyaudio
+sounddevice==0.4.7
+numpy==2.0.1
