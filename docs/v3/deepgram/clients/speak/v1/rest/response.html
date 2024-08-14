@@ -3,14 +3,14 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="generator" content="pdoc 14.5.1"/>
+    <meta name="generator" content="pdoc 14.6.0"/>
     <title>deepgram.clients.speak.v1.rest.response API documentation</title>
 
     <style>/*! * Bootstrap Reboot v5.0.0 (https://getbootstrap.com/) * Copyright 2011-2021 The Bootstrap Authors * Copyright 2011-2021 Twitter, Inc. * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE) * Forked from Normalize.css, licensed MIT (https://github.com/necolas/normalize.css/blob/master/LICENSE.md) */*,::after,::before{box-sizing:border-box}@media (prefers-reduced-motion:no-preference){:root{scroll-behavior:smooth}}body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans","Liberation Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";font-size:1rem;font-weight:400;line-height:1.5;color:#212529;background-color:#fff;-webkit-text-size-adjust:100%;-webkit-tap-highlight-color:transparent}hr{margin:1rem 0;color:inherit;background-color:currentColor;border:0;opacity:.25}hr:not([size]){height:1px}h1,h2,h3,h4,h5,h6{margin-top:0;margin-bottom:.5rem;font-weight:500;line-height:1.2}h1{font-size:calc(1.375rem + 1.5vw)}@media (min-width:1200px){h1{font-size:2.5rem}}h2{font-size:calc(1.325rem + .9vw)}@media (min-width:1200px){h2{font-size:2rem}}h3{font-size:calc(1.3rem + .6vw)}@media (min-width:1200px){h3{font-size:1.75rem}}h4{font-size:calc(1.275rem + .3vw)}@media (min-width:1200px){h4{font-size:1.5rem}}h5{font-size:1.25rem}h6{font-size:1rem}p{margin-top:0;margin-bottom:1rem}abbr[data-bs-original-title],abbr[title]{-webkit-text-decoration:underline dotted;text-decoration:underline dotted;cursor:help;-webkit-text-decoration-skip-ink:none;text-decoration-skip-ink:none}address{margin-bottom:1rem;font-style:normal;line-height:inherit}ol,ul{padding-left:2rem}dl,ol,ul{margin-top:0;margin-bottom:1rem}ol ol,ol ul,ul ol,ul ul{margin-bottom:0}dt{font-weight:700}dd{margin-bottom:.5rem;margin-left:0}blockquote{margin:0 0 1rem}b,strong{font-weight:bolder}small{font-size:.875em}mark{padding:.2em;background-color:#fcf8e3}sub,sup{position:relative;font-size:.75em;line-height:0;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}a{color:#0d6efd;text-decoration:underline}a:hover{color:#0a58ca}a:not([href]):not([class]),a:not([href]):not([class]):hover{color:inherit;text-decoration:none}code,kbd,pre,samp{font-family:SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;font-size:1em;direction:ltr;unicode-bidi:bidi-override}pre{display:block;margin-top:0;margin-bottom:1rem;overflow:auto;font-size:.875em}pre code{font-size:inherit;color:inherit;word-break:normal}code{font-size:.875em;color:#d63384;word-wrap:break-word}a>code{color:inherit}kbd{padding:.2rem .4rem;font-size:.875em;color:#fff;background-color:#212529;border-radius:.2rem}kbd kbd{padding:0;font-size:1em;font-weight:700}figure{margin:0 0 1rem}img,svg{vertical-align:middle}table{caption-side:bottom;border-collapse:collapse}caption{padding-top:.5rem;padding-bottom:.5rem;color:#6c757d;text-align:left}th{text-align:inherit;text-align:-webkit-match-parent}tbody,td,tfoot,th,thead,tr{border-color:inherit;border-style:solid;border-width:0}label{display:inline-block}button{border-radius:0}button:focus:not(:focus-visible){outline:0}button,input,optgroup,select,textarea{margin:0;font-family:inherit;font-size:inherit;line-height:inherit}button,select{text-transform:none}[role=button]{cursor:pointer}select{word-wrap:normal}select:disabled{opacity:1}[list]::-webkit-calendar-picker-indicator{display:none}[type=button],[type=reset],[type=submit],button{-webkit-appearance:button}[type=button]:not(:disabled),[type=reset]:not(:disabled),[type=submit]:not(:disabled),button:not(:disabled){cursor:pointer}::-moz-focus-inner{padding:0;border-style:none}textarea{resize:vertical}fieldset{min-width:0;padding:0;margin:0;border:0}legend{float:left;width:100%;padding:0;margin-bottom:.5rem;font-size:calc(1.275rem + .3vw);line-height:inherit}@media (min-width:1200px){legend{font-size:1.5rem}}legend+*{clear:left}::-webkit-datetime-edit-day-field,::-webkit-datetime-edit-fields-wrapper,::-webkit-datetime-edit-hour-field,::-webkit-datetime-edit-minute,::-webkit-datetime-edit-month-field,::-webkit-datetime-edit-text,::-webkit-datetime-edit-year-field{padding:0}::-webkit-inner-spin-button{height:auto}[type=search]{outline-offset:-2px;-webkit-appearance:textfield}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-color-swatch-wrapper{padding:0}::file-selector-button{font:inherit}::-webkit-file-upload-button{font:inherit;-webkit-appearance:button}output{display:inline-block}iframe{border:0}summary{display:list-item;cursor:pointer}progress{vertical-align:baseline}[hidden]{display:none!important}</style>
     <style>/*! syntax-highlighting.css */pre{line-height:125%;}span.linenos{color:inherit; background-color:transparent; padding-left:5px; padding-right:20px;}.pdoc-code .hll{background-color:#ffffcc}.pdoc-code{background:#f8f8f8;}.pdoc-code .c{color:#3D7B7B; font-style:italic}.pdoc-code .err{border:1px solid #FF0000}.pdoc-code .k{color:#008000; font-weight:bold}.pdoc-code .o{color:#666666}.pdoc-code .ch{color:#3D7B7B; font-style:italic}.pdoc-code .cm{color:#3D7B7B; font-style:italic}.pdoc-code .cp{color:#9C6500}.pdoc-code .cpf{color:#3D7B7B; font-style:italic}.pdoc-code .c1{color:#3D7B7B; font-style:italic}.pdoc-code .cs{color:#3D7B7B; font-style:italic}.pdoc-code .gd{color:#A00000}.pdoc-code .ge{font-style:italic}.pdoc-code .gr{color:#E40000}.pdoc-code .gh{color:#000080; font-weight:bold}.pdoc-code .gi{color:#008400}.pdoc-code .go{color:#717171}.pdoc-code .gp{color:#000080; font-weight:bold}.pdoc-code .gs{font-weight:bold}.pdoc-code .gu{color:#800080; font-weight:bold}.pdoc-code .gt{color:#0044DD}.pdoc-code .kc{color:#008000; font-weight:bold}.pdoc-code .kd{color:#008000; font-weight:bold}.pdoc-code .kn{color:#008000; font-weight:bold}.pdoc-code .kp{color:#008000}.pdoc-code .kr{color:#008000; font-weight:bold}.pdoc-code .kt{color:#B00040}.pdoc-code .m{color:#666666}.pdoc-code .s{color:#BA2121}.pdoc-code .na{color:#687822}.pdoc-code .nb{color:#008000}.pdoc-code .nc{color:#0000FF; font-weight:bold}.pdoc-code .no{color:#880000}.pdoc-code .nd{color:#AA22FF}.pdoc-code .ni{color:#717171; font-weight:bold}.pdoc-code .ne{color:#CB3F38; font-weight:bold}.pdoc-code .nf{color:#0000FF}.pdoc-code .nl{color:#767600}.pdoc-code .nn{color:#0000FF; font-weight:bold}.pdoc-code .nt{color:#008000; font-weight:bold}.pdoc-code .nv{color:#19177C}.pdoc-code .ow{color:#AA22FF; font-weight:bold}.pdoc-code .w{color:#bbbbbb}.pdoc-code .mb{color:#666666}.pdoc-code .mf{color:#666666}.pdoc-code .mh{color:#666666}.pdoc-code .mi{color:#666666}.pdoc-code .mo{color:#666666}.pdoc-code .sa{color:#BA2121}.pdoc-code .sb{color:#BA2121}.pdoc-code .sc{color:#BA2121}.pdoc-code .dl{color:#BA2121}.pdoc-code .sd{color:#BA2121; font-style:italic}.pdoc-code .s2{color:#BA2121}.pdoc-code .se{color:#AA5D1F; font-weight:bold}.pdoc-code .sh{color:#BA2121}.pdoc-code .si{color:#A45A77; font-weight:bold}.pdoc-code .sx{color:#008000}.pdoc-code .sr{color:#A45A77}.pdoc-code .s1{color:#BA2121}.pdoc-code .ss{color:#19177C}.pdoc-code .bp{color:#008000}.pdoc-code .fm{color:#0000FF}.pdoc-code .vc{color:#19177C}.pdoc-code .vg{color:#19177C}.pdoc-code .vi{color:#19177C}.pdoc-code .vm{color:#19177C}.pdoc-code .il{color:#666666}</style>
     <style>/*! theme.css */:root{--pdoc-background:#fff;}.pdoc{--text:#212529;--muted:#6c757d;--link:#3660a5;--link-hover:#1659c5;--code:#f8f8f8;--active:#fff598;--accent:#eee;--accent2:#c1c1c1;--nav-hover:rgba(255, 255, 255, 0.5);--name:#0066BB;--def:#008800;--annotation:#007020;}</style>
     <style>/*! layout.css */html, body{width:100%;height:100%;}html, main{scroll-behavior:smooth;}body{background-color:var(--pdoc-background);}@media (max-width:769px){#navtoggle{cursor:pointer;position:absolute;width:50px;height:40px;top:1rem;right:1rem;border-color:var(--text);color:var(--text);display:flex;opacity:0.8;z-index:999;}#navtoggle:hover{opacity:1;}#togglestate + div{display:none;}#togglestate:checked + div{display:inherit;}main, header{padding:2rem 3vw;}header + main{margin-top:-3rem;}.git-button{display:none !important;}nav input[type="search"]{max-width:77%;}nav input[type="search"]:first-child{margin-top:-6px;}nav input[type="search"]:valid ~ *{display:none !important;}}@media (min-width:770px){:root{--sidebar-width:clamp(12.5rem, 28vw, 22rem);}nav{position:fixed;overflow:auto;height:100vh;width:var(--sidebar-width);}main, header{padding:3rem 2rem 3rem calc(var(--sidebar-width) + 3rem);width:calc(54rem + var(--sidebar-width));max-width:100%;}header + main{margin-top:-4rem;}#navtoggle{display:none;}}#togglestate{position:absolute;height:0;opacity:0;}nav.pdoc{--pad:clamp(0.5rem, 2vw, 1.75rem);--indent:1.5rem;background-color:var(--accent);border-right:1px solid var(--accent2);box-shadow:0 0 20px rgba(50, 50, 50, .2) inset;padding:0 0 0 var(--pad);overflow-wrap:anywhere;scrollbar-width:thin; scrollbar-color:var(--accent2) transparent; z-index:1}nav.pdoc::-webkit-scrollbar{width:.4rem; }nav.pdoc::-webkit-scrollbar-thumb{background-color:var(--accent2); }nav.pdoc > div{padding:var(--pad) 0;}nav.pdoc .module-list-button{display:inline-flex;align-items:center;color:var(--text);border-color:var(--muted);margin-bottom:1rem;}nav.pdoc .module-list-button:hover{border-color:var(--text);}nav.pdoc input[type=search]{display:block;outline-offset:0;width:calc(100% - var(--pad));}nav.pdoc .logo{max-width:calc(100% - var(--pad));max-height:35vh;display:block;margin:0 auto 1rem;transform:translate(calc(-.5 * var(--pad)), 0);}nav.pdoc ul{list-style:none;padding-left:0;}nav.pdoc > div > ul{margin-left:calc(0px - var(--pad));}nav.pdoc li a{padding:.2rem 0 .2rem calc(var(--pad) + var(--indent));}nav.pdoc > div > ul > li > a{padding-left:var(--pad);}nav.pdoc li{transition:all 100ms;}nav.pdoc li:hover{background-color:var(--nav-hover);}nav.pdoc a, nav.pdoc a:hover{color:var(--text);}nav.pdoc a{display:block;}nav.pdoc > h2:first-of-type{margin-top:1.5rem;}nav.pdoc .class:before{content:"class ";color:var(--muted);}nav.pdoc .function:after{content:"()";color:var(--muted);}nav.pdoc footer:before{content:"";display:block;width:calc(100% - var(--pad));border-top:solid var(--accent2) 1px;margin-top:1.5rem;padding-top:.5rem;}nav.pdoc footer{font-size:small;}</style>
-    <style>/*! content.css */.pdoc{color:var(--text);box-sizing:border-box;line-height:1.5;background:none;}.pdoc .pdoc-button{cursor:pointer;display:inline-block;border:solid black 1px;border-radius:2px;font-size:.75rem;padding:calc(0.5em - 1px) 1em;transition:100ms all;}.pdoc .pdoc-alert{padding:1rem 1rem 1rem calc(1.5rem + 24px);border:1px solid transparent;border-radius:.25rem;background-repeat:no-repeat;background-position:1rem center;margin-bottom:1rem;}.pdoc .pdoc-alert > *:last-child{margin-bottom:0;}.pdoc .pdoc-alert-note {color:#084298;background-color:#cfe2ff;border-color:#b6d4fe;background-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2224%22%20height%3D%2224%22%20fill%3D%22%23084298%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M8%2016A8%208%200%201%200%208%200a8%208%200%200%200%200%2016zm.93-9.412-1%204.705c-.07.34.029.533.304.533.194%200%20.487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703%200-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381%202.29-.287zM8%205.5a1%201%200%201%201%200-2%201%201%200%200%201%200%202z%22/%3E%3C/svg%3E");}.pdoc .pdoc-alert-warning{color:#664d03;background-color:#fff3cd;border-color:#ffecb5;background-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2224%22%20height%3D%2224%22%20fill%3D%22%23664d03%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M8.982%201.566a1.13%201.13%200%200%200-1.96%200L.165%2013.233c-.457.778.091%201.767.98%201.767h13.713c.889%200%201.438-.99.98-1.767L8.982%201.566zM8%205c.535%200%20.954.462.9.995l-.35%203.507a.552.552%200%200%201-1.1%200L7.1%205.995A.905.905%200%200%201%208%205zm.002%206a1%201%200%201%201%200%202%201%201%200%200%201%200-2z%22/%3E%3C/svg%3E");}.pdoc .pdoc-alert-danger{color:#842029;background-color:#f8d7da;border-color:#f5c2c7;background-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2224%22%20height%3D%2224%22%20fill%3D%22%23842029%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M5.52.359A.5.5%200%200%201%206%200h4a.5.5%200%200%201%20.474.658L8.694%206H12.5a.5.5%200%200%201%20.395.807l-7%209a.5.5%200%200%201-.873-.454L6.823%209.5H3.5a.5.5%200%200%201-.48-.641l2.5-8.5z%22/%3E%3C/svg%3E");}.pdoc .visually-hidden{position:absolute !important;width:1px !important;height:1px !important;padding:0 !important;margin:-1px !important;overflow:hidden !important;clip:rect(0, 0, 0, 0) !important;white-space:nowrap !important;border:0 !important;}.pdoc h1, .pdoc h2, .pdoc h3{font-weight:300;margin:.3em 0;padding:.2em 0;}.pdoc > section:not(.module-info) h1{font-size:1.5rem;font-weight:500;}.pdoc > section:not(.module-info) h2{font-size:1.4rem;font-weight:500;}.pdoc > section:not(.module-info) h3{font-size:1.3rem;font-weight:500;}.pdoc > section:not(.module-info) h4{font-size:1.2rem;}.pdoc > section:not(.module-info) h5{font-size:1.1rem;}.pdoc a{text-decoration:none;color:var(--link);}.pdoc a:hover{color:var(--link-hover);}.pdoc blockquote{margin-left:2rem;}.pdoc pre{border-top:1px solid var(--accent2);border-bottom:1px solid var(--accent2);margin-top:0;margin-bottom:1em;padding:.5rem 0 .5rem .5rem;overflow-x:auto;background-color:var(--code);}.pdoc code{color:var(--text);padding:.2em .4em;margin:0;font-size:85%;background-color:var(--accent);border-radius:6px;}.pdoc a > code{color:inherit;}.pdoc pre > code{display:inline-block;font-size:inherit;background:none;border:none;padding:0;}.pdoc > section:not(.module-info){margin-bottom:1.5rem;}.pdoc .modulename{margin-top:0;font-weight:bold;}.pdoc .modulename a{color:var(--link);transition:100ms all;}.pdoc .git-button{float:right;border:solid var(--link) 1px;}.pdoc .git-button:hover{background-color:var(--link);color:var(--pdoc-background);}.view-source-toggle-state,.view-source-toggle-state ~ .pdoc-code{display:none;}.view-source-toggle-state:checked ~ .pdoc-code{display:block;}.view-source-button{display:inline-block;float:right;font-size:.75rem;line-height:1.5rem;color:var(--muted);padding:0 .4rem 0 1.3rem;cursor:pointer;text-indent:-2px;}.view-source-button > span{visibility:hidden;}.module-info .view-source-button{float:none;display:flex;justify-content:flex-end;margin:-1.2rem .4rem -.2rem 0;}.view-source-button::before{position:absolute;content:"View Source";display:list-item;list-style-type:disclosure-closed;}.view-source-toggle-state:checked ~ .attr .view-source-button::before,.view-source-toggle-state:checked ~ .view-source-button::before{list-style-type:disclosure-open;}.pdoc .docstring{margin-bottom:1.5rem;}.pdoc section:not(.module-info) .docstring{margin-left:clamp(0rem, 5vw - 2rem, 1rem);}.pdoc .docstring .pdoc-code{margin-left:1em;margin-right:1em;}.pdoc h1:target,.pdoc h2:target,.pdoc h3:target,.pdoc h4:target,.pdoc h5:target,.pdoc h6:target,.pdoc .pdoc-code > pre > span:target{background-color:var(--active);box-shadow:-1rem 0 0 0 var(--active);}.pdoc .pdoc-code > pre > span:target{display:block;}.pdoc div:target > .attr,.pdoc section:target > .attr,.pdoc dd:target > a{background-color:var(--active);}.pdoc *{scroll-margin:2rem;}.pdoc .pdoc-code .linenos{user-select:none;}.pdoc .attr:hover{filter:contrast(0.95);}.pdoc section, .pdoc .classattr{position:relative;}.pdoc .headerlink{--width:clamp(1rem, 3vw, 2rem);position:absolute;top:0;left:calc(0rem - var(--width));transition:all 100ms ease-in-out;opacity:0;}.pdoc .headerlink::before{content:"#";display:block;text-align:center;width:var(--width);height:2.3rem;line-height:2.3rem;font-size:1.5rem;}.pdoc .attr:hover ~ .headerlink,.pdoc *:target > .headerlink,.pdoc .headerlink:hover{opacity:1;}.pdoc .attr{display:block;margin:.5rem 0 .5rem;padding:.4rem .4rem .4rem 1rem;background-color:var(--accent);overflow-x:auto;}.pdoc .classattr{margin-left:2rem;}.pdoc .name{color:var(--name);font-weight:bold;}.pdoc .def{color:var(--def);font-weight:bold;}.pdoc .signature{background-color:transparent;}.pdoc .param, .pdoc .return-annotation{white-space:pre;}.pdoc .signature.multiline .param{display:block;}.pdoc .signature.condensed .param{display:inline-block;}.pdoc .annotation{color:var(--annotation);}.pdoc .view-value-toggle-state,.pdoc .view-value-toggle-state ~ .default_value{display:none;}.pdoc .view-value-toggle-state:checked ~ .default_value{display:inherit;}.pdoc .view-value-button{font-size:.5rem;vertical-align:middle;border-style:dashed;margin-top:-0.1rem;}.pdoc .view-value-button:hover{background:white;}.pdoc .view-value-button::before{content:"show";text-align:center;width:2.2em;display:inline-block;}.pdoc .view-value-toggle-state:checked ~ .view-value-button::before{content:"hide";}.pdoc .inherited{margin-left:2rem;}.pdoc .inherited dt{font-weight:700;}.pdoc .inherited dt, .pdoc .inherited dd{display:inline;margin-left:0;margin-bottom:.5rem;}.pdoc .inherited dd:not(:last-child):after{content:", ";}.pdoc .inherited .class:before{content:"class ";}.pdoc .inherited .function a:after{content:"()";}.pdoc .search-result .docstring{overflow:auto;max-height:25vh;}.pdoc .search-result.focused > .attr{background-color:var(--active);}.pdoc .attribution{margin-top:2rem;display:block;opacity:0.5;transition:all 200ms;filter:grayscale(100%);}.pdoc .attribution:hover{opacity:1;filter:grayscale(0%);}.pdoc .attribution img{margin-left:5px;height:35px;vertical-align:middle;width:70px;transition:all 200ms;}.pdoc table{display:block;width:max-content;max-width:100%;overflow:auto;margin-bottom:1rem;}.pdoc table th{font-weight:600;}.pdoc table th, .pdoc table td{padding:6px 13px;border:1px solid var(--accent2);}</style>
+    <style>/*! content.css */.pdoc{color:var(--text);box-sizing:border-box;line-height:1.5;background:none;}.pdoc .pdoc-button{cursor:pointer;display:inline-block;border:solid black 1px;border-radius:2px;font-size:.75rem;padding:calc(0.5em - 1px) 1em;transition:100ms all;}.pdoc .alert{padding:1rem 1rem 1rem calc(1.5rem + 24px);border:1px solid transparent;border-radius:.25rem;background-repeat:no-repeat;background-position:.75rem center;margin-bottom:1rem;}.pdoc .alert > em{display:none;}.pdoc .alert > *:last-child{margin-bottom:0;}.pdoc .alert.note {color:#084298;background-color:#cfe2ff;border-color:#b6d4fe;background-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2224%22%20height%3D%2224%22%20fill%3D%22%23084298%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M8%2016A8%208%200%201%200%208%200a8%208%200%200%200%200%2016zm.93-9.412-1%204.705c-.07.34.029.533.304.533.194%200%20.487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703%200-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381%202.29-.287zM8%205.5a1%201%200%201%201%200-2%201%201%200%200%201%200%202z%22/%3E%3C/svg%3E");}.pdoc .alert.warning{color:#664d03;background-color:#fff3cd;border-color:#ffecb5;background-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2224%22%20height%3D%2224%22%20fill%3D%22%23664d03%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M8.982%201.566a1.13%201.13%200%200%200-1.96%200L.165%2013.233c-.457.778.091%201.767.98%201.767h13.713c.889%200%201.438-.99.98-1.767L8.982%201.566zM8%205c.535%200%20.954.462.9.995l-.35%203.507a.552.552%200%200%201-1.1%200L7.1%205.995A.905.905%200%200%201%208%205zm.002%206a1%201%200%201%201%200%202%201%201%200%200%201%200-2z%22/%3E%3C/svg%3E");}.pdoc .alert.danger{color:#842029;background-color:#f8d7da;border-color:#f5c2c7;background-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2224%22%20height%3D%2224%22%20fill%3D%22%23842029%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M5.52.359A.5.5%200%200%201%206%200h4a.5.5%200%200%201%20.474.658L8.694%206H12.5a.5.5%200%200%201%20.395.807l-7%209a.5.5%200%200%201-.873-.454L6.823%209.5H3.5a.5.5%200%200%201-.48-.641l2.5-8.5z%22/%3E%3C/svg%3E");}.pdoc .visually-hidden{position:absolute !important;width:1px !important;height:1px !important;padding:0 !important;margin:-1px !important;overflow:hidden !important;clip:rect(0, 0, 0, 0) !important;white-space:nowrap !important;border:0 !important;}.pdoc h1, .pdoc h2, .pdoc h3{font-weight:300;margin:.3em 0;padding:.2em 0;}.pdoc > section:not(.module-info) h1{font-size:1.5rem;font-weight:500;}.pdoc > section:not(.module-info) h2{font-size:1.4rem;font-weight:500;}.pdoc > section:not(.module-info) h3{font-size:1.3rem;font-weight:500;}.pdoc > section:not(.module-info) h4{font-size:1.2rem;}.pdoc > section:not(.module-info) h5{font-size:1.1rem;}.pdoc a{text-decoration:none;color:var(--link);}.pdoc a:hover{color:var(--link-hover);}.pdoc blockquote{margin-left:2rem;}.pdoc pre{border-top:1px solid var(--accent2);border-bottom:1px solid var(--accent2);margin-top:0;margin-bottom:1em;padding:.5rem 0 .5rem .5rem;overflow-x:auto;background-color:var(--code);}.pdoc code{color:var(--text);padding:.2em .4em;margin:0;font-size:85%;background-color:var(--accent);border-radius:6px;}.pdoc a > code{color:inherit;}.pdoc pre > code{display:inline-block;font-size:inherit;background:none;border:none;padding:0;}.pdoc > section:not(.module-info){margin-bottom:1.5rem;}.pdoc .modulename{margin-top:0;font-weight:bold;}.pdoc .modulename a{color:var(--link);transition:100ms all;}.pdoc .git-button{float:right;border:solid var(--link) 1px;}.pdoc .git-button:hover{background-color:var(--link);color:var(--pdoc-background);}.view-source-toggle-state,.view-source-toggle-state ~ .pdoc-code{display:none;}.view-source-toggle-state:checked ~ .pdoc-code{display:block;}.view-source-button{display:inline-block;float:right;font-size:.75rem;line-height:1.5rem;color:var(--muted);padding:0 .4rem 0 1.3rem;cursor:pointer;text-indent:-2px;}.view-source-button > span{visibility:hidden;}.module-info .view-source-button{float:none;display:flex;justify-content:flex-end;margin:-1.2rem .4rem -.2rem 0;}.view-source-button::before{position:absolute;content:"View Source";display:list-item;list-style-type:disclosure-closed;}.view-source-toggle-state:checked ~ .attr .view-source-button::before,.view-source-toggle-state:checked ~ .view-source-button::before{list-style-type:disclosure-open;}.pdoc .docstring{margin-bottom:1.5rem;}.pdoc section:not(.module-info) .docstring{margin-left:clamp(0rem, 5vw - 2rem, 1rem);}.pdoc .docstring .pdoc-code{margin-left:1em;margin-right:1em;}.pdoc h1:target,.pdoc h2:target,.pdoc h3:target,.pdoc h4:target,.pdoc h5:target,.pdoc h6:target,.pdoc .pdoc-code > pre > span:target{background-color:var(--active);box-shadow:-1rem 0 0 0 var(--active);}.pdoc .pdoc-code > pre > span:target{display:block;}.pdoc div:target > .attr,.pdoc section:target > .attr,.pdoc dd:target > a{background-color:var(--active);}.pdoc *{scroll-margin:2rem;}.pdoc .pdoc-code .linenos{user-select:none;}.pdoc .attr:hover{filter:contrast(0.95);}.pdoc section, .pdoc .classattr{position:relative;}.pdoc .headerlink{--width:clamp(1rem, 3vw, 2rem);position:absolute;top:0;left:calc(0rem - var(--width));transition:all 100ms ease-in-out;opacity:0;}.pdoc .headerlink::before{content:"#";display:block;text-align:center;width:var(--width);height:2.3rem;line-height:2.3rem;font-size:1.5rem;}.pdoc .attr:hover ~ .headerlink,.pdoc *:target > .headerlink,.pdoc .headerlink:hover{opacity:1;}.pdoc .attr{display:block;margin:.5rem 0 .5rem;padding:.4rem .4rem .4rem 1rem;background-color:var(--accent);overflow-x:auto;}.pdoc .classattr{margin-left:2rem;}.pdoc .name{color:var(--name);font-weight:bold;}.pdoc .def{color:var(--def);font-weight:bold;}.pdoc .signature{background-color:transparent;}.pdoc .param, .pdoc .return-annotation{white-space:pre;}.pdoc .signature.multiline .param{display:block;}.pdoc .signature.condensed .param{display:inline-block;}.pdoc .annotation{color:var(--annotation);}.pdoc .view-value-toggle-state,.pdoc .view-value-toggle-state ~ .default_value{display:none;}.pdoc .view-value-toggle-state:checked ~ .default_value{display:inherit;}.pdoc .view-value-button{font-size:.5rem;vertical-align:middle;border-style:dashed;margin-top:-0.1rem;}.pdoc .view-value-button:hover{background:white;}.pdoc .view-value-button::before{content:"show";text-align:center;width:2.2em;display:inline-block;}.pdoc .view-value-toggle-state:checked ~ .view-value-button::before{content:"hide";}.pdoc .inherited{margin-left:2rem;}.pdoc .inherited dt{font-weight:700;}.pdoc .inherited dt, .pdoc .inherited dd{display:inline;margin-left:0;margin-bottom:.5rem;}.pdoc .inherited dd:not(:last-child):after{content:", ";}.pdoc .inherited .class:before{content:"class ";}.pdoc .inherited .function a:after{content:"()";}.pdoc .search-result .docstring{overflow:auto;max-height:25vh;}.pdoc .search-result.focused > .attr{background-color:var(--active);}.pdoc .attribution{margin-top:2rem;display:block;opacity:0.5;transition:all 200ms;filter:grayscale(100%);}.pdoc .attribution:hover{opacity:1;filter:grayscale(0%);}.pdoc .attribution img{margin-left:5px;height:35px;vertical-align:middle;width:70px;transition:all 200ms;}.pdoc table{display:block;width:max-content;max-width:100%;overflow:auto;margin-bottom:1rem;}.pdoc table th{font-weight:600;}.pdoc table th, .pdoc table td{padding:6px 13px;border:1px solid var(--accent2);}</style>
     <style>/*! custom.css */</style></head>
 <body>
     <nav class="pdoc">
@@ -30,6 +30,15 @@
 
             <h2>API Documentation</h2>
                 <ul class="memberlist">
+            <li>
+                    <a class="class" href="#BaseResponse">BaseResponse</a>
+                            <ul class="memberlist">
+                        <li>
+                                <a class="function" href="#BaseResponse.eval">eval</a>
+                        </li>
+                </ul>
+
+            </li>
             <li>
                     <a class="class" href="#SpeakRESTResponse">SpeakRESTResponse</a>
                             <ul class="memberlist">
@@ -58,37 +67,13 @@
                                 <a class="variable" href="#SpeakRESTResponse.date">date</a>
                         </li>
                         <li>
+                                <a class="variable" href="#SpeakRESTResponse.filename">filename</a>
+                        </li>
+                        <li>
                                 <a class="variable" href="#SpeakRESTResponse.stream">stream</a>
                         </li>
                         <li>
-                                <a class="variable" href="#SpeakRESTResponse.filename">filename</a>
-                        </li>
-                </ul>
-
-            </li>
-            <li>
-                    <a class="class" href="#SpeakStreamResponse">SpeakStreamResponse</a>
-                            <ul class="memberlist">
-                        <li>
-                                <a class="function" href="#SpeakStreamResponse.__init__">SpeakStreamResponse</a>
-                        </li>
-                        <li>
-                                <a class="variable" href="#SpeakStreamResponse.content_type">content_type</a>
-                        </li>
-                        <li>
-                                <a class="variable" href="#SpeakStreamResponse.request_id">request_id</a>
-                        </li>
-                        <li>
-                                <a class="variable" href="#SpeakStreamResponse.model_uuid">model_uuid</a>
-                        </li>
-                        <li>
-                                <a class="variable" href="#SpeakStreamResponse.model_name">model_name</a>
-                        </li>
-                        <li>
-                                <a class="variable" href="#SpeakStreamResponse.date">date</a>
-                        </li>
-                        <li>
-                                <a class="variable" href="#SpeakStreamResponse.stream">stream</a>
+                                <a class="variable" href="#SpeakRESTResponse.stream_memory">stream_memory</a>
                         </li>
                 </ul>
 
@@ -202,252 +187,279 @@
 </span><span id="L-2"><a href="#L-2"><span class="linenos">  2</span></a><span class="c1"># Use of this source code is governed by a MIT license that can be found in the LICENSE file.</span>
 </span><span id="L-3"><a href="#L-3"><span class="linenos">  3</span></a><span class="c1"># SPDX-License-Identifier: MIT</span>
 </span><span id="L-4"><a href="#L-4"><span class="linenos">  4</span></a>
-</span><span id="L-5"><a href="#L-5"><span class="linenos">  5</span></a>
-</span><span id="L-6"><a href="#L-6"><span class="linenos">  6</span></a><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span>
-</span><span id="L-7"><a href="#L-7"><span class="linenos">  7</span></a><span class="kn">import</span> <span class="nn">io</span>
-</span><span id="L-8"><a href="#L-8"><span class="linenos">  8</span></a>
-</span><span id="L-9"><a href="#L-9"><span class="linenos">  9</span></a><span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">dataclass</span><span class="p">,</span> <span class="n">field</span>
-</span><span id="L-10"><a href="#L-10"><span class="linenos"> 10</span></a><span class="kn">from</span> <span class="nn">dataclasses_json</span> <span class="kn">import</span> <span class="n">config</span> <span class="k">as</span> <span class="n">dataclass_config</span><span class="p">,</span> <span class="n">DataClassJsonMixin</span>
+</span><span id="L-5"><a href="#L-5"><span class="linenos">  5</span></a><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Any</span>
+</span><span id="L-6"><a href="#L-6"><span class="linenos">  6</span></a><span class="kn">import</span> <span class="nn">io</span>
+</span><span id="L-7"><a href="#L-7"><span class="linenos">  7</span></a>
+</span><span id="L-8"><a href="#L-8"><span class="linenos">  8</span></a><span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">dataclass</span><span class="p">,</span> <span class="n">field</span>
+</span><span id="L-9"><a href="#L-9"><span class="linenos">  9</span></a><span class="kn">from</span> <span class="nn">dataclasses_json</span> <span class="kn">import</span> <span class="n">config</span> <span class="k">as</span> <span class="n">dataclass_config</span><span class="p">,</span> <span class="n">DataClassJsonMixin</span>
+</span><span id="L-10"><a href="#L-10"><span class="linenos"> 10</span></a>
 </span><span id="L-11"><a href="#L-11"><span class="linenos"> 11</span></a>
-</span><span id="L-12"><a href="#L-12"><span class="linenos"> 12</span></a><span class="c1"># Speak Response Types:</span>
+</span><span id="L-12"><a href="#L-12"><span class="linenos"> 12</span></a><span class="c1"># Base Classes:</span>
 </span><span id="L-13"><a href="#L-13"><span class="linenos"> 13</span></a>
 </span><span id="L-14"><a href="#L-14"><span class="linenos"> 14</span></a>
 </span><span id="L-15"><a href="#L-15"><span class="linenos"> 15</span></a><span class="nd">@dataclass</span>
-</span><span id="L-16"><a href="#L-16"><span class="linenos"> 16</span></a><span class="k">class</span> <span class="nc">SpeakRESTResponse</span><span class="p">(</span>
-</span><span id="L-17"><a href="#L-17"><span class="linenos"> 17</span></a>    <span class="n">DataClassJsonMixin</span>
-</span><span id="L-18"><a href="#L-18"><span class="linenos"> 18</span></a><span class="p">):</span>  <span class="c1"># pylint: disable=too-many-instance-attributes</span>
-</span><span id="L-19"><a href="#L-19"><span class="linenos"> 19</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="L-20"><a href="#L-20"><span class="linenos"> 20</span></a><span class="sd">    A class for representing a response from the speak endpoint.</span>
-</span><span id="L-21"><a href="#L-21"><span class="linenos"> 21</span></a><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="L-22"><a href="#L-22"><span class="linenos"> 22</span></a>
-</span><span id="L-23"><a href="#L-23"><span class="linenos"> 23</span></a>    <span class="n">content_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-</span><span id="L-24"><a href="#L-24"><span class="linenos"> 24</span></a>    <span class="n">request_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-</span><span id="L-25"><a href="#L-25"><span class="linenos"> 25</span></a>    <span class="n">model_uuid</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-</span><span id="L-26"><a href="#L-26"><span class="linenos"> 26</span></a>    <span class="n">model_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-</span><span id="L-27"><a href="#L-27"><span class="linenos"> 27</span></a>    <span class="n">characters</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
-</span><span id="L-28"><a href="#L-28"><span class="linenos"> 28</span></a>    <span class="n">transfer_encoding</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-</span><span id="L-29"><a href="#L-29"><span class="linenos"> 29</span></a>    <span class="n">date</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-</span><span id="L-30"><a href="#L-30"><span class="linenos"> 30</span></a>    <span class="n">stream</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">io</span><span class="o">.</span><span class="n">BytesIO</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span>
-</span><span id="L-31"><a href="#L-31"><span class="linenos"> 31</span></a>        <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="n">dataclass_config</span><span class="p">(</span><span class="n">exclude</span><span class="o">=</span><span class="k">lambda</span> <span class="n">f</span><span class="p">:</span> <span class="n">f</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span>
-</span><span id="L-32"><a href="#L-32"><span class="linenos"> 32</span></a>    <span class="p">)</span>
-</span><span id="L-33"><a href="#L-33"><span class="linenos"> 33</span></a>    <span class="n">filename</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span>
-</span><span id="L-34"><a href="#L-34"><span class="linenos"> 34</span></a>        <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="n">dataclass_config</span><span class="p">(</span><span class="n">exclude</span><span class="o">=</span><span class="k">lambda</span> <span class="n">f</span><span class="p">:</span> <span class="n">f</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span>
-</span><span id="L-35"><a href="#L-35"><span class="linenos"> 35</span></a>    <span class="p">)</span>
-</span><span id="L-36"><a href="#L-36"><span class="linenos"> 36</span></a>
-</span><span id="L-37"><a href="#L-37"><span class="linenos"> 37</span></a>    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
-</span><span id="L-38"><a href="#L-38"><span class="linenos"> 38</span></a>        <span class="n">_dict</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
-</span><span id="L-39"><a href="#L-39"><span class="linenos"> 39</span></a>        <span class="k">return</span> <span class="n">_dict</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
-</span><span id="L-40"><a href="#L-40"><span class="linenos"> 40</span></a>
-</span><span id="L-41"><a href="#L-41"><span class="linenos"> 41</span></a>    <span class="k">def</span> <span class="fm">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
-</span><span id="L-42"><a href="#L-42"><span class="linenos"> 42</span></a>        <span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">val</span>
-</span><span id="L-43"><a href="#L-43"><span class="linenos"> 43</span></a>
-</span><span id="L-44"><a href="#L-44"><span class="linenos"> 44</span></a>    <span class="c1"># this is a hack to make the response look like a dict because of the io.BytesIO object</span>
-</span><span id="L-45"><a href="#L-45"><span class="linenos"> 45</span></a>    <span class="c1"># otherwise it will throw an exception on printing</span>
-</span><span id="L-46"><a href="#L-46"><span class="linenos"> 46</span></a>    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-</span><span id="L-47"><a href="#L-47"><span class="linenos"> 47</span></a>        <span class="n">my_dict</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
-</span><span id="L-48"><a href="#L-48"><span class="linenos"> 48</span></a>        <span class="k">return</span> <span class="n">my_dict</span><span class="o">.</span><span class="fm">__str__</span><span class="p">()</span>
+</span><span id="L-16"><a href="#L-16"><span class="linenos"> 16</span></a><span class="k">class</span> <span class="nc">BaseResponse</span><span class="p">(</span><span class="n">DataClassJsonMixin</span><span class="p">):</span>
+</span><span id="L-17"><a href="#L-17"><span class="linenos"> 17</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="L-18"><a href="#L-18"><span class="linenos"> 18</span></a><span class="sd">    BaseResponse class used to define the common methods and properties for all response classes.</span>
+</span><span id="L-19"><a href="#L-19"><span class="linenos"> 19</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="L-20"><a href="#L-20"><span class="linenos"> 20</span></a>
+</span><span id="L-21"><a href="#L-21"><span class="linenos"> 21</span></a>    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+</span><span id="L-22"><a href="#L-22"><span class="linenos"> 22</span></a>        <span class="n">_dict</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
+</span><span id="L-23"><a href="#L-23"><span class="linenos"> 23</span></a>        <span class="k">return</span> <span class="n">_dict</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+</span><span id="L-24"><a href="#L-24"><span class="linenos"> 24</span></a>
+</span><span id="L-25"><a href="#L-25"><span class="linenos"> 25</span></a>    <span class="k">def</span> <span class="fm">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
+</span><span id="L-26"><a href="#L-26"><span class="linenos"> 26</span></a>        <span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">val</span>
+</span><span id="L-27"><a href="#L-27"><span class="linenos"> 27</span></a>
+</span><span id="L-28"><a href="#L-28"><span class="linenos"> 28</span></a>    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+</span><span id="L-29"><a href="#L-29"><span class="linenos"> 29</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+</span><span id="L-30"><a href="#L-30"><span class="linenos"> 30</span></a>
+</span><span id="L-31"><a href="#L-31"><span class="linenos"> 31</span></a>    <span class="k">def</span> <span class="nf">eval</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+</span><span id="L-32"><a href="#L-32"><span class="linenos"> 32</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="L-33"><a href="#L-33"><span class="linenos"> 33</span></a><span class="sd">        This method is used to evaluate a key in the response object using a dot notation style method.</span>
+</span><span id="L-34"><a href="#L-34"><span class="linenos"> 34</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="L-35"><a href="#L-35"><span class="linenos"> 35</span></a>        <span class="n">keys</span> <span class="o">=</span> <span class="n">key</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)</span>
+</span><span id="L-36"><a href="#L-36"><span class="linenos"> 36</span></a>        <span class="n">result</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
+</span><span id="L-37"><a href="#L-37"><span class="linenos"> 37</span></a>        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">keys</span><span class="p">:</span>
+</span><span id="L-38"><a href="#L-38"><span class="linenos"> 38</span></a>            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)</span> <span class="ow">and</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">result</span><span class="p">:</span>
+</span><span id="L-39"><a href="#L-39"><span class="linenos"> 39</span></a>                <span class="n">result</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
+</span><span id="L-40"><a href="#L-40"><span class="linenos"> 40</span></a>            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="ow">and</span> <span class="n">k</span><span class="o">.</span><span class="n">isdigit</span><span class="p">()</span> <span class="ow">and</span> <span class="nb">int</span><span class="p">(</span><span class="n">k</span><span class="p">)</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="p">):</span>
+</span><span id="L-41"><a href="#L-41"><span class="linenos"> 41</span></a>                <span class="n">result</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">k</span><span class="p">)]</span>
+</span><span id="L-42"><a href="#L-42"><span class="linenos"> 42</span></a>            <span class="k">else</span><span class="p">:</span>
+</span><span id="L-43"><a href="#L-43"><span class="linenos"> 43</span></a>                <span class="k">return</span> <span class="s2">&quot;&quot;</span>
+</span><span id="L-44"><a href="#L-44"><span class="linenos"> 44</span></a>        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+</span><span id="L-45"><a href="#L-45"><span class="linenos"> 45</span></a>
+</span><span id="L-46"><a href="#L-46"><span class="linenos"> 46</span></a>
+</span><span id="L-47"><a href="#L-47"><span class="linenos"> 47</span></a><span class="c1"># Speak Response Types:</span>
+</span><span id="L-48"><a href="#L-48"><span class="linenos"> 48</span></a>
 </span><span id="L-49"><a href="#L-49"><span class="linenos"> 49</span></a>
-</span><span id="L-50"><a href="#L-50"><span class="linenos"> 50</span></a>
-</span><span id="L-51"><a href="#L-51"><span class="linenos"> 51</span></a><span class="nd">@dataclass</span>
-</span><span id="L-52"><a href="#L-52"><span class="linenos"> 52</span></a><span class="k">class</span> <span class="nc">SpeakStreamResponse</span><span class="p">(</span>
-</span><span id="L-53"><a href="#L-53"><span class="linenos"> 53</span></a>    <span class="n">DataClassJsonMixin</span>
-</span><span id="L-54"><a href="#L-54"><span class="linenos"> 54</span></a><span class="p">):</span>  <span class="c1"># pylint: disable=too-many-instance-attributes</span>
-</span><span id="L-55"><a href="#L-55"><span class="linenos"> 55</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="L-56"><a href="#L-56"><span class="linenos"> 56</span></a><span class="sd">    A class for representing a response from the speak (streaming) endpoint.</span>
-</span><span id="L-57"><a href="#L-57"><span class="linenos"> 57</span></a><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="L-58"><a href="#L-58"><span class="linenos"> 58</span></a>
-</span><span id="L-59"><a href="#L-59"><span class="linenos"> 59</span></a>    <span class="n">content_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-</span><span id="L-60"><a href="#L-60"><span class="linenos"> 60</span></a>    <span class="n">request_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-</span><span id="L-61"><a href="#L-61"><span class="linenos"> 61</span></a>    <span class="n">model_uuid</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-</span><span id="L-62"><a href="#L-62"><span class="linenos"> 62</span></a>    <span class="n">model_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-</span><span id="L-63"><a href="#L-63"><span class="linenos"> 63</span></a>    <span class="n">date</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-</span><span id="L-64"><a href="#L-64"><span class="linenos"> 64</span></a>    <span class="n">stream</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">io</span><span class="o">.</span><span class="n">BytesIO</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span>
-</span><span id="L-65"><a href="#L-65"><span class="linenos"> 65</span></a>        <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="n">dataclass_config</span><span class="p">(</span><span class="n">exclude</span><span class="o">=</span><span class="k">lambda</span> <span class="n">f</span><span class="p">:</span> <span class="n">f</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span>
-</span><span id="L-66"><a href="#L-66"><span class="linenos"> 66</span></a>    <span class="p">)</span>
-</span><span id="L-67"><a href="#L-67"><span class="linenos"> 67</span></a>
-</span><span id="L-68"><a href="#L-68"><span class="linenos"> 68</span></a>    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
-</span><span id="L-69"><a href="#L-69"><span class="linenos"> 69</span></a>        <span class="n">_dict</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
-</span><span id="L-70"><a href="#L-70"><span class="linenos"> 70</span></a>        <span class="k">return</span> <span class="n">_dict</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
-</span><span id="L-71"><a href="#L-71"><span class="linenos"> 71</span></a>
-</span><span id="L-72"><a href="#L-72"><span class="linenos"> 72</span></a>    <span class="k">def</span> <span class="fm">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
-</span><span id="L-73"><a href="#L-73"><span class="linenos"> 73</span></a>        <span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">val</span>
-</span><span id="L-74"><a href="#L-74"><span class="linenos"> 74</span></a>
-</span><span id="L-75"><a href="#L-75"><span class="linenos"> 75</span></a>    <span class="c1"># this is a hack to make the response look like a dict because of the io.BytesIO object</span>
-</span><span id="L-76"><a href="#L-76"><span class="linenos"> 76</span></a>    <span class="c1"># otherwise it will throw an exception on printing</span>
-</span><span id="L-77"><a href="#L-77"><span class="linenos"> 77</span></a>    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-</span><span id="L-78"><a href="#L-78"><span class="linenos"> 78</span></a>        <span class="n">my_dict</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
-</span><span id="L-79"><a href="#L-79"><span class="linenos"> 79</span></a>        <span class="k">return</span> <span class="n">my_dict</span><span class="o">.</span><span class="fm">__str__</span><span class="p">()</span>
-</span><span id="L-80"><a href="#L-80"><span class="linenos"> 80</span></a>
-</span><span id="L-81"><a href="#L-81"><span class="linenos"> 81</span></a>
-</span><span id="L-82"><a href="#L-82"><span class="linenos"> 82</span></a><span class="nd">@dataclass</span>
-</span><span id="L-83"><a href="#L-83"><span class="linenos"> 83</span></a><span class="k">class</span> <span class="nc">OpenResponse</span><span class="p">(</span><span class="n">DataClassJsonMixin</span><span class="p">):</span>
-</span><span id="L-84"><a href="#L-84"><span class="linenos"> 84</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="L-85"><a href="#L-85"><span class="linenos"> 85</span></a><span class="sd">    Open Message from the Deepgram Platform</span>
-</span><span id="L-86"><a href="#L-86"><span class="linenos"> 86</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="L-50"><a href="#L-50"><span class="linenos"> 50</span></a><span class="nd">@dataclass</span>
+</span><span id="L-51"><a href="#L-51"><span class="linenos"> 51</span></a><span class="k">class</span> <span class="nc">SpeakRESTResponse</span><span class="p">(</span><span class="n">BaseResponse</span><span class="p">):</span>  <span class="c1"># pylint: disable=too-many-instance-attributes</span>
+</span><span id="L-52"><a href="#L-52"><span class="linenos"> 52</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="L-53"><a href="#L-53"><span class="linenos"> 53</span></a><span class="sd">    A class for representing a response from the speak endpoint.</span>
+</span><span id="L-54"><a href="#L-54"><span class="linenos"> 54</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="L-55"><a href="#L-55"><span class="linenos"> 55</span></a>
+</span><span id="L-56"><a href="#L-56"><span class="linenos"> 56</span></a>    <span class="n">content_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+</span><span id="L-57"><a href="#L-57"><span class="linenos"> 57</span></a>    <span class="n">request_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+</span><span id="L-58"><a href="#L-58"><span class="linenos"> 58</span></a>    <span class="n">model_uuid</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+</span><span id="L-59"><a href="#L-59"><span class="linenos"> 59</span></a>    <span class="n">model_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+</span><span id="L-60"><a href="#L-60"><span class="linenos"> 60</span></a>    <span class="n">characters</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span id="L-61"><a href="#L-61"><span class="linenos"> 61</span></a>    <span class="n">transfer_encoding</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+</span><span id="L-62"><a href="#L-62"><span class="linenos"> 62</span></a>    <span class="n">date</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+</span><span id="L-63"><a href="#L-63"><span class="linenos"> 63</span></a>    <span class="n">filename</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span>
+</span><span id="L-64"><a href="#L-64"><span class="linenos"> 64</span></a>        <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="n">dataclass_config</span><span class="p">(</span><span class="n">exclude</span><span class="o">=</span><span class="k">lambda</span> <span class="n">f</span><span class="p">:</span> <span class="n">f</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span>
+</span><span id="L-65"><a href="#L-65"><span class="linenos"> 65</span></a>    <span class="p">)</span>
+</span><span id="L-66"><a href="#L-66"><span class="linenos"> 66</span></a>    <span class="c1"># pylint: disable=W0511</span>
+</span><span id="L-67"><a href="#L-67"><span class="linenos"> 67</span></a>    <span class="c1"># TODO: stream will be deprecated in a future release. Please use stream_memory instead.</span>
+</span><span id="L-68"><a href="#L-68"><span class="linenos"> 68</span></a>    <span class="n">stream</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">io</span><span class="o">.</span><span class="n">BytesIO</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span>
+</span><span id="L-69"><a href="#L-69"><span class="linenos"> 69</span></a>        <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+</span><span id="L-70"><a href="#L-70"><span class="linenos"> 70</span></a>        <span class="n">metadata</span><span class="o">=</span><span class="n">dataclass_config</span><span class="p">(</span><span class="n">exclude</span><span class="o">=</span><span class="k">lambda</span> <span class="n">f</span><span class="p">:</span> <span class="kc">True</span><span class="p">),</span>
+</span><span id="L-71"><a href="#L-71"><span class="linenos"> 71</span></a>    <span class="p">)</span>
+</span><span id="L-72"><a href="#L-72"><span class="linenos"> 72</span></a>    <span class="c1"># pylint: enable=W0511</span>
+</span><span id="L-73"><a href="#L-73"><span class="linenos"> 73</span></a>    <span class="n">stream_memory</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">io</span><span class="o">.</span><span class="n">BytesIO</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span>
+</span><span id="L-74"><a href="#L-74"><span class="linenos"> 74</span></a>        <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+</span><span id="L-75"><a href="#L-75"><span class="linenos"> 75</span></a>        <span class="n">metadata</span><span class="o">=</span><span class="n">dataclass_config</span><span class="p">(</span><span class="n">exclude</span><span class="o">=</span><span class="k">lambda</span> <span class="n">f</span><span class="p">:</span> <span class="kc">True</span><span class="p">),</span>
+</span><span id="L-76"><a href="#L-76"><span class="linenos"> 76</span></a>    <span class="p">)</span>
+</span><span id="L-77"><a href="#L-77"><span class="linenos"> 77</span></a>
+</span><span id="L-78"><a href="#L-78"><span class="linenos"> 78</span></a>
+</span><span id="L-79"><a href="#L-79"><span class="linenos"> 79</span></a><span class="nd">@dataclass</span>
+</span><span id="L-80"><a href="#L-80"><span class="linenos"> 80</span></a><span class="k">class</span> <span class="nc">OpenResponse</span><span class="p">(</span><span class="n">BaseResponse</span><span class="p">):</span>
+</span><span id="L-81"><a href="#L-81"><span class="linenos"> 81</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="L-82"><a href="#L-82"><span class="linenos"> 82</span></a><span class="sd">    Open Message from the Deepgram Platform</span>
+</span><span id="L-83"><a href="#L-83"><span class="linenos"> 83</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="L-84"><a href="#L-84"><span class="linenos"> 84</span></a>
+</span><span id="L-85"><a href="#L-85"><span class="linenos"> 85</span></a>    <span class="nb">type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+</span><span id="L-86"><a href="#L-86"><span class="linenos"> 86</span></a>
 </span><span id="L-87"><a href="#L-87"><span class="linenos"> 87</span></a>
-</span><span id="L-88"><a href="#L-88"><span class="linenos"> 88</span></a>    <span class="nb">type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-</span><span id="L-89"><a href="#L-89"><span class="linenos"> 89</span></a>
-</span><span id="L-90"><a href="#L-90"><span class="linenos"> 90</span></a>    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
-</span><span id="L-91"><a href="#L-91"><span class="linenos"> 91</span></a>        <span class="n">_dict</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
-</span><span id="L-92"><a href="#L-92"><span class="linenos"> 92</span></a>        <span class="k">return</span> <span class="n">_dict</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+</span><span id="L-88"><a href="#L-88"><span class="linenos"> 88</span></a><span class="nd">@dataclass</span>
+</span><span id="L-89"><a href="#L-89"><span class="linenos"> 89</span></a><span class="k">class</span> <span class="nc">MetadataResponse</span><span class="p">(</span><span class="n">BaseResponse</span><span class="p">):</span>
+</span><span id="L-90"><a href="#L-90"><span class="linenos"> 90</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="L-91"><a href="#L-91"><span class="linenos"> 91</span></a><span class="sd">    Metadata object</span>
+</span><span id="L-92"><a href="#L-92"><span class="linenos"> 92</span></a><span class="sd">    &quot;&quot;&quot;</span>
 </span><span id="L-93"><a href="#L-93"><span class="linenos"> 93</span></a>
-</span><span id="L-94"><a href="#L-94"><span class="linenos"> 94</span></a>    <span class="k">def</span> <span class="fm">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
-</span><span id="L-95"><a href="#L-95"><span class="linenos"> 95</span></a>        <span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">val</span>
+</span><span id="L-94"><a href="#L-94"><span class="linenos"> 94</span></a>    <span class="n">request_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+</span><span id="L-95"><a href="#L-95"><span class="linenos"> 95</span></a>
 </span><span id="L-96"><a href="#L-96"><span class="linenos"> 96</span></a>
-</span><span id="L-97"><a href="#L-97"><span class="linenos"> 97</span></a>    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-</span><span id="L-98"><a href="#L-98"><span class="linenos"> 98</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
-</span><span id="L-99"><a href="#L-99"><span class="linenos"> 99</span></a>
-</span><span id="L-100"><a href="#L-100"><span class="linenos">100</span></a>
-</span><span id="L-101"><a href="#L-101"><span class="linenos">101</span></a><span class="nd">@dataclass</span>
-</span><span id="L-102"><a href="#L-102"><span class="linenos">102</span></a><span class="k">class</span> <span class="nc">MetadataResponse</span><span class="p">(</span><span class="n">DataClassJsonMixin</span><span class="p">):</span>
-</span><span id="L-103"><a href="#L-103"><span class="linenos">103</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="L-104"><a href="#L-104"><span class="linenos">104</span></a><span class="sd">    Metadata object</span>
-</span><span id="L-105"><a href="#L-105"><span class="linenos">105</span></a><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="L-106"><a href="#L-106"><span class="linenos">106</span></a>
-</span><span id="L-107"><a href="#L-107"><span class="linenos">107</span></a>    <span class="n">request_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-</span><span id="L-108"><a href="#L-108"><span class="linenos">108</span></a>
-</span><span id="L-109"><a href="#L-109"><span class="linenos">109</span></a>    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
-</span><span id="L-110"><a href="#L-110"><span class="linenos">110</span></a>        <span class="n">_dict</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
-</span><span id="L-111"><a href="#L-111"><span class="linenos">111</span></a>        <span class="k">return</span> <span class="n">_dict</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
-</span><span id="L-112"><a href="#L-112"><span class="linenos">112</span></a>
-</span><span id="L-113"><a href="#L-113"><span class="linenos">113</span></a>    <span class="k">def</span> <span class="fm">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
-</span><span id="L-114"><a href="#L-114"><span class="linenos">114</span></a>        <span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">val</span>
-</span><span id="L-115"><a href="#L-115"><span class="linenos">115</span></a>
-</span><span id="L-116"><a href="#L-116"><span class="linenos">116</span></a>    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-</span><span id="L-117"><a href="#L-117"><span class="linenos">117</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
-</span><span id="L-118"><a href="#L-118"><span class="linenos">118</span></a>
-</span><span id="L-119"><a href="#L-119"><span class="linenos">119</span></a>
-</span><span id="L-120"><a href="#L-120"><span class="linenos">120</span></a><span class="nd">@dataclass</span>
-</span><span id="L-121"><a href="#L-121"><span class="linenos">121</span></a><span class="k">class</span> <span class="nc">FlushedResponse</span><span class="p">(</span><span class="n">DataClassJsonMixin</span><span class="p">):</span>
-</span><span id="L-122"><a href="#L-122"><span class="linenos">122</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="L-123"><a href="#L-123"><span class="linenos">123</span></a><span class="sd">    Flushed Message from the Deepgram Platform</span>
-</span><span id="L-124"><a href="#L-124"><span class="linenos">124</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="L-97"><a href="#L-97"><span class="linenos"> 97</span></a><span class="nd">@dataclass</span>
+</span><span id="L-98"><a href="#L-98"><span class="linenos"> 98</span></a><span class="k">class</span> <span class="nc">FlushedResponse</span><span class="p">(</span><span class="n">BaseResponse</span><span class="p">):</span>
+</span><span id="L-99"><a href="#L-99"><span class="linenos"> 99</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="L-100"><a href="#L-100"><span class="linenos">100</span></a><span class="sd">    Flushed Message from the Deepgram Platform</span>
+</span><span id="L-101"><a href="#L-101"><span class="linenos">101</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="L-102"><a href="#L-102"><span class="linenos">102</span></a>
+</span><span id="L-103"><a href="#L-103"><span class="linenos">103</span></a>    <span class="nb">type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+</span><span id="L-104"><a href="#L-104"><span class="linenos">104</span></a>
+</span><span id="L-105"><a href="#L-105"><span class="linenos">105</span></a>
+</span><span id="L-106"><a href="#L-106"><span class="linenos">106</span></a><span class="nd">@dataclass</span>
+</span><span id="L-107"><a href="#L-107"><span class="linenos">107</span></a><span class="k">class</span> <span class="nc">CloseResponse</span><span class="p">(</span><span class="n">BaseResponse</span><span class="p">):</span>
+</span><span id="L-108"><a href="#L-108"><span class="linenos">108</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="L-109"><a href="#L-109"><span class="linenos">109</span></a><span class="sd">    Close Message from the Deepgram Platform</span>
+</span><span id="L-110"><a href="#L-110"><span class="linenos">110</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="L-111"><a href="#L-111"><span class="linenos">111</span></a>
+</span><span id="L-112"><a href="#L-112"><span class="linenos">112</span></a>    <span class="nb">type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+</span><span id="L-113"><a href="#L-113"><span class="linenos">113</span></a>
+</span><span id="L-114"><a href="#L-114"><span class="linenos">114</span></a>
+</span><span id="L-115"><a href="#L-115"><span class="linenos">115</span></a><span class="nd">@dataclass</span>
+</span><span id="L-116"><a href="#L-116"><span class="linenos">116</span></a><span class="k">class</span> <span class="nc">ErrorResponse</span><span class="p">(</span><span class="n">BaseResponse</span><span class="p">):</span>
+</span><span id="L-117"><a href="#L-117"><span class="linenos">117</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="L-118"><a href="#L-118"><span class="linenos">118</span></a><span class="sd">    Error Message from the Deepgram Platform</span>
+</span><span id="L-119"><a href="#L-119"><span class="linenos">119</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="L-120"><a href="#L-120"><span class="linenos">120</span></a>
+</span><span id="L-121"><a href="#L-121"><span class="linenos">121</span></a>    <span class="n">description</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+</span><span id="L-122"><a href="#L-122"><span class="linenos">122</span></a>    <span class="n">message</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+</span><span id="L-123"><a href="#L-123"><span class="linenos">123</span></a>    <span class="nb">type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+</span><span id="L-124"><a href="#L-124"><span class="linenos">124</span></a>    <span class="n">variant</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
 </span><span id="L-125"><a href="#L-125"><span class="linenos">125</span></a>
-</span><span id="L-126"><a href="#L-126"><span class="linenos">126</span></a>    <span class="nb">type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-</span><span id="L-127"><a href="#L-127"><span class="linenos">127</span></a>
-</span><span id="L-128"><a href="#L-128"><span class="linenos">128</span></a>    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
-</span><span id="L-129"><a href="#L-129"><span class="linenos">129</span></a>        <span class="n">_dict</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
-</span><span id="L-130"><a href="#L-130"><span class="linenos">130</span></a>        <span class="k">return</span> <span class="n">_dict</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
-</span><span id="L-131"><a href="#L-131"><span class="linenos">131</span></a>
-</span><span id="L-132"><a href="#L-132"><span class="linenos">132</span></a>    <span class="k">def</span> <span class="fm">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
-</span><span id="L-133"><a href="#L-133"><span class="linenos">133</span></a>        <span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">val</span>
-</span><span id="L-134"><a href="#L-134"><span class="linenos">134</span></a>
-</span><span id="L-135"><a href="#L-135"><span class="linenos">135</span></a>    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-</span><span id="L-136"><a href="#L-136"><span class="linenos">136</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
-</span><span id="L-137"><a href="#L-137"><span class="linenos">137</span></a>
-</span><span id="L-138"><a href="#L-138"><span class="linenos">138</span></a>
-</span><span id="L-139"><a href="#L-139"><span class="linenos">139</span></a><span class="nd">@dataclass</span>
-</span><span id="L-140"><a href="#L-140"><span class="linenos">140</span></a><span class="k">class</span> <span class="nc">CloseResponse</span><span class="p">(</span><span class="n">DataClassJsonMixin</span><span class="p">):</span>
-</span><span id="L-141"><a href="#L-141"><span class="linenos">141</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="L-142"><a href="#L-142"><span class="linenos">142</span></a><span class="sd">    Close Message from the Deepgram Platform</span>
-</span><span id="L-143"><a href="#L-143"><span class="linenos">143</span></a><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="L-144"><a href="#L-144"><span class="linenos">144</span></a>
-</span><span id="L-145"><a href="#L-145"><span class="linenos">145</span></a>    <span class="nb">type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-</span><span id="L-146"><a href="#L-146"><span class="linenos">146</span></a>
-</span><span id="L-147"><a href="#L-147"><span class="linenos">147</span></a>    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
-</span><span id="L-148"><a href="#L-148"><span class="linenos">148</span></a>        <span class="n">_dict</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
-</span><span id="L-149"><a href="#L-149"><span class="linenos">149</span></a>        <span class="k">return</span> <span class="n">_dict</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
-</span><span id="L-150"><a href="#L-150"><span class="linenos">150</span></a>
-</span><span id="L-151"><a href="#L-151"><span class="linenos">151</span></a>    <span class="k">def</span> <span class="fm">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
-</span><span id="L-152"><a href="#L-152"><span class="linenos">152</span></a>        <span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">val</span>
-</span><span id="L-153"><a href="#L-153"><span class="linenos">153</span></a>
-</span><span id="L-154"><a href="#L-154"><span class="linenos">154</span></a>    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-</span><span id="L-155"><a href="#L-155"><span class="linenos">155</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
-</span><span id="L-156"><a href="#L-156"><span class="linenos">156</span></a>
-</span><span id="L-157"><a href="#L-157"><span class="linenos">157</span></a>
-</span><span id="L-158"><a href="#L-158"><span class="linenos">158</span></a><span class="nd">@dataclass</span>
-</span><span id="L-159"><a href="#L-159"><span class="linenos">159</span></a><span class="k">class</span> <span class="nc">ErrorResponse</span><span class="p">(</span><span class="n">DataClassJsonMixin</span><span class="p">):</span>
-</span><span id="L-160"><a href="#L-160"><span class="linenos">160</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="L-161"><a href="#L-161"><span class="linenos">161</span></a><span class="sd">    Error Message from the Deepgram Platform</span>
-</span><span id="L-162"><a href="#L-162"><span class="linenos">162</span></a><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="L-163"><a href="#L-163"><span class="linenos">163</span></a>
-</span><span id="L-164"><a href="#L-164"><span class="linenos">164</span></a>    <span class="n">description</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-</span><span id="L-165"><a href="#L-165"><span class="linenos">165</span></a>    <span class="n">message</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-</span><span id="L-166"><a href="#L-166"><span class="linenos">166</span></a>    <span class="nb">type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-</span><span id="L-167"><a href="#L-167"><span class="linenos">167</span></a>    <span class="n">variant</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-</span><span id="L-168"><a href="#L-168"><span class="linenos">168</span></a>
-</span><span id="L-169"><a href="#L-169"><span class="linenos">169</span></a>    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
-</span><span id="L-170"><a href="#L-170"><span class="linenos">170</span></a>        <span class="n">_dict</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
-</span><span id="L-171"><a href="#L-171"><span class="linenos">171</span></a>        <span class="k">return</span> <span class="n">_dict</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
-</span><span id="L-172"><a href="#L-172"><span class="linenos">172</span></a>
-</span><span id="L-173"><a href="#L-173"><span class="linenos">173</span></a>    <span class="k">def</span> <span class="fm">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
-</span><span id="L-174"><a href="#L-174"><span class="linenos">174</span></a>        <span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">val</span>
-</span><span id="L-175"><a href="#L-175"><span class="linenos">175</span></a>
-</span><span id="L-176"><a href="#L-176"><span class="linenos">176</span></a>    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-</span><span id="L-177"><a href="#L-177"><span class="linenos">177</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
-</span><span id="L-178"><a href="#L-178"><span class="linenos">178</span></a>
-</span><span id="L-179"><a href="#L-179"><span class="linenos">179</span></a>
-</span><span id="L-180"><a href="#L-180"><span class="linenos">180</span></a><span class="c1"># Unhandled Message</span>
-</span><span id="L-181"><a href="#L-181"><span class="linenos">181</span></a>
-</span><span id="L-182"><a href="#L-182"><span class="linenos">182</span></a>
-</span><span id="L-183"><a href="#L-183"><span class="linenos">183</span></a><span class="nd">@dataclass</span>
-</span><span id="L-184"><a href="#L-184"><span class="linenos">184</span></a><span class="k">class</span> <span class="nc">UnhandledResponse</span><span class="p">(</span><span class="n">DataClassJsonMixin</span><span class="p">):</span>
-</span><span id="L-185"><a href="#L-185"><span class="linenos">185</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="L-186"><a href="#L-186"><span class="linenos">186</span></a><span class="sd">    Unhandled Message from the Deepgram Platform</span>
-</span><span id="L-187"><a href="#L-187"><span class="linenos">187</span></a><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="L-188"><a href="#L-188"><span class="linenos">188</span></a>
-</span><span id="L-189"><a href="#L-189"><span class="linenos">189</span></a>    <span class="nb">type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-</span><span id="L-190"><a href="#L-190"><span class="linenos">190</span></a>    <span class="n">raw</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-</span><span id="L-191"><a href="#L-191"><span class="linenos">191</span></a>
-</span><span id="L-192"><a href="#L-192"><span class="linenos">192</span></a>    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
-</span><span id="L-193"><a href="#L-193"><span class="linenos">193</span></a>        <span class="n">_dict</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
-</span><span id="L-194"><a href="#L-194"><span class="linenos">194</span></a>        <span class="k">return</span> <span class="n">_dict</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
-</span><span id="L-195"><a href="#L-195"><span class="linenos">195</span></a>
-</span><span id="L-196"><a href="#L-196"><span class="linenos">196</span></a>    <span class="k">def</span> <span class="fm">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
-</span><span id="L-197"><a href="#L-197"><span class="linenos">197</span></a>        <span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">val</span>
-</span><span id="L-198"><a href="#L-198"><span class="linenos">198</span></a>
-</span><span id="L-199"><a href="#L-199"><span class="linenos">199</span></a>    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-</span><span id="L-200"><a href="#L-200"><span class="linenos">200</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+</span><span id="L-126"><a href="#L-126"><span class="linenos">126</span></a>
+</span><span id="L-127"><a href="#L-127"><span class="linenos">127</span></a><span class="c1"># Unhandled Message</span>
+</span><span id="L-128"><a href="#L-128"><span class="linenos">128</span></a>
+</span><span id="L-129"><a href="#L-129"><span class="linenos">129</span></a>
+</span><span id="L-130"><a href="#L-130"><span class="linenos">130</span></a><span class="nd">@dataclass</span>
+</span><span id="L-131"><a href="#L-131"><span class="linenos">131</span></a><span class="k">class</span> <span class="nc">UnhandledResponse</span><span class="p">(</span><span class="n">BaseResponse</span><span class="p">):</span>
+</span><span id="L-132"><a href="#L-132"><span class="linenos">132</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="L-133"><a href="#L-133"><span class="linenos">133</span></a><span class="sd">    Unhandled Message from the Deepgram Platform</span>
+</span><span id="L-134"><a href="#L-134"><span class="linenos">134</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="L-135"><a href="#L-135"><span class="linenos">135</span></a>
+</span><span id="L-136"><a href="#L-136"><span class="linenos">136</span></a>    <span class="nb">type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+</span><span id="L-137"><a href="#L-137"><span class="linenos">137</span></a>    <span class="n">raw</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
 </span></pre></div>
 
 
             </section>
+                <section id="BaseResponse">
+                            <input id="BaseResponse-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+<div class="attr class">
+                    <div class="decorator">@dataclass</div>
+
+    <span class="def">class</span>
+    <span class="name">BaseResponse</span><wbr>(<span class="base">dataclasses_json.api.DataClassJsonMixin</span>):
+
+                <label class="view-source-button" for="BaseResponse-view-source"><span>View Source</span></label>
+
+    </div>
+    <a class="headerlink" href="#BaseResponse"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="BaseResponse-16"><a href="#BaseResponse-16"><span class="linenos">16</span></a><span class="nd">@dataclass</span>
+</span><span id="BaseResponse-17"><a href="#BaseResponse-17"><span class="linenos">17</span></a><span class="k">class</span> <span class="nc">BaseResponse</span><span class="p">(</span><span class="n">DataClassJsonMixin</span><span class="p">):</span>
+</span><span id="BaseResponse-18"><a href="#BaseResponse-18"><span class="linenos">18</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="BaseResponse-19"><a href="#BaseResponse-19"><span class="linenos">19</span></a><span class="sd">    BaseResponse class used to define the common methods and properties for all response classes.</span>
+</span><span id="BaseResponse-20"><a href="#BaseResponse-20"><span class="linenos">20</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="BaseResponse-21"><a href="#BaseResponse-21"><span class="linenos">21</span></a>
+</span><span id="BaseResponse-22"><a href="#BaseResponse-22"><span class="linenos">22</span></a>    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+</span><span id="BaseResponse-23"><a href="#BaseResponse-23"><span class="linenos">23</span></a>        <span class="n">_dict</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
+</span><span id="BaseResponse-24"><a href="#BaseResponse-24"><span class="linenos">24</span></a>        <span class="k">return</span> <span class="n">_dict</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+</span><span id="BaseResponse-25"><a href="#BaseResponse-25"><span class="linenos">25</span></a>
+</span><span id="BaseResponse-26"><a href="#BaseResponse-26"><span class="linenos">26</span></a>    <span class="k">def</span> <span class="fm">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
+</span><span id="BaseResponse-27"><a href="#BaseResponse-27"><span class="linenos">27</span></a>        <span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">val</span>
+</span><span id="BaseResponse-28"><a href="#BaseResponse-28"><span class="linenos">28</span></a>
+</span><span id="BaseResponse-29"><a href="#BaseResponse-29"><span class="linenos">29</span></a>    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+</span><span id="BaseResponse-30"><a href="#BaseResponse-30"><span class="linenos">30</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+</span><span id="BaseResponse-31"><a href="#BaseResponse-31"><span class="linenos">31</span></a>
+</span><span id="BaseResponse-32"><a href="#BaseResponse-32"><span class="linenos">32</span></a>    <span class="k">def</span> <span class="nf">eval</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+</span><span id="BaseResponse-33"><a href="#BaseResponse-33"><span class="linenos">33</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="BaseResponse-34"><a href="#BaseResponse-34"><span class="linenos">34</span></a><span class="sd">        This method is used to evaluate a key in the response object using a dot notation style method.</span>
+</span><span id="BaseResponse-35"><a href="#BaseResponse-35"><span class="linenos">35</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="BaseResponse-36"><a href="#BaseResponse-36"><span class="linenos">36</span></a>        <span class="n">keys</span> <span class="o">=</span> <span class="n">key</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)</span>
+</span><span id="BaseResponse-37"><a href="#BaseResponse-37"><span class="linenos">37</span></a>        <span class="n">result</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
+</span><span id="BaseResponse-38"><a href="#BaseResponse-38"><span class="linenos">38</span></a>        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">keys</span><span class="p">:</span>
+</span><span id="BaseResponse-39"><a href="#BaseResponse-39"><span class="linenos">39</span></a>            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)</span> <span class="ow">and</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">result</span><span class="p">:</span>
+</span><span id="BaseResponse-40"><a href="#BaseResponse-40"><span class="linenos">40</span></a>                <span class="n">result</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
+</span><span id="BaseResponse-41"><a href="#BaseResponse-41"><span class="linenos">41</span></a>            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="ow">and</span> <span class="n">k</span><span class="o">.</span><span class="n">isdigit</span><span class="p">()</span> <span class="ow">and</span> <span class="nb">int</span><span class="p">(</span><span class="n">k</span><span class="p">)</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="p">):</span>
+</span><span id="BaseResponse-42"><a href="#BaseResponse-42"><span class="linenos">42</span></a>                <span class="n">result</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">k</span><span class="p">)]</span>
+</span><span id="BaseResponse-43"><a href="#BaseResponse-43"><span class="linenos">43</span></a>            <span class="k">else</span><span class="p">:</span>
+</span><span id="BaseResponse-44"><a href="#BaseResponse-44"><span class="linenos">44</span></a>                <span class="k">return</span> <span class="s2">&quot;&quot;</span>
+</span><span id="BaseResponse-45"><a href="#BaseResponse-45"><span class="linenos">45</span></a>        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+</span></pre></div>
+
+
+            <div class="docstring"><p>BaseResponse class used to define the common methods and properties for all response classes.</p>
+</div>
+
+
+                            <div id="BaseResponse.eval" class="classattr">
+                                        <input id="BaseResponse.eval-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+<div class="attr function">
+            
+        <span class="def">def</span>
+        <span class="name">eval</span><span class="signature pdoc-code condensed">(<span class="param"><span class="bp">self</span>, </span><span class="param"><span class="n">key</span><span class="p">:</span> <span class="nb">str</span></span><span class="return-annotation">) -> <span class="nb">str</span>:</span></span>
+
+                <label class="view-source-button" for="BaseResponse.eval-view-source"><span>View Source</span></label>
+
+    </div>
+    <a class="headerlink" href="#BaseResponse.eval"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="BaseResponse.eval-32"><a href="#BaseResponse.eval-32"><span class="linenos">32</span></a>    <span class="k">def</span> <span class="nf">eval</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+</span><span id="BaseResponse.eval-33"><a href="#BaseResponse.eval-33"><span class="linenos">33</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="BaseResponse.eval-34"><a href="#BaseResponse.eval-34"><span class="linenos">34</span></a><span class="sd">        This method is used to evaluate a key in the response object using a dot notation style method.</span>
+</span><span id="BaseResponse.eval-35"><a href="#BaseResponse.eval-35"><span class="linenos">35</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="BaseResponse.eval-36"><a href="#BaseResponse.eval-36"><span class="linenos">36</span></a>        <span class="n">keys</span> <span class="o">=</span> <span class="n">key</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)</span>
+</span><span id="BaseResponse.eval-37"><a href="#BaseResponse.eval-37"><span class="linenos">37</span></a>        <span class="n">result</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
+</span><span id="BaseResponse.eval-38"><a href="#BaseResponse.eval-38"><span class="linenos">38</span></a>        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">keys</span><span class="p">:</span>
+</span><span id="BaseResponse.eval-39"><a href="#BaseResponse.eval-39"><span class="linenos">39</span></a>            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)</span> <span class="ow">and</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">result</span><span class="p">:</span>
+</span><span id="BaseResponse.eval-40"><a href="#BaseResponse.eval-40"><span class="linenos">40</span></a>                <span class="n">result</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
+</span><span id="BaseResponse.eval-41"><a href="#BaseResponse.eval-41"><span class="linenos">41</span></a>            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="ow">and</span> <span class="n">k</span><span class="o">.</span><span class="n">isdigit</span><span class="p">()</span> <span class="ow">and</span> <span class="nb">int</span><span class="p">(</span><span class="n">k</span><span class="p">)</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="p">):</span>
+</span><span id="BaseResponse.eval-42"><a href="#BaseResponse.eval-42"><span class="linenos">42</span></a>                <span class="n">result</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">k</span><span class="p">)]</span>
+</span><span id="BaseResponse.eval-43"><a href="#BaseResponse.eval-43"><span class="linenos">43</span></a>            <span class="k">else</span><span class="p">:</span>
+</span><span id="BaseResponse.eval-44"><a href="#BaseResponse.eval-44"><span class="linenos">44</span></a>                <span class="k">return</span> <span class="s2">&quot;&quot;</span>
+</span><span id="BaseResponse.eval-45"><a href="#BaseResponse.eval-45"><span class="linenos">45</span></a>        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+</span></pre></div>
+
+
+            <div class="docstring"><p>This method is used to evaluate a key in the response object using a dot notation style method.</p>
+</div>
+
+
+                            </div>
+                            <div class="inherited">
+                                <h5>Inherited Members</h5>
+                                <dl>
+                                    <div><dt>dataclasses_json.api.DataClassJsonMixin</dt>
+                                <dd id="BaseResponse.dataclass_json_config" class="variable">dataclass_json_config</dd>
+                <dd id="BaseResponse.to_json" class="function">to_json</dd>
+                <dd id="BaseResponse.from_json" class="function">from_json</dd>
+                <dd id="BaseResponse.from_dict" class="function">from_dict</dd>
+                <dd id="BaseResponse.to_dict" class="function">to_dict</dd>
+                <dd id="BaseResponse.schema" class="function">schema</dd>
+
+            </div>
+                                </dl>
+                            </div>
+                </section>
                 <section id="SpeakRESTResponse">
                             <input id="SpeakRESTResponse-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
 <div class="attr class">
                     <div class="decorator">@dataclass</div>
 
     <span class="def">class</span>
-    <span class="name">SpeakRESTResponse</span><wbr>(<span class="base">dataclasses_json.api.DataClassJsonMixin</span>):
+    <span class="name">SpeakRESTResponse</span><wbr>(<span class="base"><a href="#BaseResponse">BaseResponse</a></span>):
 
                 <label class="view-source-button" for="SpeakRESTResponse-view-source"><span>View Source</span></label>
 
     </div>
     <a class="headerlink" href="#SpeakRESTResponse"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="SpeakRESTResponse-16"><a href="#SpeakRESTResponse-16"><span class="linenos">16</span></a><span class="nd">@dataclass</span>
-</span><span id="SpeakRESTResponse-17"><a href="#SpeakRESTResponse-17"><span class="linenos">17</span></a><span class="k">class</span> <span class="nc">SpeakRESTResponse</span><span class="p">(</span>
-</span><span id="SpeakRESTResponse-18"><a href="#SpeakRESTResponse-18"><span class="linenos">18</span></a>    <span class="n">DataClassJsonMixin</span>
-</span><span id="SpeakRESTResponse-19"><a href="#SpeakRESTResponse-19"><span class="linenos">19</span></a><span class="p">):</span>  <span class="c1"># pylint: disable=too-many-instance-attributes</span>
-</span><span id="SpeakRESTResponse-20"><a href="#SpeakRESTResponse-20"><span class="linenos">20</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="SpeakRESTResponse-21"><a href="#SpeakRESTResponse-21"><span class="linenos">21</span></a><span class="sd">    A class for representing a response from the speak endpoint.</span>
-</span><span id="SpeakRESTResponse-22"><a href="#SpeakRESTResponse-22"><span class="linenos">22</span></a><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="SpeakRESTResponse-23"><a href="#SpeakRESTResponse-23"><span class="linenos">23</span></a>
-</span><span id="SpeakRESTResponse-24"><a href="#SpeakRESTResponse-24"><span class="linenos">24</span></a>    <span class="n">content_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-</span><span id="SpeakRESTResponse-25"><a href="#SpeakRESTResponse-25"><span class="linenos">25</span></a>    <span class="n">request_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-</span><span id="SpeakRESTResponse-26"><a href="#SpeakRESTResponse-26"><span class="linenos">26</span></a>    <span class="n">model_uuid</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-</span><span id="SpeakRESTResponse-27"><a href="#SpeakRESTResponse-27"><span class="linenos">27</span></a>    <span class="n">model_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-</span><span id="SpeakRESTResponse-28"><a href="#SpeakRESTResponse-28"><span class="linenos">28</span></a>    <span class="n">characters</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
-</span><span id="SpeakRESTResponse-29"><a href="#SpeakRESTResponse-29"><span class="linenos">29</span></a>    <span class="n">transfer_encoding</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-</span><span id="SpeakRESTResponse-30"><a href="#SpeakRESTResponse-30"><span class="linenos">30</span></a>    <span class="n">date</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-</span><span id="SpeakRESTResponse-31"><a href="#SpeakRESTResponse-31"><span class="linenos">31</span></a>    <span class="n">stream</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">io</span><span class="o">.</span><span class="n">BytesIO</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span>
-</span><span id="SpeakRESTResponse-32"><a href="#SpeakRESTResponse-32"><span class="linenos">32</span></a>        <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="n">dataclass_config</span><span class="p">(</span><span class="n">exclude</span><span class="o">=</span><span class="k">lambda</span> <span class="n">f</span><span class="p">:</span> <span class="n">f</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span>
-</span><span id="SpeakRESTResponse-33"><a href="#SpeakRESTResponse-33"><span class="linenos">33</span></a>    <span class="p">)</span>
-</span><span id="SpeakRESTResponse-34"><a href="#SpeakRESTResponse-34"><span class="linenos">34</span></a>    <span class="n">filename</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span>
-</span><span id="SpeakRESTResponse-35"><a href="#SpeakRESTResponse-35"><span class="linenos">35</span></a>        <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="n">dataclass_config</span><span class="p">(</span><span class="n">exclude</span><span class="o">=</span><span class="k">lambda</span> <span class="n">f</span><span class="p">:</span> <span class="n">f</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span>
-</span><span id="SpeakRESTResponse-36"><a href="#SpeakRESTResponse-36"><span class="linenos">36</span></a>    <span class="p">)</span>
-</span><span id="SpeakRESTResponse-37"><a href="#SpeakRESTResponse-37"><span class="linenos">37</span></a>
-</span><span id="SpeakRESTResponse-38"><a href="#SpeakRESTResponse-38"><span class="linenos">38</span></a>    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
-</span><span id="SpeakRESTResponse-39"><a href="#SpeakRESTResponse-39"><span class="linenos">39</span></a>        <span class="n">_dict</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
-</span><span id="SpeakRESTResponse-40"><a href="#SpeakRESTResponse-40"><span class="linenos">40</span></a>        <span class="k">return</span> <span class="n">_dict</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
-</span><span id="SpeakRESTResponse-41"><a href="#SpeakRESTResponse-41"><span class="linenos">41</span></a>
-</span><span id="SpeakRESTResponse-42"><a href="#SpeakRESTResponse-42"><span class="linenos">42</span></a>    <span class="k">def</span> <span class="fm">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
-</span><span id="SpeakRESTResponse-43"><a href="#SpeakRESTResponse-43"><span class="linenos">43</span></a>        <span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">val</span>
-</span><span id="SpeakRESTResponse-44"><a href="#SpeakRESTResponse-44"><span class="linenos">44</span></a>
-</span><span id="SpeakRESTResponse-45"><a href="#SpeakRESTResponse-45"><span class="linenos">45</span></a>    <span class="c1"># this is a hack to make the response look like a dict because of the io.BytesIO object</span>
-</span><span id="SpeakRESTResponse-46"><a href="#SpeakRESTResponse-46"><span class="linenos">46</span></a>    <span class="c1"># otherwise it will throw an exception on printing</span>
-</span><span id="SpeakRESTResponse-47"><a href="#SpeakRESTResponse-47"><span class="linenos">47</span></a>    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-</span><span id="SpeakRESTResponse-48"><a href="#SpeakRESTResponse-48"><span class="linenos">48</span></a>        <span class="n">my_dict</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
-</span><span id="SpeakRESTResponse-49"><a href="#SpeakRESTResponse-49"><span class="linenos">49</span></a>        <span class="k">return</span> <span class="n">my_dict</span><span class="o">.</span><span class="fm">__str__</span><span class="p">()</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="SpeakRESTResponse-51"><a href="#SpeakRESTResponse-51"><span class="linenos">51</span></a><span class="nd">@dataclass</span>
+</span><span id="SpeakRESTResponse-52"><a href="#SpeakRESTResponse-52"><span class="linenos">52</span></a><span class="k">class</span> <span class="nc">SpeakRESTResponse</span><span class="p">(</span><span class="n">BaseResponse</span><span class="p">):</span>  <span class="c1"># pylint: disable=too-many-instance-attributes</span>
+</span><span id="SpeakRESTResponse-53"><a href="#SpeakRESTResponse-53"><span class="linenos">53</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="SpeakRESTResponse-54"><a href="#SpeakRESTResponse-54"><span class="linenos">54</span></a><span class="sd">    A class for representing a response from the speak endpoint.</span>
+</span><span id="SpeakRESTResponse-55"><a href="#SpeakRESTResponse-55"><span class="linenos">55</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="SpeakRESTResponse-56"><a href="#SpeakRESTResponse-56"><span class="linenos">56</span></a>
+</span><span id="SpeakRESTResponse-57"><a href="#SpeakRESTResponse-57"><span class="linenos">57</span></a>    <span class="n">content_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+</span><span id="SpeakRESTResponse-58"><a href="#SpeakRESTResponse-58"><span class="linenos">58</span></a>    <span class="n">request_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+</span><span id="SpeakRESTResponse-59"><a href="#SpeakRESTResponse-59"><span class="linenos">59</span></a>    <span class="n">model_uuid</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+</span><span id="SpeakRESTResponse-60"><a href="#SpeakRESTResponse-60"><span class="linenos">60</span></a>    <span class="n">model_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+</span><span id="SpeakRESTResponse-61"><a href="#SpeakRESTResponse-61"><span class="linenos">61</span></a>    <span class="n">characters</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span id="SpeakRESTResponse-62"><a href="#SpeakRESTResponse-62"><span class="linenos">62</span></a>    <span class="n">transfer_encoding</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+</span><span id="SpeakRESTResponse-63"><a href="#SpeakRESTResponse-63"><span class="linenos">63</span></a>    <span class="n">date</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+</span><span id="SpeakRESTResponse-64"><a href="#SpeakRESTResponse-64"><span class="linenos">64</span></a>    <span class="n">filename</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span>
+</span><span id="SpeakRESTResponse-65"><a href="#SpeakRESTResponse-65"><span class="linenos">65</span></a>        <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="n">dataclass_config</span><span class="p">(</span><span class="n">exclude</span><span class="o">=</span><span class="k">lambda</span> <span class="n">f</span><span class="p">:</span> <span class="n">f</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span>
+</span><span id="SpeakRESTResponse-66"><a href="#SpeakRESTResponse-66"><span class="linenos">66</span></a>    <span class="p">)</span>
+</span><span id="SpeakRESTResponse-67"><a href="#SpeakRESTResponse-67"><span class="linenos">67</span></a>    <span class="c1"># pylint: disable=W0511</span>
+</span><span id="SpeakRESTResponse-68"><a href="#SpeakRESTResponse-68"><span class="linenos">68</span></a>    <span class="c1"># TODO: stream will be deprecated in a future release. Please use stream_memory instead.</span>
+</span><span id="SpeakRESTResponse-69"><a href="#SpeakRESTResponse-69"><span class="linenos">69</span></a>    <span class="n">stream</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">io</span><span class="o">.</span><span class="n">BytesIO</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span>
+</span><span id="SpeakRESTResponse-70"><a href="#SpeakRESTResponse-70"><span class="linenos">70</span></a>        <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+</span><span id="SpeakRESTResponse-71"><a href="#SpeakRESTResponse-71"><span class="linenos">71</span></a>        <span class="n">metadata</span><span class="o">=</span><span class="n">dataclass_config</span><span class="p">(</span><span class="n">exclude</span><span class="o">=</span><span class="k">lambda</span> <span class="n">f</span><span class="p">:</span> <span class="kc">True</span><span class="p">),</span>
+</span><span id="SpeakRESTResponse-72"><a href="#SpeakRESTResponse-72"><span class="linenos">72</span></a>    <span class="p">)</span>
+</span><span id="SpeakRESTResponse-73"><a href="#SpeakRESTResponse-73"><span class="linenos">73</span></a>    <span class="c1"># pylint: enable=W0511</span>
+</span><span id="SpeakRESTResponse-74"><a href="#SpeakRESTResponse-74"><span class="linenos">74</span></a>    <span class="n">stream_memory</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">io</span><span class="o">.</span><span class="n">BytesIO</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span>
+</span><span id="SpeakRESTResponse-75"><a href="#SpeakRESTResponse-75"><span class="linenos">75</span></a>        <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+</span><span id="SpeakRESTResponse-76"><a href="#SpeakRESTResponse-76"><span class="linenos">76</span></a>        <span class="n">metadata</span><span class="o">=</span><span class="n">dataclass_config</span><span class="p">(</span><span class="n">exclude</span><span class="o">=</span><span class="k">lambda</span> <span class="n">f</span><span class="p">:</span> <span class="kc">True</span><span class="p">),</span>
+</span><span id="SpeakRESTResponse-77"><a href="#SpeakRESTResponse-77"><span class="linenos">77</span></a>    <span class="p">)</span>
 </span></pre></div>
 
 
@@ -458,7 +470,7 @@
                             <div id="SpeakRESTResponse.__init__" class="classattr">
                                 <div class="attr function">
             
-        <span class="name">SpeakRESTResponse</span><span class="signature pdoc-code multiline">(<span class="param">	<span class="n">content_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>,</span><span class="param">	<span class="n">request_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>,</span><span class="param">	<span class="n">model_uuid</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>,</span><span class="param">	<span class="n">model_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>,</span><span class="param">	<span class="n">characters</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>,</span><span class="param">	<span class="n">transfer_encoding</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>,</span><span class="param">	<span class="n">date</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>,</span><span class="param">	<span class="n">stream</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">_io</span><span class="o">.</span><span class="n">BytesIO</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>,</span><span class="param">	<span class="n">filename</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span></span>)</span>
+        <span class="name">SpeakRESTResponse</span><span class="signature pdoc-code multiline">(<span class="param">	<span class="n">content_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>,</span><span class="param">	<span class="n">request_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>,</span><span class="param">	<span class="n">model_uuid</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>,</span><span class="param">	<span class="n">model_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>,</span><span class="param">	<span class="n">characters</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>,</span><span class="param">	<span class="n">transfer_encoding</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>,</span><span class="param">	<span class="n">date</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>,</span><span class="param">	<span class="n">filename</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>,</span><span class="param">	<span class="n">stream</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">_io</span><span class="o">.</span><span class="n">BytesIO</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>,</span><span class="param">	<span class="n">stream_memory</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">_io</span><span class="o">.</span><span class="n">BytesIO</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span></span>)</span>
 
         
     </div>
@@ -551,18 +563,6 @@
     
 
                             </div>
-                            <div id="SpeakRESTResponse.stream" class="classattr">
-                                <div class="attr variable">
-            <span class="name">stream</span><span class="annotation">: Optional[_io.BytesIO]</span>        =
-<span class="default_value">None</span>
-
-        
-    </div>
-    <a class="headerlink" href="#SpeakRESTResponse.stream"></a>
-    
-    
-
-                            </div>
                             <div id="SpeakRESTResponse.filename" class="classattr">
                                 <div class="attr variable">
             <span class="name">filename</span><span class="annotation">: Optional[str]</span>        =
@@ -575,10 +575,38 @@
     
 
                             </div>
+                            <div id="SpeakRESTResponse.stream" class="classattr">
+                                <div class="attr variable">
+            <span class="name">stream</span><span class="annotation">: Optional[_io.BytesIO]</span>        =
+<span class="default_value">None</span>
+
+        
+    </div>
+    <a class="headerlink" href="#SpeakRESTResponse.stream"></a>
+    
+    
+
+                            </div>
+                            <div id="SpeakRESTResponse.stream_memory" class="classattr">
+                                <div class="attr variable">
+            <span class="name">stream_memory</span><span class="annotation">: Optional[_io.BytesIO]</span>        =
+<span class="default_value">None</span>
+
+        
+    </div>
+    <a class="headerlink" href="#SpeakRESTResponse.stream_memory"></a>
+    
+    
+
+                            </div>
                             <div class="inherited">
                                 <h5>Inherited Members</h5>
                                 <dl>
-                                    <div><dt>dataclasses_json.api.DataClassJsonMixin</dt>
+                                    <div><dt><a href="#BaseResponse">BaseResponse</a></dt>
+                                <dd id="SpeakRESTResponse.eval" class="function"><a href="#BaseResponse.eval">eval</a></dd>
+
+            </div>
+            <div><dt>dataclasses_json.api.DataClassJsonMixin</dt>
                                 <dd id="SpeakRESTResponse.dataclass_json_config" class="variable">dataclass_json_config</dd>
                 <dd id="SpeakRESTResponse.to_json" class="function">to_json</dd>
                 <dd id="SpeakRESTResponse.from_json" class="function">from_json</dd>
@@ -590,182 +618,25 @@
                                 </dl>
                             </div>
                 </section>
-                <section id="SpeakStreamResponse">
-                            <input id="SpeakStreamResponse-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
-<div class="attr class">
-                    <div class="decorator">@dataclass</div>
-
-    <span class="def">class</span>
-    <span class="name">SpeakStreamResponse</span><wbr>(<span class="base">dataclasses_json.api.DataClassJsonMixin</span>):
-
-                <label class="view-source-button" for="SpeakStreamResponse-view-source"><span>View Source</span></label>
-
-    </div>
-    <a class="headerlink" href="#SpeakStreamResponse"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="SpeakStreamResponse-52"><a href="#SpeakStreamResponse-52"><span class="linenos">52</span></a><span class="nd">@dataclass</span>
-</span><span id="SpeakStreamResponse-53"><a href="#SpeakStreamResponse-53"><span class="linenos">53</span></a><span class="k">class</span> <span class="nc">SpeakStreamResponse</span><span class="p">(</span>
-</span><span id="SpeakStreamResponse-54"><a href="#SpeakStreamResponse-54"><span class="linenos">54</span></a>    <span class="n">DataClassJsonMixin</span>
-</span><span id="SpeakStreamResponse-55"><a href="#SpeakStreamResponse-55"><span class="linenos">55</span></a><span class="p">):</span>  <span class="c1"># pylint: disable=too-many-instance-attributes</span>
-</span><span id="SpeakStreamResponse-56"><a href="#SpeakStreamResponse-56"><span class="linenos">56</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="SpeakStreamResponse-57"><a href="#SpeakStreamResponse-57"><span class="linenos">57</span></a><span class="sd">    A class for representing a response from the speak (streaming) endpoint.</span>
-</span><span id="SpeakStreamResponse-58"><a href="#SpeakStreamResponse-58"><span class="linenos">58</span></a><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="SpeakStreamResponse-59"><a href="#SpeakStreamResponse-59"><span class="linenos">59</span></a>
-</span><span id="SpeakStreamResponse-60"><a href="#SpeakStreamResponse-60"><span class="linenos">60</span></a>    <span class="n">content_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-</span><span id="SpeakStreamResponse-61"><a href="#SpeakStreamResponse-61"><span class="linenos">61</span></a>    <span class="n">request_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-</span><span id="SpeakStreamResponse-62"><a href="#SpeakStreamResponse-62"><span class="linenos">62</span></a>    <span class="n">model_uuid</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-</span><span id="SpeakStreamResponse-63"><a href="#SpeakStreamResponse-63"><span class="linenos">63</span></a>    <span class="n">model_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-</span><span id="SpeakStreamResponse-64"><a href="#SpeakStreamResponse-64"><span class="linenos">64</span></a>    <span class="n">date</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-</span><span id="SpeakStreamResponse-65"><a href="#SpeakStreamResponse-65"><span class="linenos">65</span></a>    <span class="n">stream</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">io</span><span class="o">.</span><span class="n">BytesIO</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span>
-</span><span id="SpeakStreamResponse-66"><a href="#SpeakStreamResponse-66"><span class="linenos">66</span></a>        <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="n">dataclass_config</span><span class="p">(</span><span class="n">exclude</span><span class="o">=</span><span class="k">lambda</span> <span class="n">f</span><span class="p">:</span> <span class="n">f</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span>
-</span><span id="SpeakStreamResponse-67"><a href="#SpeakStreamResponse-67"><span class="linenos">67</span></a>    <span class="p">)</span>
-</span><span id="SpeakStreamResponse-68"><a href="#SpeakStreamResponse-68"><span class="linenos">68</span></a>
-</span><span id="SpeakStreamResponse-69"><a href="#SpeakStreamResponse-69"><span class="linenos">69</span></a>    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
-</span><span id="SpeakStreamResponse-70"><a href="#SpeakStreamResponse-70"><span class="linenos">70</span></a>        <span class="n">_dict</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
-</span><span id="SpeakStreamResponse-71"><a href="#SpeakStreamResponse-71"><span class="linenos">71</span></a>        <span class="k">return</span> <span class="n">_dict</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
-</span><span id="SpeakStreamResponse-72"><a href="#SpeakStreamResponse-72"><span class="linenos">72</span></a>
-</span><span id="SpeakStreamResponse-73"><a href="#SpeakStreamResponse-73"><span class="linenos">73</span></a>    <span class="k">def</span> <span class="fm">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
-</span><span id="SpeakStreamResponse-74"><a href="#SpeakStreamResponse-74"><span class="linenos">74</span></a>        <span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">val</span>
-</span><span id="SpeakStreamResponse-75"><a href="#SpeakStreamResponse-75"><span class="linenos">75</span></a>
-</span><span id="SpeakStreamResponse-76"><a href="#SpeakStreamResponse-76"><span class="linenos">76</span></a>    <span class="c1"># this is a hack to make the response look like a dict because of the io.BytesIO object</span>
-</span><span id="SpeakStreamResponse-77"><a href="#SpeakStreamResponse-77"><span class="linenos">77</span></a>    <span class="c1"># otherwise it will throw an exception on printing</span>
-</span><span id="SpeakStreamResponse-78"><a href="#SpeakStreamResponse-78"><span class="linenos">78</span></a>    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-</span><span id="SpeakStreamResponse-79"><a href="#SpeakStreamResponse-79"><span class="linenos">79</span></a>        <span class="n">my_dict</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
-</span><span id="SpeakStreamResponse-80"><a href="#SpeakStreamResponse-80"><span class="linenos">80</span></a>        <span class="k">return</span> <span class="n">my_dict</span><span class="o">.</span><span class="fm">__str__</span><span class="p">()</span>
-</span></pre></div>
-
-
-            <div class="docstring"><p>A class for representing a response from the speak (streaming) endpoint.</p>
-</div>
-
-
-                            <div id="SpeakStreamResponse.__init__" class="classattr">
-                                <div class="attr function">
-            
-        <span class="name">SpeakStreamResponse</span><span class="signature pdoc-code multiline">(<span class="param">	<span class="n">content_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>,</span><span class="param">	<span class="n">request_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>,</span><span class="param">	<span class="n">model_uuid</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>,</span><span class="param">	<span class="n">model_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>,</span><span class="param">	<span class="n">date</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>,</span><span class="param">	<span class="n">stream</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">_io</span><span class="o">.</span><span class="n">BytesIO</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span></span>)</span>
-
-        
-    </div>
-    <a class="headerlink" href="#SpeakStreamResponse.__init__"></a>
-    
-    
-
-                            </div>
-                            <div id="SpeakStreamResponse.content_type" class="classattr">
-                                <div class="attr variable">
-            <span class="name">content_type</span><span class="annotation">: str</span>        =
-<span class="default_value">&#39;&#39;</span>
-
-        
-    </div>
-    <a class="headerlink" href="#SpeakStreamResponse.content_type"></a>
-    
-    
-
-                            </div>
-                            <div id="SpeakStreamResponse.request_id" class="classattr">
-                                <div class="attr variable">
-            <span class="name">request_id</span><span class="annotation">: str</span>        =
-<span class="default_value">&#39;&#39;</span>
-
-        
-    </div>
-    <a class="headerlink" href="#SpeakStreamResponse.request_id"></a>
-    
-    
-
-                            </div>
-                            <div id="SpeakStreamResponse.model_uuid" class="classattr">
-                                <div class="attr variable">
-            <span class="name">model_uuid</span><span class="annotation">: str</span>        =
-<span class="default_value">&#39;&#39;</span>
-
-        
-    </div>
-    <a class="headerlink" href="#SpeakStreamResponse.model_uuid"></a>
-    
-    
-
-                            </div>
-                            <div id="SpeakStreamResponse.model_name" class="classattr">
-                                <div class="attr variable">
-            <span class="name">model_name</span><span class="annotation">: str</span>        =
-<span class="default_value">&#39;&#39;</span>
-
-        
-    </div>
-    <a class="headerlink" href="#SpeakStreamResponse.model_name"></a>
-    
-    
-
-                            </div>
-                            <div id="SpeakStreamResponse.date" class="classattr">
-                                <div class="attr variable">
-            <span class="name">date</span><span class="annotation">: str</span>        =
-<span class="default_value">&#39;&#39;</span>
-
-        
-    </div>
-    <a class="headerlink" href="#SpeakStreamResponse.date"></a>
-    
-    
-
-                            </div>
-                            <div id="SpeakStreamResponse.stream" class="classattr">
-                                <div class="attr variable">
-            <span class="name">stream</span><span class="annotation">: Optional[_io.BytesIO]</span>        =
-<span class="default_value">None</span>
-
-        
-    </div>
-    <a class="headerlink" href="#SpeakStreamResponse.stream"></a>
-    
-    
-
-                            </div>
-                            <div class="inherited">
-                                <h5>Inherited Members</h5>
-                                <dl>
-                                    <div><dt>dataclasses_json.api.DataClassJsonMixin</dt>
-                                <dd id="SpeakStreamResponse.dataclass_json_config" class="variable">dataclass_json_config</dd>
-                <dd id="SpeakStreamResponse.to_json" class="function">to_json</dd>
-                <dd id="SpeakStreamResponse.from_json" class="function">from_json</dd>
-                <dd id="SpeakStreamResponse.from_dict" class="function">from_dict</dd>
-                <dd id="SpeakStreamResponse.to_dict" class="function">to_dict</dd>
-                <dd id="SpeakStreamResponse.schema" class="function">schema</dd>
-
-            </div>
-                                </dl>
-                            </div>
-                </section>
                 <section id="OpenResponse">
                             <input id="OpenResponse-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
 <div class="attr class">
                     <div class="decorator">@dataclass</div>
 
     <span class="def">class</span>
-    <span class="name">OpenResponse</span><wbr>(<span class="base">dataclasses_json.api.DataClassJsonMixin</span>):
+    <span class="name">OpenResponse</span><wbr>(<span class="base"><a href="#BaseResponse">BaseResponse</a></span>):
 
                 <label class="view-source-button" for="OpenResponse-view-source"><span>View Source</span></label>
 
     </div>
     <a class="headerlink" href="#OpenResponse"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="OpenResponse-83"><a href="#OpenResponse-83"><span class="linenos">83</span></a><span class="nd">@dataclass</span>
-</span><span id="OpenResponse-84"><a href="#OpenResponse-84"><span class="linenos">84</span></a><span class="k">class</span> <span class="nc">OpenResponse</span><span class="p">(</span><span class="n">DataClassJsonMixin</span><span class="p">):</span>
-</span><span id="OpenResponse-85"><a href="#OpenResponse-85"><span class="linenos">85</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="OpenResponse-86"><a href="#OpenResponse-86"><span class="linenos">86</span></a><span class="sd">    Open Message from the Deepgram Platform</span>
-</span><span id="OpenResponse-87"><a href="#OpenResponse-87"><span class="linenos">87</span></a><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="OpenResponse-88"><a href="#OpenResponse-88"><span class="linenos">88</span></a>
-</span><span id="OpenResponse-89"><a href="#OpenResponse-89"><span class="linenos">89</span></a>    <span class="nb">type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-</span><span id="OpenResponse-90"><a href="#OpenResponse-90"><span class="linenos">90</span></a>
-</span><span id="OpenResponse-91"><a href="#OpenResponse-91"><span class="linenos">91</span></a>    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
-</span><span id="OpenResponse-92"><a href="#OpenResponse-92"><span class="linenos">92</span></a>        <span class="n">_dict</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
-</span><span id="OpenResponse-93"><a href="#OpenResponse-93"><span class="linenos">93</span></a>        <span class="k">return</span> <span class="n">_dict</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
-</span><span id="OpenResponse-94"><a href="#OpenResponse-94"><span class="linenos">94</span></a>
-</span><span id="OpenResponse-95"><a href="#OpenResponse-95"><span class="linenos">95</span></a>    <span class="k">def</span> <span class="fm">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
-</span><span id="OpenResponse-96"><a href="#OpenResponse-96"><span class="linenos">96</span></a>        <span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">val</span>
-</span><span id="OpenResponse-97"><a href="#OpenResponse-97"><span class="linenos">97</span></a>
-</span><span id="OpenResponse-98"><a href="#OpenResponse-98"><span class="linenos">98</span></a>    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-</span><span id="OpenResponse-99"><a href="#OpenResponse-99"><span class="linenos">99</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="OpenResponse-80"><a href="#OpenResponse-80"><span class="linenos">80</span></a><span class="nd">@dataclass</span>
+</span><span id="OpenResponse-81"><a href="#OpenResponse-81"><span class="linenos">81</span></a><span class="k">class</span> <span class="nc">OpenResponse</span><span class="p">(</span><span class="n">BaseResponse</span><span class="p">):</span>
+</span><span id="OpenResponse-82"><a href="#OpenResponse-82"><span class="linenos">82</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="OpenResponse-83"><a href="#OpenResponse-83"><span class="linenos">83</span></a><span class="sd">    Open Message from the Deepgram Platform</span>
+</span><span id="OpenResponse-84"><a href="#OpenResponse-84"><span class="linenos">84</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="OpenResponse-85"><a href="#OpenResponse-85"><span class="linenos">85</span></a>
+</span><span id="OpenResponse-86"><a href="#OpenResponse-86"><span class="linenos">86</span></a>    <span class="nb">type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
 </span></pre></div>
 
 
@@ -800,7 +671,11 @@
                             <div class="inherited">
                                 <h5>Inherited Members</h5>
                                 <dl>
-                                    <div><dt>dataclasses_json.api.DataClassJsonMixin</dt>
+                                    <div><dt><a href="#BaseResponse">BaseResponse</a></dt>
+                                <dd id="OpenResponse.eval" class="function"><a href="#BaseResponse.eval">eval</a></dd>
+
+            </div>
+            <div><dt>dataclasses_json.api.DataClassJsonMixin</dt>
                                 <dd id="OpenResponse.dataclass_json_config" class="variable">dataclass_json_config</dd>
                 <dd id="OpenResponse.to_json" class="function">to_json</dd>
                 <dd id="OpenResponse.from_json" class="function">from_json</dd>
@@ -818,29 +693,19 @@
                     <div class="decorator">@dataclass</div>
 
     <span class="def">class</span>
-    <span class="name">MetadataResponse</span><wbr>(<span class="base">dataclasses_json.api.DataClassJsonMixin</span>):
+    <span class="name">MetadataResponse</span><wbr>(<span class="base"><a href="#BaseResponse">BaseResponse</a></span>):
 
                 <label class="view-source-button" for="MetadataResponse-view-source"><span>View Source</span></label>
 
     </div>
     <a class="headerlink" href="#MetadataResponse"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="MetadataResponse-102"><a href="#MetadataResponse-102"><span class="linenos">102</span></a><span class="nd">@dataclass</span>
-</span><span id="MetadataResponse-103"><a href="#MetadataResponse-103"><span class="linenos">103</span></a><span class="k">class</span> <span class="nc">MetadataResponse</span><span class="p">(</span><span class="n">DataClassJsonMixin</span><span class="p">):</span>
-</span><span id="MetadataResponse-104"><a href="#MetadataResponse-104"><span class="linenos">104</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="MetadataResponse-105"><a href="#MetadataResponse-105"><span class="linenos">105</span></a><span class="sd">    Metadata object</span>
-</span><span id="MetadataResponse-106"><a href="#MetadataResponse-106"><span class="linenos">106</span></a><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="MetadataResponse-107"><a href="#MetadataResponse-107"><span class="linenos">107</span></a>
-</span><span id="MetadataResponse-108"><a href="#MetadataResponse-108"><span class="linenos">108</span></a>    <span class="n">request_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-</span><span id="MetadataResponse-109"><a href="#MetadataResponse-109"><span class="linenos">109</span></a>
-</span><span id="MetadataResponse-110"><a href="#MetadataResponse-110"><span class="linenos">110</span></a>    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
-</span><span id="MetadataResponse-111"><a href="#MetadataResponse-111"><span class="linenos">111</span></a>        <span class="n">_dict</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
-</span><span id="MetadataResponse-112"><a href="#MetadataResponse-112"><span class="linenos">112</span></a>        <span class="k">return</span> <span class="n">_dict</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
-</span><span id="MetadataResponse-113"><a href="#MetadataResponse-113"><span class="linenos">113</span></a>
-</span><span id="MetadataResponse-114"><a href="#MetadataResponse-114"><span class="linenos">114</span></a>    <span class="k">def</span> <span class="fm">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
-</span><span id="MetadataResponse-115"><a href="#MetadataResponse-115"><span class="linenos">115</span></a>        <span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">val</span>
-</span><span id="MetadataResponse-116"><a href="#MetadataResponse-116"><span class="linenos">116</span></a>
-</span><span id="MetadataResponse-117"><a href="#MetadataResponse-117"><span class="linenos">117</span></a>    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-</span><span id="MetadataResponse-118"><a href="#MetadataResponse-118"><span class="linenos">118</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="MetadataResponse-89"><a href="#MetadataResponse-89"><span class="linenos">89</span></a><span class="nd">@dataclass</span>
+</span><span id="MetadataResponse-90"><a href="#MetadataResponse-90"><span class="linenos">90</span></a><span class="k">class</span> <span class="nc">MetadataResponse</span><span class="p">(</span><span class="n">BaseResponse</span><span class="p">):</span>
+</span><span id="MetadataResponse-91"><a href="#MetadataResponse-91"><span class="linenos">91</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="MetadataResponse-92"><a href="#MetadataResponse-92"><span class="linenos">92</span></a><span class="sd">    Metadata object</span>
+</span><span id="MetadataResponse-93"><a href="#MetadataResponse-93"><span class="linenos">93</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="MetadataResponse-94"><a href="#MetadataResponse-94"><span class="linenos">94</span></a>
+</span><span id="MetadataResponse-95"><a href="#MetadataResponse-95"><span class="linenos">95</span></a>    <span class="n">request_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
 </span></pre></div>
 
 
@@ -875,7 +740,11 @@
                             <div class="inherited">
                                 <h5>Inherited Members</h5>
                                 <dl>
-                                    <div><dt>dataclasses_json.api.DataClassJsonMixin</dt>
+                                    <div><dt><a href="#BaseResponse">BaseResponse</a></dt>
+                                <dd id="MetadataResponse.eval" class="function"><a href="#BaseResponse.eval">eval</a></dd>
+
+            </div>
+            <div><dt>dataclasses_json.api.DataClassJsonMixin</dt>
                                 <dd id="MetadataResponse.dataclass_json_config" class="variable">dataclass_json_config</dd>
                 <dd id="MetadataResponse.to_json" class="function">to_json</dd>
                 <dd id="MetadataResponse.from_json" class="function">from_json</dd>
@@ -893,29 +762,19 @@
                     <div class="decorator">@dataclass</div>
 
     <span class="def">class</span>
-    <span class="name">FlushedResponse</span><wbr>(<span class="base">dataclasses_json.api.DataClassJsonMixin</span>):
+    <span class="name">FlushedResponse</span><wbr>(<span class="base"><a href="#BaseResponse">BaseResponse</a></span>):
 
                 <label class="view-source-button" for="FlushedResponse-view-source"><span>View Source</span></label>
 
     </div>
     <a class="headerlink" href="#FlushedResponse"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="FlushedResponse-121"><a href="#FlushedResponse-121"><span class="linenos">121</span></a><span class="nd">@dataclass</span>
-</span><span id="FlushedResponse-122"><a href="#FlushedResponse-122"><span class="linenos">122</span></a><span class="k">class</span> <span class="nc">FlushedResponse</span><span class="p">(</span><span class="n">DataClassJsonMixin</span><span class="p">):</span>
-</span><span id="FlushedResponse-123"><a href="#FlushedResponse-123"><span class="linenos">123</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="FlushedResponse-124"><a href="#FlushedResponse-124"><span class="linenos">124</span></a><span class="sd">    Flushed Message from the Deepgram Platform</span>
-</span><span id="FlushedResponse-125"><a href="#FlushedResponse-125"><span class="linenos">125</span></a><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="FlushedResponse-126"><a href="#FlushedResponse-126"><span class="linenos">126</span></a>
-</span><span id="FlushedResponse-127"><a href="#FlushedResponse-127"><span class="linenos">127</span></a>    <span class="nb">type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-</span><span id="FlushedResponse-128"><a href="#FlushedResponse-128"><span class="linenos">128</span></a>
-</span><span id="FlushedResponse-129"><a href="#FlushedResponse-129"><span class="linenos">129</span></a>    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
-</span><span id="FlushedResponse-130"><a href="#FlushedResponse-130"><span class="linenos">130</span></a>        <span class="n">_dict</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
-</span><span id="FlushedResponse-131"><a href="#FlushedResponse-131"><span class="linenos">131</span></a>        <span class="k">return</span> <span class="n">_dict</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
-</span><span id="FlushedResponse-132"><a href="#FlushedResponse-132"><span class="linenos">132</span></a>
-</span><span id="FlushedResponse-133"><a href="#FlushedResponse-133"><span class="linenos">133</span></a>    <span class="k">def</span> <span class="fm">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
-</span><span id="FlushedResponse-134"><a href="#FlushedResponse-134"><span class="linenos">134</span></a>        <span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">val</span>
-</span><span id="FlushedResponse-135"><a href="#FlushedResponse-135"><span class="linenos">135</span></a>
-</span><span id="FlushedResponse-136"><a href="#FlushedResponse-136"><span class="linenos">136</span></a>    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-</span><span id="FlushedResponse-137"><a href="#FlushedResponse-137"><span class="linenos">137</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="FlushedResponse-98"><a href="#FlushedResponse-98"><span class="linenos"> 98</span></a><span class="nd">@dataclass</span>
+</span><span id="FlushedResponse-99"><a href="#FlushedResponse-99"><span class="linenos"> 99</span></a><span class="k">class</span> <span class="nc">FlushedResponse</span><span class="p">(</span><span class="n">BaseResponse</span><span class="p">):</span>
+</span><span id="FlushedResponse-100"><a href="#FlushedResponse-100"><span class="linenos">100</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="FlushedResponse-101"><a href="#FlushedResponse-101"><span class="linenos">101</span></a><span class="sd">    Flushed Message from the Deepgram Platform</span>
+</span><span id="FlushedResponse-102"><a href="#FlushedResponse-102"><span class="linenos">102</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="FlushedResponse-103"><a href="#FlushedResponse-103"><span class="linenos">103</span></a>
+</span><span id="FlushedResponse-104"><a href="#FlushedResponse-104"><span class="linenos">104</span></a>    <span class="nb">type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
 </span></pre></div>
 
 
@@ -950,7 +809,11 @@
                             <div class="inherited">
                                 <h5>Inherited Members</h5>
                                 <dl>
-                                    <div><dt>dataclasses_json.api.DataClassJsonMixin</dt>
+                                    <div><dt><a href="#BaseResponse">BaseResponse</a></dt>
+                                <dd id="FlushedResponse.eval" class="function"><a href="#BaseResponse.eval">eval</a></dd>
+
+            </div>
+            <div><dt>dataclasses_json.api.DataClassJsonMixin</dt>
                                 <dd id="FlushedResponse.dataclass_json_config" class="variable">dataclass_json_config</dd>
                 <dd id="FlushedResponse.to_json" class="function">to_json</dd>
                 <dd id="FlushedResponse.from_json" class="function">from_json</dd>
@@ -968,29 +831,19 @@
                     <div class="decorator">@dataclass</div>
 
     <span class="def">class</span>
-    <span class="name">CloseResponse</span><wbr>(<span class="base">dataclasses_json.api.DataClassJsonMixin</span>):
+    <span class="name">CloseResponse</span><wbr>(<span class="base"><a href="#BaseResponse">BaseResponse</a></span>):
 
                 <label class="view-source-button" for="CloseResponse-view-source"><span>View Source</span></label>
 
     </div>
     <a class="headerlink" href="#CloseResponse"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="CloseResponse-140"><a href="#CloseResponse-140"><span class="linenos">140</span></a><span class="nd">@dataclass</span>
-</span><span id="CloseResponse-141"><a href="#CloseResponse-141"><span class="linenos">141</span></a><span class="k">class</span> <span class="nc">CloseResponse</span><span class="p">(</span><span class="n">DataClassJsonMixin</span><span class="p">):</span>
-</span><span id="CloseResponse-142"><a href="#CloseResponse-142"><span class="linenos">142</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="CloseResponse-143"><a href="#CloseResponse-143"><span class="linenos">143</span></a><span class="sd">    Close Message from the Deepgram Platform</span>
-</span><span id="CloseResponse-144"><a href="#CloseResponse-144"><span class="linenos">144</span></a><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="CloseResponse-145"><a href="#CloseResponse-145"><span class="linenos">145</span></a>
-</span><span id="CloseResponse-146"><a href="#CloseResponse-146"><span class="linenos">146</span></a>    <span class="nb">type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-</span><span id="CloseResponse-147"><a href="#CloseResponse-147"><span class="linenos">147</span></a>
-</span><span id="CloseResponse-148"><a href="#CloseResponse-148"><span class="linenos">148</span></a>    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
-</span><span id="CloseResponse-149"><a href="#CloseResponse-149"><span class="linenos">149</span></a>        <span class="n">_dict</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
-</span><span id="CloseResponse-150"><a href="#CloseResponse-150"><span class="linenos">150</span></a>        <span class="k">return</span> <span class="n">_dict</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
-</span><span id="CloseResponse-151"><a href="#CloseResponse-151"><span class="linenos">151</span></a>
-</span><span id="CloseResponse-152"><a href="#CloseResponse-152"><span class="linenos">152</span></a>    <span class="k">def</span> <span class="fm">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
-</span><span id="CloseResponse-153"><a href="#CloseResponse-153"><span class="linenos">153</span></a>        <span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">val</span>
-</span><span id="CloseResponse-154"><a href="#CloseResponse-154"><span class="linenos">154</span></a>
-</span><span id="CloseResponse-155"><a href="#CloseResponse-155"><span class="linenos">155</span></a>    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-</span><span id="CloseResponse-156"><a href="#CloseResponse-156"><span class="linenos">156</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="CloseResponse-107"><a href="#CloseResponse-107"><span class="linenos">107</span></a><span class="nd">@dataclass</span>
+</span><span id="CloseResponse-108"><a href="#CloseResponse-108"><span class="linenos">108</span></a><span class="k">class</span> <span class="nc">CloseResponse</span><span class="p">(</span><span class="n">BaseResponse</span><span class="p">):</span>
+</span><span id="CloseResponse-109"><a href="#CloseResponse-109"><span class="linenos">109</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="CloseResponse-110"><a href="#CloseResponse-110"><span class="linenos">110</span></a><span class="sd">    Close Message from the Deepgram Platform</span>
+</span><span id="CloseResponse-111"><a href="#CloseResponse-111"><span class="linenos">111</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="CloseResponse-112"><a href="#CloseResponse-112"><span class="linenos">112</span></a>
+</span><span id="CloseResponse-113"><a href="#CloseResponse-113"><span class="linenos">113</span></a>    <span class="nb">type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
 </span></pre></div>
 
 
@@ -1025,7 +878,11 @@
                             <div class="inherited">
                                 <h5>Inherited Members</h5>
                                 <dl>
-                                    <div><dt>dataclasses_json.api.DataClassJsonMixin</dt>
+                                    <div><dt><a href="#BaseResponse">BaseResponse</a></dt>
+                                <dd id="CloseResponse.eval" class="function"><a href="#BaseResponse.eval">eval</a></dd>
+
+            </div>
+            <div><dt>dataclasses_json.api.DataClassJsonMixin</dt>
                                 <dd id="CloseResponse.dataclass_json_config" class="variable">dataclass_json_config</dd>
                 <dd id="CloseResponse.to_json" class="function">to_json</dd>
                 <dd id="CloseResponse.from_json" class="function">from_json</dd>
@@ -1043,32 +900,22 @@
                     <div class="decorator">@dataclass</div>
 
     <span class="def">class</span>
-    <span class="name">ErrorResponse</span><wbr>(<span class="base">dataclasses_json.api.DataClassJsonMixin</span>):
+    <span class="name">ErrorResponse</span><wbr>(<span class="base"><a href="#BaseResponse">BaseResponse</a></span>):
 
                 <label class="view-source-button" for="ErrorResponse-view-source"><span>View Source</span></label>
 
     </div>
     <a class="headerlink" href="#ErrorResponse"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="ErrorResponse-159"><a href="#ErrorResponse-159"><span class="linenos">159</span></a><span class="nd">@dataclass</span>
-</span><span id="ErrorResponse-160"><a href="#ErrorResponse-160"><span class="linenos">160</span></a><span class="k">class</span> <span class="nc">ErrorResponse</span><span class="p">(</span><span class="n">DataClassJsonMixin</span><span class="p">):</span>
-</span><span id="ErrorResponse-161"><a href="#ErrorResponse-161"><span class="linenos">161</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="ErrorResponse-162"><a href="#ErrorResponse-162"><span class="linenos">162</span></a><span class="sd">    Error Message from the Deepgram Platform</span>
-</span><span id="ErrorResponse-163"><a href="#ErrorResponse-163"><span class="linenos">163</span></a><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="ErrorResponse-164"><a href="#ErrorResponse-164"><span class="linenos">164</span></a>
-</span><span id="ErrorResponse-165"><a href="#ErrorResponse-165"><span class="linenos">165</span></a>    <span class="n">description</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-</span><span id="ErrorResponse-166"><a href="#ErrorResponse-166"><span class="linenos">166</span></a>    <span class="n">message</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-</span><span id="ErrorResponse-167"><a href="#ErrorResponse-167"><span class="linenos">167</span></a>    <span class="nb">type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-</span><span id="ErrorResponse-168"><a href="#ErrorResponse-168"><span class="linenos">168</span></a>    <span class="n">variant</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-</span><span id="ErrorResponse-169"><a href="#ErrorResponse-169"><span class="linenos">169</span></a>
-</span><span id="ErrorResponse-170"><a href="#ErrorResponse-170"><span class="linenos">170</span></a>    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
-</span><span id="ErrorResponse-171"><a href="#ErrorResponse-171"><span class="linenos">171</span></a>        <span class="n">_dict</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
-</span><span id="ErrorResponse-172"><a href="#ErrorResponse-172"><span class="linenos">172</span></a>        <span class="k">return</span> <span class="n">_dict</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
-</span><span id="ErrorResponse-173"><a href="#ErrorResponse-173"><span class="linenos">173</span></a>
-</span><span id="ErrorResponse-174"><a href="#ErrorResponse-174"><span class="linenos">174</span></a>    <span class="k">def</span> <span class="fm">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
-</span><span id="ErrorResponse-175"><a href="#ErrorResponse-175"><span class="linenos">175</span></a>        <span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">val</span>
-</span><span id="ErrorResponse-176"><a href="#ErrorResponse-176"><span class="linenos">176</span></a>
-</span><span id="ErrorResponse-177"><a href="#ErrorResponse-177"><span class="linenos">177</span></a>    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-</span><span id="ErrorResponse-178"><a href="#ErrorResponse-178"><span class="linenos">178</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="ErrorResponse-116"><a href="#ErrorResponse-116"><span class="linenos">116</span></a><span class="nd">@dataclass</span>
+</span><span id="ErrorResponse-117"><a href="#ErrorResponse-117"><span class="linenos">117</span></a><span class="k">class</span> <span class="nc">ErrorResponse</span><span class="p">(</span><span class="n">BaseResponse</span><span class="p">):</span>
+</span><span id="ErrorResponse-118"><a href="#ErrorResponse-118"><span class="linenos">118</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="ErrorResponse-119"><a href="#ErrorResponse-119"><span class="linenos">119</span></a><span class="sd">    Error Message from the Deepgram Platform</span>
+</span><span id="ErrorResponse-120"><a href="#ErrorResponse-120"><span class="linenos">120</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="ErrorResponse-121"><a href="#ErrorResponse-121"><span class="linenos">121</span></a>
+</span><span id="ErrorResponse-122"><a href="#ErrorResponse-122"><span class="linenos">122</span></a>    <span class="n">description</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+</span><span id="ErrorResponse-123"><a href="#ErrorResponse-123"><span class="linenos">123</span></a>    <span class="n">message</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+</span><span id="ErrorResponse-124"><a href="#ErrorResponse-124"><span class="linenos">124</span></a>    <span class="nb">type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+</span><span id="ErrorResponse-125"><a href="#ErrorResponse-125"><span class="linenos">125</span></a>    <span class="n">variant</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
 </span></pre></div>
 
 
@@ -1139,7 +986,11 @@
                             <div class="inherited">
                                 <h5>Inherited Members</h5>
                                 <dl>
-                                    <div><dt>dataclasses_json.api.DataClassJsonMixin</dt>
+                                    <div><dt><a href="#BaseResponse">BaseResponse</a></dt>
+                                <dd id="ErrorResponse.eval" class="function"><a href="#BaseResponse.eval">eval</a></dd>
+
+            </div>
+            <div><dt>dataclasses_json.api.DataClassJsonMixin</dt>
                                 <dd id="ErrorResponse.dataclass_json_config" class="variable">dataclass_json_config</dd>
                 <dd id="ErrorResponse.to_json" class="function">to_json</dd>
                 <dd id="ErrorResponse.from_json" class="function">from_json</dd>
@@ -1157,30 +1008,20 @@
                     <div class="decorator">@dataclass</div>
 
     <span class="def">class</span>
-    <span class="name">UnhandledResponse</span><wbr>(<span class="base">dataclasses_json.api.DataClassJsonMixin</span>):
+    <span class="name">UnhandledResponse</span><wbr>(<span class="base"><a href="#BaseResponse">BaseResponse</a></span>):
 
                 <label class="view-source-button" for="UnhandledResponse-view-source"><span>View Source</span></label>
 
     </div>
     <a class="headerlink" href="#UnhandledResponse"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="UnhandledResponse-184"><a href="#UnhandledResponse-184"><span class="linenos">184</span></a><span class="nd">@dataclass</span>
-</span><span id="UnhandledResponse-185"><a href="#UnhandledResponse-185"><span class="linenos">185</span></a><span class="k">class</span> <span class="nc">UnhandledResponse</span><span class="p">(</span><span class="n">DataClassJsonMixin</span><span class="p">):</span>
-</span><span id="UnhandledResponse-186"><a href="#UnhandledResponse-186"><span class="linenos">186</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="UnhandledResponse-187"><a href="#UnhandledResponse-187"><span class="linenos">187</span></a><span class="sd">    Unhandled Message from the Deepgram Platform</span>
-</span><span id="UnhandledResponse-188"><a href="#UnhandledResponse-188"><span class="linenos">188</span></a><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="UnhandledResponse-189"><a href="#UnhandledResponse-189"><span class="linenos">189</span></a>
-</span><span id="UnhandledResponse-190"><a href="#UnhandledResponse-190"><span class="linenos">190</span></a>    <span class="nb">type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-</span><span id="UnhandledResponse-191"><a href="#UnhandledResponse-191"><span class="linenos">191</span></a>    <span class="n">raw</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-</span><span id="UnhandledResponse-192"><a href="#UnhandledResponse-192"><span class="linenos">192</span></a>
-</span><span id="UnhandledResponse-193"><a href="#UnhandledResponse-193"><span class="linenos">193</span></a>    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
-</span><span id="UnhandledResponse-194"><a href="#UnhandledResponse-194"><span class="linenos">194</span></a>        <span class="n">_dict</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
-</span><span id="UnhandledResponse-195"><a href="#UnhandledResponse-195"><span class="linenos">195</span></a>        <span class="k">return</span> <span class="n">_dict</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
-</span><span id="UnhandledResponse-196"><a href="#UnhandledResponse-196"><span class="linenos">196</span></a>
-</span><span id="UnhandledResponse-197"><a href="#UnhandledResponse-197"><span class="linenos">197</span></a>    <span class="k">def</span> <span class="fm">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
-</span><span id="UnhandledResponse-198"><a href="#UnhandledResponse-198"><span class="linenos">198</span></a>        <span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">val</span>
-</span><span id="UnhandledResponse-199"><a href="#UnhandledResponse-199"><span class="linenos">199</span></a>
-</span><span id="UnhandledResponse-200"><a href="#UnhandledResponse-200"><span class="linenos">200</span></a>    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-</span><span id="UnhandledResponse-201"><a href="#UnhandledResponse-201"><span class="linenos">201</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="UnhandledResponse-131"><a href="#UnhandledResponse-131"><span class="linenos">131</span></a><span class="nd">@dataclass</span>
+</span><span id="UnhandledResponse-132"><a href="#UnhandledResponse-132"><span class="linenos">132</span></a><span class="k">class</span> <span class="nc">UnhandledResponse</span><span class="p">(</span><span class="n">BaseResponse</span><span class="p">):</span>
+</span><span id="UnhandledResponse-133"><a href="#UnhandledResponse-133"><span class="linenos">133</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="UnhandledResponse-134"><a href="#UnhandledResponse-134"><span class="linenos">134</span></a><span class="sd">    Unhandled Message from the Deepgram Platform</span>
+</span><span id="UnhandledResponse-135"><a href="#UnhandledResponse-135"><span class="linenos">135</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="UnhandledResponse-136"><a href="#UnhandledResponse-136"><span class="linenos">136</span></a>
+</span><span id="UnhandledResponse-137"><a href="#UnhandledResponse-137"><span class="linenos">137</span></a>    <span class="nb">type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+</span><span id="UnhandledResponse-138"><a href="#UnhandledResponse-138"><span class="linenos">138</span></a>    <span class="n">raw</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
 </span></pre></div>
 
 
@@ -1227,7 +1068,11 @@
                             <div class="inherited">
                                 <h5>Inherited Members</h5>
                                 <dl>
-                                    <div><dt>dataclasses_json.api.DataClassJsonMixin</dt>
+                                    <div><dt><a href="#BaseResponse">BaseResponse</a></dt>
+                                <dd id="UnhandledResponse.eval" class="function"><a href="#BaseResponse.eval">eval</a></dd>
+
+            </div>
+            <div><dt>dataclasses_json.api.DataClassJsonMixin</dt>
                                 <dd id="UnhandledResponse.dataclass_json_config" class="variable">dataclass_json_config</dd>
                 <dd id="UnhandledResponse.to_json" class="function">to_json</dd>
                 <dd id="UnhandledResponse.from_json" class="function">from_json</dd>
