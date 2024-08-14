@@ -27,9 +27,12 @@ from .response import (
     UsageFieldsResponse,
     Balance,
     BalancesResponse,
+    ModelResponse,
+    ModelsResponse,
 )
 from .options import (
     ProjectOptions,
+    ModelOptions,
     KeyOptions,
     ScopeOptions,
     InviteOptions,
@@ -41,7 +44,7 @@ from .options import (
 
 class AsyncManageClient(
     AbstractAsyncRestClient
-):  # pylint: disable=too-many-public-methods
+):  # pylint: disable=too-many-public-methods,too-many-lines
     """
     A client for managing Deepgram projects and associated resources via the Deepgram API.
 
@@ -237,6 +240,223 @@ class AsyncManageClient(
         self._logger.verbose("result: %s", res)
         self._logger.notice("delete_project succeeded")
         self._logger.debug("ManageClient.delete_project LEAVE")
+        return res
+
+    async def list_project_models(
+        self,
+        project_id: str,
+        options: Optional[Union[Dict, ModelOptions]] = None,
+        timeout: Optional[httpx.Timeout] = None,
+        addons: Optional[Dict] = None,
+        headers: Optional[Dict] = None,
+        **kwargs,
+    ) -> ModelsResponse:
+        """
+        Please see get_project_models.
+        """
+        return await self.get_project_models(
+            project_id,
+            options=options,
+            timeout=timeout,
+            addons=addons,
+            headers=headers,
+            **kwargs,
+        )
+
+    async def get_project_models(
+        self,
+        project_id: str,
+        options: Optional[Union[Dict, ModelOptions]] = None,
+        timeout: Optional[httpx.Timeout] = None,
+        addons: Optional[Dict] = None,
+        headers: Optional[Dict] = None,
+        **kwargs,
+    ) -> ModelsResponse:
+        """
+        Gets models for a specific project.
+
+        Reference:
+        https://developers.deepgram.com/reference/get-project
+        https://developers.deepgram.com/reference/get-model
+
+        Args:
+            project_id (str): The ID of the project.
+            timeout (Optional[httpx.Timeout]): The timeout setting for the request.
+            addons (Optional[Dict]): Additional options for the request.
+            headers (Optional[Dict]): Headers to include in the request.
+            **kwargs: Additional keyword arguments.
+
+        Returns:
+            ModelsResponse: A response object containing the model details.
+        """
+        self._logger.debug("ManageClient.get_project_models ENTER")
+
+        if options is None:
+            options = ModelOptions()
+
+        url = f"{self._config.url}/{self._endpoint}/{project_id}/models"
+        self._logger.info("url: %s", url)
+        self._logger.info("project_id: %s", project_id)
+        if isinstance(options, ModelOptions):
+            self._logger.info("ModelOptions switching class -> dict")
+            options = options.to_dict()
+        self._logger.info("options: %s", options)
+        self._logger.info("addons: %s", addons)
+        self._logger.info("headers: %s", headers)
+        result = await self.get(
+            url, json=options, timeout=timeout, addons=addons, headers=headers, **kwargs
+        )
+        self._logger.info("json: %s", result)
+        res = ModelsResponse.from_json(result)
+        self._logger.verbose("result: %s", res)
+        self._logger.notice("get_project_models succeeded")
+        self._logger.debug("ManageClient.get_project_models LEAVE")
+        return res
+
+    async def get_project_model(
+        self,
+        project_id: str,
+        model_id: str,
+        timeout: Optional[httpx.Timeout] = None,
+        addons: Optional[Dict] = None,
+        headers: Optional[Dict] = None,
+        **kwargs,
+    ) -> ModelResponse:
+        """
+        Gets a single model for a specific project.
+
+        Reference:
+        https://developers.deepgram.com/reference/get-project
+        https://developers.deepgram.com/reference/get-model
+
+        Args:
+            project_id (str): The ID of the project.
+            model_id (str): The ID of the model.
+            timeout (Optional[httpx.Timeout]): The timeout setting for the request.
+            addons (Optional[Dict]): Additional options for the request.
+            headers (Optional[Dict]): Headers to include in the request.
+            **kwargs: Additional keyword arguments.
+
+        Returns:
+            ModelResponse: A response object containing the model details.
+        """
+        self._logger.debug("ManageClient.get_project_model ENTER")
+        url = f"{self._config.url}/{self._endpoint}/{project_id}/models/{model_id}"
+        self._logger.info("url: %s", url)
+        self._logger.info("project_id: %s", project_id)
+        self._logger.info("model_id: %s", model_id)
+        self._logger.info("addons: %s", addons)
+        self._logger.info("headers: %s", headers)
+        result = await self.get(
+            url, timeout=timeout, addons=addons, headers=headers, **kwargs
+        )
+        self._logger.info("json: %s", result)
+        res = ModelResponse.from_json(result)
+        self._logger.verbose("result: %s", res)
+        self._logger.notice("get_project_model succeeded")
+        self._logger.debug("ManageClient.get_project_model LEAVE")
+        return res
+
+    # models
+    async def list_models(
+        self,
+        options: Optional[Union[Dict, ModelOptions]] = None,
+        timeout: Optional[httpx.Timeout] = None,
+        addons: Optional[Dict] = None,
+        headers: Optional[Dict] = None,
+        **kwargs,
+    ) -> ModelsResponse:
+        """
+        Please see get_models for more information.
+        """
+        return await self.get_models(
+            options=options, timeout=timeout, addons=addons, headers=headers, **kwargs
+        )
+
+    async def get_models(
+        self,
+        options: Optional[Union[Dict, ModelOptions]] = None,
+        timeout: Optional[httpx.Timeout] = None,
+        addons: Optional[Dict] = None,
+        headers: Optional[Dict] = None,
+        **kwargs,
+    ) -> ModelsResponse:
+        """
+        Gets all models available.
+
+        Reference:
+        https://developers.deepgram.com/reference/get-model
+
+        Args:
+            timeout (Optional[httpx.Timeout]): The timeout setting for the request.
+            addons (Optional[Dict]): Additional options for the request.
+            headers (Optional[Dict]): Headers to include in the request.
+            **kwargs: Additional keyword arguments.
+
+        Returns:
+            ModelsResponse: A response object containing the model details.
+        """
+        self._logger.debug("ManageClient.get_models ENTER")
+
+        if options is None:
+            options = ModelOptions()
+
+        url = f"{self._config.url}/v1/models"
+        self._logger.info("url: %s", url)
+        if isinstance(options, ModelOptions):
+            self._logger.info("ModelOptions switching class -> dict")
+            options = options.to_dict()
+        self._logger.info("options: %s", options)
+        self._logger.info("addons: %s", addons)
+        self._logger.info("headers: %s", headers)
+        result = await self.get(
+            url, json=options, timeout=timeout, addons=addons, headers=headers, **kwargs
+        )
+        self._logger.info("result: %s", result)
+        res = ModelsResponse.from_json(result)
+        self._logger.verbose("result: %s", res)
+        self._logger.notice("get_models succeeded")
+        self._logger.debug("ManageClient.get_models LEAVE")
+        return res
+
+    async def get_model(
+        self,
+        model_id: str,
+        timeout: Optional[httpx.Timeout] = None,
+        addons: Optional[Dict] = None,
+        headers: Optional[Dict] = None,
+        **kwargs,
+    ) -> ModelResponse:
+        """
+        Gets information for a specific model.
+
+        Reference:
+        https://developers.deepgram.com/reference/get-model
+
+        Args:
+            model_id (str): The ID of the model.
+            timeout (Optional[httpx.Timeout]): The timeout setting for the request.
+            addons (Optional[Dict]): Additional options for the request.
+            headers (Optional[Dict]): Headers to include in the request.
+            **kwargs: Additional keyword arguments.
+
+        Returns:
+            ModelResponse: A response object containing the model details.
+        """
+        self._logger.debug("ManageClient.get_model ENTER")
+        url = f"{self._config.url}/v1/models/{model_id}"
+        self._logger.info("url: %s", url)
+        self._logger.info("model_id: %s", model_id)
+        self._logger.info("addons: %s", addons)
+        self._logger.info("headers: %s", headers)
+        result = await self.get(
+            url, timeout=timeout, addons=addons, headers=headers, **kwargs
+        )
+        self._logger.info("result: %s", result)
+        res = ModelResponse.from_json(result)
+        self._logger.verbose("result: %s", res)
+        self._logger.notice("get_model succeeded")
+        self._logger.debug("ManageClient.get_model LEAVE")
         return res
 
     # keys

@@ -82,6 +82,118 @@ class ProjectsResponse(BaseResponse):
         return _dict[key]
 
 
+# Models
+
+
+@dataclass
+class Stt(BaseResponse):  # pylint: disable=too-many-instance-attributes
+    """
+    STT class used to define the properties of the Speech-to-Text model response object.
+    """
+
+    name: str = ""
+    canonical_name: str = ""
+    architecture: str = ""
+    languages: List[str] = field(default_factory=list)
+    version: str = ""
+    uuid: str = ""
+    batch: bool = False
+    streaming: bool = False
+    formatted_output: bool = False
+
+    def __getitem__(self, key):
+        _dict = self.to_dict()
+        if "languages" in _dict:
+            _dict["languages"] = [str(languages) for languages in _dict["languages"]]
+        return _dict[key]
+
+
+@dataclass
+class Metadata(BaseResponse):
+    """
+    Metadata class used to define the properties for a given STT or TTS model.
+    """
+
+    accent: str = ""
+    color: str = ""
+    image: str = ""
+    sample: str = ""
+    tags: Optional[List[str]] = field(
+        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
+    )
+
+
+@dataclass
+class Tts(BaseResponse):
+    """
+    TTS class used to define the properties of the Text-to-Speech model response object.
+    """
+
+    name: str = ""
+    canonical_name: str = ""
+    architecture: str = ""
+    languages: List[str] = field(default_factory=list)
+    version: str = ""
+    uuid: str = ""
+    metadata: Optional[Metadata] = field(
+        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
+    )
+
+    def __getitem__(self, key):
+        _dict = self.to_dict()
+        if "metadata" in _dict:
+            _dict["metadata"] = [
+                Metadata.from_dict(metadata) for metadata in _dict["metadata"]
+            ]
+        return _dict[key]
+
+
+# responses
+
+
+@dataclass
+class ModelResponse(BaseResponse):
+    """
+    ModelResponse class used to define the properties of a single model.
+    """
+
+    name: str = ""
+    canonical_name: str = ""
+    architecture: str = ""
+    language: str = ""
+    version: str = ""
+    uuid: str = ""
+    metadata: Optional[Metadata] = field(
+        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
+    )
+
+    def __getitem__(self, key):
+        _dict = self.to_dict()
+        if "metadata" in _dict:
+            _dict["metadata"] = [
+                Metadata.from_dict(metadata) for metadata in _dict["metadata"]
+            ]
+        return _dict[key]
+
+
+@dataclass
+class ModelsResponse(BaseResponse):
+    """
+    ModelsResponse class used to obtain a list of models.
+    """
+
+    stt: List[Stt] = field(default_factory=list)
+    tts: List[Tts] = field(default_factory=list)
+
+    def __getitem__(self, key):
+        _dict = self.to_dict()
+        if "stt" in _dict:
+            _dict["stt"] = [Stt.from_dict(stt) for stt in _dict["stt"]]
+        if "tts" in _dict:
+            _dict["tts"] = [Tts.from_dict(tts) for tts in _dict["tts"]]
+        return _dict[key]
+
+
 # Members
 
 

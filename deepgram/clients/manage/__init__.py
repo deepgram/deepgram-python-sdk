@@ -29,5 +29,7 @@ from .client import (
     UsageFieldsResponse,
     Balance,
     BalancesResponse,
+    ModelResponse,
+    ModelsResponse,
 )
 from ...options import DeepgramClientOptions, ClientOptionsFromEnv

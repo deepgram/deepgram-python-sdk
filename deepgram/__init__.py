@@ -160,6 +160,8 @@ from .client import (
     UsageFieldsResponse,
     Balance,
     BalancesResponse,
+    ModelsResponse,
+    ModelResponse,
 )
 
 # selfhosted
