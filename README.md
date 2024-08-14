@@ -88,7 +88,7 @@ options: PrerecordedOptions = PrerecordedOptions(
     model="nova-2",
     smart_format=True,
 )
-response = deepgram.listen.prerecorded.v("1").transcribe_url(AUDIO_URL, options)
+response = deepgram.listen.rest.v("1").transcribe_url(AUDIO_URL, options)
 print(f"response: {response}\n\n")
 ```
 
@@ -99,7 +99,7 @@ You can find a [walkthrough](https://developers.deepgram.com/docs/live-streaming
 ```python
 deepgram: DeepgramClient = DeepgramClient()
 
-dg_connection = deepgram.listen.live.v("1")
+dg_connection = deepgram.listen.websocket.v("1")
 
 def on_open(self, open, **kwargs):
     print(f"\n\n{open}\n\n")
