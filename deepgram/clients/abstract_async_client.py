@@ -348,7 +348,6 @@ class AbstractAsyncRestClient:
             client = httpx.AsyncClient(timeout=timeout, transport=transport)
             if transport:
                 kwargs.pop("transport")
-            kwargs.pop("transport")
             req = client.build_request(method, _url, headers=_headers, **kwargs)
             return await client.send(req, stream=True)
 

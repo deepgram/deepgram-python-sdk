@@ -337,9 +337,9 @@ class AbstractSyncRestClient:
 
         try:
             transport = kwargs.get("transport")
-            with httpx.Client(timeout=timeout, transport=transport) as client:
-                if transport:
-                    kwargs.pop("transport")
+            client = httpx.Client(timeout=timeout, transport=transport)
+            if transport:
+                kwargs.pop("transport")
             req = client.build_request(method, _url, headers=_headers, **kwargs)
             return client.send(req, stream=True)
 
