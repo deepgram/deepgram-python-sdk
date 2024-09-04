@@ -177,8 +177,8 @@ pip install -r examples/requirements-examples.txt
 
 Text to Speech:
 
-- Asynchronous - [examples/speak](https://github.com/deepgram/deepgram-python-sdk/tree/main/examples/speak/file/async_hello_world/main.py)
-- Synchronous - [examples/speak](https://github.com/deepgram/deepgram-python-sdk/tree/main/examples/speak/file/hello_world/main.py)
+- Asynchronous - [examples/text-to-speech](https://github.com/deepgram/deepgram-python-sdk/blob/main/examples/text-to-speech/rest/file/async_hello_world/main.py)
+- Synchronous - [examples/text-to-speech](https://github.com/deepgram/deepgram-python-sdk/blob/main/examples/text-to-speech/rest/file/hello_world/main.py)
 
 Analyze Text:
 
@@ -189,17 +189,17 @@ Analyze Text:
 
 PreRecorded Audio:
 
-- Transcription From an Audio File - [examples/prerecorded/file](https://github.com/deepgram/deepgram-python-sdk/blob/main/examples/prerecorded/file/main.py)
-- Transcription From an URL - [examples/prerecorded/url](https://github.com/deepgram/deepgram-python-sdk/blob/main/examples/prerecorded/url/main.py)
-- Intent Recognition - [examples/analyze/intent](https://github.com/deepgram/deepgram-python-sdk/blob/main/examples/prerecorded/intent/main.py)
-- Sentiment Analysis - [examples/sentiment/intent](https://github.com/deepgram/deepgram-python-sdk/blob/main/examples/prerecorded/sentiment/main.py)
-- Summarization - [examples/analyze/intent](https://github.com/deepgram/deepgram-python-sdk/blob/main/examples/prerecorded/summary/main.py)
-- Topic Detection - [examples/analyze/intent](https://github.com/deepgram/deepgram-python-sdk/blob/main/examples/prerecorded/topic/main.py)
+- Transcription From an Audio File - [examples/prerecorded/file](https://github.com/deepgram/deepgram-python-sdk/blob/main/examples/speech-to-text/rest/file/main.py)
+- Transcription From an URL - [examples/prerecorded/url](https://github.com/deepgram/deepgram-python-sdk/blob/main/examples/speech-to-text/rest/url/main.py)
+- Intent Recognition - [examples/speech-to-text/rest/intent](https://github.com/deepgram/deepgram-python-sdk/blob/main/examples/speech-to-text/rest/intent/main.py)
+- Sentiment Analysis - [examples/speech-to-text/rest/sentiment](https://github.com/deepgram/deepgram-python-sdk/blob/main/examples/speech-to-text/rest/sentiment/main.py)
+- Summarization - [examples/speech-to-text/rest/summary](https://github.com/deepgram/deepgram-python-sdk/blob/main/examples/speech-to-text/rest/summary/main.py)
+- Topic Detection - [examples/speech-to-text/rest/topic](https://github.com/deepgram/deepgram-python-sdk/blob/main/examples/speech-to-text/rest/topic/main.py)
 
 Live Audio Transcription:
 
-- From a Microphone - [examples/streaming/microphone](https://github.com/deepgram/deepgram-python-sdk/blob/main/examples/streaming/microphone/main.py)
-- From an HTTP Endpoint - [examples/streaming/http](https://github.com/deepgram/deepgram-python-sdk/blob/main/examples/streaming/http/main.py)
+- From a Microphone - [examples/streaming/microphone](https://github.com/deepgram/deepgram-python-sdk/blob/main/examples/speech-to-text/rest/stream_file/main.py)
+- From an HTTP Endpoint - [examples/streaming/http](https://github.com/deepgram/deepgram-python-sdk/blob/main/examples/speech-to-text/rest/async_url/main.py)
 
 Management API exercise the full [CRUD](https://en.wikipedia.org/wiki/Create,_read,_update_and_delete) operations for:
 
