@@ -41,7 +41,7 @@ class PrerecordedOptions(
     custom_intent_mode: Optional[str] = field(
         default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
-    custom_topics: Optional[Union[List[str], str]] = field(
+    custom_topic: Optional[Union[List[str], str]] = field(
         default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
     custom_topic_mode: Optional[str] = field(
