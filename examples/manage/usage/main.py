@@ -55,30 +55,30 @@ def main():
         print("")
 
         # get request
-        reqResp = deepgram.manage.v("1").get_usage_request(myId, requestId)
-        if reqResp is None:
+        getResp = deepgram.manage.v("1").get_usage_request(myId, requestId)
+        if getResp is None:
             print("No request found")
         else:
-            print(f"GetUsageRequest() - listResp: {listResp}")
+            print(f"GetUsageRequest() - getResp: {getResp}")
         print("")
 
         # get fields
         options: UsageFieldsOptions = {}
-        listResp = deepgram.manage.v("1").get_usage_fields(myId, options)
-        if listResp is None:
+        listFields = deepgram.manage.v("1").get_usage_fields(myId, options)
+        if listFields is None:
             print(f"UsageFields not found.")
             sys.exit(1)
         else:
-            print(f"GetUsageFields Models - listResp: {listResp}")
+            print(f"GetUsageFields Models - listFields: {listFields}")
         print("")
 
         # list usage
         options: UsageSummaryOptions = {}
-        listResp = deepgram.manage.v("1").get_usage_summary(myId, options)
-        if listResp is None:
+        getSummary = deepgram.manage.v("1").get_usage_summary(myId, options)
+        if getSummary is None:
             print("UsageSummary not found")
         else:
-            print(f"GetSummary - listResp: {listResp}")
+            print(f"GetSummary - getSummary: {getSummary}")
     except Exception as e:
         print(f"Exception: {e}")
 

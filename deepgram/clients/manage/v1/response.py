@@ -384,10 +384,18 @@ class Details(BaseResponse):  # pylint: disable=too-many-instance-attributes
 
     config: Config
     usd: float = 0
-    duration: float = 0
-    total_audio: float = 0
-    channels: int = 0
-    streams: int = 0
+    duration: Optional[float] = field(
+        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
+    )
+    total_audio: Optional[float] = field(
+        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
+    )
+    channels: Optional[int] = field(
+        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
+    )
+    streams: Optional[int] = field(
+        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
+    )
     method: str = ""
     tier: Optional[str] = ""
     models: List[str] = field(default_factory=list)
@@ -471,9 +479,14 @@ class Response(BaseResponse):
     Response object
     """
 
-    details: Details
+    details: Optional[Details] = field(
+        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
+    )
     code: int = 0
     completed: str = ""
+    message: Optional[str] = field(
+        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
+    )
     tts_details: Optional[TTSDetails] = field(
         default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
