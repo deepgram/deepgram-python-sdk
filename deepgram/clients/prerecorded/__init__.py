@@ -2,8 +2,6 @@
 # Use of this source code is governed by a MIT license that can be found in the LICENSE file.
 # SPDX-License-Identifier: MIT
 
-from ...options import DeepgramClientOptions, ClientOptionsFromEnv
-
 from .v1 import PreRecordedClient
 from .v1 import AsyncPreRecordedClient
 from .v1 import PrerecordedOptions

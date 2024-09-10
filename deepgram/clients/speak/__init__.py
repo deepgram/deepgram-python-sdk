@@ -3,7 +3,6 @@
 # SPDX-License-Identifier: MIT
 
 from .enums import SpeakWebSocketEvents
-from ...options import DeepgramClientOptions, ClientOptionsFromEnv
 
 from .client import (
     SpeakClient,  # backward compat

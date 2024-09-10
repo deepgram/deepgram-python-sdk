@@ -4,6 +4,8 @@
 
 from .enums import Sentiment
 
+from .errors import DeepgramError, DeepgramTypeError
+
 from .options import (
     TextSource,
     BufferSource,

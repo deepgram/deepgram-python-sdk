@@ -7,5 +7,3 @@ from .client import ReadClient, AsyncReadClient
 from .client import AnalyzeOptions
 from .client import UrlSource, FileSource, AnalyzeStreamSource, AnalyzeSource
 from .client import AsyncAnalyzeResponse, AnalyzeResponse, SyncAnalyzeResponse
-
-from ...options import DeepgramClientOptions, ClientOptionsFromEnv

@@ -32,4 +32,3 @@ from .client import (
     ModelResponse,
     ModelsResponse,
 )
-from ...options import DeepgramClientOptions, ClientOptionsFromEnv

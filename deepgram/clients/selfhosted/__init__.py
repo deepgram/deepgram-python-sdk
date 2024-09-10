@@ -4,4 +4,3 @@
 
 from .client import SelfHostedClient, OnPremClient
 from .client import AsyncSelfHostedClient, AsyncOnPremClient
-from ...options import DeepgramClientOptions, ClientOptionsFromEnv

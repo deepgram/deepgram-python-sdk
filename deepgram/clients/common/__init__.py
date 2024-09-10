@@ -2,6 +2,8 @@
 # Use of this source code is governed by a MIT license that can be found in the LICENSE file.
 # SPDX-License-Identifier: MIT
 
+from .v1 import DeepgramError, DeepgramTypeError
+
 from .v1 import (
     TextSource as TextSourceLatest,
     BufferSource as BufferSourceLatest,
@@ -15,7 +17,6 @@ UrlSource = UrlSourceLatest
 TextSource = TextSourceLatest
 BufferSource = BufferSourceLatest
 StreamSource = StreamSourceLatest
-
 
 Sentiment = SentimentLatest
 FileSource = FileSourceLatest

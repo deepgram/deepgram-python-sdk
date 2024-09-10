@@ -15,7 +15,6 @@ from .rest import (
 # from .websocket import (
 #     SpeakWebSocketOptions,
 # )
-from ....options import DeepgramClientOptions, ClientOptionsFromEnv
 
 # rest
 from .rest import SpeakRESTClient, AsyncSpeakRESTClient
