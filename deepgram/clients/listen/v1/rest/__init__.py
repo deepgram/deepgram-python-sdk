@@ -19,5 +19,3 @@ from .response import (
     SyncPrerecordedResponse,
     Sentiment,
 )
-
-from .....options import DeepgramClientOptions, ClientOptionsFromEnv

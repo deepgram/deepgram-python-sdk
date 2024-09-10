@@ -4,3 +4,4 @@
 
 from .microphone import Microphone
 from .constants import LOGGING, CHANNELS, RATE, CHUNK
+from .errors import DeepgramMicrophoneError

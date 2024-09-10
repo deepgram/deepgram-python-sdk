@@ -28,6 +28,13 @@ from .clients import (
     UnhandledResponse,
     ErrorResponse,
 )
+from .clients import (
+    DeepgramError,
+    DeepgramTypeError,
+    DeepgramModuleError,
+    DeepgramApiError,
+    DeepgramUnknownApiError,
+)
 
 # listen client
 from .clients import Listen, Read, Speak
@@ -178,7 +185,7 @@ from .clients import (
 
 # client errors and options
 from .options import DeepgramClientOptions, ClientOptionsFromEnv
-from .errors import DeepgramApiKeyError, DeepgramModuleError
+from .errors import DeepgramApiKeyError
 
 # pylint: enable=unused-import
 

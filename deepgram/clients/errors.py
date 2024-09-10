@@ -3,23 +3,6 @@
 # SPDX-License-Identifier: MIT
 
 
-class DeepgramError(Exception):
-    """
-    Exception raised for unknown errors related to the Deepgram API.
-
-    Attributes:
-        message (str): The error message describing the exception.
-    """
-
-    def __init__(self, message: str):
-        super().__init__(message)
-        self.name = "DeepgramError"
-        self.message = message
-
-    def __str__(self):
-        return f"{self.name}: {self.message}"
-
-
 class DeepgramModuleError(Exception):
     """
     Base class for exceptions raised for a missing Deepgram module.

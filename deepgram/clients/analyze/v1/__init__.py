@@ -11,5 +11,4 @@ from .options import (
     AnalyzeStreamSource,
     AnalyzeSource,
 )
-from ....options import DeepgramClientOptions, ClientOptionsFromEnv
 from .response import AsyncAnalyzeResponse, AnalyzeResponse, Sentiment

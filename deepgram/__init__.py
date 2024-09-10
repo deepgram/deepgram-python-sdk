@@ -24,7 +24,14 @@ from .utils import (
 
 from .client import Deepgram, DeepgramClient
 from .client import DeepgramClientOptions, ClientOptionsFromEnv
-from .client import DeepgramApiKeyError, DeepgramModuleError
+from .client import (
+    DeepgramError,
+    DeepgramTypeError,
+    DeepgramModuleError,
+    DeepgramApiError,
+    DeepgramUnknownApiError,
+)
+from .errors import DeepgramApiKeyError
 
 # listen/read client
 from .client import Listen, Read
@@ -173,7 +180,7 @@ from .client import (
 )
 
 # utilities
-from .audio import Microphone
+from .audio import Microphone, DeepgramMicrophoneError
 from .audio import (
     LOGGING,
     CHANNELS,

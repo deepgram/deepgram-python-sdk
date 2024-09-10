@@ -3,7 +3,6 @@
 # SPDX-License-Identifier: MIT
 
 from .enums import LiveTranscriptionEvents
-from ...options import DeepgramClientOptions, ClientOptionsFromEnv
 
 # backward compat
 from .client import (

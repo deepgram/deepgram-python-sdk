@@ -14,7 +14,7 @@ from ..... import __version__
 from .....utils import verboselogs
 from .....options import DeepgramClientOptions
 from ....abstract_sync_client import AbstractSyncRestClient
-from ...errors import DeepgramError, DeepgramTypeError
+from ....common.v1.errors import DeepgramError, DeepgramTypeError
 from .helpers import is_text_source
 
 from .options import SpeakRESTOptions, FileSource

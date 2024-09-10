@@ -18,6 +18,8 @@ from .listen import (
     UnhandledResponse,
     ErrorResponse,
 )
+from .common import DeepgramError, DeepgramTypeError
+from .errors import DeepgramModuleError, DeepgramApiError, DeepgramUnknownApiError
 
 from .listen_router import Listen
 from .read_router import Read

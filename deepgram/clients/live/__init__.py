@@ -3,7 +3,6 @@
 # SPDX-License-Identifier: MIT
 
 from .v1 import LiveTranscriptionEvents
-from .v1 import DeepgramError, DeepgramTypeError, DeepgramWebsocketError
 
 from .v1 import LiveClient
 from .v1 import AsyncLiveClient

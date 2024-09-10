@@ -15,7 +15,7 @@ from .....utils import verboselogs
 from .....options import DeepgramClientOptions
 from ...enums import LiveTranscriptionEvents
 from ..helpers import convert_to_websocket_url, append_query_params
-from ...errors import DeepgramError
+from ....common.v1.errors import DeepgramError
 
 from .response import (
     OpenResponse,
