@@ -94,15 +94,48 @@ class Alternative(BaseResponse):
 
 
 @dataclass
+class Hit(BaseResponse):
+    """
+    The hit information for the response.
+    """
+
+    confidence: float = 0
+    start: float = 0
+    end: float = 0
+    snippet: Optional[str] = ""
+
+
+@dataclass
+class Search(BaseResponse):
+    """
+    The search information for the response.
+    """
+
+    query: str = ""
+    hits: List[Hit] = field(default_factory=list)
+
+    def __getitem__(self, key):
+        _dict = self.to_dict()
+        if "hits" in _dict:
+            _dict["hits"] = [Hit.from_dict(hits) for hits in _dict["hits"]]
+        return _dict[key]
+
+
+@dataclass
 class Channel(BaseResponse):
     """
     Channel object
     """
 
+    search: Optional[List[Search]] = field(
+        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
+    )
     alternatives: List[Alternative] = field(default_factory=list)
 
     def __getitem__(self, key):
         _dict = self.to_dict()
+        if "search" in _dict:
+            _dict["search"] = [Search.from_dict(search) for search in _dict["search"]]
         if "alternatives" in _dict:
             _dict["alternatives"] = [
                 Alternative.from_dict(alternatives)
