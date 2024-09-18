@@ -31,7 +31,34 @@
             <h2>API Documentation</h2>
                 <ul class="memberlist">
             <li>
-                    <a class="variable" href="#SpeakRESTOptions">SpeakRESTOptions</a>
+                    <a class="class" href="#SpeakRESTOptions">SpeakRESTOptions</a>
+                            <ul class="memberlist">
+                        <li>
+                                <a class="function" href="#SpeakRESTOptions.__init__">SpeakRESTOptions</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#SpeakRESTOptions.model">model</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#SpeakRESTOptions.encoding">encoding</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#SpeakRESTOptions.container">container</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#SpeakRESTOptions.sample_rate">sample_rate</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#SpeakRESTOptions.bit_rate">bit_rate</a>
+                        </li>
+                        <li>
+                                <a class="function" href="#SpeakRESTOptions.check">check</a>
+                        </li>
+                </ul>
+
+            </li>
+            <li>
+                    <a class="variable" href="#SpeakOptions">SpeakOptions</a>
             </li>
             <li>
                     <a class="variable" href="#SpeakSource">SpeakSource</a>
@@ -65,28 +92,276 @@
 </span><span id="L-3"><a href="#L-3"><span class="linenos"> 3</span></a><span class="c1"># SPDX-License-Identifier: MIT</span>
 </span><span id="L-4"><a href="#L-4"><span class="linenos"> 4</span></a>
 </span><span id="L-5"><a href="#L-5"><span class="linenos"> 5</span></a><span class="kn">from</span> <span class="nn">io</span> <span class="kn">import</span> <span class="n">BufferedReader</span>
-</span><span id="L-6"><a href="#L-6"><span class="linenos"> 6</span></a><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Union</span>
-</span><span id="L-7"><a href="#L-7"><span class="linenos"> 7</span></a>
-</span><span id="L-8"><a href="#L-8"><span class="linenos"> 8</span></a><span class="kn">from</span> <span class="nn">....common</span> <span class="kn">import</span> <span class="n">FileSource</span>
-</span><span id="L-9"><a href="#L-9"><span class="linenos"> 9</span></a><span class="kn">from</span> <span class="nn">..options</span> <span class="kn">import</span> <span class="n">SpeakOptions</span>
-</span><span id="L-10"><a href="#L-10"><span class="linenos">10</span></a>
+</span><span id="L-6"><a href="#L-6"><span class="linenos"> 6</span></a><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Optional</span>
+</span><span id="L-7"><a href="#L-7"><span class="linenos"> 7</span></a><span class="kn">import</span> <span class="nn">logging</span>
+</span><span id="L-8"><a href="#L-8"><span class="linenos"> 8</span></a>
+</span><span id="L-9"><a href="#L-9"><span class="linenos"> 9</span></a><span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">dataclass</span><span class="p">,</span> <span class="n">field</span>
+</span><span id="L-10"><a href="#L-10"><span class="linenos">10</span></a><span class="kn">from</span> <span class="nn">dataclasses_json</span> <span class="kn">import</span> <span class="n">config</span> <span class="k">as</span> <span class="n">dataclass_config</span><span class="p">,</span> <span class="n">DataClassJsonMixin</span>
 </span><span id="L-11"><a href="#L-11"><span class="linenos">11</span></a>
-</span><span id="L-12"><a href="#L-12"><span class="linenos">12</span></a><span class="n">SpeakRESTOptions</span> <span class="o">=</span> <span class="n">SpeakOptions</span>
-</span><span id="L-13"><a href="#L-13"><span class="linenos">13</span></a>
-</span><span id="L-14"><a href="#L-14"><span class="linenos">14</span></a><span class="n">SpeakSource</span> <span class="o">=</span> <span class="n">Union</span><span class="p">[</span><span class="n">FileSource</span><span class="p">,</span> <span class="n">BufferedReader</span><span class="p">]</span>
-</span><span id="L-15"><a href="#L-15"><span class="linenos">15</span></a><span class="n">SpeakRestSource</span> <span class="o">=</span> <span class="n">SpeakSource</span>
+</span><span id="L-12"><a href="#L-12"><span class="linenos">12</span></a><span class="kn">from</span> <span class="nn">.....utils</span> <span class="kn">import</span> <span class="n">verboselogs</span>
+</span><span id="L-13"><a href="#L-13"><span class="linenos">13</span></a><span class="kn">from</span> <span class="nn">....common</span> <span class="kn">import</span> <span class="n">FileSource</span>
+</span><span id="L-14"><a href="#L-14"><span class="linenos">14</span></a>
+</span><span id="L-15"><a href="#L-15"><span class="linenos">15</span></a>
+</span><span id="L-16"><a href="#L-16"><span class="linenos">16</span></a><span class="nd">@dataclass</span>
+</span><span id="L-17"><a href="#L-17"><span class="linenos">17</span></a><span class="k">class</span> <span class="nc">SpeakRESTOptions</span><span class="p">(</span><span class="n">DataClassJsonMixin</span><span class="p">):</span>
+</span><span id="L-18"><a href="#L-18"><span class="linenos">18</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="L-19"><a href="#L-19"><span class="linenos">19</span></a><span class="sd">    Contains all the options for the SpeakOptions.</span>
+</span><span id="L-20"><a href="#L-20"><span class="linenos">20</span></a>
+</span><span id="L-21"><a href="#L-21"><span class="linenos">21</span></a><span class="sd">    Reference:</span>
+</span><span id="L-22"><a href="#L-22"><span class="linenos">22</span></a><span class="sd">    https://developers.deepgram.com/reference/text-to-speech-api</span>
+</span><span id="L-23"><a href="#L-23"><span class="linenos">23</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="L-24"><a href="#L-24"><span class="linenos">24</span></a>
+</span><span id="L-25"><a href="#L-25"><span class="linenos">25</span></a>    <span class="n">model</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span>
+</span><span id="L-26"><a href="#L-26"><span class="linenos">26</span></a>        <span class="n">default</span><span class="o">=</span><span class="s2">&quot;aura-asteria-en&quot;</span><span class="p">,</span>
+</span><span id="L-27"><a href="#L-27"><span class="linenos">27</span></a>        <span class="n">metadata</span><span class="o">=</span><span class="n">dataclass_config</span><span class="p">(</span><span class="n">exclude</span><span class="o">=</span><span class="k">lambda</span> <span class="n">f</span><span class="p">:</span> <span class="n">f</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">),</span>
+</span><span id="L-28"><a href="#L-28"><span class="linenos">28</span></a>    <span class="p">)</span>
+</span><span id="L-29"><a href="#L-29"><span class="linenos">29</span></a>    <span class="n">encoding</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span>
+</span><span id="L-30"><a href="#L-30"><span class="linenos">30</span></a>        <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="n">dataclass_config</span><span class="p">(</span><span class="n">exclude</span><span class="o">=</span><span class="k">lambda</span> <span class="n">f</span><span class="p">:</span> <span class="n">f</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span>
+</span><span id="L-31"><a href="#L-31"><span class="linenos">31</span></a>    <span class="p">)</span>
+</span><span id="L-32"><a href="#L-32"><span class="linenos">32</span></a>    <span class="n">container</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span>
+</span><span id="L-33"><a href="#L-33"><span class="linenos">33</span></a>        <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="n">dataclass_config</span><span class="p">(</span><span class="n">exclude</span><span class="o">=</span><span class="k">lambda</span> <span class="n">f</span><span class="p">:</span> <span class="n">f</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span>
+</span><span id="L-34"><a href="#L-34"><span class="linenos">34</span></a>    <span class="p">)</span>
+</span><span id="L-35"><a href="#L-35"><span class="linenos">35</span></a>    <span class="n">sample_rate</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span>
+</span><span id="L-36"><a href="#L-36"><span class="linenos">36</span></a>        <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="n">dataclass_config</span><span class="p">(</span><span class="n">exclude</span><span class="o">=</span><span class="k">lambda</span> <span class="n">f</span><span class="p">:</span> <span class="n">f</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span>
+</span><span id="L-37"><a href="#L-37"><span class="linenos">37</span></a>    <span class="p">)</span>
+</span><span id="L-38"><a href="#L-38"><span class="linenos">38</span></a>    <span class="n">bit_rate</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span>
+</span><span id="L-39"><a href="#L-39"><span class="linenos">39</span></a>        <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="n">dataclass_config</span><span class="p">(</span><span class="n">exclude</span><span class="o">=</span><span class="k">lambda</span> <span class="n">f</span><span class="p">:</span> <span class="n">f</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span>
+</span><span id="L-40"><a href="#L-40"><span class="linenos">40</span></a>    <span class="p">)</span>
+</span><span id="L-41"><a href="#L-41"><span class="linenos">41</span></a>
+</span><span id="L-42"><a href="#L-42"><span class="linenos">42</span></a>    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+</span><span id="L-43"><a href="#L-43"><span class="linenos">43</span></a>        <span class="n">_dict</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
+</span><span id="L-44"><a href="#L-44"><span class="linenos">44</span></a>        <span class="k">return</span> <span class="n">_dict</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+</span><span id="L-45"><a href="#L-45"><span class="linenos">45</span></a>
+</span><span id="L-46"><a href="#L-46"><span class="linenos">46</span></a>    <span class="k">def</span> <span class="fm">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
+</span><span id="L-47"><a href="#L-47"><span class="linenos">47</span></a>        <span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">val</span>
+</span><span id="L-48"><a href="#L-48"><span class="linenos">48</span></a>
+</span><span id="L-49"><a href="#L-49"><span class="linenos">49</span></a>    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+</span><span id="L-50"><a href="#L-50"><span class="linenos">50</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+</span><span id="L-51"><a href="#L-51"><span class="linenos">51</span></a>
+</span><span id="L-52"><a href="#L-52"><span class="linenos">52</span></a>    <span class="k">def</span> <span class="nf">check</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="L-53"><a href="#L-53"><span class="linenos">53</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="L-54"><a href="#L-54"><span class="linenos">54</span></a><span class="sd">        Check the SpeakOptions for any missing or invalid values.</span>
+</span><span id="L-55"><a href="#L-55"><span class="linenos">55</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="L-56"><a href="#L-56"><span class="linenos">56</span></a>        <span class="n">logger</span> <span class="o">=</span> <span class="n">verboselogs</span><span class="o">.</span><span class="n">VerboseLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+</span><span id="L-57"><a href="#L-57"><span class="linenos">57</span></a>        <span class="n">logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">StreamHandler</span><span class="p">())</span>
+</span><span id="L-58"><a href="#L-58"><span class="linenos">58</span></a>        <span class="n">prev</span> <span class="o">=</span> <span class="n">logger</span><span class="o">.</span><span class="n">level</span>
+</span><span id="L-59"><a href="#L-59"><span class="linenos">59</span></a>        <span class="n">logger</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">verboselogs</span><span class="o">.</span><span class="n">ERROR</span><span class="p">)</span>
+</span><span id="L-60"><a href="#L-60"><span class="linenos">60</span></a>
+</span><span id="L-61"><a href="#L-61"><span class="linenos">61</span></a>        <span class="c1"># no op at the moment</span>
+</span><span id="L-62"><a href="#L-62"><span class="linenos">62</span></a>
+</span><span id="L-63"><a href="#L-63"><span class="linenos">63</span></a>        <span class="n">logger</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">prev</span><span class="p">)</span>
+</span><span id="L-64"><a href="#L-64"><span class="linenos">64</span></a>
+</span><span id="L-65"><a href="#L-65"><span class="linenos">65</span></a>        <span class="k">return</span> <span class="kc">True</span>
+</span><span id="L-66"><a href="#L-66"><span class="linenos">66</span></a>
+</span><span id="L-67"><a href="#L-67"><span class="linenos">67</span></a>
+</span><span id="L-68"><a href="#L-68"><span class="linenos">68</span></a><span class="n">SpeakOptions</span> <span class="o">=</span> <span class="n">SpeakRESTOptions</span>
+</span><span id="L-69"><a href="#L-69"><span class="linenos">69</span></a>
+</span><span id="L-70"><a href="#L-70"><span class="linenos">70</span></a><span class="n">SpeakSource</span> <span class="o">=</span> <span class="n">Union</span><span class="p">[</span><span class="n">FileSource</span><span class="p">,</span> <span class="n">BufferedReader</span><span class="p">]</span>
+</span><span id="L-71"><a href="#L-71"><span class="linenos">71</span></a><span class="n">SpeakRestSource</span> <span class="o">=</span> <span class="n">SpeakSource</span>
 </span></pre></div>
 
 
             </section>
                 <section id="SpeakRESTOptions">
-                    <div class="attr variable">
-            <span class="name">SpeakRESTOptions</span>        =
-<span class="default_value">&lt;class &#39;<a href="../options.html#SpeakOptions">deepgram.clients.speak.v1.options.SpeakOptions</a>&#39;&gt;</span>
+                            <input id="SpeakRESTOptions-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+<div class="attr class">
+                    <div class="decorator">@dataclass</div>
+
+    <span class="def">class</span>
+    <span class="name">SpeakRESTOptions</span><wbr>(<span class="base">dataclasses_json.api.DataClassJsonMixin</span>):
+
+                <label class="view-source-button" for="SpeakRESTOptions-view-source"><span>View Source</span></label>
+
+    </div>
+    <a class="headerlink" href="#SpeakRESTOptions"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="SpeakRESTOptions-17"><a href="#SpeakRESTOptions-17"><span class="linenos">17</span></a><span class="nd">@dataclass</span>
+</span><span id="SpeakRESTOptions-18"><a href="#SpeakRESTOptions-18"><span class="linenos">18</span></a><span class="k">class</span> <span class="nc">SpeakRESTOptions</span><span class="p">(</span><span class="n">DataClassJsonMixin</span><span class="p">):</span>
+</span><span id="SpeakRESTOptions-19"><a href="#SpeakRESTOptions-19"><span class="linenos">19</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="SpeakRESTOptions-20"><a href="#SpeakRESTOptions-20"><span class="linenos">20</span></a><span class="sd">    Contains all the options for the SpeakOptions.</span>
+</span><span id="SpeakRESTOptions-21"><a href="#SpeakRESTOptions-21"><span class="linenos">21</span></a>
+</span><span id="SpeakRESTOptions-22"><a href="#SpeakRESTOptions-22"><span class="linenos">22</span></a><span class="sd">    Reference:</span>
+</span><span id="SpeakRESTOptions-23"><a href="#SpeakRESTOptions-23"><span class="linenos">23</span></a><span class="sd">    https://developers.deepgram.com/reference/text-to-speech-api</span>
+</span><span id="SpeakRESTOptions-24"><a href="#SpeakRESTOptions-24"><span class="linenos">24</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="SpeakRESTOptions-25"><a href="#SpeakRESTOptions-25"><span class="linenos">25</span></a>
+</span><span id="SpeakRESTOptions-26"><a href="#SpeakRESTOptions-26"><span class="linenos">26</span></a>    <span class="n">model</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span>
+</span><span id="SpeakRESTOptions-27"><a href="#SpeakRESTOptions-27"><span class="linenos">27</span></a>        <span class="n">default</span><span class="o">=</span><span class="s2">&quot;aura-asteria-en&quot;</span><span class="p">,</span>
+</span><span id="SpeakRESTOptions-28"><a href="#SpeakRESTOptions-28"><span class="linenos">28</span></a>        <span class="n">metadata</span><span class="o">=</span><span class="n">dataclass_config</span><span class="p">(</span><span class="n">exclude</span><span class="o">=</span><span class="k">lambda</span> <span class="n">f</span><span class="p">:</span> <span class="n">f</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">),</span>
+</span><span id="SpeakRESTOptions-29"><a href="#SpeakRESTOptions-29"><span class="linenos">29</span></a>    <span class="p">)</span>
+</span><span id="SpeakRESTOptions-30"><a href="#SpeakRESTOptions-30"><span class="linenos">30</span></a>    <span class="n">encoding</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span>
+</span><span id="SpeakRESTOptions-31"><a href="#SpeakRESTOptions-31"><span class="linenos">31</span></a>        <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="n">dataclass_config</span><span class="p">(</span><span class="n">exclude</span><span class="o">=</span><span class="k">lambda</span> <span class="n">f</span><span class="p">:</span> <span class="n">f</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span>
+</span><span id="SpeakRESTOptions-32"><a href="#SpeakRESTOptions-32"><span class="linenos">32</span></a>    <span class="p">)</span>
+</span><span id="SpeakRESTOptions-33"><a href="#SpeakRESTOptions-33"><span class="linenos">33</span></a>    <span class="n">container</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span>
+</span><span id="SpeakRESTOptions-34"><a href="#SpeakRESTOptions-34"><span class="linenos">34</span></a>        <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="n">dataclass_config</span><span class="p">(</span><span class="n">exclude</span><span class="o">=</span><span class="k">lambda</span> <span class="n">f</span><span class="p">:</span> <span class="n">f</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span>
+</span><span id="SpeakRESTOptions-35"><a href="#SpeakRESTOptions-35"><span class="linenos">35</span></a>    <span class="p">)</span>
+</span><span id="SpeakRESTOptions-36"><a href="#SpeakRESTOptions-36"><span class="linenos">36</span></a>    <span class="n">sample_rate</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span>
+</span><span id="SpeakRESTOptions-37"><a href="#SpeakRESTOptions-37"><span class="linenos">37</span></a>        <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="n">dataclass_config</span><span class="p">(</span><span class="n">exclude</span><span class="o">=</span><span class="k">lambda</span> <span class="n">f</span><span class="p">:</span> <span class="n">f</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span>
+</span><span id="SpeakRESTOptions-38"><a href="#SpeakRESTOptions-38"><span class="linenos">38</span></a>    <span class="p">)</span>
+</span><span id="SpeakRESTOptions-39"><a href="#SpeakRESTOptions-39"><span class="linenos">39</span></a>    <span class="n">bit_rate</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span>
+</span><span id="SpeakRESTOptions-40"><a href="#SpeakRESTOptions-40"><span class="linenos">40</span></a>        <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="n">dataclass_config</span><span class="p">(</span><span class="n">exclude</span><span class="o">=</span><span class="k">lambda</span> <span class="n">f</span><span class="p">:</span> <span class="n">f</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span>
+</span><span id="SpeakRESTOptions-41"><a href="#SpeakRESTOptions-41"><span class="linenos">41</span></a>    <span class="p">)</span>
+</span><span id="SpeakRESTOptions-42"><a href="#SpeakRESTOptions-42"><span class="linenos">42</span></a>
+</span><span id="SpeakRESTOptions-43"><a href="#SpeakRESTOptions-43"><span class="linenos">43</span></a>    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+</span><span id="SpeakRESTOptions-44"><a href="#SpeakRESTOptions-44"><span class="linenos">44</span></a>        <span class="n">_dict</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
+</span><span id="SpeakRESTOptions-45"><a href="#SpeakRESTOptions-45"><span class="linenos">45</span></a>        <span class="k">return</span> <span class="n">_dict</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+</span><span id="SpeakRESTOptions-46"><a href="#SpeakRESTOptions-46"><span class="linenos">46</span></a>
+</span><span id="SpeakRESTOptions-47"><a href="#SpeakRESTOptions-47"><span class="linenos">47</span></a>    <span class="k">def</span> <span class="fm">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
+</span><span id="SpeakRESTOptions-48"><a href="#SpeakRESTOptions-48"><span class="linenos">48</span></a>        <span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">val</span>
+</span><span id="SpeakRESTOptions-49"><a href="#SpeakRESTOptions-49"><span class="linenos">49</span></a>
+</span><span id="SpeakRESTOptions-50"><a href="#SpeakRESTOptions-50"><span class="linenos">50</span></a>    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+</span><span id="SpeakRESTOptions-51"><a href="#SpeakRESTOptions-51"><span class="linenos">51</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+</span><span id="SpeakRESTOptions-52"><a href="#SpeakRESTOptions-52"><span class="linenos">52</span></a>
+</span><span id="SpeakRESTOptions-53"><a href="#SpeakRESTOptions-53"><span class="linenos">53</span></a>    <span class="k">def</span> <span class="nf">check</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="SpeakRESTOptions-54"><a href="#SpeakRESTOptions-54"><span class="linenos">54</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="SpeakRESTOptions-55"><a href="#SpeakRESTOptions-55"><span class="linenos">55</span></a><span class="sd">        Check the SpeakOptions for any missing or invalid values.</span>
+</span><span id="SpeakRESTOptions-56"><a href="#SpeakRESTOptions-56"><span class="linenos">56</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="SpeakRESTOptions-57"><a href="#SpeakRESTOptions-57"><span class="linenos">57</span></a>        <span class="n">logger</span> <span class="o">=</span> <span class="n">verboselogs</span><span class="o">.</span><span class="n">VerboseLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+</span><span id="SpeakRESTOptions-58"><a href="#SpeakRESTOptions-58"><span class="linenos">58</span></a>        <span class="n">logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">StreamHandler</span><span class="p">())</span>
+</span><span id="SpeakRESTOptions-59"><a href="#SpeakRESTOptions-59"><span class="linenos">59</span></a>        <span class="n">prev</span> <span class="o">=</span> <span class="n">logger</span><span class="o">.</span><span class="n">level</span>
+</span><span id="SpeakRESTOptions-60"><a href="#SpeakRESTOptions-60"><span class="linenos">60</span></a>        <span class="n">logger</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">verboselogs</span><span class="o">.</span><span class="n">ERROR</span><span class="p">)</span>
+</span><span id="SpeakRESTOptions-61"><a href="#SpeakRESTOptions-61"><span class="linenos">61</span></a>
+</span><span id="SpeakRESTOptions-62"><a href="#SpeakRESTOptions-62"><span class="linenos">62</span></a>        <span class="c1"># no op at the moment</span>
+</span><span id="SpeakRESTOptions-63"><a href="#SpeakRESTOptions-63"><span class="linenos">63</span></a>
+</span><span id="SpeakRESTOptions-64"><a href="#SpeakRESTOptions-64"><span class="linenos">64</span></a>        <span class="n">logger</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">prev</span><span class="p">)</span>
+</span><span id="SpeakRESTOptions-65"><a href="#SpeakRESTOptions-65"><span class="linenos">65</span></a>
+</span><span id="SpeakRESTOptions-66"><a href="#SpeakRESTOptions-66"><span class="linenos">66</span></a>        <span class="k">return</span> <span class="kc">True</span>
+</span></pre></div>
+
+
+            <div class="docstring"><p>Contains all the options for the SpeakOptions.</p>
+
+<p>Reference:
+<a href="https://developers.deepgram.com/reference/text-to-speech-api">https://developers.deepgram.com/reference/text-to-speech-api</a></p>
+</div>
+
+
+                            <div id="SpeakRESTOptions.__init__" class="classattr">
+                                <div class="attr function">
+            
+        <span class="name">SpeakRESTOptions</span><span class="signature pdoc-code multiline">(<span class="param">	<span class="n">model</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;aura-asteria-en&#39;</span>,</span><span class="param">	<span class="n">encoding</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>,</span><span class="param">	<span class="n">container</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>,</span><span class="param">	<span class="n">sample_rate</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>,</span><span class="param">	<span class="n">bit_rate</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span></span>)</span>
 
         
     </div>
-    <a class="headerlink" href="#SpeakRESTOptions"></a>
+    <a class="headerlink" href="#SpeakRESTOptions.__init__"></a>
+    
+    
+
+                            </div>
+                            <div id="SpeakRESTOptions.model" class="classattr">
+                                <div class="attr variable">
+            <span class="name">model</span><span class="annotation">: Optional[str]</span>        =
+<span class="default_value">&#39;aura-asteria-en&#39;</span>
+
+        
+    </div>
+    <a class="headerlink" href="#SpeakRESTOptions.model"></a>
+    
+    
+
+                            </div>
+                            <div id="SpeakRESTOptions.encoding" class="classattr">
+                                <div class="attr variable">
+            <span class="name">encoding</span><span class="annotation">: Optional[str]</span>        =
+<span class="default_value">None</span>
+
+        
+    </div>
+    <a class="headerlink" href="#SpeakRESTOptions.encoding"></a>
+    
+    
+
+                            </div>
+                            <div id="SpeakRESTOptions.container" class="classattr">
+                                <div class="attr variable">
+            <span class="name">container</span><span class="annotation">: Optional[str]</span>        =
+<span class="default_value">None</span>
+
+        
+    </div>
+    <a class="headerlink" href="#SpeakRESTOptions.container"></a>
+    
+    
+
+                            </div>
+                            <div id="SpeakRESTOptions.sample_rate" class="classattr">
+                                <div class="attr variable">
+            <span class="name">sample_rate</span><span class="annotation">: Optional[int]</span>        =
+<span class="default_value">None</span>
+
+        
+    </div>
+    <a class="headerlink" href="#SpeakRESTOptions.sample_rate"></a>
+    
+    
+
+                            </div>
+                            <div id="SpeakRESTOptions.bit_rate" class="classattr">
+                                <div class="attr variable">
+            <span class="name">bit_rate</span><span class="annotation">: Optional[int]</span>        =
+<span class="default_value">None</span>
+
+        
+    </div>
+    <a class="headerlink" href="#SpeakRESTOptions.bit_rate"></a>
+    
+    
+
+                            </div>
+                            <div id="SpeakRESTOptions.check" class="classattr">
+                                        <input id="SpeakRESTOptions.check-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+<div class="attr function">
+            
+        <span class="def">def</span>
+        <span class="name">check</span><span class="signature pdoc-code condensed">(<span class="param"><span class="bp">self</span></span><span class="return-annotation">):</span></span>
+
+                <label class="view-source-button" for="SpeakRESTOptions.check-view-source"><span>View Source</span></label>
+
+    </div>
+    <a class="headerlink" href="#SpeakRESTOptions.check"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="SpeakRESTOptions.check-53"><a href="#SpeakRESTOptions.check-53"><span class="linenos">53</span></a>    <span class="k">def</span> <span class="nf">check</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="SpeakRESTOptions.check-54"><a href="#SpeakRESTOptions.check-54"><span class="linenos">54</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="SpeakRESTOptions.check-55"><a href="#SpeakRESTOptions.check-55"><span class="linenos">55</span></a><span class="sd">        Check the SpeakOptions for any missing or invalid values.</span>
+</span><span id="SpeakRESTOptions.check-56"><a href="#SpeakRESTOptions.check-56"><span class="linenos">56</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="SpeakRESTOptions.check-57"><a href="#SpeakRESTOptions.check-57"><span class="linenos">57</span></a>        <span class="n">logger</span> <span class="o">=</span> <span class="n">verboselogs</span><span class="o">.</span><span class="n">VerboseLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+</span><span id="SpeakRESTOptions.check-58"><a href="#SpeakRESTOptions.check-58"><span class="linenos">58</span></a>        <span class="n">logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">StreamHandler</span><span class="p">())</span>
+</span><span id="SpeakRESTOptions.check-59"><a href="#SpeakRESTOptions.check-59"><span class="linenos">59</span></a>        <span class="n">prev</span> <span class="o">=</span> <span class="n">logger</span><span class="o">.</span><span class="n">level</span>
+</span><span id="SpeakRESTOptions.check-60"><a href="#SpeakRESTOptions.check-60"><span class="linenos">60</span></a>        <span class="n">logger</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">verboselogs</span><span class="o">.</span><span class="n">ERROR</span><span class="p">)</span>
+</span><span id="SpeakRESTOptions.check-61"><a href="#SpeakRESTOptions.check-61"><span class="linenos">61</span></a>
+</span><span id="SpeakRESTOptions.check-62"><a href="#SpeakRESTOptions.check-62"><span class="linenos">62</span></a>        <span class="c1"># no op at the moment</span>
+</span><span id="SpeakRESTOptions.check-63"><a href="#SpeakRESTOptions.check-63"><span class="linenos">63</span></a>
+</span><span id="SpeakRESTOptions.check-64"><a href="#SpeakRESTOptions.check-64"><span class="linenos">64</span></a>        <span class="n">logger</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">prev</span><span class="p">)</span>
+</span><span id="SpeakRESTOptions.check-65"><a href="#SpeakRESTOptions.check-65"><span class="linenos">65</span></a>
+</span><span id="SpeakRESTOptions.check-66"><a href="#SpeakRESTOptions.check-66"><span class="linenos">66</span></a>        <span class="k">return</span> <span class="kc">True</span>
+</span></pre></div>
+
+
+            <div class="docstring"><p>Check the SpeakOptions for any missing or invalid values.</p>
+</div>
+
+
+                            </div>
+                            <div class="inherited">
+                                <h5>Inherited Members</h5>
+                                <dl>
+                                    <div><dt>dataclasses_json.api.DataClassJsonMixin</dt>
+                                <dd id="SpeakRESTOptions.dataclass_json_config" class="variable">dataclass_json_config</dd>
+                <dd id="SpeakRESTOptions.to_json" class="function">to_json</dd>
+                <dd id="SpeakRESTOptions.from_json" class="function">from_json</dd>
+                <dd id="SpeakRESTOptions.from_dict" class="function">from_dict</dd>
+                <dd id="SpeakRESTOptions.to_dict" class="function">to_dict</dd>
+                <dd id="SpeakRESTOptions.schema" class="function">schema</dd>
+
+            </div>
+                                </dl>
+                            </div>
+                </section>
+                <section id="SpeakOptions">
+                    <div class="attr variable">
+            <span class="name">SpeakOptions</span>        =
+<span class="default_value">&lt;class &#39;<a href="#SpeakRESTOptions">SpeakRESTOptions</a>&#39;&gt;</span>
+
+        
+    </div>
+    <a class="headerlink" href="#SpeakOptions"></a>
     
     
 

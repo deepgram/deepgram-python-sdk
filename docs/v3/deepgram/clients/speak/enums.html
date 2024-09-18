@@ -31,6 +31,24 @@
             <h2>API Documentation</h2>
                 <ul class="memberlist">
             <li>
+                    <a class="class" href="#SpeakWebSocketMessage">SpeakWebSocketMessage</a>
+                            <ul class="memberlist">
+                        <li>
+                                <a class="variable" href="#SpeakWebSocketMessage.Speak">Speak</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#SpeakWebSocketMessage.Flush">Flush</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#SpeakWebSocketMessage.Clear">Clear</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#SpeakWebSocketMessage.Close">Close</a>
+                        </li>
+                </ul>
+
+            </li>
+            <li>
                     <a class="class" href="#SpeakWebSocketEvents">SpeakWebSocketEvents</a>
                             <ul class="memberlist">
                         <li>
@@ -46,7 +64,10 @@
                                 <a class="variable" href="#SpeakWebSocketEvents.Metadata">Metadata</a>
                         </li>
                         <li>
-                                <a class="variable" href="#SpeakWebSocketEvents.Flush">Flush</a>
+                                <a class="variable" href="#SpeakWebSocketEvents.Flushed">Flushed</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#SpeakWebSocketEvents.Cleared">Cleared</a>
                         </li>
                         <li>
                                 <a class="variable" href="#SpeakWebSocketEvents.Unhandled">Unhandled</a>
@@ -90,23 +111,172 @@
 </span><span id="L-7"><a href="#L-7"><span class="linenos"> 7</span></a><span class="c1"># Constants mapping to events from the Deepgram API</span>
 </span><span id="L-8"><a href="#L-8"><span class="linenos"> 8</span></a>
 </span><span id="L-9"><a href="#L-9"><span class="linenos"> 9</span></a>
-</span><span id="L-10"><a href="#L-10"><span class="linenos">10</span></a><span class="k">class</span> <span class="nc">SpeakWebSocketEvents</span><span class="p">(</span><span class="n">StrEnum</span><span class="p">):</span>
+</span><span id="L-10"><a href="#L-10"><span class="linenos">10</span></a><span class="k">class</span> <span class="nc">SpeakWebSocketMessage</span><span class="p">(</span><span class="n">StrEnum</span><span class="p">):</span>
 </span><span id="L-11"><a href="#L-11"><span class="linenos">11</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="L-12"><a href="#L-12"><span class="linenos">12</span></a><span class="sd">    Enumerates the possible events that can be received from the Deepgram API</span>
+</span><span id="L-12"><a href="#L-12"><span class="linenos">12</span></a><span class="sd">    Enumerates the possible message types that can be received from the Deepgram API</span>
 </span><span id="L-13"><a href="#L-13"><span class="linenos">13</span></a><span class="sd">    &quot;&quot;&quot;</span>
 </span><span id="L-14"><a href="#L-14"><span class="linenos">14</span></a>
-</span><span id="L-15"><a href="#L-15"><span class="linenos">15</span></a>    <span class="n">Open</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Open&quot;</span>
-</span><span id="L-16"><a href="#L-16"><span class="linenos">16</span></a>    <span class="n">Close</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Close&quot;</span>
-</span><span id="L-17"><a href="#L-17"><span class="linenos">17</span></a>    <span class="n">AudioData</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;AudioData&quot;</span>
-</span><span id="L-18"><a href="#L-18"><span class="linenos">18</span></a>    <span class="n">Metadata</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Metadata&quot;</span>
-</span><span id="L-19"><a href="#L-19"><span class="linenos">19</span></a>    <span class="n">Flush</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Flush&quot;</span>
-</span><span id="L-20"><a href="#L-20"><span class="linenos">20</span></a>    <span class="n">Unhandled</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Unhandled&quot;</span>
-</span><span id="L-21"><a href="#L-21"><span class="linenos">21</span></a>    <span class="n">Error</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Error&quot;</span>
-</span><span id="L-22"><a href="#L-22"><span class="linenos">22</span></a>    <span class="ne">Warning</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Warning&quot;</span>
+</span><span id="L-15"><a href="#L-15"><span class="linenos">15</span></a>    <span class="n">Speak</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Speak&quot;</span>
+</span><span id="L-16"><a href="#L-16"><span class="linenos">16</span></a>    <span class="n">Flush</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Flush&quot;</span>
+</span><span id="L-17"><a href="#L-17"><span class="linenos">17</span></a>    <span class="n">Clear</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Clear&quot;</span>
+</span><span id="L-18"><a href="#L-18"><span class="linenos">18</span></a>    <span class="n">Close</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Close&quot;</span>
+</span><span id="L-19"><a href="#L-19"><span class="linenos">19</span></a>
+</span><span id="L-20"><a href="#L-20"><span class="linenos">20</span></a>
+</span><span id="L-21"><a href="#L-21"><span class="linenos">21</span></a><span class="k">class</span> <span class="nc">SpeakWebSocketEvents</span><span class="p">(</span><span class="n">StrEnum</span><span class="p">):</span>
+</span><span id="L-22"><a href="#L-22"><span class="linenos">22</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="L-23"><a href="#L-23"><span class="linenos">23</span></a><span class="sd">    Enumerates the possible events that can be received from the Deepgram API</span>
+</span><span id="L-24"><a href="#L-24"><span class="linenos">24</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="L-25"><a href="#L-25"><span class="linenos">25</span></a>
+</span><span id="L-26"><a href="#L-26"><span class="linenos">26</span></a>    <span class="n">Open</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Open&quot;</span>
+</span><span id="L-27"><a href="#L-27"><span class="linenos">27</span></a>    <span class="n">Close</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Close&quot;</span>
+</span><span id="L-28"><a href="#L-28"><span class="linenos">28</span></a>    <span class="n">AudioData</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;AudioData&quot;</span>
+</span><span id="L-29"><a href="#L-29"><span class="linenos">29</span></a>    <span class="n">Metadata</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Metadata&quot;</span>
+</span><span id="L-30"><a href="#L-30"><span class="linenos">30</span></a>    <span class="n">Flushed</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Flushed&quot;</span>
+</span><span id="L-31"><a href="#L-31"><span class="linenos">31</span></a>    <span class="n">Cleared</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Cleared&quot;</span>
+</span><span id="L-32"><a href="#L-32"><span class="linenos">32</span></a>    <span class="n">Unhandled</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Unhandled&quot;</span>
+</span><span id="L-33"><a href="#L-33"><span class="linenos">33</span></a>    <span class="n">Error</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Error&quot;</span>
+</span><span id="L-34"><a href="#L-34"><span class="linenos">34</span></a>    <span class="ne">Warning</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Warning&quot;</span>
 </span></pre></div>
 
 
             </section>
+                <section id="SpeakWebSocketMessage">
+                            <input id="SpeakWebSocketMessage-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+<div class="attr class">
+            
+    <span class="def">class</span>
+    <span class="name">SpeakWebSocketMessage</span><wbr>(<span class="base">aenum._enum.StrEnum</span>):
+
+                <label class="view-source-button" for="SpeakWebSocketMessage-view-source"><span>View Source</span></label>
+
+    </div>
+    <a class="headerlink" href="#SpeakWebSocketMessage"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="SpeakWebSocketMessage-11"><a href="#SpeakWebSocketMessage-11"><span class="linenos">11</span></a><span class="k">class</span> <span class="nc">SpeakWebSocketMessage</span><span class="p">(</span><span class="n">StrEnum</span><span class="p">):</span>
+</span><span id="SpeakWebSocketMessage-12"><a href="#SpeakWebSocketMessage-12"><span class="linenos">12</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="SpeakWebSocketMessage-13"><a href="#SpeakWebSocketMessage-13"><span class="linenos">13</span></a><span class="sd">    Enumerates the possible message types that can be received from the Deepgram API</span>
+</span><span id="SpeakWebSocketMessage-14"><a href="#SpeakWebSocketMessage-14"><span class="linenos">14</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="SpeakWebSocketMessage-15"><a href="#SpeakWebSocketMessage-15"><span class="linenos">15</span></a>
+</span><span id="SpeakWebSocketMessage-16"><a href="#SpeakWebSocketMessage-16"><span class="linenos">16</span></a>    <span class="n">Speak</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Speak&quot;</span>
+</span><span id="SpeakWebSocketMessage-17"><a href="#SpeakWebSocketMessage-17"><span class="linenos">17</span></a>    <span class="n">Flush</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Flush&quot;</span>
+</span><span id="SpeakWebSocketMessage-18"><a href="#SpeakWebSocketMessage-18"><span class="linenos">18</span></a>    <span class="n">Clear</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Clear&quot;</span>
+</span><span id="SpeakWebSocketMessage-19"><a href="#SpeakWebSocketMessage-19"><span class="linenos">19</span></a>    <span class="n">Close</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Close&quot;</span>
+</span></pre></div>
+
+
+            <div class="docstring"><p>Enumerates the possible message types that can be received from the Deepgram API</p>
+</div>
+
+
+                            <div id="SpeakWebSocketMessage.Speak" class="classattr">
+                                <div class="attr variable">
+            <span class="name">Speak</span><span class="annotation">: str</span>        =
+<span class="default_value">&lt;<a href="#SpeakWebSocketMessage.Speak">SpeakWebSocketMessage.Speak</a>: &#39;Speak&#39;&gt;</span>
+
+        
+    </div>
+    <a class="headerlink" href="#SpeakWebSocketMessage.Speak"></a>
+    
+    
+
+                            </div>
+                            <div id="SpeakWebSocketMessage.Flush" class="classattr">
+                                <div class="attr variable">
+            <span class="name">Flush</span><span class="annotation">: str</span>        =
+<span class="default_value">&lt;<a href="#SpeakWebSocketMessage.Flush">SpeakWebSocketMessage.Flush</a>: &#39;Flush&#39;&gt;</span>
+
+        
+    </div>
+    <a class="headerlink" href="#SpeakWebSocketMessage.Flush"></a>
+    
+    
+
+                            </div>
+                            <div id="SpeakWebSocketMessage.Clear" class="classattr">
+                                <div class="attr variable">
+            <span class="name">Clear</span><span class="annotation">: str</span>        =
+<span class="default_value">&lt;<a href="#SpeakWebSocketMessage.Clear">SpeakWebSocketMessage.Clear</a>: &#39;Clear&#39;&gt;</span>
+
+        
+    </div>
+    <a class="headerlink" href="#SpeakWebSocketMessage.Clear"></a>
+    
+    
+
+                            </div>
+                            <div id="SpeakWebSocketMessage.Close" class="classattr">
+                                <div class="attr variable">
+            <span class="name">Close</span><span class="annotation">: str</span>        =
+<span class="default_value">&lt;<a href="#SpeakWebSocketMessage.Close">SpeakWebSocketMessage.Close</a>: &#39;Close&#39;&gt;</span>
+
+        
+    </div>
+    <a class="headerlink" href="#SpeakWebSocketMessage.Close"></a>
+    
+    
+
+                            </div>
+                            <div class="inherited">
+                                <h5>Inherited Members</h5>
+                                <dl>
+                                    <div><dt>aenum._enum.Enum</dt>
+                                <dd id="SpeakWebSocketMessage.name" class="variable">name</dd>
+                <dd id="SpeakWebSocketMessage.value" class="variable">value</dd>
+                <dd id="SpeakWebSocketMessage.values" class="variable">values</dd>
+
+            </div>
+            <div><dt>builtins.str</dt>
+                                <dd id="SpeakWebSocketMessage.encode" class="function">encode</dd>
+                <dd id="SpeakWebSocketMessage.replace" class="function">replace</dd>
+                <dd id="SpeakWebSocketMessage.split" class="function">split</dd>
+                <dd id="SpeakWebSocketMessage.rsplit" class="function">rsplit</dd>
+                <dd id="SpeakWebSocketMessage.join" class="function">join</dd>
+                <dd id="SpeakWebSocketMessage.capitalize" class="function">capitalize</dd>
+                <dd id="SpeakWebSocketMessage.casefold" class="function">casefold</dd>
+                <dd id="SpeakWebSocketMessage.title" class="function">title</dd>
+                <dd id="SpeakWebSocketMessage.center" class="function">center</dd>
+                <dd id="SpeakWebSocketMessage.count" class="function">count</dd>
+                <dd id="SpeakWebSocketMessage.expandtabs" class="function">expandtabs</dd>
+                <dd id="SpeakWebSocketMessage.find" class="function">find</dd>
+                <dd id="SpeakWebSocketMessage.partition" class="function">partition</dd>
+                <dd id="SpeakWebSocketMessage.index" class="function">index</dd>
+                <dd id="SpeakWebSocketMessage.ljust" class="function">ljust</dd>
+                <dd id="SpeakWebSocketMessage.lower" class="function">lower</dd>
+                <dd id="SpeakWebSocketMessage.lstrip" class="function">lstrip</dd>
+                <dd id="SpeakWebSocketMessage.rfind" class="function">rfind</dd>
+                <dd id="SpeakWebSocketMessage.rindex" class="function">rindex</dd>
+                <dd id="SpeakWebSocketMessage.rjust" class="function">rjust</dd>
+                <dd id="SpeakWebSocketMessage.rstrip" class="function">rstrip</dd>
+                <dd id="SpeakWebSocketMessage.rpartition" class="function">rpartition</dd>
+                <dd id="SpeakWebSocketMessage.splitlines" class="function">splitlines</dd>
+                <dd id="SpeakWebSocketMessage.strip" class="function">strip</dd>
+                <dd id="SpeakWebSocketMessage.swapcase" class="function">swapcase</dd>
+                <dd id="SpeakWebSocketMessage.translate" class="function">translate</dd>
+                <dd id="SpeakWebSocketMessage.upper" class="function">upper</dd>
+                <dd id="SpeakWebSocketMessage.startswith" class="function">startswith</dd>
+                <dd id="SpeakWebSocketMessage.endswith" class="function">endswith</dd>
+                <dd id="SpeakWebSocketMessage.removeprefix" class="function">removeprefix</dd>
+                <dd id="SpeakWebSocketMessage.removesuffix" class="function">removesuffix</dd>
+                <dd id="SpeakWebSocketMessage.isascii" class="function">isascii</dd>
+                <dd id="SpeakWebSocketMessage.islower" class="function">islower</dd>
+                <dd id="SpeakWebSocketMessage.isupper" class="function">isupper</dd>
+                <dd id="SpeakWebSocketMessage.istitle" class="function">istitle</dd>
+                <dd id="SpeakWebSocketMessage.isspace" class="function">isspace</dd>
+                <dd id="SpeakWebSocketMessage.isdecimal" class="function">isdecimal</dd>
+                <dd id="SpeakWebSocketMessage.isdigit" class="function">isdigit</dd>
+                <dd id="SpeakWebSocketMessage.isnumeric" class="function">isnumeric</dd>
+                <dd id="SpeakWebSocketMessage.isalpha" class="function">isalpha</dd>
+                <dd id="SpeakWebSocketMessage.isalnum" class="function">isalnum</dd>
+                <dd id="SpeakWebSocketMessage.isidentifier" class="function">isidentifier</dd>
+                <dd id="SpeakWebSocketMessage.isprintable" class="function">isprintable</dd>
+                <dd id="SpeakWebSocketMessage.zfill" class="function">zfill</dd>
+                <dd id="SpeakWebSocketMessage.format" class="function">format</dd>
+                <dd id="SpeakWebSocketMessage.format_map" class="function">format_map</dd>
+                <dd id="SpeakWebSocketMessage.maketrans" class="function">maketrans</dd>
+
+            </div>
+                                </dl>
+                            </div>
+                </section>
                 <section id="SpeakWebSocketEvents">
                             <input id="SpeakWebSocketEvents-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
 <div class="attr class">
@@ -118,19 +288,20 @@
 
     </div>
     <a class="headerlink" href="#SpeakWebSocketEvents"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="SpeakWebSocketEvents-11"><a href="#SpeakWebSocketEvents-11"><span class="linenos">11</span></a><span class="k">class</span> <span class="nc">SpeakWebSocketEvents</span><span class="p">(</span><span class="n">StrEnum</span><span class="p">):</span>
-</span><span id="SpeakWebSocketEvents-12"><a href="#SpeakWebSocketEvents-12"><span class="linenos">12</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="SpeakWebSocketEvents-13"><a href="#SpeakWebSocketEvents-13"><span class="linenos">13</span></a><span class="sd">    Enumerates the possible events that can be received from the Deepgram API</span>
-</span><span id="SpeakWebSocketEvents-14"><a href="#SpeakWebSocketEvents-14"><span class="linenos">14</span></a><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="SpeakWebSocketEvents-15"><a href="#SpeakWebSocketEvents-15"><span class="linenos">15</span></a>
-</span><span id="SpeakWebSocketEvents-16"><a href="#SpeakWebSocketEvents-16"><span class="linenos">16</span></a>    <span class="n">Open</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Open&quot;</span>
-</span><span id="SpeakWebSocketEvents-17"><a href="#SpeakWebSocketEvents-17"><span class="linenos">17</span></a>    <span class="n">Close</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Close&quot;</span>
-</span><span id="SpeakWebSocketEvents-18"><a href="#SpeakWebSocketEvents-18"><span class="linenos">18</span></a>    <span class="n">AudioData</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;AudioData&quot;</span>
-</span><span id="SpeakWebSocketEvents-19"><a href="#SpeakWebSocketEvents-19"><span class="linenos">19</span></a>    <span class="n">Metadata</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Metadata&quot;</span>
-</span><span id="SpeakWebSocketEvents-20"><a href="#SpeakWebSocketEvents-20"><span class="linenos">20</span></a>    <span class="n">Flush</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Flush&quot;</span>
-</span><span id="SpeakWebSocketEvents-21"><a href="#SpeakWebSocketEvents-21"><span class="linenos">21</span></a>    <span class="n">Unhandled</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Unhandled&quot;</span>
-</span><span id="SpeakWebSocketEvents-22"><a href="#SpeakWebSocketEvents-22"><span class="linenos">22</span></a>    <span class="n">Error</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Error&quot;</span>
-</span><span id="SpeakWebSocketEvents-23"><a href="#SpeakWebSocketEvents-23"><span class="linenos">23</span></a>    <span class="ne">Warning</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Warning&quot;</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="SpeakWebSocketEvents-22"><a href="#SpeakWebSocketEvents-22"><span class="linenos">22</span></a><span class="k">class</span> <span class="nc">SpeakWebSocketEvents</span><span class="p">(</span><span class="n">StrEnum</span><span class="p">):</span>
+</span><span id="SpeakWebSocketEvents-23"><a href="#SpeakWebSocketEvents-23"><span class="linenos">23</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="SpeakWebSocketEvents-24"><a href="#SpeakWebSocketEvents-24"><span class="linenos">24</span></a><span class="sd">    Enumerates the possible events that can be received from the Deepgram API</span>
+</span><span id="SpeakWebSocketEvents-25"><a href="#SpeakWebSocketEvents-25"><span class="linenos">25</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="SpeakWebSocketEvents-26"><a href="#SpeakWebSocketEvents-26"><span class="linenos">26</span></a>
+</span><span id="SpeakWebSocketEvents-27"><a href="#SpeakWebSocketEvents-27"><span class="linenos">27</span></a>    <span class="n">Open</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Open&quot;</span>
+</span><span id="SpeakWebSocketEvents-28"><a href="#SpeakWebSocketEvents-28"><span class="linenos">28</span></a>    <span class="n">Close</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Close&quot;</span>
+</span><span id="SpeakWebSocketEvents-29"><a href="#SpeakWebSocketEvents-29"><span class="linenos">29</span></a>    <span class="n">AudioData</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;AudioData&quot;</span>
+</span><span id="SpeakWebSocketEvents-30"><a href="#SpeakWebSocketEvents-30"><span class="linenos">30</span></a>    <span class="n">Metadata</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Metadata&quot;</span>
+</span><span id="SpeakWebSocketEvents-31"><a href="#SpeakWebSocketEvents-31"><span class="linenos">31</span></a>    <span class="n">Flushed</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Flushed&quot;</span>
+</span><span id="SpeakWebSocketEvents-32"><a href="#SpeakWebSocketEvents-32"><span class="linenos">32</span></a>    <span class="n">Cleared</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Cleared&quot;</span>
+</span><span id="SpeakWebSocketEvents-33"><a href="#SpeakWebSocketEvents-33"><span class="linenos">33</span></a>    <span class="n">Unhandled</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Unhandled&quot;</span>
+</span><span id="SpeakWebSocketEvents-34"><a href="#SpeakWebSocketEvents-34"><span class="linenos">34</span></a>    <span class="n">Error</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Error&quot;</span>
+</span><span id="SpeakWebSocketEvents-35"><a href="#SpeakWebSocketEvents-35"><span class="linenos">35</span></a>    <span class="ne">Warning</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Warning&quot;</span>
 </span></pre></div>
 
 
@@ -186,14 +357,26 @@
     
 
                             </div>
-                            <div id="SpeakWebSocketEvents.Flush" class="classattr">
+                            <div id="SpeakWebSocketEvents.Flushed" class="classattr">
                                 <div class="attr variable">
-            <span class="name">Flush</span><span class="annotation">: str</span>        =
-<span class="default_value">&lt;<a href="#SpeakWebSocketEvents.Flush">SpeakWebSocketEvents.Flush</a>: &#39;Flush&#39;&gt;</span>
+            <span class="name">Flushed</span><span class="annotation">: str</span>        =
+<span class="default_value">&lt;<a href="#SpeakWebSocketEvents.Flushed">SpeakWebSocketEvents.Flushed</a>: &#39;Flushed&#39;&gt;</span>
 
         
     </div>
-    <a class="headerlink" href="#SpeakWebSocketEvents.Flush"></a>
+    <a class="headerlink" href="#SpeakWebSocketEvents.Flushed"></a>
+    
+    
+
+                            </div>
+                            <div id="SpeakWebSocketEvents.Cleared" class="classattr">
+                                <div class="attr variable">
+            <span class="name">Cleared</span><span class="annotation">: str</span>        =
+<span class="default_value">&lt;<a href="#SpeakWebSocketEvents.Cleared">SpeakWebSocketEvents.Cleared</a>: &#39;Cleared&#39;&gt;</span>
+
+        
+    </div>
+    <a class="headerlink" href="#SpeakWebSocketEvents.Cleared"></a>
     
     
 
