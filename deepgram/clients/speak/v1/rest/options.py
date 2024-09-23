@@ -7,14 +7,14 @@ from typing import Union, Optional
 import logging
 
 from dataclasses import dataclass, field
-from dataclasses_json import config as dataclass_config, DataClassJsonMixin
+from dataclasses_json import config as dataclass_config
 
 from .....utils import verboselogs
-from ....common import FileSource
+from ....common import TextSource, BufferSource, StreamSource, FileSource, BaseResponse
 
 
 @dataclass
-class SpeakRESTOptions(DataClassJsonMixin):
+class SpeakRESTOptions(BaseResponse):
     """
     Contains all the options for the SpeakOptions.
 
@@ -39,16 +39,6 @@ class SpeakRESTOptions(DataClassJsonMixin):
         default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
 
-    def __getitem__(self, key):
-        _dict = self.to_dict()
-        return _dict[key]
-
-    def __setitem__(self, key, val):
-        self.__dict__[key] = val
-
-    def __str__(self) -> str:
-        return self.to_json(indent=4)
-
     def check(self):
         """
         Check the SpeakOptions for any missing or invalid values.
@@ -67,5 +57,13 @@ class SpeakRESTOptions(DataClassJsonMixin):
 
 SpeakOptions = SpeakRESTOptions
 
+# common
+TextSource = TextSource
+BufferSource = BufferSource
+StreamSource = StreamSource
+FileSource = FileSource
+
+# unqiue
 SpeakSource = Union[FileSource, BufferedReader]
 SpeakRestSource = SpeakSource
+SpeakRESTSource = SpeakSource

@@ -3,36 +3,30 @@
 # SPDX-License-Identifier: MIT
 
 
-from typing import Optional
-import io
+from dataclasses import dataclass
 
-from dataclasses import dataclass, field
-from dataclasses_json import config as dataclass_config, DataClassJsonMixin
+from ....common import (
+    BaseResponse,
+    OpenResponse,
+    CloseResponse,
+    ErrorResponse,
+    UnhandledResponse,
+)
+
+
+# shared response types:
+
+OpenResponse = OpenResponse
+CloseResponse = CloseResponse
+ErrorResponse = ErrorResponse
+UnhandledResponse = UnhandledResponse
+
 
 # Speak Response Types:
 
 
 @dataclass
-class OpenResponse(DataClassJsonMixin):
-    """
-    Open Message from the Deepgram Platform
-    """
-
-    type: str = ""
-
-    def __getitem__(self, key):
-        _dict = self.to_dict()
-        return _dict[key]
-
-    def __setitem__(self, key, val):
-        self.__dict__[key] = val
-
-    def __str__(self) -> str:
-        return self.to_json(indent=4)
-
-
-@dataclass
-class MetadataResponse(DataClassJsonMixin):
+class MetadataResponse(BaseResponse):
     """
     Metadata object
     """
@@ -40,19 +34,9 @@ class MetadataResponse(DataClassJsonMixin):
     type: str = ""
     request_id: str = ""
 
-    def __getitem__(self, key):
-        _dict = self.to_dict()
-        return _dict[key]
-
-    def __setitem__(self, key, val):
-        self.__dict__[key] = val
-
-    def __str__(self) -> str:
-        return self.to_json(indent=4)
-
 
 @dataclass
-class FlushedResponse(DataClassJsonMixin):
+class FlushedResponse(BaseResponse):
     """
     Flushed Message from the Deepgram Platform
     """
@@ -60,19 +44,9 @@ class FlushedResponse(DataClassJsonMixin):
     type: str = ""
     sequence_id: int = 0
 
-    def __getitem__(self, key):
-        _dict = self.to_dict()
-        return _dict[key]
-
-    def __setitem__(self, key, val):
-        self.__dict__[key] = val
-
-    def __str__(self) -> str:
-        return self.to_json(indent=4)
-
 
 @dataclass
-class ClearedResponse(DataClassJsonMixin):
+class ClearedResponse(BaseResponse):
     """
     Cleared object
     """
@@ -80,60 +54,9 @@ class ClearedResponse(DataClassJsonMixin):
     type: str = ""
     sequence_id: int = 0
 
-    def __getitem__(self, key):
-        _dict = self.to_dict()
-        return _dict[key]
-
-    def __setitem__(self, key, val):
-        self.__dict__[key] = val
-
-    def __str__(self) -> str:
-        return self.to_json(indent=4)
-
 
 @dataclass
-class CloseResponse(DataClassJsonMixin):
-    """
-    Close Message from the Deepgram Platform
-    """
-
-    type: str = ""
-
-    def __getitem__(self, key):
-        _dict = self.to_dict()
-        return _dict[key]
-
-    def __setitem__(self, key, val):
-        self.__dict__[key] = val
-
-    def __str__(self) -> str:
-        return self.to_json(indent=4)
-
-
-@dataclass
-class ErrorResponse(DataClassJsonMixin):
-    """
-    Error Message from the Deepgram Platform
-    """
-
-    description: str = ""
-    message: str = ""
-    type: str = ""
-    variant: Optional[str] = ""
-
-    def __getitem__(self, key):
-        _dict = self.to_dict()
-        return _dict[key]
-
-    def __setitem__(self, key, val):
-        self.__dict__[key] = val
-
-    def __str__(self) -> str:
-        return self.to_json(indent=4)
-
-
-@dataclass
-class WarningResponse(DataClassJsonMixin):
+class WarningResponse(BaseResponse):
     """
     Warning Message from the Deepgram Platform
     """
@@ -141,36 +64,3 @@ class WarningResponse(DataClassJsonMixin):
     warn_code: str = ""
     warn_msg: str = ""
     type: str = ""
-
-    def __getitem__(self, key):
-        _dict = self.to_dict()
-        return _dict[key]
-
-    def __setitem__(self, key, val):
-        self.__dict__[key] = val
-
-    def __str__(self) -> str:
-        return self.to_json(indent=4)
-
-
-# Unhandled Message
-
-
-@dataclass
-class UnhandledResponse(DataClassJsonMixin):
-    """
-    Unhandled Message from the Deepgram Platform
-    """
-
-    type: str = ""
-    raw: str = ""
-
-    def __getitem__(self, key):
-        _dict = self.to_dict()
-        return _dict[key]
-
-    def __setitem__(self, key, val):
-        self.__dict__[key] = val
-
-    def __str__(self) -> str:
-        return self.to_json(indent=4)

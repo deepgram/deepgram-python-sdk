@@ -13,3 +13,35 @@ from .options import (
     FileSource,
     UrlSource,
 )
+
+from .shared_response import (
+    BaseResponse,
+    ModelInfo,
+    Word,
+    Alternative,
+    Hit,
+    Search,
+    Channel,
+)
+
+from .rest_response import (
+    Average,
+    Intent,
+    Intents,
+    IntentsInfo,
+    Segment,
+    SentimentInfo,
+    Sentiment,
+    Sentiments,
+    SummaryInfo,
+    Topic,
+    Topics,
+    TopicsInfo,
+)
+
+from .websocket_response import (
+    OpenResponse,
+    CloseResponse,
+    ErrorResponse,
+    UnhandledResponse,
+)

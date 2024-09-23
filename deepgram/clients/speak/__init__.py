@@ -4,32 +4,50 @@
 
 from .enums import SpeakWebSocketEvents, SpeakWebSocketMessage
 
+# rest
 from .client import (
     SpeakClient,  # backward compat
     SpeakRESTClient,
     AsyncSpeakRESTClient,
+)
+from .client import (
+    #### top level
+    SpeakRESTOptions,
+    SpeakOptions,
+    # common
+    TextSource,
+    BufferSource,
+    StreamSource,
+    FileSource,
+    # unique
+    SpeakSource,
+    SpeakRestSource,
+    SpeakRESTSource,
+)
+from .client import (
+    SpeakResponse,  # backward compat
+    SpeakRESTResponse,
+)
+
+# websocket
+from .client import (
+    SpeakWSOptions,
+)
+from .client import (
     SpeakWebSocketClient,
     AsyncSpeakWebSocketClient,
     SpeakWSClient,
     AsyncSpeakWSClient,
 )
 from .client import (
-    SpeakOptions,
-    SpeakRESTOptions,
-    SpeakWSOptions,
-    FileSource,
-    SpeakRestSource,
-    SpeakSource,
-)
-from .client import (
-    SpeakResponse,  # backward compat
-    SpeakRESTResponse,
-    OpenResponse,
-    MetadataResponse,
+    #### top level
+    SpeakWSMetadataResponse,
     FlushedResponse,
     ClearedResponse,
+    WarningResponse,
+    #### shared
+    OpenResponse,
     CloseResponse,
     UnhandledResponse,
-    WarningResponse,
     ErrorResponse,
 )

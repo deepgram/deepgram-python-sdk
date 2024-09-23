@@ -5,5 +5,36 @@
 from .client import AnalyzeClient, AsyncAnalyzeClient
 from .client import ReadClient, AsyncReadClient
 from .client import AnalyzeOptions
-from .client import UrlSource, FileSource, AnalyzeStreamSource, AnalyzeSource
-from .client import AsyncAnalyzeResponse, AnalyzeResponse, SyncAnalyzeResponse
+from .client import (
+    # common
+    UrlSource,
+    TextSource,
+    BufferSource,
+    StreamSource,
+    FileSource,
+    # unique
+    AnalyzeStreamSource,
+    AnalyzeSource,
+)
+from .client import (
+    AsyncAnalyzeResponse,
+    SyncAnalyzeResponse,
+    AnalyzeResponse,
+    # shared
+    Average,
+    Intent,
+    Intents,
+    IntentsInfo,
+    Segment,
+    SentimentInfo,
+    Sentiment,
+    Sentiments,
+    SummaryInfo,
+    Topic,
+    Topics,
+    TopicsInfo,
+    # unique
+    AnalyzeMetadata,
+    AnalyzeResults,
+    AnalyzeSummary,
+)
