@@ -5,13 +5,27 @@
 from .client import ListenWebSocketClient
 from .async_client import AsyncListenWebSocketClient
 from .options import LiveOptions, ListenWebSocketOptions
+
+# unique websocket response
 from .response import (
-    OpenResponse,
+    #### top level
     LiveResultResponse,
     MetadataResponse,
     SpeechStartedResponse,
     UtteranceEndResponse,
+    #### common websocket response
+    BaseResponse,
+    OpenResponse,
     CloseResponse,
     ErrorResponse,
     UnhandledResponse,
+    #### between rest and websocket
+    ModelInfo,
+    Alternative,
+    Hit,
+    Search,
+    Channel,
+    Word,
+    #### unique
+    Metadata,
 )

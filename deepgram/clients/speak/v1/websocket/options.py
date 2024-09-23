@@ -7,14 +7,14 @@ from typing import Union, Optional
 import logging
 
 from dataclasses import dataclass, field
-from dataclasses_json import config as dataclass_config, DataClassJsonMixin
+from dataclasses_json import config as dataclass_config
 
 from .....utils import verboselogs
-from ....common import FileSource
+from ....common import BaseResponse
 
 
 @dataclass
-class SpeakWSOptions(DataClassJsonMixin):
+class SpeakWSOptions(BaseResponse):
     """
     Contains all the options for the SpeakOptions.
 
@@ -63,7 +63,3 @@ class SpeakWSOptions(DataClassJsonMixin):
         logger.setLevel(prev)
 
         return True
-
-
-SpeakSource = Union[FileSource, BufferedReader]
-SpeakRestSource = SpeakSource

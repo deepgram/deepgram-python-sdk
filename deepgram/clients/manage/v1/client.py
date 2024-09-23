@@ -87,6 +87,8 @@ class ManageClient(
             timeout=timeout, addons=addons, headers=headers, **kwargs
         )
 
+    # pylint: disable=too-many-positional-arguments
+
     def get_projects(
         self,
         timeout: Optional[httpx.Timeout] = None,
@@ -1164,3 +1166,5 @@ class ManageClient(
         self._logger.notice("get_balance succeeded")
         self._logger.debug("ManageClient.get_balance LEAVE")
         return res
+
+    # pylint: enable=too-many-positional-arguments

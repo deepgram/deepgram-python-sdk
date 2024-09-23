@@ -6,16 +6,21 @@ import logging
 from typing import List, Union, Optional
 
 from dataclasses import dataclass, field
-from dataclasses_json import config as dataclass_config, DataClassJsonMixin
+from dataclasses_json import config as dataclass_config
 
 from ....utils import verboselogs
-from ...common import FileSource, StreamSource, UrlSource
+from ...common import (
+    TextSource,
+    FileSource,
+    BufferSource,
+    StreamSource,
+    UrlSource,
+    BaseResponse,
+)
 
 
 @dataclass
-class AnalyzeOptions(
-    DataClassJsonMixin
-):  # pylint: disable=too-many-instance-attributes
+class AnalyzeOptions(BaseResponse):  # pylint: disable=too-many-instance-attributes
     """
     Contains all the options for the AnalyzeOptions.
 
@@ -57,16 +62,6 @@ class AnalyzeOptions(
         default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
 
-    def __getitem__(self, key):
-        _dict = self.to_dict()
-        return _dict[key]
-
-    def __setitem__(self, key, val):
-        self.__dict__[key] = val
-
-    def __str__(self) -> str:
-        return self.to_json(indent=4)
-
     def check(self):
         """
         Check the options for the AnalyzeOptions.
@@ -83,8 +78,6 @@ class AnalyzeOptions(
         return True
 
 
+# unique
+AnalyzeSource = Union[UrlSource, FileSource]
 AnalyzeStreamSource = StreamSource
-
-# FileSource = FileSource
-# UrlSource = UrlSource
-AnalyzeSource = Union[FileSource, UrlSource, AnalyzeStreamSource]

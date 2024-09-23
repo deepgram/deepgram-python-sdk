@@ -5,51 +5,33 @@
 from typing import List, Optional
 
 from dataclasses import dataclass, field
-from dataclasses_json import config as dataclass_config, DataClassJsonMixin
+from dataclasses_json import config as dataclass_config
+
+from ...common import BaseResponse
 
 # Input
 
 
 @dataclass
-class ProjectOptions(DataClassJsonMixin):
+class ProjectOptions(BaseResponse):
     """
     Project Options
     """
 
     name: str = ""
 
-    def __getitem__(self, key):
-        _dict = self.to_dict()
-        return _dict[key]
-
-    def __setitem__(self, key, val):
-        self.__dict__[key] = val
-
-    def __str__(self) -> str:
-        return self.to_json(indent=4)
-
 
 @dataclass
-class ModelOptions(DataClassJsonMixin):
+class ModelOptions(BaseResponse):
     """
     Model Options
     """
 
     include_outdated: bool = False
 
-    def __getitem__(self, key):
-        _dict = self.to_dict()
-        return _dict[key]
-
-    def __setitem__(self, key, val):
-        self.__dict__[key] = val
-
-    def __str__(self) -> str:
-        return self.to_json(indent=4)
-
 
 @dataclass
-class KeyOptions(DataClassJsonMixin):
+class KeyOptions(BaseResponse):
     """
     Key Options
     """
@@ -74,34 +56,18 @@ class KeyOptions(DataClassJsonMixin):
             _dict["tags"] = [str(tags) for tags in _dict["tags"]]
         return _dict[key]
 
-    def __setitem__(self, key, val):
-        self.__dict__[key] = val
-
-    def __str__(self) -> str:
-        return self.to_json(indent=4)
-
 
 @dataclass
-class ScopeOptions(DataClassJsonMixin):
+class ScopeOptions(BaseResponse):
     """
     Scope Options
     """
 
     scope: str = ""
 
-    def __getitem__(self, key):
-        _dict = self.to_dict()
-        return _dict[key]
-
-    def __setitem__(self, key, val):
-        self.__dict__[key] = val
-
-    def __str__(self) -> str:
-        return self.to_json(indent=4)
-
 
 @dataclass
-class InviteOptions(DataClassJsonMixin):
+class InviteOptions(BaseResponse):
     """
     Invite Options
     """
@@ -109,19 +75,9 @@ class InviteOptions(DataClassJsonMixin):
     email: str = ""
     scope: str = ""
 
-    def __getitem__(self, key):
-        _dict = self.to_dict()
-        return _dict[key]
-
-    def __setitem__(self, key, val):
-        self.__dict__[key] = val
-
-    def __str__(self) -> str:
-        return self.to_json(indent=4)
-
 
 @dataclass
-class UsageRequestOptions(DataClassJsonMixin):
+class UsageRequestOptions(BaseResponse):
     """
     Usage Request Options
     """
@@ -139,21 +95,9 @@ class UsageRequestOptions(DataClassJsonMixin):
         default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
 
-    def __getitem__(self, key):
-        _dict = self.to_dict()
-        return _dict[key]
-
-    def __setitem__(self, key, val):
-        self.__dict__[key] = val
-
-    def __str__(self) -> str:
-        return self.to_json(indent=4)
-
 
 @dataclass
-class UsageSummaryOptions(
-    DataClassJsonMixin
-):  # pylint: disable=too-many-instance-attributes
+class UsageSummaryOptions(BaseResponse):  # pylint: disable=too-many-instance-attributes
     """
     Usage Summary Options
     """
@@ -222,32 +166,12 @@ class UsageSummaryOptions(
         default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
 
-    def __getitem__(self, key):
-        _dict = self.to_dict()
-        return _dict[key]
-
-    def __setitem__(self, key, val):
-        self.__dict__[key] = val
-
-    def __str__(self) -> str:
-        return self.to_json(indent=4)
-
 
 @dataclass
-class UsageFieldsOptions(DataClassJsonMixin):
+class UsageFieldsOptions(BaseResponse):
     """
     Usage Fields Options
     """
 
     start: Optional[str] = ""
     end: Optional[str] = ""
-
-    def __getitem__(self, key):
-        _dict = self.to_dict()
-        return _dict[key]
-
-    def __setitem__(self, key, val):
-        self.__dict__[key] = val
-
-    def __str__(self) -> str:
-        return self.to_json(indent=4)

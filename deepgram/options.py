@@ -39,7 +39,7 @@ class DeepgramClientOptions:  # pylint: disable=too-many-instance-attributes
         verbose: int = verboselogs.WARNING,
         headers: Optional[Dict] = None,
         options: Optional[Dict] = None,
-    ):
+    ):  # pylint: disable=too-many-positional-arguments
         self._logger = verboselogs.VerboseLogger(__name__)
         self._logger.addHandler(logging.StreamHandler())
 
@@ -152,7 +152,7 @@ class ClientOptionsFromEnv(
         verbose: int = verboselogs.WARNING,
         headers: Optional[Dict] = None,
         options: Optional[Dict] = None,
-    ):
+    ):  # pylint: disable=too-many-positional-arguments
         self._logger = verboselogs.VerboseLogger(__name__)
         self._logger.addHandler(logging.StreamHandler())
         self._logger.setLevel(verboselogs.WARNING)  # temporary set for setup

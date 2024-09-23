@@ -38,6 +38,8 @@ class AsyncListenRESTClient(AbstractAsyncRestClient):
         self._config = config
         super().__init__(config)
 
+    # pylint: disable=too-many-positional-arguments
+
     async def transcribe_url(
         self,
         source: UrlSource,
@@ -341,3 +343,5 @@ class AsyncListenRESTClient(AbstractAsyncRestClient):
         self._logger.notice("transcribe_file_callback succeeded")
         self._logger.debug("ListenRESTClient.transcribe_file_callback LEAVE")
         return res
+
+    # pylint: enable=too-many-positional-arguments
