@@ -5,45 +5,34 @@
 from typing import List, Optional, Dict, Any
 
 from dataclasses import dataclass, field
-from dataclasses_json import config as dataclass_config, DataClassJsonMixin
+from dataclasses_json import config as dataclass_config
 
-from ....common import Sentiment
+# between analyze and listen
+from ....common import (
+    BaseResponse,
+    Average,
+    Intent,
+    Intents,
+    IntentsInfo,
+    Segment,
+    SentimentInfo,
+    Sentiment,
+    Sentiments,
+    SummaryInfo,
+    Topic,
+    Topics,
+    TopicsInfo,
+)
 
-
-# Base Classes:
-
-
-@dataclass
-class BaseResponse(DataClassJsonMixin):
-    """
-    BaseResponse class used to define the common methods and properties for all response classes.
-    """
-
-    def __getitem__(self, key):
-        _dict = self.to_dict()
-        return _dict[key]
-
-    def __setitem__(self, key, val):
-        self.__dict__[key] = val
-
-    def __str__(self) -> str:
-        return self.to_json(indent=4)
-
-    def eval(self, key: str) -> str:
-        """
-        This method is used to evaluate a key in the response object using a dot notation style method.
-        """
-        keys = key.split(".")
-        result: Dict[Any, Any] = self.to_dict()
-        for k in keys:
-            if isinstance(result, dict) and k in result:
-                result = result[k]
-            elif isinstance(result, list) and k.isdigit() and int(k) < len(result):
-                result = result[int(k)]
-            else:
-                return ""
-        return str(result)
-
+# between rest and websocket
+from ....common import (
+    ModelInfo,
+    Alternative,
+    Channel,
+    Hit,
+    Search,
+    Word,
+)
 
 # Async Prerecorded Response Types:
 
@@ -58,61 +47,6 @@ class AsyncPrerecordedResponse(BaseResponse):
 
 
 # Prerecorded Response Types:
-
-
-@dataclass
-class SummaryInfo(BaseResponse):
-    """
-    The summary information for the response.
-    """
-
-    input_tokens: int = 0
-    output_tokens: int = 0
-    model_uuid: str = ""
-
-
-@dataclass
-class ModelInfo(BaseResponse):
-    """
-    The model information for the response.
-    """
-
-    name: str = ""
-    version: str = ""
-    arch: str = ""
-
-
-@dataclass
-class IntentsInfo(BaseResponse):
-    """
-    The intents information for the response.
-    """
-
-    model_uuid: str = ""
-    input_tokens: int = 0
-    output_tokens: int = 0
-
-
-@dataclass
-class SentimentInfo(BaseResponse):
-    """
-    The sentiment information for the response.
-    """
-
-    model_uuid: str = ""
-    input_tokens: int = 0
-    output_tokens: int = 0
-
-
-@dataclass
-class TopicsInfo(BaseResponse):
-    """
-    The topics information for the response.
-    """
-
-    model_uuid: str = ""
-    input_tokens: int = 0
-    output_tokens: int = 0
 
 
 @dataclass
@@ -208,33 +142,11 @@ Summary = SummaryV2
 
 
 @dataclass
-class Hit(BaseResponse):
-    """
-    The hit information for the response.
-    """
-
-    confidence: float = 0
-    start: float = 0
-    end: float = 0
-    snippet: Optional[str] = ""
-
-
-@dataclass
-class Word(BaseResponse):  # pylint: disable=too-many-instance-attributes
+class ListenRestWord(Word):  # pylint: disable=too-many-instance-attributes
     """
     The word information for the response.
     """
 
-    word: str = ""
-    start: float = 0
-    end: float = 0
-    confidence: float = 0
-    punctuated_word: Optional[str] = field(
-        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
-    )
-    speaker: Optional[int] = field(
-        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
-    )
     speaker_confidence: Optional[float] = field(
         default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
@@ -242,9 +154,6 @@ class Word(BaseResponse):  # pylint: disable=too-many-instance-attributes
         default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
     sentiment_score: Optional[float] = field(
-        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
-    )
-    language: Optional[str] = field(
         default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
 
@@ -340,9 +249,7 @@ class Translation(BaseResponse):
 
 
 @dataclass
-class Warning(
-    DataClassJsonMixin
-):  # pylint: disable=used-before-assignment,redefined-builtin
+class Warning(BaseResponse):  # pylint: disable=used-before-assignment,redefined-builtin
     """
     The warning information for the response.
     """
@@ -350,22 +257,6 @@ class Warning(
     parameter: str = ""
     type: str = ""
     message: str = ""
-
-
-@dataclass
-class Search(BaseResponse):
-    """
-    The search information for the response.
-    """
-
-    query: str = ""
-    hits: List[Hit] = field(default_factory=list)
-
-    def __getitem__(self, key):
-        _dict = self.to_dict()
-        if "hits" in _dict:
-            _dict["hits"] = [Hit.from_dict(hits) for hits in _dict["hits"]]
-        return _dict[key]
 
 
 @dataclass
@@ -414,14 +305,13 @@ class Entity(BaseResponse):
 
 
 @dataclass
-class Alternative(BaseResponse):  # pylint: disable=too-many-instance-attributes
+class ListenRESTAlternative(
+    Alternative
+):  # pylint: disable=too-many-instance-attributes
     """
     The alternative information for the response.
     """
 
-    transcript: str = ""
-    confidence: float = 0
-    words: List[Word] = field(default_factory=list)
     summaries: Optional[List[SummaryV1]] = field(
         default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
@@ -432,9 +322,6 @@ class Alternative(BaseResponse):  # pylint: disable=too-many-instance-attributes
         default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
     translations: Optional[List[Translation]] = field(
-        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
-    )
-    languages: Optional[List[str]] = field(
         default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
 
@@ -461,7 +348,7 @@ class Alternative(BaseResponse):  # pylint: disable=too-many-instance-attributes
 
 
 @dataclass
-class Channel(BaseResponse):
+class ListenRESTChannel(Channel):
     """
     The channel information for the response.
     """
@@ -485,139 +372,6 @@ class Channel(BaseResponse):
             _dict["alternatives"] = [
                 Alternative.from_dict(alternatives)
                 for alternatives in _dict["alternatives"]
-            ]
-        return _dict[key]
-
-
-@dataclass
-class Intent(BaseResponse):
-    """
-    The intent information for the response.
-    """
-
-    intent: str = ""
-    confidence_score: float = 0
-
-
-@dataclass
-class Average(BaseResponse):
-    """
-    The average information for the response.
-    """
-
-    sentiment: Sentiment
-    sentiment_score: float
-
-    def __getitem__(self, key):
-        _dict = self.to_dict()
-        if "sentiment" in _dict:
-            _dict["sentiment"] = Sentiment.from_dict(_dict["sentiment"])
-        return _dict[key]
-
-
-@dataclass
-class Topic(BaseResponse):
-    """
-    The topic information for the response.
-    """
-
-    topic: str = ""
-    confidence_score: float = 0
-
-
-@dataclass
-class Segment(BaseResponse):
-    """
-    The segment information for the response.
-    """
-
-    text: str = ""
-    start_word: int = 0
-    end_word: int = 0
-    sentiment: Optional[Sentiment] = field(
-        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
-    )
-    sentiment_score: Optional[float] = field(
-        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
-    )
-    intents: Optional[List[Intent]] = field(
-        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
-    )
-    topics: Optional[List[Topic]] = field(
-        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
-    )
-
-    def __getitem__(self, key):
-        _dict = self.to_dict()
-        if "sentiment" in _dict:
-            _dict["sentiment"] = Sentiment.from_dict(_dict["sentiment"])
-        if "intents" in _dict:
-            _dict["intents"] = [
-                Intent.from_dict(intents) for intents in _dict["intents"]
-            ]
-        if "topics" in _dict:
-            _dict["topics"] = [Topic.from_dict(topics) for topics in _dict["topics"]]
-        return _dict[key]
-
-
-@dataclass
-class Sentiments(BaseResponse):
-    """
-    The sentiments information for the response.
-    """
-
-    segments: Optional[List[Segment]] = field(
-        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
-    )
-    average: Optional[Average] = field(
-        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
-    )
-
-    def __getitem__(self, key):
-        _dict = self.to_dict()
-        if "segments" in _dict:
-            _dict["segments"] = [
-                Segment.from_dict(segments) for segments in _dict["segments"]
-            ]
-        if "average" in _dict:
-            _dict["average"] = Average.from_dict(_dict["average"])
-        return _dict[key]
-
-
-@dataclass
-class Topics(BaseResponse):
-    """
-    The topics information for the response.
-    """
-
-    segments: Optional[List[Segment]] = field(
-        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
-    )
-
-    def __getitem__(self, key):
-        _dict = self.to_dict()
-        if "segments" in _dict:
-            _dict["segments"] = [
-                Segment.from_dict(segments) for segments in _dict["segments"]
-            ]
-        return _dict[key]
-
-
-@dataclass
-class Intents(BaseResponse):
-    """
-    The intents information for the response.
-    """
-
-    segments: Optional[List[Segment]] = field(
-        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
-    )
-
-    def __getitem__(self, key):
-        _dict = self.to_dict()
-        if "segments" in _dict:
-            _dict["segments"] = [
-                Segment.from_dict(segments) for segments in _dict["segments"]
             ]
         return _dict[key]
 

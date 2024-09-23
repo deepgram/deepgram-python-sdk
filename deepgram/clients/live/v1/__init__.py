@@ -10,7 +10,8 @@ from .client import LiveOptions
 from .client import (
     OpenResponse,
     LiveResultResponse,
-    MetadataResponse,
+    ListenWSMetadataResponse,
+    MetadataResponse,  # backwards compat
     SpeechStartedResponse,
     UtteranceEndResponse,
     CloseResponse,

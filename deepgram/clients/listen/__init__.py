@@ -13,22 +13,63 @@ from .client import (
 )
 
 # rest
+# common
+from .client import (
+    UrlSource,
+    TextSource,
+    BufferSource,
+    StreamSource,
+    FileSource,
+)
+
 ## input
 from .client import (
     ListenRESTOptions,
     PrerecordedOptions,
     PreRecordedStreamSource,
-    UrlSource,
-    FileSource,
     PrerecordedSource,
     ListenRestSource,
 )
 
 ## output
 from .client import (
+    # top level
     AsyncPrerecordedResponse,
     PrerecordedResponse,
     SyncPrerecordedResponse,
+    # shared
+    Average,
+    Intent,
+    Intents,
+    IntentsInfo,
+    Segment,
+    SentimentInfo,
+    Sentiment,
+    Sentiments,
+    SummaryInfo,
+    Topic,
+    Topics,
+    TopicsInfo,
+    # between rest and websocket
+    ModelInfo,
+    Alternative,
+    Hit,
+    Search,
+    Channel,
+    Word,
+    # unique
+    Entity,
+    ListenRESTMetadata,
+    Paragraph,
+    Paragraphs,
+    ListenRESTResults,
+    Sentence,
+    Summaries,
+    SummaryV1,
+    SummaryV2,
+    Translation,
+    Utterance,
+    Warning,
 )
 
 
@@ -41,14 +82,18 @@ from .client import (
 
 ## output
 from .client import (
-    OpenResponse,
+    # top level
     LiveResultResponse,
-    MetadataResponse,
+    ListenWSMetadataResponse,
     SpeechStartedResponse,
     UtteranceEndResponse,
+    # common websocket response
+    OpenResponse,
     CloseResponse,
     ErrorResponse,
     UnhandledResponse,
+    # unique
+    ListenWSMetadata,
 )
 
 # clients

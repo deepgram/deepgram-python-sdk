@@ -19,11 +19,32 @@ from .clients import (
     StreamSource,
     FileSource,
     UrlSource,
+)
+from .clients import BaseResponse
+from .clients import (
+    Average,
+    Intent,
+    Intents,
+    IntentsInfo,
+    Segment,
+    SentimentInfo,
     Sentiment,
+    Sentiments,
+    SummaryInfo,
+    Topic,
+    Topics,
+    TopicsInfo,
+)
+from .clients import (
+    ModelInfo,
+    Alternative,
+    Hit,
+    Search,
+    Channel,
+    Word,
 )
 from .clients import (
     OpenResponse,
-    MetadataResponse,
     CloseResponse,
     UnhandledResponse,
     ErrorResponse,
@@ -53,17 +74,34 @@ from .clients import (
 
 # live client responses
 from .clients import (
-    # OpenResponse,
+    #### top level
     LiveResultResponse,
-    # MetadataResponse,
+    ListenWSMetadataResponse,
     SpeechStartedResponse,
     UtteranceEndResponse,
+    #### common websocket response
+    # OpenResponse,
     # CloseResponse,
     # ErrorResponse,
     # UnhandledResponse,
+    #### unique
+    ListenWSMetadata,
 )
 
 # prerecorded
+from .clients import (
+    # common
+    # UrlSource,
+    # BufferSource,
+    # StreamSource,
+    # TextSource,
+    # FileSource,
+    # unique
+    PreRecordedStreamSource,
+    PrerecordedSource,
+    ListenRestSource,
+)
+
 from .clients import (
     PreRecordedClient,
     AsyncPreRecordedClient,
@@ -75,16 +113,47 @@ from .clients import (
 from .clients import (
     ListenRESTOptions,
     PrerecordedOptions,
-    PreRecordedStreamSource,
-    PrerecordedSource,
-    ListenRestSource,
 )
 
-# prerecorded client responses
+# rest client responses
 from .clients import (
+    #### top level
     AsyncPrerecordedResponse,
     PrerecordedResponse,
     SyncPrerecordedResponse,
+    #### shared
+    # Average,
+    # Intent,
+    # Intents,
+    # IntentsInfo,
+    # Segment,
+    # SentimentInfo,
+    # Sentiment,
+    # Sentiments,
+    # SummaryInfo,
+    # Topic,
+    # Topics,
+    # TopicsInfo,
+    #### between rest and websocket
+    # ModelInfo,
+    # Alternative,
+    # Hit,
+    # Search,
+    # Channel,
+    # Word,
+    # unique
+    Entity,
+    ListenRESTMetadata,
+    Paragraph,
+    Paragraphs,
+    ListenRESTResults,
+    Sentence,
+    Summaries,
+    SummaryV1,
+    SummaryV2,
+    Translation,
+    Utterance,
+    Warning,
 )
 
 # read
@@ -98,23 +167,46 @@ from .clients import (
 
 # read client responses
 from .clients import (
+    #### top level
     AsyncAnalyzeResponse,
-    AnalyzeResponse,
     SyncAnalyzeResponse,
+    AnalyzeResponse,
+    #### shared
+    # Average,
+    # Intent,
+    # Intents,
+    # IntentsInfo,
+    # Segment,
+    # SentimentInfo,
+    # Sentiment,
+    # Sentiments,
+    # SummaryInfo,
+    # Topic,
+    # Topics,
+    # TopicsInfo,
+    #### unique
+    AnalyzeMetadata,
+    AnalyzeResults,
+    AnalyzeSummary,
 )
 
 # speak
-from .clients import (
-    SpeakOptions,
-    SpeakRESTOptions,
-    SpeakWSOptions,
-    # FileSource,
-    SpeakRestSource,
-    SpeakSource,
-)
-from .clients import SpeakWebSocketEvents, SpeakWebSocketMessage
-
 ## speak REST
+from .clients import (
+    #### top level
+    SpeakRESTOptions,
+    SpeakOptions,  # backward compat
+    #### common
+    # TextSource,
+    # BufferSource,
+    # StreamSource,
+    # FileSource,
+    #### unique
+    SpeakSource,
+    SpeakRestSource,
+    SpeakRESTSource,
+)
+
 from .clients import (
     SpeakClient,  # backward compat
     SpeakRESTClient,
@@ -127,20 +219,29 @@ from .clients import (
 )
 
 ## speak WebSocket
+from .clients import SpeakWebSocketEvents, SpeakWebSocketMessage
+
+from .clients import (
+    SpeakWSOptions,
+)
+
 from .clients import (
     SpeakWebSocketClient,
     AsyncSpeakWebSocketClient,
     SpeakWSClient,
     AsyncSpeakWSClient,
 )
+
 from .clients import (
-    # OpenResponse,
-    # MetadataResponse,
+    #### top level
+    SpeakWSMetadataResponse,
     FlushedResponse,
     ClearedResponse,
+    WarningResponse,
+    #### common websocket response
+    # OpenResponse,
     # CloseResponse,
     # UnhandledResponse,
-    WarningResponse,
     # ErrorResponse,
 )
 
@@ -158,23 +259,42 @@ from .clients import (
 
 # manage client responses
 from .clients import (
+    #### top level
     Message,
-    Project,
     ProjectsResponse,
+    ModelResponse,
+    ModelsResponse,
     MembersResponse,
-    Key,
     KeyResponse,
     KeysResponse,
     ScopesResponse,
     InvitesResponse,
     UsageRequest,
+    UsageResponse,
     UsageRequestsResponse,
     UsageSummaryResponse,
     UsageFieldsResponse,
-    Balance,
     BalancesResponse,
-    ModelResponse,
-    ModelsResponse,
+    #### shared
+    Project,
+    STTDetails,
+    TTSMetadata,
+    TTSDetails,
+    Member,
+    Key,
+    Invite,
+    Config,
+    STTUsageDetails,
+    Callback,
+    TokenDetail,
+    SpeechSegment,
+    TTSUsageDetails,
+    STTTokens,
+    TTSTokens,
+    UsageSummaryResults,
+    Resolution,
+    UsageModel,
+    Balance,
 )
 
 # on-prem

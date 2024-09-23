@@ -2,23 +2,32 @@
 # Use of this source code is governed by a MIT license that can be found in the LICENSE file.
 # SPDX-License-Identifier: MIT
 
+# rest
+from .rest import (
+    #### top level
+    SpeakRESTOptions,
+    SpeakOptions,
+    # common
+    TextSource,
+    BufferSource,
+    StreamSource,
+    FileSource,
+    # unique
+    SpeakSource,
+    SpeakRestSource,
+    SpeakRESTSource,
+)
 from .rest import (
     SpeakRESTOptions,
     SpeakOptions,
-    SpeakRestSource,
-    SpeakSource,
-    FileSource,
 )
-from .websocket import (
-    SpeakWSOptions,
-)
-
-# rest
 from .rest import SpeakRESTClient, AsyncSpeakRESTClient
-
 from .rest import SpeakRESTResponse
 
 # websocket
+from .websocket import (
+    SpeakWSOptions,
+)
 from .websocket import (
     SpeakWebSocketClient,
     AsyncSpeakWebSocketClient,
@@ -26,12 +35,14 @@ from .websocket import (
     AsyncSpeakWSClient,
 )
 from .websocket import (
-    OpenResponse,
-    MetadataResponse,
+    #### top level
+    MetadataResponse as SpeakWSMetadataResponse,
     FlushedResponse,
     ClearedResponse,
+    WarningResponse,
+    #### shared
+    OpenResponse,
     CloseResponse,
     UnhandledResponse,
-    WarningResponse,
     ErrorResponse,
 )

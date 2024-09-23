@@ -6,42 +6,11 @@ from typing import Optional, Dict, Any
 import io
 
 from dataclasses import dataclass, field
-from dataclasses_json import config as dataclass_config, DataClassJsonMixin
+from dataclasses_json import config as dataclass_config
 
-
-# Base Classes:
-
-
-@dataclass
-class BaseResponse(DataClassJsonMixin):
-    """
-    BaseResponse class used to define the common methods and properties for all response classes.
-    """
-
-    def __getitem__(self, key):
-        _dict = self.to_dict()
-        return _dict[key]
-
-    def __setitem__(self, key, val):
-        self.__dict__[key] = val
-
-    def __str__(self) -> str:
-        return self.to_json(indent=4)
-
-    def eval(self, key: str) -> str:
-        """
-        This method is used to evaluate a key in the response object using a dot notation style method.
-        """
-        keys = key.split(".")
-        result: Dict[Any, Any] = self.to_dict()
-        for k in keys:
-            if isinstance(result, dict) and k in result:
-                result = result[k]
-            elif isinstance(result, list) and k.isdigit() and int(k) < len(result):
-                result = result[int(k)]
-            else:
-                return ""
-        return str(result)
+from ....common import (
+    BaseResponse,
+)
 
 
 # Speak Response Types:
@@ -74,64 +43,3 @@ class SpeakRESTResponse(BaseResponse):  # pylint: disable=too-many-instance-attr
         default=None,
         metadata=dataclass_config(exclude=lambda f: True),
     )
-
-
-@dataclass
-class OpenResponse(BaseResponse):
-    """
-    Open Message from the Deepgram Platform
-    """
-
-    type: str = ""
-
-
-@dataclass
-class MetadataResponse(BaseResponse):
-    """
-    Metadata object
-    """
-
-    request_id: str = ""
-
-
-@dataclass
-class FlushedResponse(BaseResponse):
-    """
-    Flushed Message from the Deepgram Platform
-    """
-
-    type: str = ""
-
-
-@dataclass
-class CloseResponse(BaseResponse):
-    """
-    Close Message from the Deepgram Platform
-    """
-
-    type: str = ""
-
-
-@dataclass
-class ErrorResponse(BaseResponse):
-    """
-    Error Message from the Deepgram Platform
-    """
-
-    description: str = ""
-    message: str = ""
-    type: str = ""
-    variant: Optional[str] = ""
-
-
-# Unhandled Message
-
-
-@dataclass
-class UnhandledResponse(BaseResponse):
-    """
-    Unhandled Message from the Deepgram Platform
-    """
-
-    type: str = ""
-    raw: str = ""
