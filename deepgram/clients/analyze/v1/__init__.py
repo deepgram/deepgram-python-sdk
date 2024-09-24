@@ -4,11 +4,43 @@
 
 from .client import AnalyzeClient
 from .async_client import AsyncAnalyzeClient
+
+# common
+from .options import (
+    UrlSource,
+    TextSource,
+    BufferSource,
+    StreamSource,
+    FileSource,
+)
+
+# analyze
+
 from .options import (
     AnalyzeOptions,
-    UrlSource,
-    FileSource,
     AnalyzeStreamSource,
     AnalyzeSource,
 )
-from .response import AsyncAnalyzeResponse, AnalyzeResponse, Sentiment
+
+from .response import (
+    AsyncAnalyzeResponse,
+    SyncAnalyzeResponse,
+    AnalyzeResponse,
+    # shared
+    Average,
+    Intent,
+    Intents,
+    IntentsInfo,
+    Segment,
+    SentimentInfo,
+    Sentiment,
+    Sentiments,
+    SummaryInfo,
+    Topic,
+    Topics,
+    TopicsInfo,
+    # unique
+    Metadata,
+    Results,
+    Summary,
+)

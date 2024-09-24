@@ -8,7 +8,7 @@ from ...listen.v1 import LiveOptions as LiveOptionsLatest
 from ...listen.v1 import (
     OpenResponse as OpenResponseLatest,
     LiveResultResponse as LiveResultResponseLatest,
-    MetadataResponse as MetadataResponseLatest,
+    ListenWSMetadataResponse as ListenWSMetadataResponseLatest,
     SpeechStartedResponse as SpeechStartedResponseLatest,
     UtteranceEndResponse as UtteranceEndResponseLatest,
     CloseResponse as CloseResponseLatest,
@@ -24,7 +24,8 @@ from ...listen.v1 import (
 LiveOptions = LiveOptionsLatest
 OpenResponse = OpenResponseLatest
 LiveResultResponse = LiveResultResponseLatest
-MetadataResponse = MetadataResponseLatest
+ListenWSMetadataResponse = ListenWSMetadataResponseLatest
+MetadataResponse = ListenWSMetadataResponseLatest
 SpeechStartedResponse = SpeechStartedResponseLatest
 UtteranceEndResponse = UtteranceEndResponseLatest
 CloseResponse = CloseResponseLatest

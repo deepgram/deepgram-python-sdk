@@ -9,11 +9,36 @@ from .common import (
     StreamSource,
     FileSource,
     UrlSource,
-    Sentiment,
 )
-from .listen import (
+from .common import BaseResponse
+
+# common (shared between analze and prerecorded)
+from .common import (
+    Average,
+    Intent,
+    Intents,
+    IntentsInfo,
+    Segment,
+    SentimentInfo,
+    Sentiment,
+    Sentiments,
+    SummaryInfo,
+    Topic,
+    Topics,
+    TopicsInfo,
+)
+
+# common (shared between listen rest and websocket)
+from .common import (
+    ModelInfo,
+    Alternative,
+    Hit,
+    Search,
+    Channel,
+    Word,
+)
+from .common import (
     OpenResponse,
-    MetadataResponse,
     CloseResponse,
     UnhandledResponse,
     ErrorResponse,
@@ -43,20 +68,62 @@ from .listen import ListenRESTClient, AsyncListenRESTClient
 
 ## input
 from .listen import (
-    ListenRESTOptions,
-    PrerecordedOptions,
-    PreRecordedStreamSource,
+    # common
     # UrlSource,
+    # BufferSource,
+    # StreamSource,
+    # TextSource,
     # FileSource,
+    # unique
+    PreRecordedStreamSource,
     PrerecordedSource,
     ListenRestSource,
 )
 
+from .listen import (
+    ListenRESTOptions,
+    PrerecordedOptions,
+)
+
 ## output
 from .listen import (
+    #### top level
     AsyncPrerecordedResponse,
     PrerecordedResponse,
     SyncPrerecordedResponse,
+    #### shared
+    # Average,
+    # Intent,
+    # Intents,
+    # IntentsInfo,
+    # Segment,
+    # SentimentInfo,
+    # Sentiment,
+    # Sentiments,
+    # SummaryInfo,
+    # Topic,
+    # Topics,
+    # TopicsInfo,
+    #### between rest and websocket
+    # ModelInfo,
+    # Alternative,
+    # Hit,
+    # Search,
+    # Channel,
+    # Word,
+    # unique
+    Entity,
+    ListenRESTMetadata,
+    Paragraph,
+    Paragraphs,
+    ListenRESTResults,
+    Sentence,
+    Summaries,
+    SummaryV1,
+    SummaryV2,
+    Translation,
+    Utterance,
+    Warning,
 )
 
 
@@ -71,14 +138,18 @@ from .listen import (
 
 ## output
 from .listen import (
-    # OpenResponse,
+    #### top level
     LiveResultResponse,
-    # MetadataResponse,
+    ListenWSMetadataResponse,
     SpeechStartedResponse,
     UtteranceEndResponse,
+    #### common websocket response
+    # OpenResponse,
     # CloseResponse,
     # ErrorResponse,
     # UnhandledResponse,
+    #### uniqye
+    ListenWSMetadata,
 )
 
 ## clients
@@ -88,34 +159,62 @@ from .listen import (
 )
 
 
-# read
+# read/analyze
 from .analyze import ReadClient, AsyncReadClient
 from .analyze import AnalyzeClient, AsyncAnalyzeClient
 from .analyze import AnalyzeOptions
 from .analyze import (
+    # common
+    # UrlSource,
+    # TextSource,
+    # BufferSource,
+    # StreamSource,
+    # FileSource
+    # unique
     AnalyzeStreamSource,
     AnalyzeSource,
 )
 from .analyze import (
+    #### top level
     AsyncAnalyzeResponse,
-    AnalyzeResponse,
     SyncAnalyzeResponse,
+    AnalyzeResponse,
+    #### shared between analyze and pre-recorded
+    # Average,
+    # Intent,
+    # Intents,
+    # IntentsInfo,
+    # Segment,
+    # SentimentInfo,
+    # Sentiment,
+    # Sentiments,
+    # SummaryInfo,
+    # Topic,
+    # Topics,
+    # TopicsInfo,
+    #### unique
+    AnalyzeMetadata,
+    AnalyzeResults,
+    AnalyzeSummary,
 )
 
 # text-to-speech
-## common
+## text-to-speech REST
 from .speak import (
-    SpeakOptions,
+    #### top level
     SpeakRESTOptions,
-    SpeakWSOptions,
+    SpeakOptions,
+    # common
+    # TextSource,
+    # BufferSource,
+    # StreamSource,
     # FileSource,
-    SpeakRestSource,
+    # unique
     SpeakSource,
+    SpeakRestSource,
+    SpeakRESTSource,
 )
 
-from .speak import SpeakWebSocketEvents, SpeakWebSocketMessage
-
-## text-to-speech REST
 from .speak import (
     SpeakClient,  # backward compat
     SpeakRESTClient,
@@ -128,20 +227,29 @@ from .speak import (
 )
 
 ## text-to-speech WebSocket
+from .speak import SpeakWebSocketEvents, SpeakWebSocketMessage
+
+from .speak import (
+    SpeakWSOptions,
+)
+
 from .speak import (
     SpeakWebSocketClient,
     AsyncSpeakWebSocketClient,
     SpeakWSClient,
     AsyncSpeakWSClient,
 )
+
 from .speak import (
-    # OpenResponse,
-    # MetadataResponse,
+    #### top level
+    SpeakWSMetadataResponse,
     FlushedResponse,
     ClearedResponse,
+    WarningResponse,
+    #### common websocket response
+    # OpenResponse,
     # CloseResponse,
     # UnhandledResponse,
-    WarningResponse,
     # ErrorResponse,
 )
 
@@ -157,23 +265,42 @@ from .manage import (
     UsageFieldsOptions,
 )
 from .manage import (
+    #### top level
     Message,
-    Project,
     ProjectsResponse,
+    ModelResponse,
+    ModelsResponse,
     MembersResponse,
-    Key,
     KeyResponse,
     KeysResponse,
     ScopesResponse,
     InvitesResponse,
     UsageRequest,
+    UsageResponse,
     UsageRequestsResponse,
     UsageSummaryResponse,
     UsageFieldsResponse,
-    Balance,
     BalancesResponse,
-    ModelsResponse,
-    ModelResponse,
+    #### shared
+    Project,
+    STTDetails,
+    TTSMetadata,
+    TTSDetails,
+    Member,
+    Key,
+    Invite,
+    Config,
+    STTUsageDetails,
+    Callback,
+    TokenDetail,
+    SpeechSegment,
+    TTSUsageDetails,
+    STTTokens,
+    TTSTokens,
+    UsageSummaryResults,
+    Resolution,
+    UsageModel,
+    Balance,
 )
 
 # selfhosted

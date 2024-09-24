@@ -5,39 +5,11 @@
 from typing import List, Optional, Dict, Any
 
 from dataclasses import dataclass, field
-from dataclasses_json import config as dataclass_config, DataClassJsonMixin
+from dataclasses_json import config as dataclass_config
 
-
-@dataclass
-class BaseResponse(DataClassJsonMixin):
-    """
-    BaseResponse class used to define the common methods and properties for all response classes.
-    """
-
-    def __getitem__(self, key):
-        _dict = self.to_dict()
-        return _dict[key]
-
-    def __setitem__(self, key, val):
-        self.__dict__[key] = val
-
-    def __str__(self) -> str:
-        return self.to_json(indent=4)
-
-    def eval(self, key: str) -> str:
-        """
-        This method is used to evaluate a key in the response object using a dot notation style method.
-        """
-        keys = key.split(".")
-        result: Dict[Any, Any] = self.to_dict()
-        for k in keys:
-            if isinstance(result, dict) and k in result:
-                result = result[k]
-            elif isinstance(result, list) and k.isdigit() and int(k) < len(result):
-                result = result[int(k)]
-            else:
-                return ""
-        return str(result)
+from ...common import (
+    BaseResponse,
+)
 
 
 # Result Message
@@ -86,9 +58,9 @@ class ProjectsResponse(BaseResponse):
 
 
 @dataclass
-class Stt(BaseResponse):  # pylint: disable=too-many-instance-attributes
+class STTDetails(BaseResponse):  # pylint: disable=too-many-instance-attributes
     """
-    STT class used to define the properties of the Speech-to-Text model response object.
+    STTDetails class used to define the properties of the Speech-to-Text model response object.
     """
 
     name: str = ""
@@ -109,9 +81,9 @@ class Stt(BaseResponse):  # pylint: disable=too-many-instance-attributes
 
 
 @dataclass
-class Metadata(BaseResponse):
+class TTSMetadata(BaseResponse):
     """
-    Metadata class used to define the properties for a given STT or TTS model.
+    TTSMetadata class used to define the properties for a given STT or TTS model.
     """
 
     accent: str = ""
@@ -124,9 +96,9 @@ class Metadata(BaseResponse):
 
 
 @dataclass
-class Tts(BaseResponse):
+class TTSDetails(BaseResponse):
     """
-    TTS class used to define the properties of the Text-to-Speech model response object.
+    TTSDetails class used to define the properties of the Text-to-Speech model response object.
     """
 
     name: str = ""
@@ -135,7 +107,7 @@ class Tts(BaseResponse):
     languages: List[str] = field(default_factory=list)
     version: str = ""
     uuid: str = ""
-    metadata: Optional[Metadata] = field(
+    metadata: Optional[TTSMetadata] = field(
         default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
 
@@ -143,7 +115,7 @@ class Tts(BaseResponse):
         _dict = self.to_dict()
         if "metadata" in _dict:
             _dict["metadata"] = [
-                Metadata.from_dict(metadata) for metadata in _dict["metadata"]
+                TTSMetadata.from_dict(metadata) for metadata in _dict["metadata"]
             ]
         return _dict[key]
 
@@ -163,7 +135,7 @@ class ModelResponse(BaseResponse):
     language: str = ""
     version: str = ""
     uuid: str = ""
-    metadata: Optional[Metadata] = field(
+    metadata: Optional[TTSMetadata] = field(
         default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
 
@@ -171,7 +143,7 @@ class ModelResponse(BaseResponse):
         _dict = self.to_dict()
         if "metadata" in _dict:
             _dict["metadata"] = [
-                Metadata.from_dict(metadata) for metadata in _dict["metadata"]
+                TTSMetadata.from_dict(metadata) for metadata in _dict["metadata"]
             ]
         return _dict[key]
 
@@ -182,15 +154,15 @@ class ModelsResponse(BaseResponse):
     ModelsResponse class used to obtain a list of models.
     """
 
-    stt: List[Stt] = field(default_factory=list)
-    tts: List[Tts] = field(default_factory=list)
+    stt: List[STTDetails] = field(default_factory=list)
+    tts: List[TTSDetails] = field(default_factory=list)
 
     def __getitem__(self, key):
         _dict = self.to_dict()
         if "stt" in _dict:
-            _dict["stt"] = [Stt.from_dict(stt) for stt in _dict["stt"]]
+            _dict["stt"] = [STTDetails.from_dict(stt) for stt in _dict["stt"]]
         if "tts" in _dict:
-            _dict["tts"] = [Tts.from_dict(tts) for tts in _dict["tts"]]
+            _dict["tts"] = [TTSDetails.from_dict(tts) for tts in _dict["tts"]]
         return _dict[key]
 
 
@@ -377,7 +349,7 @@ class Config(BaseResponse):  # pylint: disable=too-many-instance-attributes
 
 
 @dataclass
-class Details(BaseResponse):  # pylint: disable=too-many-instance-attributes
+class STTUsageDetails(BaseResponse):  # pylint: disable=too-many-instance-attributes
     """
     Details object
     """
@@ -452,7 +424,7 @@ class SpeechSegment(BaseResponse):
 
 
 @dataclass
-class TTSDetails(BaseResponse):
+class TTSUsageDetails(BaseResponse):
     """
     TTS Details object
     """
@@ -474,12 +446,12 @@ class TTSDetails(BaseResponse):
 
 
 @dataclass
-class Response(BaseResponse):
+class UsageResponse(BaseResponse):
     """
-    Response object
+    UsageResponse object
     """
 
-    details: Optional[Details] = field(
+    details: Optional[STTUsageDetails] = field(
         default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
     code: int = 0
@@ -487,7 +459,7 @@ class Response(BaseResponse):
     message: Optional[str] = field(
         default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
-    tts_details: Optional[TTSDetails] = field(
+    tts_details: Optional[TTSUsageDetails] = field(
         default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
     token_details: List[TokenDetail] = field(
@@ -497,9 +469,9 @@ class Response(BaseResponse):
     def __getitem__(self, key):
         _dict = self.to_dict()
         if "details" in _dict:
-            _dict["details"] = Details.from_dict(_dict["details"])
+            _dict["details"] = STTUsageDetails.from_dict(_dict["details"])
         if "tts_details" in _dict:
-            _dict["tts_details"] = TTSDetails.from_dict(_dict["tts_details"])
+            _dict["tts_details"] = TTSUsageDetails.from_dict(_dict["tts_details"])
         if "token_details" in _dict:
             _dict["token_details"] = [
                 TokenDetail.from_dict(token_details)
@@ -514,7 +486,7 @@ class UsageRequest(BaseResponse):  # pylint: disable=too-many-instance-attribute
     Usage Request object
     """
 
-    response: Response
+    response: UsageResponse
     project_uuid: str = ""
     request_id: str = ""
     created: str = ""
@@ -530,7 +502,7 @@ class UsageRequest(BaseResponse):  # pylint: disable=too-many-instance-attribute
     def __getitem__(self, key):
         _dict = self.to_dict()
         if "response" in _dict:
-            _dict["response"] = Response.from_dict(_dict["response"])
+            _dict["response"] = UsageResponse.from_dict(_dict["response"])
         if "callback" in _dict:
             _dict["callback"] = Callback.from_dict(_dict["callback"])
         return _dict[key]
@@ -556,9 +528,9 @@ class UsageRequestsResponse(BaseResponse):
 
 
 @dataclass
-class Tokens(BaseResponse):
+class STTTokens(BaseResponse):
     """
-    Tokens object
+    STTTokens object
     """
 
     tokens_in: int = 0
@@ -566,9 +538,9 @@ class Tokens(BaseResponse):
 
 
 @dataclass
-class TTS(BaseResponse):
+class TTSTokens(BaseResponse):
     """
-    TTS object
+    TTSTokens object
     """
 
     characters: int = 0
@@ -576,13 +548,13 @@ class TTS(BaseResponse):
 
 
 @dataclass
-class Results(BaseResponse):
+class UsageSummaryResults(BaseResponse):
     """
     Results object
     """
 
-    tokens: Tokens
-    tts: TTS
+    tokens: STTTokens
+    tts: TTSTokens
     start: str = ""
     end: str = ""
     hours: int = 0
@@ -592,9 +564,9 @@ class Results(BaseResponse):
     def __getitem__(self, key):
         _dict = self.to_dict()
         if "tokens" in _dict:
-            _dict["tokens"] = Tokens.from_dict(_dict["tokens"])
+            _dict["tokens"] = STTTokens.from_dict(_dict["tokens"])
         if "tts" in _dict:
-            _dict["tts"] = TTS.from_dict(_dict["tts"])
+            _dict["tts"] = TTSTokens.from_dict(_dict["tts"])
         return _dict[key]
 
 
@@ -617,7 +589,7 @@ class UsageSummaryResponse(BaseResponse):
     resolution: Resolution
     start: str = ""
     end: str = ""
-    results: List[Results] = field(default_factory=list)
+    results: List[UsageSummaryResults] = field(default_factory=list)
 
     def __getitem__(self, key):
         _dict = self.to_dict()
@@ -625,7 +597,7 @@ class UsageSummaryResponse(BaseResponse):
             _dict["resolution"] = Resolution.from_dict(_dict["resolution"])
         if "results" in _dict:
             _dict["results"] = [
-                Results.from_dict(results) for results in _dict["results"]
+                UsageSummaryResults.from_dict(results) for results in _dict["results"]
             ]
         return _dict[key]
 

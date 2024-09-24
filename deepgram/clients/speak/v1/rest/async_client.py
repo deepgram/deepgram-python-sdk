@@ -38,6 +38,8 @@ class AsyncSpeakRESTClient(AbstractAsyncRestClient):
         self._config = config
         super().__init__(config)
 
+    # pylint: disable=too-many-positional-arguments
+
     async def stream_raw(
         self,
         source: FileSource,
@@ -303,3 +305,5 @@ class AsyncSpeakRESTClient(AbstractAsyncRestClient):
 
         self._logger.debug("AsyncSpeakClient.save LEAVE")
         return res
+
+    # pylint: enable=too-many-positional-arguments

@@ -10,7 +10,8 @@ from .v1 import LiveOptions
 from .v1 import (
     OpenResponse,
     LiveResultResponse,
-    MetadataResponse,
+    ListenWSMetadataResponse,
+    MetadataResponse,  # backwards compat
     SpeechStartedResponse,
     UtteranceEndResponse,
     CloseResponse,

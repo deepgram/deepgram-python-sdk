@@ -71,6 +71,8 @@ class AsyncManageClient(
         self._endpoint = "v1/projects"
         super().__init__(config)
 
+    # pylint: disable=too-many-positional-arguments
+
     # projects
     async def list_projects(
         self,
@@ -1161,3 +1163,5 @@ class AsyncManageClient(
         self._logger.notice("get_balance succeeded")
         self._logger.debug("ManageClient.get_balance LEAVE")
         return res
+
+    # pylint: enable=too-many-positional-arguments

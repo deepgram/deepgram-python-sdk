@@ -5,13 +5,15 @@
 from .client import SpeakWebSocketClient, SpeakWSClient
 from .async_client import AsyncSpeakWebSocketClient, AsyncSpeakWSClient
 from .response import (
-    OpenResponse,
+    #### top level
     MetadataResponse,
     FlushedResponse,
     ClearedResponse,
+    WarningResponse,
+    #### shared
+    OpenResponse,
     CloseResponse,
     UnhandledResponse,
-    WarningResponse,
     ErrorResponse,
 )
 from .options import SpeakWSOptions

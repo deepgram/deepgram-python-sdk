@@ -39,6 +39,8 @@ class AbstractAsyncRestClient:
             raise DeepgramError("Config are required")
         self._config = config
 
+    # pylint: disable=too-many-positional-arguments
+
     async def get(
         self,
         url: str,
@@ -372,3 +374,4 @@ class AbstractAsyncRestClient:
             raise
 
     # pylint: enable-msg=too-many-locals,too-many-branches
+    # pylint: enable=too-many-positional-arguments

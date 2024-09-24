@@ -39,6 +39,8 @@ class AbstractSyncRestClient:
             raise DeepgramError("Config are required")
         self._config = config
 
+    # pylint: disable=too-many-positional-arguments
+
     def get(
         self,
         url: str,
@@ -363,4 +365,5 @@ class AbstractSyncRestClient:
         except Exception:  # pylint: disable-msg=try-except-raise
             raise
 
-    # pylint: disable-msg=too-many-branches,too-many-locals
+    # pylint: enable-msg=too-many-branches,too-many-locals
+    # pylint: enable=too-many-positional-arguments

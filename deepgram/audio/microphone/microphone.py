@@ -47,7 +47,7 @@ class Microphone:  # pylint: disable=too-many-instance-attributes
         chunk: int = CHUNK,
         channels: int = CHANNELS,
         input_device_index: Optional[int] = None,
-    ):
+    ):  # pylint: disable=too-many-positional-arguments
         # dynamic import of pyaudio as not to force the requirements on the SDK (and users)
         import pyaudio  # pylint: disable=import-outside-toplevel
 

@@ -37,6 +37,8 @@ class AsyncAnalyzeClient(AbstractAsyncRestClient):
         self._config = config
         super().__init__(config)
 
+    # pylint: disable=too-many-positional-arguments
+
     async def analyze_url(
         self,
         source: UrlSource,
@@ -340,3 +342,5 @@ class AsyncAnalyzeClient(AbstractAsyncRestClient):
         self._logger.notice("analyze_text_callback succeeded")
         self._logger.debug("AnalyzeClient.analyze_text_callback LEAVE")
         return res
+
+    # pylint: enable=too-many-positional-arguments

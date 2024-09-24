@@ -37,6 +37,8 @@ class SpeakRESTClient(AbstractSyncRestClient):
         self._config = config
         super().__init__(config)
 
+    # pylint: disable=too-many-positional-arguments
+
     def stream_raw(
         self,
         source: FileSource,
@@ -303,3 +305,5 @@ class SpeakRESTClient(AbstractSyncRestClient):
 
         self._logger.debug("SpeakClient.save LEAVE")
         return res
+
+    # pylint: enable=too-many-positional-arguments
