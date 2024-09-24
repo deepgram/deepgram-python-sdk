@@ -132,7 +132,7 @@
 </span><span id="L-55"><a href="#L-55"><span class="linenos"> 55</span></a>        <span class="n">chunk</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">CHUNK</span><span class="p">,</span>
 </span><span id="L-56"><a href="#L-56"><span class="linenos"> 56</span></a>        <span class="n">channels</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">CHANNELS</span><span class="p">,</span>
 </span><span id="L-57"><a href="#L-57"><span class="linenos"> 57</span></a>        <span class="n">output_device_index</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-</span><span id="L-58"><a href="#L-58"><span class="linenos"> 58</span></a>    <span class="p">):</span>
+</span><span id="L-58"><a href="#L-58"><span class="linenos"> 58</span></a>    <span class="p">):</span>  <span class="c1"># pylint: disable=too-many-positional-arguments</span>
 </span><span id="L-59"><a href="#L-59"><span class="linenos"> 59</span></a>        <span class="c1"># dynamic import of pyaudio as not to force the requirements on the SDK (and users)</span>
 </span><span id="L-60"><a href="#L-60"><span class="linenos"> 60</span></a>        <span class="kn">import</span> <span class="nn">pyaudio</span>  <span class="c1"># pylint: disable=import-outside-toplevel</span>
 </span><span id="L-61"><a href="#L-61"><span class="linenos"> 61</span></a>
@@ -435,7 +435,7 @@
 </span><span id="Speaker-56"><a href="#Speaker-56"><span class="linenos"> 56</span></a>        <span class="n">chunk</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">CHUNK</span><span class="p">,</span>
 </span><span id="Speaker-57"><a href="#Speaker-57"><span class="linenos"> 57</span></a>        <span class="n">channels</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">CHANNELS</span><span class="p">,</span>
 </span><span id="Speaker-58"><a href="#Speaker-58"><span class="linenos"> 58</span></a>        <span class="n">output_device_index</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-</span><span id="Speaker-59"><a href="#Speaker-59"><span class="linenos"> 59</span></a>    <span class="p">):</span>
+</span><span id="Speaker-59"><a href="#Speaker-59"><span class="linenos"> 59</span></a>    <span class="p">):</span>  <span class="c1"># pylint: disable=too-many-positional-arguments</span>
 </span><span id="Speaker-60"><a href="#Speaker-60"><span class="linenos"> 60</span></a>        <span class="c1"># dynamic import of pyaudio as not to force the requirements on the SDK (and users)</span>
 </span><span id="Speaker-61"><a href="#Speaker-61"><span class="linenos"> 61</span></a>        <span class="kn">import</span> <span class="nn">pyaudio</span>  <span class="c1"># pylint: disable=import-outside-toplevel</span>
 </span><span id="Speaker-62"><a href="#Speaker-62"><span class="linenos"> 62</span></a>
@@ -710,7 +710,7 @@
 </span><span id="Speaker.__init__-56"><a href="#Speaker.__init__-56"><span class="linenos">56</span></a>        <span class="n">chunk</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">CHUNK</span><span class="p">,</span>
 </span><span id="Speaker.__init__-57"><a href="#Speaker.__init__-57"><span class="linenos">57</span></a>        <span class="n">channels</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">CHANNELS</span><span class="p">,</span>
 </span><span id="Speaker.__init__-58"><a href="#Speaker.__init__-58"><span class="linenos">58</span></a>        <span class="n">output_device_index</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-</span><span id="Speaker.__init__-59"><a href="#Speaker.__init__-59"><span class="linenos">59</span></a>    <span class="p">):</span>
+</span><span id="Speaker.__init__-59"><a href="#Speaker.__init__-59"><span class="linenos">59</span></a>    <span class="p">):</span>  <span class="c1"># pylint: disable=too-many-positional-arguments</span>
 </span><span id="Speaker.__init__-60"><a href="#Speaker.__init__-60"><span class="linenos">60</span></a>        <span class="c1"># dynamic import of pyaudio as not to force the requirements on the SDK (and users)</span>
 </span><span id="Speaker.__init__-61"><a href="#Speaker.__init__-61"><span class="linenos">61</span></a>        <span class="kn">import</span> <span class="nn">pyaudio</span>  <span class="c1"># pylint: disable=import-outside-toplevel</span>
 </span><span id="Speaker.__init__-62"><a href="#Speaker.__init__-62"><span class="linenos">62</span></a>
