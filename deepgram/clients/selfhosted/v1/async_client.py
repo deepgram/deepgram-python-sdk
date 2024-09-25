@@ -9,7 +9,7 @@ import httpx
 
 from ....utils import verboselogs
 from ....options import DeepgramClientOptions
-from ...abstract_async_client import AbstractAsyncRestClient
+from ...common import AbstractAsyncRestClient
 
 
 class AsyncSelfHostedClient(AbstractAsyncRestClient):

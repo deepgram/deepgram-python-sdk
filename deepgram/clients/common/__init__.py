@@ -2,7 +2,17 @@
 # Use of this source code is governed by a MIT license that can be found in the LICENSE file.
 # SPDX-License-Identifier: MIT
 
-from .v1 import DeepgramError, DeepgramTypeError
+from .v1 import (
+    DeepgramError,
+    DeepgramTypeError,
+    DeepgramApiError,
+    DeepgramUnknownApiError,
+)
+
+from .v1 import AbstractAsyncRestClient
+from .v1 import AbstractSyncRestClient
+from .v1 import AbstractAsyncWebSocketClient
+from .v1 import AbstractSyncWebSocketClient
 
 from .v1 import (
     TextSource as TextSourceLatest,

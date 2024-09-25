@@ -9,7 +9,7 @@ import httpx
 
 from ....utils import verboselogs
 from ....options import DeepgramClientOptions
-from ...abstract_sync_client import AbstractSyncRestClient
+from ...common import AbstractSyncRestClient
 
 from .response import (
     Message,
