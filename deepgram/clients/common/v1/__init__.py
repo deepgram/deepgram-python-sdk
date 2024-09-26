@@ -17,11 +17,8 @@ from .options import (
 from .shared_response import (
     BaseResponse,
     ModelInfo,
-    Word,
-    Alternative,
     Hit,
     Search,
-    Channel,
 )
 
 from .rest_response import (

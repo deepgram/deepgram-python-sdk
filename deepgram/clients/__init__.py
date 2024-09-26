@@ -31,11 +31,8 @@ from .common import (
 # common (shared between listen rest and websocket)
 from .common import (
     ModelInfo,
-    Alternative,
     Hit,
     Search,
-    Channel,
-    Word,
 )
 from .common import (
     OpenResponse,
@@ -124,6 +121,9 @@ from .listen import (
     Translation,
     Utterance,
     Warning,
+    ListenRESTAlternative,
+    ListenRESTChannel,
+    ListenRESTWord,
 )
 
 
@@ -150,6 +150,9 @@ from .listen import (
     # UnhandledResponse,
     #### uniqye
     ListenWSMetadata,
+    ListenWSWord,
+    ListenWSAlternative,
+    ListenWSChannel,
 )
 
 ## clients

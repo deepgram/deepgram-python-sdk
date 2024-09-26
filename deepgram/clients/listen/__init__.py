@@ -52,11 +52,8 @@ from .client import (
     TopicsInfo,
     # between rest and websocket
     ModelInfo,
-    Alternative,
     Hit,
     Search,
-    Channel,
-    Word,
     # unique
     Entity,
     ListenRESTMetadata,
@@ -70,6 +67,9 @@ from .client import (
     Translation,
     Utterance,
     Warning,
+    ListenRESTAlternative,
+    ListenRESTChannel,
+    ListenRESTWord,
 )
 
 
@@ -94,6 +94,9 @@ from .client import (
     UnhandledResponse,
     # unique
     ListenWSMetadata,
+    ListenWSWord,
+    ListenWSAlternative,
+    ListenWSChannel,
 )
 
 # clients

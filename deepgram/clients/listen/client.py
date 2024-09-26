@@ -41,11 +41,8 @@ from .v1 import (
     TopicsInfo as TopicsInfoLatest,
     # between rest and websocket
     ModelInfo as ModelInfoLatest,
-    Alternative as AlternativeLatest,
     Hit as HitLatest,
     Search as SearchLatest,
-    Channel as ChannelLatest,
-    Word as WordLatest,
     # unique
     ListenRESTMetadata as ListenRESTMetadataLatest,
     Entity as EntityLatest,
@@ -59,6 +56,9 @@ from .v1 import (
     Translation as TranslationLatest,
     Utterance as UtteranceLatest,
     Warning as WarningLatest,
+    ListenRESTAlternative as ListenRESTAlternativeLatest,
+    ListenRESTChannel as ListenRESTChannelLatest,
+    ListenRESTWord as ListenRESTWordLatest,
 )
 
 # websocket
@@ -80,6 +80,9 @@ from .v1 import (
     ErrorResponse as ErrorResponseLatest,
     UnhandledResponse as UnhandledResponseLatest,
     ListenWSMetadata as ListenWSMetadataLatest,
+    ListenWSAlternative as ListenWSAlternativeLatest,
+    ListenWSChannel as ListenWSChannelLatest,
+    ListenWSWord as ListenWSWordLatest,
 )
 
 # The vX/client.py points to the current supported version in the SDK.
@@ -100,12 +103,9 @@ Topics = TopicsLatest
 TopicsInfo = TopicsInfoLatest
 
 # between rest and websocket
-Alternative = AlternativeLatest
-Channel = ChannelLatest
 Hit = HitLatest
 ModelInfo = ModelInfoLatest
 Search = SearchLatest
-Word = WordLatest
 
 # websocket common
 OpenResponse = OpenResponseLatest
@@ -152,6 +152,9 @@ SummaryV2 = SummaryV2Latest
 Translation = TranslationLatest
 Utterance = UtteranceLatest
 Warning = WarningLatest
+ListenRESTAlternative = ListenRESTAlternativeLatest
+ListenRESTChannel = ListenRESTChannelLatest
+ListenRESTWord = ListenRESTWordLatest
 
 # websocket
 ## input
@@ -166,7 +169,9 @@ UtteranceEndResponse = UtteranceEndResponseLatest
 
 ## unique
 ListenWSMetadata = ListenWSMetadataLatest
-
+ListenWSAlternative = ListenWSAlternativeLatest
+ListenWSChannel = ListenWSChannelLatest
+ListenWSWord = ListenWSWordLatest
 
 # clients
 ListenRESTClient = ListenRESTClientLatest

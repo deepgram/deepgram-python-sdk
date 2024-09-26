@@ -19,12 +19,77 @@ from ....common import (
 # between rest and websocket
 from ....common import (
     ModelInfo,
-    Alternative,
     Hit,
     Search,
-    Channel,
-    Word,
 )
+
+
+# unique
+
+
+@dataclass
+class ListenWSWord(BaseResponse):
+    """
+    Word object
+    """
+
+    word: str = ""
+    start: float = 0
+    end: float = 0
+    confidence: float = 0
+    punctuated_word: Optional[str] = field(
+        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
+    )
+    speaker: Optional[int] = field(
+        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
+    )
+    language: Optional[str] = field(
+        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
+    )
+
+
+@dataclass
+class ListenWSAlternative(BaseResponse):
+    """
+    Alternative object
+    """
+
+    transcript: str = ""
+    confidence: float = 0
+    words: List[ListenWSWord] = field(default_factory=list)
+    languages: Optional[List[str]] = field(
+        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
+    )
+
+    def __getitem__(self, key):
+        _dict = self.to_dict()
+        if "words" in _dict:
+            _dict["words"] = [ListenWSWord.from_dict(words) for words in _dict["words"]]
+        return _dict[key]
+
+
+@dataclass
+class ListenWSChannel(BaseResponse):
+    """
+    Channel object
+    """
+
+    search: Optional[List[Search]] = field(
+        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
+    )
+    alternatives: List[ListenWSAlternative] = field(default_factory=list)
+
+    def __getitem__(self, key):
+        _dict = self.to_dict()
+        if "search" in _dict:
+            _dict["search"] = [Search.from_dict(search) for search in _dict["search"]]
+        if "alternatives" in _dict:
+            _dict["alternatives"] = [
+                ListenWSAlternative.from_dict(alternatives)
+                for alternatives in _dict["alternatives"]
+            ]
+        return _dict[key]
+
 
 # unique
 
@@ -62,7 +127,7 @@ class LiveResultResponse(BaseResponse):  # pylint: disable=too-many-instance-att
     Result Message from the Deepgram Platform
     """
 
-    channel: Channel
+    channel: ListenWSChannel
     metadata: Metadata
     type: str = ""
     channel_index: List[int] = field(default_factory=list)
@@ -78,7 +143,7 @@ class LiveResultResponse(BaseResponse):  # pylint: disable=too-many-instance-att
         _dict = self.to_dict()
         if "channel" in _dict:
             _dict["channel"] = [
-                Channel.from_dict(channel) for channel in _dict["channel"]
+                ListenWSChannel.from_dict(channel) for channel in _dict["channel"]
             ]
         if "metadata" in _dict:
             _dict["metadata"] = [
