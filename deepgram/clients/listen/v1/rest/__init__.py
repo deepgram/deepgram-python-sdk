@@ -38,11 +38,8 @@ from .response import (
     TopicsInfo,
     # between rest and websocket
     ModelInfo,
-    Alternative,
     Hit,
     Search,
-    Channel,
-    Word,
     # unique
     Entity,
     Metadata,
@@ -56,4 +53,7 @@ from .response import (
     Translation,
     Utterance,
     Warning,
+    ListenRESTAlternative,
+    ListenRESTChannel,
+    ListenRESTWord,
 )

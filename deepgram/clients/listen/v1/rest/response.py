@@ -27,11 +27,8 @@ from ....common import (
 # between rest and websocket
 from ....common import (
     ModelInfo,
-    Alternative,
-    Channel,
     Hit,
     Search,
-    Word,
 )
 
 # Async Prerecorded Response Types:
@@ -142,11 +139,24 @@ Summary = SummaryV2
 
 
 @dataclass
-class ListenRestWord(Word):  # pylint: disable=too-many-instance-attributes
+class ListenRESTWord(BaseResponse):  # pylint: disable=too-many-instance-attributes
     """
     The word information for the response.
     """
 
+    word: str = ""
+    start: float = 0
+    end: float = 0
+    confidence: float = 0
+    punctuated_word: Optional[str] = field(
+        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
+    )
+    speaker: Optional[int] = field(
+        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
+    )
+    language: Optional[str] = field(
+        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
+    )
     speaker_confidence: Optional[float] = field(
         default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
@@ -270,7 +280,7 @@ class Utterance(BaseResponse):  # pylint: disable=too-many-instance-attributes
     confidence: float = 0
     channel: int = 0
     transcript: str = ""
-    words: List[Word] = field(default_factory=list)
+    words: List[ListenRESTWord] = field(default_factory=list)
     speaker: Optional[int] = field(
         default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
@@ -285,7 +295,9 @@ class Utterance(BaseResponse):  # pylint: disable=too-many-instance-attributes
     def __getitem__(self, key):
         _dict = self.to_dict()
         if "words" in _dict:
-            _dict["words"] = [Word.from_dict(words) for words in _dict["words"]]
+            _dict["words"] = [
+                ListenRESTWord.from_dict(words) for words in _dict["words"]
+            ]
         if "sentiment" in _dict:
             _dict["sentiment"] = Sentiment.from_dict(_dict["sentiment"])
         return _dict[key]
@@ -306,12 +318,15 @@ class Entity(BaseResponse):
 
 @dataclass
 class ListenRESTAlternative(
-    Alternative
+    BaseResponse
 ):  # pylint: disable=too-many-instance-attributes
     """
     The alternative information for the response.
     """
 
+    transcript: str = ""
+    confidence: float = 0
+    words: List[ListenRESTWord] = field(default_factory=list)
     summaries: Optional[List[SummaryV1]] = field(
         default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
@@ -324,11 +339,16 @@ class ListenRESTAlternative(
     translations: Optional[List[Translation]] = field(
         default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
+    languages: Optional[List[str]] = field(
+        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
+    )
 
     def __getitem__(self, key):
         _dict = self.to_dict()
         if "words" in _dict:
-            _dict["words"] = [Word.from_dict(words) for words in _dict["words"]]
+            _dict["words"] = [
+                ListenRESTWord.from_dict(words) for words in _dict["words"]
+            ]
         if "summaries" in _dict:
             _dict["summaries"] = [
                 SummaryV1.from_dict(summaries) for summaries in _dict["summaries"]
@@ -348,7 +368,7 @@ class ListenRESTAlternative(
 
 
 @dataclass
-class ListenRESTChannel(Channel):
+class ListenRESTChannel(BaseResponse):
     """
     The channel information for the response.
     """
@@ -356,7 +376,7 @@ class ListenRESTChannel(Channel):
     search: Optional[List[Search]] = field(
         default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
-    alternatives: List[Alternative] = field(default_factory=list)
+    alternatives: List[ListenRESTAlternative] = field(default_factory=list)
     detected_language: Optional[str] = field(
         default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
@@ -370,7 +390,7 @@ class ListenRESTChannel(Channel):
             _dict["search"] = [Search.from_dict(search) for search in _dict["search"]]
         if "alternatives" in _dict:
             _dict["alternatives"] = [
-                Alternative.from_dict(alternatives)
+                ListenRESTAlternative.from_dict(alternatives)
                 for alternatives in _dict["alternatives"]
             ]
         return _dict[key]
@@ -382,7 +402,7 @@ class Results(BaseResponse):
     The results information for the response.
     """
 
-    channels: Optional[List[Channel]] = field(
+    channels: Optional[List[ListenRESTChannel]] = field(
         default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
     utterances: Optional[List[Utterance]] = field(
@@ -405,7 +425,7 @@ class Results(BaseResponse):
         _dict = self.to_dict()
         if "channels" in _dict:
             _dict["channels"] = [
-                Channel.from_dict(channels) for channels in _dict["channels"]
+                ListenRESTChannel.from_dict(channels) for channels in _dict["channels"]
             ]
         if "utterances" in _dict:
             _dict["utterances"] = [

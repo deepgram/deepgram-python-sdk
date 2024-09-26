@@ -16,11 +16,8 @@ from .v1 import (
 from .v1 import (
     BaseResponse as BaseResponseLatest,
     ModelInfo as ModelInfoLatest,
-    Word as WordLatest,
-    Alternative as AlternativeLatest,
     Hit as HitLatest,
     Search as SearchLatest,
-    Channel as ChannelLatest,
 )
 
 # rest
@@ -56,11 +53,8 @@ FileSource = FileSourceLatest
 
 BaseResponse = BaseResponseLatest
 ModelInfo = ModelInfoLatest
-Word = WordLatest
-Alternative = AlternativeLatest
 Hit = HitLatest
 Search = SearchLatest
-Channel = ChannelLatest
 
 Average = AverageLatest
 Intent = IntentLatest

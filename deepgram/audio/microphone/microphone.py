@@ -33,7 +33,7 @@ class Microphone:  # pylint: disable=too-many-instance-attributes
     _is_muted: bool
 
     _asyncio_loop: asyncio.AbstractEventLoop
-    _asyncio_thread: threading.Thread
+    _asyncio_thread: Optional[threading.Thread] = None
     _exit: threading.Event
 
     _push_callback_org: Optional[Callable] = None
@@ -142,6 +142,7 @@ class Microphone:  # pylint: disable=too-many-instance-attributes
             )
         else:
             self._logger.verbose("regular threaded callback")
+            self._asyncio_thread = None
             self._push_callback = self._push_callback_org
 
         self._stream = self._audio.open(
@@ -267,7 +268,7 @@ class Microphone:  # pylint: disable=too-many-instance-attributes
             self._logger.notice("stopping asyncio loop...")
             self._asyncio_loop.call_soon_threadsafe(self._asyncio_loop.stop)
             self._asyncio_thread.join()
-            self._asyncio_thread = None  # type: ignore
+            self._asyncio_thread = None
             self._logger.notice("_asyncio_thread joined")
 
         self._logger.notice("finish succeeded")

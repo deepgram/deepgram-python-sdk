@@ -37,11 +37,8 @@ from .clients import (
 )
 from .clients import (
     ModelInfo,
-    Alternative,
     Hit,
     Search,
-    Channel,
-    Word,
 )
 from .clients import (
     OpenResponse,
@@ -86,6 +83,9 @@ from .clients import (
     # UnhandledResponse,
     #### unique
     ListenWSMetadata,
+    ListenWSAlternative,
+    ListenWSChannel,
+    ListenWSWord,
 )
 
 # prerecorded
@@ -154,6 +154,9 @@ from .clients import (
     Translation,
     Utterance,
     Warning,
+    ListenRESTAlternative,
+    ListenRESTChannel,
+    ListenRESTWord,
 )
 
 # read

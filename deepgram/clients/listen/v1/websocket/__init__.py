@@ -21,11 +21,11 @@ from .response import (
     UnhandledResponse,
     #### between rest and websocket
     ModelInfo,
-    Alternative,
     Hit,
     Search,
-    Channel,
-    Word,
     #### unique
     Metadata,
+    ListenWSWord,
+    ListenWSAlternative,
+    ListenWSChannel,
 )

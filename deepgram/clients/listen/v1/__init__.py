@@ -31,11 +31,8 @@ from ...common import (
 # between rest and websocket
 from ...common import (
     ModelInfo,
-    Alternative,
     Hit,
     Search,
-    Channel,
-    Word,
 )
 
 # common websocket
@@ -99,6 +96,9 @@ from .rest import (
     Translation,
     Utterance,
     Warning,
+    ListenRESTAlternative,
+    ListenRESTChannel,
+    ListenRESTWord,
 )
 
 # websocket
@@ -125,4 +125,7 @@ from .websocket import (
     # Word,
     #### unique
     Metadata as ListenWSMetadata,
+    ListenWSWord,
+    ListenWSAlternative,
+    ListenWSChannel,
 )

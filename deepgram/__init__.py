@@ -61,11 +61,8 @@ from .client import (
 )
 from .client import (
     ModelInfo,
-    Alternative,
     Hit,
     Search,
-    Channel,
-    Word,
 )
 from .client import (
     OpenResponse,
@@ -92,6 +89,9 @@ from .client import (
     # ErrorResponse,
     #### unique
     ListenWSMetadata,
+    ListenWSAlternative,
+    ListenWSChannel,
+    ListenWSWord,
 )
 
 # prerecorded
@@ -121,6 +121,8 @@ from .client import (
     SyncPrerecordedResponse,
     #### shared
     # Average,
+    # Alternative,
+    # Channel,
     # Intent,
     # Intents,
     # IntentsInfo,
@@ -132,9 +134,8 @@ from .client import (
     # Topic,
     # Topics,
     # TopicsInfo,
+    # Word,
     #### unique
-    Alternative,
-    Channel,
     Entity,
     Hit,
     ListenRESTMetadata,
@@ -150,7 +151,9 @@ from .client import (
     Translation,
     Utterance,
     Warning,
-    Word,
+    ListenRESTAlternative,
+    ListenRESTChannel,
+    ListenRESTWord,
 )
 
 # read
