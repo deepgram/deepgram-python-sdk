@@ -40,8 +40,13 @@ from .common import (
     UnhandledResponse,
     ErrorResponse,
 )
-from .common import DeepgramError, DeepgramTypeError
-from .errors import DeepgramModuleError, DeepgramApiError, DeepgramUnknownApiError
+from .common import (
+    DeepgramError,
+    DeepgramTypeError,
+    DeepgramApiError,
+    DeepgramUnknownApiError,
+)
+from .errors import DeepgramModuleError
 
 from .listen_router import Listen
 from .read_router import Read

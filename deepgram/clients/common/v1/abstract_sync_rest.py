@@ -9,9 +9,8 @@ from typing import Dict, Optional, List, Union
 import httpx
 
 from .helpers import append_query_params
-from ..options import DeepgramClientOptions
-from .errors import DeepgramApiError, DeepgramUnknownApiError
-from .common.v1.errors import DeepgramError
+from ....options import DeepgramClientOptions
+from .errors import DeepgramError, DeepgramApiError, DeepgramUnknownApiError
 
 
 class AbstractSyncRestClient:

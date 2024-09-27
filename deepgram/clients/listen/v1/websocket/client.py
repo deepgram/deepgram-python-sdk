@@ -4,18 +4,15 @@
 import json
 import time
 import logging
-from typing import Dict, Union, Optional, cast, Any
+from typing import Dict, Union, Optional, cast, Any, Callable
 from datetime import datetime
 import threading
-
-from websockets.sync.client import connect, ClientConnection
-import websockets
 
 from .....utils import verboselogs
 from .....options import DeepgramClientOptions
 from ...enums import LiveTranscriptionEvents
-from ..helpers import convert_to_websocket_url, append_query_params
-from ....common.v1.errors import DeepgramError
+from ....common import AbstractSyncWebSocketClient
+from ....common import DeepgramError
 
 from .response import (
     OpenResponse,
@@ -27,7 +24,7 @@ from .response import (
     ErrorResponse,
     UnhandledResponse,
 )
-from .options import LiveOptions, ListenWebSocketOptions
+from .options import ListenWebSocketOptions
 
 ONE_SECOND = 1
 HALF_SECOND = 0.5
@@ -35,7 +32,9 @@ DEEPGRAM_INTERVAL = 5
 PING_INTERVAL = 20
 
 
-class ListenWebSocketClient:  # pylint: disable=too-many-instance-attributes
+class ListenWebSocketClient(
+    AbstractSyncWebSocketClient
+):  # pylint: disable=too-many-instance-attributes
     """
     Client for interacting with Deepgram's live transcription services over WebSockets.
 
@@ -48,15 +47,10 @@ class ListenWebSocketClient:  # pylint: disable=too-many-instance-attributes
     _logger: verboselogs.VerboseLogger
     _config: DeepgramClientOptions
     _endpoint: str
-    _websocket_url: str
 
-    _socket: ClientConnection
-    _exit_event: threading.Event
-    _lock_send: threading.Lock
     _lock_flush: threading.Lock
     _event_handlers: Dict[LiveTranscriptionEvents, list]
 
-    _listen_thread: Union[threading.Thread, None]
     _keep_alive_thread: Union[threading.Thread, None]
     _flush_thread: Union[threading.Thread, None]
     _last_datagram: Optional[datetime] = None
@@ -68,7 +62,7 @@ class ListenWebSocketClient:  # pylint: disable=too-many-instance-attributes
 
     def __init__(self, config: DeepgramClientOptions):
         if config is None:
-            raise DeepgramError("Config are required")
+            raise DeepgramError("Config is required")
 
         self._logger = verboselogs.VerboseLogger(__name__)
         self._logger.addHandler(logging.StreamHandler())
@@ -76,14 +70,9 @@ class ListenWebSocketClient:  # pylint: disable=too-many-instance-attributes
 
         self._config = config
         self._endpoint = "v1/listen"
-        self._lock_send = threading.Lock()
 
         self._flush_thread = None
         self._keep_alive_thread = None
-        self._listen_thread = None
-
-        # exit
-        self._exit_event = threading.Event()
 
         # auto flush
         self._last_datagram = None
@@ -93,7 +82,9 @@ class ListenWebSocketClient:  # pylint: disable=too-many-instance-attributes
         self._event_handlers = {
             event: [] for event in LiveTranscriptionEvents.__members__.values()
         }
-        self._websocket_url = convert_to_websocket_url(self._config.url, self._endpoint)
+
+        # call the parent constructor
+        super().__init__(self._config, self._endpoint)
 
     # pylint: disable=too-many-statements,too-many-branches
     def start(
@@ -140,33 +131,25 @@ class ListenWebSocketClient:  # pylint: disable=too-many-instance-attributes
         else:
             self._options = {}
 
-        combined_options = self._options
-        if self._addons is not None:
-            self._logger.info("merging addons to options")
-            combined_options.update(self._addons)
-            self._logger.info("new options: %s", combined_options)
-        self._logger.debug("combined_options: %s", combined_options)
-
-        combined_headers = self._config.headers
-        if self._headers is not None:
-            self._logger.info("merging headers to options")
-            combined_headers.update(self._headers)
-            self._logger.info("new headers: %s", combined_headers)
-        self._logger.debug("combined_headers: %s", combined_headers)
-
-        url_with_params = append_query_params(self._websocket_url, combined_options)
         try:
-            self._socket = connect(url_with_params, additional_headers=combined_headers)
-            self._exit_event.clear()
+            # call parent start
+            if (
+                super().start(
+                    self._options,
+                    self._addons,
+                    self._headers,
+                    **dict(cast(Dict[Any, Any], self._kwargs)),
+                )
+                is False
+            ):
+                self._logger.error("ListenWebSocketClient.start failed")
+                self._logger.debug("ListenWebSocketClient.start LEAVE")
+                return False
 
             # debug the threads
             for thread in threading.enumerate():
                 self._logger.debug("after running thread: %s", thread.name)
             self._logger.debug("number of active threads: %s", threading.active_count())
-
-            # listening thread
-            self._listen_thread = threading.Thread(target=self._listening)
-            self._listen_thread.start()
 
             # keepalive thread
             if self._config.is_keep_alive_enabled():
@@ -189,48 +172,23 @@ class ListenWebSocketClient:  # pylint: disable=too-many-instance-attributes
                 self._logger.debug("after running thread: %s", thread.name)
             self._logger.debug("number of active threads: %s", threading.active_count())
 
-            # push open event
-            self._emit(
-                LiveTranscriptionEvents(LiveTranscriptionEvents.Open),
-                OpenResponse(type=LiveTranscriptionEvents.Open),
-            )
-
             self._logger.notice("start succeeded")
             self._logger.debug("ListenWebSocketClient.start LEAVE")
             return True
-        except websockets.ConnectionClosed as e:
-            self._logger.error("ConnectionClosed in ListenWebSocketClient.start: %s", e)
-            self._logger.debug("ListenWebSocketClient.start LEAVE")
-            if self._config.options.get("termination_exception_connect") == "true":
-                raise e
-            return False
-        except websockets.exceptions.WebSocketException as e:
-            self._logger.error(
-                "WebSocketException in ListenWebSocketClient.start: %s", e
-            )
-            self._logger.debug("ListenWebSocketClient.start LEAVE")
-            if self._config.options.get("termination_exception_connect") == "true":
-                raise e
-            return False
+
         except Exception as e:  # pylint: disable=broad-except
             self._logger.error(
                 "WebSocketException in ListenWebSocketClient.start: %s", e
             )
             self._logger.debug("ListenWebSocketClient.start LEAVE")
-            if self._config.options.get("termination_exception_connect") == "true":
+            if self._config.options.get("termination_exception_connect") is True:
                 raise e
             return False
-
-    def is_connected(self) -> bool:
-        """
-        Returns the connection status of the WebSocket.
-        """
-        return self._socket is not None
 
     # pylint: enable=too-many-statements,too-many-branches
 
     def on(
-        self, event: LiveTranscriptionEvents, handler
+        self, event: LiveTranscriptionEvents, handler: Callable
     ) -> None:  # registers event handlers for specific events
         """
         Registers event handlers for specific events.
@@ -243,221 +201,164 @@ class ListenWebSocketClient:  # pylint: disable=too-many-instance-attributes
         """
         Emits events to the registered event handlers.
         """
+        self._logger.debug("ListenWebSocketClient._emit ENTER")
+        self._logger.debug("callback handlers for: %s", event)
+
+        # debug the threads
+        for thread in threading.enumerate():
+            self._logger.debug("after running thread: %s", thread.name)
+        self._logger.debug("number of active threads: %s", threading.active_count())
+
         self._logger.debug("callback handlers for: %s", event)
         for handler in self._event_handlers[event]:
             handler(self, *args, **kwargs)
 
+        # debug the threads
+        for thread in threading.enumerate():
+            self._logger.debug("after running thread: %s", thread.name)
+        self._logger.debug("number of active threads: %s", threading.active_count())
+
+        self._logger.debug("ListenWebSocketClient._emit LEAVE")
+
     # pylint: disable=too-many-return-statements,too-many-statements,too-many-locals,too-many-branches
-    def _listening(
-        self,
-    ) -> None:
+    def _process_text(self, message: str) -> None:
         """
-        Listens for messages from the WebSocket connection.
+        Processes messages received over the WebSocket connection.
         """
-        self._logger.debug("ListenWebSocketClient._listening ENTER")
+        self._logger.debug("ListenWebSocketClient._process_text ENTER")
 
-        while True:
-            try:
-                if self._exit_event.is_set():
-                    self._logger.notice("_listening exiting gracefully")
-                    self._logger.debug("ListenWebSocketClient._listening LEAVE")
-                    return
-
-                if self._socket is None:
-                    self._logger.warning("socket is empty")
-                    self._logger.debug("ListenWebSocketClient._listening LEAVE")
-                    return
-
-                message = str(self._socket.recv())
-
-                if message is None:
-                    self._logger.info("message is empty")
-                    continue
-
-                data = json.loads(message)
-                response_type = data.get("type")
-                self._logger.debug("response_type: %s, data: %s", response_type, data)
-
-                match response_type:
-                    case LiveTranscriptionEvents.Open:
-                        open_result: OpenResponse = OpenResponse.from_json(message)
-                        self._logger.verbose("OpenResponse: %s", open_result)
-                        self._emit(
-                            LiveTranscriptionEvents(LiveTranscriptionEvents.Open),
-                            open=open_result,
-                            **dict(cast(Dict[Any, Any], self._kwargs)),
-                        )
-                    case LiveTranscriptionEvents.Transcript:
-                        msg_result: LiveResultResponse = LiveResultResponse.from_json(
-                            message
-                        )
-                        self._logger.verbose("LiveResultResponse: %s", msg_result)
-
-                        #  auto flush
-                        if self._config.is_inspecting_listen():
-                            inspect_res = self._inspect(msg_result)
-                            if not inspect_res:
-                                self._logger.error("inspect_res failed")
-
-                        self._emit(
-                            LiveTranscriptionEvents(LiveTranscriptionEvents.Transcript),
-                            result=msg_result,
-                            **dict(cast(Dict[Any, Any], self._kwargs)),
-                        )
-                    case LiveTranscriptionEvents.Metadata:
-                        meta_result: MetadataResponse = MetadataResponse.from_json(
-                            message
-                        )
-                        self._logger.verbose("MetadataResponse: %s", meta_result)
-                        self._emit(
-                            LiveTranscriptionEvents(LiveTranscriptionEvents.Metadata),
-                            metadata=meta_result,
-                            **dict(cast(Dict[Any, Any], self._kwargs)),
-                        )
-                    case LiveTranscriptionEvents.SpeechStarted:
-                        ss_result: SpeechStartedResponse = (
-                            SpeechStartedResponse.from_json(message)
-                        )
-                        self._logger.verbose("SpeechStartedResponse: %s", ss_result)
-                        self._emit(
-                            LiveTranscriptionEvents(
-                                LiveTranscriptionEvents.SpeechStarted
-                            ),
-                            speech_started=ss_result,
-                            **dict(cast(Dict[Any, Any], self._kwargs)),
-                        )
-                    case LiveTranscriptionEvents.UtteranceEnd:
-                        ue_result: UtteranceEndResponse = (
-                            UtteranceEndResponse.from_json(message)
-                        )
-                        self._logger.verbose("UtteranceEndResponse: %s", ue_result)
-                        self._emit(
-                            LiveTranscriptionEvents(
-                                LiveTranscriptionEvents.UtteranceEnd
-                            ),
-                            utterance_end=ue_result,
-                            **dict(cast(Dict[Any, Any], self._kwargs)),
-                        )
-                    case LiveTranscriptionEvents.Close:
-                        close_result: CloseResponse = CloseResponse.from_json(message)
-                        self._logger.verbose("CloseResponse: %s", close_result)
-                        self._emit(
-                            LiveTranscriptionEvents(LiveTranscriptionEvents.Close),
-                            close=close_result,
-                            **dict(cast(Dict[Any, Any], self._kwargs)),
-                        )
-                    case LiveTranscriptionEvents.Error:
-                        err_error: ErrorResponse = ErrorResponse.from_json(message)
-                        self._logger.verbose("ErrorResponse: %s", err_error)
-                        self._emit(
-                            LiveTranscriptionEvents(LiveTranscriptionEvents.Error),
-                            error=err_error,
-                            **dict(cast(Dict[Any, Any], self._kwargs)),
-                        )
-                    case _:
-                        self._logger.warning(
-                            "Unknown Message: response_type: %s, data: %s",
-                            response_type,
-                            data,
-                        )
-                        unhandled_error: UnhandledResponse = UnhandledResponse(
-                            type=LiveTranscriptionEvents(
-                                LiveTranscriptionEvents.Unhandled
-                            ),
-                            raw=message,
-                        )
-                        self._emit(
-                            LiveTranscriptionEvents(LiveTranscriptionEvents.Unhandled),
-                            unhandled=unhandled_error,
-                            **dict(cast(Dict[Any, Any], self._kwargs)),
-                        )
-
-            except websockets.exceptions.ConnectionClosedOK as e:
-                self._logger.notice(f"_listening({e.code}) exiting gracefully")
-                self._logger.debug("ListenWebSocketClient._listening LEAVE")
+        try:
+            if len(message) == 0:
+                self._logger.debug("message is empty")
+                self._logger.debug("ListenWebSocketClient._process_text LEAVE")
                 return
 
-            except websockets.exceptions.ConnectionClosed as e:
-                if e.code in [1000, 1001]:
-                    self._logger.notice(f"_listening({e.code}) exiting gracefully")
-                    self._logger.debug("ListenWebSocketClient._listening LEAVE")
-                    return
+            data = json.loads(message)
+            response_type = data.get("type")
+            self._logger.debug("response_type: %s, data: %s", response_type, data)
 
-                # we need to explicitly call self._signal_exit() here because we are hanging on a recv()
-                # note: this is different than the speak websocket client
-                self._logger.error(
-                    "ConnectionClosed in ListenWebSocketClient._listening with code %s: %s",
-                    e.code,
-                    e.reason,
-                )
-                cc_error: ErrorResponse = ErrorResponse(
-                    "ConnectionClosed in ListenWebSocketClient._listening",
-                    f"{e}",
-                    "ConnectionClosed",
-                )
-                self._emit(
-                    LiveTranscriptionEvents(LiveTranscriptionEvents.Error), cc_error
-                )
+            match response_type:
+                case LiveTranscriptionEvents.Open:
+                    open_result: OpenResponse = OpenResponse.from_json(message)
+                    self._logger.verbose("OpenResponse: %s", open_result)
+                    self._emit(
+                        LiveTranscriptionEvents(LiveTranscriptionEvents.Open),
+                        open=open_result,
+                        **dict(cast(Dict[Any, Any], self._kwargs)),
+                    )
+                case LiveTranscriptionEvents.Transcript:
+                    msg_result: LiveResultResponse = LiveResultResponse.from_json(
+                        message
+                    )
+                    self._logger.verbose("LiveResultResponse: %s", msg_result)
 
-                # signal exit and close
-                self._signal_exit()
+                    #  auto flush
+                    if self._config.is_inspecting_listen():
+                        inspect_res = self._inspect(msg_result)
+                        if not inspect_res:
+                            self._logger.error("inspect_res failed")
 
-                self._logger.debug("ListenWebSocketClient._listening LEAVE")
+                    self._emit(
+                        LiveTranscriptionEvents(LiveTranscriptionEvents.Transcript),
+                        result=msg_result,
+                        **dict(cast(Dict[Any, Any], self._kwargs)),
+                    )
+                case LiveTranscriptionEvents.Metadata:
+                    meta_result: MetadataResponse = MetadataResponse.from_json(message)
+                    self._logger.verbose("MetadataResponse: %s", meta_result)
+                    self._emit(
+                        LiveTranscriptionEvents(LiveTranscriptionEvents.Metadata),
+                        metadata=meta_result,
+                        **dict(cast(Dict[Any, Any], self._kwargs)),
+                    )
+                case LiveTranscriptionEvents.SpeechStarted:
+                    ss_result: SpeechStartedResponse = SpeechStartedResponse.from_json(
+                        message
+                    )
+                    self._logger.verbose("SpeechStartedResponse: %s", ss_result)
+                    self._emit(
+                        LiveTranscriptionEvents(LiveTranscriptionEvents.SpeechStarted),
+                        speech_started=ss_result,
+                        **dict(cast(Dict[Any, Any], self._kwargs)),
+                    )
+                case LiveTranscriptionEvents.UtteranceEnd:
+                    ue_result: UtteranceEndResponse = UtteranceEndResponse.from_json(
+                        message
+                    )
+                    self._logger.verbose("UtteranceEndResponse: %s", ue_result)
+                    self._emit(
+                        LiveTranscriptionEvents(LiveTranscriptionEvents.UtteranceEnd),
+                        utterance_end=ue_result,
+                        **dict(cast(Dict[Any, Any], self._kwargs)),
+                    )
+                case LiveTranscriptionEvents.Close:
+                    close_result: CloseResponse = CloseResponse.from_json(message)
+                    self._logger.verbose("CloseResponse: %s", close_result)
+                    self._emit(
+                        LiveTranscriptionEvents(LiveTranscriptionEvents.Close),
+                        close=close_result,
+                        **dict(cast(Dict[Any, Any], self._kwargs)),
+                    )
+                case LiveTranscriptionEvents.Error:
+                    err_error: ErrorResponse = ErrorResponse.from_json(message)
+                    self._logger.verbose("ErrorResponse: %s", err_error)
+                    self._emit(
+                        LiveTranscriptionEvents(LiveTranscriptionEvents.Error),
+                        error=err_error,
+                        **dict(cast(Dict[Any, Any], self._kwargs)),
+                    )
+                case _:
+                    self._logger.warning(
+                        "Unknown Message: response_type: %s, data: %s",
+                        response_type,
+                        data,
+                    )
+                    unhandled_error: UnhandledResponse = UnhandledResponse(
+                        type=LiveTranscriptionEvents(LiveTranscriptionEvents.Unhandled),
+                        raw=message,
+                    )
+                    self._emit(
+                        LiveTranscriptionEvents(LiveTranscriptionEvents.Unhandled),
+                        unhandled=unhandled_error,
+                        **dict(cast(Dict[Any, Any], self._kwargs)),
+                    )
 
-                if self._config.options.get("termination_exception") == "true":
-                    raise
-                return
+            self._logger.notice("_process_text Succeeded")
+            self._logger.debug("SpeakStreamClient._process_text LEAVE")
 
-            except websockets.exceptions.WebSocketException as e:
-                self._logger.error(
-                    "WebSocketException in ListenWebSocketClient._listening with: %s", e
-                )
-                ws_error: ErrorResponse = ErrorResponse(
-                    "WebSocketException in ListenWebSocketClient._listening",
-                    f"{e}",
-                    "WebSocketException",
-                )
-                self._emit(
-                    LiveTranscriptionEvents(LiveTranscriptionEvents.Error), ws_error
-                )
+        except Exception as e:  # pylint: disable=broad-except
+            self._logger.error(
+                "Exception in ListenWebSocketClient._process_text: %s", e
+            )
+            e_error: ErrorResponse = ErrorResponse(
+                "Exception in ListenWebSocketClient._process_text",
+                f"{e}",
+                "Exception",
+            )
+            self._logger.error(
+                "Exception in ListenWebSocketClient._process_text: %s", str(e)
+            )
+            self._emit(
+                LiveTranscriptionEvents(LiveTranscriptionEvents.Error),
+                e_error,
+                **dict(cast(Dict[Any, Any], self._kwargs)),
+            )
 
-                # signal exit and close
-                self._signal_exit()
+            # signal exit and close
+            super()._signal_exit()
 
-                self._logger.debug("ListenWebSocketClient._listening LEAVE")
+            self._logger.debug("ListenWebSocketClient._process_text LEAVE")
 
-                if self._config.options.get("termination_exception") == "true":
-                    raise
-                return
-
-            except Exception as e:  # pylint: disable=broad-except
-                self._logger.error(
-                    "Exception in ListenWebSocketClient._listening: %s", e
-                )
-                e_error: ErrorResponse = ErrorResponse(
-                    "Exception in ListenWebSocketClient._listening",
-                    f"{e}",
-                    "Exception",
-                )
-                self._logger.error(
-                    "Exception in ListenWebSocketClient._listening: %s", str(e)
-                )
-                self._emit(
-                    LiveTranscriptionEvents(LiveTranscriptionEvents.Error), e_error
-                )
-
-                # signal exit and close
-                self._signal_exit()
-
-                self._logger.debug("ListenWebSocketClient._listening LEAVE")
-
-                if self._config.options.get("termination_exception") == "true":
-                    raise
-                return
+            if self._config.options.get("termination_exception") is True:
+                raise
+            return
 
     # pylint: enable=too-many-return-statements,too-many-statements
 
-    ## pylint: disable=too-many-return-statements
+    def _process_binary(self, message: bytes) -> None:
+        raise NotImplementedError("no _process_binary method should be called")
+
+    # pylint: disable=too-many-return-statements
     def _keep_alive(self) -> None:
         self._logger.debug("ListenWebSocketClient._keep_alive ENTER")
 
@@ -472,73 +373,9 @@ class ListenWebSocketClient:  # pylint: disable=too-many-instance-attributes
                     self._logger.debug("ListenWebSocketClient._keep_alive LEAVE")
                     return
 
-                if self._socket is None:
-                    self._logger.notice("socket is None, exiting keep_alive")
-                    self._logger.debug("ListenWebSocketClient._keep_alive LEAVE")
-                    return
-
                 # deepgram keepalive
                 if counter % DEEPGRAM_INTERVAL == 0:
                     self.keep_alive()
-
-            except websockets.exceptions.ConnectionClosedOK as e:
-                self._logger.notice(f"_keep_alive({e.code}) exiting gracefully")
-                self._logger.debug("ListenWebSocketClient._keep_alive LEAVE")
-                return
-
-            except websockets.exceptions.ConnectionClosed as e:
-                if e.code in [1000, 1001]:
-                    self._logger.notice(f"_keep_alive({e.code}) exiting gracefully")
-                    self._logger.debug("ListenWebSocketClient._keep_alive LEAVE")
-                    return
-
-                # we need to explicitly call self._signal_exit() here because we are hanging on a recv()
-                # note: this is different than the speak websocket client
-                self._logger.error(
-                    "ConnectionClosed in ListenWebSocketClient._keep_alive with code %s: %s",
-                    e.code,
-                    e.reason,
-                )
-                cc_error: ErrorResponse = ErrorResponse(
-                    "ConnectionClosed in ListenWebSocketClient._keep_alive",
-                    f"{e}",
-                    "ConnectionClosed",
-                )
-                self._emit(
-                    LiveTranscriptionEvents(LiveTranscriptionEvents.Error), cc_error
-                )
-
-                # signal exit and close
-                self._signal_exit()
-
-                self._logger.debug("ListenWebSocketClient._keep_alive LEAVE")
-
-                if self._config.options.get("termination_exception") == "true":
-                    raise
-                return
-
-            except websockets.exceptions.WebSocketException as e:
-                self._logger.error(
-                    "WebSocketException in ListenWebSocketClient._keep_alive with: %s",
-                    e,
-                )
-                ws_error: ErrorResponse = ErrorResponse(
-                    "WebSocketException in ListenWebSocketClient._keep_alive",
-                    f"{e}",
-                    "WebSocketException",
-                )
-                self._emit(
-                    LiveTranscriptionEvents(LiveTranscriptionEvents.Error), ws_error
-                )
-
-                # signal exit and close
-                self._signal_exit()
-
-                self._logger.debug("ListenWebSocketClient._keep_alive LEAVE")
-
-                if self._config.options.get("termination_exception") == "true":
-                    raise
-                return
 
             except Exception as e:  # pylint: disable=broad-except
                 self._logger.error(
@@ -553,19 +390,19 @@ class ListenWebSocketClient:  # pylint: disable=too-many-instance-attributes
                     "Exception in ListenWebSocketClient._keep_alive: %s", str(e)
                 )
                 self._emit(
-                    LiveTranscriptionEvents(LiveTranscriptionEvents.Error), e_error
+                    LiveTranscriptionEvents(LiveTranscriptionEvents.Error),
+                    e_error,
+                    **dict(cast(Dict[Any, Any], self._kwargs)),
                 )
 
                 # signal exit and close
-                self._signal_exit()
+                super()._signal_exit()
 
                 self._logger.debug("ListenWebSocketClient._keep_alive LEAVE")
 
-                if self._config.options.get("termination_exception") == "true":
+                if self._config.options.get("termination_exception") is True:
                     raise
                 return
-
-    # pylint: enable=too-many-return-statements
 
     ## pylint: disable=too-many-return-statements,too-many-statements
     def _flush(self) -> None:
@@ -588,11 +425,6 @@ class ListenWebSocketClient:  # pylint: disable=too-many-instance-attributes
                     self._logger.debug("ListenWebSocketClient._flush LEAVE")
                     return
 
-                if self._socket is None:
-                    self._logger.debug("socket is None, exiting flush")
-                    self._logger.debug("ListenWebSocketClient._flush LEAVE")
-                    return
-
                 with self._lock_flush:
                     if self._last_datagram is None:
                         self._logger.debug("AutoFlush last_datagram is None")
@@ -609,64 +441,6 @@ class ListenWebSocketClient:  # pylint: disable=too-many-instance-attributes
                         self._last_datagram = None
                     self.finalize()
 
-            except websockets.exceptions.ConnectionClosedOK as e:
-                self._logger.notice(f"_flush({e.code}) exiting gracefully")
-                self._logger.debug("ListenWebSocketClient._flush LEAVE")
-                return
-
-            except websockets.exceptions.ConnectionClosed as e:
-                if e.code in [1000, 1001]:
-                    self._logger.notice(f"_flush({e.code}) exiting gracefully")
-                    self._logger.debug("ListenWebSocketClient._flush LEAVE")
-                    return
-
-                # we need to explicitly call self._signal_exit() here because we are hanging on a recv()
-                # note: this is different than the speak websocket client
-                self._logger.error(
-                    "ConnectionClosed in ListenWebSocketClient._flush with code %s: %s",
-                    e.code,
-                    e.reason,
-                )
-                cc_error: ErrorResponse = ErrorResponse(
-                    "ConnectionClosed in ListenWebSocketClient._flush",
-                    f"{e}",
-                    "ConnectionClosed",
-                )
-                self._emit(
-                    LiveTranscriptionEvents(LiveTranscriptionEvents.Error), cc_error
-                )
-
-                # signal exit and close
-                self._signal_exit()
-
-                self._logger.debug("ListenWebSocketClient._flush LEAVE")
-
-                if self._config.options.get("termination_exception") == "true":
-                    raise
-                return
-
-            except websockets.exceptions.WebSocketException as e:
-                self._logger.error(
-                    "WebSocketException in ListenWebSocketClient._flush with: %s", e
-                )
-                ws_error: ErrorResponse = ErrorResponse(
-                    "WebSocketException in ListenWebSocketClient._flush",
-                    f"{e}",
-                    "WebSocketException",
-                )
-                self._emit(
-                    LiveTranscriptionEvents(LiveTranscriptionEvents.Error), ws_error
-                )
-
-                # signal exit and close
-                self._signal_exit()
-
-                self._logger.debug("ListenWebSocketClient._flush LEAVE")
-
-                if self._config.options.get("termination_exception") == "true":
-                    raise
-                return
-
             except Exception as e:  # pylint: disable=broad-except
                 self._logger.error("Exception in ListenWebSocketClient._flush: %s", e)
                 e_error: ErrorResponse = ErrorResponse(
@@ -678,82 +452,19 @@ class ListenWebSocketClient:  # pylint: disable=too-many-instance-attributes
                     "Exception in ListenWebSocketClient._flush: %s", str(e)
                 )
                 self._emit(
-                    LiveTranscriptionEvents(LiveTranscriptionEvents.Error), e_error
+                    LiveTranscriptionEvents(LiveTranscriptionEvents.Error),
+                    e_error,
+                    **dict(cast(Dict[Any, Any], self._kwargs)),
                 )
 
                 # signal exit and close
-                self._signal_exit()
+                super()._signal_exit()
 
                 self._logger.debug("ListenWebSocketClient._flush LEAVE")
 
-                if self._config.options.get("termination_exception") == "true":
+                if self._config.options.get("termination_exception") is True:
                     raise
                 return
-
-    # pylint: enable=too-many-return-statements
-
-    # pylint: disable=too-many-return-statements
-    def send(self, data: Union[str, bytes]) -> bool:
-        """
-        Sends data over the WebSocket connection.
-        """
-        self._logger.spam("ListenWebSocketClient.send ENTER")
-
-        if self._exit_event.is_set():
-            self._logger.notice("send exiting gracefully")
-            self._logger.debug("ListenWebSocketClient.send LEAVE")
-            return False
-
-        if not self.is_connected():
-            self._logger.notice("is_connected is False")
-            self._logger.debug("ListenWebSocketClient.send LEAVE")
-            return False
-
-        if self._socket is not None:
-            with self._lock_send:
-                try:
-                    self._socket.send(data)
-                except websockets.exceptions.ConnectionClosedOK as e:
-                    self._logger.notice(f"send() exiting gracefully: {e.code}")
-                    self._logger.debug("ListenWebSocketClient.send LEAVE")
-                    if self._config.options.get("termination_exception_send") == "true":
-                        raise
-                    return True
-                except websockets.exceptions.ConnectionClosed as e:
-                    if e.code in [1000, 1001]:
-                        self._logger.notice(f"send({e.code}) exiting gracefully")
-                        self._logger.debug("ListenWebSocketClient.send LEAVE")
-                        if (
-                            self._config.options.get("termination_exception_send")
-                            == "true"
-                        ):
-                            raise
-                        return True
-                    self._logger.error("send() failed - ConnectionClosed: %s", str(e))
-                    self._logger.spam("ListenWebSocketClient.send LEAVE")
-                    if self._config.options.get("termination_exception_send") == "true":
-                        raise
-                    return False
-                except websockets.exceptions.WebSocketException as e:
-                    self._logger.error("send() failed - WebSocketException: %s", str(e))
-                    self._logger.spam("ListenWebSocketClient.send LEAVE")
-                    if self._config.options.get("termination_exception_send") == "true":
-                        raise
-                    return False
-                except Exception as e:  # pylint: disable=broad-except
-                    self._logger.error("send() failed - Exception: %s", str(e))
-                    self._logger.spam("ListenWebSocketClient.send LEAVE")
-                    if self._config.options.get("termination_exception_send") == "true":
-                        raise
-                    return False
-
-            self._logger.spam("send() succeeded")
-            self._logger.spam("ListenWebSocketClient.send LEAVE")
-            return True
-
-        self._logger.spam("send() failed. socket is None")
-        self._logger.spam("ListenWebSocketClient.send LEAVE")
-        return False
 
     # pylint: enable=too-many-return-statements
 
@@ -762,16 +473,6 @@ class ListenWebSocketClient:  # pylint: disable=too-many-instance-attributes
         Sends a KeepAlive message
         """
         self._logger.spam("ListenWebSocketClient.keep_alive ENTER")
-
-        if self._exit_event.is_set():
-            self._logger.notice("keep_alive exiting gracefully")
-            self._logger.debug("ListenWebSocketClient.keep_alive LEAVE")
-            return False
-
-        if self._socket is None:
-            self._logger.notice("socket is not intialized")
-            self._logger.debug("ListenWebSocketClient.keep_alive LEAVE")
-            return False
 
         self._logger.notice("Sending KeepAlive...")
         ret = self.send(json.dumps({"type": "KeepAlive"}))
@@ -792,16 +493,6 @@ class ListenWebSocketClient:  # pylint: disable=too-many-instance-attributes
         """
         self._logger.spam("ListenWebSocketClient.finalize ENTER")
 
-        if self._exit_event.is_set():
-            self._logger.notice("finalize exiting gracefully")
-            self._logger.debug("ListenWebSocketClient.finalize LEAVE")
-            return False
-
-        if self._socket is None:
-            self._logger.notice("socket is not intialized")
-            self._logger.debug("ListenWebSocketClient.finalize LEAVE")
-            return False
-
         self._logger.notice("Sending Finalize...")
         ret = self.send(json.dumps({"type": "Finalize"}))
 
@@ -815,6 +506,9 @@ class ListenWebSocketClient:  # pylint: disable=too-many-instance-attributes
 
         return True
 
+    def _close_message(self) -> bool:
+        return self.send(json.dumps({"type": "CloseStream"}))
+
     # closes the WebSocket connection gracefully
     def finish(self) -> bool:
         """
@@ -822,13 +516,14 @@ class ListenWebSocketClient:  # pylint: disable=too-many-instance-attributes
         """
         self._logger.spam("ListenWebSocketClient.finish ENTER")
 
+        # call parent finish
+        if super().finish() is False:
+            self._logger.error("ListenWebSocketClient.finish failed")
+
         # debug the threads
         for thread in threading.enumerate():
             self._logger.debug("before running thread: %s", thread.name)
         self._logger.debug("number of active threads: %s", threading.active_count())
-
-        # signal exit
-        self._signal_exit()
 
         # stop the threads
         self._logger.verbose("cancelling tasks...")
@@ -855,50 +550,6 @@ class ListenWebSocketClient:  # pylint: disable=too-many-instance-attributes
         self._logger.notice("finish succeeded")
         self._logger.spam("ListenWebSocketClient.finish LEAVE")
         return True
-
-    # signals the WebSocket connection to exit
-    def _signal_exit(self) -> None:
-        # closes the WebSocket connection gracefully
-        self._logger.notice("closing socket...")
-        if self._socket is not None:
-            self._logger.notice("sending CloseStream...")
-            try:
-                # if the socket connection is closed, the following line might throw an error
-                self._socket.send(json.dumps({"type": "CloseStream"}))
-            except websockets.exceptions.ConnectionClosedOK as e:
-                self._logger.notice("_signal_exit  - ConnectionClosedOK: %s", e.code)
-            except websockets.exceptions.ConnectionClosed as e:
-                self._logger.error("_signal_exit  - ConnectionClosed: %s", e.code)
-            except websockets.exceptions.WebSocketException as e:
-                self._logger.error("_signal_exit - WebSocketException: %s", str(e))
-            except Exception as e:  # pylint: disable=broad-except
-                self._logger.error("_signal_exit - Exception: %s", str(e))
-
-            # push close event
-            try:
-                self._emit(
-                    LiveTranscriptionEvents(LiveTranscriptionEvents.Close),
-                    CloseResponse(type=LiveTranscriptionEvents.Close),
-                )
-            except Exception as e:  # pylint: disable=broad-except
-                self._logger.error("_signal_exit - Exception: %s", e)
-
-            # wait for task to send
-            time.sleep(0.5)
-
-        # signal exit
-        self._exit_event.set()
-
-        # closes the WebSocket connection gracefully
-        self._logger.verbose("clean up socket...")
-        if self._socket is not None:
-            self._logger.verbose("socket.wait_closed...")
-            try:
-                self._socket.close()
-            except websockets.exceptions.WebSocketException as e:
-                self._logger.error("socket.wait_closed failed: %s", e)
-
-        self._socket = None  # type: ignore
 
     def _inspect(self, msg_result: LiveResultResponse) -> bool:
         # auto flush_inspect is generically used to track any messages you might want to snoop on

@@ -9,6 +9,8 @@ import threading
 from typing import Optional, Callable, Union, TYPE_CHECKING
 import logging
 
+import websockets
+
 from ...utils import verboselogs
 from .constants import LOGGING, CHANNELS, RATE, CHUNK, TIMEOUT
 
@@ -24,22 +26,22 @@ class Speaker:  # pylint: disable=too-many-instance-attributes
     _logger: verboselogs.VerboseLogger
 
     _audio: "pyaudio.PyAudio"
-    _stream: "pyaudio.Stream"
+    _stream: Optional["pyaudio.Stream"] = None
 
     _chunk: int
     _rate: int
     _channels: int
-    _output_device_index: Optional[int]
+    _output_device_index: Optional[int] = None
 
     _queue: queue.Queue
     _exit: threading.Event
 
-    _thread: threading.Thread
+    _thread: Optional[threading.Thread] = None
     # _asyncio_loop: asyncio.AbstractEventLoop
     # _asyncio_thread: threading.Thread
-    _receiver_thread: threading.Thread
+    _receiver_thread: Optional[threading.Thread] = None
 
-    _loop: asyncio.AbstractEventLoop
+    _loop: Optional[asyncio.AbstractEventLoop] = None
 
     _push_callback_org: Optional[Callable] = None
     _push_callback: Optional[Callable] = None
@@ -217,6 +219,17 @@ class Speaker:  # pylint: disable=too-many-instance-attributes
                 elif isinstance(message, bytes):
                     self._logger.verbose("Received audio data...")
                     self.add_audio_to_queue(message)
+        except websockets.exceptions.ConnectionClosedOK as e:
+            self._logger.debug("send() exiting gracefully: %d", e.code)
+        except websockets.exceptions.ConnectionClosed as e:
+            if e.code in [1000, 1001]:
+                self._logger.debug("send() exiting gracefully: %d", e.code)
+                return
+            self._logger.error("_start_asyncio_receiver - ConnectionClosed: %s", str(e))
+        except websockets.exceptions.WebSocketException as e:
+            self._logger.error(
+                "_start_asyncio_receiver- WebSocketException: %s", str(e)
+            )
         except Exception as e:  # pylint: disable=broad-except
             self._logger.error("_start_asyncio_receiver exception: %s", str(e))
 
@@ -266,23 +279,26 @@ class Speaker:  # pylint: disable=too-many-instance-attributes
             self._logger.notice("stopping stream...")
             self._stream.stop_stream()
             self._stream.close()
-            self._stream = None  # type: ignore
+            self._stream = None
             self._logger.notice("stream stopped")
 
-        self._thread.join()
-        self._thread = None  # type: ignore
+        if self._thread is not None:
+            self._logger.notice("joining thread...")
+            self._thread.join()
+            self._thread = None
+            self._logger.notice("thread stopped")
 
         # if self._asyncio_thread is not None:
         #     self._logger.notice("stopping asyncio loop...")
         #     self._asyncio_loop.call_soon_threadsafe(self._asyncio_loop.stop)
         #     self._asyncio_thread.join()
-        #     self._asyncio_thread = None  # type: ignore
+        #     self._asyncio_thread = None
         #     self._logger.notice("_asyncio_thread joined")
 
         if self._receiver_thread is not None:
             self._logger.notice("stopping asyncio loop...")
             self._receiver_thread.join()
-            self._receiver_thread = None  # type: ignore
+            self._receiver_thread = None
             self._logger.notice("_receiver_thread joined")
 
         self._queue = None  # type: ignore

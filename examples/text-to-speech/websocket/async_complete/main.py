@@ -2,6 +2,7 @@
 # Use of this source code is governed by a MIT license that can be found in the LICENSE file.
 # SPDX-License-Identifier: MIT
 
+from signal import SIGINT, SIGTERM
 import asyncio
 import time
 from deepgram.utils import verboselogs
@@ -15,9 +16,20 @@ from deepgram import (
 
 TTS_TEXT = "Hello, this is a text to speech example using Deepgram."
 
+global warning_notice
+warning_notice = True
+
 
 async def main():
     try:
+        loop = asyncio.get_event_loop()
+
+        for signal in (SIGTERM, SIGINT):
+            loop.add_signal_handler(
+                signal,
+                lambda: asyncio.create_task(shutdown(signal, loop, dg_connection)),
+            )
+
         # example of setting up a client config. logging values: WARNING, VERBOSE, DEBUG, SPAM
         config: DeepgramClientOptions = DeepgramClientOptions(
             options={"auto_flush_speak_delta": "500", "speaker_playback": "true"},
@@ -32,12 +44,15 @@ async def main():
             print(f"\n\n{open}\n\n")
 
         async def on_binary_data(self, data, **kwargs):
-            print("Received binary data")
-            print("You can do something with the binary data here")
-            print("OR")
-            print(
-                "If you want to simply play the audio, set speaker_playback to true in the options for DeepgramClientOptions"
-            )
+            global warning_notice
+            if warning_notice:
+                print("Received binary data")
+                print("You can do something with the binary data here")
+                print("OR")
+                print(
+                    "If you want to simply play the audio, set speaker_playback to true in the options for DeepgramClientOptions"
+                )
+                warning_notice = False
 
         async def on_metadata(self, metadata, **kwargs):
             print(f"\n\n{metadata}\n\n")
@@ -101,5 +116,15 @@ async def main():
         print(f"An unexpected error occurred: {e}")
 
 
-if __name__ == "__main__":
-    asyncio.run(main())
+async def shutdown(signal, loop, dg_connection):
+    print(f"Received exit signal {signal.name}...")
+    await dg_connection.finish()
+    tasks = [t for t in asyncio.all_tasks() if t is not asyncio.current_task()]
+    [task.cancel() for task in tasks]
+    print(f"Cancelling {len(tasks)} outstanding tasks")
+    await asyncio.gather(*tasks, return_exceptions=True)
+    loop.stop()
+    print("Shutdown complete.")
+
+
+asyncio.run(main())

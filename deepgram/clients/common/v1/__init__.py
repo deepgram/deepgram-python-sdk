@@ -4,7 +4,16 @@
 
 from .enums import Sentiment
 
-from .errors import DeepgramError, DeepgramTypeError
+from .errors import (
+    DeepgramError,
+    DeepgramTypeError,
+    DeepgramApiError,
+    DeepgramUnknownApiError,
+)
+from .abstract_async_rest import AbstractAsyncRestClient
+from .abstract_sync_rest import AbstractSyncRestClient
+from .abstract_async_websocket import AbstractAsyncWebSocketClient
+from .abstract_sync_websocket import AbstractSyncWebSocketClient
 
 from .options import (
     TextSource,

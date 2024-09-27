@@ -91,9 +91,6 @@ class ListenWSChannel(BaseResponse):
         return _dict[key]
 
 
-# unique
-
-
 @dataclass
 class Metadata(BaseResponse):
     """

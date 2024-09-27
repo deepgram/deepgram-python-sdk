@@ -15,13 +15,19 @@ from deepgram import (
 
 TTS_TEXT = "Hello, this is a text to speech example using Deepgram."
 
+global warning_notice
+warning_notice = True
+
 
 def main():
     try:
         # example of setting up a client config. logging values: WARNING, VERBOSE, DEBUG, SPAM
         config: DeepgramClientOptions = DeepgramClientOptions(
-            options={"auto_flush_speak_delta": "500", "speaker_playback": "true"},
-            # verbose=verboselogs.SPAM,
+            options={
+                # "auto_flush_speak_delta": "500",
+                "speaker_playback": "true",
+            },
+            # verbose=verboselogs.DEBUG,
         )
         deepgram: DeepgramClient = DeepgramClient("", config)
 
@@ -32,12 +38,15 @@ def main():
             print(f"\n\n{open}\n\n")
 
         def on_binary_data(self, data, **kwargs):
-            print("Received binary data")
-            print("You can do something with the binary data here")
-            print("OR")
-            print(
-                "If you want to simply play the audio, set speaker_playback to true in the options for DeepgramClientOptions"
-            )
+            global warning_notice
+            if warning_notice:
+                print("Received binary data")
+                print("You can do something with the binary data here")
+                print("OR")
+                print(
+                    "If you want to simply play the audio, set speaker_playback to true in the options for DeepgramClientOptions"
+                )
+                warning_notice = False
 
         def on_metadata(self, metadata, **kwargs):
             print(f"\n\n{metadata}\n\n")
