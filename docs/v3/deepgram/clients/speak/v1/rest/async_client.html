@@ -91,8 +91,8 @@
 </span><span id="L-14"><a href="#L-14"><span class="linenos"> 14</span></a>
 </span><span id="L-15"><a href="#L-15"><span class="linenos"> 15</span></a><span class="kn">from</span> <span class="nn">.....utils</span> <span class="kn">import</span> <span class="n">verboselogs</span>
 </span><span id="L-16"><a href="#L-16"><span class="linenos"> 16</span></a><span class="kn">from</span> <span class="nn">.....options</span> <span class="kn">import</span> <span class="n">DeepgramClientOptions</span>
-</span><span id="L-17"><a href="#L-17"><span class="linenos"> 17</span></a><span class="kn">from</span> <span class="nn">....abstract_async_client</span> <span class="kn">import</span> <span class="n">AbstractAsyncRestClient</span>
-</span><span id="L-18"><a href="#L-18"><span class="linenos"> 18</span></a><span class="kn">from</span> <span class="nn">....common.v1.errors</span> <span class="kn">import</span> <span class="n">DeepgramError</span><span class="p">,</span> <span class="n">DeepgramTypeError</span>
+</span><span id="L-17"><a href="#L-17"><span class="linenos"> 17</span></a><span class="kn">from</span> <span class="nn">....common</span> <span class="kn">import</span> <span class="n">AbstractAsyncRestClient</span>
+</span><span id="L-18"><a href="#L-18"><span class="linenos"> 18</span></a><span class="kn">from</span> <span class="nn">....common</span> <span class="kn">import</span> <span class="n">DeepgramError</span><span class="p">,</span> <span class="n">DeepgramTypeError</span>
 </span><span id="L-19"><a href="#L-19"><span class="linenos"> 19</span></a>
 </span><span id="L-20"><a href="#L-20"><span class="linenos"> 20</span></a><span class="kn">from</span> <span class="nn">.helpers</span> <span class="kn">import</span> <span class="n">is_text_source</span>
 </span><span id="L-21"><a href="#L-21"><span class="linenos"> 21</span></a><span class="kn">from</span> <span class="nn">.options</span> <span class="kn">import</span> <span class="n">SpeakRESTOptions</span><span class="p">,</span> <span class="n">FileSource</span>
@@ -393,7 +393,7 @@
 <div class="attr class">
             
     <span class="def">class</span>
-    <span class="name">AsyncSpeakRESTClient</span><wbr>(<span class="base"><a href="../../../abstract_async_client.html#AbstractAsyncRestClient">deepgram.clients.abstract_async_client.AbstractAsyncRestClient</a></span>):
+    <span class="name">AsyncSpeakRESTClient</span><wbr>(<span class="base"><a href="../../../common/v1/abstract_async_rest.html#AbstractAsyncRestClient">deepgram.clients.common.v1.abstract_async_rest.AbstractAsyncRestClient</a></span>):
 
                 <label class="view-source-button" for="AsyncSpeakRESTClient-view-source"><span>View Source</span></label>
 
@@ -1121,14 +1121,14 @@ in order to prevent connection leaks.
                             <div class="inherited">
                                 <h5>Inherited Members</h5>
                                 <dl>
-                                    <div><dt><a href="../../../abstract_async_client.html#AbstractAsyncRestClient">deepgram.clients.abstract_async_client.AbstractAsyncRestClient</a></dt>
-                                <dd id="AsyncSpeakRESTClient.get" class="function"><a href="../../../abstract_async_client.html#AbstractAsyncRestClient.get">get</a></dd>
-                <dd id="AsyncSpeakRESTClient.post_raw" class="function"><a href="../../../abstract_async_client.html#AbstractAsyncRestClient.post_raw">post_raw</a></dd>
-                <dd id="AsyncSpeakRESTClient.post_memory" class="function"><a href="../../../abstract_async_client.html#AbstractAsyncRestClient.post_memory">post_memory</a></dd>
-                <dd id="AsyncSpeakRESTClient.post" class="function"><a href="../../../abstract_async_client.html#AbstractAsyncRestClient.post">post</a></dd>
-                <dd id="AsyncSpeakRESTClient.put" class="function"><a href="../../../abstract_async_client.html#AbstractAsyncRestClient.put">put</a></dd>
-                <dd id="AsyncSpeakRESTClient.patch" class="function"><a href="../../../abstract_async_client.html#AbstractAsyncRestClient.patch">patch</a></dd>
-                <dd id="AsyncSpeakRESTClient.delete" class="function"><a href="../../../abstract_async_client.html#AbstractAsyncRestClient.delete">delete</a></dd>
+                                    <div><dt><a href="../../../common/v1/abstract_async_rest.html#AbstractAsyncRestClient">deepgram.clients.common.v1.abstract_async_rest.AbstractAsyncRestClient</a></dt>
+                                <dd id="AsyncSpeakRESTClient.get" class="function"><a href="../../../common/v1/abstract_async_rest.html#AbstractAsyncRestClient.get">get</a></dd>
+                <dd id="AsyncSpeakRESTClient.post_raw" class="function"><a href="../../../common/v1/abstract_async_rest.html#AbstractAsyncRestClient.post_raw">post_raw</a></dd>
+                <dd id="AsyncSpeakRESTClient.post_memory" class="function"><a href="../../../common/v1/abstract_async_rest.html#AbstractAsyncRestClient.post_memory">post_memory</a></dd>
+                <dd id="AsyncSpeakRESTClient.post" class="function"><a href="../../../common/v1/abstract_async_rest.html#AbstractAsyncRestClient.post">post</a></dd>
+                <dd id="AsyncSpeakRESTClient.put" class="function"><a href="../../../common/v1/abstract_async_rest.html#AbstractAsyncRestClient.put">put</a></dd>
+                <dd id="AsyncSpeakRESTClient.patch" class="function"><a href="../../../common/v1/abstract_async_rest.html#AbstractAsyncRestClient.patch">patch</a></dd>
+                <dd id="AsyncSpeakRESTClient.delete" class="function"><a href="../../../common/v1/abstract_async_rest.html#AbstractAsyncRestClient.delete">delete</a></dd>
 
             </div>
                                 </dl>

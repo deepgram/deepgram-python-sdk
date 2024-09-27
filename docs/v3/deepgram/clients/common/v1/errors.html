@@ -60,6 +60,45 @@
                 </ul>
 
             </li>
+            <li>
+                    <a class="class" href="#DeepgramApiError">DeepgramApiError</a>
+                            <ul class="memberlist">
+                        <li>
+                                <a class="function" href="#DeepgramApiError.__init__">DeepgramApiError</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#DeepgramApiError.name">name</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#DeepgramApiError.status">status</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#DeepgramApiError.message">message</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#DeepgramApiError.original_error">original_error</a>
+                        </li>
+                </ul>
+
+            </li>
+            <li>
+                    <a class="class" href="#DeepgramUnknownApiError">DeepgramUnknownApiError</a>
+                            <ul class="memberlist">
+                        <li>
+                                <a class="function" href="#DeepgramUnknownApiError.__init__">DeepgramUnknownApiError</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#DeepgramUnknownApiError.name">name</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#DeepgramUnknownApiError.status">status</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#DeepgramUnknownApiError.message">message</a>
+                        </li>
+                </ul>
+
+            </li>
     </ul>
 
 
@@ -118,6 +157,46 @@
 </span><span id="L-35"><a href="#L-35"><span class="linenos">35</span></a>
 </span><span id="L-36"><a href="#L-36"><span class="linenos">36</span></a>    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 </span><span id="L-37"><a href="#L-37"><span class="linenos">37</span></a>        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">message</span><span class="si">}</span><span class="s2">&quot;</span>
+</span><span id="L-38"><a href="#L-38"><span class="linenos">38</span></a>
+</span><span id="L-39"><a href="#L-39"><span class="linenos">39</span></a>
+</span><span id="L-40"><a href="#L-40"><span class="linenos">40</span></a><span class="k">class</span> <span class="nc">DeepgramApiError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+</span><span id="L-41"><a href="#L-41"><span class="linenos">41</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="L-42"><a href="#L-42"><span class="linenos">42</span></a><span class="sd">    Exception raised for known errors (in json response format) related to the Deepgram API.</span>
+</span><span id="L-43"><a href="#L-43"><span class="linenos">43</span></a>
+</span><span id="L-44"><a href="#L-44"><span class="linenos">44</span></a><span class="sd">    Attributes:</span>
+</span><span id="L-45"><a href="#L-45"><span class="linenos">45</span></a><span class="sd">        message (str): The error message describing the exception.</span>
+</span><span id="L-46"><a href="#L-46"><span class="linenos">46</span></a><span class="sd">        status (str): The HTTP status associated with the API error.</span>
+</span><span id="L-47"><a href="#L-47"><span class="linenos">47</span></a><span class="sd">        original_error (str - json): The original error that was raised.</span>
+</span><span id="L-48"><a href="#L-48"><span class="linenos">48</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="L-49"><a href="#L-49"><span class="linenos">49</span></a>
+</span><span id="L-50"><a href="#L-50"><span class="linenos">50</span></a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">status</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">original_error</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+</span><span id="L-51"><a href="#L-51"><span class="linenos">51</span></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+</span><span id="L-52"><a href="#L-52"><span class="linenos">52</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;DeepgramApiError&quot;</span>
+</span><span id="L-53"><a href="#L-53"><span class="linenos">53</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="n">status</span>
+</span><span id="L-54"><a href="#L-54"><span class="linenos">54</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">message</span> <span class="o">=</span> <span class="n">message</span>
+</span><span id="L-55"><a href="#L-55"><span class="linenos">55</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">original_error</span> <span class="o">=</span> <span class="n">original_error</span>
+</span><span id="L-56"><a href="#L-56"><span class="linenos">56</span></a>
+</span><span id="L-57"><a href="#L-57"><span class="linenos">57</span></a>    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="L-58"><a href="#L-58"><span class="linenos">58</span></a>        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">message</span><span class="si">}</span><span class="s2"> (Status: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">status</span><span class="si">}</span><span class="s2">)&quot;</span>
+</span><span id="L-59"><a href="#L-59"><span class="linenos">59</span></a>
+</span><span id="L-60"><a href="#L-60"><span class="linenos">60</span></a>
+</span><span id="L-61"><a href="#L-61"><span class="linenos">61</span></a><span class="k">class</span> <span class="nc">DeepgramUnknownApiError</span><span class="p">(</span><span class="n">DeepgramApiError</span><span class="p">):</span>
+</span><span id="L-62"><a href="#L-62"><span class="linenos">62</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="L-63"><a href="#L-63"><span class="linenos">63</span></a><span class="sd">    Exception raised for unknown errors related to the Deepgram API.</span>
+</span><span id="L-64"><a href="#L-64"><span class="linenos">64</span></a>
+</span><span id="L-65"><a href="#L-65"><span class="linenos">65</span></a><span class="sd">    Attributes:</span>
+</span><span id="L-66"><a href="#L-66"><span class="linenos">66</span></a><span class="sd">        message (str): The error message describing the exception.</span>
+</span><span id="L-67"><a href="#L-67"><span class="linenos">67</span></a><span class="sd">        status (str): The HTTP status associated with the API error.</span>
+</span><span id="L-68"><a href="#L-68"><span class="linenos">68</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="L-69"><a href="#L-69"><span class="linenos">69</span></a>
+</span><span id="L-70"><a href="#L-70"><span class="linenos">70</span></a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">status</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+</span><span id="L-71"><a href="#L-71"><span class="linenos">71</span></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">status</span><span class="p">)</span>
+</span><span id="L-72"><a href="#L-72"><span class="linenos">72</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;DeepgramUnknownApiError&quot;</span>
+</span><span id="L-73"><a href="#L-73"><span class="linenos">73</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="n">status</span>
+</span><span id="L-74"><a href="#L-74"><span class="linenos">74</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">message</span> <span class="o">=</span> <span class="n">message</span>
+</span><span id="L-75"><a href="#L-75"><span class="linenos">75</span></a>
+</span><span id="L-76"><a href="#L-76"><span class="linenos">76</span></a>    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="L-77"><a href="#L-77"><span class="linenos">77</span></a>        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">message</span><span class="si">}</span><span class="s2"> (Status: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">status</span><span class="si">}</span><span class="s2">)&quot;</span>
 </span></pre></div>
 
 
@@ -297,6 +376,235 @@
                                 <dd id="DeepgramTypeError.with_traceback" class="function">with_traceback</dd>
                 <dd id="DeepgramTypeError.add_note" class="function">add_note</dd>
                 <dd id="DeepgramTypeError.args" class="variable">args</dd>
+
+            </div>
+                                </dl>
+                            </div>
+                </section>
+                <section id="DeepgramApiError">
+                            <input id="DeepgramApiError-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+<div class="attr class">
+            
+    <span class="def">class</span>
+    <span class="name">DeepgramApiError</span><wbr>(<span class="base">builtins.Exception</span>):
+
+                <label class="view-source-button" for="DeepgramApiError-view-source"><span>View Source</span></label>
+
+    </div>
+    <a class="headerlink" href="#DeepgramApiError"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="DeepgramApiError-41"><a href="#DeepgramApiError-41"><span class="linenos">41</span></a><span class="k">class</span> <span class="nc">DeepgramApiError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+</span><span id="DeepgramApiError-42"><a href="#DeepgramApiError-42"><span class="linenos">42</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="DeepgramApiError-43"><a href="#DeepgramApiError-43"><span class="linenos">43</span></a><span class="sd">    Exception raised for known errors (in json response format) related to the Deepgram API.</span>
+</span><span id="DeepgramApiError-44"><a href="#DeepgramApiError-44"><span class="linenos">44</span></a>
+</span><span id="DeepgramApiError-45"><a href="#DeepgramApiError-45"><span class="linenos">45</span></a><span class="sd">    Attributes:</span>
+</span><span id="DeepgramApiError-46"><a href="#DeepgramApiError-46"><span class="linenos">46</span></a><span class="sd">        message (str): The error message describing the exception.</span>
+</span><span id="DeepgramApiError-47"><a href="#DeepgramApiError-47"><span class="linenos">47</span></a><span class="sd">        status (str): The HTTP status associated with the API error.</span>
+</span><span id="DeepgramApiError-48"><a href="#DeepgramApiError-48"><span class="linenos">48</span></a><span class="sd">        original_error (str - json): The original error that was raised.</span>
+</span><span id="DeepgramApiError-49"><a href="#DeepgramApiError-49"><span class="linenos">49</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="DeepgramApiError-50"><a href="#DeepgramApiError-50"><span class="linenos">50</span></a>
+</span><span id="DeepgramApiError-51"><a href="#DeepgramApiError-51"><span class="linenos">51</span></a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">status</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">original_error</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+</span><span id="DeepgramApiError-52"><a href="#DeepgramApiError-52"><span class="linenos">52</span></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+</span><span id="DeepgramApiError-53"><a href="#DeepgramApiError-53"><span class="linenos">53</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;DeepgramApiError&quot;</span>
+</span><span id="DeepgramApiError-54"><a href="#DeepgramApiError-54"><span class="linenos">54</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="n">status</span>
+</span><span id="DeepgramApiError-55"><a href="#DeepgramApiError-55"><span class="linenos">55</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">message</span> <span class="o">=</span> <span class="n">message</span>
+</span><span id="DeepgramApiError-56"><a href="#DeepgramApiError-56"><span class="linenos">56</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">original_error</span> <span class="o">=</span> <span class="n">original_error</span>
+</span><span id="DeepgramApiError-57"><a href="#DeepgramApiError-57"><span class="linenos">57</span></a>
+</span><span id="DeepgramApiError-58"><a href="#DeepgramApiError-58"><span class="linenos">58</span></a>    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="DeepgramApiError-59"><a href="#DeepgramApiError-59"><span class="linenos">59</span></a>        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">message</span><span class="si">}</span><span class="s2"> (Status: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">status</span><span class="si">}</span><span class="s2">)&quot;</span>
+</span></pre></div>
+
+
+            <div class="docstring"><p>Exception raised for known errors (in json response format) related to the Deepgram API.</p>
+
+<p>Attributes:
+    message (str): The error message describing the exception.
+    status (str): The HTTP status associated with the API error.
+    original_error (str - json): The original error that was raised.</p>
+</div>
+
+
+                            <div id="DeepgramApiError.__init__" class="classattr">
+                                        <input id="DeepgramApiError.__init__-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+<div class="attr function">
+            
+        <span class="name">DeepgramApiError</span><span class="signature pdoc-code condensed">(<span class="param"><span class="n">message</span><span class="p">:</span> <span class="nb">str</span>, </span><span class="param"><span class="n">status</span><span class="p">:</span> <span class="nb">str</span>, </span><span class="param"><span class="n">original_error</span><span class="o">=</span><span class="kc">None</span></span>)</span>
+
+                <label class="view-source-button" for="DeepgramApiError.__init__-view-source"><span>View Source</span></label>
+
+    </div>
+    <a class="headerlink" href="#DeepgramApiError.__init__"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="DeepgramApiError.__init__-51"><a href="#DeepgramApiError.__init__-51"><span class="linenos">51</span></a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">status</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">original_error</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+</span><span id="DeepgramApiError.__init__-52"><a href="#DeepgramApiError.__init__-52"><span class="linenos">52</span></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+</span><span id="DeepgramApiError.__init__-53"><a href="#DeepgramApiError.__init__-53"><span class="linenos">53</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;DeepgramApiError&quot;</span>
+</span><span id="DeepgramApiError.__init__-54"><a href="#DeepgramApiError.__init__-54"><span class="linenos">54</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="n">status</span>
+</span><span id="DeepgramApiError.__init__-55"><a href="#DeepgramApiError.__init__-55"><span class="linenos">55</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">message</span> <span class="o">=</span> <span class="n">message</span>
+</span><span id="DeepgramApiError.__init__-56"><a href="#DeepgramApiError.__init__-56"><span class="linenos">56</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">original_error</span> <span class="o">=</span> <span class="n">original_error</span>
+</span></pre></div>
+
+
+    
+
+                            </div>
+                            <div id="DeepgramApiError.name" class="classattr">
+                                <div class="attr variable">
+            <span class="name">name</span>
+
+        
+    </div>
+    <a class="headerlink" href="#DeepgramApiError.name"></a>
+    
+    
+
+                            </div>
+                            <div id="DeepgramApiError.status" class="classattr">
+                                <div class="attr variable">
+            <span class="name">status</span>
+
+        
+    </div>
+    <a class="headerlink" href="#DeepgramApiError.status"></a>
+    
+    
+
+                            </div>
+                            <div id="DeepgramApiError.message" class="classattr">
+                                <div class="attr variable">
+            <span class="name">message</span>
+
+        
+    </div>
+    <a class="headerlink" href="#DeepgramApiError.message"></a>
+    
+    
+
+                            </div>
+                            <div id="DeepgramApiError.original_error" class="classattr">
+                                <div class="attr variable">
+            <span class="name">original_error</span>
+
+        
+    </div>
+    <a class="headerlink" href="#DeepgramApiError.original_error"></a>
+    
+    
+
+                            </div>
+                            <div class="inherited">
+                                <h5>Inherited Members</h5>
+                                <dl>
+                                    <div><dt>builtins.BaseException</dt>
+                                <dd id="DeepgramApiError.with_traceback" class="function">with_traceback</dd>
+                <dd id="DeepgramApiError.add_note" class="function">add_note</dd>
+                <dd id="DeepgramApiError.args" class="variable">args</dd>
+
+            </div>
+                                </dl>
+                            </div>
+                </section>
+                <section id="DeepgramUnknownApiError">
+                            <input id="DeepgramUnknownApiError-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+<div class="attr class">
+            
+    <span class="def">class</span>
+    <span class="name">DeepgramUnknownApiError</span><wbr>(<span class="base"><a href="#DeepgramApiError">DeepgramApiError</a></span>):
+
+                <label class="view-source-button" for="DeepgramUnknownApiError-view-source"><span>View Source</span></label>
+
+    </div>
+    <a class="headerlink" href="#DeepgramUnknownApiError"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="DeepgramUnknownApiError-62"><a href="#DeepgramUnknownApiError-62"><span class="linenos">62</span></a><span class="k">class</span> <span class="nc">DeepgramUnknownApiError</span><span class="p">(</span><span class="n">DeepgramApiError</span><span class="p">):</span>
+</span><span id="DeepgramUnknownApiError-63"><a href="#DeepgramUnknownApiError-63"><span class="linenos">63</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="DeepgramUnknownApiError-64"><a href="#DeepgramUnknownApiError-64"><span class="linenos">64</span></a><span class="sd">    Exception raised for unknown errors related to the Deepgram API.</span>
+</span><span id="DeepgramUnknownApiError-65"><a href="#DeepgramUnknownApiError-65"><span class="linenos">65</span></a>
+</span><span id="DeepgramUnknownApiError-66"><a href="#DeepgramUnknownApiError-66"><span class="linenos">66</span></a><span class="sd">    Attributes:</span>
+</span><span id="DeepgramUnknownApiError-67"><a href="#DeepgramUnknownApiError-67"><span class="linenos">67</span></a><span class="sd">        message (str): The error message describing the exception.</span>
+</span><span id="DeepgramUnknownApiError-68"><a href="#DeepgramUnknownApiError-68"><span class="linenos">68</span></a><span class="sd">        status (str): The HTTP status associated with the API error.</span>
+</span><span id="DeepgramUnknownApiError-69"><a href="#DeepgramUnknownApiError-69"><span class="linenos">69</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="DeepgramUnknownApiError-70"><a href="#DeepgramUnknownApiError-70"><span class="linenos">70</span></a>
+</span><span id="DeepgramUnknownApiError-71"><a href="#DeepgramUnknownApiError-71"><span class="linenos">71</span></a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">status</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+</span><span id="DeepgramUnknownApiError-72"><a href="#DeepgramUnknownApiError-72"><span class="linenos">72</span></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">status</span><span class="p">)</span>
+</span><span id="DeepgramUnknownApiError-73"><a href="#DeepgramUnknownApiError-73"><span class="linenos">73</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;DeepgramUnknownApiError&quot;</span>
+</span><span id="DeepgramUnknownApiError-74"><a href="#DeepgramUnknownApiError-74"><span class="linenos">74</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="n">status</span>
+</span><span id="DeepgramUnknownApiError-75"><a href="#DeepgramUnknownApiError-75"><span class="linenos">75</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">message</span> <span class="o">=</span> <span class="n">message</span>
+</span><span id="DeepgramUnknownApiError-76"><a href="#DeepgramUnknownApiError-76"><span class="linenos">76</span></a>
+</span><span id="DeepgramUnknownApiError-77"><a href="#DeepgramUnknownApiError-77"><span class="linenos">77</span></a>    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="DeepgramUnknownApiError-78"><a href="#DeepgramUnknownApiError-78"><span class="linenos">78</span></a>        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">message</span><span class="si">}</span><span class="s2"> (Status: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">status</span><span class="si">}</span><span class="s2">)&quot;</span>
+</span></pre></div>
+
+
+            <div class="docstring"><p>Exception raised for unknown errors related to the Deepgram API.</p>
+
+<p>Attributes:
+    message (str): The error message describing the exception.
+    status (str): The HTTP status associated with the API error.</p>
+</div>
+
+
+                            <div id="DeepgramUnknownApiError.__init__" class="classattr">
+                                        <input id="DeepgramUnknownApiError.__init__-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+<div class="attr function">
+            
+        <span class="name">DeepgramUnknownApiError</span><span class="signature pdoc-code condensed">(<span class="param"><span class="n">message</span><span class="p">:</span> <span class="nb">str</span>, </span><span class="param"><span class="n">status</span><span class="p">:</span> <span class="nb">str</span></span>)</span>
+
+                <label class="view-source-button" for="DeepgramUnknownApiError.__init__-view-source"><span>View Source</span></label>
+
+    </div>
+    <a class="headerlink" href="#DeepgramUnknownApiError.__init__"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="DeepgramUnknownApiError.__init__-71"><a href="#DeepgramUnknownApiError.__init__-71"><span class="linenos">71</span></a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">status</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+</span><span id="DeepgramUnknownApiError.__init__-72"><a href="#DeepgramUnknownApiError.__init__-72"><span class="linenos">72</span></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">status</span><span class="p">)</span>
+</span><span id="DeepgramUnknownApiError.__init__-73"><a href="#DeepgramUnknownApiError.__init__-73"><span class="linenos">73</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;DeepgramUnknownApiError&quot;</span>
+</span><span id="DeepgramUnknownApiError.__init__-74"><a href="#DeepgramUnknownApiError.__init__-74"><span class="linenos">74</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="n">status</span>
+</span><span id="DeepgramUnknownApiError.__init__-75"><a href="#DeepgramUnknownApiError.__init__-75"><span class="linenos">75</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">message</span> <span class="o">=</span> <span class="n">message</span>
+</span></pre></div>
+
+
+    
+
+                            </div>
+                            <div id="DeepgramUnknownApiError.name" class="classattr">
+                                <div class="attr variable">
+            <span class="name">name</span>
+
+        
+    </div>
+    <a class="headerlink" href="#DeepgramUnknownApiError.name"></a>
+    
+    
+
+                            </div>
+                            <div id="DeepgramUnknownApiError.status" class="classattr">
+                                <div class="attr variable">
+            <span class="name">status</span>
+
+        
+    </div>
+    <a class="headerlink" href="#DeepgramUnknownApiError.status"></a>
+    
+    
+
+                            </div>
+                            <div id="DeepgramUnknownApiError.message" class="classattr">
+                                <div class="attr variable">
+            <span class="name">message</span>
+
+        
+    </div>
+    <a class="headerlink" href="#DeepgramUnknownApiError.message"></a>
+    
+    
+
+                            </div>
+                            <div class="inherited">
+                                <h5>Inherited Members</h5>
+                                <dl>
+                                    <div><dt><a href="#DeepgramApiError">DeepgramApiError</a></dt>
+                                <dd id="DeepgramUnknownApiError.original_error" class="variable"><a href="#DeepgramApiError.original_error">original_error</a></dd>
+
+            </div>
+            <div><dt>builtins.BaseException</dt>
+                                <dd id="DeepgramUnknownApiError.with_traceback" class="function">with_traceback</dd>
+                <dd id="DeepgramUnknownApiError.add_note" class="function">add_note</dd>
+                <dd id="DeepgramUnknownApiError.args" class="variable">args</dd>
 
             </div>
                                 </dl>

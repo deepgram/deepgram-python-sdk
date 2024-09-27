@@ -83,8 +83,8 @@
 </span><span id="L-9"><a href="#L-9"><span class="linenos">  9</span></a>
 </span><span id="L-10"><a href="#L-10"><span class="linenos"> 10</span></a><span class="kn">from</span> <span class="nn">....utils</span> <span class="kn">import</span> <span class="n">verboselogs</span>
 </span><span id="L-11"><a href="#L-11"><span class="linenos"> 11</span></a><span class="kn">from</span> <span class="nn">....options</span> <span class="kn">import</span> <span class="n">DeepgramClientOptions</span>
-</span><span id="L-12"><a href="#L-12"><span class="linenos"> 12</span></a><span class="kn">from</span> <span class="nn">...abstract_sync_client</span> <span class="kn">import</span> <span class="n">AbstractSyncRestClient</span>
-</span><span id="L-13"><a href="#L-13"><span class="linenos"> 13</span></a><span class="kn">from</span> <span class="nn">...common.v1.errors</span> <span class="kn">import</span> <span class="n">DeepgramError</span><span class="p">,</span> <span class="n">DeepgramTypeError</span>
+</span><span id="L-12"><a href="#L-12"><span class="linenos"> 12</span></a><span class="kn">from</span> <span class="nn">...common</span> <span class="kn">import</span> <span class="n">AbstractSyncRestClient</span>
+</span><span id="L-13"><a href="#L-13"><span class="linenos"> 13</span></a><span class="kn">from</span> <span class="nn">...common</span> <span class="kn">import</span> <span class="n">DeepgramError</span><span class="p">,</span> <span class="n">DeepgramTypeError</span>
 </span><span id="L-14"><a href="#L-14"><span class="linenos"> 14</span></a>
 </span><span id="L-15"><a href="#L-15"><span class="linenos"> 15</span></a><span class="kn">from</span> <span class="nn">.helpers</span> <span class="kn">import</span> <span class="n">is_buffer_source</span><span class="p">,</span> <span class="n">is_readstream_source</span><span class="p">,</span> <span class="n">is_url_source</span>
 </span><span id="L-16"><a href="#L-16"><span class="linenos"> 16</span></a><span class="kn">from</span> <span class="nn">.options</span> <span class="kn">import</span> <span class="p">(</span>
@@ -427,7 +427,7 @@
 <div class="attr class">
             
     <span class="def">class</span>
-    <span class="name">AnalyzeClient</span><wbr>(<span class="base"><a href="../../abstract_sync_client.html#AbstractSyncRestClient">deepgram.clients.abstract_sync_client.AbstractSyncRestClient</a></span>):
+    <span class="name">AnalyzeClient</span><wbr>(<span class="base"><a href="../../common/v1/abstract_sync_rest.html#AbstractSyncRestClient">deepgram.clients.common.v1.abstract_sync_rest.AbstractSyncRestClient</a></span>):
 
                 <label class="view-source-button" for="AnalyzeClient-view-source"><span>View Source</span></label>
 
@@ -1211,14 +1211,14 @@ Provides methods for transcribing text from URLs, files, etc.</p>
                             <div class="inherited">
                                 <h5>Inherited Members</h5>
                                 <dl>
-                                    <div><dt><a href="../../abstract_sync_client.html#AbstractSyncRestClient">deepgram.clients.abstract_sync_client.AbstractSyncRestClient</a></dt>
-                                <dd id="AnalyzeClient.get" class="function"><a href="../../abstract_sync_client.html#AbstractSyncRestClient.get">get</a></dd>
-                <dd id="AnalyzeClient.post_raw" class="function"><a href="../../abstract_sync_client.html#AbstractSyncRestClient.post_raw">post_raw</a></dd>
-                <dd id="AnalyzeClient.post_memory" class="function"><a href="../../abstract_sync_client.html#AbstractSyncRestClient.post_memory">post_memory</a></dd>
-                <dd id="AnalyzeClient.post" class="function"><a href="../../abstract_sync_client.html#AbstractSyncRestClient.post">post</a></dd>
-                <dd id="AnalyzeClient.put" class="function"><a href="../../abstract_sync_client.html#AbstractSyncRestClient.put">put</a></dd>
-                <dd id="AnalyzeClient.patch" class="function"><a href="../../abstract_sync_client.html#AbstractSyncRestClient.patch">patch</a></dd>
-                <dd id="AnalyzeClient.delete" class="function"><a href="../../abstract_sync_client.html#AbstractSyncRestClient.delete">delete</a></dd>
+                                    <div><dt><a href="../../common/v1/abstract_sync_rest.html#AbstractSyncRestClient">deepgram.clients.common.v1.abstract_sync_rest.AbstractSyncRestClient</a></dt>
+                                <dd id="AnalyzeClient.get" class="function"><a href="../../common/v1/abstract_sync_rest.html#AbstractSyncRestClient.get">get</a></dd>
+                <dd id="AnalyzeClient.post_raw" class="function"><a href="../../common/v1/abstract_sync_rest.html#AbstractSyncRestClient.post_raw">post_raw</a></dd>
+                <dd id="AnalyzeClient.post_memory" class="function"><a href="../../common/v1/abstract_sync_rest.html#AbstractSyncRestClient.post_memory">post_memory</a></dd>
+                <dd id="AnalyzeClient.post" class="function"><a href="../../common/v1/abstract_sync_rest.html#AbstractSyncRestClient.post">post</a></dd>
+                <dd id="AnalyzeClient.put" class="function"><a href="../../common/v1/abstract_sync_rest.html#AbstractSyncRestClient.put">put</a></dd>
+                <dd id="AnalyzeClient.patch" class="function"><a href="../../common/v1/abstract_sync_rest.html#AbstractSyncRestClient.patch">patch</a></dd>
+                <dd id="AnalyzeClient.delete" class="function"><a href="../../common/v1/abstract_sync_rest.html#AbstractSyncRestClient.delete">delete</a></dd>
 
             </div>
                                 </dl>
