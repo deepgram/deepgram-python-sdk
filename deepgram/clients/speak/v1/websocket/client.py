@@ -604,7 +604,7 @@ class SpeakWSClient(
 
         if self._speaker is None:
             self._logger.error("speaker is None. Return immediately")
-            return
+            raise DeepgramError("Speaker is not initialized")
 
         self._speaker.wait_for_complete()
         self._logger.notice("wait_for_complete succeeded")
