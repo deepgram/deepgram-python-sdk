@@ -4,4 +4,4 @@
 
 from .speaker import Speaker
 from .errors import DeepgramSpeakerError
-from .constants import LOGGING, CHANNELS, RATE, CHUNK
+from .constants import LOGGING, CHANNELS, RATE, CHUNK, PLAYBACK_DELTA

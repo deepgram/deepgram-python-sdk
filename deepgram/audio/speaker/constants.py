@@ -4,9 +4,12 @@
 
 from ...utils import verboselogs
 
-# Constants for microphone
+# Constants for speaker
 LOGGING = verboselogs.WARNING
 TIMEOUT = 0.050
 CHANNELS = 1
 RATE = 16000
 CHUNK = 8194
+
+# Constants for speaker
+PLAYBACK_DELTA = 2000

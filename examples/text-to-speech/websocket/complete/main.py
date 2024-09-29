@@ -93,11 +93,13 @@ def main():
 
         # send the text to Deepgram
         dg_connection.send_text(TTS_TEXT)
+
         # if auto_flush_speak_delta is not used, you must flush the connection by calling flush()
         dg_connection.flush()
 
         # Indicate that we've finished
-        time.sleep(5)
+        dg_connection.wait_for_complete()
+
         print("\n\nPress Enter to stop...\n\n")
         input()
 

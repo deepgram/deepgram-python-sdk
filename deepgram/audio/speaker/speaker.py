@@ -8,14 +8,17 @@ import queue
 import threading
 from typing import Optional, Callable, Union, TYPE_CHECKING
 import logging
+from datetime import datetime
 
 import websockets
 
 from ...utils import verboselogs
-from .constants import LOGGING, CHANNELS, RATE, CHUNK, TIMEOUT
+from .constants import LOGGING, CHANNELS, RATE, CHUNK, TIMEOUT, PLAYBACK_DELTA
 
 if TYPE_CHECKING:
     import pyaudio
+
+HALF_SECOND = 0.5
 
 
 class Speaker:  # pylint: disable=too-many-instance-attributes
@@ -32,6 +35,11 @@ class Speaker:  # pylint: disable=too-many-instance-attributes
     _rate: int
     _channels: int
     _output_device_index: Optional[int] = None
+
+    # last time we received audio
+    _last_datagram: datetime = datetime.now()
+    _last_play_delta_in_ms: int
+    _lock_wait: threading.Lock
 
     _queue: queue.Queue
     _exit: threading.Event
@@ -56,6 +64,7 @@ class Speaker:  # pylint: disable=too-many-instance-attributes
         rate: int = RATE,
         chunk: int = CHUNK,
         channels: int = CHANNELS,
+        last_play_delta_in_ms: int = PLAYBACK_DELTA,
         output_device_index: Optional[int] = None,
     ):  # pylint: disable=too-many-positional-arguments
         # dynamic import of pyaudio as not to force the requirements on the SDK (and users)
@@ -68,11 +77,15 @@ class Speaker:  # pylint: disable=too-many-instance-attributes
         self._exit = threading.Event()
         self._queue = queue.Queue()
 
+        self._last_datagram = datetime.now()
+        self._lock_wait = threading.Lock()
+
         self._audio = pyaudio.PyAudio()
         self._chunk = chunk
         self._rate = rate
         self._format = pyaudio.paInt16
         self._channels = channels
+        self._last_play_delta_in_ms = last_play_delta_in_ms
         self._output_device_index = output_device_index
 
         self._push_callback_org = push_callback
@@ -191,6 +204,42 @@ class Speaker:  # pylint: disable=too-many-instance-attributes
         self._logger.debug("Speaker.start LEAVE")
 
         return True
+
+    def wait_for_complete(self):
+        """
+        This method will block until the speak is done playing sound.
+        """
+        self._logger.debug("Speaker.wait_for_complete ENTER")
+
+        delta_in_ms = float(self._last_play_delta_in_ms)
+        self._logger.debug("Last Play delta: %f", delta_in_ms)
+
+        # set to now
+        with self._lock_wait:
+            self._last_datagram = datetime.now()
+
+        while True:
+            # sleep for a bit
+            self._exit.wait(HALF_SECOND)
+
+            # check if we should exit
+            if self._exit.is_set():
+                self._logger.debug("Exiting wait_for_complete _exit is set")
+                break
+
+            # check the time
+            with self._lock_wait:
+                delta = datetime.now() - self._last_datagram
+                diff_in_ms = delta.total_seconds() * 1000
+                if diff_in_ms < delta_in_ms:
+                    self._logger.debug("LastPlay delta is less than threshold")
+                    continue
+
+            # if we get here, we are done playing audio
+            self._logger.debug("LastPlay delta is greater than threshold. Exit wait!")
+            break
+
+        self._logger.debug("Speaker.wait_for_complete LEAVE")
 
     def _start_receiver(self):
         # Check if the socket is an asyncio WebSocket
@@ -315,6 +364,8 @@ class Speaker:  # pylint: disable=too-many-instance-attributes
         while not stop.is_set():
             try:
                 data = audio_out.get(True, TIMEOUT)
+                with self._lock_wait:
+                    self._last_datagram = datetime.now()
                 stream.write(data)
             except queue.Empty:
                 pass
