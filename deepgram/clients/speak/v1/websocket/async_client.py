@@ -27,7 +27,7 @@ from .response import (
 )
 from .options import SpeakWSOptions
 
-from .....audio.speaker import Speaker, RATE, CHANNELS
+from .....audio.speaker import Speaker, RATE, CHANNELS, PLAYBACK_DELTA
 
 ONE_SECOND = 1
 HALF_SECOND = 0.5
@@ -93,6 +93,11 @@ class AsyncSpeakWSClient(
             channels = self._config.options.get("speaker_playback_channels")
             if channels is None:
                 channels = CHANNELS
+            playback_delta_in_ms = self._config.options.get(
+                "speaker_playback_delta_in_ms"
+            )
+            if playback_delta_in_ms is None:
+                playback_delta_in_ms = PLAYBACK_DELTA
             device_index = self._config.options.get("speaker_playback_device_index")
 
             self._logger.debug("rate: %s", rate)
@@ -103,6 +108,7 @@ class AsyncSpeakWSClient(
                 self._speaker = Speaker(
                     rate=rate,
                     channels=channels,
+                    last_play_delta_in_ms=playback_delta_in_ms,
                     verbose=self._config.verbose,
                     output_device_index=device_index,
                 )
@@ -110,6 +116,7 @@ class AsyncSpeakWSClient(
                 self._speaker = Speaker(
                     rate=rate,
                     channels=channels,
+                    last_play_delta_in_ms=playback_delta_in_ms,
                     verbose=self._config.verbose,
                 )
 
@@ -589,6 +596,21 @@ class AsyncSpeakWSClient(
         self._logger.spam("AsyncSpeakWebSocketClient.clear LEAVE")
 
         return True
+
+    async def wait_for_complete(self):
+        """
+        This method will block until the speak is done playing sound.
+        """
+        self._logger.spam("AsyncSpeakWebSocketClient.wait_for_complete ENTER")
+
+        if self._speaker is None:
+            self._logger.error("speaker is None. Return immediately")
+            return
+
+        loop = asyncio.get_event_loop()
+        await loop.run_in_executor(None, self._speaker.wait_for_complete)
+        self._logger.notice("wait_for_complete succeeded")
+        self._logger.spam("AsyncSpeakWebSocketClient.wait_for_complete LEAVE")
 
     async def _close_message(self) -> bool:
         return await self.send_control(SpeakWebSocketMessage.Close)

@@ -27,7 +27,7 @@ from .response import (
 )
 from .options import SpeakWSOptions
 
-from .....audio.speaker import Speaker, RATE, CHANNELS
+from .....audio.speaker import Speaker, RATE, CHANNELS, PLAYBACK_DELTA
 
 ONE_SECOND = 1
 HALF_SECOND = 0.5
@@ -96,6 +96,11 @@ class SpeakWSClient(
             channels = self._config.options.get("speaker_playback_channels")
             if channels is None:
                 channels = CHANNELS
+            playback_delta_in_ms = self._config.options.get(
+                "speaker_playback_delta_in_ms"
+            )
+            if playback_delta_in_ms is None:
+                playback_delta_in_ms = PLAYBACK_DELTA
             device_index = self._config.options.get("speaker_playback_device_index")
 
             self._logger.debug("rate: %s", rate)
@@ -106,6 +111,7 @@ class SpeakWSClient(
                 self._speaker = Speaker(
                     rate=rate,
                     channels=channels,
+                    last_play_delta_in_ms=playback_delta_in_ms,
                     verbose=self._config.verbose,
                     output_device_index=device_index,
                 )
@@ -113,6 +119,7 @@ class SpeakWSClient(
                 self._speaker = Speaker(
                     rate=rate,
                     channels=channels,
+                    last_play_delta_in_ms=playback_delta_in_ms,
                     verbose=self._config.verbose,
                 )
 
@@ -588,6 +595,20 @@ class SpeakWSClient(
         self._logger.spam("SpeakWebSocketClient.clear LEAVE")
 
         return True
+
+    def wait_for_complete(self):
+        """
+        This method will block until the speak is done playing sound.
+        """
+        self._logger.spam("SpeakWebSocketClient.wait_for_complete ENTER")
+
+        if self._speaker is None:
+            self._logger.error("speaker is None. Return immediately")
+            raise DeepgramError("Speaker is not initialized")
+
+        self._speaker.wait_for_complete()
+        self._logger.notice("wait_for_complete succeeded")
+        self._logger.spam("SpeakWebSocketClient.wait_for_complete LEAVE")
 
     def _close_message(self) -> bool:
         return self.send_control(SpeakWebSocketMessage.Close)

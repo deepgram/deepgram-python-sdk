@@ -32,8 +32,11 @@ async def main():
 
         # example of setting up a client config. logging values: WARNING, VERBOSE, DEBUG, SPAM
         config: DeepgramClientOptions = DeepgramClientOptions(
-            options={"auto_flush_speak_delta": "500", "speaker_playback": "true"},
-            # verbose=verboselogs.SPAM,
+            options={
+                # "auto_flush_speak_delta": "500",
+                "speaker_playback": "true"
+            },
+            verbose=verboselogs.SPAM,
         )
         deepgram: DeepgramClient = DeepgramClient("", config)
 
@@ -99,11 +102,12 @@ async def main():
 
         # send the text to Deepgram
         await dg_connection.send_text(TTS_TEXT)
+
         # if auto_flush_speak_delta is not used, you must flush the connection by calling flush()
         await dg_connection.flush()
 
         # Indicate that we've finished
-        await asyncio.sleep(7)
+        await dg_connection.wait_for_complete()
 
         # Close the connection
         await dg_connection.finish()
