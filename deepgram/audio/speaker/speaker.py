@@ -50,7 +50,6 @@ class Speaker:  # pylint: disable=too-many-instance-attributes
     # _asyncio_loop: asyncio.AbstractEventLoop
     # _asyncio_thread: threading.Thread
     _receiver_thread: Optional[threading.Thread] = None
-
     _loop: Optional[asyncio.AbstractEventLoop] = None
 
     _push_callback_org: Optional[Callable] = None
@@ -265,6 +264,7 @@ class Speaker:  # pylint: disable=too-many-instance-attributes
                     await self._push_callback(message)
                 elif isinstance(message, bytes):
                     self._logger.verbose("Received audio data...")
+                    await self._push_callback(message)
                     self.add_audio_to_queue(message)
         except websockets.exceptions.ConnectionClosedOK as e:
             self._logger.debug("send() exiting gracefully: %d", e.code)
@@ -297,6 +297,7 @@ class Speaker:  # pylint: disable=too-many-instance-attributes
                     self._push_callback(message)
                 elif isinstance(message, bytes):
                     self._logger.verbose("Received audio data...")
+                    self._push_callback(message)
                     self.add_audio_to_queue(message)
         except Exception as e:  # pylint: disable=broad-except
             self._logger.notice("_start_threaded_receiver exception: %s", str(e))
@@ -365,6 +366,7 @@ class Speaker:  # pylint: disable=too-many-instance-attributes
                                 "LastPlay delta is greater than threshold. Unmute!"
                             )
                             self._microphone.unmute()
+
                 data = audio_out.get(True, TIMEOUT)
                 with self._lock_wait:
                     self._last_datagram = datetime.now()

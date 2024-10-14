@@ -9,6 +9,7 @@ from typing import Optional, Callable, Union, TYPE_CHECKING
 import logging
 
 from ...utils import verboselogs
+
 from .constants import LOGGING, CHANNELS, RATE, CHUNK
 
 if TYPE_CHECKING:
