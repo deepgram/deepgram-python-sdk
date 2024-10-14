@@ -15,6 +15,8 @@ import websockets
 from ...utils import verboselogs
 from .constants import LOGGING, CHANNELS, RATE, CHUNK, TIMEOUT, PLAYBACK_DELTA
 
+from ..microphone import Microphone
+
 if TYPE_CHECKING:
     import pyaudio
 
@@ -28,7 +30,7 @@ class Speaker:  # pylint: disable=too-many-instance-attributes
 
     _logger: verboselogs.VerboseLogger
 
-    _audio: "pyaudio.PyAudio"
+    _audio: Optional["pyaudio.PyAudio"] = None
     _stream: Optional["pyaudio.Stream"] = None
 
     _chunk: int
@@ -48,13 +50,14 @@ class Speaker:  # pylint: disable=too-many-instance-attributes
     # _asyncio_loop: asyncio.AbstractEventLoop
     # _asyncio_thread: threading.Thread
     _receiver_thread: Optional[threading.Thread] = None
-
     _loop: Optional[asyncio.AbstractEventLoop] = None
 
     _push_callback_org: Optional[Callable] = None
     _push_callback: Optional[Callable] = None
     _pull_callback_org: Optional[Callable] = None
     _pull_callback: Optional[Callable] = None
+
+    _microphone: Optional[Microphone] = None
 
     def __init__(
         self,
@@ -66,6 +69,7 @@ class Speaker:  # pylint: disable=too-many-instance-attributes
         channels: int = CHANNELS,
         last_play_delta_in_ms: int = PLAYBACK_DELTA,
         output_device_index: Optional[int] = None,
+        microphone: Optional[Microphone] = None,
     ):  # pylint: disable=too-many-positional-arguments
         # dynamic import of pyaudio as not to force the requirements on the SDK (and users)
         import pyaudio  # pylint: disable=import-outside-toplevel
@@ -79,6 +83,8 @@ class Speaker:  # pylint: disable=too-many-instance-attributes
 
         self._last_datagram = datetime.now()
         self._lock_wait = threading.Lock()
+
+        self._microphone = microphone
 
         self._audio = pyaudio.PyAudio()
         self._chunk = chunk
@@ -117,10 +123,6 @@ class Speaker:  # pylint: disable=too-many-instance-attributes
         """
         self._pull_callback_org = pull_callback
 
-    # def _start_asyncio_loop(self) -> None:
-    #     self._asyncio_loop = asyncio.new_event_loop()
-    #     self._asyncio_loop.run_forever()
-
     def start(self, active_loop: Optional[asyncio.AbstractEventLoop] = None) -> bool:
         """
         starts - starts the Speaker stream
@@ -147,44 +149,24 @@ class Speaker:  # pylint: disable=too-many-instance-attributes
         self._exit.clear()
         self._queue = queue.Queue()
 
-        self._stream = self._audio.open(
-            format=self._format,
-            channels=self._channels,
-            rate=self._rate,
-            input=False,
-            output=True,
-            frames_per_buffer=self._chunk,
-            output_device_index=self._output_device_index,
-        )
+        if self._audio is not None:
+            self._stream = self._audio.open(
+                format=self._format,
+                channels=self._channels,
+                rate=self._rate,
+                input=False,
+                output=True,
+                frames_per_buffer=self._chunk,
+                output_device_index=self._output_device_index,
+            )
+
+        if self._stream is None:
+            self._logger.error("start failed. No stream created.")
+            self._logger.debug("Speaker.start LEAVE")
+            return False
 
         self._push_callback = self._push_callback_org
         self._pull_callback = self._pull_callback_org
-
-        # if inspect.iscoroutinefunction(
-        #     self._push_callback_org
-        # ) or inspect.iscoroutinefunction(self._pull_callback_org):
-        #     self._logger.verbose("Starting asyncio loop...")
-        #     self._asyncio_thread = threading.Thread(target=self._start_asyncio_loop)
-        #     self._asyncio_thread.start()
-
-        # # determine if the push_callback is a coroutine
-        # if inspect.iscoroutinefunction(self._push_callback_org):
-        #     self._logger.verbose("async/await push callback")
-        #     self._push_callback = lambda data: asyncio.run_coroutine_threadsafe(
-        #         self._push_callback_org(data), self._asyncio_loop
-        #     ).result()
-        # else:
-        #     self._logger.verbose("threaded push callback")
-        #     self._push_callback = self._push_callback_org
-
-        # if inspect.iscoroutinefunction(self._pull_callback_org):
-        #     self._logger.verbose("async/await pull callback")
-        #     self._pull_callback = lambda: asyncio.run_coroutine_threadsafe(
-        #         self._pull_callback_org(), self._asyncio_loop
-        #     ).result()
-        # else:
-        #     self._logger.verbose("threaded pull callback")
-        #     self._pull_callback = self._pull_callback_org
 
         # start the play thread
         self._thread = threading.Thread(
@@ -193,7 +175,8 @@ class Speaker:  # pylint: disable=too-many-instance-attributes
         self._thread.start()
 
         # Start the stream
-        self._stream.start_stream()
+        if self._stream is not None:
+            self._stream.start_stream()
 
         # Start the receiver thread within the start function
         self._logger.verbose("Starting receiver thread...")
@@ -204,6 +187,20 @@ class Speaker:  # pylint: disable=too-many-instance-attributes
         self._logger.debug("Speaker.start LEAVE")
 
         return True
+
+    def wait_for_complete_with_mute(self, mic: Microphone):
+        """
+        This method will mute/unmute a Microphone and block until the speak is done playing sound.
+        """
+        self._logger.debug("Speaker.wait_for_complete ENTER")
+
+        if self._microphone is not None:
+            mic.mute()
+        self.wait_for_complete()
+        if self._microphone is not None:
+            mic.unmute()
+
+        self._logger.debug("Speaker.wait_for_complete LEAVE")
 
     def wait_for_complete(self):
         """
@@ -267,6 +264,7 @@ class Speaker:  # pylint: disable=too-many-instance-attributes
                     await self._push_callback(message)
                 elif isinstance(message, bytes):
                     self._logger.verbose("Received audio data...")
+                    await self._push_callback(message)
                     self.add_audio_to_queue(message)
         except websockets.exceptions.ConnectionClosedOK as e:
             self._logger.debug("send() exiting gracefully: %d", e.code)
@@ -299,6 +297,7 @@ class Speaker:  # pylint: disable=too-many-instance-attributes
                     self._push_callback(message)
                 elif isinstance(message, bytes):
                     self._logger.verbose("Received audio data...")
+                    self._push_callback(message)
                     self.add_audio_to_queue(message)
         except Exception as e:  # pylint: disable=broad-except
             self._logger.notice("_start_threaded_receiver exception: %s", str(e))
@@ -328,29 +327,24 @@ class Speaker:  # pylint: disable=too-many-instance-attributes
             self._logger.notice("stopping stream...")
             self._stream.stop_stream()
             self._stream.close()
-            self._stream = None
             self._logger.notice("stream stopped")
 
         if self._thread is not None:
-            self._logger.notice("joining thread...")
+            self._logger.notice("joining _thread...")
             self._thread.join()
-            self._thread = None
             self._logger.notice("thread stopped")
 
-        # if self._asyncio_thread is not None:
-        #     self._logger.notice("stopping asyncio loop...")
-        #     self._asyncio_loop.call_soon_threadsafe(self._asyncio_loop.stop)
-        #     self._asyncio_thread.join()
-        #     self._asyncio_thread = None
-        #     self._logger.notice("_asyncio_thread joined")
-
         if self._receiver_thread is not None:
-            self._logger.notice("stopping asyncio loop...")
+            self._logger.notice("stopping _receiver_thread...")
             self._receiver_thread.join()
-            self._receiver_thread = None
             self._logger.notice("_receiver_thread joined")
 
-        self._queue = None  # type: ignore
+        with self._queue.mutex:
+            self._queue.queue.clear()
+
+        self._stream = None
+        self._thread = None
+        self._receiver_thread = None
 
         self._logger.notice("finish succeeded")
         self._logger.debug("Speaker.finish LEAVE")
@@ -363,9 +357,22 @@ class Speaker:  # pylint: disable=too-many-instance-attributes
         """
         while not stop.is_set():
             try:
+                if self._microphone is not None and self._microphone.is_muted():
+                    with self._lock_wait:
+                        delta = datetime.now() - self._last_datagram
+                        diff_in_ms = delta.total_seconds() * 1000
+                        if diff_in_ms > float(self._last_play_delta_in_ms):
+                            self._logger.debug(
+                                "LastPlay delta is greater than threshold. Unmute!"
+                            )
+                            self._microphone.unmute()
+
                 data = audio_out.get(True, TIMEOUT)
                 with self._lock_wait:
                     self._last_datagram = datetime.now()
+                    if self._microphone is not None and not self._microphone.is_muted():
+                        self._logger.debug("New speaker sound detected. Mute!")
+                        self._microphone.mute()
                 stream.write(data)
             except queue.Empty:
                 pass
