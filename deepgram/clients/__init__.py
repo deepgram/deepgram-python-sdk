@@ -48,9 +48,10 @@ from .common import (
 )
 from .errors import DeepgramModuleError
 
-from .listen_router import Listen
-from .read_router import Read
-from .speak_router import Speak
+from .listen_router import ListenRouter
+from .read_router import ReadRouter
+from .speak_router import SpeakRouter
+from .agent_router import AgentRouter
 
 # listen
 from .listen import LiveTranscriptionEvents
@@ -317,4 +318,54 @@ from .selfhosted import (
     AsyncOnPremClient,
     SelfHostedClient,
     AsyncSelfHostedClient,
+)
+
+# agent
+from .agent import AgentWebSocketEvents
+
+# websocket
+from .agent import (
+    AgentWebSocketClient,
+    AsyncAgentWebSocketClient,
+)
+
+from .agent import (
+    #### common websocket response
+    # OpenResponse,
+    # CloseResponse,
+    # ErrorResponse,
+    # UnhandledResponse,
+    #### unique
+    WelcomeResponse,
+    SettingsAppliedResponse,
+    ConversationTextResponse,
+    UserStartedSpeakingResponse,
+    AgentThinkingResponse,
+    FunctionCallingResponse,
+    AgentStartedSpeakingResponse,
+    AgentAudioDoneResponse,
+    EndOfThoughtResponse,
+)
+
+from .agent import (
+    # top level
+    SettingsConfigurationOptions,
+    UpdateInstructionsOptions,
+    UpdateSpeakOptions,
+    InjectAgentMessageOptions,
+    # sub level
+    Listen,
+    Speak,
+    Header,
+    Item,
+    Properties,
+    Parameters,
+    Function,
+    Provider,
+    Think,
+    Agent,
+    Input,
+    Output,
+    Audio,
+    Context,
 )

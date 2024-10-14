@@ -34,7 +34,7 @@ from .client import (
 from .errors import DeepgramApiKeyError
 
 # listen/read client
-from .client import Listen, Read
+from .client import ListenRouter, ReadRouter, SpeakRouter, AgentRouter
 
 # common
 from .client import (
@@ -300,6 +300,57 @@ from .client import (
     AsyncOnPremClient,
     SelfHostedClient,
     AsyncSelfHostedClient,
+)
+
+
+# agent
+from .client import AgentWebSocketEvents
+
+# websocket
+from .client import (
+    AgentWebSocketClient,
+    AsyncAgentWebSocketClient,
+)
+
+from .client import (
+    #### common websocket response
+    # OpenResponse,
+    # CloseResponse,
+    # ErrorResponse,
+    # UnhandledResponse,
+    #### unique
+    WelcomeResponse,
+    SettingsAppliedResponse,
+    ConversationTextResponse,
+    UserStartedSpeakingResponse,
+    AgentThinkingResponse,
+    FunctionCallingResponse,
+    AgentStartedSpeakingResponse,
+    AgentAudioDoneResponse,
+    EndOfThoughtResponse,
+)
+
+from .client import (
+    # top level
+    SettingsConfigurationOptions,
+    UpdateInstructionsOptions,
+    UpdateSpeakOptions,
+    InjectAgentMessageOptions,
+    # sub level
+    Listen,
+    Speak,
+    Header,
+    Item,
+    Properties,
+    Parameters,
+    Function,
+    Provider,
+    Think,
+    Agent,
+    Input,
+    Output,
+    Audio,
+    Context,
 )
 
 # utilities
