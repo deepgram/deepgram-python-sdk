@@ -55,7 +55,7 @@ from .clients import (
 )
 
 # listen client
-from .clients import Listen, Read, Speak
+from .clients import ListenRouter, ReadRouter, SpeakRouter, AgentRouter
 
 # speech-to-text
 from .clients import LiveClient, AsyncLiveClient  # backward compat
@@ -308,6 +308,57 @@ from .clients import (
     AsyncSelfHostedClient,
 )
 
+
+# agent
+from .clients import AgentWebSocketEvents
+
+# websocket
+from .clients import (
+    AgentWebSocketClient,
+    AsyncAgentWebSocketClient,
+)
+
+from .clients import (
+    #### common websocket response
+    # OpenResponse,
+    # CloseResponse,
+    # ErrorResponse,
+    # UnhandledResponse,
+    #### unique
+    WelcomeResponse,
+    SettingsAppliedResponse,
+    ConversationTextResponse,
+    UserStartedSpeakingResponse,
+    AgentThinkingResponse,
+    FunctionCallingResponse,
+    AgentStartedSpeakingResponse,
+    AgentAudioDoneResponse,
+)
+
+from .clients import (
+    # top level
+    SettingsConfigurationOptions,
+    UpdateInstructionsOptions,
+    UpdateSpeakOptions,
+    InjectAgentMessageOptions,
+    # sub level
+    Listen,
+    Speak,
+    Header,
+    Item,
+    Properties,
+    Parameters,
+    Function,
+    Provider,
+    Think,
+    Agent,
+    Input,
+    Output,
+    Audio,
+    Context,
+)
+
+
 # client errors and options
 from .options import DeepgramClientOptions, ClientOptionsFromEnv
 from .errors import DeepgramApiKeyError
@@ -397,21 +448,21 @@ class DeepgramClient:
         """
         Returns a Listen dot-notation router for interacting with Deepgram's transcription services.
         """
-        return Listen(self._config)
+        return ListenRouter(self._config)
 
     @property
     def read(self):
         """
         Returns a Read dot-notation router for interacting with Deepgram's read services.
         """
-        return Read(self._config)
+        return ReadRouter(self._config)
 
     @property
     def speak(self):
         """
         Returns a Speak dot-notation router for interacting with Deepgram's speak services.
         """
-        return Speak(self._config)
+        return SpeakRouter(self._config)
 
     @property
     @deprecation.deprecated(
@@ -479,6 +530,13 @@ class DeepgramClient:
         Returns an AsyncSelfHostedClient instance for interacting with Deepgram's on-premises API.
         """
         return self.Version(self._config, "asyncselfhosted")
+
+    @property
+    def agent(self):
+        """
+        Returns a Agent dot-notation router for interacting with Deepgram's speak services.
+        """
+        return AgentRouter(self._config)
 
     # INTERNAL CLASSES
     class Version:
