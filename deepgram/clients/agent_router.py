@@ -10,7 +10,7 @@ from ..options import DeepgramClientOptions
 from .errors import DeepgramModuleError
 
 
-class ReadRouter:
+class AgentRouter:
     """
     Represents a client for interacting with the Deepgram API.
 
@@ -37,18 +37,18 @@ class ReadRouter:
         self._config = config
 
     @property
-    def analyze(self):
+    def websocket(self):
         """
-        Returns an AnalyzeClient instance for interacting with Deepgram's read services.
+        Returns an AgentWebSocketClient instance for interacting with Deepgram's Agent API.
         """
-        return self.Version(self._config, "analyze")
+        return self.Version(self._config, "websocket")
 
     @property
-    def asyncanalyze(self):
+    def asyncwebsocket(self):
         """
-        Returns an AsyncAnalyzeClient instance for interacting with Deepgram's read services.
+        Returns an AsyncAgentWebSocketClient instance for interacting with Deepgram's Agent API.
         """
-        return self.Version(self._config, "asyncanalyze")
+        return self.Version(self._config, "asyncwebsocket")
 
     # INTERNAL CLASSES
     class Version:
@@ -92,21 +92,21 @@ class ReadRouter:
             file_name = ""
             class_name = ""
             match self._parent:
-                case "analyze":
-                    parent = "analyze"
+                case "websocket":
+                    parent = "websocket"
                     file_name = "client"
-                    class_name = "AnalyzeClient"
-                case "asyncanalyze":
-                    parent = "analyze"
+                    class_name = "AgentWebSocketClient"
+                case "asyncwebsocket":
+                    parent = "websocket"
                     file_name = "async_client"
-                    class_name = "AsyncAnalyzeClient"
+                    class_name = "AsyncAgentWebSocketClient"
                 case _:
                     self._logger.error("parent unknown: %s", self._parent)
                     self._logger.debug("Version.v LEAVE")
                     raise DeepgramModuleError("Invalid parent type")
 
             # create class path
-            path = f"deepgram.clients.{parent}.v{version}.{file_name}"
+            path = f"deepgram.clients.agent.v{version}.{parent}.{file_name}"
             self._logger.info("path: %s", path)
             self._logger.info("class_name: %s", class_name)
 

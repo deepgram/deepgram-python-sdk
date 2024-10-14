@@ -18,14 +18,13 @@ from ..options import DeepgramClientOptions
 from .errors import DeepgramModuleError
 
 
-class Listen:
+class ListenRouter:
     """
     Represents a client for interacting with the Deepgram API.
 
     This class provides a client for making requests to the Deepgram API with various configuration options.
 
     Attributes:
-        api_key (str): The Deepgram API key used for authentication.
         config_options (DeepgramClientOptions): An optional configuration object specifying client options.
 
     Raises:
