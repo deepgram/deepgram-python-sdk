@@ -27,6 +27,7 @@ from .response import (
 )
 from .options import SpeakWSOptions
 
+from .....audio.microphone import Microphone
 from .....audio.speaker import Speaker, RATE, CHANNELS, PLAYBACK_DELTA
 
 ONE_SECOND = 1
@@ -62,9 +63,13 @@ class AsyncSpeakWSClient(
     _options: Optional[Dict] = None
     _headers: Optional[Dict] = None
 
+    _speaker_created: bool = False
     _speaker: Optional[Speaker] = None
+    _microphone: Optional[Microphone] = None
 
-    def __init__(self, config: DeepgramClientOptions):
+    def __init__(
+        self, config: DeepgramClientOptions, microphone: Optional[Microphone] = None
+    ):
         if config is None:
             raise DeepgramError("Config is required")
         self._logger = verboselogs.VerboseLogger(__name__)
@@ -79,6 +84,9 @@ class AsyncSpeakWSClient(
         # auto flush
         self._last_datagram = None
         self._flush_count = 0
+
+        # microphone
+        self._microphone = microphone
 
         # init handlers
         self._event_handlers = {
@@ -104,6 +112,8 @@ class AsyncSpeakWSClient(
             self._logger.debug("channels: %s", channels)
             self._logger.debug("device_index: %s", device_index)
 
+            self._speaker_created = True
+
             if device_index is not None:
                 self._speaker = Speaker(
                     rate=rate,
@@ -111,6 +121,7 @@ class AsyncSpeakWSClient(
                     last_play_delta_in_ms=playback_delta_in_ms,
                     verbose=self._config.verbose,
                     output_device_index=device_index,
+                    microphone=self._microphone,
                 )
             else:
                 self._speaker = Speaker(
@@ -118,6 +129,7 @@ class AsyncSpeakWSClient(
                     channels=channels,
                     last_play_delta_in_ms=playback_delta_in_ms,
                     verbose=self._config.verbose,
+                    microphone=self._microphone,
                 )
 
         # call the parent constructor
@@ -627,6 +639,10 @@ class AsyncSpeakWSClient(
             # call parent finish
             if await super().finish() is False:
                 self._logger.error("AsyncListenWebSocketClient.finish failed")
+
+            if self._speaker is not None and self._speaker_created:
+                self._speaker.finish()
+                self._speaker_created = False
 
             # Before cancelling, check if the tasks were created
             # debug the threads

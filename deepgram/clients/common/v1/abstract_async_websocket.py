@@ -84,7 +84,7 @@ class AbstractAsyncWebSocketClient(ABC):  # pylint: disable=too-many-instance-at
     # pylint: disable=too-many-branches,too-many-statements
     async def start(
         self,
-        options: Optional[Dict] = None,
+        options: Optional[Any] = None,
         addons: Optional[Dict] = None,
         headers: Optional[Dict] = None,
         **kwargs,
@@ -105,6 +105,11 @@ class AbstractAsyncWebSocketClient(ABC):  # pylint: disable=too-many-instance-at
             self._kwargs = kwargs
         else:
             self._kwargs = {}
+
+        if not isinstance(options, dict):
+            self._logger.error("options is not a dict")
+            self._logger.debug("AbstractSyncWebSocketClient.start LEAVE")
+            return False
 
         # set options
         if options is not None:
@@ -448,7 +453,10 @@ class AbstractAsyncWebSocketClient(ABC):  # pylint: disable=too-many-instance-at
 
             # debug the threads
             for thread in threading.enumerate():
-                self._logger.debug("after running thread: %s", thread.name)
+                if thread is not None and thread.name is not None:
+                    self._logger.debug("after running thread: %s", thread.name)
+                else:
+                    self._logger.debug("after running thread: unknown_thread_name")
             self._logger.debug("number of active threads: %s", threading.active_count())
 
             self._logger.notice("finish succeeded")

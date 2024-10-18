@@ -22,8 +22,8 @@ class Microphone:  # pylint: disable=too-many-instance-attributes
 
     _logger: verboselogs.VerboseLogger
 
-    _audio: "pyaudio.PyAudio"
-    _stream: "pyaudio.Stream"
+    _audio: Optional["pyaudio.PyAudio"] = None
+    _stream: Optional["pyaudio.Stream"] = None
 
     _chunk: int
     _rate: int
@@ -145,58 +145,30 @@ class Microphone:  # pylint: disable=too-many-instance-attributes
             self._asyncio_thread = None
             self._push_callback = self._push_callback_org
 
-        self._stream = self._audio.open(
-            format=self._format,
-            channels=self._channels,
-            rate=self._rate,
-            input=True,
-            frames_per_buffer=self._chunk,
-            input_device_index=self._input_device_index,
-            stream_callback=self._callback,
-        )
+        if self._audio is not None:
+            self._stream = self._audio.open(
+                format=self._format,
+                channels=self._channels,
+                rate=self._rate,
+                input=True,
+                output=False,
+                frames_per_buffer=self._chunk,
+                input_device_index=self._input_device_index,
+                stream_callback=self._callback,
+            )
+
+        if self._stream is None:
+            self._logger.error("start failed. No stream created.")
+            self._logger.debug("Microphone.start LEAVE")
+            return False
 
         self._exit.clear()
-        self._stream.start_stream()
+        if self._stream is not None:
+            self._stream.start_stream()
 
         self._logger.notice("start succeeded")
         self._logger.debug("Microphone.start LEAVE")
         return True
-
-    def _callback(
-        self, input_data, frame_count, time_info, status_flags
-    ):  # pylint: disable=unused-argument
-        """
-        The callback used to process data in callback mode.
-        """
-        # dynamic import of pyaudio as not to force the requirements on the SDK (and users)
-        import pyaudio  # pylint: disable=import-outside-toplevel
-
-        self._logger.debug("Microphone._callback ENTER")
-
-        if self._exit.is_set():
-            self._logger.info("exit is Set")
-            self._logger.notice("_callback stopping...")
-            self._logger.debug("Microphone._callback LEAVE")
-            return None, pyaudio.paAbort
-
-        if input_data is None:
-            self._logger.warning("input_data is None")
-            self._logger.debug("Microphone._callback LEAVE")
-            return None, pyaudio.paContinue
-
-        try:
-            if self._is_muted:
-                size = len(input_data)
-                input_data = b"\x00" * size
-
-            self._push_callback(input_data)
-        except Exception as e:
-            self._logger.error("Error while sending: %s", str(e))
-            self._logger.debug("Microphone._callback LEAVE")
-            raise
-
-        self._logger.debug("Microphone._callback LEAVE")
-        return input_data, pyaudio.paContinue
 
     def mute(self) -> bool:
         """
@@ -205,17 +177,17 @@ class Microphone:  # pylint: disable=too-many-instance-attributes
         Returns:
             bool: True if the stream was muted, False otherwise
         """
-        self._logger.debug("Microphone.mute ENTER")
+        self._logger.verbose("Microphone.mute ENTER")
 
         if self._stream is None:
             self._logger.error("mute failed. Library not initialized.")
-            self._logger.debug("Microphone.mute LEAVE")
+            self._logger.verbose("Microphone.mute LEAVE")
             return False
 
         self._is_muted = True
 
         self._logger.notice("mute succeeded")
-        self._logger.debug("Microphone.mute LEAVE")
+        self._logger.verbose("Microphone.mute LEAVE")
         return True
 
     def unmute(self) -> bool:
@@ -225,18 +197,41 @@ class Microphone:  # pylint: disable=too-many-instance-attributes
         Returns:
             bool: True if the stream was unmuted, False otherwise
         """
-        self._logger.debug("Microphone.unmute ENTER")
+        self._logger.verbose("Microphone.unmute ENTER")
 
         if self._stream is None:
             self._logger.error("unmute failed. Library not initialized.")
-            self._logger.debug("Microphone.unmute LEAVE")
+            self._logger.verbose("Microphone.unmute LEAVE")
             return False
 
         self._is_muted = False
 
         self._logger.notice("unmute succeeded")
-        self._logger.debug("Microphone.unmute LEAVE")
+        self._logger.verbose("Microphone.unmute LEAVE")
         return True
+
+    def is_muted(self) -> bool:
+        """
+        is_muted - returns the state of the stream
+
+        Args:
+            None
+
+        Returns:
+            True if the stream is muted, False otherwise
+        """
+        self._logger.spam("Microphone.is_muted ENTER")
+
+        if self._stream is None:
+            self._logger.spam("is_muted: stream is None")
+            self._logger.spam("Microphone.is_muted LEAVE")
+            return False
+
+        val = self._is_muted
+
+        self._logger.spam("is_muted: %s", val)
+        self._logger.spam("Microphone.is_muted LEAVE")
+        return val
 
     def finish(self) -> bool:
         """
@@ -255,7 +250,6 @@ class Microphone:  # pylint: disable=too-many-instance-attributes
             self._logger.notice("stopping stream...")
             self._stream.stop_stream()
             self._stream.close()
-            self._stream = None  # type: ignore
             self._logger.notice("stream stopped")
 
         # clean up the thread
@@ -265,13 +259,43 @@ class Microphone:  # pylint: disable=too-many-instance-attributes
             self._asyncio_thread
             is not None
         ):
-            self._logger.notice("stopping asyncio loop...")
+            self._logger.notice("stopping _asyncio_loop...")
             self._asyncio_loop.call_soon_threadsafe(self._asyncio_loop.stop)
             self._asyncio_thread.join()
-            self._asyncio_thread = None
             self._logger.notice("_asyncio_thread joined")
+        self._stream = None
+        self._asyncio_thread = None
 
         self._logger.notice("finish succeeded")
         self._logger.debug("Microphone.finish LEAVE")
 
         return True
+
+    def _callback(
+        self, input_data, frame_count, time_info, status_flags
+    ):  # pylint: disable=unused-argument
+        """
+        The callback used to process data in callback mode.
+        """
+        # dynamic import of pyaudio as not to force the requirements on the SDK (and users)
+        import pyaudio  # pylint: disable=import-outside-toplevel
+
+        if self._exit.is_set():
+            self._logger.notice("_callback exit is Set. stopping...")
+            return None, pyaudio.paAbort
+
+        if input_data is None:
+            self._logger.warning("input_data is None")
+            return None, pyaudio.paContinue
+
+        try:
+            if self._is_muted:
+                size = len(input_data)
+                input_data = b"\x00" * size
+
+            self._push_callback(input_data)
+        except Exception as e:
+            self._logger.error("Error while sending: %s", str(e))
+            raise
+
+        return input_data, pyaudio.paContinue

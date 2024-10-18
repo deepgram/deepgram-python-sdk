@@ -229,6 +229,13 @@ class AbstractAsyncRestClient:
                     method, _url, headers=_headers, **kwargs
                 )
                 response.raise_for_status()
+
+                # throw exception if response is None or response.text is None
+                if response is None or response.text is None:
+                    raise DeepgramError(
+                        "Response is not available yet. Please try again later."
+                    )
+
                 return response.text
 
         except httpx.HTTPError as e1:
