@@ -4,12 +4,13 @@
 
 import logging
 from typing import Dict, Union, Optional
+import json
 
 import httpx
 
 from ....utils import verboselogs
 from ....options import DeepgramClientOptions
-from ...common import AbstractSyncRestClient
+from ...common import AbstractSyncRestClient, DeepgramError
 
 from .response import (
     Message,
@@ -1003,6 +1004,14 @@ class ManageClient(
             url, timeout=timeout, addons=addons, headers=headers, **kwargs
         )
         self._logger.info("json: %s", result)
+
+        # convert str to JSON to check response field
+        json_result = json.loads(result)
+        if json_result.get("response") is None:
+            raise DeepgramError(
+                "Response is not available yet. Please try again later."
+            )
+
         res = UsageRequest.from_json(result)
         self._logger.verbose("result: %s", res)
         self._logger.notice("get_usage_request succeeded")
