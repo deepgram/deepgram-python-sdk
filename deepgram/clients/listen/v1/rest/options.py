@@ -91,6 +91,9 @@ class PrerecordedOptions(BaseResponse):  # pylint: disable=too-many-instance-att
     measurements: Optional[bool] = field(
         default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
+    mip_opt_out: Optional[bool] = field(
+        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
+    )
     model: Optional[str] = field(
         default="nova-2", metadata=dataclass_config(exclude=lambda f: f is None)
     )
