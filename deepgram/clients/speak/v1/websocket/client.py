@@ -326,7 +326,7 @@ class SpeakWSClient(
                     )
                 case SpeakWebSocketEvents.Cleared:
                     clear_result: ClearedResponse = ClearedResponse.from_json(message)
-                    self._logger.verbose("ClearedResponse: %s", meta_result)
+                    self._logger.verbose("ClearedResponse: %s", clear_result)
                     self._emit(
                         SpeakWebSocketEvents(SpeakWebSocketEvents.Cleared),
                         cleared=clear_result,
