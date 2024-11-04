@@ -256,12 +256,18 @@ class AbstractSyncWebSocketClient(ABC):  # pylint: disable=too-many-instance-att
                 self._logger.debug("AbstractSyncWebSocketClient._listening LEAVE")
 
             except websockets.exceptions.ConnectionClosedOK as e:
+                # signal exit and close
+                self._signal_exit()
+
                 self._logger.notice(f"_listening({e.code}) exiting gracefully")
                 self._logger.debug("AbstractSyncWebSocketClient._listening LEAVE")
                 return
 
             except websockets.exceptions.ConnectionClosed as e:
                 if e.code in [1000, 1001]:
+                    # signal exit and close
+                    self._signal_exit()
+
                     self._logger.notice(f"_listening({e.code}) exiting gracefully")
                     self._logger.debug("AbstractSyncWebSocketClient._listening LEAVE")
                     return

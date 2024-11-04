@@ -254,12 +254,18 @@ class AbstractAsyncWebSocketClient(ABC):  # pylint: disable=too-many-instance-at
                 self._logger.debug("AbstractAsyncWebSocketClient._listening LEAVE")
 
             except websockets.exceptions.ConnectionClosedOK as e:
+                # signal exit and close
+                await self._signal_exit()
+
                 self._logger.notice(f"_listening({e.code}) exiting gracefully")
                 self._logger.debug("AbstractAsyncWebSocketClient._listening LEAVE")
                 return
 
             except websockets.exceptions.ConnectionClosed as e:
                 if e.code in [1000, 1001]:
+                    # signal exit and close
+                    await self._signal_exit()
+
                     self._logger.notice(f"_listening({e.code}) exiting gracefully")
                     self._logger.debug("AbstractAsyncWebSocketClient._listening LEAVE")
                     return
@@ -466,7 +472,7 @@ class AbstractAsyncWebSocketClient(ABC):  # pylint: disable=too-many-instance-at
         except asyncio.CancelledError as e:
             self._logger.error("tasks cancelled error: %s", e)
             self._logger.debug("AbstractAsyncWebSocketClient.finish LEAVE")
-            return False
+            return True
 
     async def _signal_exit(self) -> None:
         # send close event
