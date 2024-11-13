@@ -94,7 +94,7 @@ print(f"response: {response}\n\n")
 
 ### Live Audio Transcription Quickstart
 
-You can find a [walkthrough](https://developers.deepgram.com/docs/live-streaming-audio-transcription) on our documentation site. Transcribing Live Audio can be done using the following sample code:
+You can find a [walkthrough](https://developers.deepgram.com/docs/python-sdk-streaming-transcription) on our documentation site. Transcribing Live Audio can be done using the following sample code:
 
 ```python
 deepgram: DeepgramClient = DeepgramClient()
