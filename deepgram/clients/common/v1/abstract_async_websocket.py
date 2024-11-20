@@ -136,7 +136,7 @@ class AbstractAsyncWebSocketClient(ABC):  # pylint: disable=too-many-instance-at
         try:
             self._socket = await websockets.connect(
                 url_with_params,
-                extra_headers=combined_headers,
+                additional_headers=combined_headers,
                 ping_interval=PING_INTERVAL,
             )
             self._exit_event.clear()
