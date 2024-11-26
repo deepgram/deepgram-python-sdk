@@ -1,7 +1,7 @@
 # pip install -r requirements.txt
 
 # standard libs
-websockets==12.*
+websockets==14.*
 httpx==0.*
 dataclasses-json==0.*
 dataclasses==0.*
