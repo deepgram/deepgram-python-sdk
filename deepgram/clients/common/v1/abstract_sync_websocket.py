@@ -59,7 +59,12 @@ class AbstractSyncWebSocketClient(ABC):  # pylint: disable=too-many-instance-att
     _options: Optional[Dict] = None
     _headers: Optional[Dict] = None
 
-    def __init__(self, config: DeepgramClientOptions, endpoint: str = "", thread_cls: Type[threading.Thread] = threading.Thread) -> None:
+    def __init__(
+        self,
+        config: DeepgramClientOptions,
+        endpoint: str = "",
+        thread_cls: Type[threading.Thread] = threading.Thread,
+    ):
         if config is None:
             raise DeepgramError("Config is required")
         if endpoint == "":

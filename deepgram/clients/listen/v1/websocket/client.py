@@ -62,7 +62,11 @@ class ListenWebSocketClient(
     _options: Optional[Dict] = None
     _headers: Optional[Dict] = None
 
-    def __init__(self, config: DeepgramClientOptions, thread_cls: Type[threading.Thread] = threading.Thread):
+    def __init__(
+        self,
+        config: DeepgramClientOptions,
+        thread_cls: Type[threading.Thread] = threading.Thread,
+    ):
         if config is None:
             raise DeepgramError("Config is required")
 
