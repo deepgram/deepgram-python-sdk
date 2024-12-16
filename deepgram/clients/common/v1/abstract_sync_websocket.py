@@ -4,7 +4,7 @@
 import json
 import time
 import logging
-from typing import Dict, Union, Optional, cast, Any, Callable
+from typing import Dict, Union, Optional, cast, Any, Callable, Type
 from datetime import datetime
 import threading
 from abc import ABC, abstractmethod
@@ -52,12 +52,14 @@ class AbstractSyncWebSocketClient(ABC):  # pylint: disable=too-many-instance-att
     _listen_thread: Union[threading.Thread, None]
     _delegate: Optional[Speaker] = None
 
+    _thread_cls: Type[threading.Thread]
+
     _kwargs: Optional[Dict] = None
     _addons: Optional[Dict] = None
     _options: Optional[Dict] = None
     _headers: Optional[Dict] = None
 
-    def __init__(self, config: DeepgramClientOptions, endpoint: str = ""):
+    def __init__(self, config: DeepgramClientOptions, endpoint: str = "", thread_cls: Type[threading.Thread] = threading.Thread) -> None:
         if config is None:
             raise DeepgramError("Config is required")
         if endpoint == "":
@@ -72,6 +74,8 @@ class AbstractSyncWebSocketClient(ABC):  # pylint: disable=too-many-instance-att
         self._lock_send = threading.Lock()
 
         self._listen_thread = None
+
+        self._thread_cls = thread_cls
 
         # exit
         self._exit_event = threading.Event()
@@ -152,7 +156,7 @@ class AbstractSyncWebSocketClient(ABC):  # pylint: disable=too-many-instance-att
                 self._delegate.set_push_callback(self._process_message)
             else:
                 self._logger.notice("create _listening thread")
-                self._listen_thread = threading.Thread(target=self._listening)
+                self._listen_thread = self._thread_cls(target=self._listening)
                 self._listen_thread.start()
 
             # debug the threads
