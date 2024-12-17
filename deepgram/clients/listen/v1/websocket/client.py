@@ -92,7 +92,11 @@ class ListenWebSocketClient(
         }
 
         # call the parent constructor
-        super().__init__(self._config, self._endpoint)
+        super().__init__(
+            config=self._config,
+            endpoint=self._endpoint,
+            thread_cls=self._thread_cls,
+        )
 
     # pylint: disable=too-many-statements,too-many-branches
     def start(
