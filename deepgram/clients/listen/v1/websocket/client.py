@@ -4,7 +4,7 @@
 import json
 import time
 import logging
-from typing import Dict, Union, Optional, cast, Any, Callable
+from typing import Dict, Union, Optional, cast, Any, Callable, Type
 from datetime import datetime
 import threading
 
@@ -55,12 +55,18 @@ class ListenWebSocketClient(
     _flush_thread: Union[threading.Thread, None]
     _last_datagram: Optional[datetime] = None
 
+    _thread_cls: Type[threading.Thread]
+
     _kwargs: Optional[Dict] = None
     _addons: Optional[Dict] = None
     _options: Optional[Dict] = None
     _headers: Optional[Dict] = None
 
-    def __init__(self, config: DeepgramClientOptions):
+    def __init__(
+        self,
+        config: DeepgramClientOptions,
+        thread_cls: Type[threading.Thread] = threading.Thread,
+    ):
         if config is None:
             raise DeepgramError("Config is required")
 
@@ -78,13 +84,19 @@ class ListenWebSocketClient(
         self._last_datagram = None
         self._lock_flush = threading.Lock()
 
+        self._thread_cls = thread_cls
+
         # init handlers
         self._event_handlers = {
             event: [] for event in LiveTranscriptionEvents.__members__.values()
         }
 
         # call the parent constructor
-        super().__init__(self._config, self._endpoint)
+        super().__init__(
+            config=self._config,
+            endpoint=self._endpoint,
+            thread_cls=self._thread_cls,
+        )
 
     # pylint: disable=too-many-statements,too-many-branches
     def start(
@@ -154,7 +166,7 @@ class ListenWebSocketClient(
             # keepalive thread
             if self._config.is_keep_alive_enabled():
                 self._logger.notice("keepalive is enabled")
-                self._keep_alive_thread = threading.Thread(target=self._keep_alive)
+                self._keep_alive_thread = self._thread_cls(target=self._keep_alive)
                 self._keep_alive_thread.start()
             else:
                 self._logger.notice("keepalive is disabled")
@@ -162,7 +174,7 @@ class ListenWebSocketClient(
             # flush thread
             if self._config.is_auto_flush_reply_enabled():
                 self._logger.notice("autoflush is enabled")
-                self._flush_thread = threading.Thread(target=self._flush)
+                self._flush_thread = self._thread_cls(target=self._flush)
                 self._flush_thread.start()
             else:
                 self._logger.notice("autoflush is disabled")
