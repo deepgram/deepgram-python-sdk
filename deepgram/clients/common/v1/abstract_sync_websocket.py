@@ -38,6 +38,12 @@ class AbstractSyncWebSocketClient(ABC):  # pylint: disable=too-many-instance-att
 
     This class provides methods to establish a WebSocket connection generically for
     use in all WebSocket clients.
+
+    Args:
+        config (DeepgramClientOptions): all the options for the client
+        endpoint (str): the endpoint to connect to
+        thread_cls (Type[threading.Thread]): optional thread class to use for creating threads,
+            defaults to threading.Thread. Useful for custom thread management like ContextVar support.
     """
 
     _logger: verboselogs.VerboseLogger

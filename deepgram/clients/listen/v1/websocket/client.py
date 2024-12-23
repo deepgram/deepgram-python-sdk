@@ -40,8 +40,10 @@ class ListenWebSocketClient(
 
      This class provides methods to establish a WebSocket connection for live transcription and handle real-time transcription events.
 
-     Args:
-         config (DeepgramClientOptions): all the options for the client.
+    Args:
+        config (DeepgramClientOptions): all the options for the client.
+        thread_cls (Type[threading.Thread]): optional thread class to use for creating threads,
+            defaults to threading.Thread. Useful for custom thread management like ContextVar support.
     """
 
     _logger: verboselogs.VerboseLogger
