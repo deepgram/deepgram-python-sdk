@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="generator" content="pdoc 15.0.0"/>
+    <meta name="generator" content="pdoc 15.0.1"/>
     <title>deepgram.client API documentation</title>
 
     <style>/*! * Bootstrap Reboot v5.0.0 (https://getbootstrap.com/) * Copyright 2011-2021 The Bootstrap Authors * Copyright 2011-2021 Twitter, Inc. * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE) * Forked from Normalize.css, licensed MIT (https://github.com/necolas/normalize.css/blob/master/LICENSE.md) */*,::after,::before{box-sizing:border-box}@media (prefers-reduced-motion:no-preference){:root{scroll-behavior:smooth}}body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans","Liberation Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";font-size:1rem;font-weight:400;line-height:1.5;color:#212529;background-color:#fff;-webkit-text-size-adjust:100%;-webkit-tap-highlight-color:transparent}hr{margin:1rem 0;color:inherit;background-color:currentColor;border:0;opacity:.25}hr:not([size]){height:1px}h1,h2,h3,h4,h5,h6{margin-top:0;margin-bottom:.5rem;font-weight:500;line-height:1.2}h1{font-size:calc(1.375rem + 1.5vw)}@media (min-width:1200px){h1{font-size:2.5rem}}h2{font-size:calc(1.325rem + .9vw)}@media (min-width:1200px){h2{font-size:2rem}}h3{font-size:calc(1.3rem + .6vw)}@media (min-width:1200px){h3{font-size:1.75rem}}h4{font-size:calc(1.275rem + .3vw)}@media (min-width:1200px){h4{font-size:1.5rem}}h5{font-size:1.25rem}h6{font-size:1rem}p{margin-top:0;margin-bottom:1rem}abbr[data-bs-original-title],abbr[title]{-webkit-text-decoration:underline dotted;text-decoration:underline dotted;cursor:help;-webkit-text-decoration-skip-ink:none;text-decoration-skip-ink:none}address{margin-bottom:1rem;font-style:normal;line-height:inherit}ol,ul{padding-left:2rem}dl,ol,ul{margin-top:0;margin-bottom:1rem}ol ol,ol ul,ul ol,ul ul{margin-bottom:0}dt{font-weight:700}dd{margin-bottom:.5rem;margin-left:0}blockquote{margin:0 0 1rem}b,strong{font-weight:bolder}small{font-size:.875em}mark{padding:.2em;background-color:#fcf8e3}sub,sup{position:relative;font-size:.75em;line-height:0;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}a{color:#0d6efd;text-decoration:underline}a:hover{color:#0a58ca}a:not([href]):not([class]),a:not([href]):not([class]):hover{color:inherit;text-decoration:none}code,kbd,pre,samp{font-family:SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;font-size:1em;direction:ltr;unicode-bidi:bidi-override}pre{display:block;margin-top:0;margin-bottom:1rem;overflow:auto;font-size:.875em}pre code{font-size:inherit;color:inherit;word-break:normal}code{font-size:.875em;color:#d63384;word-wrap:break-word}a>code{color:inherit}kbd{padding:.2rem .4rem;font-size:.875em;color:#fff;background-color:#212529;border-radius:.2rem}kbd kbd{padding:0;font-size:1em;font-weight:700}figure{margin:0 0 1rem}img,svg{vertical-align:middle}table{caption-side:bottom;border-collapse:collapse}caption{padding-top:.5rem;padding-bottom:.5rem;color:#6c757d;text-align:left}th{text-align:inherit;text-align:-webkit-match-parent}tbody,td,tfoot,th,thead,tr{border-color:inherit;border-style:solid;border-width:0}label{display:inline-block}button{border-radius:0}button:focus:not(:focus-visible){outline:0}button,input,optgroup,select,textarea{margin:0;font-family:inherit;font-size:inherit;line-height:inherit}button,select{text-transform:none}[role=button]{cursor:pointer}select{word-wrap:normal}select:disabled{opacity:1}[list]::-webkit-calendar-picker-indicator{display:none}[type=button],[type=reset],[type=submit],button{-webkit-appearance:button}[type=button]:not(:disabled),[type=reset]:not(:disabled),[type=submit]:not(:disabled),button:not(:disabled){cursor:pointer}::-moz-focus-inner{padding:0;border-style:none}textarea{resize:vertical}fieldset{min-width:0;padding:0;margin:0;border:0}legend{float:left;width:100%;padding:0;margin-bottom:.5rem;font-size:calc(1.275rem + .3vw);line-height:inherit}@media (min-width:1200px){legend{font-size:1.5rem}}legend+*{clear:left}::-webkit-datetime-edit-day-field,::-webkit-datetime-edit-fields-wrapper,::-webkit-datetime-edit-hour-field,::-webkit-datetime-edit-minute,::-webkit-datetime-edit-month-field,::-webkit-datetime-edit-text,::-webkit-datetime-edit-year-field{padding:0}::-webkit-inner-spin-button{height:auto}[type=search]{outline-offset:-2px;-webkit-appearance:textfield}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-color-swatch-wrapper{padding:0}::file-selector-button{font:inherit}::-webkit-file-upload-button{font:inherit;-webkit-appearance:button}output{display:inline-block}iframe{border:0}summary{display:list-item;cursor:pointer}progress{vertical-align:baseline}[hidden]{display:none!important}</style>
@@ -118,26 +118,26 @@
 </span><span id="L-2"><a href="#L-2"><span class="linenos">  2</span></a><span class="c1"># Use of this source code is governed by a MIT license that can be found in the LICENSE file.</span>
 </span><span id="L-3"><a href="#L-3"><span class="linenos">  3</span></a><span class="c1"># SPDX-License-Identifier: MIT</span>
 </span><span id="L-4"><a href="#L-4"><span class="linenos">  4</span></a>
-</span><span id="L-5"><a href="#L-5"><span class="linenos">  5</span></a><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span>
-</span><span id="L-6"><a href="#L-6"><span class="linenos">  6</span></a><span class="kn">from</span> <span class="nn">importlib</span> <span class="kn">import</span> <span class="n">import_module</span>
-</span><span id="L-7"><a href="#L-7"><span class="linenos">  7</span></a><span class="kn">import</span> <span class="nn">os</span>
-</span><span id="L-8"><a href="#L-8"><span class="linenos">  8</span></a><span class="kn">import</span> <span class="nn">logging</span>
-</span><span id="L-9"><a href="#L-9"><span class="linenos">  9</span></a><span class="kn">import</span> <span class="nn">deprecation</span>  <span class="c1"># type: ignore</span>
+</span><span id="L-5"><a href="#L-5"><span class="linenos">  5</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Optional</span>
+</span><span id="L-6"><a href="#L-6"><span class="linenos">  6</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">importlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">import_module</span>
+</span><span id="L-7"><a href="#L-7"><span class="linenos">  7</span></a><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+</span><span id="L-8"><a href="#L-8"><span class="linenos">  8</span></a><span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
+</span><span id="L-9"><a href="#L-9"><span class="linenos">  9</span></a><span class="kn">import</span><span class="w"> </span><span class="nn">deprecation</span>  <span class="c1"># type: ignore</span>
 </span><span id="L-10"><a href="#L-10"><span class="linenos"> 10</span></a>
-</span><span id="L-11"><a href="#L-11"><span class="linenos"> 11</span></a><span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">__version__</span>
-</span><span id="L-12"><a href="#L-12"><span class="linenos"> 12</span></a><span class="kn">from</span> <span class="nn">.utils</span> <span class="kn">import</span> <span class="n">verboselogs</span>
+</span><span id="L-11"><a href="#L-11"><span class="linenos"> 11</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">.</span><span class="w"> </span><span class="kn">import</span> <span class="n">__version__</span>
+</span><span id="L-12"><a href="#L-12"><span class="linenos"> 12</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">verboselogs</span>
 </span><span id="L-13"><a href="#L-13"><span class="linenos"> 13</span></a>
 </span><span id="L-14"><a href="#L-14"><span class="linenos"> 14</span></a><span class="c1"># common</span>
 </span><span id="L-15"><a href="#L-15"><span class="linenos"> 15</span></a><span class="c1"># pylint: disable=unused-import</span>
-</span><span id="L-16"><a href="#L-16"><span class="linenos"> 16</span></a><span class="kn">from</span> <span class="nn">.clients</span> <span class="kn">import</span> <span class="p">(</span>
+</span><span id="L-16"><a href="#L-16"><span class="linenos"> 16</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">.clients</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
 </span><span id="L-17"><a href="#L-17"><span class="linenos"> 17</span></a>    <span class="n">TextSource</span><span class="p">,</span>
 </span><span id="L-18"><a href="#L-18"><span class="linenos"> 18</span></a>    <span class="n">BufferSource</span><span class="p">,</span>
 </span><span id="L-19"><a href="#L-19"><span class="linenos"> 19</span></a>    <span class="n">StreamSource</span><span class="p">,</span>
 </span><span id="L-20"><a href="#L-20"><span class="linenos"> 20</span></a>    <span class="n">FileSource</span><span class="p">,</span>
 </span><span id="L-21"><a href="#L-21"><span class="linenos"> 21</span></a>    <span class="n">UrlSource</span><span class="p">,</span>
 </span><span id="L-22"><a href="#L-22"><span class="linenos"> 22</span></a><span class="p">)</span>
-</span><span id="L-23"><a href="#L-23"><span class="linenos"> 23</span></a><span class="kn">from</span> <span class="nn">.clients</span> <span class="kn">import</span> <span class="n">BaseResponse</span>
-</span><span id="L-24"><a href="#L-24"><span class="linenos"> 24</span></a><span class="kn">from</span> <span class="nn">.clients</span> <span class="kn">import</span> <span class="p">(</span>
+</span><span id="L-23"><a href="#L-23"><span class="linenos"> 23</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">.clients</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaseResponse</span>
+</span><span id="L-24"><a href="#L-24"><span class="linenos"> 24</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">.clients</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
 </span><span id="L-25"><a href="#L-25"><span class="linenos"> 25</span></a>    <span class="n">Average</span><span class="p">,</span>
 </span><span id="L-26"><a href="#L-26"><span class="linenos"> 26</span></a>    <span class="n">Intent</span><span class="p">,</span>
 </span><span id="L-27"><a href="#L-27"><span class="linenos"> 27</span></a>    <span class="n">Intents</span><span class="p">,</span>
@@ -151,18 +151,18 @@
 </span><span id="L-35"><a href="#L-35"><span class="linenos"> 35</span></a>    <span class="n">Topics</span><span class="p">,</span>
 </span><span id="L-36"><a href="#L-36"><span class="linenos"> 36</span></a>    <span class="n">TopicsInfo</span><span class="p">,</span>
 </span><span id="L-37"><a href="#L-37"><span class="linenos"> 37</span></a><span class="p">)</span>
-</span><span id="L-38"><a href="#L-38"><span class="linenos"> 38</span></a><span class="kn">from</span> <span class="nn">.clients</span> <span class="kn">import</span> <span class="p">(</span>
+</span><span id="L-38"><a href="#L-38"><span class="linenos"> 38</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">.clients</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
 </span><span id="L-39"><a href="#L-39"><span class="linenos"> 39</span></a>    <span class="n">ModelInfo</span><span class="p">,</span>
 </span><span id="L-40"><a href="#L-40"><span class="linenos"> 40</span></a>    <span class="n">Hit</span><span class="p">,</span>
 </span><span id="L-41"><a href="#L-41"><span class="linenos"> 41</span></a>    <span class="n">Search</span><span class="p">,</span>
 </span><span id="L-42"><a href="#L-42"><span class="linenos"> 42</span></a><span class="p">)</span>
-</span><span id="L-43"><a href="#L-43"><span class="linenos"> 43</span></a><span class="kn">from</span> <span class="nn">.clients</span> <span class="kn">import</span> <span class="p">(</span>
+</span><span id="L-43"><a href="#L-43"><span class="linenos"> 43</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">.clients</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
 </span><span id="L-44"><a href="#L-44"><span class="linenos"> 44</span></a>    <span class="n">OpenResponse</span><span class="p">,</span>
 </span><span id="L-45"><a href="#L-45"><span class="linenos"> 45</span></a>    <span class="n">CloseResponse</span><span class="p">,</span>
 </span><span id="L-46"><a href="#L-46"><span class="linenos"> 46</span></a>    <span class="n">UnhandledResponse</span><span class="p">,</span>
 </span><span id="L-47"><a href="#L-47"><span class="linenos"> 47</span></a>    <span class="n">ErrorResponse</span><span class="p">,</span>
 </span><span id="L-48"><a href="#L-48"><span class="linenos"> 48</span></a><span class="p">)</span>
-</span><span id="L-49"><a href="#L-49"><span class="linenos"> 49</span></a><span class="kn">from</span> <span class="nn">.clients</span> <span class="kn">import</span> <span class="p">(</span>
+</span><span id="L-49"><a href="#L-49"><span class="linenos"> 49</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">.clients</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
 </span><span id="L-50"><a href="#L-50"><span class="linenos"> 50</span></a>    <span class="n">DeepgramError</span><span class="p">,</span>
 </span><span id="L-51"><a href="#L-51"><span class="linenos"> 51</span></a>    <span class="n">DeepgramTypeError</span><span class="p">,</span>
 </span><span id="L-52"><a href="#L-52"><span class="linenos"> 52</span></a>    <span class="n">DeepgramModuleError</span><span class="p">,</span>
@@ -171,22 +171,22 @@
 </span><span id="L-55"><a href="#L-55"><span class="linenos"> 55</span></a><span class="p">)</span>
 </span><span id="L-56"><a href="#L-56"><span class="linenos"> 56</span></a>
 </span><span id="L-57"><a href="#L-57"><span class="linenos"> 57</span></a><span class="c1"># listen client</span>
-</span><span id="L-58"><a href="#L-58"><span class="linenos"> 58</span></a><span class="kn">from</span> <span class="nn">.clients</span> <span class="kn">import</span> <span class="n">Listen</span><span class="p">,</span> <span class="n">Read</span><span class="p">,</span> <span class="n">Speak</span>
+</span><span id="L-58"><a href="#L-58"><span class="linenos"> 58</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">.clients</span><span class="w"> </span><span class="kn">import</span> <span class="n">Listen</span><span class="p">,</span> <span class="n">Read</span><span class="p">,</span> <span class="n">Speak</span>
 </span><span id="L-59"><a href="#L-59"><span class="linenos"> 59</span></a>
 </span><span id="L-60"><a href="#L-60"><span class="linenos"> 60</span></a><span class="c1"># speech-to-text</span>
-</span><span id="L-61"><a href="#L-61"><span class="linenos"> 61</span></a><span class="kn">from</span> <span class="nn">.clients</span> <span class="kn">import</span> <span class="n">LiveClient</span><span class="p">,</span> <span class="n">AsyncLiveClient</span>  <span class="c1"># backward compat</span>
-</span><span id="L-62"><a href="#L-62"><span class="linenos"> 62</span></a><span class="kn">from</span> <span class="nn">.clients</span> <span class="kn">import</span> <span class="p">(</span>
+</span><span id="L-61"><a href="#L-61"><span class="linenos"> 61</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">.clients</span><span class="w"> </span><span class="kn">import</span> <span class="n">LiveClient</span><span class="p">,</span> <span class="n">AsyncLiveClient</span>  <span class="c1"># backward compat</span>
+</span><span id="L-62"><a href="#L-62"><span class="linenos"> 62</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">.clients</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
 </span><span id="L-63"><a href="#L-63"><span class="linenos"> 63</span></a>    <span class="n">ListenWebSocketClient</span><span class="p">,</span>
 </span><span id="L-64"><a href="#L-64"><span class="linenos"> 64</span></a>    <span class="n">AsyncListenWebSocketClient</span><span class="p">,</span>
 </span><span id="L-65"><a href="#L-65"><span class="linenos"> 65</span></a><span class="p">)</span>
-</span><span id="L-66"><a href="#L-66"><span class="linenos"> 66</span></a><span class="kn">from</span> <span class="nn">.clients</span> <span class="kn">import</span> <span class="p">(</span>
+</span><span id="L-66"><a href="#L-66"><span class="linenos"> 66</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">.clients</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
 </span><span id="L-67"><a href="#L-67"><span class="linenos"> 67</span></a>    <span class="n">ListenWebSocketOptions</span><span class="p">,</span>
 </span><span id="L-68"><a href="#L-68"><span class="linenos"> 68</span></a>    <span class="n">LiveOptions</span><span class="p">,</span>
 </span><span id="L-69"><a href="#L-69"><span class="linenos"> 69</span></a>    <span class="n">LiveTranscriptionEvents</span><span class="p">,</span>
 </span><span id="L-70"><a href="#L-70"><span class="linenos"> 70</span></a><span class="p">)</span>
 </span><span id="L-71"><a href="#L-71"><span class="linenos"> 71</span></a>
 </span><span id="L-72"><a href="#L-72"><span class="linenos"> 72</span></a><span class="c1"># live client responses</span>
-</span><span id="L-73"><a href="#L-73"><span class="linenos"> 73</span></a><span class="kn">from</span> <span class="nn">.clients</span> <span class="kn">import</span> <span class="p">(</span>
+</span><span id="L-73"><a href="#L-73"><span class="linenos"> 73</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">.clients</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
 </span><span id="L-74"><a href="#L-74"><span class="linenos"> 74</span></a>    <span class="c1">#### top level</span>
 </span><span id="L-75"><a href="#L-75"><span class="linenos"> 75</span></a>    <span class="n">LiveResultResponse</span><span class="p">,</span>
 </span><span id="L-76"><a href="#L-76"><span class="linenos"> 76</span></a>    <span class="n">ListenWSMetadataResponse</span><span class="p">,</span>
@@ -205,7 +205,7 @@
 </span><span id="L-89"><a href="#L-89"><span class="linenos"> 89</span></a><span class="p">)</span>
 </span><span id="L-90"><a href="#L-90"><span class="linenos"> 90</span></a>
 </span><span id="L-91"><a href="#L-91"><span class="linenos"> 91</span></a><span class="c1"># prerecorded</span>
-</span><span id="L-92"><a href="#L-92"><span class="linenos"> 92</span></a><span class="kn">from</span> <span class="nn">.clients</span> <span class="kn">import</span> <span class="p">(</span>
+</span><span id="L-92"><a href="#L-92"><span class="linenos"> 92</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">.clients</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
 </span><span id="L-93"><a href="#L-93"><span class="linenos"> 93</span></a>    <span class="c1"># common</span>
 </span><span id="L-94"><a href="#L-94"><span class="linenos"> 94</span></a>    <span class="c1"># UrlSource,</span>
 </span><span id="L-95"><a href="#L-95"><span class="linenos"> 95</span></a>    <span class="c1"># BufferSource,</span>
@@ -218,21 +218,21 @@
 </span><span id="L-102"><a href="#L-102"><span class="linenos">102</span></a>    <span class="n">ListenRestSource</span><span class="p">,</span>
 </span><span id="L-103"><a href="#L-103"><span class="linenos">103</span></a><span class="p">)</span>
 </span><span id="L-104"><a href="#L-104"><span class="linenos">104</span></a>
-</span><span id="L-105"><a href="#L-105"><span class="linenos">105</span></a><span class="kn">from</span> <span class="nn">.clients</span> <span class="kn">import</span> <span class="p">(</span>
+</span><span id="L-105"><a href="#L-105"><span class="linenos">105</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">.clients</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
 </span><span id="L-106"><a href="#L-106"><span class="linenos">106</span></a>    <span class="n">PreRecordedClient</span><span class="p">,</span>
 </span><span id="L-107"><a href="#L-107"><span class="linenos">107</span></a>    <span class="n">AsyncPreRecordedClient</span><span class="p">,</span>
 </span><span id="L-108"><a href="#L-108"><span class="linenos">108</span></a><span class="p">)</span>  <span class="c1"># backward compat</span>
-</span><span id="L-109"><a href="#L-109"><span class="linenos">109</span></a><span class="kn">from</span> <span class="nn">.clients</span> <span class="kn">import</span> <span class="p">(</span>
+</span><span id="L-109"><a href="#L-109"><span class="linenos">109</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">.clients</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
 </span><span id="L-110"><a href="#L-110"><span class="linenos">110</span></a>    <span class="n">ListenRESTClient</span><span class="p">,</span>
 </span><span id="L-111"><a href="#L-111"><span class="linenos">111</span></a>    <span class="n">AsyncListenRESTClient</span><span class="p">,</span>
 </span><span id="L-112"><a href="#L-112"><span class="linenos">112</span></a><span class="p">)</span>
-</span><span id="L-113"><a href="#L-113"><span class="linenos">113</span></a><span class="kn">from</span> <span class="nn">.clients</span> <span class="kn">import</span> <span class="p">(</span>
+</span><span id="L-113"><a href="#L-113"><span class="linenos">113</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">.clients</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
 </span><span id="L-114"><a href="#L-114"><span class="linenos">114</span></a>    <span class="n">ListenRESTOptions</span><span class="p">,</span>
 </span><span id="L-115"><a href="#L-115"><span class="linenos">115</span></a>    <span class="n">PrerecordedOptions</span><span class="p">,</span>
 </span><span id="L-116"><a href="#L-116"><span class="linenos">116</span></a><span class="p">)</span>
 </span><span id="L-117"><a href="#L-117"><span class="linenos">117</span></a>
 </span><span id="L-118"><a href="#L-118"><span class="linenos">118</span></a><span class="c1"># rest client responses</span>
-</span><span id="L-119"><a href="#L-119"><span class="linenos">119</span></a><span class="kn">from</span> <span class="nn">.clients</span> <span class="kn">import</span> <span class="p">(</span>
+</span><span id="L-119"><a href="#L-119"><span class="linenos">119</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">.clients</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
 </span><span id="L-120"><a href="#L-120"><span class="linenos">120</span></a>    <span class="c1">#### top level</span>
 </span><span id="L-121"><a href="#L-121"><span class="linenos">121</span></a>    <span class="n">AsyncPrerecordedResponse</span><span class="p">,</span>
 </span><span id="L-122"><a href="#L-122"><span class="linenos">122</span></a>    <span class="n">PrerecordedResponse</span><span class="p">,</span>
@@ -276,16 +276,16 @@
 </span><span id="L-160"><a href="#L-160"><span class="linenos">160</span></a><span class="p">)</span>
 </span><span id="L-161"><a href="#L-161"><span class="linenos">161</span></a>
 </span><span id="L-162"><a href="#L-162"><span class="linenos">162</span></a><span class="c1"># read</span>
-</span><span id="L-163"><a href="#L-163"><span class="linenos">163</span></a><span class="kn">from</span> <span class="nn">.clients</span> <span class="kn">import</span> <span class="n">ReadClient</span><span class="p">,</span> <span class="n">AsyncReadClient</span>
-</span><span id="L-164"><a href="#L-164"><span class="linenos">164</span></a><span class="kn">from</span> <span class="nn">.clients</span> <span class="kn">import</span> <span class="n">AnalyzeClient</span><span class="p">,</span> <span class="n">AsyncAnalyzeClient</span>
-</span><span id="L-165"><a href="#L-165"><span class="linenos">165</span></a><span class="kn">from</span> <span class="nn">.clients</span> <span class="kn">import</span> <span class="p">(</span>
+</span><span id="L-163"><a href="#L-163"><span class="linenos">163</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">.clients</span><span class="w"> </span><span class="kn">import</span> <span class="n">ReadClient</span><span class="p">,</span> <span class="n">AsyncReadClient</span>
+</span><span id="L-164"><a href="#L-164"><span class="linenos">164</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">.clients</span><span class="w"> </span><span class="kn">import</span> <span class="n">AnalyzeClient</span><span class="p">,</span> <span class="n">AsyncAnalyzeClient</span>
+</span><span id="L-165"><a href="#L-165"><span class="linenos">165</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">.clients</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
 </span><span id="L-166"><a href="#L-166"><span class="linenos">166</span></a>    <span class="n">AnalyzeOptions</span><span class="p">,</span>
 </span><span id="L-167"><a href="#L-167"><span class="linenos">167</span></a>    <span class="n">AnalyzeStreamSource</span><span class="p">,</span>
 </span><span id="L-168"><a href="#L-168"><span class="linenos">168</span></a>    <span class="n">AnalyzeSource</span><span class="p">,</span>
 </span><span id="L-169"><a href="#L-169"><span class="linenos">169</span></a><span class="p">)</span>
 </span><span id="L-170"><a href="#L-170"><span class="linenos">170</span></a>
 </span><span id="L-171"><a href="#L-171"><span class="linenos">171</span></a><span class="c1"># read client responses</span>
-</span><span id="L-172"><a href="#L-172"><span class="linenos">172</span></a><span class="kn">from</span> <span class="nn">.clients</span> <span class="kn">import</span> <span class="p">(</span>
+</span><span id="L-172"><a href="#L-172"><span class="linenos">172</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">.clients</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
 </span><span id="L-173"><a href="#L-173"><span class="linenos">173</span></a>    <span class="c1">#### top level</span>
 </span><span id="L-174"><a href="#L-174"><span class="linenos">174</span></a>    <span class="n">AsyncAnalyzeResponse</span><span class="p">,</span>
 </span><span id="L-175"><a href="#L-175"><span class="linenos">175</span></a>    <span class="n">SyncAnalyzeResponse</span><span class="p">,</span>
@@ -311,7 +311,7 @@
 </span><span id="L-195"><a href="#L-195"><span class="linenos">195</span></a>
 </span><span id="L-196"><a href="#L-196"><span class="linenos">196</span></a><span class="c1"># speak</span>
 </span><span id="L-197"><a href="#L-197"><span class="linenos">197</span></a><span class="c1">## speak REST</span>
-</span><span id="L-198"><a href="#L-198"><span class="linenos">198</span></a><span class="kn">from</span> <span class="nn">.clients</span> <span class="kn">import</span> <span class="p">(</span>
+</span><span id="L-198"><a href="#L-198"><span class="linenos">198</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">.clients</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
 </span><span id="L-199"><a href="#L-199"><span class="linenos">199</span></a>    <span class="c1">#### top level</span>
 </span><span id="L-200"><a href="#L-200"><span class="linenos">200</span></a>    <span class="n">SpeakRESTOptions</span><span class="p">,</span>
 </span><span id="L-201"><a href="#L-201"><span class="linenos">201</span></a>    <span class="n">SpeakOptions</span><span class="p">,</span>  <span class="c1"># backward compat</span>
@@ -326,32 +326,32 @@
 </span><span id="L-210"><a href="#L-210"><span class="linenos">210</span></a>    <span class="n">SpeakRESTSource</span><span class="p">,</span>
 </span><span id="L-211"><a href="#L-211"><span class="linenos">211</span></a><span class="p">)</span>
 </span><span id="L-212"><a href="#L-212"><span class="linenos">212</span></a>
-</span><span id="L-213"><a href="#L-213"><span class="linenos">213</span></a><span class="kn">from</span> <span class="nn">.clients</span> <span class="kn">import</span> <span class="p">(</span>
+</span><span id="L-213"><a href="#L-213"><span class="linenos">213</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">.clients</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
 </span><span id="L-214"><a href="#L-214"><span class="linenos">214</span></a>    <span class="n">SpeakClient</span><span class="p">,</span>  <span class="c1"># backward compat</span>
 </span><span id="L-215"><a href="#L-215"><span class="linenos">215</span></a>    <span class="n">SpeakRESTClient</span><span class="p">,</span>
 </span><span id="L-216"><a href="#L-216"><span class="linenos">216</span></a>    <span class="n">AsyncSpeakRESTClient</span><span class="p">,</span>
 </span><span id="L-217"><a href="#L-217"><span class="linenos">217</span></a><span class="p">)</span>
 </span><span id="L-218"><a href="#L-218"><span class="linenos">218</span></a>
-</span><span id="L-219"><a href="#L-219"><span class="linenos">219</span></a><span class="kn">from</span> <span class="nn">.clients</span> <span class="kn">import</span> <span class="p">(</span>
+</span><span id="L-219"><a href="#L-219"><span class="linenos">219</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">.clients</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
 </span><span id="L-220"><a href="#L-220"><span class="linenos">220</span></a>    <span class="n">SpeakResponse</span><span class="p">,</span>  <span class="c1"># backward compat</span>
 </span><span id="L-221"><a href="#L-221"><span class="linenos">221</span></a>    <span class="n">SpeakRESTResponse</span><span class="p">,</span>
 </span><span id="L-222"><a href="#L-222"><span class="linenos">222</span></a><span class="p">)</span>
 </span><span id="L-223"><a href="#L-223"><span class="linenos">223</span></a>
 </span><span id="L-224"><a href="#L-224"><span class="linenos">224</span></a><span class="c1">## speak WebSocket</span>
-</span><span id="L-225"><a href="#L-225"><span class="linenos">225</span></a><span class="kn">from</span> <span class="nn">.clients</span> <span class="kn">import</span> <span class="n">SpeakWebSocketEvents</span><span class="p">,</span> <span class="n">SpeakWebSocketMessage</span>
+</span><span id="L-225"><a href="#L-225"><span class="linenos">225</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">.clients</span><span class="w"> </span><span class="kn">import</span> <span class="n">SpeakWebSocketEvents</span><span class="p">,</span> <span class="n">SpeakWebSocketMessage</span>
 </span><span id="L-226"><a href="#L-226"><span class="linenos">226</span></a>
-</span><span id="L-227"><a href="#L-227"><span class="linenos">227</span></a><span class="kn">from</span> <span class="nn">.clients</span> <span class="kn">import</span> <span class="p">(</span>
+</span><span id="L-227"><a href="#L-227"><span class="linenos">227</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">.clients</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
 </span><span id="L-228"><a href="#L-228"><span class="linenos">228</span></a>    <span class="n">SpeakWSOptions</span><span class="p">,</span>
 </span><span id="L-229"><a href="#L-229"><span class="linenos">229</span></a><span class="p">)</span>
 </span><span id="L-230"><a href="#L-230"><span class="linenos">230</span></a>
-</span><span id="L-231"><a href="#L-231"><span class="linenos">231</span></a><span class="kn">from</span> <span class="nn">.clients</span> <span class="kn">import</span> <span class="p">(</span>
+</span><span id="L-231"><a href="#L-231"><span class="linenos">231</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">.clients</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
 </span><span id="L-232"><a href="#L-232"><span class="linenos">232</span></a>    <span class="n">SpeakWebSocketClient</span><span class="p">,</span>
 </span><span id="L-233"><a href="#L-233"><span class="linenos">233</span></a>    <span class="n">AsyncSpeakWebSocketClient</span><span class="p">,</span>
 </span><span id="L-234"><a href="#L-234"><span class="linenos">234</span></a>    <span class="n">SpeakWSClient</span><span class="p">,</span>
 </span><span id="L-235"><a href="#L-235"><span class="linenos">235</span></a>    <span class="n">AsyncSpeakWSClient</span><span class="p">,</span>
 </span><span id="L-236"><a href="#L-236"><span class="linenos">236</span></a><span class="p">)</span>
 </span><span id="L-237"><a href="#L-237"><span class="linenos">237</span></a>
-</span><span id="L-238"><a href="#L-238"><span class="linenos">238</span></a><span class="kn">from</span> <span class="nn">.clients</span> <span class="kn">import</span> <span class="p">(</span>
+</span><span id="L-238"><a href="#L-238"><span class="linenos">238</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">.clients</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
 </span><span id="L-239"><a href="#L-239"><span class="linenos">239</span></a>    <span class="c1">#### top level</span>
 </span><span id="L-240"><a href="#L-240"><span class="linenos">240</span></a>    <span class="n">SpeakWSMetadataResponse</span><span class="p">,</span>
 </span><span id="L-241"><a href="#L-241"><span class="linenos">241</span></a>    <span class="n">FlushedResponse</span><span class="p">,</span>
@@ -365,8 +365,8 @@
 </span><span id="L-249"><a href="#L-249"><span class="linenos">249</span></a><span class="p">)</span>
 </span><span id="L-250"><a href="#L-250"><span class="linenos">250</span></a>
 </span><span id="L-251"><a href="#L-251"><span class="linenos">251</span></a><span class="c1"># manage client classes/input</span>
-</span><span id="L-252"><a href="#L-252"><span class="linenos">252</span></a><span class="kn">from</span> <span class="nn">.clients</span> <span class="kn">import</span> <span class="n">ManageClient</span><span class="p">,</span> <span class="n">AsyncManageClient</span>
-</span><span id="L-253"><a href="#L-253"><span class="linenos">253</span></a><span class="kn">from</span> <span class="nn">.clients</span> <span class="kn">import</span> <span class="p">(</span>
+</span><span id="L-252"><a href="#L-252"><span class="linenos">252</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">.clients</span><span class="w"> </span><span class="kn">import</span> <span class="n">ManageClient</span><span class="p">,</span> <span class="n">AsyncManageClient</span>
+</span><span id="L-253"><a href="#L-253"><span class="linenos">253</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">.clients</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
 </span><span id="L-254"><a href="#L-254"><span class="linenos">254</span></a>    <span class="n">ProjectOptions</span><span class="p">,</span>
 </span><span id="L-255"><a href="#L-255"><span class="linenos">255</span></a>    <span class="n">KeyOptions</span><span class="p">,</span>
 </span><span id="L-256"><a href="#L-256"><span class="linenos">256</span></a>    <span class="n">ScopeOptions</span><span class="p">,</span>
@@ -377,7 +377,7 @@
 </span><span id="L-261"><a href="#L-261"><span class="linenos">261</span></a><span class="p">)</span>
 </span><span id="L-262"><a href="#L-262"><span class="linenos">262</span></a>
 </span><span id="L-263"><a href="#L-263"><span class="linenos">263</span></a><span class="c1"># manage client responses</span>
-</span><span id="L-264"><a href="#L-264"><span class="linenos">264</span></a><span class="kn">from</span> <span class="nn">.clients</span> <span class="kn">import</span> <span class="p">(</span>
+</span><span id="L-264"><a href="#L-264"><span class="linenos">264</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">.clients</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
 </span><span id="L-265"><a href="#L-265"><span class="linenos">265</span></a>    <span class="c1">#### top level</span>
 </span><span id="L-266"><a href="#L-266"><span class="linenos">266</span></a>    <span class="n">Message</span><span class="p">,</span>
 </span><span id="L-267"><a href="#L-267"><span class="linenos">267</span></a>    <span class="n">ProjectsResponse</span><span class="p">,</span>
@@ -417,7 +417,7 @@
 </span><span id="L-301"><a href="#L-301"><span class="linenos">301</span></a><span class="p">)</span>
 </span><span id="L-302"><a href="#L-302"><span class="linenos">302</span></a>
 </span><span id="L-303"><a href="#L-303"><span class="linenos">303</span></a><span class="c1"># on-prem</span>
-</span><span id="L-304"><a href="#L-304"><span class="linenos">304</span></a><span class="kn">from</span> <span class="nn">.clients</span> <span class="kn">import</span> <span class="p">(</span>
+</span><span id="L-304"><a href="#L-304"><span class="linenos">304</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">.clients</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
 </span><span id="L-305"><a href="#L-305"><span class="linenos">305</span></a>    <span class="n">OnPremClient</span><span class="p">,</span>
 </span><span id="L-306"><a href="#L-306"><span class="linenos">306</span></a>    <span class="n">AsyncOnPremClient</span><span class="p">,</span>
 </span><span id="L-307"><a href="#L-307"><span class="linenos">307</span></a>    <span class="n">SelfHostedClient</span><span class="p">,</span>
@@ -425,18 +425,18 @@
 </span><span id="L-309"><a href="#L-309"><span class="linenos">309</span></a><span class="p">)</span>
 </span><span id="L-310"><a href="#L-310"><span class="linenos">310</span></a>
 </span><span id="L-311"><a href="#L-311"><span class="linenos">311</span></a><span class="c1"># client errors and options</span>
-</span><span id="L-312"><a href="#L-312"><span class="linenos">312</span></a><span class="kn">from</span> <span class="nn">.options</span> <span class="kn">import</span> <span class="n">DeepgramClientOptions</span><span class="p">,</span> <span class="n">ClientOptionsFromEnv</span>
-</span><span id="L-313"><a href="#L-313"><span class="linenos">313</span></a><span class="kn">from</span> <span class="nn">.errors</span> <span class="kn">import</span> <span class="n">DeepgramApiKeyError</span>
+</span><span id="L-312"><a href="#L-312"><span class="linenos">312</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">.options</span><span class="w"> </span><span class="kn">import</span> <span class="n">DeepgramClientOptions</span><span class="p">,</span> <span class="n">ClientOptionsFromEnv</span>
+</span><span id="L-313"><a href="#L-313"><span class="linenos">313</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">.errors</span><span class="w"> </span><span class="kn">import</span> <span class="n">DeepgramApiKeyError</span>
 </span><span id="L-314"><a href="#L-314"><span class="linenos">314</span></a>
 </span><span id="L-315"><a href="#L-315"><span class="linenos">315</span></a><span class="c1"># pylint: enable=unused-import</span>
 </span><span id="L-316"><a href="#L-316"><span class="linenos">316</span></a>
 </span><span id="L-317"><a href="#L-317"><span class="linenos">317</span></a>
-</span><span id="L-318"><a href="#L-318"><span class="linenos">318</span></a><span class="k">class</span> <span class="nc">Deepgram</span><span class="p">:</span>  <span class="c1"># pylint: disable=broad-exception-raised</span>
+</span><span id="L-318"><a href="#L-318"><span class="linenos">318</span></a><span class="k">class</span><span class="w"> </span><span class="nc">Deepgram</span><span class="p">:</span>  <span class="c1"># pylint: disable=broad-exception-raised</span>
 </span><span id="L-319"><a href="#L-319"><span class="linenos">319</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="L-320"><a href="#L-320"><span class="linenos">320</span></a><span class="sd">    The Deepgram class is no longer a class in version 3 of this SDK.</span>
 </span><span id="L-321"><a href="#L-321"><span class="linenos">321</span></a><span class="sd">    &quot;&quot;&quot;</span>
 </span><span id="L-322"><a href="#L-322"><span class="linenos">322</span></a>
-</span><span id="L-323"><a href="#L-323"><span class="linenos">323</span></a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">anything</span><span class="p">):</span>
+</span><span id="L-323"><a href="#L-323"><span class="linenos">323</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">anything</span><span class="p">):</span>
 </span><span id="L-324"><a href="#L-324"><span class="linenos">324</span></a>        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
 </span><span id="L-325"><a href="#L-325"><span class="linenos">325</span></a><span class="w">            </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="L-326"><a href="#L-326"><span class="linenos">326</span></a><span class="sd">            FATAL ERROR:</span>
@@ -458,7 +458,7 @@
 </span><span id="L-342"><a href="#L-342"><span class="linenos">342</span></a>        <span class="p">)</span>
 </span><span id="L-343"><a href="#L-343"><span class="linenos">343</span></a>
 </span><span id="L-344"><a href="#L-344"><span class="linenos">344</span></a>
-</span><span id="L-345"><a href="#L-345"><span class="linenos">345</span></a><span class="k">class</span> <span class="nc">DeepgramClient</span><span class="p">:</span>
+</span><span id="L-345"><a href="#L-345"><span class="linenos">345</span></a><span class="k">class</span><span class="w"> </span><span class="nc">DeepgramClient</span><span class="p">:</span>
 </span><span id="L-346"><a href="#L-346"><span class="linenos">346</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="L-347"><a href="#L-347"><span class="linenos">347</span></a><span class="sd">    Represents a client for interacting with the Deepgram API.</span>
 </span><span id="L-348"><a href="#L-348"><span class="linenos">348</span></a>
@@ -484,7 +484,7 @@
 </span><span id="L-368"><a href="#L-368"><span class="linenos">368</span></a>    <span class="n">_config</span><span class="p">:</span> <span class="n">DeepgramClientOptions</span>
 </span><span id="L-369"><a href="#L-369"><span class="linenos">369</span></a>    <span class="n">_logger</span><span class="p">:</span> <span class="n">verboselogs</span><span class="o">.</span><span class="n">VerboseLogger</span>
 </span><span id="L-370"><a href="#L-370"><span class="linenos">370</span></a>
-</span><span id="L-371"><a href="#L-371"><span class="linenos">371</span></a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+</span><span id="L-371"><a href="#L-371"><span class="linenos">371</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
 </span><span id="L-372"><a href="#L-372"><span class="linenos">372</span></a>        <span class="bp">self</span><span class="p">,</span>
 </span><span id="L-373"><a href="#L-373"><span class="linenos">373</span></a>        <span class="n">api_key</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
 </span><span id="L-374"><a href="#L-374"><span class="linenos">374</span></a>        <span class="n">config</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">DeepgramClientOptions</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -509,21 +509,21 @@
 </span><span id="L-393"><a href="#L-393"><span class="linenos">393</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">_config</span> <span class="o">=</span> <span class="n">config</span>
 </span><span id="L-394"><a href="#L-394"><span class="linenos">394</span></a>
 </span><span id="L-395"><a href="#L-395"><span class="linenos">395</span></a>    <span class="nd">@property</span>
-</span><span id="L-396"><a href="#L-396"><span class="linenos">396</span></a>    <span class="k">def</span> <span class="nf">listen</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="L-396"><a href="#L-396"><span class="linenos">396</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">listen</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 </span><span id="L-397"><a href="#L-397"><span class="linenos">397</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="L-398"><a href="#L-398"><span class="linenos">398</span></a><span class="sd">        Returns a Listen dot-notation router for interacting with Deepgram&#39;s transcription services.</span>
 </span><span id="L-399"><a href="#L-399"><span class="linenos">399</span></a><span class="sd">        &quot;&quot;&quot;</span>
 </span><span id="L-400"><a href="#L-400"><span class="linenos">400</span></a>        <span class="k">return</span> <span class="n">Listen</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="p">)</span>
 </span><span id="L-401"><a href="#L-401"><span class="linenos">401</span></a>
 </span><span id="L-402"><a href="#L-402"><span class="linenos">402</span></a>    <span class="nd">@property</span>
-</span><span id="L-403"><a href="#L-403"><span class="linenos">403</span></a>    <span class="k">def</span> <span class="nf">read</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="L-403"><a href="#L-403"><span class="linenos">403</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">read</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 </span><span id="L-404"><a href="#L-404"><span class="linenos">404</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="L-405"><a href="#L-405"><span class="linenos">405</span></a><span class="sd">        Returns a Read dot-notation router for interacting with Deepgram&#39;s read services.</span>
 </span><span id="L-406"><a href="#L-406"><span class="linenos">406</span></a><span class="sd">        &quot;&quot;&quot;</span>
 </span><span id="L-407"><a href="#L-407"><span class="linenos">407</span></a>        <span class="k">return</span> <span class="n">Read</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="p">)</span>
 </span><span id="L-408"><a href="#L-408"><span class="linenos">408</span></a>
 </span><span id="L-409"><a href="#L-409"><span class="linenos">409</span></a>    <span class="nd">@property</span>
-</span><span id="L-410"><a href="#L-410"><span class="linenos">410</span></a>    <span class="k">def</span> <span class="nf">speak</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="L-410"><a href="#L-410"><span class="linenos">410</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">speak</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 </span><span id="L-411"><a href="#L-411"><span class="linenos">411</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="L-412"><a href="#L-412"><span class="linenos">412</span></a><span class="sd">        Returns a Speak dot-notation router for interacting with Deepgram&#39;s speak services.</span>
 </span><span id="L-413"><a href="#L-413"><span class="linenos">413</span></a><span class="sd">        &quot;&quot;&quot;</span>
@@ -536,21 +536,21 @@
 </span><span id="L-420"><a href="#L-420"><span class="linenos">420</span></a>        <span class="n">current_version</span><span class="o">=</span><span class="n">__version__</span><span class="p">,</span>
 </span><span id="L-421"><a href="#L-421"><span class="linenos">421</span></a>        <span class="n">details</span><span class="o">=</span><span class="s2">&quot;deepgram.asyncspeak is deprecated. Use deepgram.speak.asyncrest instead.&quot;</span><span class="p">,</span>
 </span><span id="L-422"><a href="#L-422"><span class="linenos">422</span></a>    <span class="p">)</span>
-</span><span id="L-423"><a href="#L-423"><span class="linenos">423</span></a>    <span class="k">def</span> <span class="nf">asyncspeak</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="L-423"><a href="#L-423"><span class="linenos">423</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">asyncspeak</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 </span><span id="L-424"><a href="#L-424"><span class="linenos">424</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="L-425"><a href="#L-425"><span class="linenos">425</span></a><span class="sd">        DEPRECATED: deepgram.asyncspeak is deprecated. Use deepgram.speak.asyncrest instead.</span>
 </span><span id="L-426"><a href="#L-426"><span class="linenos">426</span></a><span class="sd">        &quot;&quot;&quot;</span>
 </span><span id="L-427"><a href="#L-427"><span class="linenos">427</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">Version</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="p">,</span> <span class="s2">&quot;asyncspeak&quot;</span><span class="p">)</span>
 </span><span id="L-428"><a href="#L-428"><span class="linenos">428</span></a>
 </span><span id="L-429"><a href="#L-429"><span class="linenos">429</span></a>    <span class="nd">@property</span>
-</span><span id="L-430"><a href="#L-430"><span class="linenos">430</span></a>    <span class="k">def</span> <span class="nf">manage</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="L-430"><a href="#L-430"><span class="linenos">430</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">manage</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 </span><span id="L-431"><a href="#L-431"><span class="linenos">431</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="L-432"><a href="#L-432"><span class="linenos">432</span></a><span class="sd">        Returns a ManageClient instance for managing Deepgram resources.</span>
 </span><span id="L-433"><a href="#L-433"><span class="linenos">433</span></a><span class="sd">        &quot;&quot;&quot;</span>
 </span><span id="L-434"><a href="#L-434"><span class="linenos">434</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">Version</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="p">,</span> <span class="s2">&quot;manage&quot;</span><span class="p">)</span>
 </span><span id="L-435"><a href="#L-435"><span class="linenos">435</span></a>
 </span><span id="L-436"><a href="#L-436"><span class="linenos">436</span></a>    <span class="nd">@property</span>
-</span><span id="L-437"><a href="#L-437"><span class="linenos">437</span></a>    <span class="k">def</span> <span class="nf">asyncmanage</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="L-437"><a href="#L-437"><span class="linenos">437</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">asyncmanage</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 </span><span id="L-438"><a href="#L-438"><span class="linenos">438</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="L-439"><a href="#L-439"><span class="linenos">439</span></a><span class="sd">        Returns an AsyncManageClient instance for managing Deepgram resources.</span>
 </span><span id="L-440"><a href="#L-440"><span class="linenos">440</span></a><span class="sd">        &quot;&quot;&quot;</span>
@@ -563,14 +563,14 @@
 </span><span id="L-447"><a href="#L-447"><span class="linenos">447</span></a>        <span class="n">current_version</span><span class="o">=</span><span class="n">__version__</span><span class="p">,</span>
 </span><span id="L-448"><a href="#L-448"><span class="linenos">448</span></a>        <span class="n">details</span><span class="o">=</span><span class="s2">&quot;deepgram.onprem is deprecated. Use deepgram.speak.selfhosted instead.&quot;</span><span class="p">,</span>
 </span><span id="L-449"><a href="#L-449"><span class="linenos">449</span></a>    <span class="p">)</span>
-</span><span id="L-450"><a href="#L-450"><span class="linenos">450</span></a>    <span class="k">def</span> <span class="nf">onprem</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="L-450"><a href="#L-450"><span class="linenos">450</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">onprem</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 </span><span id="L-451"><a href="#L-451"><span class="linenos">451</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="L-452"><a href="#L-452"><span class="linenos">452</span></a><span class="sd">        DEPRECATED: deepgram.onprem is deprecated. Use deepgram.speak.selfhosted instead.</span>
 </span><span id="L-453"><a href="#L-453"><span class="linenos">453</span></a><span class="sd">        &quot;&quot;&quot;</span>
 </span><span id="L-454"><a href="#L-454"><span class="linenos">454</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">Version</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="p">,</span> <span class="s2">&quot;selfhosted&quot;</span><span class="p">)</span>
 </span><span id="L-455"><a href="#L-455"><span class="linenos">455</span></a>
 </span><span id="L-456"><a href="#L-456"><span class="linenos">456</span></a>    <span class="nd">@property</span>
-</span><span id="L-457"><a href="#L-457"><span class="linenos">457</span></a>    <span class="k">def</span> <span class="nf">selfhosted</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="L-457"><a href="#L-457"><span class="linenos">457</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">selfhosted</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 </span><span id="L-458"><a href="#L-458"><span class="linenos">458</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="L-459"><a href="#L-459"><span class="linenos">459</span></a><span class="sd">        Returns an SelfHostedClient instance for interacting with Deepgram&#39;s on-premises API.</span>
 </span><span id="L-460"><a href="#L-460"><span class="linenos">460</span></a><span class="sd">        &quot;&quot;&quot;</span>
@@ -583,21 +583,21 @@
 </span><span id="L-467"><a href="#L-467"><span class="linenos">467</span></a>        <span class="n">current_version</span><span class="o">=</span><span class="n">__version__</span><span class="p">,</span>
 </span><span id="L-468"><a href="#L-468"><span class="linenos">468</span></a>        <span class="n">details</span><span class="o">=</span><span class="s2">&quot;deepgram.asynconprem is deprecated. Use deepgram.speak.asyncselfhosted instead.&quot;</span><span class="p">,</span>
 </span><span id="L-469"><a href="#L-469"><span class="linenos">469</span></a>    <span class="p">)</span>
-</span><span id="L-470"><a href="#L-470"><span class="linenos">470</span></a>    <span class="k">def</span> <span class="nf">asynconprem</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="L-470"><a href="#L-470"><span class="linenos">470</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">asynconprem</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 </span><span id="L-471"><a href="#L-471"><span class="linenos">471</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="L-472"><a href="#L-472"><span class="linenos">472</span></a><span class="sd">        DEPRECATED: deepgram.asynconprem is deprecated. Use deepgram.speak.asyncselfhosted instead.</span>
 </span><span id="L-473"><a href="#L-473"><span class="linenos">473</span></a><span class="sd">        &quot;&quot;&quot;</span>
 </span><span id="L-474"><a href="#L-474"><span class="linenos">474</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">Version</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="p">,</span> <span class="s2">&quot;asyncselfhosted&quot;</span><span class="p">)</span>
 </span><span id="L-475"><a href="#L-475"><span class="linenos">475</span></a>
 </span><span id="L-476"><a href="#L-476"><span class="linenos">476</span></a>    <span class="nd">@property</span>
-</span><span id="L-477"><a href="#L-477"><span class="linenos">477</span></a>    <span class="k">def</span> <span class="nf">asyncselfhosted</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="L-477"><a href="#L-477"><span class="linenos">477</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">asyncselfhosted</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 </span><span id="L-478"><a href="#L-478"><span class="linenos">478</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="L-479"><a href="#L-479"><span class="linenos">479</span></a><span class="sd">        Returns an AsyncSelfHostedClient instance for interacting with Deepgram&#39;s on-premises API.</span>
 </span><span id="L-480"><a href="#L-480"><span class="linenos">480</span></a><span class="sd">        &quot;&quot;&quot;</span>
 </span><span id="L-481"><a href="#L-481"><span class="linenos">481</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">Version</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="p">,</span> <span class="s2">&quot;asyncselfhosted&quot;</span><span class="p">)</span>
 </span><span id="L-482"><a href="#L-482"><span class="linenos">482</span></a>
 </span><span id="L-483"><a href="#L-483"><span class="linenos">483</span></a>    <span class="c1"># INTERNAL CLASSES</span>
-</span><span id="L-484"><a href="#L-484"><span class="linenos">484</span></a>    <span class="k">class</span> <span class="nc">Version</span><span class="p">:</span>
+</span><span id="L-484"><a href="#L-484"><span class="linenos">484</span></a>    <span class="k">class</span><span class="w"> </span><span class="nc">Version</span><span class="p">:</span>
 </span><span id="L-485"><a href="#L-485"><span class="linenos">485</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="L-486"><a href="#L-486"><span class="linenos">486</span></a><span class="sd">        Represents a version of the Deepgram API.</span>
 </span><span id="L-487"><a href="#L-487"><span class="linenos">487</span></a><span class="sd">        &quot;&quot;&quot;</span>
@@ -606,7 +606,7 @@
 </span><span id="L-490"><a href="#L-490"><span class="linenos">490</span></a>        <span class="n">_config</span><span class="p">:</span> <span class="n">DeepgramClientOptions</span>
 </span><span id="L-491"><a href="#L-491"><span class="linenos">491</span></a>        <span class="n">_parent</span><span class="p">:</span> <span class="nb">str</span>
 </span><span id="L-492"><a href="#L-492"><span class="linenos">492</span></a>
-</span><span id="L-493"><a href="#L-493"><span class="linenos">493</span></a>        <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">,</span> <span class="n">parent</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+</span><span id="L-493"><a href="#L-493"><span class="linenos">493</span></a>        <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">,</span> <span class="n">parent</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
 </span><span id="L-494"><a href="#L-494"><span class="linenos">494</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span> <span class="o">=</span> <span class="n">verboselogs</span><span class="o">.</span><span class="n">VerboseLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 </span><span id="L-495"><a href="#L-495"><span class="linenos">495</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">StreamHandler</span><span class="p">())</span>
 </span><span id="L-496"><a href="#L-496"><span class="linenos">496</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">verbose</span><span class="p">)</span>
@@ -626,7 +626,7 @@
 </span><span id="L-510"><a href="#L-510"><span class="linenos">510</span></a>        <span class="c1">#         case _:</span>
 </span><span id="L-511"><a href="#L-511"><span class="linenos">511</span></a>        <span class="c1">#             raise DeepgramModuleError(&quot;Invalid parent&quot;)</span>
 </span><span id="L-512"><a href="#L-512"><span class="linenos">512</span></a>
-</span><span id="L-513"><a href="#L-513"><span class="linenos">513</span></a>        <span class="k">def</span> <span class="nf">v</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">version</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">):</span>
+</span><span id="L-513"><a href="#L-513"><span class="linenos">513</span></a>        <span class="k">def</span><span class="w"> </span><span class="nf">v</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">version</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">):</span>
 </span><span id="L-514"><a href="#L-514"><span class="linenos">514</span></a>            <span class="c1"># pylint: disable-msg=too-many-statements</span>
 </span><span id="L-515"><a href="#L-515"><span class="linenos">515</span></a><span class="w">            </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="L-516"><a href="#L-516"><span class="linenos">516</span></a><span class="sd">            Returns a client for the specified version of the API.</span>
@@ -705,12 +705,12 @@
 
     </div>
     <a class="headerlink" href="#Deepgram"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="Deepgram-319"><a href="#Deepgram-319"><span class="linenos">319</span></a><span class="k">class</span> <span class="nc">Deepgram</span><span class="p">:</span>  <span class="c1"># pylint: disable=broad-exception-raised</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="Deepgram-319"><a href="#Deepgram-319"><span class="linenos">319</span></a><span class="k">class</span><span class="w"> </span><span class="nc">Deepgram</span><span class="p">:</span>  <span class="c1"># pylint: disable=broad-exception-raised</span>
 </span><span id="Deepgram-320"><a href="#Deepgram-320"><span class="linenos">320</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="Deepgram-321"><a href="#Deepgram-321"><span class="linenos">321</span></a><span class="sd">    The Deepgram class is no longer a class in version 3 of this SDK.</span>
 </span><span id="Deepgram-322"><a href="#Deepgram-322"><span class="linenos">322</span></a><span class="sd">    &quot;&quot;&quot;</span>
 </span><span id="Deepgram-323"><a href="#Deepgram-323"><span class="linenos">323</span></a>
-</span><span id="Deepgram-324"><a href="#Deepgram-324"><span class="linenos">324</span></a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">anything</span><span class="p">):</span>
+</span><span id="Deepgram-324"><a href="#Deepgram-324"><span class="linenos">324</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">anything</span><span class="p">):</span>
 </span><span id="Deepgram-325"><a href="#Deepgram-325"><span class="linenos">325</span></a>        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
 </span><span id="Deepgram-326"><a href="#Deepgram-326"><span class="linenos">326</span></a><span class="w">            </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="Deepgram-327"><a href="#Deepgram-327"><span class="linenos">327</span></a><span class="sd">            FATAL ERROR:</span>
@@ -747,7 +747,7 @@
 
     </div>
     <a class="headerlink" href="#Deepgram.__init__"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="Deepgram.__init__-324"><a href="#Deepgram.__init__-324"><span class="linenos">324</span></a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">anything</span><span class="p">):</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="Deepgram.__init__-324"><a href="#Deepgram.__init__-324"><span class="linenos">324</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">anything</span><span class="p">):</span>
 </span><span id="Deepgram.__init__-325"><a href="#Deepgram.__init__-325"><span class="linenos">325</span></a>        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
 </span><span id="Deepgram.__init__-326"><a href="#Deepgram.__init__-326"><span class="linenos">326</span></a><span class="w">            </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="Deepgram.__init__-327"><a href="#Deepgram.__init__-327"><span class="linenos">327</span></a><span class="sd">            FATAL ERROR:</span>
@@ -785,7 +785,7 @@
 
     </div>
     <a class="headerlink" href="#DeepgramClient"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="DeepgramClient-346"><a href="#DeepgramClient-346"><span class="linenos">346</span></a><span class="k">class</span> <span class="nc">DeepgramClient</span><span class="p">:</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="DeepgramClient-346"><a href="#DeepgramClient-346"><span class="linenos">346</span></a><span class="k">class</span><span class="w"> </span><span class="nc">DeepgramClient</span><span class="p">:</span>
 </span><span id="DeepgramClient-347"><a href="#DeepgramClient-347"><span class="linenos">347</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="DeepgramClient-348"><a href="#DeepgramClient-348"><span class="linenos">348</span></a><span class="sd">    Represents a client for interacting with the Deepgram API.</span>
 </span><span id="DeepgramClient-349"><a href="#DeepgramClient-349"><span class="linenos">349</span></a>
@@ -811,7 +811,7 @@
 </span><span id="DeepgramClient-369"><a href="#DeepgramClient-369"><span class="linenos">369</span></a>    <span class="n">_config</span><span class="p">:</span> <span class="n">DeepgramClientOptions</span>
 </span><span id="DeepgramClient-370"><a href="#DeepgramClient-370"><span class="linenos">370</span></a>    <span class="n">_logger</span><span class="p">:</span> <span class="n">verboselogs</span><span class="o">.</span><span class="n">VerboseLogger</span>
 </span><span id="DeepgramClient-371"><a href="#DeepgramClient-371"><span class="linenos">371</span></a>
-</span><span id="DeepgramClient-372"><a href="#DeepgramClient-372"><span class="linenos">372</span></a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+</span><span id="DeepgramClient-372"><a href="#DeepgramClient-372"><span class="linenos">372</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
 </span><span id="DeepgramClient-373"><a href="#DeepgramClient-373"><span class="linenos">373</span></a>        <span class="bp">self</span><span class="p">,</span>
 </span><span id="DeepgramClient-374"><a href="#DeepgramClient-374"><span class="linenos">374</span></a>        <span class="n">api_key</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
 </span><span id="DeepgramClient-375"><a href="#DeepgramClient-375"><span class="linenos">375</span></a>        <span class="n">config</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">DeepgramClientOptions</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -836,21 +836,21 @@
 </span><span id="DeepgramClient-394"><a href="#DeepgramClient-394"><span class="linenos">394</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">_config</span> <span class="o">=</span> <span class="n">config</span>
 </span><span id="DeepgramClient-395"><a href="#DeepgramClient-395"><span class="linenos">395</span></a>
 </span><span id="DeepgramClient-396"><a href="#DeepgramClient-396"><span class="linenos">396</span></a>    <span class="nd">@property</span>
-</span><span id="DeepgramClient-397"><a href="#DeepgramClient-397"><span class="linenos">397</span></a>    <span class="k">def</span> <span class="nf">listen</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="DeepgramClient-397"><a href="#DeepgramClient-397"><span class="linenos">397</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">listen</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 </span><span id="DeepgramClient-398"><a href="#DeepgramClient-398"><span class="linenos">398</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="DeepgramClient-399"><a href="#DeepgramClient-399"><span class="linenos">399</span></a><span class="sd">        Returns a Listen dot-notation router for interacting with Deepgram&#39;s transcription services.</span>
 </span><span id="DeepgramClient-400"><a href="#DeepgramClient-400"><span class="linenos">400</span></a><span class="sd">        &quot;&quot;&quot;</span>
 </span><span id="DeepgramClient-401"><a href="#DeepgramClient-401"><span class="linenos">401</span></a>        <span class="k">return</span> <span class="n">Listen</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="p">)</span>
 </span><span id="DeepgramClient-402"><a href="#DeepgramClient-402"><span class="linenos">402</span></a>
 </span><span id="DeepgramClient-403"><a href="#DeepgramClient-403"><span class="linenos">403</span></a>    <span class="nd">@property</span>
-</span><span id="DeepgramClient-404"><a href="#DeepgramClient-404"><span class="linenos">404</span></a>    <span class="k">def</span> <span class="nf">read</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="DeepgramClient-404"><a href="#DeepgramClient-404"><span class="linenos">404</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">read</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 </span><span id="DeepgramClient-405"><a href="#DeepgramClient-405"><span class="linenos">405</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="DeepgramClient-406"><a href="#DeepgramClient-406"><span class="linenos">406</span></a><span class="sd">        Returns a Read dot-notation router for interacting with Deepgram&#39;s read services.</span>
 </span><span id="DeepgramClient-407"><a href="#DeepgramClient-407"><span class="linenos">407</span></a><span class="sd">        &quot;&quot;&quot;</span>
 </span><span id="DeepgramClient-408"><a href="#DeepgramClient-408"><span class="linenos">408</span></a>        <span class="k">return</span> <span class="n">Read</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="p">)</span>
 </span><span id="DeepgramClient-409"><a href="#DeepgramClient-409"><span class="linenos">409</span></a>
 </span><span id="DeepgramClient-410"><a href="#DeepgramClient-410"><span class="linenos">410</span></a>    <span class="nd">@property</span>
-</span><span id="DeepgramClient-411"><a href="#DeepgramClient-411"><span class="linenos">411</span></a>    <span class="k">def</span> <span class="nf">speak</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="DeepgramClient-411"><a href="#DeepgramClient-411"><span class="linenos">411</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">speak</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 </span><span id="DeepgramClient-412"><a href="#DeepgramClient-412"><span class="linenos">412</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="DeepgramClient-413"><a href="#DeepgramClient-413"><span class="linenos">413</span></a><span class="sd">        Returns a Speak dot-notation router for interacting with Deepgram&#39;s speak services.</span>
 </span><span id="DeepgramClient-414"><a href="#DeepgramClient-414"><span class="linenos">414</span></a><span class="sd">        &quot;&quot;&quot;</span>
@@ -863,21 +863,21 @@
 </span><span id="DeepgramClient-421"><a href="#DeepgramClient-421"><span class="linenos">421</span></a>        <span class="n">current_version</span><span class="o">=</span><span class="n">__version__</span><span class="p">,</span>
 </span><span id="DeepgramClient-422"><a href="#DeepgramClient-422"><span class="linenos">422</span></a>        <span class="n">details</span><span class="o">=</span><span class="s2">&quot;deepgram.asyncspeak is deprecated. Use deepgram.speak.asyncrest instead.&quot;</span><span class="p">,</span>
 </span><span id="DeepgramClient-423"><a href="#DeepgramClient-423"><span class="linenos">423</span></a>    <span class="p">)</span>
-</span><span id="DeepgramClient-424"><a href="#DeepgramClient-424"><span class="linenos">424</span></a>    <span class="k">def</span> <span class="nf">asyncspeak</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="DeepgramClient-424"><a href="#DeepgramClient-424"><span class="linenos">424</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">asyncspeak</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 </span><span id="DeepgramClient-425"><a href="#DeepgramClient-425"><span class="linenos">425</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="DeepgramClient-426"><a href="#DeepgramClient-426"><span class="linenos">426</span></a><span class="sd">        DEPRECATED: deepgram.asyncspeak is deprecated. Use deepgram.speak.asyncrest instead.</span>
 </span><span id="DeepgramClient-427"><a href="#DeepgramClient-427"><span class="linenos">427</span></a><span class="sd">        &quot;&quot;&quot;</span>
 </span><span id="DeepgramClient-428"><a href="#DeepgramClient-428"><span class="linenos">428</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">Version</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="p">,</span> <span class="s2">&quot;asyncspeak&quot;</span><span class="p">)</span>
 </span><span id="DeepgramClient-429"><a href="#DeepgramClient-429"><span class="linenos">429</span></a>
 </span><span id="DeepgramClient-430"><a href="#DeepgramClient-430"><span class="linenos">430</span></a>    <span class="nd">@property</span>
-</span><span id="DeepgramClient-431"><a href="#DeepgramClient-431"><span class="linenos">431</span></a>    <span class="k">def</span> <span class="nf">manage</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="DeepgramClient-431"><a href="#DeepgramClient-431"><span class="linenos">431</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">manage</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 </span><span id="DeepgramClient-432"><a href="#DeepgramClient-432"><span class="linenos">432</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="DeepgramClient-433"><a href="#DeepgramClient-433"><span class="linenos">433</span></a><span class="sd">        Returns a ManageClient instance for managing Deepgram resources.</span>
 </span><span id="DeepgramClient-434"><a href="#DeepgramClient-434"><span class="linenos">434</span></a><span class="sd">        &quot;&quot;&quot;</span>
 </span><span id="DeepgramClient-435"><a href="#DeepgramClient-435"><span class="linenos">435</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">Version</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="p">,</span> <span class="s2">&quot;manage&quot;</span><span class="p">)</span>
 </span><span id="DeepgramClient-436"><a href="#DeepgramClient-436"><span class="linenos">436</span></a>
 </span><span id="DeepgramClient-437"><a href="#DeepgramClient-437"><span class="linenos">437</span></a>    <span class="nd">@property</span>
-</span><span id="DeepgramClient-438"><a href="#DeepgramClient-438"><span class="linenos">438</span></a>    <span class="k">def</span> <span class="nf">asyncmanage</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="DeepgramClient-438"><a href="#DeepgramClient-438"><span class="linenos">438</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">asyncmanage</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 </span><span id="DeepgramClient-439"><a href="#DeepgramClient-439"><span class="linenos">439</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="DeepgramClient-440"><a href="#DeepgramClient-440"><span class="linenos">440</span></a><span class="sd">        Returns an AsyncManageClient instance for managing Deepgram resources.</span>
 </span><span id="DeepgramClient-441"><a href="#DeepgramClient-441"><span class="linenos">441</span></a><span class="sd">        &quot;&quot;&quot;</span>
@@ -890,14 +890,14 @@
 </span><span id="DeepgramClient-448"><a href="#DeepgramClient-448"><span class="linenos">448</span></a>        <span class="n">current_version</span><span class="o">=</span><span class="n">__version__</span><span class="p">,</span>
 </span><span id="DeepgramClient-449"><a href="#DeepgramClient-449"><span class="linenos">449</span></a>        <span class="n">details</span><span class="o">=</span><span class="s2">&quot;deepgram.onprem is deprecated. Use deepgram.speak.selfhosted instead.&quot;</span><span class="p">,</span>
 </span><span id="DeepgramClient-450"><a href="#DeepgramClient-450"><span class="linenos">450</span></a>    <span class="p">)</span>
-</span><span id="DeepgramClient-451"><a href="#DeepgramClient-451"><span class="linenos">451</span></a>    <span class="k">def</span> <span class="nf">onprem</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="DeepgramClient-451"><a href="#DeepgramClient-451"><span class="linenos">451</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">onprem</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 </span><span id="DeepgramClient-452"><a href="#DeepgramClient-452"><span class="linenos">452</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="DeepgramClient-453"><a href="#DeepgramClient-453"><span class="linenos">453</span></a><span class="sd">        DEPRECATED: deepgram.onprem is deprecated. Use deepgram.speak.selfhosted instead.</span>
 </span><span id="DeepgramClient-454"><a href="#DeepgramClient-454"><span class="linenos">454</span></a><span class="sd">        &quot;&quot;&quot;</span>
 </span><span id="DeepgramClient-455"><a href="#DeepgramClient-455"><span class="linenos">455</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">Version</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="p">,</span> <span class="s2">&quot;selfhosted&quot;</span><span class="p">)</span>
 </span><span id="DeepgramClient-456"><a href="#DeepgramClient-456"><span class="linenos">456</span></a>
 </span><span id="DeepgramClient-457"><a href="#DeepgramClient-457"><span class="linenos">457</span></a>    <span class="nd">@property</span>
-</span><span id="DeepgramClient-458"><a href="#DeepgramClient-458"><span class="linenos">458</span></a>    <span class="k">def</span> <span class="nf">selfhosted</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="DeepgramClient-458"><a href="#DeepgramClient-458"><span class="linenos">458</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">selfhosted</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 </span><span id="DeepgramClient-459"><a href="#DeepgramClient-459"><span class="linenos">459</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="DeepgramClient-460"><a href="#DeepgramClient-460"><span class="linenos">460</span></a><span class="sd">        Returns an SelfHostedClient instance for interacting with Deepgram&#39;s on-premises API.</span>
 </span><span id="DeepgramClient-461"><a href="#DeepgramClient-461"><span class="linenos">461</span></a><span class="sd">        &quot;&quot;&quot;</span>
@@ -910,21 +910,21 @@
 </span><span id="DeepgramClient-468"><a href="#DeepgramClient-468"><span class="linenos">468</span></a>        <span class="n">current_version</span><span class="o">=</span><span class="n">__version__</span><span class="p">,</span>
 </span><span id="DeepgramClient-469"><a href="#DeepgramClient-469"><span class="linenos">469</span></a>        <span class="n">details</span><span class="o">=</span><span class="s2">&quot;deepgram.asynconprem is deprecated. Use deepgram.speak.asyncselfhosted instead.&quot;</span><span class="p">,</span>
 </span><span id="DeepgramClient-470"><a href="#DeepgramClient-470"><span class="linenos">470</span></a>    <span class="p">)</span>
-</span><span id="DeepgramClient-471"><a href="#DeepgramClient-471"><span class="linenos">471</span></a>    <span class="k">def</span> <span class="nf">asynconprem</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="DeepgramClient-471"><a href="#DeepgramClient-471"><span class="linenos">471</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">asynconprem</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 </span><span id="DeepgramClient-472"><a href="#DeepgramClient-472"><span class="linenos">472</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="DeepgramClient-473"><a href="#DeepgramClient-473"><span class="linenos">473</span></a><span class="sd">        DEPRECATED: deepgram.asynconprem is deprecated. Use deepgram.speak.asyncselfhosted instead.</span>
 </span><span id="DeepgramClient-474"><a href="#DeepgramClient-474"><span class="linenos">474</span></a><span class="sd">        &quot;&quot;&quot;</span>
 </span><span id="DeepgramClient-475"><a href="#DeepgramClient-475"><span class="linenos">475</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">Version</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="p">,</span> <span class="s2">&quot;asyncselfhosted&quot;</span><span class="p">)</span>
 </span><span id="DeepgramClient-476"><a href="#DeepgramClient-476"><span class="linenos">476</span></a>
 </span><span id="DeepgramClient-477"><a href="#DeepgramClient-477"><span class="linenos">477</span></a>    <span class="nd">@property</span>
-</span><span id="DeepgramClient-478"><a href="#DeepgramClient-478"><span class="linenos">478</span></a>    <span class="k">def</span> <span class="nf">asyncselfhosted</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="DeepgramClient-478"><a href="#DeepgramClient-478"><span class="linenos">478</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">asyncselfhosted</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 </span><span id="DeepgramClient-479"><a href="#DeepgramClient-479"><span class="linenos">479</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="DeepgramClient-480"><a href="#DeepgramClient-480"><span class="linenos">480</span></a><span class="sd">        Returns an AsyncSelfHostedClient instance for interacting with Deepgram&#39;s on-premises API.</span>
 </span><span id="DeepgramClient-481"><a href="#DeepgramClient-481"><span class="linenos">481</span></a><span class="sd">        &quot;&quot;&quot;</span>
 </span><span id="DeepgramClient-482"><a href="#DeepgramClient-482"><span class="linenos">482</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">Version</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="p">,</span> <span class="s2">&quot;asyncselfhosted&quot;</span><span class="p">)</span>
 </span><span id="DeepgramClient-483"><a href="#DeepgramClient-483"><span class="linenos">483</span></a>
 </span><span id="DeepgramClient-484"><a href="#DeepgramClient-484"><span class="linenos">484</span></a>    <span class="c1"># INTERNAL CLASSES</span>
-</span><span id="DeepgramClient-485"><a href="#DeepgramClient-485"><span class="linenos">485</span></a>    <span class="k">class</span> <span class="nc">Version</span><span class="p">:</span>
+</span><span id="DeepgramClient-485"><a href="#DeepgramClient-485"><span class="linenos">485</span></a>    <span class="k">class</span><span class="w"> </span><span class="nc">Version</span><span class="p">:</span>
 </span><span id="DeepgramClient-486"><a href="#DeepgramClient-486"><span class="linenos">486</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="DeepgramClient-487"><a href="#DeepgramClient-487"><span class="linenos">487</span></a><span class="sd">        Represents a version of the Deepgram API.</span>
 </span><span id="DeepgramClient-488"><a href="#DeepgramClient-488"><span class="linenos">488</span></a><span class="sd">        &quot;&quot;&quot;</span>
@@ -933,7 +933,7 @@
 </span><span id="DeepgramClient-491"><a href="#DeepgramClient-491"><span class="linenos">491</span></a>        <span class="n">_config</span><span class="p">:</span> <span class="n">DeepgramClientOptions</span>
 </span><span id="DeepgramClient-492"><a href="#DeepgramClient-492"><span class="linenos">492</span></a>        <span class="n">_parent</span><span class="p">:</span> <span class="nb">str</span>
 </span><span id="DeepgramClient-493"><a href="#DeepgramClient-493"><span class="linenos">493</span></a>
-</span><span id="DeepgramClient-494"><a href="#DeepgramClient-494"><span class="linenos">494</span></a>        <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">,</span> <span class="n">parent</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+</span><span id="DeepgramClient-494"><a href="#DeepgramClient-494"><span class="linenos">494</span></a>        <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">,</span> <span class="n">parent</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
 </span><span id="DeepgramClient-495"><a href="#DeepgramClient-495"><span class="linenos">495</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span> <span class="o">=</span> <span class="n">verboselogs</span><span class="o">.</span><span class="n">VerboseLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 </span><span id="DeepgramClient-496"><a href="#DeepgramClient-496"><span class="linenos">496</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">StreamHandler</span><span class="p">())</span>
 </span><span id="DeepgramClient-497"><a href="#DeepgramClient-497"><span class="linenos">497</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">verbose</span><span class="p">)</span>
@@ -953,7 +953,7 @@
 </span><span id="DeepgramClient-511"><a href="#DeepgramClient-511"><span class="linenos">511</span></a>        <span class="c1">#         case _:</span>
 </span><span id="DeepgramClient-512"><a href="#DeepgramClient-512"><span class="linenos">512</span></a>        <span class="c1">#             raise DeepgramModuleError(&quot;Invalid parent&quot;)</span>
 </span><span id="DeepgramClient-513"><a href="#DeepgramClient-513"><span class="linenos">513</span></a>
-</span><span id="DeepgramClient-514"><a href="#DeepgramClient-514"><span class="linenos">514</span></a>        <span class="k">def</span> <span class="nf">v</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">version</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">):</span>
+</span><span id="DeepgramClient-514"><a href="#DeepgramClient-514"><span class="linenos">514</span></a>        <span class="k">def</span><span class="w"> </span><span class="nf">v</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">version</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">):</span>
 </span><span id="DeepgramClient-515"><a href="#DeepgramClient-515"><span class="linenos">515</span></a>            <span class="c1"># pylint: disable-msg=too-many-statements</span>
 </span><span id="DeepgramClient-516"><a href="#DeepgramClient-516"><span class="linenos">516</span></a><span class="w">            </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="DeepgramClient-517"><a href="#DeepgramClient-517"><span class="linenos">517</span></a><span class="sd">            Returns a client for the specified version of the API.</span>
@@ -1053,7 +1053,7 @@ asyncselfhosted: Returns an (Async) SelfHostedClient instance for interacting wi
 
     </div>
     <a class="headerlink" href="#DeepgramClient.__init__"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="DeepgramClient.__init__-372"><a href="#DeepgramClient.__init__-372"><span class="linenos">372</span></a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="DeepgramClient.__init__-372"><a href="#DeepgramClient.__init__-372"><span class="linenos">372</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
 </span><span id="DeepgramClient.__init__-373"><a href="#DeepgramClient.__init__-373"><span class="linenos">373</span></a>        <span class="bp">self</span><span class="p">,</span>
 </span><span id="DeepgramClient.__init__-374"><a href="#DeepgramClient.__init__-374"><span class="linenos">374</span></a>        <span class="n">api_key</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
 </span><span id="DeepgramClient.__init__-375"><a href="#DeepgramClient.__init__-375"><span class="linenos">375</span></a>        <span class="n">config</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">DeepgramClientOptions</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -1103,7 +1103,7 @@ asyncselfhosted: Returns an (Async) SelfHostedClient instance for interacting wi
     </div>
     <a class="headerlink" href="#DeepgramClient.listen"></a>
             <div class="pdoc-code codehilite"><pre><span></span><span id="DeepgramClient.listen-396"><a href="#DeepgramClient.listen-396"><span class="linenos">396</span></a>    <span class="nd">@property</span>
-</span><span id="DeepgramClient.listen-397"><a href="#DeepgramClient.listen-397"><span class="linenos">397</span></a>    <span class="k">def</span> <span class="nf">listen</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="DeepgramClient.listen-397"><a href="#DeepgramClient.listen-397"><span class="linenos">397</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">listen</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 </span><span id="DeepgramClient.listen-398"><a href="#DeepgramClient.listen-398"><span class="linenos">398</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="DeepgramClient.listen-399"><a href="#DeepgramClient.listen-399"><span class="linenos">399</span></a><span class="sd">        Returns a Listen dot-notation router for interacting with Deepgram&#39;s transcription services.</span>
 </span><span id="DeepgramClient.listen-400"><a href="#DeepgramClient.listen-400"><span class="linenos">400</span></a><span class="sd">        &quot;&quot;&quot;</span>
@@ -1126,7 +1126,7 @@ asyncselfhosted: Returns an (Async) SelfHostedClient instance for interacting wi
     </div>
     <a class="headerlink" href="#DeepgramClient.read"></a>
             <div class="pdoc-code codehilite"><pre><span></span><span id="DeepgramClient.read-403"><a href="#DeepgramClient.read-403"><span class="linenos">403</span></a>    <span class="nd">@property</span>
-</span><span id="DeepgramClient.read-404"><a href="#DeepgramClient.read-404"><span class="linenos">404</span></a>    <span class="k">def</span> <span class="nf">read</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="DeepgramClient.read-404"><a href="#DeepgramClient.read-404"><span class="linenos">404</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">read</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 </span><span id="DeepgramClient.read-405"><a href="#DeepgramClient.read-405"><span class="linenos">405</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="DeepgramClient.read-406"><a href="#DeepgramClient.read-406"><span class="linenos">406</span></a><span class="sd">        Returns a Read dot-notation router for interacting with Deepgram&#39;s read services.</span>
 </span><span id="DeepgramClient.read-407"><a href="#DeepgramClient.read-407"><span class="linenos">407</span></a><span class="sd">        &quot;&quot;&quot;</span>
@@ -1149,7 +1149,7 @@ asyncselfhosted: Returns an (Async) SelfHostedClient instance for interacting wi
     </div>
     <a class="headerlink" href="#DeepgramClient.speak"></a>
             <div class="pdoc-code codehilite"><pre><span></span><span id="DeepgramClient.speak-410"><a href="#DeepgramClient.speak-410"><span class="linenos">410</span></a>    <span class="nd">@property</span>
-</span><span id="DeepgramClient.speak-411"><a href="#DeepgramClient.speak-411"><span class="linenos">411</span></a>    <span class="k">def</span> <span class="nf">speak</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="DeepgramClient.speak-411"><a href="#DeepgramClient.speak-411"><span class="linenos">411</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">speak</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 </span><span id="DeepgramClient.speak-412"><a href="#DeepgramClient.speak-412"><span class="linenos">412</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="DeepgramClient.speak-413"><a href="#DeepgramClient.speak-413"><span class="linenos">413</span></a><span class="sd">        Returns a Speak dot-notation router for interacting with Deepgram&#39;s speak services.</span>
 </span><span id="DeepgramClient.speak-414"><a href="#DeepgramClient.speak-414"><span class="linenos">414</span></a><span class="sd">        &quot;&quot;&quot;</span>
@@ -1178,7 +1178,7 @@ asyncselfhosted: Returns an (Async) SelfHostedClient instance for interacting wi
 </span><span id="DeepgramClient.asyncspeak-421"><a href="#DeepgramClient.asyncspeak-421"><span class="linenos">421</span></a>        <span class="n">current_version</span><span class="o">=</span><span class="n">__version__</span><span class="p">,</span>
 </span><span id="DeepgramClient.asyncspeak-422"><a href="#DeepgramClient.asyncspeak-422"><span class="linenos">422</span></a>        <span class="n">details</span><span class="o">=</span><span class="s2">&quot;deepgram.asyncspeak is deprecated. Use deepgram.speak.asyncrest instead.&quot;</span><span class="p">,</span>
 </span><span id="DeepgramClient.asyncspeak-423"><a href="#DeepgramClient.asyncspeak-423"><span class="linenos">423</span></a>    <span class="p">)</span>
-</span><span id="DeepgramClient.asyncspeak-424"><a href="#DeepgramClient.asyncspeak-424"><span class="linenos">424</span></a>    <span class="k">def</span> <span class="nf">asyncspeak</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="DeepgramClient.asyncspeak-424"><a href="#DeepgramClient.asyncspeak-424"><span class="linenos">424</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">asyncspeak</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 </span><span id="DeepgramClient.asyncspeak-425"><a href="#DeepgramClient.asyncspeak-425"><span class="linenos">425</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="DeepgramClient.asyncspeak-426"><a href="#DeepgramClient.asyncspeak-426"><span class="linenos">426</span></a><span class="sd">        DEPRECATED: deepgram.asyncspeak is deprecated. Use deepgram.speak.asyncrest instead.</span>
 </span><span id="DeepgramClient.asyncspeak-427"><a href="#DeepgramClient.asyncspeak-427"><span class="linenos">427</span></a><span class="sd">        &quot;&quot;&quot;</span>
@@ -1201,7 +1201,7 @@ asyncselfhosted: Returns an (Async) SelfHostedClient instance for interacting wi
     </div>
     <a class="headerlink" href="#DeepgramClient.manage"></a>
             <div class="pdoc-code codehilite"><pre><span></span><span id="DeepgramClient.manage-430"><a href="#DeepgramClient.manage-430"><span class="linenos">430</span></a>    <span class="nd">@property</span>
-</span><span id="DeepgramClient.manage-431"><a href="#DeepgramClient.manage-431"><span class="linenos">431</span></a>    <span class="k">def</span> <span class="nf">manage</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="DeepgramClient.manage-431"><a href="#DeepgramClient.manage-431"><span class="linenos">431</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">manage</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 </span><span id="DeepgramClient.manage-432"><a href="#DeepgramClient.manage-432"><span class="linenos">432</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="DeepgramClient.manage-433"><a href="#DeepgramClient.manage-433"><span class="linenos">433</span></a><span class="sd">        Returns a ManageClient instance for managing Deepgram resources.</span>
 </span><span id="DeepgramClient.manage-434"><a href="#DeepgramClient.manage-434"><span class="linenos">434</span></a><span class="sd">        &quot;&quot;&quot;</span>
@@ -1224,7 +1224,7 @@ asyncselfhosted: Returns an (Async) SelfHostedClient instance for interacting wi
     </div>
     <a class="headerlink" href="#DeepgramClient.asyncmanage"></a>
             <div class="pdoc-code codehilite"><pre><span></span><span id="DeepgramClient.asyncmanage-437"><a href="#DeepgramClient.asyncmanage-437"><span class="linenos">437</span></a>    <span class="nd">@property</span>
-</span><span id="DeepgramClient.asyncmanage-438"><a href="#DeepgramClient.asyncmanage-438"><span class="linenos">438</span></a>    <span class="k">def</span> <span class="nf">asyncmanage</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="DeepgramClient.asyncmanage-438"><a href="#DeepgramClient.asyncmanage-438"><span class="linenos">438</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">asyncmanage</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 </span><span id="DeepgramClient.asyncmanage-439"><a href="#DeepgramClient.asyncmanage-439"><span class="linenos">439</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="DeepgramClient.asyncmanage-440"><a href="#DeepgramClient.asyncmanage-440"><span class="linenos">440</span></a><span class="sd">        Returns an AsyncManageClient instance for managing Deepgram resources.</span>
 </span><span id="DeepgramClient.asyncmanage-441"><a href="#DeepgramClient.asyncmanage-441"><span class="linenos">441</span></a><span class="sd">        &quot;&quot;&quot;</span>
@@ -1253,7 +1253,7 @@ asyncselfhosted: Returns an (Async) SelfHostedClient instance for interacting wi
 </span><span id="DeepgramClient.onprem-448"><a href="#DeepgramClient.onprem-448"><span class="linenos">448</span></a>        <span class="n">current_version</span><span class="o">=</span><span class="n">__version__</span><span class="p">,</span>
 </span><span id="DeepgramClient.onprem-449"><a href="#DeepgramClient.onprem-449"><span class="linenos">449</span></a>        <span class="n">details</span><span class="o">=</span><span class="s2">&quot;deepgram.onprem is deprecated. Use deepgram.speak.selfhosted instead.&quot;</span><span class="p">,</span>
 </span><span id="DeepgramClient.onprem-450"><a href="#DeepgramClient.onprem-450"><span class="linenos">450</span></a>    <span class="p">)</span>
-</span><span id="DeepgramClient.onprem-451"><a href="#DeepgramClient.onprem-451"><span class="linenos">451</span></a>    <span class="k">def</span> <span class="nf">onprem</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="DeepgramClient.onprem-451"><a href="#DeepgramClient.onprem-451"><span class="linenos">451</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">onprem</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 </span><span id="DeepgramClient.onprem-452"><a href="#DeepgramClient.onprem-452"><span class="linenos">452</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="DeepgramClient.onprem-453"><a href="#DeepgramClient.onprem-453"><span class="linenos">453</span></a><span class="sd">        DEPRECATED: deepgram.onprem is deprecated. Use deepgram.speak.selfhosted instead.</span>
 </span><span id="DeepgramClient.onprem-454"><a href="#DeepgramClient.onprem-454"><span class="linenos">454</span></a><span class="sd">        &quot;&quot;&quot;</span>
@@ -1276,7 +1276,7 @@ asyncselfhosted: Returns an (Async) SelfHostedClient instance for interacting wi
     </div>
     <a class="headerlink" href="#DeepgramClient.selfhosted"></a>
             <div class="pdoc-code codehilite"><pre><span></span><span id="DeepgramClient.selfhosted-457"><a href="#DeepgramClient.selfhosted-457"><span class="linenos">457</span></a>    <span class="nd">@property</span>
-</span><span id="DeepgramClient.selfhosted-458"><a href="#DeepgramClient.selfhosted-458"><span class="linenos">458</span></a>    <span class="k">def</span> <span class="nf">selfhosted</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="DeepgramClient.selfhosted-458"><a href="#DeepgramClient.selfhosted-458"><span class="linenos">458</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">selfhosted</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 </span><span id="DeepgramClient.selfhosted-459"><a href="#DeepgramClient.selfhosted-459"><span class="linenos">459</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="DeepgramClient.selfhosted-460"><a href="#DeepgramClient.selfhosted-460"><span class="linenos">460</span></a><span class="sd">        Returns an SelfHostedClient instance for interacting with Deepgram&#39;s on-premises API.</span>
 </span><span id="DeepgramClient.selfhosted-461"><a href="#DeepgramClient.selfhosted-461"><span class="linenos">461</span></a><span class="sd">        &quot;&quot;&quot;</span>
@@ -1305,7 +1305,7 @@ asyncselfhosted: Returns an (Async) SelfHostedClient instance for interacting wi
 </span><span id="DeepgramClient.asynconprem-468"><a href="#DeepgramClient.asynconprem-468"><span class="linenos">468</span></a>        <span class="n">current_version</span><span class="o">=</span><span class="n">__version__</span><span class="p">,</span>
 </span><span id="DeepgramClient.asynconprem-469"><a href="#DeepgramClient.asynconprem-469"><span class="linenos">469</span></a>        <span class="n">details</span><span class="o">=</span><span class="s2">&quot;deepgram.asynconprem is deprecated. Use deepgram.speak.asyncselfhosted instead.&quot;</span><span class="p">,</span>
 </span><span id="DeepgramClient.asynconprem-470"><a href="#DeepgramClient.asynconprem-470"><span class="linenos">470</span></a>    <span class="p">)</span>
-</span><span id="DeepgramClient.asynconprem-471"><a href="#DeepgramClient.asynconprem-471"><span class="linenos">471</span></a>    <span class="k">def</span> <span class="nf">asynconprem</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="DeepgramClient.asynconprem-471"><a href="#DeepgramClient.asynconprem-471"><span class="linenos">471</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">asynconprem</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 </span><span id="DeepgramClient.asynconprem-472"><a href="#DeepgramClient.asynconprem-472"><span class="linenos">472</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="DeepgramClient.asynconprem-473"><a href="#DeepgramClient.asynconprem-473"><span class="linenos">473</span></a><span class="sd">        DEPRECATED: deepgram.asynconprem is deprecated. Use deepgram.speak.asyncselfhosted instead.</span>
 </span><span id="DeepgramClient.asynconprem-474"><a href="#DeepgramClient.asynconprem-474"><span class="linenos">474</span></a><span class="sd">        &quot;&quot;&quot;</span>
@@ -1328,7 +1328,7 @@ asyncselfhosted: Returns an (Async) SelfHostedClient instance for interacting wi
     </div>
     <a class="headerlink" href="#DeepgramClient.asyncselfhosted"></a>
             <div class="pdoc-code codehilite"><pre><span></span><span id="DeepgramClient.asyncselfhosted-477"><a href="#DeepgramClient.asyncselfhosted-477"><span class="linenos">477</span></a>    <span class="nd">@property</span>
-</span><span id="DeepgramClient.asyncselfhosted-478"><a href="#DeepgramClient.asyncselfhosted-478"><span class="linenos">478</span></a>    <span class="k">def</span> <span class="nf">asyncselfhosted</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="DeepgramClient.asyncselfhosted-478"><a href="#DeepgramClient.asyncselfhosted-478"><span class="linenos">478</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">asyncselfhosted</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 </span><span id="DeepgramClient.asyncselfhosted-479"><a href="#DeepgramClient.asyncselfhosted-479"><span class="linenos">479</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="DeepgramClient.asyncselfhosted-480"><a href="#DeepgramClient.asyncselfhosted-480"><span class="linenos">480</span></a><span class="sd">        Returns an AsyncSelfHostedClient instance for interacting with Deepgram&#39;s on-premises API.</span>
 </span><span id="DeepgramClient.asyncselfhosted-481"><a href="#DeepgramClient.asyncselfhosted-481"><span class="linenos">481</span></a><span class="sd">        &quot;&quot;&quot;</span>
@@ -1353,7 +1353,7 @@ asyncselfhosted: Returns an (Async) SelfHostedClient instance for interacting wi
 
     </div>
     <a class="headerlink" href="#DeepgramClient.Version"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="DeepgramClient.Version-485"><a href="#DeepgramClient.Version-485"><span class="linenos">485</span></a>    <span class="k">class</span> <span class="nc">Version</span><span class="p">:</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="DeepgramClient.Version-485"><a href="#DeepgramClient.Version-485"><span class="linenos">485</span></a>    <span class="k">class</span><span class="w"> </span><span class="nc">Version</span><span class="p">:</span>
 </span><span id="DeepgramClient.Version-486"><a href="#DeepgramClient.Version-486"><span class="linenos">486</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="DeepgramClient.Version-487"><a href="#DeepgramClient.Version-487"><span class="linenos">487</span></a><span class="sd">        Represents a version of the Deepgram API.</span>
 </span><span id="DeepgramClient.Version-488"><a href="#DeepgramClient.Version-488"><span class="linenos">488</span></a><span class="sd">        &quot;&quot;&quot;</span>
@@ -1362,7 +1362,7 @@ asyncselfhosted: Returns an (Async) SelfHostedClient instance for interacting wi
 </span><span id="DeepgramClient.Version-491"><a href="#DeepgramClient.Version-491"><span class="linenos">491</span></a>        <span class="n">_config</span><span class="p">:</span> <span class="n">DeepgramClientOptions</span>
 </span><span id="DeepgramClient.Version-492"><a href="#DeepgramClient.Version-492"><span class="linenos">492</span></a>        <span class="n">_parent</span><span class="p">:</span> <span class="nb">str</span>
 </span><span id="DeepgramClient.Version-493"><a href="#DeepgramClient.Version-493"><span class="linenos">493</span></a>
-</span><span id="DeepgramClient.Version-494"><a href="#DeepgramClient.Version-494"><span class="linenos">494</span></a>        <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">,</span> <span class="n">parent</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+</span><span id="DeepgramClient.Version-494"><a href="#DeepgramClient.Version-494"><span class="linenos">494</span></a>        <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">,</span> <span class="n">parent</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
 </span><span id="DeepgramClient.Version-495"><a href="#DeepgramClient.Version-495"><span class="linenos">495</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span> <span class="o">=</span> <span class="n">verboselogs</span><span class="o">.</span><span class="n">VerboseLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 </span><span id="DeepgramClient.Version-496"><a href="#DeepgramClient.Version-496"><span class="linenos">496</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">StreamHandler</span><span class="p">())</span>
 </span><span id="DeepgramClient.Version-497"><a href="#DeepgramClient.Version-497"><span class="linenos">497</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">verbose</span><span class="p">)</span>
@@ -1382,7 +1382,7 @@ asyncselfhosted: Returns an (Async) SelfHostedClient instance for interacting wi
 </span><span id="DeepgramClient.Version-511"><a href="#DeepgramClient.Version-511"><span class="linenos">511</span></a>        <span class="c1">#         case _:</span>
 </span><span id="DeepgramClient.Version-512"><a href="#DeepgramClient.Version-512"><span class="linenos">512</span></a>        <span class="c1">#             raise DeepgramModuleError(&quot;Invalid parent&quot;)</span>
 </span><span id="DeepgramClient.Version-513"><a href="#DeepgramClient.Version-513"><span class="linenos">513</span></a>
-</span><span id="DeepgramClient.Version-514"><a href="#DeepgramClient.Version-514"><span class="linenos">514</span></a>        <span class="k">def</span> <span class="nf">v</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">version</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">):</span>
+</span><span id="DeepgramClient.Version-514"><a href="#DeepgramClient.Version-514"><span class="linenos">514</span></a>        <span class="k">def</span><span class="w"> </span><span class="nf">v</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">version</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">):</span>
 </span><span id="DeepgramClient.Version-515"><a href="#DeepgramClient.Version-515"><span class="linenos">515</span></a>            <span class="c1"># pylint: disable-msg=too-many-statements</span>
 </span><span id="DeepgramClient.Version-516"><a href="#DeepgramClient.Version-516"><span class="linenos">516</span></a><span class="w">            </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="DeepgramClient.Version-517"><a href="#DeepgramClient.Version-517"><span class="linenos">517</span></a><span class="sd">            Returns a client for the specified version of the API.</span>
@@ -1463,7 +1463,7 @@ asyncselfhosted: Returns an (Async) SelfHostedClient instance for interacting wi
 
     </div>
     <a class="headerlink" href="#DeepgramClient.Version.__init__"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="DeepgramClient.Version.__init__-494"><a href="#DeepgramClient.Version.__init__-494"><span class="linenos">494</span></a>        <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">,</span> <span class="n">parent</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="DeepgramClient.Version.__init__-494"><a href="#DeepgramClient.Version.__init__-494"><span class="linenos">494</span></a>        <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">,</span> <span class="n">parent</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
 </span><span id="DeepgramClient.Version.__init__-495"><a href="#DeepgramClient.Version.__init__-495"><span class="linenos">495</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span> <span class="o">=</span> <span class="n">verboselogs</span><span class="o">.</span><span class="n">VerboseLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 </span><span id="DeepgramClient.Version.__init__-496"><a href="#DeepgramClient.Version.__init__-496"><span class="linenos">496</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">StreamHandler</span><span class="p">())</span>
 </span><span id="DeepgramClient.Version.__init__-497"><a href="#DeepgramClient.Version.__init__-497"><span class="linenos">497</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">verbose</span><span class="p">)</span>
@@ -1487,7 +1487,7 @@ asyncselfhosted: Returns an (Async) SelfHostedClient instance for interacting wi
 
     </div>
     <a class="headerlink" href="#DeepgramClient.Version.v"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="DeepgramClient.Version.v-514"><a href="#DeepgramClient.Version.v-514"><span class="linenos">514</span></a>        <span class="k">def</span> <span class="nf">v</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">version</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">):</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="DeepgramClient.Version.v-514"><a href="#DeepgramClient.Version.v-514"><span class="linenos">514</span></a>        <span class="k">def</span><span class="w"> </span><span class="nf">v</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">version</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">):</span>
 </span><span id="DeepgramClient.Version.v-515"><a href="#DeepgramClient.Version.v-515"><span class="linenos">515</span></a>            <span class="c1"># pylint: disable-msg=too-many-statements</span>
 </span><span id="DeepgramClient.Version.v-516"><a href="#DeepgramClient.Version.v-516"><span class="linenos">516</span></a><span class="w">            </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="DeepgramClient.Version.v-517"><a href="#DeepgramClient.Version.v-517"><span class="linenos">517</span></a><span class="sd">            Returns a client for the specified version of the API.</span>

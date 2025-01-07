@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="generator" content="pdoc 15.0.0"/>
+    <meta name="generator" content="pdoc 15.0.1"/>
     <title>deepgram.clients.listen.v1.rest.response API documentation</title>
 
     <style>/*! * Bootstrap Reboot v5.0.0 (https://getbootstrap.com/) * Copyright 2011-2021 The Bootstrap Authors * Copyright 2011-2021 Twitter, Inc. * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE) * Forked from Normalize.css, licensed MIT (https://github.com/necolas/normalize.css/blob/master/LICENSE.md) */*,::after,::before{box-sizing:border-box}@media (prefers-reduced-motion:no-preference){:root{scroll-behavior:smooth}}body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans","Liberation Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";font-size:1rem;font-weight:400;line-height:1.5;color:#212529;background-color:#fff;-webkit-text-size-adjust:100%;-webkit-tap-highlight-color:transparent}hr{margin:1rem 0;color:inherit;background-color:currentColor;border:0;opacity:.25}hr:not([size]){height:1px}h1,h2,h3,h4,h5,h6{margin-top:0;margin-bottom:.5rem;font-weight:500;line-height:1.2}h1{font-size:calc(1.375rem + 1.5vw)}@media (min-width:1200px){h1{font-size:2.5rem}}h2{font-size:calc(1.325rem + .9vw)}@media (min-width:1200px){h2{font-size:2rem}}h3{font-size:calc(1.3rem + .6vw)}@media (min-width:1200px){h3{font-size:1.75rem}}h4{font-size:calc(1.275rem + .3vw)}@media (min-width:1200px){h4{font-size:1.5rem}}h5{font-size:1.25rem}h6{font-size:1rem}p{margin-top:0;margin-bottom:1rem}abbr[data-bs-original-title],abbr[title]{-webkit-text-decoration:underline dotted;text-decoration:underline dotted;cursor:help;-webkit-text-decoration-skip-ink:none;text-decoration-skip-ink:none}address{margin-bottom:1rem;font-style:normal;line-height:inherit}ol,ul{padding-left:2rem}dl,ol,ul{margin-top:0;margin-bottom:1rem}ol ol,ol ul,ul ol,ul ul{margin-bottom:0}dt{font-weight:700}dd{margin-bottom:.5rem;margin-left:0}blockquote{margin:0 0 1rem}b,strong{font-weight:bolder}small{font-size:.875em}mark{padding:.2em;background-color:#fcf8e3}sub,sup{position:relative;font-size:.75em;line-height:0;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}a{color:#0d6efd;text-decoration:underline}a:hover{color:#0a58ca}a:not([href]):not([class]),a:not([href]):not([class]):hover{color:inherit;text-decoration:none}code,kbd,pre,samp{font-family:SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;font-size:1em;direction:ltr;unicode-bidi:bidi-override}pre{display:block;margin-top:0;margin-bottom:1rem;overflow:auto;font-size:.875em}pre code{font-size:inherit;color:inherit;word-break:normal}code{font-size:.875em;color:#d63384;word-wrap:break-word}a>code{color:inherit}kbd{padding:.2rem .4rem;font-size:.875em;color:#fff;background-color:#212529;border-radius:.2rem}kbd kbd{padding:0;font-size:1em;font-weight:700}figure{margin:0 0 1rem}img,svg{vertical-align:middle}table{caption-side:bottom;border-collapse:collapse}caption{padding-top:.5rem;padding-bottom:.5rem;color:#6c757d;text-align:left}th{text-align:inherit;text-align:-webkit-match-parent}tbody,td,tfoot,th,thead,tr{border-color:inherit;border-style:solid;border-width:0}label{display:inline-block}button{border-radius:0}button:focus:not(:focus-visible){outline:0}button,input,optgroup,select,textarea{margin:0;font-family:inherit;font-size:inherit;line-height:inherit}button,select{text-transform:none}[role=button]{cursor:pointer}select{word-wrap:normal}select:disabled{opacity:1}[list]::-webkit-calendar-picker-indicator{display:none}[type=button],[type=reset],[type=submit],button{-webkit-appearance:button}[type=button]:not(:disabled),[type=reset]:not(:disabled),[type=submit]:not(:disabled),button:not(:disabled){cursor:pointer}::-moz-focus-inner{padding:0;border-style:none}textarea{resize:vertical}fieldset{min-width:0;padding:0;margin:0;border:0}legend{float:left;width:100%;padding:0;margin-bottom:.5rem;font-size:calc(1.275rem + .3vw);line-height:inherit}@media (min-width:1200px){legend{font-size:1.5rem}}legend+*{clear:left}::-webkit-datetime-edit-day-field,::-webkit-datetime-edit-fields-wrapper,::-webkit-datetime-edit-hour-field,::-webkit-datetime-edit-minute,::-webkit-datetime-edit-month-field,::-webkit-datetime-edit-text,::-webkit-datetime-edit-year-field{padding:0}::-webkit-inner-spin-button{height:auto}[type=search]{outline-offset:-2px;-webkit-appearance:textfield}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-color-swatch-wrapper{padding:0}::file-selector-button{font:inherit}::-webkit-file-upload-button{font:inherit;-webkit-appearance:button}output{display:inline-block}iframe{border:0}summary{display:list-item;cursor:pointer}progress{vertical-align:baseline}[hidden]{display:none!important}</style>
@@ -460,13 +460,13 @@
 </span><span id="L-2"><a href="#L-2"><span class="linenos">  2</span></a><span class="c1"># Use of this source code is governed by a MIT license that can be found in the LICENSE file.</span>
 </span><span id="L-3"><a href="#L-3"><span class="linenos">  3</span></a><span class="c1"># SPDX-License-Identifier: MIT</span>
 </span><span id="L-4"><a href="#L-4"><span class="linenos">  4</span></a>
-</span><span id="L-5"><a href="#L-5"><span class="linenos">  5</span></a><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Any</span>
+</span><span id="L-5"><a href="#L-5"><span class="linenos">  5</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Any</span>
 </span><span id="L-6"><a href="#L-6"><span class="linenos">  6</span></a>
-</span><span id="L-7"><a href="#L-7"><span class="linenos">  7</span></a><span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">dataclass</span><span class="p">,</span> <span class="n">field</span>
-</span><span id="L-8"><a href="#L-8"><span class="linenos">  8</span></a><span class="kn">from</span> <span class="nn">dataclasses_json</span> <span class="kn">import</span> <span class="n">config</span> <span class="k">as</span> <span class="n">dataclass_config</span>
+</span><span id="L-7"><a href="#L-7"><span class="linenos">  7</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span><span class="p">,</span> <span class="n">field</span>
+</span><span id="L-8"><a href="#L-8"><span class="linenos">  8</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses_json</span><span class="w"> </span><span class="kn">import</span> <span class="n">config</span> <span class="k">as</span> <span class="n">dataclass_config</span>
 </span><span id="L-9"><a href="#L-9"><span class="linenos">  9</span></a>
 </span><span id="L-10"><a href="#L-10"><span class="linenos"> 10</span></a><span class="c1"># between analyze and listen</span>
-</span><span id="L-11"><a href="#L-11"><span class="linenos"> 11</span></a><span class="kn">from</span> <span class="nn">....common</span> <span class="kn">import</span> <span class="p">(</span>
+</span><span id="L-11"><a href="#L-11"><span class="linenos"> 11</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">....common</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
 </span><span id="L-12"><a href="#L-12"><span class="linenos"> 12</span></a>    <span class="n">BaseResponse</span><span class="p">,</span>
 </span><span id="L-13"><a href="#L-13"><span class="linenos"> 13</span></a>    <span class="n">Average</span><span class="p">,</span>
 </span><span id="L-14"><a href="#L-14"><span class="linenos"> 14</span></a>    <span class="n">Intent</span><span class="p">,</span>
@@ -483,7 +483,7 @@
 </span><span id="L-25"><a href="#L-25"><span class="linenos"> 25</span></a><span class="p">)</span>
 </span><span id="L-26"><a href="#L-26"><span class="linenos"> 26</span></a>
 </span><span id="L-27"><a href="#L-27"><span class="linenos"> 27</span></a><span class="c1"># between rest and websocket</span>
-</span><span id="L-28"><a href="#L-28"><span class="linenos"> 28</span></a><span class="kn">from</span> <span class="nn">....common</span> <span class="kn">import</span> <span class="p">(</span>
+</span><span id="L-28"><a href="#L-28"><span class="linenos"> 28</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">....common</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
 </span><span id="L-29"><a href="#L-29"><span class="linenos"> 29</span></a>    <span class="n">ModelInfo</span><span class="p">,</span>
 </span><span id="L-30"><a href="#L-30"><span class="linenos"> 30</span></a>    <span class="n">Hit</span><span class="p">,</span>
 </span><span id="L-31"><a href="#L-31"><span class="linenos"> 31</span></a>    <span class="n">Search</span><span class="p">,</span>
@@ -493,7 +493,7 @@
 </span><span id="L-35"><a href="#L-35"><span class="linenos"> 35</span></a>
 </span><span id="L-36"><a href="#L-36"><span class="linenos"> 36</span></a>
 </span><span id="L-37"><a href="#L-37"><span class="linenos"> 37</span></a><span class="nd">@dataclass</span>
-</span><span id="L-38"><a href="#L-38"><span class="linenos"> 38</span></a><span class="k">class</span> <span class="nc">AsyncPrerecordedResponse</span><span class="p">(</span><span class="n">BaseResponse</span><span class="p">):</span>
+</span><span id="L-38"><a href="#L-38"><span class="linenos"> 38</span></a><span class="k">class</span><span class="w"> </span><span class="nc">AsyncPrerecordedResponse</span><span class="p">(</span><span class="n">BaseResponse</span><span class="p">):</span>
 </span><span id="L-39"><a href="#L-39"><span class="linenos"> 39</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="L-40"><a href="#L-40"><span class="linenos"> 40</span></a><span class="sd">    The response object for the async prerecorded API.</span>
 </span><span id="L-41"><a href="#L-41"><span class="linenos"> 41</span></a><span class="sd">    &quot;&quot;&quot;</span>
@@ -505,7 +505,7 @@
 </span><span id="L-47"><a href="#L-47"><span class="linenos"> 47</span></a>
 </span><span id="L-48"><a href="#L-48"><span class="linenos"> 48</span></a>
 </span><span id="L-49"><a href="#L-49"><span class="linenos"> 49</span></a><span class="nd">@dataclass</span>
-</span><span id="L-50"><a href="#L-50"><span class="linenos"> 50</span></a><span class="k">class</span> <span class="nc">Metadata</span><span class="p">(</span><span class="n">BaseResponse</span><span class="p">):</span>  <span class="c1"># pylint: disable=too-many-instance-attributes</span>
+</span><span id="L-50"><a href="#L-50"><span class="linenos"> 50</span></a><span class="k">class</span><span class="w"> </span><span class="nc">Metadata</span><span class="p">(</span><span class="n">BaseResponse</span><span class="p">):</span>  <span class="c1"># pylint: disable=too-many-instance-attributes</span>
 </span><span id="L-51"><a href="#L-51"><span class="linenos"> 51</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="L-52"><a href="#L-52"><span class="linenos"> 52</span></a><span class="sd">    The metadata for the response.</span>
 </span><span id="L-53"><a href="#L-53"><span class="linenos"> 53</span></a><span class="sd">    &quot;&quot;&quot;</span>
@@ -543,7 +543,7 @@
 </span><span id="L-85"><a href="#L-85"><span class="linenos"> 85</span></a>        <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="n">dataclass_config</span><span class="p">(</span><span class="n">exclude</span><span class="o">=</span><span class="k">lambda</span> <span class="n">f</span><span class="p">:</span> <span class="n">f</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span>
 </span><span id="L-86"><a href="#L-86"><span class="linenos"> 86</span></a>    <span class="p">)</span>
 </span><span id="L-87"><a href="#L-87"><span class="linenos"> 87</span></a>
-</span><span id="L-88"><a href="#L-88"><span class="linenos"> 88</span></a>    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+</span><span id="L-88"><a href="#L-88"><span class="linenos"> 88</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
 </span><span id="L-89"><a href="#L-89"><span class="linenos"> 89</span></a>        <span class="n">_dict</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
 </span><span id="L-90"><a href="#L-90"><span class="linenos"> 90</span></a>        <span class="k">if</span> <span class="s2">&quot;models&quot;</span> <span class="ow">in</span> <span class="n">_dict</span><span class="p">:</span>
 </span><span id="L-91"><a href="#L-91"><span class="linenos"> 91</span></a>            <span class="n">_dict</span><span class="p">[</span><span class="s2">&quot;models&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">models</span><span class="p">)</span> <span class="k">for</span> <span class="n">models</span> <span class="ow">in</span> <span class="n">_dict</span><span class="p">[</span><span class="s2">&quot;models&quot;</span><span class="p">]]</span>
@@ -570,7 +570,7 @@
 </span><span id="L-112"><a href="#L-112"><span class="linenos">112</span></a>
 </span><span id="L-113"><a href="#L-113"><span class="linenos">113</span></a>
 </span><span id="L-114"><a href="#L-114"><span class="linenos">114</span></a><span class="nd">@dataclass</span>
-</span><span id="L-115"><a href="#L-115"><span class="linenos">115</span></a><span class="k">class</span> <span class="nc">SummaryV1</span><span class="p">(</span><span class="n">BaseResponse</span><span class="p">):</span>
+</span><span id="L-115"><a href="#L-115"><span class="linenos">115</span></a><span class="k">class</span><span class="w"> </span><span class="nc">SummaryV1</span><span class="p">(</span><span class="n">BaseResponse</span><span class="p">):</span>
 </span><span id="L-116"><a href="#L-116"><span class="linenos">116</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="L-117"><a href="#L-117"><span class="linenos">117</span></a><span class="sd">    The summary information for the response.</span>
 </span><span id="L-118"><a href="#L-118"><span class="linenos">118</span></a><span class="sd">    &quot;&quot;&quot;</span>
@@ -584,7 +584,7 @@
 </span><span id="L-126"><a href="#L-126"><span class="linenos">126</span></a>
 </span><span id="L-127"><a href="#L-127"><span class="linenos">127</span></a>
 </span><span id="L-128"><a href="#L-128"><span class="linenos">128</span></a><span class="nd">@dataclass</span>
-</span><span id="L-129"><a href="#L-129"><span class="linenos">129</span></a><span class="k">class</span> <span class="nc">SummaryV2</span><span class="p">(</span><span class="n">BaseResponse</span><span class="p">):</span>
+</span><span id="L-129"><a href="#L-129"><span class="linenos">129</span></a><span class="k">class</span><span class="w"> </span><span class="nc">SummaryV2</span><span class="p">(</span><span class="n">BaseResponse</span><span class="p">):</span>
 </span><span id="L-130"><a href="#L-130"><span class="linenos">130</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="L-131"><a href="#L-131"><span class="linenos">131</span></a><span class="sd">    The summary information for the response.</span>
 </span><span id="L-132"><a href="#L-132"><span class="linenos">132</span></a><span class="sd">    &quot;&quot;&quot;</span>
@@ -597,7 +597,7 @@
 </span><span id="L-139"><a href="#L-139"><span class="linenos">139</span></a>
 </span><span id="L-140"><a href="#L-140"><span class="linenos">140</span></a>
 </span><span id="L-141"><a href="#L-141"><span class="linenos">141</span></a><span class="nd">@dataclass</span>
-</span><span id="L-142"><a href="#L-142"><span class="linenos">142</span></a><span class="k">class</span> <span class="nc">ListenRESTWord</span><span class="p">(</span><span class="n">BaseResponse</span><span class="p">):</span>  <span class="c1"># pylint: disable=too-many-instance-attributes</span>
+</span><span id="L-142"><a href="#L-142"><span class="linenos">142</span></a><span class="k">class</span><span class="w"> </span><span class="nc">ListenRESTWord</span><span class="p">(</span><span class="n">BaseResponse</span><span class="p">):</span>  <span class="c1"># pylint: disable=too-many-instance-attributes</span>
 </span><span id="L-143"><a href="#L-143"><span class="linenos">143</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="L-144"><a href="#L-144"><span class="linenos">144</span></a><span class="sd">    The word information for the response.</span>
 </span><span id="L-145"><a href="#L-145"><span class="linenos">145</span></a><span class="sd">    &quot;&quot;&quot;</span>
@@ -625,7 +625,7 @@
 </span><span id="L-167"><a href="#L-167"><span class="linenos">167</span></a>        <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="n">dataclass_config</span><span class="p">(</span><span class="n">exclude</span><span class="o">=</span><span class="k">lambda</span> <span class="n">f</span><span class="p">:</span> <span class="n">f</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span>
 </span><span id="L-168"><a href="#L-168"><span class="linenos">168</span></a>    <span class="p">)</span>
 </span><span id="L-169"><a href="#L-169"><span class="linenos">169</span></a>
-</span><span id="L-170"><a href="#L-170"><span class="linenos">170</span></a>    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+</span><span id="L-170"><a href="#L-170"><span class="linenos">170</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
 </span><span id="L-171"><a href="#L-171"><span class="linenos">171</span></a>        <span class="n">_dict</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
 </span><span id="L-172"><a href="#L-172"><span class="linenos">172</span></a>        <span class="k">if</span> <span class="s2">&quot;sentiment&quot;</span> <span class="ow">in</span> <span class="n">_dict</span><span class="p">:</span>
 </span><span id="L-173"><a href="#L-173"><span class="linenos">173</span></a>            <span class="n">_dict</span><span class="p">[</span><span class="s2">&quot;sentiment&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Sentiment</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">_dict</span><span class="p">[</span><span class="s2">&quot;sentiment&quot;</span><span class="p">])</span>
@@ -633,7 +633,7 @@
 </span><span id="L-175"><a href="#L-175"><span class="linenos">175</span></a>
 </span><span id="L-176"><a href="#L-176"><span class="linenos">176</span></a>
 </span><span id="L-177"><a href="#L-177"><span class="linenos">177</span></a><span class="nd">@dataclass</span>
-</span><span id="L-178"><a href="#L-178"><span class="linenos">178</span></a><span class="k">class</span> <span class="nc">Sentence</span><span class="p">(</span><span class="n">BaseResponse</span><span class="p">):</span>
+</span><span id="L-178"><a href="#L-178"><span class="linenos">178</span></a><span class="k">class</span><span class="w"> </span><span class="nc">Sentence</span><span class="p">(</span><span class="n">BaseResponse</span><span class="p">):</span>
 </span><span id="L-179"><a href="#L-179"><span class="linenos">179</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="L-180"><a href="#L-180"><span class="linenos">180</span></a><span class="sd">    The sentence information for the response.</span>
 </span><span id="L-181"><a href="#L-181"><span class="linenos">181</span></a><span class="sd">    &quot;&quot;&quot;</span>
@@ -648,7 +648,7 @@
 </span><span id="L-190"><a href="#L-190"><span class="linenos">190</span></a>        <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="n">dataclass_config</span><span class="p">(</span><span class="n">exclude</span><span class="o">=</span><span class="k">lambda</span> <span class="n">f</span><span class="p">:</span> <span class="n">f</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span>
 </span><span id="L-191"><a href="#L-191"><span class="linenos">191</span></a>    <span class="p">)</span>
 </span><span id="L-192"><a href="#L-192"><span class="linenos">192</span></a>
-</span><span id="L-193"><a href="#L-193"><span class="linenos">193</span></a>    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+</span><span id="L-193"><a href="#L-193"><span class="linenos">193</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
 </span><span id="L-194"><a href="#L-194"><span class="linenos">194</span></a>        <span class="n">_dict</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
 </span><span id="L-195"><a href="#L-195"><span class="linenos">195</span></a>        <span class="k">if</span> <span class="s2">&quot;sentiment&quot;</span> <span class="ow">in</span> <span class="n">_dict</span><span class="p">:</span>
 </span><span id="L-196"><a href="#L-196"><span class="linenos">196</span></a>            <span class="n">_dict</span><span class="p">[</span><span class="s2">&quot;sentiment&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Sentiment</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">_dict</span><span class="p">[</span><span class="s2">&quot;sentiment&quot;</span><span class="p">])</span>
@@ -656,7 +656,7 @@
 </span><span id="L-198"><a href="#L-198"><span class="linenos">198</span></a>
 </span><span id="L-199"><a href="#L-199"><span class="linenos">199</span></a>
 </span><span id="L-200"><a href="#L-200"><span class="linenos">200</span></a><span class="nd">@dataclass</span>
-</span><span id="L-201"><a href="#L-201"><span class="linenos">201</span></a><span class="k">class</span> <span class="nc">Paragraph</span><span class="p">(</span><span class="n">BaseResponse</span><span class="p">):</span>
+</span><span id="L-201"><a href="#L-201"><span class="linenos">201</span></a><span class="k">class</span><span class="w"> </span><span class="nc">Paragraph</span><span class="p">(</span><span class="n">BaseResponse</span><span class="p">):</span>
 </span><span id="L-202"><a href="#L-202"><span class="linenos">202</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="L-203"><a href="#L-203"><span class="linenos">203</span></a><span class="sd">    The paragraph information for the response.</span>
 </span><span id="L-204"><a href="#L-204"><span class="linenos">204</span></a><span class="sd">    &quot;&quot;&quot;</span>
@@ -675,7 +675,7 @@
 </span><span id="L-217"><a href="#L-217"><span class="linenos">217</span></a>        <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="n">dataclass_config</span><span class="p">(</span><span class="n">exclude</span><span class="o">=</span><span class="k">lambda</span> <span class="n">f</span><span class="p">:</span> <span class="n">f</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span>
 </span><span id="L-218"><a href="#L-218"><span class="linenos">218</span></a>    <span class="p">)</span>
 </span><span id="L-219"><a href="#L-219"><span class="linenos">219</span></a>
-</span><span id="L-220"><a href="#L-220"><span class="linenos">220</span></a>    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+</span><span id="L-220"><a href="#L-220"><span class="linenos">220</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
 </span><span id="L-221"><a href="#L-221"><span class="linenos">221</span></a>        <span class="n">_dict</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
 </span><span id="L-222"><a href="#L-222"><span class="linenos">222</span></a>        <span class="k">if</span> <span class="s2">&quot;sentences&quot;</span> <span class="ow">in</span> <span class="n">_dict</span><span class="p">:</span>
 </span><span id="L-223"><a href="#L-223"><span class="linenos">223</span></a>            <span class="n">_dict</span><span class="p">[</span><span class="s2">&quot;sentences&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
@@ -687,7 +687,7 @@
 </span><span id="L-229"><a href="#L-229"><span class="linenos">229</span></a>
 </span><span id="L-230"><a href="#L-230"><span class="linenos">230</span></a>
 </span><span id="L-231"><a href="#L-231"><span class="linenos">231</span></a><span class="nd">@dataclass</span>
-</span><span id="L-232"><a href="#L-232"><span class="linenos">232</span></a><span class="k">class</span> <span class="nc">Paragraphs</span><span class="p">(</span><span class="n">BaseResponse</span><span class="p">):</span>
+</span><span id="L-232"><a href="#L-232"><span class="linenos">232</span></a><span class="k">class</span><span class="w"> </span><span class="nc">Paragraphs</span><span class="p">(</span><span class="n">BaseResponse</span><span class="p">):</span>
 </span><span id="L-233"><a href="#L-233"><span class="linenos">233</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="L-234"><a href="#L-234"><span class="linenos">234</span></a><span class="sd">    The paragraphs information for the response.</span>
 </span><span id="L-235"><a href="#L-235"><span class="linenos">235</span></a><span class="sd">    &quot;&quot;&quot;</span>
@@ -697,7 +697,7 @@
 </span><span id="L-239"><a href="#L-239"><span class="linenos">239</span></a>        <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="n">dataclass_config</span><span class="p">(</span><span class="n">exclude</span><span class="o">=</span><span class="k">lambda</span> <span class="n">f</span><span class="p">:</span> <span class="n">f</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span>
 </span><span id="L-240"><a href="#L-240"><span class="linenos">240</span></a>    <span class="p">)</span>
 </span><span id="L-241"><a href="#L-241"><span class="linenos">241</span></a>
-</span><span id="L-242"><a href="#L-242"><span class="linenos">242</span></a>    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+</span><span id="L-242"><a href="#L-242"><span class="linenos">242</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
 </span><span id="L-243"><a href="#L-243"><span class="linenos">243</span></a>        <span class="n">_dict</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
 </span><span id="L-244"><a href="#L-244"><span class="linenos">244</span></a>        <span class="k">if</span> <span class="s2">&quot;paragraphs&quot;</span> <span class="ow">in</span> <span class="n">_dict</span><span class="p">:</span>
 </span><span id="L-245"><a href="#L-245"><span class="linenos">245</span></a>            <span class="n">_dict</span><span class="p">[</span><span class="s2">&quot;paragraphs&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
@@ -707,7 +707,7 @@
 </span><span id="L-249"><a href="#L-249"><span class="linenos">249</span></a>
 </span><span id="L-250"><a href="#L-250"><span class="linenos">250</span></a>
 </span><span id="L-251"><a href="#L-251"><span class="linenos">251</span></a><span class="nd">@dataclass</span>
-</span><span id="L-252"><a href="#L-252"><span class="linenos">252</span></a><span class="k">class</span> <span class="nc">Translation</span><span class="p">(</span><span class="n">BaseResponse</span><span class="p">):</span>
+</span><span id="L-252"><a href="#L-252"><span class="linenos">252</span></a><span class="k">class</span><span class="w"> </span><span class="nc">Translation</span><span class="p">(</span><span class="n">BaseResponse</span><span class="p">):</span>
 </span><span id="L-253"><a href="#L-253"><span class="linenos">253</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="L-254"><a href="#L-254"><span class="linenos">254</span></a><span class="sd">    The translation information for the response.</span>
 </span><span id="L-255"><a href="#L-255"><span class="linenos">255</span></a><span class="sd">    &quot;&quot;&quot;</span>
@@ -717,7 +717,7 @@
 </span><span id="L-259"><a href="#L-259"><span class="linenos">259</span></a>
 </span><span id="L-260"><a href="#L-260"><span class="linenos">260</span></a>
 </span><span id="L-261"><a href="#L-261"><span class="linenos">261</span></a><span class="nd">@dataclass</span>
-</span><span id="L-262"><a href="#L-262"><span class="linenos">262</span></a><span class="k">class</span> <span class="nc">Warning</span><span class="p">(</span><span class="n">BaseResponse</span><span class="p">):</span>  <span class="c1"># pylint: disable=used-before-assignment,redefined-builtin</span>
+</span><span id="L-262"><a href="#L-262"><span class="linenos">262</span></a><span class="k">class</span><span class="w"> </span><span class="nc">Warning</span><span class="p">(</span><span class="n">BaseResponse</span><span class="p">):</span>  <span class="c1"># pylint: disable=used-before-assignment,redefined-builtin</span>
 </span><span id="L-263"><a href="#L-263"><span class="linenos">263</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="L-264"><a href="#L-264"><span class="linenos">264</span></a><span class="sd">    The warning information for the response.</span>
 </span><span id="L-265"><a href="#L-265"><span class="linenos">265</span></a><span class="sd">    &quot;&quot;&quot;</span>
@@ -728,7 +728,7 @@
 </span><span id="L-270"><a href="#L-270"><span class="linenos">270</span></a>
 </span><span id="L-271"><a href="#L-271"><span class="linenos">271</span></a>
 </span><span id="L-272"><a href="#L-272"><span class="linenos">272</span></a><span class="nd">@dataclass</span>
-</span><span id="L-273"><a href="#L-273"><span class="linenos">273</span></a><span class="k">class</span> <span class="nc">Utterance</span><span class="p">(</span><span class="n">BaseResponse</span><span class="p">):</span>  <span class="c1"># pylint: disable=too-many-instance-attributes</span>
+</span><span id="L-273"><a href="#L-273"><span class="linenos">273</span></a><span class="k">class</span><span class="w"> </span><span class="nc">Utterance</span><span class="p">(</span><span class="n">BaseResponse</span><span class="p">):</span>  <span class="c1"># pylint: disable=too-many-instance-attributes</span>
 </span><span id="L-274"><a href="#L-274"><span class="linenos">274</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="L-275"><a href="#L-275"><span class="linenos">275</span></a><span class="sd">    The utterance information for the response.</span>
 </span><span id="L-276"><a href="#L-276"><span class="linenos">276</span></a><span class="sd">    &quot;&quot;&quot;</span>
@@ -750,7 +750,7 @@
 </span><span id="L-292"><a href="#L-292"><span class="linenos">292</span></a>    <span class="p">)</span>
 </span><span id="L-293"><a href="#L-293"><span class="linenos">293</span></a>    <span class="nb">id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
 </span><span id="L-294"><a href="#L-294"><span class="linenos">294</span></a>
-</span><span id="L-295"><a href="#L-295"><span class="linenos">295</span></a>    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+</span><span id="L-295"><a href="#L-295"><span class="linenos">295</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
 </span><span id="L-296"><a href="#L-296"><span class="linenos">296</span></a>        <span class="n">_dict</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
 </span><span id="L-297"><a href="#L-297"><span class="linenos">297</span></a>        <span class="k">if</span> <span class="s2">&quot;words&quot;</span> <span class="ow">in</span> <span class="n">_dict</span><span class="p">:</span>
 </span><span id="L-298"><a href="#L-298"><span class="linenos">298</span></a>            <span class="n">_dict</span><span class="p">[</span><span class="s2">&quot;words&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
@@ -762,7 +762,7 @@
 </span><span id="L-304"><a href="#L-304"><span class="linenos">304</span></a>
 </span><span id="L-305"><a href="#L-305"><span class="linenos">305</span></a>
 </span><span id="L-306"><a href="#L-306"><span class="linenos">306</span></a><span class="nd">@dataclass</span>
-</span><span id="L-307"><a href="#L-307"><span class="linenos">307</span></a><span class="k">class</span> <span class="nc">Entity</span><span class="p">(</span><span class="n">BaseResponse</span><span class="p">):</span>
+</span><span id="L-307"><a href="#L-307"><span class="linenos">307</span></a><span class="k">class</span><span class="w"> </span><span class="nc">Entity</span><span class="p">(</span><span class="n">BaseResponse</span><span class="p">):</span>
 </span><span id="L-308"><a href="#L-308"><span class="linenos">308</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="L-309"><a href="#L-309"><span class="linenos">309</span></a><span class="sd">    The entity information for the response.</span>
 </span><span id="L-310"><a href="#L-310"><span class="linenos">310</span></a><span class="sd">    &quot;&quot;&quot;</span>
@@ -775,7 +775,7 @@
 </span><span id="L-317"><a href="#L-317"><span class="linenos">317</span></a>
 </span><span id="L-318"><a href="#L-318"><span class="linenos">318</span></a>
 </span><span id="L-319"><a href="#L-319"><span class="linenos">319</span></a><span class="nd">@dataclass</span>
-</span><span id="L-320"><a href="#L-320"><span class="linenos">320</span></a><span class="k">class</span> <span class="nc">ListenRESTAlternative</span><span class="p">(</span>
+</span><span id="L-320"><a href="#L-320"><span class="linenos">320</span></a><span class="k">class</span><span class="w"> </span><span class="nc">ListenRESTAlternative</span><span class="p">(</span>
 </span><span id="L-321"><a href="#L-321"><span class="linenos">321</span></a>    <span class="n">BaseResponse</span>
 </span><span id="L-322"><a href="#L-322"><span class="linenos">322</span></a><span class="p">):</span>  <span class="c1"># pylint: disable=too-many-instance-attributes</span>
 </span><span id="L-323"><a href="#L-323"><span class="linenos">323</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
@@ -801,7 +801,7 @@
 </span><span id="L-343"><a href="#L-343"><span class="linenos">343</span></a>        <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="n">dataclass_config</span><span class="p">(</span><span class="n">exclude</span><span class="o">=</span><span class="k">lambda</span> <span class="n">f</span><span class="p">:</span> <span class="n">f</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span>
 </span><span id="L-344"><a href="#L-344"><span class="linenos">344</span></a>    <span class="p">)</span>
 </span><span id="L-345"><a href="#L-345"><span class="linenos">345</span></a>
-</span><span id="L-346"><a href="#L-346"><span class="linenos">346</span></a>    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+</span><span id="L-346"><a href="#L-346"><span class="linenos">346</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
 </span><span id="L-347"><a href="#L-347"><span class="linenos">347</span></a>        <span class="n">_dict</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
 </span><span id="L-348"><a href="#L-348"><span class="linenos">348</span></a>        <span class="k">if</span> <span class="s2">&quot;words&quot;</span> <span class="ow">in</span> <span class="n">_dict</span><span class="p">:</span>
 </span><span id="L-349"><a href="#L-349"><span class="linenos">349</span></a>            <span class="n">_dict</span><span class="p">[</span><span class="s2">&quot;words&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
@@ -826,7 +826,7 @@
 </span><span id="L-368"><a href="#L-368"><span class="linenos">368</span></a>
 </span><span id="L-369"><a href="#L-369"><span class="linenos">369</span></a>
 </span><span id="L-370"><a href="#L-370"><span class="linenos">370</span></a><span class="nd">@dataclass</span>
-</span><span id="L-371"><a href="#L-371"><span class="linenos">371</span></a><span class="k">class</span> <span class="nc">ListenRESTChannel</span><span class="p">(</span><span class="n">BaseResponse</span><span class="p">):</span>
+</span><span id="L-371"><a href="#L-371"><span class="linenos">371</span></a><span class="k">class</span><span class="w"> </span><span class="nc">ListenRESTChannel</span><span class="p">(</span><span class="n">BaseResponse</span><span class="p">):</span>
 </span><span id="L-372"><a href="#L-372"><span class="linenos">372</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="L-373"><a href="#L-373"><span class="linenos">373</span></a><span class="sd">    The channel information for the response.</span>
 </span><span id="L-374"><a href="#L-374"><span class="linenos">374</span></a><span class="sd">    &quot;&quot;&quot;</span>
@@ -842,7 +842,7 @@
 </span><span id="L-384"><a href="#L-384"><span class="linenos">384</span></a>        <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="n">dataclass_config</span><span class="p">(</span><span class="n">exclude</span><span class="o">=</span><span class="k">lambda</span> <span class="n">f</span><span class="p">:</span> <span class="n">f</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span>
 </span><span id="L-385"><a href="#L-385"><span class="linenos">385</span></a>    <span class="p">)</span>
 </span><span id="L-386"><a href="#L-386"><span class="linenos">386</span></a>
-</span><span id="L-387"><a href="#L-387"><span class="linenos">387</span></a>    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+</span><span id="L-387"><a href="#L-387"><span class="linenos">387</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
 </span><span id="L-388"><a href="#L-388"><span class="linenos">388</span></a>        <span class="n">_dict</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
 </span><span id="L-389"><a href="#L-389"><span class="linenos">389</span></a>        <span class="k">if</span> <span class="s2">&quot;search&quot;</span> <span class="ow">in</span> <span class="n">_dict</span><span class="p">:</span>
 </span><span id="L-390"><a href="#L-390"><span class="linenos">390</span></a>            <span class="n">_dict</span><span class="p">[</span><span class="s2">&quot;search&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">Search</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">search</span><span class="p">)</span> <span class="k">for</span> <span class="n">search</span> <span class="ow">in</span> <span class="n">_dict</span><span class="p">[</span><span class="s2">&quot;search&quot;</span><span class="p">]]</span>
@@ -855,7 +855,7 @@
 </span><span id="L-397"><a href="#L-397"><span class="linenos">397</span></a>
 </span><span id="L-398"><a href="#L-398"><span class="linenos">398</span></a>
 </span><span id="L-399"><a href="#L-399"><span class="linenos">399</span></a><span class="nd">@dataclass</span>
-</span><span id="L-400"><a href="#L-400"><span class="linenos">400</span></a><span class="k">class</span> <span class="nc">Results</span><span class="p">(</span><span class="n">BaseResponse</span><span class="p">):</span>
+</span><span id="L-400"><a href="#L-400"><span class="linenos">400</span></a><span class="k">class</span><span class="w"> </span><span class="nc">Results</span><span class="p">(</span><span class="n">BaseResponse</span><span class="p">):</span>
 </span><span id="L-401"><a href="#L-401"><span class="linenos">401</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="L-402"><a href="#L-402"><span class="linenos">402</span></a><span class="sd">    The results information for the response.</span>
 </span><span id="L-403"><a href="#L-403"><span class="linenos">403</span></a><span class="sd">    &quot;&quot;&quot;</span>
@@ -879,7 +879,7 @@
 </span><span id="L-421"><a href="#L-421"><span class="linenos">421</span></a>        <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="n">dataclass_config</span><span class="p">(</span><span class="n">exclude</span><span class="o">=</span><span class="k">lambda</span> <span class="n">f</span><span class="p">:</span> <span class="n">f</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span>
 </span><span id="L-422"><a href="#L-422"><span class="linenos">422</span></a>    <span class="p">)</span>
 </span><span id="L-423"><a href="#L-423"><span class="linenos">423</span></a>
-</span><span id="L-424"><a href="#L-424"><span class="linenos">424</span></a>    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+</span><span id="L-424"><a href="#L-424"><span class="linenos">424</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
 </span><span id="L-425"><a href="#L-425"><span class="linenos">425</span></a>        <span class="n">_dict</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
 </span><span id="L-426"><a href="#L-426"><span class="linenos">426</span></a>        <span class="k">if</span> <span class="s2">&quot;channels&quot;</span> <span class="ow">in</span> <span class="n">_dict</span><span class="p">:</span>
 </span><span id="L-427"><a href="#L-427"><span class="linenos">427</span></a>            <span class="n">_dict</span><span class="p">[</span><span class="s2">&quot;channels&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
@@ -904,7 +904,7 @@
 </span><span id="L-446"><a href="#L-446"><span class="linenos">446</span></a>
 </span><span id="L-447"><a href="#L-447"><span class="linenos">447</span></a>
 </span><span id="L-448"><a href="#L-448"><span class="linenos">448</span></a><span class="nd">@dataclass</span>
-</span><span id="L-449"><a href="#L-449"><span class="linenos">449</span></a><span class="k">class</span> <span class="nc">PrerecordedResponse</span><span class="p">(</span><span class="n">BaseResponse</span><span class="p">):</span>
+</span><span id="L-449"><a href="#L-449"><span class="linenos">449</span></a><span class="k">class</span><span class="w"> </span><span class="nc">PrerecordedResponse</span><span class="p">(</span><span class="n">BaseResponse</span><span class="p">):</span>
 </span><span id="L-450"><a href="#L-450"><span class="linenos">450</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="L-451"><a href="#L-451"><span class="linenos">451</span></a><span class="sd">    The response object for the prerecorded API.</span>
 </span><span id="L-452"><a href="#L-452"><span class="linenos">452</span></a><span class="sd">    &quot;&quot;&quot;</span>
@@ -916,7 +916,7 @@
 </span><span id="L-458"><a href="#L-458"><span class="linenos">458</span></a>        <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="n">dataclass_config</span><span class="p">(</span><span class="n">exclude</span><span class="o">=</span><span class="k">lambda</span> <span class="n">f</span><span class="p">:</span> <span class="n">f</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span>
 </span><span id="L-459"><a href="#L-459"><span class="linenos">459</span></a>    <span class="p">)</span>
 </span><span id="L-460"><a href="#L-460"><span class="linenos">460</span></a>
-</span><span id="L-461"><a href="#L-461"><span class="linenos">461</span></a>    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+</span><span id="L-461"><a href="#L-461"><span class="linenos">461</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
 </span><span id="L-462"><a href="#L-462"><span class="linenos">462</span></a>        <span class="n">_dict</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
 </span><span id="L-463"><a href="#L-463"><span class="linenos">463</span></a>        <span class="k">if</span> <span class="s2">&quot;metadata&quot;</span> <span class="ow">in</span> <span class="n">_dict</span><span class="p">:</span>
 </span><span id="L-464"><a href="#L-464"><span class="linenos">464</span></a>            <span class="n">_dict</span><span class="p">[</span><span class="s2">&quot;metadata&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Metadata</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">_dict</span><span class="p">[</span><span class="s2">&quot;metadata&quot;</span><span class="p">])</span>
@@ -943,7 +943,7 @@
     </div>
     <a class="headerlink" href="#AsyncPrerecordedResponse"></a>
             <div class="pdoc-code codehilite"><pre><span></span><span id="AsyncPrerecordedResponse-38"><a href="#AsyncPrerecordedResponse-38"><span class="linenos">38</span></a><span class="nd">@dataclass</span>
-</span><span id="AsyncPrerecordedResponse-39"><a href="#AsyncPrerecordedResponse-39"><span class="linenos">39</span></a><span class="k">class</span> <span class="nc">AsyncPrerecordedResponse</span><span class="p">(</span><span class="n">BaseResponse</span><span class="p">):</span>
+</span><span id="AsyncPrerecordedResponse-39"><a href="#AsyncPrerecordedResponse-39"><span class="linenos">39</span></a><span class="k">class</span><span class="w"> </span><span class="nc">AsyncPrerecordedResponse</span><span class="p">(</span><span class="n">BaseResponse</span><span class="p">):</span>
 </span><span id="AsyncPrerecordedResponse-40"><a href="#AsyncPrerecordedResponse-40"><span class="linenos">40</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="AsyncPrerecordedResponse-41"><a href="#AsyncPrerecordedResponse-41"><span class="linenos">41</span></a><span class="sd">    The response object for the async prerecorded API.</span>
 </span><span id="AsyncPrerecordedResponse-42"><a href="#AsyncPrerecordedResponse-42"><span class="linenos">42</span></a><span class="sd">    &quot;&quot;&quot;</span>
@@ -1003,7 +1003,7 @@
     </div>
     <a class="headerlink" href="#Metadata"></a>
             <div class="pdoc-code codehilite"><pre><span></span><span id="Metadata-50"><a href="#Metadata-50"><span class="linenos"> 50</span></a><span class="nd">@dataclass</span>
-</span><span id="Metadata-51"><a href="#Metadata-51"><span class="linenos"> 51</span></a><span class="k">class</span> <span class="nc">Metadata</span><span class="p">(</span><span class="n">BaseResponse</span><span class="p">):</span>  <span class="c1"># pylint: disable=too-many-instance-attributes</span>
+</span><span id="Metadata-51"><a href="#Metadata-51"><span class="linenos"> 51</span></a><span class="k">class</span><span class="w"> </span><span class="nc">Metadata</span><span class="p">(</span><span class="n">BaseResponse</span><span class="p">):</span>  <span class="c1"># pylint: disable=too-many-instance-attributes</span>
 </span><span id="Metadata-52"><a href="#Metadata-52"><span class="linenos"> 52</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="Metadata-53"><a href="#Metadata-53"><span class="linenos"> 53</span></a><span class="sd">    The metadata for the response.</span>
 </span><span id="Metadata-54"><a href="#Metadata-54"><span class="linenos"> 54</span></a><span class="sd">    &quot;&quot;&quot;</span>
@@ -1041,7 +1041,7 @@
 </span><span id="Metadata-86"><a href="#Metadata-86"><span class="linenos"> 86</span></a>        <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="n">dataclass_config</span><span class="p">(</span><span class="n">exclude</span><span class="o">=</span><span class="k">lambda</span> <span class="n">f</span><span class="p">:</span> <span class="n">f</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span>
 </span><span id="Metadata-87"><a href="#Metadata-87"><span class="linenos"> 87</span></a>    <span class="p">)</span>
 </span><span id="Metadata-88"><a href="#Metadata-88"><span class="linenos"> 88</span></a>
-</span><span id="Metadata-89"><a href="#Metadata-89"><span class="linenos"> 89</span></a>    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+</span><span id="Metadata-89"><a href="#Metadata-89"><span class="linenos"> 89</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
 </span><span id="Metadata-90"><a href="#Metadata-90"><span class="linenos"> 90</span></a>        <span class="n">_dict</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
 </span><span id="Metadata-91"><a href="#Metadata-91"><span class="linenos"> 91</span></a>        <span class="k">if</span> <span class="s2">&quot;models&quot;</span> <span class="ow">in</span> <span class="n">_dict</span><span class="p">:</span>
 </span><span id="Metadata-92"><a href="#Metadata-92"><span class="linenos"> 92</span></a>            <span class="n">_dict</span><span class="p">[</span><span class="s2">&quot;models&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">models</span><span class="p">)</span> <span class="k">for</span> <span class="n">models</span> <span class="ow">in</span> <span class="n">_dict</span><span class="p">[</span><span class="s2">&quot;models&quot;</span><span class="p">]]</span>
@@ -1275,7 +1275,7 @@
     </div>
     <a class="headerlink" href="#SummaryV1"></a>
             <div class="pdoc-code codehilite"><pre><span></span><span id="SummaryV1-115"><a href="#SummaryV1-115"><span class="linenos">115</span></a><span class="nd">@dataclass</span>
-</span><span id="SummaryV1-116"><a href="#SummaryV1-116"><span class="linenos">116</span></a><span class="k">class</span> <span class="nc">SummaryV1</span><span class="p">(</span><span class="n">BaseResponse</span><span class="p">):</span>
+</span><span id="SummaryV1-116"><a href="#SummaryV1-116"><span class="linenos">116</span></a><span class="k">class</span><span class="w"> </span><span class="nc">SummaryV1</span><span class="p">(</span><span class="n">BaseResponse</span><span class="p">):</span>
 </span><span id="SummaryV1-117"><a href="#SummaryV1-117"><span class="linenos">117</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="SummaryV1-118"><a href="#SummaryV1-118"><span class="linenos">118</span></a><span class="sd">    The summary information for the response.</span>
 </span><span id="SummaryV1-119"><a href="#SummaryV1-119"><span class="linenos">119</span></a><span class="sd">    &quot;&quot;&quot;</span>
@@ -1373,7 +1373,7 @@
     </div>
     <a class="headerlink" href="#SummaryV2"></a>
             <div class="pdoc-code codehilite"><pre><span></span><span id="SummaryV2-129"><a href="#SummaryV2-129"><span class="linenos">129</span></a><span class="nd">@dataclass</span>
-</span><span id="SummaryV2-130"><a href="#SummaryV2-130"><span class="linenos">130</span></a><span class="k">class</span> <span class="nc">SummaryV2</span><span class="p">(</span><span class="n">BaseResponse</span><span class="p">):</span>
+</span><span id="SummaryV2-130"><a href="#SummaryV2-130"><span class="linenos">130</span></a><span class="k">class</span><span class="w"> </span><span class="nc">SummaryV2</span><span class="p">(</span><span class="n">BaseResponse</span><span class="p">):</span>
 </span><span id="SummaryV2-131"><a href="#SummaryV2-131"><span class="linenos">131</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="SummaryV2-132"><a href="#SummaryV2-132"><span class="linenos">132</span></a><span class="sd">    The summary information for the response.</span>
 </span><span id="SummaryV2-133"><a href="#SummaryV2-133"><span class="linenos">133</span></a><span class="sd">    &quot;&quot;&quot;</span>
@@ -1458,7 +1458,7 @@
     </div>
     <a class="headerlink" href="#ListenRESTWord"></a>
             <div class="pdoc-code codehilite"><pre><span></span><span id="ListenRESTWord-142"><a href="#ListenRESTWord-142"><span class="linenos">142</span></a><span class="nd">@dataclass</span>
-</span><span id="ListenRESTWord-143"><a href="#ListenRESTWord-143"><span class="linenos">143</span></a><span class="k">class</span> <span class="nc">ListenRESTWord</span><span class="p">(</span><span class="n">BaseResponse</span><span class="p">):</span>  <span class="c1"># pylint: disable=too-many-instance-attributes</span>
+</span><span id="ListenRESTWord-143"><a href="#ListenRESTWord-143"><span class="linenos">143</span></a><span class="k">class</span><span class="w"> </span><span class="nc">ListenRESTWord</span><span class="p">(</span><span class="n">BaseResponse</span><span class="p">):</span>  <span class="c1"># pylint: disable=too-many-instance-attributes</span>
 </span><span id="ListenRESTWord-144"><a href="#ListenRESTWord-144"><span class="linenos">144</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="ListenRESTWord-145"><a href="#ListenRESTWord-145"><span class="linenos">145</span></a><span class="sd">    The word information for the response.</span>
 </span><span id="ListenRESTWord-146"><a href="#ListenRESTWord-146"><span class="linenos">146</span></a><span class="sd">    &quot;&quot;&quot;</span>
@@ -1486,7 +1486,7 @@
 </span><span id="ListenRESTWord-168"><a href="#ListenRESTWord-168"><span class="linenos">168</span></a>        <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="n">dataclass_config</span><span class="p">(</span><span class="n">exclude</span><span class="o">=</span><span class="k">lambda</span> <span class="n">f</span><span class="p">:</span> <span class="n">f</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span>
 </span><span id="ListenRESTWord-169"><a href="#ListenRESTWord-169"><span class="linenos">169</span></a>    <span class="p">)</span>
 </span><span id="ListenRESTWord-170"><a href="#ListenRESTWord-170"><span class="linenos">170</span></a>
-</span><span id="ListenRESTWord-171"><a href="#ListenRESTWord-171"><span class="linenos">171</span></a>    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+</span><span id="ListenRESTWord-171"><a href="#ListenRESTWord-171"><span class="linenos">171</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
 </span><span id="ListenRESTWord-172"><a href="#ListenRESTWord-172"><span class="linenos">172</span></a>        <span class="n">_dict</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
 </span><span id="ListenRESTWord-173"><a href="#ListenRESTWord-173"><span class="linenos">173</span></a>        <span class="k">if</span> <span class="s2">&quot;sentiment&quot;</span> <span class="ow">in</span> <span class="n">_dict</span><span class="p">:</span>
 </span><span id="ListenRESTWord-174"><a href="#ListenRESTWord-174"><span class="linenos">174</span></a>            <span class="n">_dict</span><span class="p">[</span><span class="s2">&quot;sentiment&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Sentiment</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">_dict</span><span class="p">[</span><span class="s2">&quot;sentiment&quot;</span><span class="p">])</span>
@@ -1653,7 +1653,7 @@
     </div>
     <a class="headerlink" href="#Sentence"></a>
             <div class="pdoc-code codehilite"><pre><span></span><span id="Sentence-178"><a href="#Sentence-178"><span class="linenos">178</span></a><span class="nd">@dataclass</span>
-</span><span id="Sentence-179"><a href="#Sentence-179"><span class="linenos">179</span></a><span class="k">class</span> <span class="nc">Sentence</span><span class="p">(</span><span class="n">BaseResponse</span><span class="p">):</span>
+</span><span id="Sentence-179"><a href="#Sentence-179"><span class="linenos">179</span></a><span class="k">class</span><span class="w"> </span><span class="nc">Sentence</span><span class="p">(</span><span class="n">BaseResponse</span><span class="p">):</span>
 </span><span id="Sentence-180"><a href="#Sentence-180"><span class="linenos">180</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="Sentence-181"><a href="#Sentence-181"><span class="linenos">181</span></a><span class="sd">    The sentence information for the response.</span>
 </span><span id="Sentence-182"><a href="#Sentence-182"><span class="linenos">182</span></a><span class="sd">    &quot;&quot;&quot;</span>
@@ -1668,7 +1668,7 @@
 </span><span id="Sentence-191"><a href="#Sentence-191"><span class="linenos">191</span></a>        <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="n">dataclass_config</span><span class="p">(</span><span class="n">exclude</span><span class="o">=</span><span class="k">lambda</span> <span class="n">f</span><span class="p">:</span> <span class="n">f</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span>
 </span><span id="Sentence-192"><a href="#Sentence-192"><span class="linenos">192</span></a>    <span class="p">)</span>
 </span><span id="Sentence-193"><a href="#Sentence-193"><span class="linenos">193</span></a>
-</span><span id="Sentence-194"><a href="#Sentence-194"><span class="linenos">194</span></a>    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+</span><span id="Sentence-194"><a href="#Sentence-194"><span class="linenos">194</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
 </span><span id="Sentence-195"><a href="#Sentence-195"><span class="linenos">195</span></a>        <span class="n">_dict</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
 </span><span id="Sentence-196"><a href="#Sentence-196"><span class="linenos">196</span></a>        <span class="k">if</span> <span class="s2">&quot;sentiment&quot;</span> <span class="ow">in</span> <span class="n">_dict</span><span class="p">:</span>
 </span><span id="Sentence-197"><a href="#Sentence-197"><span class="linenos">197</span></a>            <span class="n">_dict</span><span class="p">[</span><span class="s2">&quot;sentiment&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Sentiment</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">_dict</span><span class="p">[</span><span class="s2">&quot;sentiment&quot;</span><span class="p">])</span>
@@ -1775,7 +1775,7 @@
     </div>
     <a class="headerlink" href="#Paragraph"></a>
             <div class="pdoc-code codehilite"><pre><span></span><span id="Paragraph-201"><a href="#Paragraph-201"><span class="linenos">201</span></a><span class="nd">@dataclass</span>
-</span><span id="Paragraph-202"><a href="#Paragraph-202"><span class="linenos">202</span></a><span class="k">class</span> <span class="nc">Paragraph</span><span class="p">(</span><span class="n">BaseResponse</span><span class="p">):</span>
+</span><span id="Paragraph-202"><a href="#Paragraph-202"><span class="linenos">202</span></a><span class="k">class</span><span class="w"> </span><span class="nc">Paragraph</span><span class="p">(</span><span class="n">BaseResponse</span><span class="p">):</span>
 </span><span id="Paragraph-203"><a href="#Paragraph-203"><span class="linenos">203</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="Paragraph-204"><a href="#Paragraph-204"><span class="linenos">204</span></a><span class="sd">    The paragraph information for the response.</span>
 </span><span id="Paragraph-205"><a href="#Paragraph-205"><span class="linenos">205</span></a><span class="sd">    &quot;&quot;&quot;</span>
@@ -1794,7 +1794,7 @@
 </span><span id="Paragraph-218"><a href="#Paragraph-218"><span class="linenos">218</span></a>        <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="n">dataclass_config</span><span class="p">(</span><span class="n">exclude</span><span class="o">=</span><span class="k">lambda</span> <span class="n">f</span><span class="p">:</span> <span class="n">f</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span>
 </span><span id="Paragraph-219"><a href="#Paragraph-219"><span class="linenos">219</span></a>    <span class="p">)</span>
 </span><span id="Paragraph-220"><a href="#Paragraph-220"><span class="linenos">220</span></a>
-</span><span id="Paragraph-221"><a href="#Paragraph-221"><span class="linenos">221</span></a>    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+</span><span id="Paragraph-221"><a href="#Paragraph-221"><span class="linenos">221</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
 </span><span id="Paragraph-222"><a href="#Paragraph-222"><span class="linenos">222</span></a>        <span class="n">_dict</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
 </span><span id="Paragraph-223"><a href="#Paragraph-223"><span class="linenos">223</span></a>        <span class="k">if</span> <span class="s2">&quot;sentences&quot;</span> <span class="ow">in</span> <span class="n">_dict</span><span class="p">:</span>
 </span><span id="Paragraph-224"><a href="#Paragraph-224"><span class="linenos">224</span></a>            <span class="n">_dict</span><span class="p">[</span><span class="s2">&quot;sentences&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
@@ -1928,7 +1928,7 @@
     </div>
     <a class="headerlink" href="#Paragraphs"></a>
             <div class="pdoc-code codehilite"><pre><span></span><span id="Paragraphs-232"><a href="#Paragraphs-232"><span class="linenos">232</span></a><span class="nd">@dataclass</span>
-</span><span id="Paragraphs-233"><a href="#Paragraphs-233"><span class="linenos">233</span></a><span class="k">class</span> <span class="nc">Paragraphs</span><span class="p">(</span><span class="n">BaseResponse</span><span class="p">):</span>
+</span><span id="Paragraphs-233"><a href="#Paragraphs-233"><span class="linenos">233</span></a><span class="k">class</span><span class="w"> </span><span class="nc">Paragraphs</span><span class="p">(</span><span class="n">BaseResponse</span><span class="p">):</span>
 </span><span id="Paragraphs-234"><a href="#Paragraphs-234"><span class="linenos">234</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="Paragraphs-235"><a href="#Paragraphs-235"><span class="linenos">235</span></a><span class="sd">    The paragraphs information for the response.</span>
 </span><span id="Paragraphs-236"><a href="#Paragraphs-236"><span class="linenos">236</span></a><span class="sd">    &quot;&quot;&quot;</span>
@@ -1938,7 +1938,7 @@
 </span><span id="Paragraphs-240"><a href="#Paragraphs-240"><span class="linenos">240</span></a>        <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="n">dataclass_config</span><span class="p">(</span><span class="n">exclude</span><span class="o">=</span><span class="k">lambda</span> <span class="n">f</span><span class="p">:</span> <span class="n">f</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span>
 </span><span id="Paragraphs-241"><a href="#Paragraphs-241"><span class="linenos">241</span></a>    <span class="p">)</span>
 </span><span id="Paragraphs-242"><a href="#Paragraphs-242"><span class="linenos">242</span></a>
-</span><span id="Paragraphs-243"><a href="#Paragraphs-243"><span class="linenos">243</span></a>    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+</span><span id="Paragraphs-243"><a href="#Paragraphs-243"><span class="linenos">243</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
 </span><span id="Paragraphs-244"><a href="#Paragraphs-244"><span class="linenos">244</span></a>        <span class="n">_dict</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
 </span><span id="Paragraphs-245"><a href="#Paragraphs-245"><span class="linenos">245</span></a>        <span class="k">if</span> <span class="s2">&quot;paragraphs&quot;</span> <span class="ow">in</span> <span class="n">_dict</span><span class="p">:</span>
 </span><span id="Paragraphs-246"><a href="#Paragraphs-246"><span class="linenos">246</span></a>            <span class="n">_dict</span><span class="p">[</span><span class="s2">&quot;paragraphs&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
@@ -2011,7 +2011,7 @@
     </div>
     <a class="headerlink" href="#Translation"></a>
             <div class="pdoc-code codehilite"><pre><span></span><span id="Translation-252"><a href="#Translation-252"><span class="linenos">252</span></a><span class="nd">@dataclass</span>
-</span><span id="Translation-253"><a href="#Translation-253"><span class="linenos">253</span></a><span class="k">class</span> <span class="nc">Translation</span><span class="p">(</span><span class="n">BaseResponse</span><span class="p">):</span>
+</span><span id="Translation-253"><a href="#Translation-253"><span class="linenos">253</span></a><span class="k">class</span><span class="w"> </span><span class="nc">Translation</span><span class="p">(</span><span class="n">BaseResponse</span><span class="p">):</span>
 </span><span id="Translation-254"><a href="#Translation-254"><span class="linenos">254</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="Translation-255"><a href="#Translation-255"><span class="linenos">255</span></a><span class="sd">    The translation information for the response.</span>
 </span><span id="Translation-256"><a href="#Translation-256"><span class="linenos">256</span></a><span class="sd">    &quot;&quot;&quot;</span>
@@ -2084,7 +2084,7 @@
     </div>
     <a class="headerlink" href="#Warning"></a>
             <div class="pdoc-code codehilite"><pre><span></span><span id="Warning-262"><a href="#Warning-262"><span class="linenos">262</span></a><span class="nd">@dataclass</span>
-</span><span id="Warning-263"><a href="#Warning-263"><span class="linenos">263</span></a><span class="k">class</span> <span class="nc">Warning</span><span class="p">(</span><span class="n">BaseResponse</span><span class="p">):</span>  <span class="c1"># pylint: disable=used-before-assignment,redefined-builtin</span>
+</span><span id="Warning-263"><a href="#Warning-263"><span class="linenos">263</span></a><span class="k">class</span><span class="w"> </span><span class="nc">Warning</span><span class="p">(</span><span class="n">BaseResponse</span><span class="p">):</span>  <span class="c1"># pylint: disable=used-before-assignment,redefined-builtin</span>
 </span><span id="Warning-264"><a href="#Warning-264"><span class="linenos">264</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="Warning-265"><a href="#Warning-265"><span class="linenos">265</span></a><span class="sd">    The warning information for the response.</span>
 </span><span id="Warning-266"><a href="#Warning-266"><span class="linenos">266</span></a><span class="sd">    &quot;&quot;&quot;</span>
@@ -2170,7 +2170,7 @@
     </div>
     <a class="headerlink" href="#Utterance"></a>
             <div class="pdoc-code codehilite"><pre><span></span><span id="Utterance-273"><a href="#Utterance-273"><span class="linenos">273</span></a><span class="nd">@dataclass</span>
-</span><span id="Utterance-274"><a href="#Utterance-274"><span class="linenos">274</span></a><span class="k">class</span> <span class="nc">Utterance</span><span class="p">(</span><span class="n">BaseResponse</span><span class="p">):</span>  <span class="c1"># pylint: disable=too-many-instance-attributes</span>
+</span><span id="Utterance-274"><a href="#Utterance-274"><span class="linenos">274</span></a><span class="k">class</span><span class="w"> </span><span class="nc">Utterance</span><span class="p">(</span><span class="n">BaseResponse</span><span class="p">):</span>  <span class="c1"># pylint: disable=too-many-instance-attributes</span>
 </span><span id="Utterance-275"><a href="#Utterance-275"><span class="linenos">275</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="Utterance-276"><a href="#Utterance-276"><span class="linenos">276</span></a><span class="sd">    The utterance information for the response.</span>
 </span><span id="Utterance-277"><a href="#Utterance-277"><span class="linenos">277</span></a><span class="sd">    &quot;&quot;&quot;</span>
@@ -2192,7 +2192,7 @@
 </span><span id="Utterance-293"><a href="#Utterance-293"><span class="linenos">293</span></a>    <span class="p">)</span>
 </span><span id="Utterance-294"><a href="#Utterance-294"><span class="linenos">294</span></a>    <span class="nb">id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
 </span><span id="Utterance-295"><a href="#Utterance-295"><span class="linenos">295</span></a>
-</span><span id="Utterance-296"><a href="#Utterance-296"><span class="linenos">296</span></a>    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+</span><span id="Utterance-296"><a href="#Utterance-296"><span class="linenos">296</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
 </span><span id="Utterance-297"><a href="#Utterance-297"><span class="linenos">297</span></a>        <span class="n">_dict</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
 </span><span id="Utterance-298"><a href="#Utterance-298"><span class="linenos">298</span></a>        <span class="k">if</span> <span class="s2">&quot;words&quot;</span> <span class="ow">in</span> <span class="n">_dict</span><span class="p">:</span>
 </span><span id="Utterance-299"><a href="#Utterance-299"><span class="linenos">299</span></a>            <span class="n">_dict</span><span class="p">[</span><span class="s2">&quot;words&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
@@ -2362,7 +2362,7 @@
     </div>
     <a class="headerlink" href="#Entity"></a>
             <div class="pdoc-code codehilite"><pre><span></span><span id="Entity-307"><a href="#Entity-307"><span class="linenos">307</span></a><span class="nd">@dataclass</span>
-</span><span id="Entity-308"><a href="#Entity-308"><span class="linenos">308</span></a><span class="k">class</span> <span class="nc">Entity</span><span class="p">(</span><span class="n">BaseResponse</span><span class="p">):</span>
+</span><span id="Entity-308"><a href="#Entity-308"><span class="linenos">308</span></a><span class="k">class</span><span class="w"> </span><span class="nc">Entity</span><span class="p">(</span><span class="n">BaseResponse</span><span class="p">):</span>
 </span><span id="Entity-309"><a href="#Entity-309"><span class="linenos">309</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="Entity-310"><a href="#Entity-310"><span class="linenos">310</span></a><span class="sd">    The entity information for the response.</span>
 </span><span id="Entity-311"><a href="#Entity-311"><span class="linenos">311</span></a><span class="sd">    &quot;&quot;&quot;</span>
@@ -2474,7 +2474,7 @@
     </div>
     <a class="headerlink" href="#ListenRESTAlternative"></a>
             <div class="pdoc-code codehilite"><pre><span></span><span id="ListenRESTAlternative-320"><a href="#ListenRESTAlternative-320"><span class="linenos">320</span></a><span class="nd">@dataclass</span>
-</span><span id="ListenRESTAlternative-321"><a href="#ListenRESTAlternative-321"><span class="linenos">321</span></a><span class="k">class</span> <span class="nc">ListenRESTAlternative</span><span class="p">(</span>
+</span><span id="ListenRESTAlternative-321"><a href="#ListenRESTAlternative-321"><span class="linenos">321</span></a><span class="k">class</span><span class="w"> </span><span class="nc">ListenRESTAlternative</span><span class="p">(</span>
 </span><span id="ListenRESTAlternative-322"><a href="#ListenRESTAlternative-322"><span class="linenos">322</span></a>    <span class="n">BaseResponse</span>
 </span><span id="ListenRESTAlternative-323"><a href="#ListenRESTAlternative-323"><span class="linenos">323</span></a><span class="p">):</span>  <span class="c1"># pylint: disable=too-many-instance-attributes</span>
 </span><span id="ListenRESTAlternative-324"><a href="#ListenRESTAlternative-324"><span class="linenos">324</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
@@ -2500,7 +2500,7 @@
 </span><span id="ListenRESTAlternative-344"><a href="#ListenRESTAlternative-344"><span class="linenos">344</span></a>        <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="n">dataclass_config</span><span class="p">(</span><span class="n">exclude</span><span class="o">=</span><span class="k">lambda</span> <span class="n">f</span><span class="p">:</span> <span class="n">f</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span>
 </span><span id="ListenRESTAlternative-345"><a href="#ListenRESTAlternative-345"><span class="linenos">345</span></a>    <span class="p">)</span>
 </span><span id="ListenRESTAlternative-346"><a href="#ListenRESTAlternative-346"><span class="linenos">346</span></a>
-</span><span id="ListenRESTAlternative-347"><a href="#ListenRESTAlternative-347"><span class="linenos">347</span></a>    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+</span><span id="ListenRESTAlternative-347"><a href="#ListenRESTAlternative-347"><span class="linenos">347</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
 </span><span id="ListenRESTAlternative-348"><a href="#ListenRESTAlternative-348"><span class="linenos">348</span></a>        <span class="n">_dict</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
 </span><span id="ListenRESTAlternative-349"><a href="#ListenRESTAlternative-349"><span class="linenos">349</span></a>        <span class="k">if</span> <span class="s2">&quot;words&quot;</span> <span class="ow">in</span> <span class="n">_dict</span><span class="p">:</span>
 </span><span id="ListenRESTAlternative-350"><a href="#ListenRESTAlternative-350"><span class="linenos">350</span></a>            <span class="n">_dict</span><span class="p">[</span><span class="s2">&quot;words&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
@@ -2659,7 +2659,7 @@
     </div>
     <a class="headerlink" href="#ListenRESTChannel"></a>
             <div class="pdoc-code codehilite"><pre><span></span><span id="ListenRESTChannel-371"><a href="#ListenRESTChannel-371"><span class="linenos">371</span></a><span class="nd">@dataclass</span>
-</span><span id="ListenRESTChannel-372"><a href="#ListenRESTChannel-372"><span class="linenos">372</span></a><span class="k">class</span> <span class="nc">ListenRESTChannel</span><span class="p">(</span><span class="n">BaseResponse</span><span class="p">):</span>
+</span><span id="ListenRESTChannel-372"><a href="#ListenRESTChannel-372"><span class="linenos">372</span></a><span class="k">class</span><span class="w"> </span><span class="nc">ListenRESTChannel</span><span class="p">(</span><span class="n">BaseResponse</span><span class="p">):</span>
 </span><span id="ListenRESTChannel-373"><a href="#ListenRESTChannel-373"><span class="linenos">373</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="ListenRESTChannel-374"><a href="#ListenRESTChannel-374"><span class="linenos">374</span></a><span class="sd">    The channel information for the response.</span>
 </span><span id="ListenRESTChannel-375"><a href="#ListenRESTChannel-375"><span class="linenos">375</span></a><span class="sd">    &quot;&quot;&quot;</span>
@@ -2675,7 +2675,7 @@
 </span><span id="ListenRESTChannel-385"><a href="#ListenRESTChannel-385"><span class="linenos">385</span></a>        <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="n">dataclass_config</span><span class="p">(</span><span class="n">exclude</span><span class="o">=</span><span class="k">lambda</span> <span class="n">f</span><span class="p">:</span> <span class="n">f</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span>
 </span><span id="ListenRESTChannel-386"><a href="#ListenRESTChannel-386"><span class="linenos">386</span></a>    <span class="p">)</span>
 </span><span id="ListenRESTChannel-387"><a href="#ListenRESTChannel-387"><span class="linenos">387</span></a>
-</span><span id="ListenRESTChannel-388"><a href="#ListenRESTChannel-388"><span class="linenos">388</span></a>    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+</span><span id="ListenRESTChannel-388"><a href="#ListenRESTChannel-388"><span class="linenos">388</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
 </span><span id="ListenRESTChannel-389"><a href="#ListenRESTChannel-389"><span class="linenos">389</span></a>        <span class="n">_dict</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
 </span><span id="ListenRESTChannel-390"><a href="#ListenRESTChannel-390"><span class="linenos">390</span></a>        <span class="k">if</span> <span class="s2">&quot;search&quot;</span> <span class="ow">in</span> <span class="n">_dict</span><span class="p">:</span>
 </span><span id="ListenRESTChannel-391"><a href="#ListenRESTChannel-391"><span class="linenos">391</span></a>            <span class="n">_dict</span><span class="p">[</span><span class="s2">&quot;search&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">Search</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">search</span><span class="p">)</span> <span class="k">for</span> <span class="n">search</span> <span class="ow">in</span> <span class="n">_dict</span><span class="p">[</span><span class="s2">&quot;search&quot;</span><span class="p">]]</span>
@@ -2774,7 +2774,7 @@
     </div>
     <a class="headerlink" href="#Results"></a>
             <div class="pdoc-code codehilite"><pre><span></span><span id="Results-400"><a href="#Results-400"><span class="linenos">400</span></a><span class="nd">@dataclass</span>
-</span><span id="Results-401"><a href="#Results-401"><span class="linenos">401</span></a><span class="k">class</span> <span class="nc">Results</span><span class="p">(</span><span class="n">BaseResponse</span><span class="p">):</span>
+</span><span id="Results-401"><a href="#Results-401"><span class="linenos">401</span></a><span class="k">class</span><span class="w"> </span><span class="nc">Results</span><span class="p">(</span><span class="n">BaseResponse</span><span class="p">):</span>
 </span><span id="Results-402"><a href="#Results-402"><span class="linenos">402</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="Results-403"><a href="#Results-403"><span class="linenos">403</span></a><span class="sd">    The results information for the response.</span>
 </span><span id="Results-404"><a href="#Results-404"><span class="linenos">404</span></a><span class="sd">    &quot;&quot;&quot;</span>
@@ -2798,7 +2798,7 @@
 </span><span id="Results-422"><a href="#Results-422"><span class="linenos">422</span></a>        <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="n">dataclass_config</span><span class="p">(</span><span class="n">exclude</span><span class="o">=</span><span class="k">lambda</span> <span class="n">f</span><span class="p">:</span> <span class="n">f</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span>
 </span><span id="Results-423"><a href="#Results-423"><span class="linenos">423</span></a>    <span class="p">)</span>
 </span><span id="Results-424"><a href="#Results-424"><span class="linenos">424</span></a>
-</span><span id="Results-425"><a href="#Results-425"><span class="linenos">425</span></a>    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+</span><span id="Results-425"><a href="#Results-425"><span class="linenos">425</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
 </span><span id="Results-426"><a href="#Results-426"><span class="linenos">426</span></a>        <span class="n">_dict</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
 </span><span id="Results-427"><a href="#Results-427"><span class="linenos">427</span></a>        <span class="k">if</span> <span class="s2">&quot;channels&quot;</span> <span class="ow">in</span> <span class="n">_dict</span><span class="p">:</span>
 </span><span id="Results-428"><a href="#Results-428"><span class="linenos">428</span></a>            <span class="n">_dict</span><span class="p">[</span><span class="s2">&quot;channels&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
@@ -2931,7 +2931,7 @@
     </div>
     <a class="headerlink" href="#PrerecordedResponse"></a>
             <div class="pdoc-code codehilite"><pre><span></span><span id="PrerecordedResponse-449"><a href="#PrerecordedResponse-449"><span class="linenos">449</span></a><span class="nd">@dataclass</span>
-</span><span id="PrerecordedResponse-450"><a href="#PrerecordedResponse-450"><span class="linenos">450</span></a><span class="k">class</span> <span class="nc">PrerecordedResponse</span><span class="p">(</span><span class="n">BaseResponse</span><span class="p">):</span>
+</span><span id="PrerecordedResponse-450"><a href="#PrerecordedResponse-450"><span class="linenos">450</span></a><span class="k">class</span><span class="w"> </span><span class="nc">PrerecordedResponse</span><span class="p">(</span><span class="n">BaseResponse</span><span class="p">):</span>
 </span><span id="PrerecordedResponse-451"><a href="#PrerecordedResponse-451"><span class="linenos">451</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="PrerecordedResponse-452"><a href="#PrerecordedResponse-452"><span class="linenos">452</span></a><span class="sd">    The response object for the prerecorded API.</span>
 </span><span id="PrerecordedResponse-453"><a href="#PrerecordedResponse-453"><span class="linenos">453</span></a><span class="sd">    &quot;&quot;&quot;</span>
@@ -2943,7 +2943,7 @@
 </span><span id="PrerecordedResponse-459"><a href="#PrerecordedResponse-459"><span class="linenos">459</span></a>        <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="n">dataclass_config</span><span class="p">(</span><span class="n">exclude</span><span class="o">=</span><span class="k">lambda</span> <span class="n">f</span><span class="p">:</span> <span class="n">f</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span>
 </span><span id="PrerecordedResponse-460"><a href="#PrerecordedResponse-460"><span class="linenos">460</span></a>    <span class="p">)</span>
 </span><span id="PrerecordedResponse-461"><a href="#PrerecordedResponse-461"><span class="linenos">461</span></a>
-</span><span id="PrerecordedResponse-462"><a href="#PrerecordedResponse-462"><span class="linenos">462</span></a>    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+</span><span id="PrerecordedResponse-462"><a href="#PrerecordedResponse-462"><span class="linenos">462</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
 </span><span id="PrerecordedResponse-463"><a href="#PrerecordedResponse-463"><span class="linenos">463</span></a>        <span class="n">_dict</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
 </span><span id="PrerecordedResponse-464"><a href="#PrerecordedResponse-464"><span class="linenos">464</span></a>        <span class="k">if</span> <span class="s2">&quot;metadata&quot;</span> <span class="ow">in</span> <span class="n">_dict</span><span class="p">:</span>
 </span><span id="PrerecordedResponse-465"><a href="#PrerecordedResponse-465"><span class="linenos">465</span></a>            <span class="n">_dict</span><span class="p">[</span><span class="s2">&quot;metadata&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Metadata</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">_dict</span><span class="p">[</span><span class="s2">&quot;metadata&quot;</span><span class="p">])</span>

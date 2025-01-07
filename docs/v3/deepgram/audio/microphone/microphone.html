@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="generator" content="pdoc 15.0.0"/>
+    <meta name="generator" content="pdoc 15.0.1"/>
     <title>deepgram.audio.microphone.microphone API documentation</title>
 
     <style>/*! * Bootstrap Reboot v5.0.0 (https://getbootstrap.com/) * Copyright 2011-2021 The Bootstrap Authors * Copyright 2011-2021 Twitter, Inc. * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE) * Forked from Normalize.css, licensed MIT (https://github.com/necolas/normalize.css/blob/master/LICENSE.md) */*,::after,::before{box-sizing:border-box}@media (prefers-reduced-motion:no-preference){:root{scroll-behavior:smooth}}body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans","Liberation Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";font-size:1rem;font-weight:400;line-height:1.5;color:#212529;background-color:#fff;-webkit-text-size-adjust:100%;-webkit-tap-highlight-color:transparent}hr{margin:1rem 0;color:inherit;background-color:currentColor;border:0;opacity:.25}hr:not([size]){height:1px}h1,h2,h3,h4,h5,h6{margin-top:0;margin-bottom:.5rem;font-weight:500;line-height:1.2}h1{font-size:calc(1.375rem + 1.5vw)}@media (min-width:1200px){h1{font-size:2.5rem}}h2{font-size:calc(1.325rem + .9vw)}@media (min-width:1200px){h2{font-size:2rem}}h3{font-size:calc(1.3rem + .6vw)}@media (min-width:1200px){h3{font-size:1.75rem}}h4{font-size:calc(1.275rem + .3vw)}@media (min-width:1200px){h4{font-size:1.5rem}}h5{font-size:1.25rem}h6{font-size:1rem}p{margin-top:0;margin-bottom:1rem}abbr[data-bs-original-title],abbr[title]{-webkit-text-decoration:underline dotted;text-decoration:underline dotted;cursor:help;-webkit-text-decoration-skip-ink:none;text-decoration-skip-ink:none}address{margin-bottom:1rem;font-style:normal;line-height:inherit}ol,ul{padding-left:2rem}dl,ol,ul{margin-top:0;margin-bottom:1rem}ol ol,ol ul,ul ol,ul ul{margin-bottom:0}dt{font-weight:700}dd{margin-bottom:.5rem;margin-left:0}blockquote{margin:0 0 1rem}b,strong{font-weight:bolder}small{font-size:.875em}mark{padding:.2em;background-color:#fcf8e3}sub,sup{position:relative;font-size:.75em;line-height:0;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}a{color:#0d6efd;text-decoration:underline}a:hover{color:#0a58ca}a:not([href]):not([class]),a:not([href]):not([class]):hover{color:inherit;text-decoration:none}code,kbd,pre,samp{font-family:SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;font-size:1em;direction:ltr;unicode-bidi:bidi-override}pre{display:block;margin-top:0;margin-bottom:1rem;overflow:auto;font-size:.875em}pre code{font-size:inherit;color:inherit;word-break:normal}code{font-size:.875em;color:#d63384;word-wrap:break-word}a>code{color:inherit}kbd{padding:.2rem .4rem;font-size:.875em;color:#fff;background-color:#212529;border-radius:.2rem}kbd kbd{padding:0;font-size:1em;font-weight:700}figure{margin:0 0 1rem}img,svg{vertical-align:middle}table{caption-side:bottom;border-collapse:collapse}caption{padding-top:.5rem;padding-bottom:.5rem;color:#6c757d;text-align:left}th{text-align:inherit;text-align:-webkit-match-parent}tbody,td,tfoot,th,thead,tr{border-color:inherit;border-style:solid;border-width:0}label{display:inline-block}button{border-radius:0}button:focus:not(:focus-visible){outline:0}button,input,optgroup,select,textarea{margin:0;font-family:inherit;font-size:inherit;line-height:inherit}button,select{text-transform:none}[role=button]{cursor:pointer}select{word-wrap:normal}select:disabled{opacity:1}[list]::-webkit-calendar-picker-indicator{display:none}[type=button],[type=reset],[type=submit],button{-webkit-appearance:button}[type=button]:not(:disabled),[type=reset]:not(:disabled),[type=submit]:not(:disabled),button:not(:disabled){cursor:pointer}::-moz-focus-inner{padding:0;border-style:none}textarea{resize:vertical}fieldset{min-width:0;padding:0;margin:0;border:0}legend{float:left;width:100%;padding:0;margin-bottom:.5rem;font-size:calc(1.275rem + .3vw);line-height:inherit}@media (min-width:1200px){legend{font-size:1.5rem}}legend+*{clear:left}::-webkit-datetime-edit-day-field,::-webkit-datetime-edit-fields-wrapper,::-webkit-datetime-edit-hour-field,::-webkit-datetime-edit-minute,::-webkit-datetime-edit-month-field,::-webkit-datetime-edit-text,::-webkit-datetime-edit-year-field{padding:0}::-webkit-inner-spin-button{height:auto}[type=search]{outline-offset:-2px;-webkit-appearance:textfield}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-color-swatch-wrapper{padding:0}::file-selector-button{font:inherit}::-webkit-file-upload-button{font:inherit;-webkit-appearance:button}output{display:inline-block}iframe{border:0}summary{display:list-item;cursor:pointer}progress{vertical-align:baseline}[hidden]{display:none!important}</style>
@@ -85,20 +85,20 @@
 </span><span id="L-2"><a href="#L-2"><span class="linenos">  2</span></a><span class="c1"># Use of this source code is governed by a MIT license that can be found in the LICENSE file.</span>
 </span><span id="L-3"><a href="#L-3"><span class="linenos">  3</span></a><span class="c1"># SPDX-License-Identifier: MIT</span>
 </span><span id="L-4"><a href="#L-4"><span class="linenos">  4</span></a>
-</span><span id="L-5"><a href="#L-5"><span class="linenos">  5</span></a><span class="kn">import</span> <span class="nn">inspect</span>
-</span><span id="L-6"><a href="#L-6"><span class="linenos">  6</span></a><span class="kn">import</span> <span class="nn">asyncio</span>
-</span><span id="L-7"><a href="#L-7"><span class="linenos">  7</span></a><span class="kn">import</span> <span class="nn">threading</span>
-</span><span id="L-8"><a href="#L-8"><span class="linenos">  8</span></a><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">TYPE_CHECKING</span>
-</span><span id="L-9"><a href="#L-9"><span class="linenos">  9</span></a><span class="kn">import</span> <span class="nn">logging</span>
+</span><span id="L-5"><a href="#L-5"><span class="linenos">  5</span></a><span class="kn">import</span><span class="w"> </span><span class="nn">inspect</span>
+</span><span id="L-6"><a href="#L-6"><span class="linenos">  6</span></a><span class="kn">import</span><span class="w"> </span><span class="nn">asyncio</span>
+</span><span id="L-7"><a href="#L-7"><span class="linenos">  7</span></a><span class="kn">import</span><span class="w"> </span><span class="nn">threading</span>
+</span><span id="L-8"><a href="#L-8"><span class="linenos">  8</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">TYPE_CHECKING</span>
+</span><span id="L-9"><a href="#L-9"><span class="linenos">  9</span></a><span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
 </span><span id="L-10"><a href="#L-10"><span class="linenos"> 10</span></a>
-</span><span id="L-11"><a href="#L-11"><span class="linenos"> 11</span></a><span class="kn">from</span> <span class="nn">...utils</span> <span class="kn">import</span> <span class="n">verboselogs</span>
-</span><span id="L-12"><a href="#L-12"><span class="linenos"> 12</span></a><span class="kn">from</span> <span class="nn">.constants</span> <span class="kn">import</span> <span class="n">LOGGING</span><span class="p">,</span> <span class="n">CHANNELS</span><span class="p">,</span> <span class="n">RATE</span><span class="p">,</span> <span class="n">CHUNK</span>
+</span><span id="L-11"><a href="#L-11"><span class="linenos"> 11</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">...utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">verboselogs</span>
+</span><span id="L-12"><a href="#L-12"><span class="linenos"> 12</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">.constants</span><span class="w"> </span><span class="kn">import</span> <span class="n">LOGGING</span><span class="p">,</span> <span class="n">CHANNELS</span><span class="p">,</span> <span class="n">RATE</span><span class="p">,</span> <span class="n">CHUNK</span>
 </span><span id="L-13"><a href="#L-13"><span class="linenos"> 13</span></a>
 </span><span id="L-14"><a href="#L-14"><span class="linenos"> 14</span></a><span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
-</span><span id="L-15"><a href="#L-15"><span class="linenos"> 15</span></a>    <span class="kn">import</span> <span class="nn">pyaudio</span>
+</span><span id="L-15"><a href="#L-15"><span class="linenos"> 15</span></a>    <span class="kn">import</span><span class="w"> </span><span class="nn">pyaudio</span>
 </span><span id="L-16"><a href="#L-16"><span class="linenos"> 16</span></a>
 </span><span id="L-17"><a href="#L-17"><span class="linenos"> 17</span></a>
-</span><span id="L-18"><a href="#L-18"><span class="linenos"> 18</span></a><span class="k">class</span> <span class="nc">Microphone</span><span class="p">:</span>  <span class="c1"># pylint: disable=too-many-instance-attributes</span>
+</span><span id="L-18"><a href="#L-18"><span class="linenos"> 18</span></a><span class="k">class</span><span class="w"> </span><span class="nc">Microphone</span><span class="p">:</span>  <span class="c1"># pylint: disable=too-many-instance-attributes</span>
 </span><span id="L-19"><a href="#L-19"><span class="linenos"> 19</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="L-20"><a href="#L-20"><span class="linenos"> 20</span></a><span class="sd">    This implements a microphone for local audio input. This uses PyAudio under the hood.</span>
 </span><span id="L-21"><a href="#L-21"><span class="linenos"> 21</span></a><span class="sd">    &quot;&quot;&quot;</span>
@@ -122,7 +122,7 @@
 </span><span id="L-39"><a href="#L-39"><span class="linenos"> 39</span></a>    <span class="n">_push_callback_org</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Callable</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
 </span><span id="L-40"><a href="#L-40"><span class="linenos"> 40</span></a>    <span class="n">_push_callback</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Callable</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
 </span><span id="L-41"><a href="#L-41"><span class="linenos"> 41</span></a>
-</span><span id="L-42"><a href="#L-42"><span class="linenos"> 42</span></a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+</span><span id="L-42"><a href="#L-42"><span class="linenos"> 42</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
 </span><span id="L-43"><a href="#L-43"><span class="linenos"> 43</span></a>        <span class="bp">self</span><span class="p">,</span>
 </span><span id="L-44"><a href="#L-44"><span class="linenos"> 44</span></a>        <span class="n">push_callback</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Callable</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 </span><span id="L-45"><a href="#L-45"><span class="linenos"> 45</span></a>        <span class="n">verbose</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">LOGGING</span><span class="p">,</span>
@@ -132,7 +132,7 @@
 </span><span id="L-49"><a href="#L-49"><span class="linenos"> 49</span></a>        <span class="n">input_device_index</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 </span><span id="L-50"><a href="#L-50"><span class="linenos"> 50</span></a>    <span class="p">):</span>  <span class="c1"># pylint: disable=too-many-positional-arguments</span>
 </span><span id="L-51"><a href="#L-51"><span class="linenos"> 51</span></a>        <span class="c1"># dynamic import of pyaudio as not to force the requirements on the SDK (and users)</span>
-</span><span id="L-52"><a href="#L-52"><span class="linenos"> 52</span></a>        <span class="kn">import</span> <span class="nn">pyaudio</span>  <span class="c1"># pylint: disable=import-outside-toplevel</span>
+</span><span id="L-52"><a href="#L-52"><span class="linenos"> 52</span></a>        <span class="kn">import</span><span class="w"> </span><span class="nn">pyaudio</span>  <span class="c1"># pylint: disable=import-outside-toplevel</span>
 </span><span id="L-53"><a href="#L-53"><span class="linenos"> 53</span></a>
 </span><span id="L-54"><a href="#L-54"><span class="linenos"> 54</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span> <span class="o">=</span> <span class="n">verboselogs</span><span class="o">.</span><span class="n">VerboseLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 </span><span id="L-55"><a href="#L-55"><span class="linenos"> 55</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">StreamHandler</span><span class="p">())</span>
@@ -150,11 +150,11 @@
 </span><span id="L-67"><a href="#L-67"><span class="linenos"> 67</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_input_device_index</span> <span class="o">=</span> <span class="n">input_device_index</span>
 </span><span id="L-68"><a href="#L-68"><span class="linenos"> 68</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_push_callback_org</span> <span class="o">=</span> <span class="n">push_callback</span>
 </span><span id="L-69"><a href="#L-69"><span class="linenos"> 69</span></a>
-</span><span id="L-70"><a href="#L-70"><span class="linenos"> 70</span></a>    <span class="k">def</span> <span class="nf">_start_asyncio_loop</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="L-70"><a href="#L-70"><span class="linenos"> 70</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">_start_asyncio_loop</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 </span><span id="L-71"><a href="#L-71"><span class="linenos"> 71</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_asyncio_loop</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">new_event_loop</span><span class="p">()</span>
 </span><span id="L-72"><a href="#L-72"><span class="linenos"> 72</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_asyncio_loop</span><span class="o">.</span><span class="n">run_forever</span><span class="p">()</span>
 </span><span id="L-73"><a href="#L-73"><span class="linenos"> 73</span></a>
-</span><span id="L-74"><a href="#L-74"><span class="linenos"> 74</span></a>    <span class="k">def</span> <span class="nf">is_active</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+</span><span id="L-74"><a href="#L-74"><span class="linenos"> 74</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">is_active</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 </span><span id="L-75"><a href="#L-75"><span class="linenos"> 75</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="L-76"><a href="#L-76"><span class="linenos"> 76</span></a><span class="sd">        is_active - returns the state of the stream</span>
 </span><span id="L-77"><a href="#L-77"><span class="linenos"> 77</span></a>
@@ -177,7 +177,7 @@
 </span><span id="L-94"><a href="#L-94"><span class="linenos"> 94</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Microphone.is_active LEAVE&quot;</span><span class="p">)</span>
 </span><span id="L-95"><a href="#L-95"><span class="linenos"> 95</span></a>        <span class="k">return</span> <span class="n">val</span>
 </span><span id="L-96"><a href="#L-96"><span class="linenos"> 96</span></a>
-</span><span id="L-97"><a href="#L-97"><span class="linenos"> 97</span></a>    <span class="k">def</span> <span class="nf">set_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">push_callback</span><span class="p">:</span> <span class="n">Callable</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="L-97"><a href="#L-97"><span class="linenos"> 97</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">set_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">push_callback</span><span class="p">:</span> <span class="n">Callable</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 </span><span id="L-98"><a href="#L-98"><span class="linenos"> 98</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="L-99"><a href="#L-99"><span class="linenos"> 99</span></a><span class="sd">        set_callback - sets the callback function to be called when data is received.</span>
 </span><span id="L-100"><a href="#L-100"><span class="linenos">100</span></a>
@@ -190,7 +190,7 @@
 </span><span id="L-107"><a href="#L-107"><span class="linenos">107</span></a><span class="sd">        &quot;&quot;&quot;</span>
 </span><span id="L-108"><a href="#L-108"><span class="linenos">108</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_push_callback_org</span> <span class="o">=</span> <span class="n">push_callback</span>
 </span><span id="L-109"><a href="#L-109"><span class="linenos">109</span></a>
-</span><span id="L-110"><a href="#L-110"><span class="linenos">110</span></a>    <span class="k">def</span> <span class="nf">start</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+</span><span id="L-110"><a href="#L-110"><span class="linenos">110</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">start</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 </span><span id="L-111"><a href="#L-111"><span class="linenos">111</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="L-112"><a href="#L-112"><span class="linenos">112</span></a><span class="sd">        starts - starts the microphone stream</span>
 </span><span id="L-113"><a href="#L-113"><span class="linenos">113</span></a>
@@ -253,7 +253,7 @@
 </span><span id="L-170"><a href="#L-170"><span class="linenos">170</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Microphone.start LEAVE&quot;</span><span class="p">)</span>
 </span><span id="L-171"><a href="#L-171"><span class="linenos">171</span></a>        <span class="k">return</span> <span class="kc">True</span>
 </span><span id="L-172"><a href="#L-172"><span class="linenos">172</span></a>
-</span><span id="L-173"><a href="#L-173"><span class="linenos">173</span></a>    <span class="k">def</span> <span class="nf">mute</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+</span><span id="L-173"><a href="#L-173"><span class="linenos">173</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">mute</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 </span><span id="L-174"><a href="#L-174"><span class="linenos">174</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="L-175"><a href="#L-175"><span class="linenos">175</span></a><span class="sd">        mute - mutes the microphone stream</span>
 </span><span id="L-176"><a href="#L-176"><span class="linenos">176</span></a>
@@ -273,7 +273,7 @@
 </span><span id="L-190"><a href="#L-190"><span class="linenos">190</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">verbose</span><span class="p">(</span><span class="s2">&quot;Microphone.mute LEAVE&quot;</span><span class="p">)</span>
 </span><span id="L-191"><a href="#L-191"><span class="linenos">191</span></a>        <span class="k">return</span> <span class="kc">True</span>
 </span><span id="L-192"><a href="#L-192"><span class="linenos">192</span></a>
-</span><span id="L-193"><a href="#L-193"><span class="linenos">193</span></a>    <span class="k">def</span> <span class="nf">unmute</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+</span><span id="L-193"><a href="#L-193"><span class="linenos">193</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">unmute</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 </span><span id="L-194"><a href="#L-194"><span class="linenos">194</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="L-195"><a href="#L-195"><span class="linenos">195</span></a><span class="sd">        unmute - unmutes the microphone stream</span>
 </span><span id="L-196"><a href="#L-196"><span class="linenos">196</span></a>
@@ -293,7 +293,7 @@
 </span><span id="L-210"><a href="#L-210"><span class="linenos">210</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">verbose</span><span class="p">(</span><span class="s2">&quot;Microphone.unmute LEAVE&quot;</span><span class="p">)</span>
 </span><span id="L-211"><a href="#L-211"><span class="linenos">211</span></a>        <span class="k">return</span> <span class="kc">True</span>
 </span><span id="L-212"><a href="#L-212"><span class="linenos">212</span></a>
-</span><span id="L-213"><a href="#L-213"><span class="linenos">213</span></a>    <span class="k">def</span> <span class="nf">is_muted</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+</span><span id="L-213"><a href="#L-213"><span class="linenos">213</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">is_muted</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 </span><span id="L-214"><a href="#L-214"><span class="linenos">214</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="L-215"><a href="#L-215"><span class="linenos">215</span></a><span class="sd">        is_muted - returns the state of the stream</span>
 </span><span id="L-216"><a href="#L-216"><span class="linenos">216</span></a>
@@ -316,7 +316,7 @@
 </span><span id="L-233"><a href="#L-233"><span class="linenos">233</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">spam</span><span class="p">(</span><span class="s2">&quot;Microphone.is_muted LEAVE&quot;</span><span class="p">)</span>
 </span><span id="L-234"><a href="#L-234"><span class="linenos">234</span></a>        <span class="k">return</span> <span class="n">val</span>
 </span><span id="L-235"><a href="#L-235"><span class="linenos">235</span></a>
-</span><span id="L-236"><a href="#L-236"><span class="linenos">236</span></a>    <span class="k">def</span> <span class="nf">finish</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+</span><span id="L-236"><a href="#L-236"><span class="linenos">236</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">finish</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 </span><span id="L-237"><a href="#L-237"><span class="linenos">237</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="L-238"><a href="#L-238"><span class="linenos">238</span></a><span class="sd">        finish - stops the microphone stream</span>
 </span><span id="L-239"><a href="#L-239"><span class="linenos">239</span></a>
@@ -354,14 +354,14 @@
 </span><span id="L-271"><a href="#L-271"><span class="linenos">271</span></a>
 </span><span id="L-272"><a href="#L-272"><span class="linenos">272</span></a>        <span class="k">return</span> <span class="kc">True</span>
 </span><span id="L-273"><a href="#L-273"><span class="linenos">273</span></a>
-</span><span id="L-274"><a href="#L-274"><span class="linenos">274</span></a>    <span class="k">def</span> <span class="nf">_callback</span><span class="p">(</span>
+</span><span id="L-274"><a href="#L-274"><span class="linenos">274</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">_callback</span><span class="p">(</span>
 </span><span id="L-275"><a href="#L-275"><span class="linenos">275</span></a>        <span class="bp">self</span><span class="p">,</span> <span class="n">input_data</span><span class="p">,</span> <span class="n">frame_count</span><span class="p">,</span> <span class="n">time_info</span><span class="p">,</span> <span class="n">status_flags</span>
 </span><span id="L-276"><a href="#L-276"><span class="linenos">276</span></a>    <span class="p">):</span>  <span class="c1"># pylint: disable=unused-argument</span>
 </span><span id="L-277"><a href="#L-277"><span class="linenos">277</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="L-278"><a href="#L-278"><span class="linenos">278</span></a><span class="sd">        The callback used to process data in callback mode.</span>
 </span><span id="L-279"><a href="#L-279"><span class="linenos">279</span></a><span class="sd">        &quot;&quot;&quot;</span>
 </span><span id="L-280"><a href="#L-280"><span class="linenos">280</span></a>        <span class="c1"># dynamic import of pyaudio as not to force the requirements on the SDK (and users)</span>
-</span><span id="L-281"><a href="#L-281"><span class="linenos">281</span></a>        <span class="kn">import</span> <span class="nn">pyaudio</span>  <span class="c1"># pylint: disable=import-outside-toplevel</span>
+</span><span id="L-281"><a href="#L-281"><span class="linenos">281</span></a>        <span class="kn">import</span><span class="w"> </span><span class="nn">pyaudio</span>  <span class="c1"># pylint: disable=import-outside-toplevel</span>
 </span><span id="L-282"><a href="#L-282"><span class="linenos">282</span></a>
 </span><span id="L-283"><a href="#L-283"><span class="linenos">283</span></a>        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_exit</span><span class="o">.</span><span class="n">is_set</span><span class="p">():</span>
 </span><span id="L-284"><a href="#L-284"><span class="linenos">284</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">notice</span><span class="p">(</span><span class="s2">&quot;_callback exit is Set. stopping...&quot;</span><span class="p">)</span>
@@ -397,7 +397,7 @@
 
     </div>
     <a class="headerlink" href="#Microphone"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="Microphone-19"><a href="#Microphone-19"><span class="linenos"> 19</span></a><span class="k">class</span> <span class="nc">Microphone</span><span class="p">:</span>  <span class="c1"># pylint: disable=too-many-instance-attributes</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="Microphone-19"><a href="#Microphone-19"><span class="linenos"> 19</span></a><span class="k">class</span><span class="w"> </span><span class="nc">Microphone</span><span class="p">:</span>  <span class="c1"># pylint: disable=too-many-instance-attributes</span>
 </span><span id="Microphone-20"><a href="#Microphone-20"><span class="linenos"> 20</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="Microphone-21"><a href="#Microphone-21"><span class="linenos"> 21</span></a><span class="sd">    This implements a microphone for local audio input. This uses PyAudio under the hood.</span>
 </span><span id="Microphone-22"><a href="#Microphone-22"><span class="linenos"> 22</span></a><span class="sd">    &quot;&quot;&quot;</span>
@@ -421,7 +421,7 @@
 </span><span id="Microphone-40"><a href="#Microphone-40"><span class="linenos"> 40</span></a>    <span class="n">_push_callback_org</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Callable</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
 </span><span id="Microphone-41"><a href="#Microphone-41"><span class="linenos"> 41</span></a>    <span class="n">_push_callback</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Callable</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
 </span><span id="Microphone-42"><a href="#Microphone-42"><span class="linenos"> 42</span></a>
-</span><span id="Microphone-43"><a href="#Microphone-43"><span class="linenos"> 43</span></a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+</span><span id="Microphone-43"><a href="#Microphone-43"><span class="linenos"> 43</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
 </span><span id="Microphone-44"><a href="#Microphone-44"><span class="linenos"> 44</span></a>        <span class="bp">self</span><span class="p">,</span>
 </span><span id="Microphone-45"><a href="#Microphone-45"><span class="linenos"> 45</span></a>        <span class="n">push_callback</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Callable</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 </span><span id="Microphone-46"><a href="#Microphone-46"><span class="linenos"> 46</span></a>        <span class="n">verbose</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">LOGGING</span><span class="p">,</span>
@@ -431,7 +431,7 @@
 </span><span id="Microphone-50"><a href="#Microphone-50"><span class="linenos"> 50</span></a>        <span class="n">input_device_index</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 </span><span id="Microphone-51"><a href="#Microphone-51"><span class="linenos"> 51</span></a>    <span class="p">):</span>  <span class="c1"># pylint: disable=too-many-positional-arguments</span>
 </span><span id="Microphone-52"><a href="#Microphone-52"><span class="linenos"> 52</span></a>        <span class="c1"># dynamic import of pyaudio as not to force the requirements on the SDK (and users)</span>
-</span><span id="Microphone-53"><a href="#Microphone-53"><span class="linenos"> 53</span></a>        <span class="kn">import</span> <span class="nn">pyaudio</span>  <span class="c1"># pylint: disable=import-outside-toplevel</span>
+</span><span id="Microphone-53"><a href="#Microphone-53"><span class="linenos"> 53</span></a>        <span class="kn">import</span><span class="w"> </span><span class="nn">pyaudio</span>  <span class="c1"># pylint: disable=import-outside-toplevel</span>
 </span><span id="Microphone-54"><a href="#Microphone-54"><span class="linenos"> 54</span></a>
 </span><span id="Microphone-55"><a href="#Microphone-55"><span class="linenos"> 55</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span> <span class="o">=</span> <span class="n">verboselogs</span><span class="o">.</span><span class="n">VerboseLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 </span><span id="Microphone-56"><a href="#Microphone-56"><span class="linenos"> 56</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">StreamHandler</span><span class="p">())</span>
@@ -449,11 +449,11 @@
 </span><span id="Microphone-68"><a href="#Microphone-68"><span class="linenos"> 68</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_input_device_index</span> <span class="o">=</span> <span class="n">input_device_index</span>
 </span><span id="Microphone-69"><a href="#Microphone-69"><span class="linenos"> 69</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_push_callback_org</span> <span class="o">=</span> <span class="n">push_callback</span>
 </span><span id="Microphone-70"><a href="#Microphone-70"><span class="linenos"> 70</span></a>
-</span><span id="Microphone-71"><a href="#Microphone-71"><span class="linenos"> 71</span></a>    <span class="k">def</span> <span class="nf">_start_asyncio_loop</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="Microphone-71"><a href="#Microphone-71"><span class="linenos"> 71</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">_start_asyncio_loop</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 </span><span id="Microphone-72"><a href="#Microphone-72"><span class="linenos"> 72</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_asyncio_loop</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">new_event_loop</span><span class="p">()</span>
 </span><span id="Microphone-73"><a href="#Microphone-73"><span class="linenos"> 73</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_asyncio_loop</span><span class="o">.</span><span class="n">run_forever</span><span class="p">()</span>
 </span><span id="Microphone-74"><a href="#Microphone-74"><span class="linenos"> 74</span></a>
-</span><span id="Microphone-75"><a href="#Microphone-75"><span class="linenos"> 75</span></a>    <span class="k">def</span> <span class="nf">is_active</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+</span><span id="Microphone-75"><a href="#Microphone-75"><span class="linenos"> 75</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">is_active</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 </span><span id="Microphone-76"><a href="#Microphone-76"><span class="linenos"> 76</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="Microphone-77"><a href="#Microphone-77"><span class="linenos"> 77</span></a><span class="sd">        is_active - returns the state of the stream</span>
 </span><span id="Microphone-78"><a href="#Microphone-78"><span class="linenos"> 78</span></a>
@@ -476,7 +476,7 @@
 </span><span id="Microphone-95"><a href="#Microphone-95"><span class="linenos"> 95</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Microphone.is_active LEAVE&quot;</span><span class="p">)</span>
 </span><span id="Microphone-96"><a href="#Microphone-96"><span class="linenos"> 96</span></a>        <span class="k">return</span> <span class="n">val</span>
 </span><span id="Microphone-97"><a href="#Microphone-97"><span class="linenos"> 97</span></a>
-</span><span id="Microphone-98"><a href="#Microphone-98"><span class="linenos"> 98</span></a>    <span class="k">def</span> <span class="nf">set_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">push_callback</span><span class="p">:</span> <span class="n">Callable</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="Microphone-98"><a href="#Microphone-98"><span class="linenos"> 98</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">set_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">push_callback</span><span class="p">:</span> <span class="n">Callable</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 </span><span id="Microphone-99"><a href="#Microphone-99"><span class="linenos"> 99</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="Microphone-100"><a href="#Microphone-100"><span class="linenos">100</span></a><span class="sd">        set_callback - sets the callback function to be called when data is received.</span>
 </span><span id="Microphone-101"><a href="#Microphone-101"><span class="linenos">101</span></a>
@@ -489,7 +489,7 @@
 </span><span id="Microphone-108"><a href="#Microphone-108"><span class="linenos">108</span></a><span class="sd">        &quot;&quot;&quot;</span>
 </span><span id="Microphone-109"><a href="#Microphone-109"><span class="linenos">109</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_push_callback_org</span> <span class="o">=</span> <span class="n">push_callback</span>
 </span><span id="Microphone-110"><a href="#Microphone-110"><span class="linenos">110</span></a>
-</span><span id="Microphone-111"><a href="#Microphone-111"><span class="linenos">111</span></a>    <span class="k">def</span> <span class="nf">start</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+</span><span id="Microphone-111"><a href="#Microphone-111"><span class="linenos">111</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">start</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 </span><span id="Microphone-112"><a href="#Microphone-112"><span class="linenos">112</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="Microphone-113"><a href="#Microphone-113"><span class="linenos">113</span></a><span class="sd">        starts - starts the microphone stream</span>
 </span><span id="Microphone-114"><a href="#Microphone-114"><span class="linenos">114</span></a>
@@ -552,7 +552,7 @@
 </span><span id="Microphone-171"><a href="#Microphone-171"><span class="linenos">171</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Microphone.start LEAVE&quot;</span><span class="p">)</span>
 </span><span id="Microphone-172"><a href="#Microphone-172"><span class="linenos">172</span></a>        <span class="k">return</span> <span class="kc">True</span>
 </span><span id="Microphone-173"><a href="#Microphone-173"><span class="linenos">173</span></a>
-</span><span id="Microphone-174"><a href="#Microphone-174"><span class="linenos">174</span></a>    <span class="k">def</span> <span class="nf">mute</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+</span><span id="Microphone-174"><a href="#Microphone-174"><span class="linenos">174</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">mute</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 </span><span id="Microphone-175"><a href="#Microphone-175"><span class="linenos">175</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="Microphone-176"><a href="#Microphone-176"><span class="linenos">176</span></a><span class="sd">        mute - mutes the microphone stream</span>
 </span><span id="Microphone-177"><a href="#Microphone-177"><span class="linenos">177</span></a>
@@ -572,7 +572,7 @@
 </span><span id="Microphone-191"><a href="#Microphone-191"><span class="linenos">191</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">verbose</span><span class="p">(</span><span class="s2">&quot;Microphone.mute LEAVE&quot;</span><span class="p">)</span>
 </span><span id="Microphone-192"><a href="#Microphone-192"><span class="linenos">192</span></a>        <span class="k">return</span> <span class="kc">True</span>
 </span><span id="Microphone-193"><a href="#Microphone-193"><span class="linenos">193</span></a>
-</span><span id="Microphone-194"><a href="#Microphone-194"><span class="linenos">194</span></a>    <span class="k">def</span> <span class="nf">unmute</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+</span><span id="Microphone-194"><a href="#Microphone-194"><span class="linenos">194</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">unmute</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 </span><span id="Microphone-195"><a href="#Microphone-195"><span class="linenos">195</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="Microphone-196"><a href="#Microphone-196"><span class="linenos">196</span></a><span class="sd">        unmute - unmutes the microphone stream</span>
 </span><span id="Microphone-197"><a href="#Microphone-197"><span class="linenos">197</span></a>
@@ -592,7 +592,7 @@
 </span><span id="Microphone-211"><a href="#Microphone-211"><span class="linenos">211</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">verbose</span><span class="p">(</span><span class="s2">&quot;Microphone.unmute LEAVE&quot;</span><span class="p">)</span>
 </span><span id="Microphone-212"><a href="#Microphone-212"><span class="linenos">212</span></a>        <span class="k">return</span> <span class="kc">True</span>
 </span><span id="Microphone-213"><a href="#Microphone-213"><span class="linenos">213</span></a>
-</span><span id="Microphone-214"><a href="#Microphone-214"><span class="linenos">214</span></a>    <span class="k">def</span> <span class="nf">is_muted</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+</span><span id="Microphone-214"><a href="#Microphone-214"><span class="linenos">214</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">is_muted</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 </span><span id="Microphone-215"><a href="#Microphone-215"><span class="linenos">215</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="Microphone-216"><a href="#Microphone-216"><span class="linenos">216</span></a><span class="sd">        is_muted - returns the state of the stream</span>
 </span><span id="Microphone-217"><a href="#Microphone-217"><span class="linenos">217</span></a>
@@ -615,7 +615,7 @@
 </span><span id="Microphone-234"><a href="#Microphone-234"><span class="linenos">234</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">spam</span><span class="p">(</span><span class="s2">&quot;Microphone.is_muted LEAVE&quot;</span><span class="p">)</span>
 </span><span id="Microphone-235"><a href="#Microphone-235"><span class="linenos">235</span></a>        <span class="k">return</span> <span class="n">val</span>
 </span><span id="Microphone-236"><a href="#Microphone-236"><span class="linenos">236</span></a>
-</span><span id="Microphone-237"><a href="#Microphone-237"><span class="linenos">237</span></a>    <span class="k">def</span> <span class="nf">finish</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+</span><span id="Microphone-237"><a href="#Microphone-237"><span class="linenos">237</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">finish</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 </span><span id="Microphone-238"><a href="#Microphone-238"><span class="linenos">238</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="Microphone-239"><a href="#Microphone-239"><span class="linenos">239</span></a><span class="sd">        finish - stops the microphone stream</span>
 </span><span id="Microphone-240"><a href="#Microphone-240"><span class="linenos">240</span></a>
@@ -653,14 +653,14 @@
 </span><span id="Microphone-272"><a href="#Microphone-272"><span class="linenos">272</span></a>
 </span><span id="Microphone-273"><a href="#Microphone-273"><span class="linenos">273</span></a>        <span class="k">return</span> <span class="kc">True</span>
 </span><span id="Microphone-274"><a href="#Microphone-274"><span class="linenos">274</span></a>
-</span><span id="Microphone-275"><a href="#Microphone-275"><span class="linenos">275</span></a>    <span class="k">def</span> <span class="nf">_callback</span><span class="p">(</span>
+</span><span id="Microphone-275"><a href="#Microphone-275"><span class="linenos">275</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">_callback</span><span class="p">(</span>
 </span><span id="Microphone-276"><a href="#Microphone-276"><span class="linenos">276</span></a>        <span class="bp">self</span><span class="p">,</span> <span class="n">input_data</span><span class="p">,</span> <span class="n">frame_count</span><span class="p">,</span> <span class="n">time_info</span><span class="p">,</span> <span class="n">status_flags</span>
 </span><span id="Microphone-277"><a href="#Microphone-277"><span class="linenos">277</span></a>    <span class="p">):</span>  <span class="c1"># pylint: disable=unused-argument</span>
 </span><span id="Microphone-278"><a href="#Microphone-278"><span class="linenos">278</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="Microphone-279"><a href="#Microphone-279"><span class="linenos">279</span></a><span class="sd">        The callback used to process data in callback mode.</span>
 </span><span id="Microphone-280"><a href="#Microphone-280"><span class="linenos">280</span></a><span class="sd">        &quot;&quot;&quot;</span>
 </span><span id="Microphone-281"><a href="#Microphone-281"><span class="linenos">281</span></a>        <span class="c1"># dynamic import of pyaudio as not to force the requirements on the SDK (and users)</span>
-</span><span id="Microphone-282"><a href="#Microphone-282"><span class="linenos">282</span></a>        <span class="kn">import</span> <span class="nn">pyaudio</span>  <span class="c1"># pylint: disable=import-outside-toplevel</span>
+</span><span id="Microphone-282"><a href="#Microphone-282"><span class="linenos">282</span></a>        <span class="kn">import</span><span class="w"> </span><span class="nn">pyaudio</span>  <span class="c1"># pylint: disable=import-outside-toplevel</span>
 </span><span id="Microphone-283"><a href="#Microphone-283"><span class="linenos">283</span></a>
 </span><span id="Microphone-284"><a href="#Microphone-284"><span class="linenos">284</span></a>        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_exit</span><span class="o">.</span><span class="n">is_set</span><span class="p">():</span>
 </span><span id="Microphone-285"><a href="#Microphone-285"><span class="linenos">285</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">notice</span><span class="p">(</span><span class="s2">&quot;_callback exit is Set. stopping...&quot;</span><span class="p">)</span>
@@ -698,7 +698,7 @@
 
     </div>
     <a class="headerlink" href="#Microphone.__init__"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="Microphone.__init__-43"><a href="#Microphone.__init__-43"><span class="linenos">43</span></a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="Microphone.__init__-43"><a href="#Microphone.__init__-43"><span class="linenos">43</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
 </span><span id="Microphone.__init__-44"><a href="#Microphone.__init__-44"><span class="linenos">44</span></a>        <span class="bp">self</span><span class="p">,</span>
 </span><span id="Microphone.__init__-45"><a href="#Microphone.__init__-45"><span class="linenos">45</span></a>        <span class="n">push_callback</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Callable</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 </span><span id="Microphone.__init__-46"><a href="#Microphone.__init__-46"><span class="linenos">46</span></a>        <span class="n">verbose</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">LOGGING</span><span class="p">,</span>
@@ -708,7 +708,7 @@
 </span><span id="Microphone.__init__-50"><a href="#Microphone.__init__-50"><span class="linenos">50</span></a>        <span class="n">input_device_index</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 </span><span id="Microphone.__init__-51"><a href="#Microphone.__init__-51"><span class="linenos">51</span></a>    <span class="p">):</span>  <span class="c1"># pylint: disable=too-many-positional-arguments</span>
 </span><span id="Microphone.__init__-52"><a href="#Microphone.__init__-52"><span class="linenos">52</span></a>        <span class="c1"># dynamic import of pyaudio as not to force the requirements on the SDK (and users)</span>
-</span><span id="Microphone.__init__-53"><a href="#Microphone.__init__-53"><span class="linenos">53</span></a>        <span class="kn">import</span> <span class="nn">pyaudio</span>  <span class="c1"># pylint: disable=import-outside-toplevel</span>
+</span><span id="Microphone.__init__-53"><a href="#Microphone.__init__-53"><span class="linenos">53</span></a>        <span class="kn">import</span><span class="w"> </span><span class="nn">pyaudio</span>  <span class="c1"># pylint: disable=import-outside-toplevel</span>
 </span><span id="Microphone.__init__-54"><a href="#Microphone.__init__-54"><span class="linenos">54</span></a>
 </span><span id="Microphone.__init__-55"><a href="#Microphone.__init__-55"><span class="linenos">55</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span> <span class="o">=</span> <span class="n">verboselogs</span><span class="o">.</span><span class="n">VerboseLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 </span><span id="Microphone.__init__-56"><a href="#Microphone.__init__-56"><span class="linenos">56</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">StreamHandler</span><span class="p">())</span>
@@ -742,7 +742,7 @@
 
     </div>
     <a class="headerlink" href="#Microphone.is_active"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="Microphone.is_active-75"><a href="#Microphone.is_active-75"><span class="linenos">75</span></a>    <span class="k">def</span> <span class="nf">is_active</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="Microphone.is_active-75"><a href="#Microphone.is_active-75"><span class="linenos">75</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">is_active</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 </span><span id="Microphone.is_active-76"><a href="#Microphone.is_active-76"><span class="linenos">76</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="Microphone.is_active-77"><a href="#Microphone.is_active-77"><span class="linenos">77</span></a><span class="sd">        is_active - returns the state of the stream</span>
 </span><span id="Microphone.is_active-78"><a href="#Microphone.is_active-78"><span class="linenos">78</span></a>
@@ -789,7 +789,7 @@
 
     </div>
     <a class="headerlink" href="#Microphone.set_callback"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="Microphone.set_callback-98"><a href="#Microphone.set_callback-98"><span class="linenos"> 98</span></a>    <span class="k">def</span> <span class="nf">set_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">push_callback</span><span class="p">:</span> <span class="n">Callable</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="Microphone.set_callback-98"><a href="#Microphone.set_callback-98"><span class="linenos"> 98</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">set_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">push_callback</span><span class="p">:</span> <span class="n">Callable</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 </span><span id="Microphone.set_callback-99"><a href="#Microphone.set_callback-99"><span class="linenos"> 99</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="Microphone.set_callback-100"><a href="#Microphone.set_callback-100"><span class="linenos">100</span></a><span class="sd">        set_callback - sets the callback function to be called when data is received.</span>
 </span><span id="Microphone.set_callback-101"><a href="#Microphone.set_callback-101"><span class="linenos">101</span></a>
@@ -827,7 +827,7 @@
 
     </div>
     <a class="headerlink" href="#Microphone.start"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="Microphone.start-111"><a href="#Microphone.start-111"><span class="linenos">111</span></a>    <span class="k">def</span> <span class="nf">start</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="Microphone.start-111"><a href="#Microphone.start-111"><span class="linenos">111</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">start</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 </span><span id="Microphone.start-112"><a href="#Microphone.start-112"><span class="linenos">112</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="Microphone.start-113"><a href="#Microphone.start-113"><span class="linenos">113</span></a><span class="sd">        starts - starts the microphone stream</span>
 </span><span id="Microphone.start-114"><a href="#Microphone.start-114"><span class="linenos">114</span></a>
@@ -911,7 +911,7 @@
 
     </div>
     <a class="headerlink" href="#Microphone.mute"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="Microphone.mute-174"><a href="#Microphone.mute-174"><span class="linenos">174</span></a>    <span class="k">def</span> <span class="nf">mute</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="Microphone.mute-174"><a href="#Microphone.mute-174"><span class="linenos">174</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">mute</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 </span><span id="Microphone.mute-175"><a href="#Microphone.mute-175"><span class="linenos">175</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="Microphone.mute-176"><a href="#Microphone.mute-176"><span class="linenos">176</span></a><span class="sd">        mute - mutes the microphone stream</span>
 </span><span id="Microphone.mute-177"><a href="#Microphone.mute-177"><span class="linenos">177</span></a>
@@ -952,7 +952,7 @@
 
     </div>
     <a class="headerlink" href="#Microphone.unmute"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="Microphone.unmute-194"><a href="#Microphone.unmute-194"><span class="linenos">194</span></a>    <span class="k">def</span> <span class="nf">unmute</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="Microphone.unmute-194"><a href="#Microphone.unmute-194"><span class="linenos">194</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">unmute</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 </span><span id="Microphone.unmute-195"><a href="#Microphone.unmute-195"><span class="linenos">195</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="Microphone.unmute-196"><a href="#Microphone.unmute-196"><span class="linenos">196</span></a><span class="sd">        unmute - unmutes the microphone stream</span>
 </span><span id="Microphone.unmute-197"><a href="#Microphone.unmute-197"><span class="linenos">197</span></a>
@@ -993,7 +993,7 @@
 
     </div>
     <a class="headerlink" href="#Microphone.is_muted"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="Microphone.is_muted-214"><a href="#Microphone.is_muted-214"><span class="linenos">214</span></a>    <span class="k">def</span> <span class="nf">is_muted</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="Microphone.is_muted-214"><a href="#Microphone.is_muted-214"><span class="linenos">214</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">is_muted</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 </span><span id="Microphone.is_muted-215"><a href="#Microphone.is_muted-215"><span class="linenos">215</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="Microphone.is_muted-216"><a href="#Microphone.is_muted-216"><span class="linenos">216</span></a><span class="sd">        is_muted - returns the state of the stream</span>
 </span><span id="Microphone.is_muted-217"><a href="#Microphone.is_muted-217"><span class="linenos">217</span></a>
@@ -1040,7 +1040,7 @@
 
     </div>
     <a class="headerlink" href="#Microphone.finish"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="Microphone.finish-237"><a href="#Microphone.finish-237"><span class="linenos">237</span></a>    <span class="k">def</span> <span class="nf">finish</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="Microphone.finish-237"><a href="#Microphone.finish-237"><span class="linenos">237</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">finish</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 </span><span id="Microphone.finish-238"><a href="#Microphone.finish-238"><span class="linenos">238</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="Microphone.finish-239"><a href="#Microphone.finish-239"><span class="linenos">239</span></a><span class="sd">        finish - stops the microphone stream</span>
 </span><span id="Microphone.finish-240"><a href="#Microphone.finish-240"><span class="linenos">240</span></a>
