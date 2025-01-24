@@ -317,3 +317,26 @@ class InjectAgentMessageOptions(BaseResponse):
 
     type: str = str(AgentWebSocketEvents.InjectAgentMessage)
     message: str = field(default="")
+
+# Function Call Response
+
+
+@dataclass
+class FunctionCallResponse(BaseResponse):
+    """
+    TheFunctionCallResponse message is a JSON command that the client should reply with every time there is a FunctionCallRequest received.
+    """
+    type: str = "FunctionCallResponse"
+    function_call_id: str = field(default="")
+    output: str = field(default="")
+
+
+# Agent Keep Alive
+
+
+@dataclass
+class AgentKeepAlive(BaseResponse):
+    """
+    The KeepAlive message is a JSON command that you can use to ensure that the server does not close the connection.
+    """
+    type: str = "KeepAlive"

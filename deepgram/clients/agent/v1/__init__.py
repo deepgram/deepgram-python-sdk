@@ -26,7 +26,8 @@ from .websocket import (
     ConversationTextResponse,
     UserStartedSpeakingResponse,
     AgentThinkingResponse,
-    FunctionCallingResponse,
+    FunctionCallingMessage,
+    FunctionCallRequest,
     AgentStartedSpeakingResponse,
     AgentAudioDoneResponse,
 )
@@ -37,6 +38,8 @@ from .websocket import (
     UpdateInstructionsOptions,
     UpdateSpeakOptions,
     InjectAgentMessageOptions,
+    FunctionCallResponse,
+    AgentKeepAlive,
     # sub level
     Listen,
     Speak,

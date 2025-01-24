@@ -22,7 +22,8 @@ from .client import (
     ConversationTextResponse,
     UserStartedSpeakingResponse,
     AgentThinkingResponse,
-    FunctionCallingResponse,
+    FunctionCallingMessage,
+    FunctionCallRequest,
     AgentStartedSpeakingResponse,
     AgentAudioDoneResponse,
 )
@@ -33,6 +34,8 @@ from .client import (
     UpdateInstructionsOptions,
     UpdateSpeakOptions,
     InjectAgentMessageOptions,
+    FunctionCallingResponse,
+    AgentKeepAlive,
     # sub level
     Listen,
     Speak,

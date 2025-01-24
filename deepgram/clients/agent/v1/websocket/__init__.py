@@ -18,7 +18,8 @@ from .response import (
     ConversationTextResponse,
     UserStartedSpeakingResponse,
     AgentThinkingResponse,
-    FunctionCallingResponse,
+    FunctionCallingMessage,
+    FunctionCallRequest,
     AgentStartedSpeakingResponse,
     AgentAudioDoneResponse,
 )
@@ -28,6 +29,8 @@ from .options import (
     UpdateInstructionsOptions,
     UpdateSpeakOptions,
     InjectAgentMessageOptions,
+    FunctionCallResponse,
+    AgentKeepAlive,
     # sub level
     Listen,
     Speak,

@@ -21,7 +21,8 @@ from .v1 import (
     ConversationTextResponse as LatestConversationTextResponse,
     UserStartedSpeakingResponse as LatestUserStartedSpeakingResponse,
     AgentThinkingResponse as LatestAgentThinkingResponse,
-    FunctionCallingResponse as LatestFunctionCallingResponse,
+    FunctionCallingMessage as LatestFunctionCallingMessage,
+    FunctionCallRequest as LatestFunctionCallRequest,
     AgentStartedSpeakingResponse as LatestAgentStartedSpeakingResponse,
     AgentAudioDoneResponse as LatestAgentAudioDoneResponse,
 )
@@ -32,6 +33,8 @@ from .v1 import (
     UpdateInstructionsOptions as LatestUpdateInstructionsOptions,
     UpdateSpeakOptions as LatestUpdateSpeakOptions,
     InjectAgentMessageOptions as LatestInjectAgentMessageOptions,
+    FunctionCallResponse as LatestFunctionCallResponse,
+    AgentKeepAlive as LatestAgentKeepAlive,
     # sub level
     Listen as LatestListen,
     Speak as LatestSpeak,
@@ -66,7 +69,8 @@ SettingsAppliedResponse = LatestSettingsAppliedResponse
 ConversationTextResponse = LatestConversationTextResponse
 UserStartedSpeakingResponse = LatestUserStartedSpeakingResponse
 AgentThinkingResponse = LatestAgentThinkingResponse
-FunctionCallingResponse = LatestFunctionCallingResponse
+FunctionCallingMessage = LatestFunctionCallingMessage
+FunctionCallRequest = LatestFunctionCallRequest
 AgentStartedSpeakingResponse = LatestAgentStartedSpeakingResponse
 AgentAudioDoneResponse = LatestAgentAudioDoneResponse
 
@@ -75,6 +79,8 @@ SettingsConfigurationOptions = LatestSettingsConfigurationOptions
 UpdateInstructionsOptions = LatestUpdateInstructionsOptions
 UpdateSpeakOptions = LatestUpdateSpeakOptions
 InjectAgentMessageOptions = LatestInjectAgentMessageOptions
+FunctionCallResponse = LatestFunctionCallResponse
+AgentKeepAlive = LatestAgentKeepAlive
 
 Listen = LatestListen
 Speak = LatestSpeak

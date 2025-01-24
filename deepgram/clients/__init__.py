@@ -341,7 +341,8 @@ from .agent import (
     ConversationTextResponse,
     UserStartedSpeakingResponse,
     AgentThinkingResponse,
-    FunctionCallingResponse,
+    FunctionCallingMessage,
+    FunctionCallRequest,
     AgentStartedSpeakingResponse,
     AgentAudioDoneResponse,
 )
@@ -352,6 +353,8 @@ from .agent import (
     UpdateInstructionsOptions,
     UpdateSpeakOptions,
     InjectAgentMessageOptions,
+    FunctionCallingResponse,
+    AgentKeepAlive,
     # sub level
     Listen,
     Speak,

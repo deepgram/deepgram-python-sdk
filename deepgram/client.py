@@ -330,7 +330,8 @@ from .clients import (
     ConversationTextResponse,
     UserStartedSpeakingResponse,
     AgentThinkingResponse,
-    FunctionCallingResponse,
+    FunctionCallingMessage,
+    FunctionCallRequest,
     AgentStartedSpeakingResponse,
     AgentAudioDoneResponse,
 )
@@ -341,6 +342,8 @@ from .clients import (
     UpdateInstructionsOptions,
     UpdateSpeakOptions,
     InjectAgentMessageOptions,
+    FunctionCallingResponse,
+    AgentKeepAlive,
     # sub level
     Listen,
     Speak,

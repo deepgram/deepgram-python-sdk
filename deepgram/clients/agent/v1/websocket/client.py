@@ -21,7 +21,8 @@ from .response import (
     ConversationTextResponse,
     UserStartedSpeakingResponse,
     AgentThinkingResponse,
-    FunctionCallingResponse,
+    FunctionCallingMessage,
+    FunctionCallRequest,
     AgentStartedSpeakingResponse,
     AgentAudioDoneResponse,
     CloseResponse,
@@ -33,6 +34,8 @@ from .options import (
     UpdateInstructionsOptions,
     UpdateSpeakOptions,
     InjectAgentMessageOptions,
+    FunctionCallResponse,
+    AgentKeepAlive,
 )
 
 from .....audio.speaker import (

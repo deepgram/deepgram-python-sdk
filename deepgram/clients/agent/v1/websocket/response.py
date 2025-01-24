@@ -68,13 +68,23 @@ class AgentThinkingResponse(BaseResponse):
 
 
 @dataclass
-class FunctionCallingResponse(BaseResponse):
+class FunctionCallingMessage(BaseResponse):
     """
     The server will sometimes send FunctionCalling messages when making function calls to help the client developer debug function calling workflows.
     """
 
     type: str
 
+@dataclass
+class FunctionCallRequest(BaseResponse):
+    """
+    The FunctionCallRequest message is used to call a function from the server to the client.
+    """
+
+    type: str
+    function_name: str
+    function_call_id: str
+    input: str
 
 @dataclass
 class AgentStartedSpeakingResponse(BaseResponse):
