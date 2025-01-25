@@ -9,6 +9,8 @@ from deepgram import (
     DeepgramClientOptions,
     AgentWebSocketEvents,
     SettingsConfigurationOptions,
+    FunctionCallingMessage,
+    FunctionCallResponse,
 )
 
 TTS_TEXT = "Hello, this is a text to speech example using Deepgram."
@@ -62,8 +64,17 @@ def main():
         def on_agent_thinking(self, agent_thinking, **kwargs):
             print(f"\n\n{agent_thinking}\n\n")
 
-        def on_function_calling(self, function_calling, **kwargs):
-            print(f"\n\n{function_calling}\n\n")
+        def on_function_calling(self, function_calling: FunctionCallingMessage, **kwargs):
+            print(f"\n\nFunction Calling Message: {function_calling}\n\n")
+
+        def on_function_call_request(self, function_call_request, **kwargs):
+            print(f"\n\nFunction Call Request: {function_call_request}\n\n")
+            # Send a response back
+            response = FunctionCallResponse(
+                function_call_id=function_call_request.function_call_id,
+                output="Function response here"
+            )
+            dg_connection.send_function_call_response(response)
 
         def on_agent_started_speaking(self, agent_started_speaking, **kwargs):
             print(f"\n\n{agent_started_speaking}\n\n")
@@ -93,6 +104,7 @@ def main():
         )
         dg_connection.on(AgentWebSocketEvents.AgentThinking, on_agent_thinking)
         dg_connection.on(AgentWebSocketEvents.FunctionCalling, on_function_calling)
+        dg_connection.on(AgentWebSocketEvents.FunctionCallRequest, on_function_call_request)
         dg_connection.on(
             AgentWebSocketEvents.AgentStartedSpeaking, on_agent_started_speaking
         )

@@ -134,7 +134,7 @@ class Think(BaseResponse):
     This class defines any configuration settings for the Think model.
     """
 
-    provider: Provider = field(default=Provider())
+    provider: Provider = field(default_factory=Provider)
     model: Optional[str] = field(
         default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
@@ -164,9 +164,9 @@ class Agent(BaseResponse):
     This class defines any configuration settings for the Agent model.
     """
 
-    listen: Listen = field(default=Listen())
-    think: Think = field(default=Think())
-    speak: Speak = field(default=Speak())
+    listen: Listen = field(default_factory=Listen)
+    think: Think = field(default_factory=Think)
+    speak: Speak = field(default_factory=Speak)
 
     def __getitem__(self, key):
         _dict = self.to_dict()
@@ -209,8 +209,8 @@ class Audio(BaseResponse):
     This class defines any configuration settings for the audio.
     """
 
-    input: Optional[Input] = field(default=Input())
-    output: Optional[Output] = field(default=Output())
+    input: Optional[Input] = field(default_factory=Input)
+    output: Optional[Output] = field(default_factory=Output)
 
     def __getitem__(self, key):
         _dict = self.to_dict()
@@ -246,8 +246,8 @@ class SettingsConfigurationOptions(BaseResponse):
     """
 
     type: str = str(AgentWebSocketEvents.SettingsConfiguration)
-    audio: Audio = field(default=Audio())
-    agent: Agent = field(default=Agent())
+    audio: Audio = field(default_factory=Audio)
+    agent: Agent = field(default_factory=Agent)
     context: Optional[Context] = field(
         default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )

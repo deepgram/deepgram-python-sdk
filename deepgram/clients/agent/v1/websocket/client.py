@@ -424,11 +424,11 @@ class AgentWebSocketClient(
                         **dict(cast(Dict[Any, Any], self._kwargs)),
                     )
                 case AgentWebSocketEvents.FunctionCalling:
-                    function_calling_result: FunctionCallingResponse = (
-                        FunctionCallingResponse.from_json(message)
+                    function_calling_result: FunctionCallingMessage = (
+                        FunctionCallingMessage.from_json(message)
                     )
                     self._logger.verbose(
-                        "FunctionCallingResponse: %s", function_calling_result
+                        "FunctionCallingMessage: %s", function_calling_result
                     )
                     self._emit(
                         AgentWebSocketEvents(AgentWebSocketEvents.FunctionCalling),

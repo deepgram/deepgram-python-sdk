@@ -342,7 +342,7 @@ from .clients import (
     UpdateInstructionsOptions,
     UpdateSpeakOptions,
     InjectAgentMessageOptions,
-    FunctionCallingResponse,
+    FunctionCallResponse,
     AgentKeepAlive,
     # sub level
     Listen,
