@@ -10,7 +10,6 @@ import threading
 from abc import ABC, abstractmethod
 
 import websockets
-from websockets.client import WebSocketClientProtocol
 
 from ....audio import Speaker
 from ....utils import verboselogs
@@ -24,6 +23,8 @@ from .websocket_response import (
     ErrorResponse,
 )
 from .websocket_events import WebSocketEvents
+
+WEBSOCKETS_CURRENT_MAJOR_VERSION = int(websockets.version.version.split(".", 1)[0])
 
 ONE_SECOND = 1
 HALF_SECOND = 0.5
@@ -44,7 +45,7 @@ class AbstractAsyncWebSocketClient(ABC):  # pylint: disable=too-many-instance-at
     _endpoint: str
     _websocket_url: str
 
-    _socket: Optional[WebSocketClientProtocol] = None
+    _socket: Optional[websockets.connect] = None
 
     _listen_thread: Union[asyncio.Task, None]
     _delegate: Optional[Speaker] = None
@@ -134,10 +135,20 @@ class AbstractAsyncWebSocketClient(ABC):  # pylint: disable=too-many-instance-at
         url_with_params = append_query_params(self._websocket_url, combined_options)
 
         try:
+            ws_connect_kwargs: Dict = {
+                "ping_interval": PING_INTERVAL,
+            }
+
+            # Backward compatibility support with older versions of websockets.
+            # "extra_headers" was renamed to "additional_headers" in Python Websockets version 14
+            if WEBSOCKETS_CURRENT_MAJOR_VERSION < 14:
+                ws_connect_kwargs["extra_headers"] = combined_headers
+            else:
+                ws_connect_kwargs["additional_headers"] = combined_headers
+
             self._socket = await websockets.connect(
                 url_with_params,
-                extra_headers=combined_headers,
-                ping_interval=PING_INTERVAL,
+                **ws_connect_kwargs,
             )
             self._exit_event.clear()
 
