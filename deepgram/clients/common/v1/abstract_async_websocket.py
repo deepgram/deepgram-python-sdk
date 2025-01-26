@@ -10,7 +10,20 @@ import threading
 from abc import ABC, abstractmethod
 
 import websockets
-from websockets.client import WebSocketClientProtocol
+
+try:
+    # Websockets versions >= 13
+    from websockets.asyncio.client import connect, ClientConnection
+
+    WS_ADDITIONAL_HEADERS_KEY = "additional_headers"
+except ImportError:
+    # Backward compatibility with websockets versions 12
+    from websockets.legacy.client import (  # type: ignore
+        connect,
+        WebSocketClientProtocol as ClientConnection,
+    )
+
+    WS_ADDITIONAL_HEADERS_KEY = "extra_headers"
 
 from ....audio import Speaker
 from ....utils import verboselogs
@@ -24,6 +37,7 @@ from .websocket_response import (
     ErrorResponse,
 )
 from .websocket_events import WebSocketEvents
+
 
 ONE_SECOND = 1
 HALF_SECOND = 0.5
@@ -44,7 +58,7 @@ class AbstractAsyncWebSocketClient(ABC):  # pylint: disable=too-many-instance-at
     _endpoint: str
     _websocket_url: str
 
-    _socket: Optional[WebSocketClientProtocol] = None
+    _socket: Optional[ClientConnection] = None
 
     _listen_thread: Union[asyncio.Task, None]
     _delegate: Optional[Speaker] = None
@@ -134,10 +148,14 @@ class AbstractAsyncWebSocketClient(ABC):  # pylint: disable=too-many-instance-at
         url_with_params = append_query_params(self._websocket_url, combined_options)
 
         try:
-            self._socket = await websockets.connect(
+            ws_connect_kwargs: Dict = {
+                "ping_interval": PING_INTERVAL,
+                WS_ADDITIONAL_HEADERS_KEY: combined_headers,
+            }
+
+            self._socket = await connect(
                 url_with_params,
-                extra_headers=combined_headers,
-                ping_interval=PING_INTERVAL,
+                **ws_connect_kwargs,
             )
             self._exit_event.clear()
 
@@ -169,7 +187,7 @@ class AbstractAsyncWebSocketClient(ABC):  # pylint: disable=too-many-instance-at
             self._logger.notice("start succeeded")
             self._logger.debug("AbstractAsyncWebSocketClient.start LEAVE")
             return True
-        except websockets.ConnectionClosed as e:
+        except websockets.exceptions.ConnectionClosed as e:
             self._logger.error(
                 "ConnectionClosed in AbstractAsyncWebSocketClient.start: %s", e
             )
