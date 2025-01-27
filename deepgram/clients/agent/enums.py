@@ -21,7 +21,7 @@ class AgentWebSocketEvents(StrEnum):
     ConversationText: str = "ConversationText"
     UserStartedSpeaking: str = "UserStartedSpeaking"
     AgentThinking: str = "AgentThinking"
-    FunctionCallingMessage: str = "FunctionCallingMessage"
+    FunctionCalling: str = "FunctionCalling"
     FunctionCallRequest: str = "FunctionCallRequest"
     AgentStartedSpeaking: str = "AgentStartedSpeaking"
     AgentAudioDone: str = "AgentAudioDone"

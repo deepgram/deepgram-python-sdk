@@ -68,7 +68,7 @@ class AgentThinkingResponse(BaseResponse):
 
 
 @dataclass
-class FunctionCallingMessage(BaseResponse):
+class FunctionCalling(BaseResponse):
     """
     The server will sometimes send FunctionCalling messages when making function calls to help the client developer debug function calling workflows.
     """

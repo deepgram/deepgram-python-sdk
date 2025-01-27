@@ -9,9 +9,24 @@ from deepgram import (
     DeepgramClientOptions,
     AgentWebSocketEvents,
     SettingsConfigurationOptions,
-    FunctionCallingMessage,
+    FunctionCalling,
+    FunctionCallRequest,
     FunctionCallResponse,
 )
+
+# Add debug prints for imports
+print("Checking imports...")
+try:
+    from deepgram import FunctionCallRequest
+    print("Successfully imported FunctionCallRequest")
+except ImportError as e:
+    print(f"Failed to import FunctionCallRequest: {e}")
+
+try:
+    from deepgram import FunctionCallResponse
+    print("Successfully imported FunctionCallResponse")
+except ImportError as e:
+    print(f"Failed to import FunctionCallResponse: {e}")
 
 TTS_TEXT = "Hello, this is a text to speech example using Deepgram."
 
@@ -21,7 +36,7 @@ warning_notice = True
 
 def main():
     try:
-        # example of setting up a client config. logging values: WARNING, VERBOSE, DEBUG, SPAM
+        print("Starting main function...")
         config: DeepgramClientOptions = DeepgramClientOptions(
             options={
                 "keepalive": "true",
@@ -30,10 +45,13 @@ def main():
             },
             # verbose=verboselogs.DEBUG,
         )
-        deepgram: DeepgramClient = DeepgramClient("", config)
+        print("Created DeepgramClientOptions...")
 
-        # Create a websocket connection to Deepgram
+        deepgram: DeepgramClient = DeepgramClient("", config)
+        print("Created DeepgramClient...")
+
         dg_connection = deepgram.agent.websocket.v("1")
+        print("Created WebSocket connection...")
 
         def on_open(self, open, **kwargs):
             print(f"\n\n{open}\n\n")
@@ -64,17 +82,19 @@ def main():
         def on_agent_thinking(self, agent_thinking, **kwargs):
             print(f"\n\n{agent_thinking}\n\n")
 
-        def on_function_calling(self, function_calling: FunctionCallingMessage, **kwargs):
-            print(f"\n\nFunction Calling Message: {function_calling}\n\n")
+        def on_function_calling(self, function_calling: FunctionCalling, **kwargs):
+            print(f"\n\nFunction Calling Debug: {function_calling}\n\n")
 
-        def on_function_call_request(self, function_call_request, **kwargs):
+        def on_function_call_request(self, function_call_request: FunctionCallRequest, **kwargs):
             print(f"\n\nFunction Call Request: {function_call_request}\n\n")
-            # Send a response back
-            response = FunctionCallResponse(
-                function_call_id=function_call_request.function_call_id,
-                output="Function response here"
-            )
-            dg_connection.send_function_call_response(response)
+            try:
+                response = FunctionCallResponse(
+                    function_call_id=function_call_request.function_call_id,
+                    output="Function response here"
+                )
+                dg_connection.send_function_call_response(response)
+            except Exception as e:
+                print(f"Error in function call: {e}")
 
         def on_agent_started_speaking(self, agent_started_speaking, **kwargs):
             print(f"\n\n{agent_started_speaking}\n\n")
@@ -132,10 +152,14 @@ def main():
 
         print("Finished")
 
-    except ValueError as e:
-        print(f"Invalid value encountered: {e}")
+    except ImportError as e:
+        print(f"Import Error Details: {e}")
+        print(f"Error occurred in module: {getattr(e, 'name', 'unknown')}")
+        print(f"Path that failed: {getattr(e, 'path', 'unknown')}")
     except Exception as e:
-        print(f"An unexpected error occurred: {e}")
+        print(f"Unexpected error type: {type(e)}")
+        print(f"Error message: {str(e)}")
+        print(f"Error occurred in: {__file__}")
 
 
 if __name__ == "__main__":
