@@ -33,4 +33,5 @@ class AgentWebSocketEvents(StrEnum):
     UpdateInstructions: str = "UpdateInstructions"
     UpdateSpeak: str = "UpdateSpeak"
     InjectAgentMessage: str = "InjectAgentMessage"
+    InjectionRefused: str = "InjectionRefused"
     AgentKeepAlive: str = "AgentKeepAlive"

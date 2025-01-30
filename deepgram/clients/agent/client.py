@@ -25,6 +25,7 @@ from .v1 import (
     FunctionCallRequest as LatestFunctionCallRequest,
     AgentStartedSpeakingResponse as LatestAgentStartedSpeakingResponse,
     AgentAudioDoneResponse as LatestAgentAudioDoneResponse,
+    InjectionRefusedResponse as LatestInjectionRefusedResponse,
 )
 
 from .v1 import (
@@ -73,6 +74,7 @@ FunctionCalling = LatestFunctionCalling
 FunctionCallRequest = LatestFunctionCallRequest
 AgentStartedSpeakingResponse = LatestAgentStartedSpeakingResponse
 AgentAudioDoneResponse = LatestAgentAudioDoneResponse
+InjectionRefusedResponse = LatestInjectionRefusedResponse
 
 
 SettingsConfigurationOptions = LatestSettingsConfigurationOptions

@@ -25,6 +25,7 @@ from .response import (
     FunctionCallRequest,
     AgentStartedSpeakingResponse,
     AgentAudioDoneResponse,
+    InjectionRefusedResponse,
     CloseResponse,
     ErrorResponse,
     UnhandledResponse,
@@ -475,6 +476,18 @@ class AsyncAgentWebSocketClient(
                     await self._emit(
                         AgentWebSocketEvents(AgentWebSocketEvents.AgentAudioDone),
                         agent_audio_done=agent_audio_done_result,
+                        **dict(cast(Dict[Any, Any], self._kwargs)),
+                    )
+                case AgentWebSocketEvents.InjectionRefused:
+                    injection_refused_result: InjectionRefusedResponse = (
+                        InjectionRefusedResponse.from_json(message)
+                    )
+                    self._logger.verbose(
+                        "InjectionRefused: %s", injection_refused_result
+                    )
+                    await self._emit(
+                        AgentWebSocketEvents(AgentWebSocketEvents.InjectionRefused),
+                        injection_refused=injection_refused_result,
                         **dict(cast(Dict[Any, Any], self._kwargs)),
                     )
                 case AgentWebSocketEvents.Close:

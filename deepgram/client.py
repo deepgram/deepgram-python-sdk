@@ -334,6 +334,7 @@ from .clients import (
     FunctionCallRequest,
     AgentStartedSpeakingResponse,
     AgentAudioDoneResponse,
+    InjectionRefusedResponse,
 )
 
 from .clients import (

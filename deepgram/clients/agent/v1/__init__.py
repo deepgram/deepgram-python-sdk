@@ -30,6 +30,7 @@ from .websocket import (
     FunctionCallRequest,
     AgentStartedSpeakingResponse,
     AgentAudioDoneResponse,
+    InjectionRefusedResponse,
 )
 
 from .websocket import (

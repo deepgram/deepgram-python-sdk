@@ -345,6 +345,7 @@ from .agent import (
     FunctionCallRequest,
     AgentStartedSpeakingResponse,
     AgentAudioDoneResponse,
+    InjectionRefusedResponse,
 )
 
 from .agent import (

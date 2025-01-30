@@ -328,6 +328,7 @@ from .client import (
     FunctionCallRequest,
     AgentStartedSpeakingResponse,
     AgentAudioDoneResponse,
+    InjectionRefusedResponse,
 )
 
 from .client import (

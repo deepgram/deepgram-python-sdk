@@ -104,3 +104,11 @@ class AgentAudioDoneResponse(BaseResponse):
     """
 
     type: str
+
+@dataclass
+class InjectionRefusedResponse(BaseResponse):
+    """
+    The server will send an InjectionRefused message when an InjectAgentMessage request is ignored because it arrived while the user was speaking or while the server was sending audio for an agent response.
+    """
+
+    type: str

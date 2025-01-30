@@ -22,6 +22,7 @@ from .response import (
     FunctionCallRequest,
     AgentStartedSpeakingResponse,
     AgentAudioDoneResponse,
+    InjectionRefusedResponse,
 )
 from .options import (
     # top level

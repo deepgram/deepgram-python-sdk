@@ -28,8 +28,6 @@ try:
 except ImportError as e:
     print(f"Failed to import FunctionCallResponse: {e}")
 
-TTS_TEXT = "Hello, this is a text to speech example using Deepgram."
-
 global warning_notice
 warning_notice = True
 
