@@ -32,7 +32,18 @@ class Speak(BaseResponse):
     This class defines any configuration settings for the Speak model.
     """
 
-    model: Optional[str] = field(default="aura-asteria-en")
+    model: Optional[str] = field(
+        default="aura-asteria-en",
+        metadata=dataclass_config(exclude=lambda f: f is None)
+    )
+    provider: Optional[str] = field(
+        default=None,
+        metadata=dataclass_config(exclude=lambda f: f is None)
+    )
+    voice_id: Optional[str] = field(
+        default=None,
+        metadata=dataclass_config(exclude=lambda f: f is None)
+    )
 
 
 @dataclass
