@@ -435,6 +435,14 @@ class AgentWebSocketClient(
                         function_calling=function_calling_result,
                         **dict(cast(Dict[Any, Any], self._kwargs)),
                     )
+                case AgentWebSocketEvents.FunctionCallRequest:
+                    function_call_request_result: FunctionCallRequest = FunctionCallRequest.from_json(message)
+                    self._logger.verbose("FunctionCallRequest: %s", function_call_request_result)
+                    self._emit(
+                        AgentWebSocketEvents(AgentWebSocketEvents.FunctionCallRequest),
+                        function_call_request=function_call_request_result,
+                        **dict(cast(Dict[Any, Any], self._kwargs)),
+                    )
                 case AgentWebSocketEvents.AgentStartedSpeaking:
                     agent_started_speaking_result: AgentStartedSpeakingResponse = (
                         AgentStartedSpeakingResponse.from_json(message)

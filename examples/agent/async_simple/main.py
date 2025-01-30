@@ -82,9 +82,6 @@ async def main():
         async def on_agent_audio_done(self, agent_audio_done, **kwargs):
             print(f"\n\n{agent_audio_done}\n\n")
 
-        async def on_end_of_thought(self, end_of_thought, **kwargs):
-            print(f"\n\n{end_of_thought}\n\n")
-
         async def on_close(self, close, **kwargs):
             print(f"\n\n{close}\n\n")
 
@@ -108,7 +105,6 @@ async def main():
             AgentWebSocketEvents.AgentStartedSpeaking, on_agent_started_speaking
         )
         dg_connection.on(AgentWebSocketEvents.AgentAudioDone, on_agent_audio_done)
-        dg_connection.on(AgentWebSocketEvents.EndOfThought, on_end_of_thought)
         dg_connection.on(AgentWebSocketEvents.Close, on_close)
         dg_connection.on(AgentWebSocketEvents.Error, on_error)
         dg_connection.on(AgentWebSocketEvents.Unhandled, on_unhandled)
