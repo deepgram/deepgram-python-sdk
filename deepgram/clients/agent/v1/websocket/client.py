@@ -428,17 +428,19 @@ class AgentWebSocketClient(
                     function_calling_result: FunctionCalling = (
                         FunctionCalling.from_json(message)
                     )
-                    self._logger.verbose(
-                        "FunctionCalling: %s", function_calling_result
-                    )
+                    self._logger.verbose("FunctionCalling: %s", function_calling_result)
                     self._emit(
                         AgentWebSocketEvents(AgentWebSocketEvents.FunctionCalling),
                         function_calling=function_calling_result,
                         **dict(cast(Dict[Any, Any], self._kwargs)),
                     )
                 case AgentWebSocketEvents.FunctionCallRequest:
-                    function_call_request_result: FunctionCallRequest = FunctionCallRequest.from_json(message)
-                    self._logger.verbose("FunctionCallRequest: %s", function_call_request_result)
+                    function_call_request_result: FunctionCallRequest = (
+                        FunctionCallRequest.from_json(message)
+                    )
+                    self._logger.verbose(
+                        "FunctionCallRequest: %s", function_call_request_result
+                    )
                     self._emit(
                         AgentWebSocketEvents(AgentWebSocketEvents.FunctionCallRequest),
                         function_call_request=function_call_request_result,
@@ -473,7 +475,9 @@ class AgentWebSocketClient(
                     injection_refused_result: InjectionRefusedResponse = (
                         InjectionRefusedResponse.from_json(message)
                     )
-                    self._logger.verbose("InjectionRefused: %s", injection_refused_result)
+                    self._logger.verbose(
+                        "InjectionRefused: %s", injection_refused_result
+                    )
                     self._emit(
                         AgentWebSocketEvents(AgentWebSocketEvents.InjectionRefused),
                         injection_refused=injection_refused_result,

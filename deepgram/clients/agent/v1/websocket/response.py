@@ -75,6 +75,7 @@ class FunctionCalling(BaseResponse):
 
     type: str
 
+
 @dataclass
 class FunctionCallRequest(BaseResponse):
     """
@@ -85,6 +86,7 @@ class FunctionCallRequest(BaseResponse):
     function_name: str
     function_call_id: str
     input: str
+
 
 @dataclass
 class AgentStartedSpeakingResponse(BaseResponse):
@@ -104,6 +106,7 @@ class AgentAudioDoneResponse(BaseResponse):
     """
 
     type: str
+
 
 @dataclass
 class InjectionRefusedResponse(BaseResponse):

@@ -18,12 +18,14 @@ from deepgram import (
 print("Checking imports...")
 try:
     from deepgram import FunctionCallRequest
+
     print("Successfully imported FunctionCallRequest")
 except ImportError as e:
     print(f"Failed to import FunctionCallRequest: {e}")
 
 try:
     from deepgram import FunctionCallResponse
+
     print("Successfully imported FunctionCallResponse")
 except ImportError as e:
     print(f"Failed to import FunctionCallResponse: {e}")
@@ -83,12 +85,14 @@ def main():
         def on_function_calling(self, function_calling: FunctionCalling, **kwargs):
             print(f"\n\nFunction Calling Debug: {function_calling}\n\n")
 
-        def on_function_call_request(self, function_call_request: FunctionCallRequest, **kwargs):
+        def on_function_call_request(
+            self, function_call_request: FunctionCallRequest, **kwargs
+        ):
             print(f"\n\nFunction Call Request: {function_call_request}\n\n")
             try:
                 response = FunctionCallResponse(
                     function_call_id=function_call_request.function_call_id,
-                    output="Function response here"
+                    output="Function response here",
                 )
                 dg_connection.send_function_call_response(response)
             except Exception as e:
@@ -119,7 +123,9 @@ def main():
         )
         dg_connection.on(AgentWebSocketEvents.AgentThinking, on_agent_thinking)
         dg_connection.on(AgentWebSocketEvents.FunctionCalling, on_function_calling)
-        dg_connection.on(AgentWebSocketEvents.FunctionCallRequest, on_function_call_request)
+        dg_connection.on(
+            AgentWebSocketEvents.FunctionCallRequest, on_function_call_request
+        )
         dg_connection.on(
             AgentWebSocketEvents.AgentStartedSpeaking, on_agent_started_speaking
         )

@@ -34,15 +34,13 @@ class Speak(BaseResponse):
 
     model: Optional[str] = field(
         default="aura-asteria-en",
-        metadata=dataclass_config(exclude=lambda f: f is None)
+        metadata=dataclass_config(exclude=lambda f: f is None),
     )
     provider: Optional[str] = field(
-        default=None,
-        metadata=dataclass_config(exclude=lambda f: f is None)
+        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
     voice_id: Optional[str] = field(
-        default=None,
-        metadata=dataclass_config(exclude=lambda f: f is None)
+        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
 
 
@@ -329,6 +327,7 @@ class InjectAgentMessageOptions(BaseResponse):
     type: str = str(AgentWebSocketEvents.InjectAgentMessage)
     message: str = field(default="")
 
+
 # Function Call Response
 
 
@@ -337,6 +336,7 @@ class FunctionCallResponse(BaseResponse):
     """
     TheFunctionCallResponse message is a JSON command that the client should reply with every time there is a FunctionCallRequest received.
     """
+
     type: str = "FunctionCallResponse"
     function_call_id: str = field(default="")
     output: str = field(default="")
@@ -350,4 +350,5 @@ class AgentKeepAlive(BaseResponse):
     """
     The KeepAlive message is a JSON command that you can use to ensure that the server does not close the connection.
     """
+
     type: str = "KeepAlive"

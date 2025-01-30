@@ -433,9 +433,7 @@ class AsyncAgentWebSocketClient(
                     function_calling_result: FunctionCalling = (
                         FunctionCalling.from_json(message)
                     )
-                    self._logger.verbose(
-                        "FunctionCalling: %s", function_calling_result
-                    )
+                    self._logger.verbose("FunctionCalling: %s", function_calling_result)
                     await self._emit(
                         AgentWebSocketEvents(AgentWebSocketEvents.FunctionCalling),
                         function_calling=function_calling_result,

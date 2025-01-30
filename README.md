@@ -177,9 +177,7 @@ pip install -r examples/requirements-examples.txt
 
 To run each example set the `DEEPGRAM_API_KEY` as an environment variable, then `cd` into each example folder and execute the example with: `python main.py` or `python3 main.py`.
 
-
 ### Agent
-
 - Simple - [examples/agent/simple](https://github.com/deepgram/deepgram-python-sdk/blob/main/examples/agent/simple/main.py)
 - Async Simple - [examples/agent/async_simple](https://github.com/deepgram/deepgram-python-sdk/blob/main/examples/agent/async_simple/main.py)
 
