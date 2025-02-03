@@ -184,7 +184,7 @@ class AbstractSyncWebSocketClient(ABC):  # pylint: disable=too-many-instance-att
             self._logger.notice("start succeeded")
             self._logger.debug("AbstractSyncWebSocketClient.start LEAVE")
             return True
-        except websockets.ConnectionClosed as e:
+        except websockets.exceptions.ConnectionClosed as e:
             self._logger.error(
                 "ConnectionClosed in AbstractSyncWebSocketClient.start: %s", e
             )
