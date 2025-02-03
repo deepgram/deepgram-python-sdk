@@ -31,34 +31,34 @@
             <h2>API Documentation</h2>
                 <ul class="memberlist">
             <li>
-                    <a class="class" href="#Speak">Speak</a>
+                    <a class="class" href="#SpeakRouter">SpeakRouter</a>
                             <ul class="memberlist">
                         <li>
-                                <a class="function" href="#Speak.__init__">Speak</a>
+                                <a class="function" href="#SpeakRouter.__init__">SpeakRouter</a>
                         </li>
                         <li>
-                                <a class="function" href="#Speak.v">v</a>
+                                <a class="function" href="#SpeakRouter.v">v</a>
                         </li>
                         <li>
-                                <a class="variable" href="#Speak.rest">rest</a>
+                                <a class="variable" href="#SpeakRouter.rest">rest</a>
                         </li>
                         <li>
-                                <a class="variable" href="#Speak.asyncrest">asyncrest</a>
+                                <a class="variable" href="#SpeakRouter.asyncrest">asyncrest</a>
                         </li>
                         <li>
-                                <a class="variable" href="#Speak.websocket">websocket</a>
+                                <a class="variable" href="#SpeakRouter.websocket">websocket</a>
                         </li>
                         <li>
-                                <a class="variable" href="#Speak.asyncwebsocket">asyncwebsocket</a>
+                                <a class="variable" href="#SpeakRouter.asyncwebsocket">asyncwebsocket</a>
                         </li>
                         <li>
-                                <a class="class" href="#Speak.Version">Speak.Version</a>
+                                <a class="class" href="#SpeakRouter.Version">SpeakRouter.Version</a>
                                         <ul class="memberlist">
                                     <li>
-                                            <a class="function" href="#Speak.Version.__init__">Version</a>
+                                            <a class="function" href="#SpeakRouter.Version.__init__">Version</a>
                                     </li>
                                     <li>
-                                            <a class="function" href="#Speak.Version.v">v</a>
+                                            <a class="function" href="#SpeakRouter.Version.v">v</a>
                                     </li>
                             </ul>
 
@@ -102,7 +102,7 @@
 </span><span id="L-13"><a href="#L-13"><span class="linenos"> 13</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">.errors</span><span class="w"> </span><span class="kn">import</span> <span class="n">DeepgramModuleError</span>
 </span><span id="L-14"><a href="#L-14"><span class="linenos"> 14</span></a>
 </span><span id="L-15"><a href="#L-15"><span class="linenos"> 15</span></a>
-</span><span id="L-16"><a href="#L-16"><span class="linenos"> 16</span></a><span class="k">class</span><span class="w"> </span><span class="nc">Speak</span><span class="p">:</span>
+</span><span id="L-16"><a href="#L-16"><span class="linenos"> 16</span></a><span class="k">class</span><span class="w"> </span><span class="nc">SpeakRouter</span><span class="p">:</span>
 </span><span id="L-17"><a href="#L-17"><span class="linenos"> 17</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="L-18"><a href="#L-18"><span class="linenos"> 18</span></a><span class="sd">    This class provides a Speak Clients for making requests to the Deepgram API with various configuration options.</span>
 </span><span id="L-19"><a href="#L-19"><span class="linenos"> 19</span></a>
@@ -262,173 +262,173 @@
 
 
             </section>
-                <section id="Speak">
-                            <input id="Speak-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+                <section id="SpeakRouter">
+                            <input id="SpeakRouter-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
 <div class="attr class">
             
     <span class="def">class</span>
-    <span class="name">Speak</span>:
+    <span class="name">SpeakRouter</span>:
 
-                <label class="view-source-button" for="Speak-view-source"><span>View Source</span></label>
+                <label class="view-source-button" for="SpeakRouter-view-source"><span>View Source</span></label>
 
     </div>
-    <a class="headerlink" href="#Speak"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="Speak-17"><a href="#Speak-17"><span class="linenos"> 17</span></a><span class="k">class</span><span class="w"> </span><span class="nc">Speak</span><span class="p">:</span>
-</span><span id="Speak-18"><a href="#Speak-18"><span class="linenos"> 18</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="Speak-19"><a href="#Speak-19"><span class="linenos"> 19</span></a><span class="sd">    This class provides a Speak Clients for making requests to the Deepgram API with various configuration options.</span>
-</span><span id="Speak-20"><a href="#Speak-20"><span class="linenos"> 20</span></a>
-</span><span id="Speak-21"><a href="#Speak-21"><span class="linenos"> 21</span></a><span class="sd">    Attributes:</span>
-</span><span id="Speak-22"><a href="#Speak-22"><span class="linenos"> 22</span></a><span class="sd">        config_options (DeepgramClientOptions): An optional configuration object specifying client options.</span>
-</span><span id="Speak-23"><a href="#Speak-23"><span class="linenos"> 23</span></a>
-</span><span id="Speak-24"><a href="#Speak-24"><span class="linenos"> 24</span></a><span class="sd">    Methods:</span>
-</span><span id="Speak-25"><a href="#Speak-25"><span class="linenos"> 25</span></a><span class="sd">        rest: (Preferred) Returns a Threaded REST Client instance for interacting with Deepgram&#39;s transcription services.</span>
-</span><span id="Speak-26"><a href="#Speak-26"><span class="linenos"> 26</span></a><span class="sd">        websocket: (Preferred) Returns an Threaded WebSocket Client instance for interacting with Deepgram&#39;s prerecorded transcription services.</span>
-</span><span id="Speak-27"><a href="#Speak-27"><span class="linenos"> 27</span></a>
-</span><span id="Speak-28"><a href="#Speak-28"><span class="linenos"> 28</span></a><span class="sd">        asyncrest: Returns an Async REST Client instance for interacting with Deepgram&#39;s transcription services.</span>
-</span><span id="Speak-29"><a href="#Speak-29"><span class="linenos"> 29</span></a><span class="sd">        asyncwebsocket: Returns an Async WebSocket Client instance for interacting with Deepgram&#39;s prerecorded transcription services.</span>
-</span><span id="Speak-30"><a href="#Speak-30"><span class="linenos"> 30</span></a><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="Speak-31"><a href="#Speak-31"><span class="linenos"> 31</span></a>
-</span><span id="Speak-32"><a href="#Speak-32"><span class="linenos"> 32</span></a>    <span class="n">_logger</span><span class="p">:</span> <span class="n">verboselogs</span><span class="o">.</span><span class="n">VerboseLogger</span>
-</span><span id="Speak-33"><a href="#Speak-33"><span class="linenos"> 33</span></a>    <span class="n">_config</span><span class="p">:</span> <span class="n">DeepgramClientOptions</span>
-</span><span id="Speak-34"><a href="#Speak-34"><span class="linenos"> 34</span></a>
-</span><span id="Speak-35"><a href="#Speak-35"><span class="linenos"> 35</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">:</span> <span class="n">DeepgramClientOptions</span><span class="p">):</span>
-</span><span id="Speak-36"><a href="#Speak-36"><span class="linenos"> 36</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span> <span class="o">=</span> <span class="n">verboselogs</span><span class="o">.</span><span class="n">VerboseLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
-</span><span id="Speak-37"><a href="#Speak-37"><span class="linenos"> 37</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">StreamHandler</span><span class="p">())</span>
-</span><span id="Speak-38"><a href="#Speak-38"><span class="linenos"> 38</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">verbose</span><span class="p">)</span>
-</span><span id="Speak-39"><a href="#Speak-39"><span class="linenos"> 39</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_config</span> <span class="o">=</span> <span class="n">config</span>
-</span><span id="Speak-40"><a href="#Speak-40"><span class="linenos"> 40</span></a>
-</span><span id="Speak-41"><a href="#Speak-41"><span class="linenos"> 41</span></a>    <span class="c1"># when this is removed, remove --disable=W0622 from Makefile</span>
-</span><span id="Speak-42"><a href="#Speak-42"><span class="linenos"> 42</span></a>    <span class="c1"># pylint: disable=unused-argument</span>
-</span><span id="Speak-43"><a href="#Speak-43"><span class="linenos"> 43</span></a>    <span class="nd">@deprecation</span><span class="o">.</span><span class="n">deprecated</span><span class="p">(</span>
-</span><span id="Speak-44"><a href="#Speak-44"><span class="linenos"> 44</span></a>        <span class="n">deprecated_in</span><span class="o">=</span><span class="s2">&quot;3.4.0&quot;</span><span class="p">,</span>
-</span><span id="Speak-45"><a href="#Speak-45"><span class="linenos"> 45</span></a>        <span class="n">removed_in</span><span class="o">=</span><span class="s2">&quot;4.0.0&quot;</span><span class="p">,</span>
-</span><span id="Speak-46"><a href="#Speak-46"><span class="linenos"> 46</span></a>        <span class="n">current_version</span><span class="o">=</span><span class="n">__version__</span><span class="p">,</span>
-</span><span id="Speak-47"><a href="#Speak-47"><span class="linenos"> 47</span></a>        <span class="n">details</span><span class="o">=</span><span class="s2">&quot;deepgram.speak.v1 is deprecated. Use deepgram.speak.rest or deepgram.speak.websocket instead.&quot;</span><span class="p">,</span>
-</span><span id="Speak-48"><a href="#Speak-48"><span class="linenos"> 48</span></a>    <span class="p">)</span>
-</span><span id="Speak-49"><a href="#Speak-49"><span class="linenos"> 49</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">v</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">version</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">):</span>
-</span><span id="Speak-50"><a href="#Speak-50"><span class="linenos"> 50</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="Speak-51"><a href="#Speak-51"><span class="linenos"> 51</span></a><span class="sd">        DEPRECATED: deepgram.speak.v1 is deprecated. Use deepgram.speak.rest or deepgram.speak.websocket instead.</span>
-</span><span id="Speak-52"><a href="#Speak-52"><span class="linenos"> 52</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="Speak-53"><a href="#Speak-53"><span class="linenos"> 53</span></a>        <span class="k">return</span> <span class="n">SpeakRESTClient</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="p">)</span>
-</span><span id="Speak-54"><a href="#Speak-54"><span class="linenos"> 54</span></a>
-</span><span id="Speak-55"><a href="#Speak-55"><span class="linenos"> 55</span></a>    <span class="c1"># pylint: enable=unused-argument</span>
-</span><span id="Speak-56"><a href="#Speak-56"><span class="linenos"> 56</span></a>
-</span><span id="Speak-57"><a href="#Speak-57"><span class="linenos"> 57</span></a>    <span class="nd">@property</span>
-</span><span id="Speak-58"><a href="#Speak-58"><span class="linenos"> 58</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">rest</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="Speak-59"><a href="#Speak-59"><span class="linenos"> 59</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="Speak-60"><a href="#Speak-60"><span class="linenos"> 60</span></a><span class="sd">        Returns a Threaded REST Client instance for interacting with Deepgram&#39;s prerecorded Text-to-Speech services.</span>
-</span><span id="Speak-61"><a href="#Speak-61"><span class="linenos"> 61</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="Speak-62"><a href="#Speak-62"><span class="linenos"> 62</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">Version</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="p">,</span> <span class="s2">&quot;rest&quot;</span><span class="p">)</span>
-</span><span id="Speak-63"><a href="#Speak-63"><span class="linenos"> 63</span></a>
-</span><span id="Speak-64"><a href="#Speak-64"><span class="linenos"> 64</span></a>    <span class="nd">@property</span>
-</span><span id="Speak-65"><a href="#Speak-65"><span class="linenos"> 65</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">asyncrest</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="Speak-66"><a href="#Speak-66"><span class="linenos"> 66</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="Speak-67"><a href="#Speak-67"><span class="linenos"> 67</span></a><span class="sd">        Returns an Async REST Client instance for interacting with Deepgram&#39;s prerecorded Text-to-Speech services.</span>
-</span><span id="Speak-68"><a href="#Speak-68"><span class="linenos"> 68</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="Speak-69"><a href="#Speak-69"><span class="linenos"> 69</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">Version</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="p">,</span> <span class="s2">&quot;asyncrest&quot;</span><span class="p">)</span>
-</span><span id="Speak-70"><a href="#Speak-70"><span class="linenos"> 70</span></a>
-</span><span id="Speak-71"><a href="#Speak-71"><span class="linenos"> 71</span></a>    <span class="nd">@property</span>
-</span><span id="Speak-72"><a href="#Speak-72"><span class="linenos"> 72</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">websocket</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="Speak-73"><a href="#Speak-73"><span class="linenos"> 73</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="Speak-74"><a href="#Speak-74"><span class="linenos"> 74</span></a><span class="sd">        Returns a Threaded WebSocket Client instance for interacting with Deepgram&#39;s Text-to-Speech services.</span>
-</span><span id="Speak-75"><a href="#Speak-75"><span class="linenos"> 75</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="Speak-76"><a href="#Speak-76"><span class="linenos"> 76</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">Version</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="p">,</span> <span class="s2">&quot;websocket&quot;</span><span class="p">)</span>
-</span><span id="Speak-77"><a href="#Speak-77"><span class="linenos"> 77</span></a>
-</span><span id="Speak-78"><a href="#Speak-78"><span class="linenos"> 78</span></a>    <span class="nd">@property</span>
-</span><span id="Speak-79"><a href="#Speak-79"><span class="linenos"> 79</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">asyncwebsocket</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="Speak-80"><a href="#Speak-80"><span class="linenos"> 80</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="Speak-81"><a href="#Speak-81"><span class="linenos"> 81</span></a><span class="sd">        Returns an Async WebSocket Client instance for interacting with Deepgram&#39;s Text-to-Speech services.</span>
-</span><span id="Speak-82"><a href="#Speak-82"><span class="linenos"> 82</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="Speak-83"><a href="#Speak-83"><span class="linenos"> 83</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">Version</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="p">,</span> <span class="s2">&quot;asyncwebsocket&quot;</span><span class="p">)</span>
-</span><span id="Speak-84"><a href="#Speak-84"><span class="linenos"> 84</span></a>
-</span><span id="Speak-85"><a href="#Speak-85"><span class="linenos"> 85</span></a>    <span class="c1"># INTERNAL CLASSES</span>
-</span><span id="Speak-86"><a href="#Speak-86"><span class="linenos"> 86</span></a>    <span class="k">class</span><span class="w"> </span><span class="nc">Version</span><span class="p">:</span>
-</span><span id="Speak-87"><a href="#Speak-87"><span class="linenos"> 87</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="Speak-88"><a href="#Speak-88"><span class="linenos"> 88</span></a><span class="sd">        Represents a version of the Deepgram API.</span>
-</span><span id="Speak-89"><a href="#Speak-89"><span class="linenos"> 89</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="Speak-90"><a href="#Speak-90"><span class="linenos"> 90</span></a>
-</span><span id="Speak-91"><a href="#Speak-91"><span class="linenos"> 91</span></a>        <span class="n">_logger</span><span class="p">:</span> <span class="n">verboselogs</span><span class="o">.</span><span class="n">VerboseLogger</span>
-</span><span id="Speak-92"><a href="#Speak-92"><span class="linenos"> 92</span></a>        <span class="n">_config</span><span class="p">:</span> <span class="n">DeepgramClientOptions</span>
-</span><span id="Speak-93"><a href="#Speak-93"><span class="linenos"> 93</span></a>        <span class="n">_parent</span><span class="p">:</span> <span class="nb">str</span>
-</span><span id="Speak-94"><a href="#Speak-94"><span class="linenos"> 94</span></a>
-</span><span id="Speak-95"><a href="#Speak-95"><span class="linenos"> 95</span></a>        <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">,</span> <span class="n">parent</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
-</span><span id="Speak-96"><a href="#Speak-96"><span class="linenos"> 96</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span> <span class="o">=</span> <span class="n">verboselogs</span><span class="o">.</span><span class="n">VerboseLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
-</span><span id="Speak-97"><a href="#Speak-97"><span class="linenos"> 97</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">StreamHandler</span><span class="p">())</span>
-</span><span id="Speak-98"><a href="#Speak-98"><span class="linenos"> 98</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">verbose</span><span class="p">)</span>
-</span><span id="Speak-99"><a href="#Speak-99"><span class="linenos"> 99</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">_config</span> <span class="o">=</span> <span class="n">config</span>
-</span><span id="Speak-100"><a href="#Speak-100"><span class="linenos">100</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">_parent</span> <span class="o">=</span> <span class="n">parent</span>
-</span><span id="Speak-101"><a href="#Speak-101"><span class="linenos">101</span></a>
-</span><span id="Speak-102"><a href="#Speak-102"><span class="linenos">102</span></a>        <span class="c1"># FUTURE VERSIONING:</span>
-</span><span id="Speak-103"><a href="#Speak-103"><span class="linenos">103</span></a>        <span class="c1"># When v2 or v1.1beta1 or etc. This allows easy access to the latest version of the API.</span>
-</span><span id="Speak-104"><a href="#Speak-104"><span class="linenos">104</span></a>        <span class="c1"># @property</span>
-</span><span id="Speak-105"><a href="#Speak-105"><span class="linenos">105</span></a>        <span class="c1"># def latest(self):</span>
-</span><span id="Speak-106"><a href="#Speak-106"><span class="linenos">106</span></a>        <span class="c1">#     match self._parent:</span>
-</span><span id="Speak-107"><a href="#Speak-107"><span class="linenos">107</span></a>        <span class="c1">#         case &quot;live&quot;:</span>
-</span><span id="Speak-108"><a href="#Speak-108"><span class="linenos">108</span></a>        <span class="c1">#             return LiveClient(self._config)</span>
-</span><span id="Speak-109"><a href="#Speak-109"><span class="linenos">109</span></a>        <span class="c1">#         case &quot;prerecorded&quot;:</span>
-</span><span id="Speak-110"><a href="#Speak-110"><span class="linenos">110</span></a>        <span class="c1">#             return PreRecordedClient(self._config)</span>
-</span><span id="Speak-111"><a href="#Speak-111"><span class="linenos">111</span></a>        <span class="c1">#         case _:</span>
-</span><span id="Speak-112"><a href="#Speak-112"><span class="linenos">112</span></a>        <span class="c1">#             raise DeepgramModuleError(&quot;Invalid parent&quot;)</span>
-</span><span id="Speak-113"><a href="#Speak-113"><span class="linenos">113</span></a>
-</span><span id="Speak-114"><a href="#Speak-114"><span class="linenos">114</span></a>        <span class="k">def</span><span class="w"> </span><span class="nf">v</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">version</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">):</span>
-</span><span id="Speak-115"><a href="#Speak-115"><span class="linenos">115</span></a><span class="w">            </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="Speak-116"><a href="#Speak-116"><span class="linenos">116</span></a><span class="sd">            Returns a specific version of the Deepgram API.</span>
-</span><span id="Speak-117"><a href="#Speak-117"><span class="linenos">117</span></a><span class="sd">            &quot;&quot;&quot;</span>
-</span><span id="Speak-118"><a href="#Speak-118"><span class="linenos">118</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Version.v ENTER&quot;</span><span class="p">)</span>
-</span><span id="Speak-119"><a href="#Speak-119"><span class="linenos">119</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;version: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">version</span><span class="p">)</span>
-</span><span id="Speak-120"><a href="#Speak-120"><span class="linenos">120</span></a>            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">version</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-</span><span id="Speak-121"><a href="#Speak-121"><span class="linenos">121</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;version is empty&quot;</span><span class="p">)</span>
-</span><span id="Speak-122"><a href="#Speak-122"><span class="linenos">122</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Version.v LEAVE&quot;</span><span class="p">)</span>
-</span><span id="Speak-123"><a href="#Speak-123"><span class="linenos">123</span></a>                <span class="k">raise</span> <span class="n">DeepgramModuleError</span><span class="p">(</span><span class="s2">&quot;Invalid module version&quot;</span><span class="p">)</span>
-</span><span id="Speak-124"><a href="#Speak-124"><span class="linenos">124</span></a>
-</span><span id="Speak-125"><a href="#Speak-125"><span class="linenos">125</span></a>            <span class="nb">type</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-</span><span id="Speak-126"><a href="#Speak-126"><span class="linenos">126</span></a>            <span class="n">file_name</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-</span><span id="Speak-127"><a href="#Speak-127"><span class="linenos">127</span></a>            <span class="n">class_name</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-</span><span id="Speak-128"><a href="#Speak-128"><span class="linenos">128</span></a>            <span class="k">match</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parent</span><span class="p">:</span>
-</span><span id="Speak-129"><a href="#Speak-129"><span class="linenos">129</span></a>                <span class="k">case</span> <span class="s2">&quot;websocket&quot;</span><span class="p">:</span>
-</span><span id="Speak-130"><a href="#Speak-130"><span class="linenos">130</span></a>                    <span class="nb">type</span> <span class="o">=</span> <span class="s2">&quot;websocket&quot;</span>
-</span><span id="Speak-131"><a href="#Speak-131"><span class="linenos">131</span></a>                    <span class="n">file_name</span> <span class="o">=</span> <span class="s2">&quot;client&quot;</span>
-</span><span id="Speak-132"><a href="#Speak-132"><span class="linenos">132</span></a>                    <span class="n">class_name</span> <span class="o">=</span> <span class="s2">&quot;SpeakWebSocketClient&quot;</span>
-</span><span id="Speak-133"><a href="#Speak-133"><span class="linenos">133</span></a>                <span class="k">case</span> <span class="s2">&quot;asyncwebsocket&quot;</span><span class="p">:</span>
-</span><span id="Speak-134"><a href="#Speak-134"><span class="linenos">134</span></a>                    <span class="nb">type</span> <span class="o">=</span> <span class="s2">&quot;websocket&quot;</span>
-</span><span id="Speak-135"><a href="#Speak-135"><span class="linenos">135</span></a>                    <span class="n">file_name</span> <span class="o">=</span> <span class="s2">&quot;async_client&quot;</span>
-</span><span id="Speak-136"><a href="#Speak-136"><span class="linenos">136</span></a>                    <span class="n">class_name</span> <span class="o">=</span> <span class="s2">&quot;AsyncSpeakWebSocketClient&quot;</span>
-</span><span id="Speak-137"><a href="#Speak-137"><span class="linenos">137</span></a>                <span class="k">case</span> <span class="s2">&quot;rest&quot;</span><span class="p">:</span>
-</span><span id="Speak-138"><a href="#Speak-138"><span class="linenos">138</span></a>                    <span class="nb">type</span> <span class="o">=</span> <span class="s2">&quot;rest&quot;</span>
-</span><span id="Speak-139"><a href="#Speak-139"><span class="linenos">139</span></a>                    <span class="n">file_name</span> <span class="o">=</span> <span class="s2">&quot;client&quot;</span>
-</span><span id="Speak-140"><a href="#Speak-140"><span class="linenos">140</span></a>                    <span class="n">class_name</span> <span class="o">=</span> <span class="s2">&quot;SpeakRESTClient&quot;</span>
-</span><span id="Speak-141"><a href="#Speak-141"><span class="linenos">141</span></a>                <span class="k">case</span> <span class="s2">&quot;asyncrest&quot;</span><span class="p">:</span>
-</span><span id="Speak-142"><a href="#Speak-142"><span class="linenos">142</span></a>                    <span class="nb">type</span> <span class="o">=</span> <span class="s2">&quot;rest&quot;</span>
-</span><span id="Speak-143"><a href="#Speak-143"><span class="linenos">143</span></a>                    <span class="n">file_name</span> <span class="o">=</span> <span class="s2">&quot;async_client&quot;</span>
-</span><span id="Speak-144"><a href="#Speak-144"><span class="linenos">144</span></a>                    <span class="n">class_name</span> <span class="o">=</span> <span class="s2">&quot;AsyncSpeakRESTClient&quot;</span>
-</span><span id="Speak-145"><a href="#Speak-145"><span class="linenos">145</span></a>                <span class="k">case</span><span class="w"> </span><span class="k">_</span><span class="p">:</span>
-</span><span id="Speak-146"><a href="#Speak-146"><span class="linenos">146</span></a>                    <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;parent unknown: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parent</span><span class="p">)</span>
-</span><span id="Speak-147"><a href="#Speak-147"><span class="linenos">147</span></a>                    <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Version.v LEAVE&quot;</span><span class="p">)</span>
-</span><span id="Speak-148"><a href="#Speak-148"><span class="linenos">148</span></a>                    <span class="k">raise</span> <span class="n">DeepgramModuleError</span><span class="p">(</span><span class="s2">&quot;Invalid parent type&quot;</span><span class="p">)</span>
-</span><span id="Speak-149"><a href="#Speak-149"><span class="linenos">149</span></a>
-</span><span id="Speak-150"><a href="#Speak-150"><span class="linenos">150</span></a>            <span class="c1"># create class path</span>
-</span><span id="Speak-151"><a href="#Speak-151"><span class="linenos">151</span></a>            <span class="n">path</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;deepgram.clients.speak.v</span><span class="si">{</span><span class="n">version</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="nb">type</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">file_name</span><span class="si">}</span><span class="s2">&quot;</span>
-</span><span id="Speak-152"><a href="#Speak-152"><span class="linenos">152</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;path: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
-</span><span id="Speak-153"><a href="#Speak-153"><span class="linenos">153</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;class_name: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">class_name</span><span class="p">)</span>
-</span><span id="Speak-154"><a href="#Speak-154"><span class="linenos">154</span></a>
-</span><span id="Speak-155"><a href="#Speak-155"><span class="linenos">155</span></a>            <span class="c1"># import class</span>
-</span><span id="Speak-156"><a href="#Speak-156"><span class="linenos">156</span></a>            <span class="n">mod</span> <span class="o">=</span> <span class="n">import_module</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
-</span><span id="Speak-157"><a href="#Speak-157"><span class="linenos">157</span></a>            <span class="k">if</span> <span class="n">mod</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-</span><span id="Speak-158"><a href="#Speak-158"><span class="linenos">158</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;module path is None&quot;</span><span class="p">)</span>
-</span><span id="Speak-159"><a href="#Speak-159"><span class="linenos">159</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Version.v LEAVE&quot;</span><span class="p">)</span>
-</span><span id="Speak-160"><a href="#Speak-160"><span class="linenos">160</span></a>                <span class="k">raise</span> <span class="n">DeepgramModuleError</span><span class="p">(</span><span class="s2">&quot;Unable to find package&quot;</span><span class="p">)</span>
-</span><span id="Speak-161"><a href="#Speak-161"><span class="linenos">161</span></a>
-</span><span id="Speak-162"><a href="#Speak-162"><span class="linenos">162</span></a>            <span class="n">my_class</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">mod</span><span class="p">,</span> <span class="n">class_name</span><span class="p">)</span>
-</span><span id="Speak-163"><a href="#Speak-163"><span class="linenos">163</span></a>            <span class="k">if</span> <span class="n">my_class</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-</span><span id="Speak-164"><a href="#Speak-164"><span class="linenos">164</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;my_class is None&quot;</span><span class="p">)</span>
-</span><span id="Speak-165"><a href="#Speak-165"><span class="linenos">165</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Version.v LEAVE&quot;</span><span class="p">)</span>
-</span><span id="Speak-166"><a href="#Speak-166"><span class="linenos">166</span></a>                <span class="k">raise</span> <span class="n">DeepgramModuleError</span><span class="p">(</span><span class="s2">&quot;Unable to find class&quot;</span><span class="p">)</span>
-</span><span id="Speak-167"><a href="#Speak-167"><span class="linenos">167</span></a>
-</span><span id="Speak-168"><a href="#Speak-168"><span class="linenos">168</span></a>            <span class="c1"># instantiate class</span>
-</span><span id="Speak-169"><a href="#Speak-169"><span class="linenos">169</span></a>            <span class="n">my_class</span> <span class="o">=</span> <span class="n">my_class</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="p">)</span>
-</span><span id="Speak-170"><a href="#Speak-170"><span class="linenos">170</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">notice</span><span class="p">(</span><span class="s2">&quot;Version.v succeeded&quot;</span><span class="p">)</span>
-</span><span id="Speak-171"><a href="#Speak-171"><span class="linenos">171</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Version.v LEAVE&quot;</span><span class="p">)</span>
-</span><span id="Speak-172"><a href="#Speak-172"><span class="linenos">172</span></a>            <span class="k">return</span> <span class="n">my_class</span>
+    <a class="headerlink" href="#SpeakRouter"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="SpeakRouter-17"><a href="#SpeakRouter-17"><span class="linenos"> 17</span></a><span class="k">class</span><span class="w"> </span><span class="nc">SpeakRouter</span><span class="p">:</span>
+</span><span id="SpeakRouter-18"><a href="#SpeakRouter-18"><span class="linenos"> 18</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="SpeakRouter-19"><a href="#SpeakRouter-19"><span class="linenos"> 19</span></a><span class="sd">    This class provides a Speak Clients for making requests to the Deepgram API with various configuration options.</span>
+</span><span id="SpeakRouter-20"><a href="#SpeakRouter-20"><span class="linenos"> 20</span></a>
+</span><span id="SpeakRouter-21"><a href="#SpeakRouter-21"><span class="linenos"> 21</span></a><span class="sd">    Attributes:</span>
+</span><span id="SpeakRouter-22"><a href="#SpeakRouter-22"><span class="linenos"> 22</span></a><span class="sd">        config_options (DeepgramClientOptions): An optional configuration object specifying client options.</span>
+</span><span id="SpeakRouter-23"><a href="#SpeakRouter-23"><span class="linenos"> 23</span></a>
+</span><span id="SpeakRouter-24"><a href="#SpeakRouter-24"><span class="linenos"> 24</span></a><span class="sd">    Methods:</span>
+</span><span id="SpeakRouter-25"><a href="#SpeakRouter-25"><span class="linenos"> 25</span></a><span class="sd">        rest: (Preferred) Returns a Threaded REST Client instance for interacting with Deepgram&#39;s transcription services.</span>
+</span><span id="SpeakRouter-26"><a href="#SpeakRouter-26"><span class="linenos"> 26</span></a><span class="sd">        websocket: (Preferred) Returns an Threaded WebSocket Client instance for interacting with Deepgram&#39;s prerecorded transcription services.</span>
+</span><span id="SpeakRouter-27"><a href="#SpeakRouter-27"><span class="linenos"> 27</span></a>
+</span><span id="SpeakRouter-28"><a href="#SpeakRouter-28"><span class="linenos"> 28</span></a><span class="sd">        asyncrest: Returns an Async REST Client instance for interacting with Deepgram&#39;s transcription services.</span>
+</span><span id="SpeakRouter-29"><a href="#SpeakRouter-29"><span class="linenos"> 29</span></a><span class="sd">        asyncwebsocket: Returns an Async WebSocket Client instance for interacting with Deepgram&#39;s prerecorded transcription services.</span>
+</span><span id="SpeakRouter-30"><a href="#SpeakRouter-30"><span class="linenos"> 30</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="SpeakRouter-31"><a href="#SpeakRouter-31"><span class="linenos"> 31</span></a>
+</span><span id="SpeakRouter-32"><a href="#SpeakRouter-32"><span class="linenos"> 32</span></a>    <span class="n">_logger</span><span class="p">:</span> <span class="n">verboselogs</span><span class="o">.</span><span class="n">VerboseLogger</span>
+</span><span id="SpeakRouter-33"><a href="#SpeakRouter-33"><span class="linenos"> 33</span></a>    <span class="n">_config</span><span class="p">:</span> <span class="n">DeepgramClientOptions</span>
+</span><span id="SpeakRouter-34"><a href="#SpeakRouter-34"><span class="linenos"> 34</span></a>
+</span><span id="SpeakRouter-35"><a href="#SpeakRouter-35"><span class="linenos"> 35</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">:</span> <span class="n">DeepgramClientOptions</span><span class="p">):</span>
+</span><span id="SpeakRouter-36"><a href="#SpeakRouter-36"><span class="linenos"> 36</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span> <span class="o">=</span> <span class="n">verboselogs</span><span class="o">.</span><span class="n">VerboseLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+</span><span id="SpeakRouter-37"><a href="#SpeakRouter-37"><span class="linenos"> 37</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">StreamHandler</span><span class="p">())</span>
+</span><span id="SpeakRouter-38"><a href="#SpeakRouter-38"><span class="linenos"> 38</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">verbose</span><span class="p">)</span>
+</span><span id="SpeakRouter-39"><a href="#SpeakRouter-39"><span class="linenos"> 39</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_config</span> <span class="o">=</span> <span class="n">config</span>
+</span><span id="SpeakRouter-40"><a href="#SpeakRouter-40"><span class="linenos"> 40</span></a>
+</span><span id="SpeakRouter-41"><a href="#SpeakRouter-41"><span class="linenos"> 41</span></a>    <span class="c1"># when this is removed, remove --disable=W0622 from Makefile</span>
+</span><span id="SpeakRouter-42"><a href="#SpeakRouter-42"><span class="linenos"> 42</span></a>    <span class="c1"># pylint: disable=unused-argument</span>
+</span><span id="SpeakRouter-43"><a href="#SpeakRouter-43"><span class="linenos"> 43</span></a>    <span class="nd">@deprecation</span><span class="o">.</span><span class="n">deprecated</span><span class="p">(</span>
+</span><span id="SpeakRouter-44"><a href="#SpeakRouter-44"><span class="linenos"> 44</span></a>        <span class="n">deprecated_in</span><span class="o">=</span><span class="s2">&quot;3.4.0&quot;</span><span class="p">,</span>
+</span><span id="SpeakRouter-45"><a href="#SpeakRouter-45"><span class="linenos"> 45</span></a>        <span class="n">removed_in</span><span class="o">=</span><span class="s2">&quot;4.0.0&quot;</span><span class="p">,</span>
+</span><span id="SpeakRouter-46"><a href="#SpeakRouter-46"><span class="linenos"> 46</span></a>        <span class="n">current_version</span><span class="o">=</span><span class="n">__version__</span><span class="p">,</span>
+</span><span id="SpeakRouter-47"><a href="#SpeakRouter-47"><span class="linenos"> 47</span></a>        <span class="n">details</span><span class="o">=</span><span class="s2">&quot;deepgram.speak.v1 is deprecated. Use deepgram.speak.rest or deepgram.speak.websocket instead.&quot;</span><span class="p">,</span>
+</span><span id="SpeakRouter-48"><a href="#SpeakRouter-48"><span class="linenos"> 48</span></a>    <span class="p">)</span>
+</span><span id="SpeakRouter-49"><a href="#SpeakRouter-49"><span class="linenos"> 49</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">v</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">version</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">):</span>
+</span><span id="SpeakRouter-50"><a href="#SpeakRouter-50"><span class="linenos"> 50</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="SpeakRouter-51"><a href="#SpeakRouter-51"><span class="linenos"> 51</span></a><span class="sd">        DEPRECATED: deepgram.speak.v1 is deprecated. Use deepgram.speak.rest or deepgram.speak.websocket instead.</span>
+</span><span id="SpeakRouter-52"><a href="#SpeakRouter-52"><span class="linenos"> 52</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="SpeakRouter-53"><a href="#SpeakRouter-53"><span class="linenos"> 53</span></a>        <span class="k">return</span> <span class="n">SpeakRESTClient</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="p">)</span>
+</span><span id="SpeakRouter-54"><a href="#SpeakRouter-54"><span class="linenos"> 54</span></a>
+</span><span id="SpeakRouter-55"><a href="#SpeakRouter-55"><span class="linenos"> 55</span></a>    <span class="c1"># pylint: enable=unused-argument</span>
+</span><span id="SpeakRouter-56"><a href="#SpeakRouter-56"><span class="linenos"> 56</span></a>
+</span><span id="SpeakRouter-57"><a href="#SpeakRouter-57"><span class="linenos"> 57</span></a>    <span class="nd">@property</span>
+</span><span id="SpeakRouter-58"><a href="#SpeakRouter-58"><span class="linenos"> 58</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">rest</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="SpeakRouter-59"><a href="#SpeakRouter-59"><span class="linenos"> 59</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="SpeakRouter-60"><a href="#SpeakRouter-60"><span class="linenos"> 60</span></a><span class="sd">        Returns a Threaded REST Client instance for interacting with Deepgram&#39;s prerecorded Text-to-Speech services.</span>
+</span><span id="SpeakRouter-61"><a href="#SpeakRouter-61"><span class="linenos"> 61</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="SpeakRouter-62"><a href="#SpeakRouter-62"><span class="linenos"> 62</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">Version</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="p">,</span> <span class="s2">&quot;rest&quot;</span><span class="p">)</span>
+</span><span id="SpeakRouter-63"><a href="#SpeakRouter-63"><span class="linenos"> 63</span></a>
+</span><span id="SpeakRouter-64"><a href="#SpeakRouter-64"><span class="linenos"> 64</span></a>    <span class="nd">@property</span>
+</span><span id="SpeakRouter-65"><a href="#SpeakRouter-65"><span class="linenos"> 65</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">asyncrest</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="SpeakRouter-66"><a href="#SpeakRouter-66"><span class="linenos"> 66</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="SpeakRouter-67"><a href="#SpeakRouter-67"><span class="linenos"> 67</span></a><span class="sd">        Returns an Async REST Client instance for interacting with Deepgram&#39;s prerecorded Text-to-Speech services.</span>
+</span><span id="SpeakRouter-68"><a href="#SpeakRouter-68"><span class="linenos"> 68</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="SpeakRouter-69"><a href="#SpeakRouter-69"><span class="linenos"> 69</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">Version</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="p">,</span> <span class="s2">&quot;asyncrest&quot;</span><span class="p">)</span>
+</span><span id="SpeakRouter-70"><a href="#SpeakRouter-70"><span class="linenos"> 70</span></a>
+</span><span id="SpeakRouter-71"><a href="#SpeakRouter-71"><span class="linenos"> 71</span></a>    <span class="nd">@property</span>
+</span><span id="SpeakRouter-72"><a href="#SpeakRouter-72"><span class="linenos"> 72</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">websocket</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="SpeakRouter-73"><a href="#SpeakRouter-73"><span class="linenos"> 73</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="SpeakRouter-74"><a href="#SpeakRouter-74"><span class="linenos"> 74</span></a><span class="sd">        Returns a Threaded WebSocket Client instance for interacting with Deepgram&#39;s Text-to-Speech services.</span>
+</span><span id="SpeakRouter-75"><a href="#SpeakRouter-75"><span class="linenos"> 75</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="SpeakRouter-76"><a href="#SpeakRouter-76"><span class="linenos"> 76</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">Version</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="p">,</span> <span class="s2">&quot;websocket&quot;</span><span class="p">)</span>
+</span><span id="SpeakRouter-77"><a href="#SpeakRouter-77"><span class="linenos"> 77</span></a>
+</span><span id="SpeakRouter-78"><a href="#SpeakRouter-78"><span class="linenos"> 78</span></a>    <span class="nd">@property</span>
+</span><span id="SpeakRouter-79"><a href="#SpeakRouter-79"><span class="linenos"> 79</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">asyncwebsocket</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="SpeakRouter-80"><a href="#SpeakRouter-80"><span class="linenos"> 80</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="SpeakRouter-81"><a href="#SpeakRouter-81"><span class="linenos"> 81</span></a><span class="sd">        Returns an Async WebSocket Client instance for interacting with Deepgram&#39;s Text-to-Speech services.</span>
+</span><span id="SpeakRouter-82"><a href="#SpeakRouter-82"><span class="linenos"> 82</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="SpeakRouter-83"><a href="#SpeakRouter-83"><span class="linenos"> 83</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">Version</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="p">,</span> <span class="s2">&quot;asyncwebsocket&quot;</span><span class="p">)</span>
+</span><span id="SpeakRouter-84"><a href="#SpeakRouter-84"><span class="linenos"> 84</span></a>
+</span><span id="SpeakRouter-85"><a href="#SpeakRouter-85"><span class="linenos"> 85</span></a>    <span class="c1"># INTERNAL CLASSES</span>
+</span><span id="SpeakRouter-86"><a href="#SpeakRouter-86"><span class="linenos"> 86</span></a>    <span class="k">class</span><span class="w"> </span><span class="nc">Version</span><span class="p">:</span>
+</span><span id="SpeakRouter-87"><a href="#SpeakRouter-87"><span class="linenos"> 87</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="SpeakRouter-88"><a href="#SpeakRouter-88"><span class="linenos"> 88</span></a><span class="sd">        Represents a version of the Deepgram API.</span>
+</span><span id="SpeakRouter-89"><a href="#SpeakRouter-89"><span class="linenos"> 89</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="SpeakRouter-90"><a href="#SpeakRouter-90"><span class="linenos"> 90</span></a>
+</span><span id="SpeakRouter-91"><a href="#SpeakRouter-91"><span class="linenos"> 91</span></a>        <span class="n">_logger</span><span class="p">:</span> <span class="n">verboselogs</span><span class="o">.</span><span class="n">VerboseLogger</span>
+</span><span id="SpeakRouter-92"><a href="#SpeakRouter-92"><span class="linenos"> 92</span></a>        <span class="n">_config</span><span class="p">:</span> <span class="n">DeepgramClientOptions</span>
+</span><span id="SpeakRouter-93"><a href="#SpeakRouter-93"><span class="linenos"> 93</span></a>        <span class="n">_parent</span><span class="p">:</span> <span class="nb">str</span>
+</span><span id="SpeakRouter-94"><a href="#SpeakRouter-94"><span class="linenos"> 94</span></a>
+</span><span id="SpeakRouter-95"><a href="#SpeakRouter-95"><span class="linenos"> 95</span></a>        <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">,</span> <span class="n">parent</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+</span><span id="SpeakRouter-96"><a href="#SpeakRouter-96"><span class="linenos"> 96</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span> <span class="o">=</span> <span class="n">verboselogs</span><span class="o">.</span><span class="n">VerboseLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+</span><span id="SpeakRouter-97"><a href="#SpeakRouter-97"><span class="linenos"> 97</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">StreamHandler</span><span class="p">())</span>
+</span><span id="SpeakRouter-98"><a href="#SpeakRouter-98"><span class="linenos"> 98</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">verbose</span><span class="p">)</span>
+</span><span id="SpeakRouter-99"><a href="#SpeakRouter-99"><span class="linenos"> 99</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">_config</span> <span class="o">=</span> <span class="n">config</span>
+</span><span id="SpeakRouter-100"><a href="#SpeakRouter-100"><span class="linenos">100</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">_parent</span> <span class="o">=</span> <span class="n">parent</span>
+</span><span id="SpeakRouter-101"><a href="#SpeakRouter-101"><span class="linenos">101</span></a>
+</span><span id="SpeakRouter-102"><a href="#SpeakRouter-102"><span class="linenos">102</span></a>        <span class="c1"># FUTURE VERSIONING:</span>
+</span><span id="SpeakRouter-103"><a href="#SpeakRouter-103"><span class="linenos">103</span></a>        <span class="c1"># When v2 or v1.1beta1 or etc. This allows easy access to the latest version of the API.</span>
+</span><span id="SpeakRouter-104"><a href="#SpeakRouter-104"><span class="linenos">104</span></a>        <span class="c1"># @property</span>
+</span><span id="SpeakRouter-105"><a href="#SpeakRouter-105"><span class="linenos">105</span></a>        <span class="c1"># def latest(self):</span>
+</span><span id="SpeakRouter-106"><a href="#SpeakRouter-106"><span class="linenos">106</span></a>        <span class="c1">#     match self._parent:</span>
+</span><span id="SpeakRouter-107"><a href="#SpeakRouter-107"><span class="linenos">107</span></a>        <span class="c1">#         case &quot;live&quot;:</span>
+</span><span id="SpeakRouter-108"><a href="#SpeakRouter-108"><span class="linenos">108</span></a>        <span class="c1">#             return LiveClient(self._config)</span>
+</span><span id="SpeakRouter-109"><a href="#SpeakRouter-109"><span class="linenos">109</span></a>        <span class="c1">#         case &quot;prerecorded&quot;:</span>
+</span><span id="SpeakRouter-110"><a href="#SpeakRouter-110"><span class="linenos">110</span></a>        <span class="c1">#             return PreRecordedClient(self._config)</span>
+</span><span id="SpeakRouter-111"><a href="#SpeakRouter-111"><span class="linenos">111</span></a>        <span class="c1">#         case _:</span>
+</span><span id="SpeakRouter-112"><a href="#SpeakRouter-112"><span class="linenos">112</span></a>        <span class="c1">#             raise DeepgramModuleError(&quot;Invalid parent&quot;)</span>
+</span><span id="SpeakRouter-113"><a href="#SpeakRouter-113"><span class="linenos">113</span></a>
+</span><span id="SpeakRouter-114"><a href="#SpeakRouter-114"><span class="linenos">114</span></a>        <span class="k">def</span><span class="w"> </span><span class="nf">v</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">version</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">):</span>
+</span><span id="SpeakRouter-115"><a href="#SpeakRouter-115"><span class="linenos">115</span></a><span class="w">            </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="SpeakRouter-116"><a href="#SpeakRouter-116"><span class="linenos">116</span></a><span class="sd">            Returns a specific version of the Deepgram API.</span>
+</span><span id="SpeakRouter-117"><a href="#SpeakRouter-117"><span class="linenos">117</span></a><span class="sd">            &quot;&quot;&quot;</span>
+</span><span id="SpeakRouter-118"><a href="#SpeakRouter-118"><span class="linenos">118</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Version.v ENTER&quot;</span><span class="p">)</span>
+</span><span id="SpeakRouter-119"><a href="#SpeakRouter-119"><span class="linenos">119</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;version: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">version</span><span class="p">)</span>
+</span><span id="SpeakRouter-120"><a href="#SpeakRouter-120"><span class="linenos">120</span></a>            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">version</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+</span><span id="SpeakRouter-121"><a href="#SpeakRouter-121"><span class="linenos">121</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;version is empty&quot;</span><span class="p">)</span>
+</span><span id="SpeakRouter-122"><a href="#SpeakRouter-122"><span class="linenos">122</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Version.v LEAVE&quot;</span><span class="p">)</span>
+</span><span id="SpeakRouter-123"><a href="#SpeakRouter-123"><span class="linenos">123</span></a>                <span class="k">raise</span> <span class="n">DeepgramModuleError</span><span class="p">(</span><span class="s2">&quot;Invalid module version&quot;</span><span class="p">)</span>
+</span><span id="SpeakRouter-124"><a href="#SpeakRouter-124"><span class="linenos">124</span></a>
+</span><span id="SpeakRouter-125"><a href="#SpeakRouter-125"><span class="linenos">125</span></a>            <span class="nb">type</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+</span><span id="SpeakRouter-126"><a href="#SpeakRouter-126"><span class="linenos">126</span></a>            <span class="n">file_name</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+</span><span id="SpeakRouter-127"><a href="#SpeakRouter-127"><span class="linenos">127</span></a>            <span class="n">class_name</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+</span><span id="SpeakRouter-128"><a href="#SpeakRouter-128"><span class="linenos">128</span></a>            <span class="k">match</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parent</span><span class="p">:</span>
+</span><span id="SpeakRouter-129"><a href="#SpeakRouter-129"><span class="linenos">129</span></a>                <span class="k">case</span> <span class="s2">&quot;websocket&quot;</span><span class="p">:</span>
+</span><span id="SpeakRouter-130"><a href="#SpeakRouter-130"><span class="linenos">130</span></a>                    <span class="nb">type</span> <span class="o">=</span> <span class="s2">&quot;websocket&quot;</span>
+</span><span id="SpeakRouter-131"><a href="#SpeakRouter-131"><span class="linenos">131</span></a>                    <span class="n">file_name</span> <span class="o">=</span> <span class="s2">&quot;client&quot;</span>
+</span><span id="SpeakRouter-132"><a href="#SpeakRouter-132"><span class="linenos">132</span></a>                    <span class="n">class_name</span> <span class="o">=</span> <span class="s2">&quot;SpeakWebSocketClient&quot;</span>
+</span><span id="SpeakRouter-133"><a href="#SpeakRouter-133"><span class="linenos">133</span></a>                <span class="k">case</span> <span class="s2">&quot;asyncwebsocket&quot;</span><span class="p">:</span>
+</span><span id="SpeakRouter-134"><a href="#SpeakRouter-134"><span class="linenos">134</span></a>                    <span class="nb">type</span> <span class="o">=</span> <span class="s2">&quot;websocket&quot;</span>
+</span><span id="SpeakRouter-135"><a href="#SpeakRouter-135"><span class="linenos">135</span></a>                    <span class="n">file_name</span> <span class="o">=</span> <span class="s2">&quot;async_client&quot;</span>
+</span><span id="SpeakRouter-136"><a href="#SpeakRouter-136"><span class="linenos">136</span></a>                    <span class="n">class_name</span> <span class="o">=</span> <span class="s2">&quot;AsyncSpeakWebSocketClient&quot;</span>
+</span><span id="SpeakRouter-137"><a href="#SpeakRouter-137"><span class="linenos">137</span></a>                <span class="k">case</span> <span class="s2">&quot;rest&quot;</span><span class="p">:</span>
+</span><span id="SpeakRouter-138"><a href="#SpeakRouter-138"><span class="linenos">138</span></a>                    <span class="nb">type</span> <span class="o">=</span> <span class="s2">&quot;rest&quot;</span>
+</span><span id="SpeakRouter-139"><a href="#SpeakRouter-139"><span class="linenos">139</span></a>                    <span class="n">file_name</span> <span class="o">=</span> <span class="s2">&quot;client&quot;</span>
+</span><span id="SpeakRouter-140"><a href="#SpeakRouter-140"><span class="linenos">140</span></a>                    <span class="n">class_name</span> <span class="o">=</span> <span class="s2">&quot;SpeakRESTClient&quot;</span>
+</span><span id="SpeakRouter-141"><a href="#SpeakRouter-141"><span class="linenos">141</span></a>                <span class="k">case</span> <span class="s2">&quot;asyncrest&quot;</span><span class="p">:</span>
+</span><span id="SpeakRouter-142"><a href="#SpeakRouter-142"><span class="linenos">142</span></a>                    <span class="nb">type</span> <span class="o">=</span> <span class="s2">&quot;rest&quot;</span>
+</span><span id="SpeakRouter-143"><a href="#SpeakRouter-143"><span class="linenos">143</span></a>                    <span class="n">file_name</span> <span class="o">=</span> <span class="s2">&quot;async_client&quot;</span>
+</span><span id="SpeakRouter-144"><a href="#SpeakRouter-144"><span class="linenos">144</span></a>                    <span class="n">class_name</span> <span class="o">=</span> <span class="s2">&quot;AsyncSpeakRESTClient&quot;</span>
+</span><span id="SpeakRouter-145"><a href="#SpeakRouter-145"><span class="linenos">145</span></a>                <span class="k">case</span><span class="w"> </span><span class="k">_</span><span class="p">:</span>
+</span><span id="SpeakRouter-146"><a href="#SpeakRouter-146"><span class="linenos">146</span></a>                    <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;parent unknown: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parent</span><span class="p">)</span>
+</span><span id="SpeakRouter-147"><a href="#SpeakRouter-147"><span class="linenos">147</span></a>                    <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Version.v LEAVE&quot;</span><span class="p">)</span>
+</span><span id="SpeakRouter-148"><a href="#SpeakRouter-148"><span class="linenos">148</span></a>                    <span class="k">raise</span> <span class="n">DeepgramModuleError</span><span class="p">(</span><span class="s2">&quot;Invalid parent type&quot;</span><span class="p">)</span>
+</span><span id="SpeakRouter-149"><a href="#SpeakRouter-149"><span class="linenos">149</span></a>
+</span><span id="SpeakRouter-150"><a href="#SpeakRouter-150"><span class="linenos">150</span></a>            <span class="c1"># create class path</span>
+</span><span id="SpeakRouter-151"><a href="#SpeakRouter-151"><span class="linenos">151</span></a>            <span class="n">path</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;deepgram.clients.speak.v</span><span class="si">{</span><span class="n">version</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="nb">type</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">file_name</span><span class="si">}</span><span class="s2">&quot;</span>
+</span><span id="SpeakRouter-152"><a href="#SpeakRouter-152"><span class="linenos">152</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;path: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
+</span><span id="SpeakRouter-153"><a href="#SpeakRouter-153"><span class="linenos">153</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;class_name: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">class_name</span><span class="p">)</span>
+</span><span id="SpeakRouter-154"><a href="#SpeakRouter-154"><span class="linenos">154</span></a>
+</span><span id="SpeakRouter-155"><a href="#SpeakRouter-155"><span class="linenos">155</span></a>            <span class="c1"># import class</span>
+</span><span id="SpeakRouter-156"><a href="#SpeakRouter-156"><span class="linenos">156</span></a>            <span class="n">mod</span> <span class="o">=</span> <span class="n">import_module</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+</span><span id="SpeakRouter-157"><a href="#SpeakRouter-157"><span class="linenos">157</span></a>            <span class="k">if</span> <span class="n">mod</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="SpeakRouter-158"><a href="#SpeakRouter-158"><span class="linenos">158</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;module path is None&quot;</span><span class="p">)</span>
+</span><span id="SpeakRouter-159"><a href="#SpeakRouter-159"><span class="linenos">159</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Version.v LEAVE&quot;</span><span class="p">)</span>
+</span><span id="SpeakRouter-160"><a href="#SpeakRouter-160"><span class="linenos">160</span></a>                <span class="k">raise</span> <span class="n">DeepgramModuleError</span><span class="p">(</span><span class="s2">&quot;Unable to find package&quot;</span><span class="p">)</span>
+</span><span id="SpeakRouter-161"><a href="#SpeakRouter-161"><span class="linenos">161</span></a>
+</span><span id="SpeakRouter-162"><a href="#SpeakRouter-162"><span class="linenos">162</span></a>            <span class="n">my_class</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">mod</span><span class="p">,</span> <span class="n">class_name</span><span class="p">)</span>
+</span><span id="SpeakRouter-163"><a href="#SpeakRouter-163"><span class="linenos">163</span></a>            <span class="k">if</span> <span class="n">my_class</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="SpeakRouter-164"><a href="#SpeakRouter-164"><span class="linenos">164</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;my_class is None&quot;</span><span class="p">)</span>
+</span><span id="SpeakRouter-165"><a href="#SpeakRouter-165"><span class="linenos">165</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Version.v LEAVE&quot;</span><span class="p">)</span>
+</span><span id="SpeakRouter-166"><a href="#SpeakRouter-166"><span class="linenos">166</span></a>                <span class="k">raise</span> <span class="n">DeepgramModuleError</span><span class="p">(</span><span class="s2">&quot;Unable to find class&quot;</span><span class="p">)</span>
+</span><span id="SpeakRouter-167"><a href="#SpeakRouter-167"><span class="linenos">167</span></a>
+</span><span id="SpeakRouter-168"><a href="#SpeakRouter-168"><span class="linenos">168</span></a>            <span class="c1"># instantiate class</span>
+</span><span id="SpeakRouter-169"><a href="#SpeakRouter-169"><span class="linenos">169</span></a>            <span class="n">my_class</span> <span class="o">=</span> <span class="n">my_class</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="p">)</span>
+</span><span id="SpeakRouter-170"><a href="#SpeakRouter-170"><span class="linenos">170</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">notice</span><span class="p">(</span><span class="s2">&quot;Version.v succeeded&quot;</span><span class="p">)</span>
+</span><span id="SpeakRouter-171"><a href="#SpeakRouter-171"><span class="linenos">171</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Version.v LEAVE&quot;</span><span class="p">)</span>
+</span><span id="SpeakRouter-172"><a href="#SpeakRouter-172"><span class="linenos">172</span></a>            <span class="k">return</span> <span class="n">my_class</span>
 </span></pre></div>
 
 
@@ -447,50 +447,50 @@ asyncwebsocket: Returns an Async WebSocket Client instance for interacting with 
 </div>
 
 
-                            <div id="Speak.__init__" class="classattr">
-                                        <input id="Speak.__init__-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+                            <div id="SpeakRouter.__init__" class="classattr">
+                                        <input id="SpeakRouter.__init__-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
 <div class="attr function">
             
-        <span class="name">Speak</span><span class="signature pdoc-code condensed">(<span class="param"><span class="n">config</span><span class="p">:</span> <span class="n"><a href="../options.html#DeepgramClientOptions">deepgram.options.DeepgramClientOptions</a></span></span>)</span>
+        <span class="name">SpeakRouter</span><span class="signature pdoc-code condensed">(<span class="param"><span class="n">config</span><span class="p">:</span> <span class="n"><a href="../options.html#DeepgramClientOptions">deepgram.options.DeepgramClientOptions</a></span></span>)</span>
 
-                <label class="view-source-button" for="Speak.__init__-view-source"><span>View Source</span></label>
+                <label class="view-source-button" for="SpeakRouter.__init__-view-source"><span>View Source</span></label>
 
     </div>
-    <a class="headerlink" href="#Speak.__init__"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="Speak.__init__-35"><a href="#Speak.__init__-35"><span class="linenos">35</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">:</span> <span class="n">DeepgramClientOptions</span><span class="p">):</span>
-</span><span id="Speak.__init__-36"><a href="#Speak.__init__-36"><span class="linenos">36</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span> <span class="o">=</span> <span class="n">verboselogs</span><span class="o">.</span><span class="n">VerboseLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
-</span><span id="Speak.__init__-37"><a href="#Speak.__init__-37"><span class="linenos">37</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">StreamHandler</span><span class="p">())</span>
-</span><span id="Speak.__init__-38"><a href="#Speak.__init__-38"><span class="linenos">38</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">verbose</span><span class="p">)</span>
-</span><span id="Speak.__init__-39"><a href="#Speak.__init__-39"><span class="linenos">39</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_config</span> <span class="o">=</span> <span class="n">config</span>
+    <a class="headerlink" href="#SpeakRouter.__init__"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="SpeakRouter.__init__-35"><a href="#SpeakRouter.__init__-35"><span class="linenos">35</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">:</span> <span class="n">DeepgramClientOptions</span><span class="p">):</span>
+</span><span id="SpeakRouter.__init__-36"><a href="#SpeakRouter.__init__-36"><span class="linenos">36</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span> <span class="o">=</span> <span class="n">verboselogs</span><span class="o">.</span><span class="n">VerboseLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+</span><span id="SpeakRouter.__init__-37"><a href="#SpeakRouter.__init__-37"><span class="linenos">37</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">StreamHandler</span><span class="p">())</span>
+</span><span id="SpeakRouter.__init__-38"><a href="#SpeakRouter.__init__-38"><span class="linenos">38</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">verbose</span><span class="p">)</span>
+</span><span id="SpeakRouter.__init__-39"><a href="#SpeakRouter.__init__-39"><span class="linenos">39</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_config</span> <span class="o">=</span> <span class="n">config</span>
 </span></pre></div>
 
 
     
 
                             </div>
-                            <div id="Speak.v" class="classattr">
-                                        <input id="Speak.v-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+                            <div id="SpeakRouter.v" class="classattr">
+                                        <input id="SpeakRouter.v-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
 <div class="attr function">
                     <div class="decorator decorator-deprecation.deprecated">@deprecation.deprecated(deprecated_in=&#39;3.4.0&#39;, removed_in=&#39;4.0.0&#39;, current_version=__version__, details=&#39;deepgram.speak.v1 is deprecated. Use deepgram.speak.rest or deepgram.speak.websocket instead.&#39;)</div>
 
         <span class="def">def</span>
         <span class="name">v</span><span class="signature pdoc-code condensed">(<span class="param"><span class="bp">self</span>, </span><span class="param"><span class="n">version</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span></span><span class="return-annotation">):</span></span>
 
-                <label class="view-source-button" for="Speak.v-view-source"><span>View Source</span></label>
+                <label class="view-source-button" for="SpeakRouter.v-view-source"><span>View Source</span></label>
 
     </div>
-    <a class="headerlink" href="#Speak.v"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="Speak.v-43"><a href="#Speak.v-43"><span class="linenos">43</span></a>    <span class="nd">@deprecation</span><span class="o">.</span><span class="n">deprecated</span><span class="p">(</span>
-</span><span id="Speak.v-44"><a href="#Speak.v-44"><span class="linenos">44</span></a>        <span class="n">deprecated_in</span><span class="o">=</span><span class="s2">&quot;3.4.0&quot;</span><span class="p">,</span>
-</span><span id="Speak.v-45"><a href="#Speak.v-45"><span class="linenos">45</span></a>        <span class="n">removed_in</span><span class="o">=</span><span class="s2">&quot;4.0.0&quot;</span><span class="p">,</span>
-</span><span id="Speak.v-46"><a href="#Speak.v-46"><span class="linenos">46</span></a>        <span class="n">current_version</span><span class="o">=</span><span class="n">__version__</span><span class="p">,</span>
-</span><span id="Speak.v-47"><a href="#Speak.v-47"><span class="linenos">47</span></a>        <span class="n">details</span><span class="o">=</span><span class="s2">&quot;deepgram.speak.v1 is deprecated. Use deepgram.speak.rest or deepgram.speak.websocket instead.&quot;</span><span class="p">,</span>
-</span><span id="Speak.v-48"><a href="#Speak.v-48"><span class="linenos">48</span></a>    <span class="p">)</span>
-</span><span id="Speak.v-49"><a href="#Speak.v-49"><span class="linenos">49</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">v</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">version</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">):</span>
-</span><span id="Speak.v-50"><a href="#Speak.v-50"><span class="linenos">50</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="Speak.v-51"><a href="#Speak.v-51"><span class="linenos">51</span></a><span class="sd">        DEPRECATED: deepgram.speak.v1 is deprecated. Use deepgram.speak.rest or deepgram.speak.websocket instead.</span>
-</span><span id="Speak.v-52"><a href="#Speak.v-52"><span class="linenos">52</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="Speak.v-53"><a href="#Speak.v-53"><span class="linenos">53</span></a>        <span class="k">return</span> <span class="n">SpeakRESTClient</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="p">)</span>
+    <a class="headerlink" href="#SpeakRouter.v"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="SpeakRouter.v-43"><a href="#SpeakRouter.v-43"><span class="linenos">43</span></a>    <span class="nd">@deprecation</span><span class="o">.</span><span class="n">deprecated</span><span class="p">(</span>
+</span><span id="SpeakRouter.v-44"><a href="#SpeakRouter.v-44"><span class="linenos">44</span></a>        <span class="n">deprecated_in</span><span class="o">=</span><span class="s2">&quot;3.4.0&quot;</span><span class="p">,</span>
+</span><span id="SpeakRouter.v-45"><a href="#SpeakRouter.v-45"><span class="linenos">45</span></a>        <span class="n">removed_in</span><span class="o">=</span><span class="s2">&quot;4.0.0&quot;</span><span class="p">,</span>
+</span><span id="SpeakRouter.v-46"><a href="#SpeakRouter.v-46"><span class="linenos">46</span></a>        <span class="n">current_version</span><span class="o">=</span><span class="n">__version__</span><span class="p">,</span>
+</span><span id="SpeakRouter.v-47"><a href="#SpeakRouter.v-47"><span class="linenos">47</span></a>        <span class="n">details</span><span class="o">=</span><span class="s2">&quot;deepgram.speak.v1 is deprecated. Use deepgram.speak.rest or deepgram.speak.websocket instead.&quot;</span><span class="p">,</span>
+</span><span id="SpeakRouter.v-48"><a href="#SpeakRouter.v-48"><span class="linenos">48</span></a>    <span class="p">)</span>
+</span><span id="SpeakRouter.v-49"><a href="#SpeakRouter.v-49"><span class="linenos">49</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">v</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">version</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">):</span>
+</span><span id="SpeakRouter.v-50"><a href="#SpeakRouter.v-50"><span class="linenos">50</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="SpeakRouter.v-51"><a href="#SpeakRouter.v-51"><span class="linenos">51</span></a><span class="sd">        DEPRECATED: deepgram.speak.v1 is deprecated. Use deepgram.speak.rest or deepgram.speak.websocket instead.</span>
+</span><span id="SpeakRouter.v-52"><a href="#SpeakRouter.v-52"><span class="linenos">52</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="SpeakRouter.v-53"><a href="#SpeakRouter.v-53"><span class="linenos">53</span></a>        <span class="k">return</span> <span class="n">SpeakRESTClient</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="p">)</span>
 </span></pre></div>
 
 
@@ -499,21 +499,21 @@ asyncwebsocket: Returns an Async WebSocket Client instance for interacting with 
 
 
                             </div>
-                            <div id="Speak.rest" class="classattr">
-                                        <input id="Speak.rest-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+                            <div id="SpeakRouter.rest" class="classattr">
+                                        <input id="SpeakRouter.rest-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
 <div class="attr variable">
             <span class="name">rest</span>
 
-                <label class="view-source-button" for="Speak.rest-view-source"><span>View Source</span></label>
+                <label class="view-source-button" for="SpeakRouter.rest-view-source"><span>View Source</span></label>
 
     </div>
-    <a class="headerlink" href="#Speak.rest"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="Speak.rest-57"><a href="#Speak.rest-57"><span class="linenos">57</span></a>    <span class="nd">@property</span>
-</span><span id="Speak.rest-58"><a href="#Speak.rest-58"><span class="linenos">58</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">rest</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="Speak.rest-59"><a href="#Speak.rest-59"><span class="linenos">59</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="Speak.rest-60"><a href="#Speak.rest-60"><span class="linenos">60</span></a><span class="sd">        Returns a Threaded REST Client instance for interacting with Deepgram&#39;s prerecorded Text-to-Speech services.</span>
-</span><span id="Speak.rest-61"><a href="#Speak.rest-61"><span class="linenos">61</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="Speak.rest-62"><a href="#Speak.rest-62"><span class="linenos">62</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">Version</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="p">,</span> <span class="s2">&quot;rest&quot;</span><span class="p">)</span>
+    <a class="headerlink" href="#SpeakRouter.rest"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="SpeakRouter.rest-57"><a href="#SpeakRouter.rest-57"><span class="linenos">57</span></a>    <span class="nd">@property</span>
+</span><span id="SpeakRouter.rest-58"><a href="#SpeakRouter.rest-58"><span class="linenos">58</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">rest</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="SpeakRouter.rest-59"><a href="#SpeakRouter.rest-59"><span class="linenos">59</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="SpeakRouter.rest-60"><a href="#SpeakRouter.rest-60"><span class="linenos">60</span></a><span class="sd">        Returns a Threaded REST Client instance for interacting with Deepgram&#39;s prerecorded Text-to-Speech services.</span>
+</span><span id="SpeakRouter.rest-61"><a href="#SpeakRouter.rest-61"><span class="linenos">61</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="SpeakRouter.rest-62"><a href="#SpeakRouter.rest-62"><span class="linenos">62</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">Version</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="p">,</span> <span class="s2">&quot;rest&quot;</span><span class="p">)</span>
 </span></pre></div>
 
 
@@ -522,21 +522,21 @@ asyncwebsocket: Returns an Async WebSocket Client instance for interacting with 
 
 
                             </div>
-                            <div id="Speak.asyncrest" class="classattr">
-                                        <input id="Speak.asyncrest-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+                            <div id="SpeakRouter.asyncrest" class="classattr">
+                                        <input id="SpeakRouter.asyncrest-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
 <div class="attr variable">
             <span class="name">asyncrest</span>
 
-                <label class="view-source-button" for="Speak.asyncrest-view-source"><span>View Source</span></label>
+                <label class="view-source-button" for="SpeakRouter.asyncrest-view-source"><span>View Source</span></label>
 
     </div>
-    <a class="headerlink" href="#Speak.asyncrest"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="Speak.asyncrest-64"><a href="#Speak.asyncrest-64"><span class="linenos">64</span></a>    <span class="nd">@property</span>
-</span><span id="Speak.asyncrest-65"><a href="#Speak.asyncrest-65"><span class="linenos">65</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">asyncrest</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="Speak.asyncrest-66"><a href="#Speak.asyncrest-66"><span class="linenos">66</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="Speak.asyncrest-67"><a href="#Speak.asyncrest-67"><span class="linenos">67</span></a><span class="sd">        Returns an Async REST Client instance for interacting with Deepgram&#39;s prerecorded Text-to-Speech services.</span>
-</span><span id="Speak.asyncrest-68"><a href="#Speak.asyncrest-68"><span class="linenos">68</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="Speak.asyncrest-69"><a href="#Speak.asyncrest-69"><span class="linenos">69</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">Version</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="p">,</span> <span class="s2">&quot;asyncrest&quot;</span><span class="p">)</span>
+    <a class="headerlink" href="#SpeakRouter.asyncrest"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="SpeakRouter.asyncrest-64"><a href="#SpeakRouter.asyncrest-64"><span class="linenos">64</span></a>    <span class="nd">@property</span>
+</span><span id="SpeakRouter.asyncrest-65"><a href="#SpeakRouter.asyncrest-65"><span class="linenos">65</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">asyncrest</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="SpeakRouter.asyncrest-66"><a href="#SpeakRouter.asyncrest-66"><span class="linenos">66</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="SpeakRouter.asyncrest-67"><a href="#SpeakRouter.asyncrest-67"><span class="linenos">67</span></a><span class="sd">        Returns an Async REST Client instance for interacting with Deepgram&#39;s prerecorded Text-to-Speech services.</span>
+</span><span id="SpeakRouter.asyncrest-68"><a href="#SpeakRouter.asyncrest-68"><span class="linenos">68</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="SpeakRouter.asyncrest-69"><a href="#SpeakRouter.asyncrest-69"><span class="linenos">69</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">Version</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="p">,</span> <span class="s2">&quot;asyncrest&quot;</span><span class="p">)</span>
 </span></pre></div>
 
 
@@ -545,21 +545,21 @@ asyncwebsocket: Returns an Async WebSocket Client instance for interacting with 
 
 
                             </div>
-                            <div id="Speak.websocket" class="classattr">
-                                        <input id="Speak.websocket-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+                            <div id="SpeakRouter.websocket" class="classattr">
+                                        <input id="SpeakRouter.websocket-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
 <div class="attr variable">
             <span class="name">websocket</span>
 
-                <label class="view-source-button" for="Speak.websocket-view-source"><span>View Source</span></label>
+                <label class="view-source-button" for="SpeakRouter.websocket-view-source"><span>View Source</span></label>
 
     </div>
-    <a class="headerlink" href="#Speak.websocket"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="Speak.websocket-71"><a href="#Speak.websocket-71"><span class="linenos">71</span></a>    <span class="nd">@property</span>
-</span><span id="Speak.websocket-72"><a href="#Speak.websocket-72"><span class="linenos">72</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">websocket</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="Speak.websocket-73"><a href="#Speak.websocket-73"><span class="linenos">73</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="Speak.websocket-74"><a href="#Speak.websocket-74"><span class="linenos">74</span></a><span class="sd">        Returns a Threaded WebSocket Client instance for interacting with Deepgram&#39;s Text-to-Speech services.</span>
-</span><span id="Speak.websocket-75"><a href="#Speak.websocket-75"><span class="linenos">75</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="Speak.websocket-76"><a href="#Speak.websocket-76"><span class="linenos">76</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">Version</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="p">,</span> <span class="s2">&quot;websocket&quot;</span><span class="p">)</span>
+    <a class="headerlink" href="#SpeakRouter.websocket"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="SpeakRouter.websocket-71"><a href="#SpeakRouter.websocket-71"><span class="linenos">71</span></a>    <span class="nd">@property</span>
+</span><span id="SpeakRouter.websocket-72"><a href="#SpeakRouter.websocket-72"><span class="linenos">72</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">websocket</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="SpeakRouter.websocket-73"><a href="#SpeakRouter.websocket-73"><span class="linenos">73</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="SpeakRouter.websocket-74"><a href="#SpeakRouter.websocket-74"><span class="linenos">74</span></a><span class="sd">        Returns a Threaded WebSocket Client instance for interacting with Deepgram&#39;s Text-to-Speech services.</span>
+</span><span id="SpeakRouter.websocket-75"><a href="#SpeakRouter.websocket-75"><span class="linenos">75</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="SpeakRouter.websocket-76"><a href="#SpeakRouter.websocket-76"><span class="linenos">76</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">Version</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="p">,</span> <span class="s2">&quot;websocket&quot;</span><span class="p">)</span>
 </span></pre></div>
 
 
@@ -568,21 +568,21 @@ asyncwebsocket: Returns an Async WebSocket Client instance for interacting with 
 
 
                             </div>
-                            <div id="Speak.asyncwebsocket" class="classattr">
-                                        <input id="Speak.asyncwebsocket-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+                            <div id="SpeakRouter.asyncwebsocket" class="classattr">
+                                        <input id="SpeakRouter.asyncwebsocket-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
 <div class="attr variable">
             <span class="name">asyncwebsocket</span>
 
-                <label class="view-source-button" for="Speak.asyncwebsocket-view-source"><span>View Source</span></label>
+                <label class="view-source-button" for="SpeakRouter.asyncwebsocket-view-source"><span>View Source</span></label>
 
     </div>
-    <a class="headerlink" href="#Speak.asyncwebsocket"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="Speak.asyncwebsocket-78"><a href="#Speak.asyncwebsocket-78"><span class="linenos">78</span></a>    <span class="nd">@property</span>
-</span><span id="Speak.asyncwebsocket-79"><a href="#Speak.asyncwebsocket-79"><span class="linenos">79</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">asyncwebsocket</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="Speak.asyncwebsocket-80"><a href="#Speak.asyncwebsocket-80"><span class="linenos">80</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="Speak.asyncwebsocket-81"><a href="#Speak.asyncwebsocket-81"><span class="linenos">81</span></a><span class="sd">        Returns an Async WebSocket Client instance for interacting with Deepgram&#39;s Text-to-Speech services.</span>
-</span><span id="Speak.asyncwebsocket-82"><a href="#Speak.asyncwebsocket-82"><span class="linenos">82</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="Speak.asyncwebsocket-83"><a href="#Speak.asyncwebsocket-83"><span class="linenos">83</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">Version</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="p">,</span> <span class="s2">&quot;asyncwebsocket&quot;</span><span class="p">)</span>
+    <a class="headerlink" href="#SpeakRouter.asyncwebsocket"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="SpeakRouter.asyncwebsocket-78"><a href="#SpeakRouter.asyncwebsocket-78"><span class="linenos">78</span></a>    <span class="nd">@property</span>
+</span><span id="SpeakRouter.asyncwebsocket-79"><a href="#SpeakRouter.asyncwebsocket-79"><span class="linenos">79</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">asyncwebsocket</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="SpeakRouter.asyncwebsocket-80"><a href="#SpeakRouter.asyncwebsocket-80"><span class="linenos">80</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="SpeakRouter.asyncwebsocket-81"><a href="#SpeakRouter.asyncwebsocket-81"><span class="linenos">81</span></a><span class="sd">        Returns an Async WebSocket Client instance for interacting with Deepgram&#39;s Text-to-Speech services.</span>
+</span><span id="SpeakRouter.asyncwebsocket-82"><a href="#SpeakRouter.asyncwebsocket-82"><span class="linenos">82</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="SpeakRouter.asyncwebsocket-83"><a href="#SpeakRouter.asyncwebsocket-83"><span class="linenos">83</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">Version</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="p">,</span> <span class="s2">&quot;asyncwebsocket&quot;</span><span class="p">)</span>
 </span></pre></div>
 
 
@@ -592,104 +592,104 @@ asyncwebsocket: Returns an Async WebSocket Client instance for interacting with 
 
                             </div>
                 </section>
-                <section id="Speak.Version">
-                            <input id="Speak.Version-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+                <section id="SpeakRouter.Version">
+                            <input id="SpeakRouter.Version-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
 <div class="attr class">
             
     <span class="def">class</span>
-    <span class="name">Speak.Version</span>:
+    <span class="name">SpeakRouter.Version</span>:
 
-                <label class="view-source-button" for="Speak.Version-view-source"><span>View Source</span></label>
+                <label class="view-source-button" for="SpeakRouter.Version-view-source"><span>View Source</span></label>
 
     </div>
-    <a class="headerlink" href="#Speak.Version"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="Speak.Version-86"><a href="#Speak.Version-86"><span class="linenos"> 86</span></a>    <span class="k">class</span><span class="w"> </span><span class="nc">Version</span><span class="p">:</span>
-</span><span id="Speak.Version-87"><a href="#Speak.Version-87"><span class="linenos"> 87</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="Speak.Version-88"><a href="#Speak.Version-88"><span class="linenos"> 88</span></a><span class="sd">        Represents a version of the Deepgram API.</span>
-</span><span id="Speak.Version-89"><a href="#Speak.Version-89"><span class="linenos"> 89</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="Speak.Version-90"><a href="#Speak.Version-90"><span class="linenos"> 90</span></a>
-</span><span id="Speak.Version-91"><a href="#Speak.Version-91"><span class="linenos"> 91</span></a>        <span class="n">_logger</span><span class="p">:</span> <span class="n">verboselogs</span><span class="o">.</span><span class="n">VerboseLogger</span>
-</span><span id="Speak.Version-92"><a href="#Speak.Version-92"><span class="linenos"> 92</span></a>        <span class="n">_config</span><span class="p">:</span> <span class="n">DeepgramClientOptions</span>
-</span><span id="Speak.Version-93"><a href="#Speak.Version-93"><span class="linenos"> 93</span></a>        <span class="n">_parent</span><span class="p">:</span> <span class="nb">str</span>
-</span><span id="Speak.Version-94"><a href="#Speak.Version-94"><span class="linenos"> 94</span></a>
-</span><span id="Speak.Version-95"><a href="#Speak.Version-95"><span class="linenos"> 95</span></a>        <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">,</span> <span class="n">parent</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
-</span><span id="Speak.Version-96"><a href="#Speak.Version-96"><span class="linenos"> 96</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span> <span class="o">=</span> <span class="n">verboselogs</span><span class="o">.</span><span class="n">VerboseLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
-</span><span id="Speak.Version-97"><a href="#Speak.Version-97"><span class="linenos"> 97</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">StreamHandler</span><span class="p">())</span>
-</span><span id="Speak.Version-98"><a href="#Speak.Version-98"><span class="linenos"> 98</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">verbose</span><span class="p">)</span>
-</span><span id="Speak.Version-99"><a href="#Speak.Version-99"><span class="linenos"> 99</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">_config</span> <span class="o">=</span> <span class="n">config</span>
-</span><span id="Speak.Version-100"><a href="#Speak.Version-100"><span class="linenos">100</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">_parent</span> <span class="o">=</span> <span class="n">parent</span>
-</span><span id="Speak.Version-101"><a href="#Speak.Version-101"><span class="linenos">101</span></a>
-</span><span id="Speak.Version-102"><a href="#Speak.Version-102"><span class="linenos">102</span></a>        <span class="c1"># FUTURE VERSIONING:</span>
-</span><span id="Speak.Version-103"><a href="#Speak.Version-103"><span class="linenos">103</span></a>        <span class="c1"># When v2 or v1.1beta1 or etc. This allows easy access to the latest version of the API.</span>
-</span><span id="Speak.Version-104"><a href="#Speak.Version-104"><span class="linenos">104</span></a>        <span class="c1"># @property</span>
-</span><span id="Speak.Version-105"><a href="#Speak.Version-105"><span class="linenos">105</span></a>        <span class="c1"># def latest(self):</span>
-</span><span id="Speak.Version-106"><a href="#Speak.Version-106"><span class="linenos">106</span></a>        <span class="c1">#     match self._parent:</span>
-</span><span id="Speak.Version-107"><a href="#Speak.Version-107"><span class="linenos">107</span></a>        <span class="c1">#         case &quot;live&quot;:</span>
-</span><span id="Speak.Version-108"><a href="#Speak.Version-108"><span class="linenos">108</span></a>        <span class="c1">#             return LiveClient(self._config)</span>
-</span><span id="Speak.Version-109"><a href="#Speak.Version-109"><span class="linenos">109</span></a>        <span class="c1">#         case &quot;prerecorded&quot;:</span>
-</span><span id="Speak.Version-110"><a href="#Speak.Version-110"><span class="linenos">110</span></a>        <span class="c1">#             return PreRecordedClient(self._config)</span>
-</span><span id="Speak.Version-111"><a href="#Speak.Version-111"><span class="linenos">111</span></a>        <span class="c1">#         case _:</span>
-</span><span id="Speak.Version-112"><a href="#Speak.Version-112"><span class="linenos">112</span></a>        <span class="c1">#             raise DeepgramModuleError(&quot;Invalid parent&quot;)</span>
-</span><span id="Speak.Version-113"><a href="#Speak.Version-113"><span class="linenos">113</span></a>
-</span><span id="Speak.Version-114"><a href="#Speak.Version-114"><span class="linenos">114</span></a>        <span class="k">def</span><span class="w"> </span><span class="nf">v</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">version</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">):</span>
-</span><span id="Speak.Version-115"><a href="#Speak.Version-115"><span class="linenos">115</span></a><span class="w">            </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="Speak.Version-116"><a href="#Speak.Version-116"><span class="linenos">116</span></a><span class="sd">            Returns a specific version of the Deepgram API.</span>
-</span><span id="Speak.Version-117"><a href="#Speak.Version-117"><span class="linenos">117</span></a><span class="sd">            &quot;&quot;&quot;</span>
-</span><span id="Speak.Version-118"><a href="#Speak.Version-118"><span class="linenos">118</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Version.v ENTER&quot;</span><span class="p">)</span>
-</span><span id="Speak.Version-119"><a href="#Speak.Version-119"><span class="linenos">119</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;version: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">version</span><span class="p">)</span>
-</span><span id="Speak.Version-120"><a href="#Speak.Version-120"><span class="linenos">120</span></a>            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">version</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-</span><span id="Speak.Version-121"><a href="#Speak.Version-121"><span class="linenos">121</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;version is empty&quot;</span><span class="p">)</span>
-</span><span id="Speak.Version-122"><a href="#Speak.Version-122"><span class="linenos">122</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Version.v LEAVE&quot;</span><span class="p">)</span>
-</span><span id="Speak.Version-123"><a href="#Speak.Version-123"><span class="linenos">123</span></a>                <span class="k">raise</span> <span class="n">DeepgramModuleError</span><span class="p">(</span><span class="s2">&quot;Invalid module version&quot;</span><span class="p">)</span>
-</span><span id="Speak.Version-124"><a href="#Speak.Version-124"><span class="linenos">124</span></a>
-</span><span id="Speak.Version-125"><a href="#Speak.Version-125"><span class="linenos">125</span></a>            <span class="nb">type</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-</span><span id="Speak.Version-126"><a href="#Speak.Version-126"><span class="linenos">126</span></a>            <span class="n">file_name</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-</span><span id="Speak.Version-127"><a href="#Speak.Version-127"><span class="linenos">127</span></a>            <span class="n">class_name</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-</span><span id="Speak.Version-128"><a href="#Speak.Version-128"><span class="linenos">128</span></a>            <span class="k">match</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parent</span><span class="p">:</span>
-</span><span id="Speak.Version-129"><a href="#Speak.Version-129"><span class="linenos">129</span></a>                <span class="k">case</span> <span class="s2">&quot;websocket&quot;</span><span class="p">:</span>
-</span><span id="Speak.Version-130"><a href="#Speak.Version-130"><span class="linenos">130</span></a>                    <span class="nb">type</span> <span class="o">=</span> <span class="s2">&quot;websocket&quot;</span>
-</span><span id="Speak.Version-131"><a href="#Speak.Version-131"><span class="linenos">131</span></a>                    <span class="n">file_name</span> <span class="o">=</span> <span class="s2">&quot;client&quot;</span>
-</span><span id="Speak.Version-132"><a href="#Speak.Version-132"><span class="linenos">132</span></a>                    <span class="n">class_name</span> <span class="o">=</span> <span class="s2">&quot;SpeakWebSocketClient&quot;</span>
-</span><span id="Speak.Version-133"><a href="#Speak.Version-133"><span class="linenos">133</span></a>                <span class="k">case</span> <span class="s2">&quot;asyncwebsocket&quot;</span><span class="p">:</span>
-</span><span id="Speak.Version-134"><a href="#Speak.Version-134"><span class="linenos">134</span></a>                    <span class="nb">type</span> <span class="o">=</span> <span class="s2">&quot;websocket&quot;</span>
-</span><span id="Speak.Version-135"><a href="#Speak.Version-135"><span class="linenos">135</span></a>                    <span class="n">file_name</span> <span class="o">=</span> <span class="s2">&quot;async_client&quot;</span>
-</span><span id="Speak.Version-136"><a href="#Speak.Version-136"><span class="linenos">136</span></a>                    <span class="n">class_name</span> <span class="o">=</span> <span class="s2">&quot;AsyncSpeakWebSocketClient&quot;</span>
-</span><span id="Speak.Version-137"><a href="#Speak.Version-137"><span class="linenos">137</span></a>                <span class="k">case</span> <span class="s2">&quot;rest&quot;</span><span class="p">:</span>
-</span><span id="Speak.Version-138"><a href="#Speak.Version-138"><span class="linenos">138</span></a>                    <span class="nb">type</span> <span class="o">=</span> <span class="s2">&quot;rest&quot;</span>
-</span><span id="Speak.Version-139"><a href="#Speak.Version-139"><span class="linenos">139</span></a>                    <span class="n">file_name</span> <span class="o">=</span> <span class="s2">&quot;client&quot;</span>
-</span><span id="Speak.Version-140"><a href="#Speak.Version-140"><span class="linenos">140</span></a>                    <span class="n">class_name</span> <span class="o">=</span> <span class="s2">&quot;SpeakRESTClient&quot;</span>
-</span><span id="Speak.Version-141"><a href="#Speak.Version-141"><span class="linenos">141</span></a>                <span class="k">case</span> <span class="s2">&quot;asyncrest&quot;</span><span class="p">:</span>
-</span><span id="Speak.Version-142"><a href="#Speak.Version-142"><span class="linenos">142</span></a>                    <span class="nb">type</span> <span class="o">=</span> <span class="s2">&quot;rest&quot;</span>
-</span><span id="Speak.Version-143"><a href="#Speak.Version-143"><span class="linenos">143</span></a>                    <span class="n">file_name</span> <span class="o">=</span> <span class="s2">&quot;async_client&quot;</span>
-</span><span id="Speak.Version-144"><a href="#Speak.Version-144"><span class="linenos">144</span></a>                    <span class="n">class_name</span> <span class="o">=</span> <span class="s2">&quot;AsyncSpeakRESTClient&quot;</span>
-</span><span id="Speak.Version-145"><a href="#Speak.Version-145"><span class="linenos">145</span></a>                <span class="k">case</span><span class="w"> </span><span class="k">_</span><span class="p">:</span>
-</span><span id="Speak.Version-146"><a href="#Speak.Version-146"><span class="linenos">146</span></a>                    <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;parent unknown: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parent</span><span class="p">)</span>
-</span><span id="Speak.Version-147"><a href="#Speak.Version-147"><span class="linenos">147</span></a>                    <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Version.v LEAVE&quot;</span><span class="p">)</span>
-</span><span id="Speak.Version-148"><a href="#Speak.Version-148"><span class="linenos">148</span></a>                    <span class="k">raise</span> <span class="n">DeepgramModuleError</span><span class="p">(</span><span class="s2">&quot;Invalid parent type&quot;</span><span class="p">)</span>
-</span><span id="Speak.Version-149"><a href="#Speak.Version-149"><span class="linenos">149</span></a>
-</span><span id="Speak.Version-150"><a href="#Speak.Version-150"><span class="linenos">150</span></a>            <span class="c1"># create class path</span>
-</span><span id="Speak.Version-151"><a href="#Speak.Version-151"><span class="linenos">151</span></a>            <span class="n">path</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;deepgram.clients.speak.v</span><span class="si">{</span><span class="n">version</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="nb">type</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">file_name</span><span class="si">}</span><span class="s2">&quot;</span>
-</span><span id="Speak.Version-152"><a href="#Speak.Version-152"><span class="linenos">152</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;path: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
-</span><span id="Speak.Version-153"><a href="#Speak.Version-153"><span class="linenos">153</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;class_name: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">class_name</span><span class="p">)</span>
-</span><span id="Speak.Version-154"><a href="#Speak.Version-154"><span class="linenos">154</span></a>
-</span><span id="Speak.Version-155"><a href="#Speak.Version-155"><span class="linenos">155</span></a>            <span class="c1"># import class</span>
-</span><span id="Speak.Version-156"><a href="#Speak.Version-156"><span class="linenos">156</span></a>            <span class="n">mod</span> <span class="o">=</span> <span class="n">import_module</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
-</span><span id="Speak.Version-157"><a href="#Speak.Version-157"><span class="linenos">157</span></a>            <span class="k">if</span> <span class="n">mod</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-</span><span id="Speak.Version-158"><a href="#Speak.Version-158"><span class="linenos">158</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;module path is None&quot;</span><span class="p">)</span>
-</span><span id="Speak.Version-159"><a href="#Speak.Version-159"><span class="linenos">159</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Version.v LEAVE&quot;</span><span class="p">)</span>
-</span><span id="Speak.Version-160"><a href="#Speak.Version-160"><span class="linenos">160</span></a>                <span class="k">raise</span> <span class="n">DeepgramModuleError</span><span class="p">(</span><span class="s2">&quot;Unable to find package&quot;</span><span class="p">)</span>
-</span><span id="Speak.Version-161"><a href="#Speak.Version-161"><span class="linenos">161</span></a>
-</span><span id="Speak.Version-162"><a href="#Speak.Version-162"><span class="linenos">162</span></a>            <span class="n">my_class</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">mod</span><span class="p">,</span> <span class="n">class_name</span><span class="p">)</span>
-</span><span id="Speak.Version-163"><a href="#Speak.Version-163"><span class="linenos">163</span></a>            <span class="k">if</span> <span class="n">my_class</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-</span><span id="Speak.Version-164"><a href="#Speak.Version-164"><span class="linenos">164</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;my_class is None&quot;</span><span class="p">)</span>
-</span><span id="Speak.Version-165"><a href="#Speak.Version-165"><span class="linenos">165</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Version.v LEAVE&quot;</span><span class="p">)</span>
-</span><span id="Speak.Version-166"><a href="#Speak.Version-166"><span class="linenos">166</span></a>                <span class="k">raise</span> <span class="n">DeepgramModuleError</span><span class="p">(</span><span class="s2">&quot;Unable to find class&quot;</span><span class="p">)</span>
-</span><span id="Speak.Version-167"><a href="#Speak.Version-167"><span class="linenos">167</span></a>
-</span><span id="Speak.Version-168"><a href="#Speak.Version-168"><span class="linenos">168</span></a>            <span class="c1"># instantiate class</span>
-</span><span id="Speak.Version-169"><a href="#Speak.Version-169"><span class="linenos">169</span></a>            <span class="n">my_class</span> <span class="o">=</span> <span class="n">my_class</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="p">)</span>
-</span><span id="Speak.Version-170"><a href="#Speak.Version-170"><span class="linenos">170</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">notice</span><span class="p">(</span><span class="s2">&quot;Version.v succeeded&quot;</span><span class="p">)</span>
-</span><span id="Speak.Version-171"><a href="#Speak.Version-171"><span class="linenos">171</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Version.v LEAVE&quot;</span><span class="p">)</span>
-</span><span id="Speak.Version-172"><a href="#Speak.Version-172"><span class="linenos">172</span></a>            <span class="k">return</span> <span class="n">my_class</span>
+    <a class="headerlink" href="#SpeakRouter.Version"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="SpeakRouter.Version-86"><a href="#SpeakRouter.Version-86"><span class="linenos"> 86</span></a>    <span class="k">class</span><span class="w"> </span><span class="nc">Version</span><span class="p">:</span>
+</span><span id="SpeakRouter.Version-87"><a href="#SpeakRouter.Version-87"><span class="linenos"> 87</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="SpeakRouter.Version-88"><a href="#SpeakRouter.Version-88"><span class="linenos"> 88</span></a><span class="sd">        Represents a version of the Deepgram API.</span>
+</span><span id="SpeakRouter.Version-89"><a href="#SpeakRouter.Version-89"><span class="linenos"> 89</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="SpeakRouter.Version-90"><a href="#SpeakRouter.Version-90"><span class="linenos"> 90</span></a>
+</span><span id="SpeakRouter.Version-91"><a href="#SpeakRouter.Version-91"><span class="linenos"> 91</span></a>        <span class="n">_logger</span><span class="p">:</span> <span class="n">verboselogs</span><span class="o">.</span><span class="n">VerboseLogger</span>
+</span><span id="SpeakRouter.Version-92"><a href="#SpeakRouter.Version-92"><span class="linenos"> 92</span></a>        <span class="n">_config</span><span class="p">:</span> <span class="n">DeepgramClientOptions</span>
+</span><span id="SpeakRouter.Version-93"><a href="#SpeakRouter.Version-93"><span class="linenos"> 93</span></a>        <span class="n">_parent</span><span class="p">:</span> <span class="nb">str</span>
+</span><span id="SpeakRouter.Version-94"><a href="#SpeakRouter.Version-94"><span class="linenos"> 94</span></a>
+</span><span id="SpeakRouter.Version-95"><a href="#SpeakRouter.Version-95"><span class="linenos"> 95</span></a>        <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">,</span> <span class="n">parent</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+</span><span id="SpeakRouter.Version-96"><a href="#SpeakRouter.Version-96"><span class="linenos"> 96</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span> <span class="o">=</span> <span class="n">verboselogs</span><span class="o">.</span><span class="n">VerboseLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+</span><span id="SpeakRouter.Version-97"><a href="#SpeakRouter.Version-97"><span class="linenos"> 97</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">StreamHandler</span><span class="p">())</span>
+</span><span id="SpeakRouter.Version-98"><a href="#SpeakRouter.Version-98"><span class="linenos"> 98</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">verbose</span><span class="p">)</span>
+</span><span id="SpeakRouter.Version-99"><a href="#SpeakRouter.Version-99"><span class="linenos"> 99</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">_config</span> <span class="o">=</span> <span class="n">config</span>
+</span><span id="SpeakRouter.Version-100"><a href="#SpeakRouter.Version-100"><span class="linenos">100</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">_parent</span> <span class="o">=</span> <span class="n">parent</span>
+</span><span id="SpeakRouter.Version-101"><a href="#SpeakRouter.Version-101"><span class="linenos">101</span></a>
+</span><span id="SpeakRouter.Version-102"><a href="#SpeakRouter.Version-102"><span class="linenos">102</span></a>        <span class="c1"># FUTURE VERSIONING:</span>
+</span><span id="SpeakRouter.Version-103"><a href="#SpeakRouter.Version-103"><span class="linenos">103</span></a>        <span class="c1"># When v2 or v1.1beta1 or etc. This allows easy access to the latest version of the API.</span>
+</span><span id="SpeakRouter.Version-104"><a href="#SpeakRouter.Version-104"><span class="linenos">104</span></a>        <span class="c1"># @property</span>
+</span><span id="SpeakRouter.Version-105"><a href="#SpeakRouter.Version-105"><span class="linenos">105</span></a>        <span class="c1"># def latest(self):</span>
+</span><span id="SpeakRouter.Version-106"><a href="#SpeakRouter.Version-106"><span class="linenos">106</span></a>        <span class="c1">#     match self._parent:</span>
+</span><span id="SpeakRouter.Version-107"><a href="#SpeakRouter.Version-107"><span class="linenos">107</span></a>        <span class="c1">#         case &quot;live&quot;:</span>
+</span><span id="SpeakRouter.Version-108"><a href="#SpeakRouter.Version-108"><span class="linenos">108</span></a>        <span class="c1">#             return LiveClient(self._config)</span>
+</span><span id="SpeakRouter.Version-109"><a href="#SpeakRouter.Version-109"><span class="linenos">109</span></a>        <span class="c1">#         case &quot;prerecorded&quot;:</span>
+</span><span id="SpeakRouter.Version-110"><a href="#SpeakRouter.Version-110"><span class="linenos">110</span></a>        <span class="c1">#             return PreRecordedClient(self._config)</span>
+</span><span id="SpeakRouter.Version-111"><a href="#SpeakRouter.Version-111"><span class="linenos">111</span></a>        <span class="c1">#         case _:</span>
+</span><span id="SpeakRouter.Version-112"><a href="#SpeakRouter.Version-112"><span class="linenos">112</span></a>        <span class="c1">#             raise DeepgramModuleError(&quot;Invalid parent&quot;)</span>
+</span><span id="SpeakRouter.Version-113"><a href="#SpeakRouter.Version-113"><span class="linenos">113</span></a>
+</span><span id="SpeakRouter.Version-114"><a href="#SpeakRouter.Version-114"><span class="linenos">114</span></a>        <span class="k">def</span><span class="w"> </span><span class="nf">v</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">version</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">):</span>
+</span><span id="SpeakRouter.Version-115"><a href="#SpeakRouter.Version-115"><span class="linenos">115</span></a><span class="w">            </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="SpeakRouter.Version-116"><a href="#SpeakRouter.Version-116"><span class="linenos">116</span></a><span class="sd">            Returns a specific version of the Deepgram API.</span>
+</span><span id="SpeakRouter.Version-117"><a href="#SpeakRouter.Version-117"><span class="linenos">117</span></a><span class="sd">            &quot;&quot;&quot;</span>
+</span><span id="SpeakRouter.Version-118"><a href="#SpeakRouter.Version-118"><span class="linenos">118</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Version.v ENTER&quot;</span><span class="p">)</span>
+</span><span id="SpeakRouter.Version-119"><a href="#SpeakRouter.Version-119"><span class="linenos">119</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;version: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">version</span><span class="p">)</span>
+</span><span id="SpeakRouter.Version-120"><a href="#SpeakRouter.Version-120"><span class="linenos">120</span></a>            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">version</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+</span><span id="SpeakRouter.Version-121"><a href="#SpeakRouter.Version-121"><span class="linenos">121</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;version is empty&quot;</span><span class="p">)</span>
+</span><span id="SpeakRouter.Version-122"><a href="#SpeakRouter.Version-122"><span class="linenos">122</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Version.v LEAVE&quot;</span><span class="p">)</span>
+</span><span id="SpeakRouter.Version-123"><a href="#SpeakRouter.Version-123"><span class="linenos">123</span></a>                <span class="k">raise</span> <span class="n">DeepgramModuleError</span><span class="p">(</span><span class="s2">&quot;Invalid module version&quot;</span><span class="p">)</span>
+</span><span id="SpeakRouter.Version-124"><a href="#SpeakRouter.Version-124"><span class="linenos">124</span></a>
+</span><span id="SpeakRouter.Version-125"><a href="#SpeakRouter.Version-125"><span class="linenos">125</span></a>            <span class="nb">type</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+</span><span id="SpeakRouter.Version-126"><a href="#SpeakRouter.Version-126"><span class="linenos">126</span></a>            <span class="n">file_name</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+</span><span id="SpeakRouter.Version-127"><a href="#SpeakRouter.Version-127"><span class="linenos">127</span></a>            <span class="n">class_name</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+</span><span id="SpeakRouter.Version-128"><a href="#SpeakRouter.Version-128"><span class="linenos">128</span></a>            <span class="k">match</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parent</span><span class="p">:</span>
+</span><span id="SpeakRouter.Version-129"><a href="#SpeakRouter.Version-129"><span class="linenos">129</span></a>                <span class="k">case</span> <span class="s2">&quot;websocket&quot;</span><span class="p">:</span>
+</span><span id="SpeakRouter.Version-130"><a href="#SpeakRouter.Version-130"><span class="linenos">130</span></a>                    <span class="nb">type</span> <span class="o">=</span> <span class="s2">&quot;websocket&quot;</span>
+</span><span id="SpeakRouter.Version-131"><a href="#SpeakRouter.Version-131"><span class="linenos">131</span></a>                    <span class="n">file_name</span> <span class="o">=</span> <span class="s2">&quot;client&quot;</span>
+</span><span id="SpeakRouter.Version-132"><a href="#SpeakRouter.Version-132"><span class="linenos">132</span></a>                    <span class="n">class_name</span> <span class="o">=</span> <span class="s2">&quot;SpeakWebSocketClient&quot;</span>
+</span><span id="SpeakRouter.Version-133"><a href="#SpeakRouter.Version-133"><span class="linenos">133</span></a>                <span class="k">case</span> <span class="s2">&quot;asyncwebsocket&quot;</span><span class="p">:</span>
+</span><span id="SpeakRouter.Version-134"><a href="#SpeakRouter.Version-134"><span class="linenos">134</span></a>                    <span class="nb">type</span> <span class="o">=</span> <span class="s2">&quot;websocket&quot;</span>
+</span><span id="SpeakRouter.Version-135"><a href="#SpeakRouter.Version-135"><span class="linenos">135</span></a>                    <span class="n">file_name</span> <span class="o">=</span> <span class="s2">&quot;async_client&quot;</span>
+</span><span id="SpeakRouter.Version-136"><a href="#SpeakRouter.Version-136"><span class="linenos">136</span></a>                    <span class="n">class_name</span> <span class="o">=</span> <span class="s2">&quot;AsyncSpeakWebSocketClient&quot;</span>
+</span><span id="SpeakRouter.Version-137"><a href="#SpeakRouter.Version-137"><span class="linenos">137</span></a>                <span class="k">case</span> <span class="s2">&quot;rest&quot;</span><span class="p">:</span>
+</span><span id="SpeakRouter.Version-138"><a href="#SpeakRouter.Version-138"><span class="linenos">138</span></a>                    <span class="nb">type</span> <span class="o">=</span> <span class="s2">&quot;rest&quot;</span>
+</span><span id="SpeakRouter.Version-139"><a href="#SpeakRouter.Version-139"><span class="linenos">139</span></a>                    <span class="n">file_name</span> <span class="o">=</span> <span class="s2">&quot;client&quot;</span>
+</span><span id="SpeakRouter.Version-140"><a href="#SpeakRouter.Version-140"><span class="linenos">140</span></a>                    <span class="n">class_name</span> <span class="o">=</span> <span class="s2">&quot;SpeakRESTClient&quot;</span>
+</span><span id="SpeakRouter.Version-141"><a href="#SpeakRouter.Version-141"><span class="linenos">141</span></a>                <span class="k">case</span> <span class="s2">&quot;asyncrest&quot;</span><span class="p">:</span>
+</span><span id="SpeakRouter.Version-142"><a href="#SpeakRouter.Version-142"><span class="linenos">142</span></a>                    <span class="nb">type</span> <span class="o">=</span> <span class="s2">&quot;rest&quot;</span>
+</span><span id="SpeakRouter.Version-143"><a href="#SpeakRouter.Version-143"><span class="linenos">143</span></a>                    <span class="n">file_name</span> <span class="o">=</span> <span class="s2">&quot;async_client&quot;</span>
+</span><span id="SpeakRouter.Version-144"><a href="#SpeakRouter.Version-144"><span class="linenos">144</span></a>                    <span class="n">class_name</span> <span class="o">=</span> <span class="s2">&quot;AsyncSpeakRESTClient&quot;</span>
+</span><span id="SpeakRouter.Version-145"><a href="#SpeakRouter.Version-145"><span class="linenos">145</span></a>                <span class="k">case</span><span class="w"> </span><span class="k">_</span><span class="p">:</span>
+</span><span id="SpeakRouter.Version-146"><a href="#SpeakRouter.Version-146"><span class="linenos">146</span></a>                    <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;parent unknown: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parent</span><span class="p">)</span>
+</span><span id="SpeakRouter.Version-147"><a href="#SpeakRouter.Version-147"><span class="linenos">147</span></a>                    <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Version.v LEAVE&quot;</span><span class="p">)</span>
+</span><span id="SpeakRouter.Version-148"><a href="#SpeakRouter.Version-148"><span class="linenos">148</span></a>                    <span class="k">raise</span> <span class="n">DeepgramModuleError</span><span class="p">(</span><span class="s2">&quot;Invalid parent type&quot;</span><span class="p">)</span>
+</span><span id="SpeakRouter.Version-149"><a href="#SpeakRouter.Version-149"><span class="linenos">149</span></a>
+</span><span id="SpeakRouter.Version-150"><a href="#SpeakRouter.Version-150"><span class="linenos">150</span></a>            <span class="c1"># create class path</span>
+</span><span id="SpeakRouter.Version-151"><a href="#SpeakRouter.Version-151"><span class="linenos">151</span></a>            <span class="n">path</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;deepgram.clients.speak.v</span><span class="si">{</span><span class="n">version</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="nb">type</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">file_name</span><span class="si">}</span><span class="s2">&quot;</span>
+</span><span id="SpeakRouter.Version-152"><a href="#SpeakRouter.Version-152"><span class="linenos">152</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;path: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
+</span><span id="SpeakRouter.Version-153"><a href="#SpeakRouter.Version-153"><span class="linenos">153</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;class_name: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">class_name</span><span class="p">)</span>
+</span><span id="SpeakRouter.Version-154"><a href="#SpeakRouter.Version-154"><span class="linenos">154</span></a>
+</span><span id="SpeakRouter.Version-155"><a href="#SpeakRouter.Version-155"><span class="linenos">155</span></a>            <span class="c1"># import class</span>
+</span><span id="SpeakRouter.Version-156"><a href="#SpeakRouter.Version-156"><span class="linenos">156</span></a>            <span class="n">mod</span> <span class="o">=</span> <span class="n">import_module</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+</span><span id="SpeakRouter.Version-157"><a href="#SpeakRouter.Version-157"><span class="linenos">157</span></a>            <span class="k">if</span> <span class="n">mod</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="SpeakRouter.Version-158"><a href="#SpeakRouter.Version-158"><span class="linenos">158</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;module path is None&quot;</span><span class="p">)</span>
+</span><span id="SpeakRouter.Version-159"><a href="#SpeakRouter.Version-159"><span class="linenos">159</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Version.v LEAVE&quot;</span><span class="p">)</span>
+</span><span id="SpeakRouter.Version-160"><a href="#SpeakRouter.Version-160"><span class="linenos">160</span></a>                <span class="k">raise</span> <span class="n">DeepgramModuleError</span><span class="p">(</span><span class="s2">&quot;Unable to find package&quot;</span><span class="p">)</span>
+</span><span id="SpeakRouter.Version-161"><a href="#SpeakRouter.Version-161"><span class="linenos">161</span></a>
+</span><span id="SpeakRouter.Version-162"><a href="#SpeakRouter.Version-162"><span class="linenos">162</span></a>            <span class="n">my_class</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">mod</span><span class="p">,</span> <span class="n">class_name</span><span class="p">)</span>
+</span><span id="SpeakRouter.Version-163"><a href="#SpeakRouter.Version-163"><span class="linenos">163</span></a>            <span class="k">if</span> <span class="n">my_class</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="SpeakRouter.Version-164"><a href="#SpeakRouter.Version-164"><span class="linenos">164</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;my_class is None&quot;</span><span class="p">)</span>
+</span><span id="SpeakRouter.Version-165"><a href="#SpeakRouter.Version-165"><span class="linenos">165</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Version.v LEAVE&quot;</span><span class="p">)</span>
+</span><span id="SpeakRouter.Version-166"><a href="#SpeakRouter.Version-166"><span class="linenos">166</span></a>                <span class="k">raise</span> <span class="n">DeepgramModuleError</span><span class="p">(</span><span class="s2">&quot;Unable to find class&quot;</span><span class="p">)</span>
+</span><span id="SpeakRouter.Version-167"><a href="#SpeakRouter.Version-167"><span class="linenos">167</span></a>
+</span><span id="SpeakRouter.Version-168"><a href="#SpeakRouter.Version-168"><span class="linenos">168</span></a>            <span class="c1"># instantiate class</span>
+</span><span id="SpeakRouter.Version-169"><a href="#SpeakRouter.Version-169"><span class="linenos">169</span></a>            <span class="n">my_class</span> <span class="o">=</span> <span class="n">my_class</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="p">)</span>
+</span><span id="SpeakRouter.Version-170"><a href="#SpeakRouter.Version-170"><span class="linenos">170</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">notice</span><span class="p">(</span><span class="s2">&quot;Version.v succeeded&quot;</span><span class="p">)</span>
+</span><span id="SpeakRouter.Version-171"><a href="#SpeakRouter.Version-171"><span class="linenos">171</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Version.v LEAVE&quot;</span><span class="p">)</span>
+</span><span id="SpeakRouter.Version-172"><a href="#SpeakRouter.Version-172"><span class="linenos">172</span></a>            <span class="k">return</span> <span class="n">my_class</span>
 </span></pre></div>
 
 
@@ -697,98 +697,98 @@ asyncwebsocket: Returns an Async WebSocket Client instance for interacting with 
 </div>
 
 
-                            <div id="Speak.Version.__init__" class="classattr">
-                                        <input id="Speak.Version.__init__-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+                            <div id="SpeakRouter.Version.__init__" class="classattr">
+                                        <input id="SpeakRouter.Version.__init__-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
 <div class="attr function">
             
-        <span class="name">Speak.Version</span><span class="signature pdoc-code condensed">(<span class="param"><span class="n">config</span>, </span><span class="param"><span class="n">parent</span><span class="p">:</span> <span class="nb">str</span></span>)</span>
+        <span class="name">SpeakRouter.Version</span><span class="signature pdoc-code condensed">(<span class="param"><span class="n">config</span>, </span><span class="param"><span class="n">parent</span><span class="p">:</span> <span class="nb">str</span></span>)</span>
 
-                <label class="view-source-button" for="Speak.Version.__init__-view-source"><span>View Source</span></label>
+                <label class="view-source-button" for="SpeakRouter.Version.__init__-view-source"><span>View Source</span></label>
 
     </div>
-    <a class="headerlink" href="#Speak.Version.__init__"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="Speak.Version.__init__-95"><a href="#Speak.Version.__init__-95"><span class="linenos"> 95</span></a>        <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">,</span> <span class="n">parent</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
-</span><span id="Speak.Version.__init__-96"><a href="#Speak.Version.__init__-96"><span class="linenos"> 96</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span> <span class="o">=</span> <span class="n">verboselogs</span><span class="o">.</span><span class="n">VerboseLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
-</span><span id="Speak.Version.__init__-97"><a href="#Speak.Version.__init__-97"><span class="linenos"> 97</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">StreamHandler</span><span class="p">())</span>
-</span><span id="Speak.Version.__init__-98"><a href="#Speak.Version.__init__-98"><span class="linenos"> 98</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">verbose</span><span class="p">)</span>
-</span><span id="Speak.Version.__init__-99"><a href="#Speak.Version.__init__-99"><span class="linenos"> 99</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">_config</span> <span class="o">=</span> <span class="n">config</span>
-</span><span id="Speak.Version.__init__-100"><a href="#Speak.Version.__init__-100"><span class="linenos">100</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">_parent</span> <span class="o">=</span> <span class="n">parent</span>
+    <a class="headerlink" href="#SpeakRouter.Version.__init__"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="SpeakRouter.Version.__init__-95"><a href="#SpeakRouter.Version.__init__-95"><span class="linenos"> 95</span></a>        <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">,</span> <span class="n">parent</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+</span><span id="SpeakRouter.Version.__init__-96"><a href="#SpeakRouter.Version.__init__-96"><span class="linenos"> 96</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span> <span class="o">=</span> <span class="n">verboselogs</span><span class="o">.</span><span class="n">VerboseLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+</span><span id="SpeakRouter.Version.__init__-97"><a href="#SpeakRouter.Version.__init__-97"><span class="linenos"> 97</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">StreamHandler</span><span class="p">())</span>
+</span><span id="SpeakRouter.Version.__init__-98"><a href="#SpeakRouter.Version.__init__-98"><span class="linenos"> 98</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">verbose</span><span class="p">)</span>
+</span><span id="SpeakRouter.Version.__init__-99"><a href="#SpeakRouter.Version.__init__-99"><span class="linenos"> 99</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">_config</span> <span class="o">=</span> <span class="n">config</span>
+</span><span id="SpeakRouter.Version.__init__-100"><a href="#SpeakRouter.Version.__init__-100"><span class="linenos">100</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">_parent</span> <span class="o">=</span> <span class="n">parent</span>
 </span></pre></div>
 
 
     
 
                             </div>
-                            <div id="Speak.Version.v" class="classattr">
-                                        <input id="Speak.Version.v-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+                            <div id="SpeakRouter.Version.v" class="classattr">
+                                        <input id="SpeakRouter.Version.v-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
 <div class="attr function">
             
         <span class="def">def</span>
         <span class="name">v</span><span class="signature pdoc-code condensed">(<span class="param"><span class="bp">self</span>, </span><span class="param"><span class="n">version</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span></span><span class="return-annotation">):</span></span>
 
-                <label class="view-source-button" for="Speak.Version.v-view-source"><span>View Source</span></label>
+                <label class="view-source-button" for="SpeakRouter.Version.v-view-source"><span>View Source</span></label>
 
     </div>
-    <a class="headerlink" href="#Speak.Version.v"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="Speak.Version.v-114"><a href="#Speak.Version.v-114"><span class="linenos">114</span></a>        <span class="k">def</span><span class="w"> </span><span class="nf">v</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">version</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">):</span>
-</span><span id="Speak.Version.v-115"><a href="#Speak.Version.v-115"><span class="linenos">115</span></a><span class="w">            </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="Speak.Version.v-116"><a href="#Speak.Version.v-116"><span class="linenos">116</span></a><span class="sd">            Returns a specific version of the Deepgram API.</span>
-</span><span id="Speak.Version.v-117"><a href="#Speak.Version.v-117"><span class="linenos">117</span></a><span class="sd">            &quot;&quot;&quot;</span>
-</span><span id="Speak.Version.v-118"><a href="#Speak.Version.v-118"><span class="linenos">118</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Version.v ENTER&quot;</span><span class="p">)</span>
-</span><span id="Speak.Version.v-119"><a href="#Speak.Version.v-119"><span class="linenos">119</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;version: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">version</span><span class="p">)</span>
-</span><span id="Speak.Version.v-120"><a href="#Speak.Version.v-120"><span class="linenos">120</span></a>            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">version</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-</span><span id="Speak.Version.v-121"><a href="#Speak.Version.v-121"><span class="linenos">121</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;version is empty&quot;</span><span class="p">)</span>
-</span><span id="Speak.Version.v-122"><a href="#Speak.Version.v-122"><span class="linenos">122</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Version.v LEAVE&quot;</span><span class="p">)</span>
-</span><span id="Speak.Version.v-123"><a href="#Speak.Version.v-123"><span class="linenos">123</span></a>                <span class="k">raise</span> <span class="n">DeepgramModuleError</span><span class="p">(</span><span class="s2">&quot;Invalid module version&quot;</span><span class="p">)</span>
-</span><span id="Speak.Version.v-124"><a href="#Speak.Version.v-124"><span class="linenos">124</span></a>
-</span><span id="Speak.Version.v-125"><a href="#Speak.Version.v-125"><span class="linenos">125</span></a>            <span class="nb">type</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-</span><span id="Speak.Version.v-126"><a href="#Speak.Version.v-126"><span class="linenos">126</span></a>            <span class="n">file_name</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-</span><span id="Speak.Version.v-127"><a href="#Speak.Version.v-127"><span class="linenos">127</span></a>            <span class="n">class_name</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-</span><span id="Speak.Version.v-128"><a href="#Speak.Version.v-128"><span class="linenos">128</span></a>            <span class="k">match</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parent</span><span class="p">:</span>
-</span><span id="Speak.Version.v-129"><a href="#Speak.Version.v-129"><span class="linenos">129</span></a>                <span class="k">case</span> <span class="s2">&quot;websocket&quot;</span><span class="p">:</span>
-</span><span id="Speak.Version.v-130"><a href="#Speak.Version.v-130"><span class="linenos">130</span></a>                    <span class="nb">type</span> <span class="o">=</span> <span class="s2">&quot;websocket&quot;</span>
-</span><span id="Speak.Version.v-131"><a href="#Speak.Version.v-131"><span class="linenos">131</span></a>                    <span class="n">file_name</span> <span class="o">=</span> <span class="s2">&quot;client&quot;</span>
-</span><span id="Speak.Version.v-132"><a href="#Speak.Version.v-132"><span class="linenos">132</span></a>                    <span class="n">class_name</span> <span class="o">=</span> <span class="s2">&quot;SpeakWebSocketClient&quot;</span>
-</span><span id="Speak.Version.v-133"><a href="#Speak.Version.v-133"><span class="linenos">133</span></a>                <span class="k">case</span> <span class="s2">&quot;asyncwebsocket&quot;</span><span class="p">:</span>
-</span><span id="Speak.Version.v-134"><a href="#Speak.Version.v-134"><span class="linenos">134</span></a>                    <span class="nb">type</span> <span class="o">=</span> <span class="s2">&quot;websocket&quot;</span>
-</span><span id="Speak.Version.v-135"><a href="#Speak.Version.v-135"><span class="linenos">135</span></a>                    <span class="n">file_name</span> <span class="o">=</span> <span class="s2">&quot;async_client&quot;</span>
-</span><span id="Speak.Version.v-136"><a href="#Speak.Version.v-136"><span class="linenos">136</span></a>                    <span class="n">class_name</span> <span class="o">=</span> <span class="s2">&quot;AsyncSpeakWebSocketClient&quot;</span>
-</span><span id="Speak.Version.v-137"><a href="#Speak.Version.v-137"><span class="linenos">137</span></a>                <span class="k">case</span> <span class="s2">&quot;rest&quot;</span><span class="p">:</span>
-</span><span id="Speak.Version.v-138"><a href="#Speak.Version.v-138"><span class="linenos">138</span></a>                    <span class="nb">type</span> <span class="o">=</span> <span class="s2">&quot;rest&quot;</span>
-</span><span id="Speak.Version.v-139"><a href="#Speak.Version.v-139"><span class="linenos">139</span></a>                    <span class="n">file_name</span> <span class="o">=</span> <span class="s2">&quot;client&quot;</span>
-</span><span id="Speak.Version.v-140"><a href="#Speak.Version.v-140"><span class="linenos">140</span></a>                    <span class="n">class_name</span> <span class="o">=</span> <span class="s2">&quot;SpeakRESTClient&quot;</span>
-</span><span id="Speak.Version.v-141"><a href="#Speak.Version.v-141"><span class="linenos">141</span></a>                <span class="k">case</span> <span class="s2">&quot;asyncrest&quot;</span><span class="p">:</span>
-</span><span id="Speak.Version.v-142"><a href="#Speak.Version.v-142"><span class="linenos">142</span></a>                    <span class="nb">type</span> <span class="o">=</span> <span class="s2">&quot;rest&quot;</span>
-</span><span id="Speak.Version.v-143"><a href="#Speak.Version.v-143"><span class="linenos">143</span></a>                    <span class="n">file_name</span> <span class="o">=</span> <span class="s2">&quot;async_client&quot;</span>
-</span><span id="Speak.Version.v-144"><a href="#Speak.Version.v-144"><span class="linenos">144</span></a>                    <span class="n">class_name</span> <span class="o">=</span> <span class="s2">&quot;AsyncSpeakRESTClient&quot;</span>
-</span><span id="Speak.Version.v-145"><a href="#Speak.Version.v-145"><span class="linenos">145</span></a>                <span class="k">case</span><span class="w"> </span><span class="k">_</span><span class="p">:</span>
-</span><span id="Speak.Version.v-146"><a href="#Speak.Version.v-146"><span class="linenos">146</span></a>                    <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;parent unknown: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parent</span><span class="p">)</span>
-</span><span id="Speak.Version.v-147"><a href="#Speak.Version.v-147"><span class="linenos">147</span></a>                    <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Version.v LEAVE&quot;</span><span class="p">)</span>
-</span><span id="Speak.Version.v-148"><a href="#Speak.Version.v-148"><span class="linenos">148</span></a>                    <span class="k">raise</span> <span class="n">DeepgramModuleError</span><span class="p">(</span><span class="s2">&quot;Invalid parent type&quot;</span><span class="p">)</span>
-</span><span id="Speak.Version.v-149"><a href="#Speak.Version.v-149"><span class="linenos">149</span></a>
-</span><span id="Speak.Version.v-150"><a href="#Speak.Version.v-150"><span class="linenos">150</span></a>            <span class="c1"># create class path</span>
-</span><span id="Speak.Version.v-151"><a href="#Speak.Version.v-151"><span class="linenos">151</span></a>            <span class="n">path</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;deepgram.clients.speak.v</span><span class="si">{</span><span class="n">version</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="nb">type</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">file_name</span><span class="si">}</span><span class="s2">&quot;</span>
-</span><span id="Speak.Version.v-152"><a href="#Speak.Version.v-152"><span class="linenos">152</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;path: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
-</span><span id="Speak.Version.v-153"><a href="#Speak.Version.v-153"><span class="linenos">153</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;class_name: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">class_name</span><span class="p">)</span>
-</span><span id="Speak.Version.v-154"><a href="#Speak.Version.v-154"><span class="linenos">154</span></a>
-</span><span id="Speak.Version.v-155"><a href="#Speak.Version.v-155"><span class="linenos">155</span></a>            <span class="c1"># import class</span>
-</span><span id="Speak.Version.v-156"><a href="#Speak.Version.v-156"><span class="linenos">156</span></a>            <span class="n">mod</span> <span class="o">=</span> <span class="n">import_module</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
-</span><span id="Speak.Version.v-157"><a href="#Speak.Version.v-157"><span class="linenos">157</span></a>            <span class="k">if</span> <span class="n">mod</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-</span><span id="Speak.Version.v-158"><a href="#Speak.Version.v-158"><span class="linenos">158</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;module path is None&quot;</span><span class="p">)</span>
-</span><span id="Speak.Version.v-159"><a href="#Speak.Version.v-159"><span class="linenos">159</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Version.v LEAVE&quot;</span><span class="p">)</span>
-</span><span id="Speak.Version.v-160"><a href="#Speak.Version.v-160"><span class="linenos">160</span></a>                <span class="k">raise</span> <span class="n">DeepgramModuleError</span><span class="p">(</span><span class="s2">&quot;Unable to find package&quot;</span><span class="p">)</span>
-</span><span id="Speak.Version.v-161"><a href="#Speak.Version.v-161"><span class="linenos">161</span></a>
-</span><span id="Speak.Version.v-162"><a href="#Speak.Version.v-162"><span class="linenos">162</span></a>            <span class="n">my_class</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">mod</span><span class="p">,</span> <span class="n">class_name</span><span class="p">)</span>
-</span><span id="Speak.Version.v-163"><a href="#Speak.Version.v-163"><span class="linenos">163</span></a>            <span class="k">if</span> <span class="n">my_class</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-</span><span id="Speak.Version.v-164"><a href="#Speak.Version.v-164"><span class="linenos">164</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;my_class is None&quot;</span><span class="p">)</span>
-</span><span id="Speak.Version.v-165"><a href="#Speak.Version.v-165"><span class="linenos">165</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Version.v LEAVE&quot;</span><span class="p">)</span>
-</span><span id="Speak.Version.v-166"><a href="#Speak.Version.v-166"><span class="linenos">166</span></a>                <span class="k">raise</span> <span class="n">DeepgramModuleError</span><span class="p">(</span><span class="s2">&quot;Unable to find class&quot;</span><span class="p">)</span>
-</span><span id="Speak.Version.v-167"><a href="#Speak.Version.v-167"><span class="linenos">167</span></a>
-</span><span id="Speak.Version.v-168"><a href="#Speak.Version.v-168"><span class="linenos">168</span></a>            <span class="c1"># instantiate class</span>
-</span><span id="Speak.Version.v-169"><a href="#Speak.Version.v-169"><span class="linenos">169</span></a>            <span class="n">my_class</span> <span class="o">=</span> <span class="n">my_class</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="p">)</span>
-</span><span id="Speak.Version.v-170"><a href="#Speak.Version.v-170"><span class="linenos">170</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">notice</span><span class="p">(</span><span class="s2">&quot;Version.v succeeded&quot;</span><span class="p">)</span>
-</span><span id="Speak.Version.v-171"><a href="#Speak.Version.v-171"><span class="linenos">171</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Version.v LEAVE&quot;</span><span class="p">)</span>
-</span><span id="Speak.Version.v-172"><a href="#Speak.Version.v-172"><span class="linenos">172</span></a>            <span class="k">return</span> <span class="n">my_class</span>
+    <a class="headerlink" href="#SpeakRouter.Version.v"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="SpeakRouter.Version.v-114"><a href="#SpeakRouter.Version.v-114"><span class="linenos">114</span></a>        <span class="k">def</span><span class="w"> </span><span class="nf">v</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">version</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">):</span>
+</span><span id="SpeakRouter.Version.v-115"><a href="#SpeakRouter.Version.v-115"><span class="linenos">115</span></a><span class="w">            </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="SpeakRouter.Version.v-116"><a href="#SpeakRouter.Version.v-116"><span class="linenos">116</span></a><span class="sd">            Returns a specific version of the Deepgram API.</span>
+</span><span id="SpeakRouter.Version.v-117"><a href="#SpeakRouter.Version.v-117"><span class="linenos">117</span></a><span class="sd">            &quot;&quot;&quot;</span>
+</span><span id="SpeakRouter.Version.v-118"><a href="#SpeakRouter.Version.v-118"><span class="linenos">118</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Version.v ENTER&quot;</span><span class="p">)</span>
+</span><span id="SpeakRouter.Version.v-119"><a href="#SpeakRouter.Version.v-119"><span class="linenos">119</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;version: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">version</span><span class="p">)</span>
+</span><span id="SpeakRouter.Version.v-120"><a href="#SpeakRouter.Version.v-120"><span class="linenos">120</span></a>            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">version</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+</span><span id="SpeakRouter.Version.v-121"><a href="#SpeakRouter.Version.v-121"><span class="linenos">121</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;version is empty&quot;</span><span class="p">)</span>
+</span><span id="SpeakRouter.Version.v-122"><a href="#SpeakRouter.Version.v-122"><span class="linenos">122</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Version.v LEAVE&quot;</span><span class="p">)</span>
+</span><span id="SpeakRouter.Version.v-123"><a href="#SpeakRouter.Version.v-123"><span class="linenos">123</span></a>                <span class="k">raise</span> <span class="n">DeepgramModuleError</span><span class="p">(</span><span class="s2">&quot;Invalid module version&quot;</span><span class="p">)</span>
+</span><span id="SpeakRouter.Version.v-124"><a href="#SpeakRouter.Version.v-124"><span class="linenos">124</span></a>
+</span><span id="SpeakRouter.Version.v-125"><a href="#SpeakRouter.Version.v-125"><span class="linenos">125</span></a>            <span class="nb">type</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+</span><span id="SpeakRouter.Version.v-126"><a href="#SpeakRouter.Version.v-126"><span class="linenos">126</span></a>            <span class="n">file_name</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+</span><span id="SpeakRouter.Version.v-127"><a href="#SpeakRouter.Version.v-127"><span class="linenos">127</span></a>            <span class="n">class_name</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+</span><span id="SpeakRouter.Version.v-128"><a href="#SpeakRouter.Version.v-128"><span class="linenos">128</span></a>            <span class="k">match</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parent</span><span class="p">:</span>
+</span><span id="SpeakRouter.Version.v-129"><a href="#SpeakRouter.Version.v-129"><span class="linenos">129</span></a>                <span class="k">case</span> <span class="s2">&quot;websocket&quot;</span><span class="p">:</span>
+</span><span id="SpeakRouter.Version.v-130"><a href="#SpeakRouter.Version.v-130"><span class="linenos">130</span></a>                    <span class="nb">type</span> <span class="o">=</span> <span class="s2">&quot;websocket&quot;</span>
+</span><span id="SpeakRouter.Version.v-131"><a href="#SpeakRouter.Version.v-131"><span class="linenos">131</span></a>                    <span class="n">file_name</span> <span class="o">=</span> <span class="s2">&quot;client&quot;</span>
+</span><span id="SpeakRouter.Version.v-132"><a href="#SpeakRouter.Version.v-132"><span class="linenos">132</span></a>                    <span class="n">class_name</span> <span class="o">=</span> <span class="s2">&quot;SpeakWebSocketClient&quot;</span>
+</span><span id="SpeakRouter.Version.v-133"><a href="#SpeakRouter.Version.v-133"><span class="linenos">133</span></a>                <span class="k">case</span> <span class="s2">&quot;asyncwebsocket&quot;</span><span class="p">:</span>
+</span><span id="SpeakRouter.Version.v-134"><a href="#SpeakRouter.Version.v-134"><span class="linenos">134</span></a>                    <span class="nb">type</span> <span class="o">=</span> <span class="s2">&quot;websocket&quot;</span>
+</span><span id="SpeakRouter.Version.v-135"><a href="#SpeakRouter.Version.v-135"><span class="linenos">135</span></a>                    <span class="n">file_name</span> <span class="o">=</span> <span class="s2">&quot;async_client&quot;</span>
+</span><span id="SpeakRouter.Version.v-136"><a href="#SpeakRouter.Version.v-136"><span class="linenos">136</span></a>                    <span class="n">class_name</span> <span class="o">=</span> <span class="s2">&quot;AsyncSpeakWebSocketClient&quot;</span>
+</span><span id="SpeakRouter.Version.v-137"><a href="#SpeakRouter.Version.v-137"><span class="linenos">137</span></a>                <span class="k">case</span> <span class="s2">&quot;rest&quot;</span><span class="p">:</span>
+</span><span id="SpeakRouter.Version.v-138"><a href="#SpeakRouter.Version.v-138"><span class="linenos">138</span></a>                    <span class="nb">type</span> <span class="o">=</span> <span class="s2">&quot;rest&quot;</span>
+</span><span id="SpeakRouter.Version.v-139"><a href="#SpeakRouter.Version.v-139"><span class="linenos">139</span></a>                    <span class="n">file_name</span> <span class="o">=</span> <span class="s2">&quot;client&quot;</span>
+</span><span id="SpeakRouter.Version.v-140"><a href="#SpeakRouter.Version.v-140"><span class="linenos">140</span></a>                    <span class="n">class_name</span> <span class="o">=</span> <span class="s2">&quot;SpeakRESTClient&quot;</span>
+</span><span id="SpeakRouter.Version.v-141"><a href="#SpeakRouter.Version.v-141"><span class="linenos">141</span></a>                <span class="k">case</span> <span class="s2">&quot;asyncrest&quot;</span><span class="p">:</span>
+</span><span id="SpeakRouter.Version.v-142"><a href="#SpeakRouter.Version.v-142"><span class="linenos">142</span></a>                    <span class="nb">type</span> <span class="o">=</span> <span class="s2">&quot;rest&quot;</span>
+</span><span id="SpeakRouter.Version.v-143"><a href="#SpeakRouter.Version.v-143"><span class="linenos">143</span></a>                    <span class="n">file_name</span> <span class="o">=</span> <span class="s2">&quot;async_client&quot;</span>
+</span><span id="SpeakRouter.Version.v-144"><a href="#SpeakRouter.Version.v-144"><span class="linenos">144</span></a>                    <span class="n">class_name</span> <span class="o">=</span> <span class="s2">&quot;AsyncSpeakRESTClient&quot;</span>
+</span><span id="SpeakRouter.Version.v-145"><a href="#SpeakRouter.Version.v-145"><span class="linenos">145</span></a>                <span class="k">case</span><span class="w"> </span><span class="k">_</span><span class="p">:</span>
+</span><span id="SpeakRouter.Version.v-146"><a href="#SpeakRouter.Version.v-146"><span class="linenos">146</span></a>                    <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;parent unknown: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parent</span><span class="p">)</span>
+</span><span id="SpeakRouter.Version.v-147"><a href="#SpeakRouter.Version.v-147"><span class="linenos">147</span></a>                    <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Version.v LEAVE&quot;</span><span class="p">)</span>
+</span><span id="SpeakRouter.Version.v-148"><a href="#SpeakRouter.Version.v-148"><span class="linenos">148</span></a>                    <span class="k">raise</span> <span class="n">DeepgramModuleError</span><span class="p">(</span><span class="s2">&quot;Invalid parent type&quot;</span><span class="p">)</span>
+</span><span id="SpeakRouter.Version.v-149"><a href="#SpeakRouter.Version.v-149"><span class="linenos">149</span></a>
+</span><span id="SpeakRouter.Version.v-150"><a href="#SpeakRouter.Version.v-150"><span class="linenos">150</span></a>            <span class="c1"># create class path</span>
+</span><span id="SpeakRouter.Version.v-151"><a href="#SpeakRouter.Version.v-151"><span class="linenos">151</span></a>            <span class="n">path</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;deepgram.clients.speak.v</span><span class="si">{</span><span class="n">version</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="nb">type</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">file_name</span><span class="si">}</span><span class="s2">&quot;</span>
+</span><span id="SpeakRouter.Version.v-152"><a href="#SpeakRouter.Version.v-152"><span class="linenos">152</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;path: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span>
+</span><span id="SpeakRouter.Version.v-153"><a href="#SpeakRouter.Version.v-153"><span class="linenos">153</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;class_name: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">class_name</span><span class="p">)</span>
+</span><span id="SpeakRouter.Version.v-154"><a href="#SpeakRouter.Version.v-154"><span class="linenos">154</span></a>
+</span><span id="SpeakRouter.Version.v-155"><a href="#SpeakRouter.Version.v-155"><span class="linenos">155</span></a>            <span class="c1"># import class</span>
+</span><span id="SpeakRouter.Version.v-156"><a href="#SpeakRouter.Version.v-156"><span class="linenos">156</span></a>            <span class="n">mod</span> <span class="o">=</span> <span class="n">import_module</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+</span><span id="SpeakRouter.Version.v-157"><a href="#SpeakRouter.Version.v-157"><span class="linenos">157</span></a>            <span class="k">if</span> <span class="n">mod</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="SpeakRouter.Version.v-158"><a href="#SpeakRouter.Version.v-158"><span class="linenos">158</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;module path is None&quot;</span><span class="p">)</span>
+</span><span id="SpeakRouter.Version.v-159"><a href="#SpeakRouter.Version.v-159"><span class="linenos">159</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Version.v LEAVE&quot;</span><span class="p">)</span>
+</span><span id="SpeakRouter.Version.v-160"><a href="#SpeakRouter.Version.v-160"><span class="linenos">160</span></a>                <span class="k">raise</span> <span class="n">DeepgramModuleError</span><span class="p">(</span><span class="s2">&quot;Unable to find package&quot;</span><span class="p">)</span>
+</span><span id="SpeakRouter.Version.v-161"><a href="#SpeakRouter.Version.v-161"><span class="linenos">161</span></a>
+</span><span id="SpeakRouter.Version.v-162"><a href="#SpeakRouter.Version.v-162"><span class="linenos">162</span></a>            <span class="n">my_class</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">mod</span><span class="p">,</span> <span class="n">class_name</span><span class="p">)</span>
+</span><span id="SpeakRouter.Version.v-163"><a href="#SpeakRouter.Version.v-163"><span class="linenos">163</span></a>            <span class="k">if</span> <span class="n">my_class</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="SpeakRouter.Version.v-164"><a href="#SpeakRouter.Version.v-164"><span class="linenos">164</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;my_class is None&quot;</span><span class="p">)</span>
+</span><span id="SpeakRouter.Version.v-165"><a href="#SpeakRouter.Version.v-165"><span class="linenos">165</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Version.v LEAVE&quot;</span><span class="p">)</span>
+</span><span id="SpeakRouter.Version.v-166"><a href="#SpeakRouter.Version.v-166"><span class="linenos">166</span></a>                <span class="k">raise</span> <span class="n">DeepgramModuleError</span><span class="p">(</span><span class="s2">&quot;Unable to find class&quot;</span><span class="p">)</span>
+</span><span id="SpeakRouter.Version.v-167"><a href="#SpeakRouter.Version.v-167"><span class="linenos">167</span></a>
+</span><span id="SpeakRouter.Version.v-168"><a href="#SpeakRouter.Version.v-168"><span class="linenos">168</span></a>            <span class="c1"># instantiate class</span>
+</span><span id="SpeakRouter.Version.v-169"><a href="#SpeakRouter.Version.v-169"><span class="linenos">169</span></a>            <span class="n">my_class</span> <span class="o">=</span> <span class="n">my_class</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="p">)</span>
+</span><span id="SpeakRouter.Version.v-170"><a href="#SpeakRouter.Version.v-170"><span class="linenos">170</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">notice</span><span class="p">(</span><span class="s2">&quot;Version.v succeeded&quot;</span><span class="p">)</span>
+</span><span id="SpeakRouter.Version.v-171"><a href="#SpeakRouter.Version.v-171"><span class="linenos">171</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Version.v LEAVE&quot;</span><span class="p">)</span>
+</span><span id="SpeakRouter.Version.v-172"><a href="#SpeakRouter.Version.v-172"><span class="linenos">172</span></a>            <span class="k">return</span> <span class="n">my_class</span>
 </span></pre></div>
 
 
