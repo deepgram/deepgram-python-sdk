@@ -88,9 +88,9 @@ class DeepgramClientOptions:  # pylint: disable=too-many-instance-attributes
             self.headers["Authorization"] = f"Token {self.api_key}"
         elif "Authorization" in self.headers:
             del self.headers["Authorization"]
-        self.headers["User-Agent"] = (
-            f"@deepgram/sdk/{__version__} python/{sys.version_info[1]}.{sys.version_info[2]}"
-        )
+        self.headers[
+            "User-Agent"
+        ] = f"@deepgram/sdk/{__version__} python/{sys.version_info[1]}.{sys.version_info[2]}"
         # Overwrite / add any headers that were passed in
         if headers:
             self.headers.update(headers)

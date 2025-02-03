@@ -175,19 +175,26 @@ Before running any of these examples, then you need to take a look at the README
 pip install -r examples/requirements-examples.txt
 ```
 
-Text to Speech:
+To run each example set the `DEEPGRAM_API_KEY` as an environment variable, then `cd` into each example folder and execute the example with: `python main.py` or `python3 main.py`.
+
+### Agent
+
+- Simple - [examples/agent/simple](https://github.com/deepgram/deepgram-python-sdk/blob/main/examples/agent/simple/main.py)
+- Async Simple - [examples/agent/async_simple](https://github.com/deepgram/deepgram-python-sdk/blob/main/examples/agent/async_simple/main.py)
+
+### Text to Speech
 
 - Asynchronous - [examples/text-to-speech](https://github.com/deepgram/deepgram-python-sdk/blob/main/examples/text-to-speech/rest/file/async_hello_world/main.py)
 - Synchronous - [examples/text-to-speech](https://github.com/deepgram/deepgram-python-sdk/blob/main/examples/text-to-speech/rest/file/hello_world/main.py)
 
-Analyze Text:
+### Analyze Text
 
 - Intent Recognition - [examples/analyze/intent](https://github.com/deepgram/deepgram-python-sdk/blob/main/examples/analyze/intent/main.py)
 - Sentiment Analysis - [examples/sentiment/intent](https://github.com/deepgram/deepgram-python-sdk/blob/main/examples/analyze/sentiment/main.py)
 - Summarization - [examples/analyze/intent](https://github.com/deepgram/deepgram-python-sdk/blob/main/examples/analyze/summary/main.py)
 - Topic Detection - [examples/analyze/intent](https://github.com/deepgram/deepgram-python-sdk/blob/main/examples/analyze/topic/main.py)
 
-PreRecorded Audio:
+### PreRecorded Audio
 
 - Transcription From an Audio File - [examples/prerecorded/file](https://github.com/deepgram/deepgram-python-sdk/blob/main/examples/speech-to-text/rest/file/main.py)
 - Transcription From an URL - [examples/prerecorded/url](https://github.com/deepgram/deepgram-python-sdk/blob/main/examples/speech-to-text/rest/url/main.py)
@@ -196,7 +203,7 @@ PreRecorded Audio:
 - Summarization - [examples/speech-to-text/rest/summary](https://github.com/deepgram/deepgram-python-sdk/blob/main/examples/speech-to-text/rest/summary/main.py)
 - Topic Detection - [examples/speech-to-text/rest/topic](https://github.com/deepgram/deepgram-python-sdk/blob/main/examples/speech-to-text/rest/topic/main.py)
 
-Live Audio Transcription:
+### Live Audio Transcription
 
 - From a Microphone - [examples/streaming/microphone](https://github.com/deepgram/deepgram-python-sdk/blob/main/examples/speech-to-text/rest/stream_file/main.py)
 - From an HTTP Endpoint - [examples/streaming/http](https://github.com/deepgram/deepgram-python-sdk/blob/main/examples/speech-to-text/rest/async_url/main.py)
@@ -210,8 +217,6 @@ Management API exercise the full [CRUD](https://en.wikipedia.org/wiki/Create,_re
 - Projects - [examples/manage/projects](https://github.com/deepgram/deepgram-python-sdk/blob/main/examples/manage/projects/main.py)
 - Scopes - [examples/manage/scopes](https://github.com/deepgram/deepgram-python-sdk/blob/main/examples/manage/scopes/main.py)
 - Usage - [examples/manage/usage](https://github.com/deepgram/deepgram-python-sdk/blob/main/examples/manage/usage/main.py)
-
-To run each example set the `DEEPGRAM_API_KEY` as an environment variable, then `cd` into each example folder and execute the example: `go run main.py`.
 
 ## Logging
 

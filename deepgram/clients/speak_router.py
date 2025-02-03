@@ -13,7 +13,7 @@ from ..options import DeepgramClientOptions
 from .errors import DeepgramModuleError
 
 
-class Speak:
+class SpeakRouter:
     """
     This class provides a Speak Clients for making requests to the Deepgram API with various configuration options.
 

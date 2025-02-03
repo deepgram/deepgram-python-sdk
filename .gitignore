@@ -7,6 +7,8 @@ venv/
 venv.bak/
 .vscode/
 .DS_Store
+Pipfile
+Pipfile.lock
 
 # python artifacts
 __pycache__
@@ -18,3 +20,4 @@ dist/
 # build
 build/
 poetry.lock
+
