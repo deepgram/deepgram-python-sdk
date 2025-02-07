@@ -20,8 +20,8 @@ MODEL = "general-nova-3"
 URL1 = {
     "url": "https://static.deepgram.com/examples/Bueller-Life-moves-pretty-fast.wav"
 }
-URL1_SMART_FORMAT1 = "Yep. I said it before and I'll say it again. Life moves pretty fast. You don't stop and look around once in a while, you could miss it."
-URL1_SUMMARIZE1 = "Yep. I said it before and I'll say it again. Life moves pretty fast. You don't stop and look around once in a while, you could miss it."
+URL1_SMART_FORMAT1 = "Yep. I said it before, and I'll say it again. Life moves pretty fast. You don't stop and look around once in a while, you could miss it."
+URL1_SUMMARIZE1 = "Yep. I said it before, and I'll say it again. Life moves pretty fast. You don't stop and look around once in a while, you could miss it."
 
 # Create a list of tuples to store the key-value pairs
 input_output = [
