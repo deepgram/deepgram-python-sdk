@@ -14,7 +14,7 @@ import httpx
 from deepgram import DeepgramClient, PrerecordedOptions, PrerecordedResponse
 from tests.utils import read_metadata_string, save_metadata_string
 
-MODEL = "2-general-nova"
+MODEL = "3-general-nova"
 
 # response constants
 URL1 = {
@@ -27,12 +27,12 @@ URL1_SUMMARIZE1 = "Yep. I said it before and I'll say it again. Life moves prett
 input_output = [
     (
         URL1,
-        PrerecordedOptions(model="nova-2", smart_format=True),
+        PrerecordedOptions(model="nova-3", smart_format=True),
         {"results.channels.0.alternatives.0.transcript": [URL1_SMART_FORMAT1]},
     ),
     (
         URL1,
-        PrerecordedOptions(model="nova-2", smart_format=True, summarize="v2"),
+        PrerecordedOptions(model="nova-3", smart_format=True, summarize="v2"),
         {
             "results.channels.0.alternatives.0.transcript": [URL1_SMART_FORMAT1],
             "results.summary.short": [URL1_SUMMARIZE1],

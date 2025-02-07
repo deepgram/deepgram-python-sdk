@@ -58,7 +58,7 @@ def main():
         liveClient.on(LiveTranscriptionEvents.Error, on_error)
 
         # connect to websocket
-        options: LiveOptions = LiveOptions(model="nova-2", language="en-US")
+        options: LiveOptions = LiveOptions(model="nova-3", language="en-US")
 
         if liveClient.start(options) is False:
             print("Failed to connect to Deepgram")

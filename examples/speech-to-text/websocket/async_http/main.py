@@ -84,7 +84,7 @@ async def main():
 
         # connect to websocket
         options: LiveOptions = LiveOptions(
-            model="nova-2",
+            model="nova-3",
             language="en-US",
         )
 

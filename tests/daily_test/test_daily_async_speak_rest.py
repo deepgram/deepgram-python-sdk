@@ -23,7 +23,7 @@ input_output = [
     (
         TEXT1,
         SpeakOptions(model=TTS_MODEL, encoding="linear16", sample_rate=24000),
-        PrerecordedOptions(model="nova-2", smart_format=True),
+        PrerecordedOptions(model="nova-3", smart_format=True),
         {"results.channels.0.alternatives.0.transcript": [TEXT1]},
     ),
 ]

@@ -39,7 +39,7 @@ def main():
         }
 
         options = PrerecordedOptions(
-            model="nova-2",
+            model="nova-3",
             smart_format=True,
             utterances=True,
             punctuate=True,

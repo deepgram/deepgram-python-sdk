@@ -25,12 +25,12 @@ URL1_SUMMARIZE = "Yep. I said it before and I'll say it again. Life moves pretty
 input_output = [
     (
         URL1,
-        PrerecordedOptions(model="nova-2", smart_format=True),
+        PrerecordedOptions(model="nova-3", smart_format=True),
         {"results.channels.0.alternatives.0.transcript": [URL1_SMART_FORMAT]},
     ),
     (
         URL1,
-        PrerecordedOptions(model="nova-2", smart_format=True, summarize="v2"),
+        PrerecordedOptions(model="nova-3", smart_format=True, summarize="v2"),
         {
             "results.channels.0.alternatives.0.transcript": [URL1_SMART_FORMAT],
             "results.summary.short": [URL1_SUMMARIZE],

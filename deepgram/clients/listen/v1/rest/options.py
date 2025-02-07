@@ -82,6 +82,9 @@ class PrerecordedOptions(BaseResponse):  # pylint: disable=too-many-instance-att
     intents: Optional[bool] = field(
         default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
+    keyterm: Optional[List[str]] = field(
+        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
+    )
     keywords: Optional[Union[List[str], str]] = field(
         default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
@@ -92,7 +95,7 @@ class PrerecordedOptions(BaseResponse):  # pylint: disable=too-many-instance-att
         default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
     model: Optional[str] = field(
-        default="nova-2", metadata=dataclass_config(exclude=lambda f: f is None)
+        default="None", metadata=dataclass_config(exclude=lambda f: f is None)
     )
     multichannel: Optional[bool] = field(
         default=None, metadata=dataclass_config(exclude=lambda f: f is None)
