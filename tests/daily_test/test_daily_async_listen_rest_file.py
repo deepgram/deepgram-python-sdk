@@ -12,7 +12,7 @@ from deepgram import DeepgramClient, PrerecordedOptions, FileSource
 
 from tests.utils import save_metadata_string
 
-MODEL = "2-general-nova"
+MODEL = "general-nova-3"
 
 # response constants
 FILE1 = "preamble-rest.wav"
@@ -84,7 +84,7 @@ async def test_daily_async_listen_rest_file(filename, options, expected_output):
     save_metadata_string(file_options, options.to_json())
     save_metadata_string(file_resp, response.to_json())
 
-    # Check the response
+    # Original assertion
     for key, value in response.metadata.model_info.items():
         assert (
             value.name == MODEL

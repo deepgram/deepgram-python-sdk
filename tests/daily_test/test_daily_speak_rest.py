@@ -13,7 +13,7 @@ from deepgram import DeepgramClient, SpeakOptions, PrerecordedOptions, FileSourc
 from tests.utils import save_metadata_string
 
 TTS_MODEL = "aura-asteria-en"
-STT_MODEL = "2-general-nova"
+STT_MODEL = "general-nova-3"
 
 # response constants
 TEXT1 = "Hello, world."

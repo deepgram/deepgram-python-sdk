@@ -20,7 +20,7 @@ from deepgram import (
 
 from tests.utils import save_metadata_string
 
-MODEL = "3-general-nova"
+MODEL = "general-nova-3"
 
 # response constants
 INPUT1 = '{"channel": {"alternatives": [{"transcript": "Testing 123. Testing 123.", "confidence": 0.97866726, "words": [{"word": "testing", "start": 1.12, "end": 1.62, "confidence": 0.97866726, "punctuated_word": "Testing"}, {"word": "123", "start": 1.76, "end": 1.8399999, "confidence": 0.73616695, "punctuated_word": "123."}, {"word": "testing", "start": 1.8399999, "end": 2.34, "confidence": 0.99529773, "punctuated_word": "Testing"}, {"word": "123", "start": 2.8799999, "end": 3.3799999, "confidence": 0.9773819, "punctuated_word": "123."}]}]}, "metadata": {"model_info": {"name": "2-general-nova", "version": "2024-01-18.26916", "arch": "nova-3"}, "request_id": "0d2f1ddf-b9aa-40c9-a761-abcd8cf5734f", "model_uuid": "c0d1a568-ce81-4fea-97e7-bd45cb1fdf3c"}, "type": "Results", "channel_index": [0, 1], "duration": 3.69, "start": 0.0, "is_final": true, "from_finalize": false, "speech_final": true}'

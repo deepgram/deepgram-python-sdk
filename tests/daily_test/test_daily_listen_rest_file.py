@@ -12,7 +12,7 @@ from deepgram import DeepgramClient, PrerecordedOptions, FileSource
 
 from tests.utils import save_metadata_string
 
-MODEL = "2-general-nova"
+MODEL = "general-nova-3"
 
 # response constants
 FILE1 = "preamble-rest.wav"

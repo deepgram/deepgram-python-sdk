@@ -14,7 +14,7 @@ import httpx
 from deepgram import DeepgramClient, AnalyzeOptions, FileSource
 from tests.utils import read_metadata_string, save_metadata_string
 
-MODEL = "2-general-nova"
+MODEL = "general-nova-3"
 
 # response constants
 FILE1 = "conversation.txt"

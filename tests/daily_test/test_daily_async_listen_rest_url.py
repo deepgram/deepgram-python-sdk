@@ -12,7 +12,7 @@ from deepgram import DeepgramClient, PrerecordedOptions
 
 from tests.utils import save_metadata_string
 
-MODEL = "2-general-nova"
+MODEL = "general-nova-3"
 
 # response constants
 URL1 = {

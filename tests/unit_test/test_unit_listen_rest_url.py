@@ -14,7 +14,7 @@ import httpx
 from deepgram import DeepgramClient, PrerecordedOptions, PrerecordedResponse
 from tests.utils import read_metadata_string, save_metadata_string
 
-MODEL = "3-general-nova"
+MODEL = "general-nova-3"
 
 # response constants
 URL1 = {
