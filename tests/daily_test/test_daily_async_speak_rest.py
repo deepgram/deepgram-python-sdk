@@ -13,7 +13,7 @@ from deepgram import DeepgramClient, SpeakOptions, PrerecordedOptions, FileSourc
 from tests.utils import save_metadata_string
 
 TTS_MODEL = "aura-asteria-en"
-STT_MODEL = "2-general-nova"
+STT_MODEL = "general-nova-3"
 
 # response constants
 TEXT1 = "Hello, world."
@@ -23,7 +23,7 @@ input_output = [
     (
         TEXT1,
         SpeakOptions(model=TTS_MODEL, encoding="linear16", sample_rate=24000),
-        PrerecordedOptions(model="nova-2", smart_format=True),
+        PrerecordedOptions(model="nova-3", smart_format=True),
         {"results.channels.0.alternatives.0.transcript": [TEXT1]},
     ),
 ]

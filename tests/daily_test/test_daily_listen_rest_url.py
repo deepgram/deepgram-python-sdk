@@ -12,25 +12,25 @@ from deepgram import DeepgramClient, PrerecordedOptions
 
 from tests.utils import save_metadata_string
 
-MODEL = "2-general-nova"
+MODEL = "general-nova-3"
 
 # response constants
 URL1 = {
     "url": "https://static.deepgram.com/examples/Bueller-Life-moves-pretty-fast.wav"
 }
-URL1_SMART_FORMAT = "Yep. I said it before and I'll say it again. Life moves pretty fast. You don't stop and look around once in a while, you could miss it."
-URL1_SUMMARIZE = "Yep. I said it before and I'll say it again. Life moves pretty fast. You don't stop and look around once in a while, you could miss it."
+URL1_SMART_FORMAT = "Yep. I said it before, and I'll say it again. Life moves pretty fast. You don't stop and look around once in a while, you could miss it."
+URL1_SUMMARIZE = "Yep. I said it before, and I'll say it again. Life moves pretty fast. You don't stop and look around once in a while, you could miss it."
 
 # Create a list of tuples to store the key-value pairs
 input_output = [
     (
         URL1,
-        PrerecordedOptions(model="nova-2", smart_format=True),
+        PrerecordedOptions(model="nova-3", smart_format=True),
         {"results.channels.0.alternatives.0.transcript": [URL1_SMART_FORMAT]},
     ),
     (
         URL1,
-        PrerecordedOptions(model="nova-2", smart_format=True, summarize="v2"),
+        PrerecordedOptions(model="nova-3", smart_format=True, summarize="v2"),
         {
             "results.channels.0.alternatives.0.transcript": [URL1_SMART_FORMAT],
             "results.summary.short": [URL1_SUMMARIZE],

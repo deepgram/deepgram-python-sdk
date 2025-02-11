@@ -94,7 +94,7 @@ def main():
         dg_connection.on(LiveTranscriptionEvents.Unhandled, on_unhandled)
 
         options: LiveOptions = LiveOptions(
-            model="nova-2",
+            model="nova-3",
             language="en-US",
             # Apply smart formatting to the output
             smart_format=True,

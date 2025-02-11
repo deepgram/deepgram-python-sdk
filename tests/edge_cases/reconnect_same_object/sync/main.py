@@ -10,7 +10,7 @@ def main():
     # config: DeepgramClientOptions = DeepgramClientOptions()
     deepgram: DeepgramClient = DeepgramClient("", config)
     options: LiveOptions = LiveOptions(
-        model="nova-2",
+        model="nova-3",
         language="en-US",
         encoding="linear16",
         channels=1,

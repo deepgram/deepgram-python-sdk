@@ -23,7 +23,9 @@ class Listen(BaseResponse):
     This class defines any configuration settings for the Listen model.
     """
 
-    model: Optional[str] = field(default="nova-2")
+    model: Optional[str] = field(
+        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
+    )
 
 
 @dataclass

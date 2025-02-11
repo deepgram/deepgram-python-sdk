@@ -29,7 +29,7 @@ def main():
 
         # STEP 2 Call the transcribe_url method on the prerecorded class
         options: PrerecordedOptions = PrerecordedOptions(
-            model="nova-2",
+            model="nova-3",
             smart_format=True,
             summarize="v2",
         )

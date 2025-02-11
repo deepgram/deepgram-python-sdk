@@ -68,11 +68,14 @@ class LiveOptions(BaseResponse):  # pylint: disable=too-many-instance-attributes
     keywords: Optional[Union[List[str], str]] = field(
         default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
+    keyterm: Optional[List[str]] = field(
+        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
+    )
     language: Optional[str] = field(
         default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
     model: Optional[str] = field(
-        default="nova-2", metadata=dataclass_config(exclude=lambda f: f is None)
+        default="None", metadata=dataclass_config(exclude=lambda f: f is None)
     )
     multichannel: Optional[bool] = field(
         default=None, metadata=dataclass_config(exclude=lambda f: f is None)

@@ -68,7 +68,7 @@ def main():
         dg_connection.on(LiveTranscriptionEvents.Unhandled, on_unhandled)
 
         options = {
-            "model": "nova-2",
+            "model": "nova-3",
             "punctuate": True,
             "language": "en-US",
             "encoding": "linear16",

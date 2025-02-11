@@ -1,1 +1,5 @@
-{"model": "nova-2", "smart_format": true, "summarize": "v2"}
+{
+  "model": "nova-3",
+  "smart_format": true,
+  "summarize": "v2"
+}

@@ -1,1 +1,59 @@
-{"channel": {"alternatives": [{"transcript": "Testing. 123. Testing. 123.", "confidence": 0.987885, "words": [{"word": "testing", "start": 1.22, "end": 1.62, "confidence": 0.483064, "punctuated_word": "Testing."}, {"word": "123", "start": 1.62, "end": 2.12, "confidence": 0.93632686, "punctuated_word": "123."}, {"word": "testing", "start": 2.1799998, "end": 2.6799998, "confidence": 0.987885, "punctuated_word": "Testing."}, {"word": "123", "start": 3.1399999, "end": 3.6399999, "confidence": 0.99418044, "punctuated_word": "123."}]}]}, "metadata": {"model_info": {"name": "2-general-nova", "version": "2024-01-18.26916", "arch": "nova-2"}, "request_id": "26dd8cc9-77e6-4db7-a0ae-3034c013cb64", "model_uuid": "c0d1a568-ce81-4fea-97e7-bd45cb1fdf3c"}, "type": "Results", "channel_index": [0, 1], "duration": 3.08, "start": 0.74, "is_final": true, "from_finalize": false, "speech_final": true}
+{
+  "channel": {
+    "alternatives": [
+      {
+        "transcript": "Testing. 123. Testing. 123.",
+        "confidence": 0.987885,
+        "words": [
+          {
+            "word": "testing",
+            "start": 1.22,
+            "end": 1.62,
+            "confidence": 0.483064,
+            "punctuated_word": "Testing."
+          },
+          {
+            "word": "123",
+            "start": 1.62,
+            "end": 2.12,
+            "confidence": 0.93632686,
+            "punctuated_word": "123."
+          },
+          {
+            "word": "testing",
+            "start": 2.1799998,
+            "end": 2.6799998,
+            "confidence": 0.987885,
+            "punctuated_word": "Testing."
+          },
+          {
+            "word": "123",
+            "start": 3.1399999,
+            "end": 3.6399999,
+            "confidence": 0.99418044,
+            "punctuated_word": "123."
+          }
+        ]
+      }
+    ]
+  },
+  "metadata": {
+    "model_info": {
+      "name": "2-general-nova",
+      "version": "2024-01-18.26916",
+      "arch": "nova-3"
+    },
+    "request_id": "26dd8cc9-77e6-4db7-a0ae-3034c013cb64",
+    "model_uuid": "c0d1a568-ce81-4fea-97e7-bd45cb1fdf3c"
+  },
+  "type": "Results",
+  "channel_index": [
+    0,
+    1
+  ],
+  "duration": 3.08,
+  "start": 0.74,
+  "is_final": true,
+  "from_finalize": false,
+  "speech_final": true
+}

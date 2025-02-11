@@ -14,7 +14,7 @@ import httpx
 from deepgram import DeepgramClient, PrerecordedOptions, FileSource
 from tests.utils import read_metadata_string, save_metadata_string
 
-MODEL = "2-general-nova"
+MODEL = "general-nova-3"
 
 # response constants
 FILE1 = "preamble-rest.wav"
@@ -25,12 +25,12 @@ FILE1_SUMMARIZE1 = "*"
 input_output = [
     (
         FILE1,
-        PrerecordedOptions(model="nova-2", smart_format=True),
+        PrerecordedOptions(model="nova-3", smart_format=True),
         {"results.channels.0.alternatives.0.transcript": [FILE1_SMART_FORMAT]},
     ),
     (
         FILE1,
-        PrerecordedOptions(model="nova-2", smart_format=True, summarize="v2"),
+        PrerecordedOptions(model="nova-3", smart_format=True, summarize="v2"),
         {
             "results.channels.0.alternatives.0.transcript": [FILE1_SMART_FORMAT],
             "results.summary.short": [

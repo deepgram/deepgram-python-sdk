@@ -27,7 +27,7 @@ def main():
 
         # STEP 2 Call the transcribe_url method on the rest class
         options = {
-            "mode": "nova-2",
+            "mode": "nova-3",
             "smart_format": True,
         }
         response = deepgram.listen.rest.v("1").transcribe_url(AUDIO_URL, options)

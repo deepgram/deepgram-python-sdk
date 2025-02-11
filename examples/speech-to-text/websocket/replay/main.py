@@ -67,7 +67,7 @@ def main():
 
         # connect to websocket
         options = LiveOptions(
-            model="nova-2",
+            model="nova-3",
             language="en-US",
             encoding="linear16",
             sample_rate=22050,

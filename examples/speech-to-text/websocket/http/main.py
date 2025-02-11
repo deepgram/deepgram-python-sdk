@@ -69,7 +69,7 @@ def main():
         dg_connection.on(LiveTranscriptionEvents.Unhandled, on_unhandled)
 
         # connect to websocket
-        options = LiveOptions(model="nova-2", language="en-US")
+        options = LiveOptions(model="nova-3", language="en-US")
 
         print("\n\nPress Enter to stop recording...\n\n")
         if dg_connection.start(options) is False:

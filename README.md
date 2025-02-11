@@ -85,7 +85,7 @@ deepgram: DeepgramClient = DeepgramClient("", ClientOptionsFromEnv())
 
 ## STEP 2 Call the transcribe_url method on the prerecorded class
 options: PrerecordedOptions = PrerecordedOptions(
-    model="nova-2",
+    model="nova-3",
     smart_format=True,
 )
 response = deepgram.listen.rest.v("1").transcribe_url(AUDIO_URL, options)
@@ -134,7 +134,7 @@ dg_connection.on(LiveTranscriptionEvents.Error, on_error)
 dg_connection.on(LiveTranscriptionEvents.Close, on_close)
 
 options: LiveOptions = LiveOptions(
-    model="nova-2",
+    model="nova-3",
     punctuate=True,
     language="en-US",
     encoding="linear16",

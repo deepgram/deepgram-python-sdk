@@ -39,7 +39,7 @@ def main():
                 "stream": stream,
             }
             options = PrerecordedOptions(
-                model="nova-2",
+                model="nova-3",
             )
             response = deepgram.listen.rest.v("1").transcribe_file(payload, options)
             print(response.to_json(indent=4))

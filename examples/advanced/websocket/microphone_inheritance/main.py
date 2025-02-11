@@ -79,7 +79,7 @@ def main():
         liveClient: MyLiveClient = MyLiveClient(ClientOptionsFromEnv())
 
         options: LiveOptions = LiveOptions(
-            model="nova-2",
+            model="nova-3",
             punctuate=True,
             language="en-US",
             encoding="linear16",
