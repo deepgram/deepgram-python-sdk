@@ -13,6 +13,7 @@ Official Python SDK for [Deepgram](https://www.deepgram.com/). Power your apps w
 - [Quickstarts](#quickstarts)
   - [PreRecorded Audio Transcription Quickstart](#prerecorded-audio-transcription-quickstart)
   - [Live Audio Transcription Quickstart](#live-audio-transcription-quickstart)
+  - [Self-Hosted](#self-hosted)
 - [Examples](#examples)
 - [Logging](#logging)
 - [Backwards Compatibility](#backwards-compatibility)
@@ -164,6 +165,12 @@ dg_connection.finish()
 
 print("Finished")
 ```
+
+### Self-Hosted
+
+To use the SDKs with self-hosted, please see our self-hosted developer documentation for more information:
+
+https://developers.deepgram.com/docs/using-sdks-with-self-hosted#python-sdk
 
 ## Examples
 
