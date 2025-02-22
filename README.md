@@ -170,7 +170,7 @@ print("Finished")
 
 To use the SDKs with self-hosted, please see our self-hosted developer documentation for more information:
 
-https://developers.deepgram.com/docs/using-sdks-with-self-hosted#python-sdk
+<https://developers.deepgram.com/docs/using-sdks-with-self-hosted#python-sdk>
 
 ## Examples
 
