@@ -225,7 +225,7 @@ class AsyncAgentWebSocketClient(
         else:
             raise DeepgramError("Invalid options type")
 
-        if self._settings.agent.listen.keyterms is not None and not self._settings.agent.listen.model.startswith("nova-3"):
+        if self._settings.agent.listen.keyterms is not None and self._settings.agent.listen.model is not None and not self._settings.agent.listen.model.startswith("nova-3"):
             raise DeepgramError("Keyterms are only supported for nova-3 models")
 
         try:
