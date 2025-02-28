@@ -136,6 +136,8 @@ def main():
 
         # connect to websocket
         options: SettingsConfigurationOptions = SettingsConfigurationOptions()
+        options.agent.listen.model = "nova-3"
+        options.agent.listen.keyterms = ["hello", "goodbye"]
         options.agent.think.provider.type = "open_ai"
         options.agent.think.model = "gpt-4o-mini"
         options.agent.think.instructions = "You are a helpful AI assistant."

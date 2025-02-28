@@ -26,6 +26,9 @@ class Listen(BaseResponse):
     model: Optional[str] = field(
         default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
+    keyterms: Optional[List[str]] = field(
+        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
+    )
 
 
 @dataclass
