@@ -212,7 +212,7 @@ To run each example set the `DEEPGRAM_API_KEY` as an environment variable, then 
 
 ### Live Audio Transcription
 
-- From a Microphone - [examples/streaming/microphone](https://github.com/deepgram/deepgram-python-sdk/blob/main/examples/speech-to-text/rest/stream_file/main.py)
+- From a Microphone - [examples/streaming/microphone](https://github.com/deepgram/deepgram-python-sdk/blob/main/examples/speech-to-text/websocket/microphone/main.py)
 - From an HTTP Endpoint - [examples/streaming/http](https://github.com/deepgram/deepgram-python-sdk/blob/main/examples/speech-to-text/rest/async_url/main.py)
 
 Management API exercise the full [CRUD](https://en.wikipedia.org/wiki/Create,_read,_update_and_delete) operations for:
