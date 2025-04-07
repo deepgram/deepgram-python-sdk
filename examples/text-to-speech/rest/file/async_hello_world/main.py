@@ -26,7 +26,7 @@ async def main():
 
         # STEP 2 Call the save method on the asyncspeak property
         options = SpeakOptions(
-            model="aura-asteria-en",
+            model="aura-2-thalia-en",
         )
 
         response = await deepgram.speak.asyncrest.v("1").save(

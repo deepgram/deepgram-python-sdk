@@ -90,7 +90,7 @@ async def main():
 
         # connect to websocket
         options = SpeakWSOptions(
-            model="aura-asteria-en",
+            model="aura-2-thalia-en",
             encoding="linear16",
             sample_rate=16000,
         )
