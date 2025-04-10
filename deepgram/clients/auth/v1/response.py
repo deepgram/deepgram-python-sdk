@@ -16,7 +16,7 @@ class GrantTokenResponse(BaseResponse):
     """
     access_token: str = field(
         metadata=dataclass_config(field_name='access_token'),
-        default=None,
+        default="",
     )
     expires_in: int = field(
         metadata=dataclass_config(field_name='expires_in'),
