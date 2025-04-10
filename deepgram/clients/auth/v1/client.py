@@ -12,8 +12,8 @@ from .response import GrantTokenResponse
 
 class AuthRESTClient(AbstractSyncRestClient):
     """
-    A client class for handling pre-recorded audio data.
-    Provides methods for transcribing audio from URLs and files.
+    A client class for handling authentication endpoints.
+    Provides method for generating a temporary JWT token.
     """
 
     _logger: verboselogs.VerboseLogger
@@ -33,7 +33,7 @@ class AuthRESTClient(AbstractSyncRestClient):
         Generates a temporary JWT with a 30 second TTL.
 
         Returns:
-            GrantTokenResponse: An object containing the transcription result.
+            GrantTokenResponse: An object containing the authentication token and its expiration time.
 
         Raises:
             DeepgramTypeError: Raised for known API errors.
@@ -42,7 +42,7 @@ class AuthRESTClient(AbstractSyncRestClient):
 
         url = f"{self._config.url}/{self._endpoint}"
         self._logger.info("url: %s", url)
-        result = self.post(url, headers={"auth": self._config.api_key})
+        result = self.post(url, headers={"Authorization": f"Token {self._config.api_key}"})
         self._logger.info("json: %s", result)
         res = GrantTokenResponse.from_json(result)
         self._logger.verbose("result: %s", res)

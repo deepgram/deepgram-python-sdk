@@ -26,7 +26,7 @@ def main():
         config = DeepgramClientOptions(
             verbose=verboselogs.SPAM,
         )
-        deepgram: DeepgramClient = DeepgramClient("", config)
+        deepgram: DeepgramClient = DeepgramClient(os.getenv("DEEPGRAM_API_KEY", ""), config)
 
         # STEP 2 Call the grant_token method on the auth rest class
         response = deepgram.auth.v("1").grant_token()

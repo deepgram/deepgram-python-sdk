@@ -3,6 +3,6 @@
 # SPDX-License-Identifier: MIT
 from .client import AuthRESTClient
 from .async_client import AsyncAuthRESTClient
-from .client import (
+from .response import (
     GrantTokenResponse,
 )
