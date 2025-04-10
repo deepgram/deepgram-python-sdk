@@ -312,6 +312,12 @@ from .manage import (
     Balance,
 )
 
+# auth
+from .auth import AuthRESTClient, AsyncAuthRESTClient
+from .auth import (
+    GrantTokenResponse,
+)
+
 # selfhosted
 from .selfhosted import (
     OnPremClient,
