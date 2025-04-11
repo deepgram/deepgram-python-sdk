@@ -4,21 +4,14 @@
 
 import os
 from dotenv import load_dotenv
-import logging
 from deepgram.utils import verboselogs
 
 from deepgram import (
     DeepgramClient,
-    PrerecordedOptions,
     DeepgramClientOptions
 )
 
 load_dotenv()
-
-AUDIO_URL = {
-    "url": "https://static.deepgram.com/examples/Bueller-Life-moves-pretty-fast.wav"
-}
-
 
 def main():
     try:
