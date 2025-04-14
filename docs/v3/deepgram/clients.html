@@ -32,6 +32,7 @@
                     <li><a href="clients/agent.html">agent</a></li>
                     <li><a href="clients/agent_router.html">agent_router</a></li>
                     <li><a href="clients/analyze.html">analyze</a></li>
+                    <li><a href="clients/auth.html">auth</a></li>
                     <li><a href="clients/common.html">common</a></li>
                     <li><a href="clients/errors.html">errors</a></li>
                     <li><a href="clients/listen.html">listen</a></li>
@@ -378,66 +379,72 @@
 </span><span id="L-312"><a href="#L-312"><span class="linenos">312</span></a>    <span class="n">Balance</span><span class="p">,</span>
 </span><span id="L-313"><a href="#L-313"><span class="linenos">313</span></a><span class="p">)</span>
 </span><span id="L-314"><a href="#L-314"><span class="linenos">314</span></a>
-</span><span id="L-315"><a href="#L-315"><span class="linenos">315</span></a><span class="c1"># selfhosted</span>
-</span><span id="L-316"><a href="#L-316"><span class="linenos">316</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">.selfhosted</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
-</span><span id="L-317"><a href="#L-317"><span class="linenos">317</span></a>    <span class="n">OnPremClient</span><span class="p">,</span>
-</span><span id="L-318"><a href="#L-318"><span class="linenos">318</span></a>    <span class="n">AsyncOnPremClient</span><span class="p">,</span>
-</span><span id="L-319"><a href="#L-319"><span class="linenos">319</span></a>    <span class="n">SelfHostedClient</span><span class="p">,</span>
-</span><span id="L-320"><a href="#L-320"><span class="linenos">320</span></a>    <span class="n">AsyncSelfHostedClient</span><span class="p">,</span>
-</span><span id="L-321"><a href="#L-321"><span class="linenos">321</span></a><span class="p">)</span>
-</span><span id="L-322"><a href="#L-322"><span class="linenos">322</span></a>
-</span><span id="L-323"><a href="#L-323"><span class="linenos">323</span></a><span class="c1"># agent</span>
-</span><span id="L-324"><a href="#L-324"><span class="linenos">324</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">.agent</span><span class="w"> </span><span class="kn">import</span> <span class="n">AgentWebSocketEvents</span>
-</span><span id="L-325"><a href="#L-325"><span class="linenos">325</span></a>
-</span><span id="L-326"><a href="#L-326"><span class="linenos">326</span></a><span class="c1"># websocket</span>
-</span><span id="L-327"><a href="#L-327"><span class="linenos">327</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">.agent</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
-</span><span id="L-328"><a href="#L-328"><span class="linenos">328</span></a>    <span class="n">AgentWebSocketClient</span><span class="p">,</span>
-</span><span id="L-329"><a href="#L-329"><span class="linenos">329</span></a>    <span class="n">AsyncAgentWebSocketClient</span><span class="p">,</span>
-</span><span id="L-330"><a href="#L-330"><span class="linenos">330</span></a><span class="p">)</span>
+</span><span id="L-315"><a href="#L-315"><span class="linenos">315</span></a><span class="c1"># auth</span>
+</span><span id="L-316"><a href="#L-316"><span class="linenos">316</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">.auth</span><span class="w"> </span><span class="kn">import</span> <span class="n">AuthRESTClient</span><span class="p">,</span> <span class="n">AsyncAuthRESTClient</span>
+</span><span id="L-317"><a href="#L-317"><span class="linenos">317</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">.auth</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+</span><span id="L-318"><a href="#L-318"><span class="linenos">318</span></a>    <span class="n">GrantTokenResponse</span><span class="p">,</span>
+</span><span id="L-319"><a href="#L-319"><span class="linenos">319</span></a><span class="p">)</span>
+</span><span id="L-320"><a href="#L-320"><span class="linenos">320</span></a>
+</span><span id="L-321"><a href="#L-321"><span class="linenos">321</span></a><span class="c1"># selfhosted</span>
+</span><span id="L-322"><a href="#L-322"><span class="linenos">322</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">.selfhosted</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+</span><span id="L-323"><a href="#L-323"><span class="linenos">323</span></a>    <span class="n">OnPremClient</span><span class="p">,</span>
+</span><span id="L-324"><a href="#L-324"><span class="linenos">324</span></a>    <span class="n">AsyncOnPremClient</span><span class="p">,</span>
+</span><span id="L-325"><a href="#L-325"><span class="linenos">325</span></a>    <span class="n">SelfHostedClient</span><span class="p">,</span>
+</span><span id="L-326"><a href="#L-326"><span class="linenos">326</span></a>    <span class="n">AsyncSelfHostedClient</span><span class="p">,</span>
+</span><span id="L-327"><a href="#L-327"><span class="linenos">327</span></a><span class="p">)</span>
+</span><span id="L-328"><a href="#L-328"><span class="linenos">328</span></a>
+</span><span id="L-329"><a href="#L-329"><span class="linenos">329</span></a><span class="c1"># agent</span>
+</span><span id="L-330"><a href="#L-330"><span class="linenos">330</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">.agent</span><span class="w"> </span><span class="kn">import</span> <span class="n">AgentWebSocketEvents</span>
 </span><span id="L-331"><a href="#L-331"><span class="linenos">331</span></a>
-</span><span id="L-332"><a href="#L-332"><span class="linenos">332</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">.agent</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
-</span><span id="L-333"><a href="#L-333"><span class="linenos">333</span></a>    <span class="c1">#### common websocket response</span>
-</span><span id="L-334"><a href="#L-334"><span class="linenos">334</span></a>    <span class="c1"># OpenResponse,</span>
-</span><span id="L-335"><a href="#L-335"><span class="linenos">335</span></a>    <span class="c1"># CloseResponse,</span>
-</span><span id="L-336"><a href="#L-336"><span class="linenos">336</span></a>    <span class="c1"># ErrorResponse,</span>
-</span><span id="L-337"><a href="#L-337"><span class="linenos">337</span></a>    <span class="c1"># UnhandledResponse,</span>
-</span><span id="L-338"><a href="#L-338"><span class="linenos">338</span></a>    <span class="c1">#### unique</span>
-</span><span id="L-339"><a href="#L-339"><span class="linenos">339</span></a>    <span class="n">WelcomeResponse</span><span class="p">,</span>
-</span><span id="L-340"><a href="#L-340"><span class="linenos">340</span></a>    <span class="n">SettingsAppliedResponse</span><span class="p">,</span>
-</span><span id="L-341"><a href="#L-341"><span class="linenos">341</span></a>    <span class="n">ConversationTextResponse</span><span class="p">,</span>
-</span><span id="L-342"><a href="#L-342"><span class="linenos">342</span></a>    <span class="n">UserStartedSpeakingResponse</span><span class="p">,</span>
-</span><span id="L-343"><a href="#L-343"><span class="linenos">343</span></a>    <span class="n">AgentThinkingResponse</span><span class="p">,</span>
-</span><span id="L-344"><a href="#L-344"><span class="linenos">344</span></a>    <span class="n">FunctionCalling</span><span class="p">,</span>
-</span><span id="L-345"><a href="#L-345"><span class="linenos">345</span></a>    <span class="n">FunctionCallRequest</span><span class="p">,</span>
-</span><span id="L-346"><a href="#L-346"><span class="linenos">346</span></a>    <span class="n">AgentStartedSpeakingResponse</span><span class="p">,</span>
-</span><span id="L-347"><a href="#L-347"><span class="linenos">347</span></a>    <span class="n">AgentAudioDoneResponse</span><span class="p">,</span>
-</span><span id="L-348"><a href="#L-348"><span class="linenos">348</span></a>    <span class="n">InjectionRefusedResponse</span><span class="p">,</span>
-</span><span id="L-349"><a href="#L-349"><span class="linenos">349</span></a><span class="p">)</span>
-</span><span id="L-350"><a href="#L-350"><span class="linenos">350</span></a>
-</span><span id="L-351"><a href="#L-351"><span class="linenos">351</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">.agent</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
-</span><span id="L-352"><a href="#L-352"><span class="linenos">352</span></a>    <span class="c1"># top level</span>
-</span><span id="L-353"><a href="#L-353"><span class="linenos">353</span></a>    <span class="n">SettingsConfigurationOptions</span><span class="p">,</span>
-</span><span id="L-354"><a href="#L-354"><span class="linenos">354</span></a>    <span class="n">UpdateInstructionsOptions</span><span class="p">,</span>
-</span><span id="L-355"><a href="#L-355"><span class="linenos">355</span></a>    <span class="n">UpdateSpeakOptions</span><span class="p">,</span>
-</span><span id="L-356"><a href="#L-356"><span class="linenos">356</span></a>    <span class="n">InjectAgentMessageOptions</span><span class="p">,</span>
-</span><span id="L-357"><a href="#L-357"><span class="linenos">357</span></a>    <span class="n">FunctionCallResponse</span><span class="p">,</span>
-</span><span id="L-358"><a href="#L-358"><span class="linenos">358</span></a>    <span class="n">AgentKeepAlive</span><span class="p">,</span>
-</span><span id="L-359"><a href="#L-359"><span class="linenos">359</span></a>    <span class="c1"># sub level</span>
-</span><span id="L-360"><a href="#L-360"><span class="linenos">360</span></a>    <span class="n">Listen</span><span class="p">,</span>
-</span><span id="L-361"><a href="#L-361"><span class="linenos">361</span></a>    <span class="n">Speak</span><span class="p">,</span>
-</span><span id="L-362"><a href="#L-362"><span class="linenos">362</span></a>    <span class="n">Header</span><span class="p">,</span>
-</span><span id="L-363"><a href="#L-363"><span class="linenos">363</span></a>    <span class="n">Item</span><span class="p">,</span>
-</span><span id="L-364"><a href="#L-364"><span class="linenos">364</span></a>    <span class="n">Properties</span><span class="p">,</span>
-</span><span id="L-365"><a href="#L-365"><span class="linenos">365</span></a>    <span class="n">Parameters</span><span class="p">,</span>
-</span><span id="L-366"><a href="#L-366"><span class="linenos">366</span></a>    <span class="n">Function</span><span class="p">,</span>
-</span><span id="L-367"><a href="#L-367"><span class="linenos">367</span></a>    <span class="n">Provider</span><span class="p">,</span>
-</span><span id="L-368"><a href="#L-368"><span class="linenos">368</span></a>    <span class="n">Think</span><span class="p">,</span>
-</span><span id="L-369"><a href="#L-369"><span class="linenos">369</span></a>    <span class="n">Agent</span><span class="p">,</span>
-</span><span id="L-370"><a href="#L-370"><span class="linenos">370</span></a>    <span class="n">Input</span><span class="p">,</span>
-</span><span id="L-371"><a href="#L-371"><span class="linenos">371</span></a>    <span class="n">Output</span><span class="p">,</span>
-</span><span id="L-372"><a href="#L-372"><span class="linenos">372</span></a>    <span class="n">Audio</span><span class="p">,</span>
-</span><span id="L-373"><a href="#L-373"><span class="linenos">373</span></a>    <span class="n">Context</span><span class="p">,</span>
-</span><span id="L-374"><a href="#L-374"><span class="linenos">374</span></a><span class="p">)</span>
+</span><span id="L-332"><a href="#L-332"><span class="linenos">332</span></a><span class="c1"># websocket</span>
+</span><span id="L-333"><a href="#L-333"><span class="linenos">333</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">.agent</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+</span><span id="L-334"><a href="#L-334"><span class="linenos">334</span></a>    <span class="n">AgentWebSocketClient</span><span class="p">,</span>
+</span><span id="L-335"><a href="#L-335"><span class="linenos">335</span></a>    <span class="n">AsyncAgentWebSocketClient</span><span class="p">,</span>
+</span><span id="L-336"><a href="#L-336"><span class="linenos">336</span></a><span class="p">)</span>
+</span><span id="L-337"><a href="#L-337"><span class="linenos">337</span></a>
+</span><span id="L-338"><a href="#L-338"><span class="linenos">338</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">.agent</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+</span><span id="L-339"><a href="#L-339"><span class="linenos">339</span></a>    <span class="c1">#### common websocket response</span>
+</span><span id="L-340"><a href="#L-340"><span class="linenos">340</span></a>    <span class="c1"># OpenResponse,</span>
+</span><span id="L-341"><a href="#L-341"><span class="linenos">341</span></a>    <span class="c1"># CloseResponse,</span>
+</span><span id="L-342"><a href="#L-342"><span class="linenos">342</span></a>    <span class="c1"># ErrorResponse,</span>
+</span><span id="L-343"><a href="#L-343"><span class="linenos">343</span></a>    <span class="c1"># UnhandledResponse,</span>
+</span><span id="L-344"><a href="#L-344"><span class="linenos">344</span></a>    <span class="c1">#### unique</span>
+</span><span id="L-345"><a href="#L-345"><span class="linenos">345</span></a>    <span class="n">WelcomeResponse</span><span class="p">,</span>
+</span><span id="L-346"><a href="#L-346"><span class="linenos">346</span></a>    <span class="n">SettingsAppliedResponse</span><span class="p">,</span>
+</span><span id="L-347"><a href="#L-347"><span class="linenos">347</span></a>    <span class="n">ConversationTextResponse</span><span class="p">,</span>
+</span><span id="L-348"><a href="#L-348"><span class="linenos">348</span></a>    <span class="n">UserStartedSpeakingResponse</span><span class="p">,</span>
+</span><span id="L-349"><a href="#L-349"><span class="linenos">349</span></a>    <span class="n">AgentThinkingResponse</span><span class="p">,</span>
+</span><span id="L-350"><a href="#L-350"><span class="linenos">350</span></a>    <span class="n">FunctionCalling</span><span class="p">,</span>
+</span><span id="L-351"><a href="#L-351"><span class="linenos">351</span></a>    <span class="n">FunctionCallRequest</span><span class="p">,</span>
+</span><span id="L-352"><a href="#L-352"><span class="linenos">352</span></a>    <span class="n">AgentStartedSpeakingResponse</span><span class="p">,</span>
+</span><span id="L-353"><a href="#L-353"><span class="linenos">353</span></a>    <span class="n">AgentAudioDoneResponse</span><span class="p">,</span>
+</span><span id="L-354"><a href="#L-354"><span class="linenos">354</span></a>    <span class="n">InjectionRefusedResponse</span><span class="p">,</span>
+</span><span id="L-355"><a href="#L-355"><span class="linenos">355</span></a><span class="p">)</span>
+</span><span id="L-356"><a href="#L-356"><span class="linenos">356</span></a>
+</span><span id="L-357"><a href="#L-357"><span class="linenos">357</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">.agent</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+</span><span id="L-358"><a href="#L-358"><span class="linenos">358</span></a>    <span class="c1"># top level</span>
+</span><span id="L-359"><a href="#L-359"><span class="linenos">359</span></a>    <span class="n">SettingsConfigurationOptions</span><span class="p">,</span>
+</span><span id="L-360"><a href="#L-360"><span class="linenos">360</span></a>    <span class="n">UpdateInstructionsOptions</span><span class="p">,</span>
+</span><span id="L-361"><a href="#L-361"><span class="linenos">361</span></a>    <span class="n">UpdateSpeakOptions</span><span class="p">,</span>
+</span><span id="L-362"><a href="#L-362"><span class="linenos">362</span></a>    <span class="n">InjectAgentMessageOptions</span><span class="p">,</span>
+</span><span id="L-363"><a href="#L-363"><span class="linenos">363</span></a>    <span class="n">FunctionCallResponse</span><span class="p">,</span>
+</span><span id="L-364"><a href="#L-364"><span class="linenos">364</span></a>    <span class="n">AgentKeepAlive</span><span class="p">,</span>
+</span><span id="L-365"><a href="#L-365"><span class="linenos">365</span></a>    <span class="c1"># sub level</span>
+</span><span id="L-366"><a href="#L-366"><span class="linenos">366</span></a>    <span class="n">Listen</span><span class="p">,</span>
+</span><span id="L-367"><a href="#L-367"><span class="linenos">367</span></a>    <span class="n">Speak</span><span class="p">,</span>
+</span><span id="L-368"><a href="#L-368"><span class="linenos">368</span></a>    <span class="n">Header</span><span class="p">,</span>
+</span><span id="L-369"><a href="#L-369"><span class="linenos">369</span></a>    <span class="n">Item</span><span class="p">,</span>
+</span><span id="L-370"><a href="#L-370"><span class="linenos">370</span></a>    <span class="n">Properties</span><span class="p">,</span>
+</span><span id="L-371"><a href="#L-371"><span class="linenos">371</span></a>    <span class="n">Parameters</span><span class="p">,</span>
+</span><span id="L-372"><a href="#L-372"><span class="linenos">372</span></a>    <span class="n">Function</span><span class="p">,</span>
+</span><span id="L-373"><a href="#L-373"><span class="linenos">373</span></a>    <span class="n">Provider</span><span class="p">,</span>
+</span><span id="L-374"><a href="#L-374"><span class="linenos">374</span></a>    <span class="n">Think</span><span class="p">,</span>
+</span><span id="L-375"><a href="#L-375"><span class="linenos">375</span></a>    <span class="n">Agent</span><span class="p">,</span>
+</span><span id="L-376"><a href="#L-376"><span class="linenos">376</span></a>    <span class="n">Input</span><span class="p">,</span>
+</span><span id="L-377"><a href="#L-377"><span class="linenos">377</span></a>    <span class="n">Output</span><span class="p">,</span>
+</span><span id="L-378"><a href="#L-378"><span class="linenos">378</span></a>    <span class="n">Audio</span><span class="p">,</span>
+</span><span id="L-379"><a href="#L-379"><span class="linenos">379</span></a>    <span class="n">Context</span><span class="p">,</span>
+</span><span id="L-380"><a href="#L-380"><span class="linenos">380</span></a><span class="p">)</span>
 </span></pre></div>
 
 
