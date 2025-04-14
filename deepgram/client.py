@@ -248,6 +248,14 @@ from .clients import (
     # ErrorResponse,
 )
 
+# auth client classes
+from .clients import AuthRESTClient, AsyncAuthRESTClient
+
+# auth client responses
+from .clients import (
+    GrantTokenResponse,
+)
+
 # manage client classes/input
 from .clients import ManageClient, AsyncManageClient
 from .clients import (
@@ -496,6 +504,20 @@ class DeepgramClient:
         return self.Version(self._config, "asyncmanage")
 
     @property
+    def auth(self):
+        """
+        Returns an AuthRESTClient instance for managing short-lived tokens.
+        """
+        return self.Version(self._config, "auth")
+
+    @property
+    def asyncauth(self):
+        """
+        Returns an AsyncAuthRESTClient instance for managing short-lived tokens.
+        """
+        return self.Version(self._config, "asyncauth")
+
+    @property
     @deprecation.deprecated(
         deprecated_in="3.4.0",
         removed_in="4.0.0",
@@ -606,6 +628,14 @@ class DeepgramClient:
                     parent = "selfhosted"
                     filename = "async_client"
                     classname = "AsyncSelfHostedClient"
+                case "auth":
+                    parent = "auth"
+                    filename = "client"
+                    classname = "AuthRESTClient"
+                case "asyncauth":
+                    parent = "auth"
+                    filename = "async_client"
+                    classname = "AsyncAuthRESTClient"
                 case _:
                     self._logger.error("parent unknown: %s", self._parent)
                     self._logger.debug("Version.v LEAVE")
