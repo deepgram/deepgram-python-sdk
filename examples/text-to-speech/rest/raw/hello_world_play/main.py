@@ -64,7 +64,7 @@ def main():
 
         # STEP 2: Call the save method on the speak property
         options = SpeakOptions(
-            model="aura-asteria-en",
+            model="aura-2-thalia-en",
             encoding="linear16",
             container="none",
             sample_rate=48000,

@@ -29,7 +29,7 @@ def main():
 
         # STEP 2 Call the save method on the speak property
         options = SpeakOptions(
-            model="aura-asteria-en",
+            model="aura-2-thalia-en",
         )
 
         response = deepgram.speak.rest.v("1").stream_raw(SPEAK_TEXT, options)
