@@ -160,15 +160,28 @@ class SpeakRESTClient(AbstractSyncRestClient):
         self._logger.info("addons: %s", addons)
         self._logger.info("headers: %s", headers)
 
-        return_vals = [
-            "content-type",
-            "request-id",
-            "model-uuid",
-            "model-name",
-            "char-count",
-            "transfer-encoding",
-            "date",
-        ]
+        is_aura_2_model = options["model"].split("-")[1] == "2"
+
+        if is_aura_2_model:
+            return_vals = [
+                "content-type",
+                "request-id",
+                "model-name",
+                "characters",
+                "transfer-encoding",
+                "date",
+            ]
+        else:
+            return_vals = [
+                "content-type",
+                "request-id",
+                "model-uuid",
+                "model-name",
+                "char-count",
+                "transfer-encoding",
+                "date",
+            ]
+
         result = self.post_memory(
             url,
             options=options,
@@ -181,17 +194,31 @@ class SpeakRESTClient(AbstractSyncRestClient):
         )
 
         self._logger.info("result: %s", result)
-        resp = SpeakRESTResponse(
-            content_type=str(result["content-type"]),
-            request_id=str(result["request-id"]),
-            model_uuid=str(result["model-uuid"]),
-            model_name=str(result["model-name"]),
-            characters=int(str(result["char-count"])),
-            transfer_encoding=str(result["transfer-encoding"]),
-            date=str(result["date"]),
-            stream=cast(io.BytesIO, result["stream"]),
-            stream_memory=cast(io.BytesIO, result["stream"]),
-        )
+
+        if is_aura_2_model:
+            resp = SpeakRESTResponse(
+                content_type=str(result["content-type"]),
+                request_id=str(result["request-id"]),
+                model_name=str(result["model-name"]),
+                characters=int(str(result["characters"])),
+                transfer_encoding=str(result["transfer-encoding"]),
+                date=str(result["date"]),
+                stream=cast(io.BytesIO, result["stream"]),
+                stream_memory=cast(io.BytesIO, result["stream"]),
+            )
+        else:
+            resp = SpeakRESTResponse(
+                content_type=str(result["content-type"]),
+                request_id=str(result["request-id"]),
+                model_uuid=str(result["model-uuid"]),
+                model_name=str(result["model-name"]),
+                characters=int(str(result["char-count"])),
+                transfer_encoding=str(result["transfer-encoding"]),
+                date=str(result["date"]),
+                stream=cast(io.BytesIO, result["stream"]),
+                stream_memory=cast(io.BytesIO, result["stream"]),
+            )
+
         self._logger.verbose("resp Object: %s", resp)
         self._logger.notice("speak succeeded")
         self._logger.debug("SpeakClient.stream LEAVE")
