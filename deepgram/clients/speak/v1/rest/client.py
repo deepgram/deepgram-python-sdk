@@ -166,7 +166,6 @@ class SpeakRESTClient(AbstractSyncRestClient):
             "model-uuid",
             "model-name",
             "char-count",
-            "characters", # Initial Aura-2 variation of char-count
             "transfer-encoding",
             "date",
         ]
@@ -182,13 +181,12 @@ class SpeakRESTClient(AbstractSyncRestClient):
         )
 
         self._logger.info("result: %s", result)
-
         resp = SpeakRESTResponse(
             content_type=str(result["content-type"]),
             request_id=str(result["request-id"]),
             model_uuid=str(result.get("model-uuid", "")),
             model_name=str(result["model-name"]),
-            characters=int(str(result.get("char-count") or result.get("characters"))),
+            characters=int(str(result["char-count"])),
             transfer_encoding=str(result["transfer-encoding"]),
             date=str(result["date"]),
             stream=cast(io.BytesIO, result["stream"]),
