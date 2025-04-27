@@ -30,7 +30,7 @@ class AgentWebSocketEvents(StrEnum):
 
     # client
     SettingsConfiguration: str = "SettingsConfiguration"
-    UpdateInstructions: str = "UpdateInstructions"
+    UpdatePrompt: str = "UpdatePrompt"
     UpdateSpeak: str = "UpdateSpeak"
     InjectAgentMessage: str = "InjectAgentMessage"
     InjectionRefused: str = "InjectionRefused"

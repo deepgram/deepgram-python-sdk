@@ -294,17 +294,17 @@ class SettingsConfigurationOptions(BaseResponse):
         return True
 
 
-# UpdateInstructions
+# UpdatePrompt
 
 
 @dataclass
-class UpdateInstructionsOptions(BaseResponse):
+class UpdatePromptOptions(BaseResponse):
     """
-    The client can send an UpdateInstructions message to give additional instructions to the Think model in the middle of a conversation.
+    The client can send an UpdatePrompt message to provide a new prompt to the Think model in the middle of a conversation.
     """
 
-    type: str = str(AgentWebSocketEvents.UpdateInstructions)
-    instructions: str = field(default="")
+    type: str = str(AgentWebSocketEvents.UpdatePrompt)
+    prompt: str = field(default="")
 
 
 # UpdateSpeak

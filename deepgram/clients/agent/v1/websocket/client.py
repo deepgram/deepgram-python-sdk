@@ -32,7 +32,7 @@ from .response import (
 )
 from .options import (
     SettingsConfigurationOptions,
-    UpdateInstructionsOptions,
+    UpdatePromptOptions,
     UpdateSpeakOptions,
     InjectAgentMessageOptions,
     FunctionCallResponse,
