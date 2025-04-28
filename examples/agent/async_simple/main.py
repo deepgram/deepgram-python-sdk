@@ -11,7 +11,7 @@ from deepgram import (
     DeepgramClient,
     DeepgramClientOptions,
     AgentWebSocketEvents,
-    SettingsConfigurationOptions,
+    SettingsOptions,
 )
 
 TTS_TEXT = "Hello, this is a text to speech example using Deepgram."
@@ -110,10 +110,15 @@ async def main():
         dg_connection.on(AgentWebSocketEvents.Unhandled, on_unhandled)
 
         # connect to websocket
-        options = SettingsConfigurationOptions()
+        options = SettingsOptions()
         options.agent.think.provider.type = "open_ai"
-        options.agent.think.model = "gpt-4o-mini"
-        options.agent.think.instructions = "You are a helpful AI assistant."
+        options.agent.think.provider.model = "gpt-4o-mini"
+        options.agent.think.prompt = "You are a helpful AI assistant."
+        options.greeting = "Hello, this is a text to speech example using Deepgram."
+        options.agent.listen.provider.keyterms = ["hello", "goodbye"]
+        options.agent.listen.provider.model = "nova-3"
+        options.language = "en"
+
 
         print("\n\nPress Enter to stop...\n\n")
         if await dg_connection.start(options) is False:

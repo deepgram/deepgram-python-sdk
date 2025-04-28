@@ -30,27 +30,29 @@ from .v1 import (
 
 from .v1 import (
     # top level
-    SettingsConfigurationOptions as LatestSettingsConfigurationOptions,
-    UpdateInstructionsOptions as LatestUpdateInstructionsOptions,
+    SettingsOptions as LatestSettingsOptions,
+    UpdatePromptOptions as LatestUpdatePromptOptions,
     UpdateSpeakOptions as LatestUpdateSpeakOptions,
     InjectAgentMessageOptions as LatestInjectAgentMessageOptions,
     FunctionCallResponse as LatestFunctionCallResponse,
     AgentKeepAlive as LatestAgentKeepAlive,
     # sub level
     Listen as LatestListen,
+    ListenProvider as LatestListenProvider,
     Speak as LatestSpeak,
+    SpeakProvider as LatestSpeakProvider,
     Header as LatestHeader,
     Item as LatestItem,
     Properties as LatestProperties,
     Parameters as LatestParameters,
     Function as LatestFunction,
-    Provider as LatestProvider,
     Think as LatestThink,
+    ThinkProvider as LatestThinkProvider,
     Agent as LatestAgent,
     Input as LatestInput,
     Output as LatestOutput,
     Audio as LatestAudio,
-    Context as LatestContext,
+    Endpoint as LatestEndpoint,
 )
 
 
@@ -77,24 +79,26 @@ AgentAudioDoneResponse = LatestAgentAudioDoneResponse
 InjectionRefusedResponse = LatestInjectionRefusedResponse
 
 
-SettingsConfigurationOptions = LatestSettingsConfigurationOptions
-UpdateInstructionsOptions = LatestUpdateInstructionsOptions
+SettingsOptions = LatestSettingsOptions
+UpdatePromptOptions = LatestUpdatePromptOptions
 UpdateSpeakOptions = LatestUpdateSpeakOptions
 InjectAgentMessageOptions = LatestInjectAgentMessageOptions
 FunctionCallResponse = LatestFunctionCallResponse
 AgentKeepAlive = LatestAgentKeepAlive
 
 Listen = LatestListen
+ListenProvider = LatestListenProvider
 Speak = LatestSpeak
+SpeakProvider = LatestSpeakProvider
 Header = LatestHeader
 Item = LatestItem
 Properties = LatestProperties
 Parameters = LatestParameters
 Function = LatestFunction
-Provider = LatestProvider
 Think = LatestThink
+ThinkProvider = LatestThinkProvider
 Agent = LatestAgent
 Input = LatestInput
 Output = LatestOutput
 Audio = LatestAudio
-Context = LatestContext
+Endpoint = LatestEndpoint

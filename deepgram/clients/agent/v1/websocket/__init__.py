@@ -26,25 +26,27 @@ from .response import (
 )
 from .options import (
     # top level
-    SettingsConfigurationOptions,
-    UpdateInstructionsOptions,
+    SettingsOptions,
+    UpdatePromptOptions,
     UpdateSpeakOptions,
     InjectAgentMessageOptions,
     FunctionCallResponse,
     AgentKeepAlive,
     # sub level
     Listen,
+    ListenProvider,
     Speak,
+    SpeakProvider,
     Header,
     Item,
     Properties,
     Parameters,
     Function,
-    Provider,
     Think,
+    ThinkProvider,
     Agent,
     Input,
     Output,
     Audio,
-    Context,
+    Endpoint,
 )

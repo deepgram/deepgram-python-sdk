@@ -29,7 +29,7 @@ class AgentWebSocketEvents(StrEnum):
     Unhandled: str = "Unhandled"
 
     # client
-    SettingsConfiguration: str = "SettingsConfiguration"
+    Settings: str = "Settings"
     UpdatePrompt: str = "UpdatePrompt"
     UpdateSpeak: str = "UpdateSpeak"
     InjectAgentMessage: str = "InjectAgentMessage"

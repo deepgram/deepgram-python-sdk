@@ -18,38 +18,6 @@ from ....common import BaseResponse
 
 
 @dataclass
-class Listen(BaseResponse):
-    """
-    This class defines any configuration settings for the Listen model.
-    """
-
-    model: Optional[str] = field(
-        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
-    )
-    keyterms: Optional[List[str]] = field(
-        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
-    )
-
-
-@dataclass
-class Speak(BaseResponse):
-    """
-    This class defines any configuration settings for the Speak model.
-    """
-
-    model: Optional[str] = field(
-        default="aura-asteria-en",
-        metadata=dataclass_config(exclude=lambda f: f is None),
-    )
-    provider: Optional[str] = field(
-        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
-    )
-    voice_id: Optional[str] = field(
-        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
-    )
-
-
-@dataclass
 class Header(BaseResponse):
     """
     This class defines a single key/value pair for a header.
@@ -102,6 +70,27 @@ class Parameters(BaseResponse):
 
 
 @dataclass
+class Endpoint(BaseResponse):
+    """
+    Define a custom endpoint for the agent.
+    """
+
+    method: Optional[str] = field(default="POST")
+    url: str = field(default="")
+    headers: Optional[List[Header]] = field(
+        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
+    )
+
+    def __getitem__(self, key):
+        _dict = self.to_dict()
+        if "headers" in _dict:
+            _dict["headers"] = [
+                Header.from_dict(headers) for headers in _dict["headers"]
+            ]
+        return _dict[key]
+
+
+@dataclass
 class Function(BaseResponse):
     """
     This class defines a function for the Think model.
@@ -117,6 +106,9 @@ class Function(BaseResponse):
     parameters: Optional[Parameters] = field(
         default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
+    endpoint: Optional[Endpoint] = field(
+        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
+    )
 
     def __getitem__(self, key):
         _dict = self.to_dict()
@@ -128,18 +120,107 @@ class Function(BaseResponse):
             _dict["headers"] = [
                 Header.from_dict(headers) for headers in _dict["headers"]
             ]
+        if "endpoint" in _dict:
+            _dict["endpoint"] = [
+                Endpoint.from_dict(endpoint) for endpoint in _dict["endpoint"]
+            ]
         return _dict[key]
 
 
 @dataclass
-class Provider(BaseResponse):
+class CartesiaVoice(BaseResponse):
+    """
+    This class defines the voice for the Cartesia model.
+    """
+
+    mode: str = field(
+        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
+    )
+    id: str = field(
+        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
+    )
+
+
+@dataclass
+class ListenProvider(BaseResponse):
+    """
+    This class defines the provider for the Listen model.
+    """
+
+    type: str = field(default="deepgram")
+    model: str = field(default="nova-3")
+    keyterms: Optional[List[str]] = field(
+        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
+    )
+
+    def __getitem__(self, key):
+        _dict = self.to_dict()
+        if "keyterms" in _dict:
+            _dict["keyterms"] = [str(keyterm) for keyterm in _dict["keyterms"]]
+        return _dict[key]
+
+
+@dataclass
+class ThinkProvider(BaseResponse):
     """
     This class defines the provider for the Think model.
     """
 
-    type: Optional[str] = field(
+    type: str = field(default="open_ai")
+    model: str = field(default="gpt-4o-mini")
+    temperature: Optional[float] = field(
         default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
+
+
+@dataclass
+class SpeakProvider(BaseResponse):
+    """
+    This class defines the provider for the Speak model.
+    """
+
+    type: Optional[str] = field(default="deepgram")
+    """
+    Deepgram OR OpenAI model to use.
+    """
+    model: Optional[str] = field(
+        default="aura-2-thalia-en",
+        metadata=dataclass_config(exclude=lambda f: f is None),
+    )
+    """
+    ElevenLabs or Cartesia model to use.
+    """
+    model_id: Optional[str] = field(
+        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
+    )
+    """
+    Cartesia voice configuration.
+    """
+    voice: Optional[CartesiaVoice] = field(
+        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
+    )
+    """
+    Cartesia language.
+    """
+    language: Optional[str] = field(
+        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
+    )
+    """
+    ElevenLabs language.
+    """
+    language_code: Optional[str] = field(
+        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
+    )
+
+    def __getitem__(self, key):
+        _dict = self.to_dict()
+        if "voice" in _dict:
+            _dict["voice"] = [
+                CartesiaVoice.from_dict(voice) for voice in _dict["voice"]
+            ]
+        if "language" in _dict:
+            _dict["language"] = [str(language) for language in _dict["language"]]
+        return _dict[key]
 
 
 @dataclass
@@ -148,14 +229,14 @@ class Think(BaseResponse):
     This class defines any configuration settings for the Think model.
     """
 
-    provider: Provider = field(default_factory=Provider)
-    model: Optional[str] = field(
-        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
-    )
-    instructions: Optional[str] = field(
-        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
-    )
+    provider: ThinkProvider = field(default_factory=ThinkProvider)
     functions: Optional[List[Function]] = field(
+        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
+    )
+    endpoint: Optional[Endpoint] = field(
+        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
+    )
+    prompt: Optional[str] = field(
         default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
 
@@ -163,11 +244,52 @@ class Think(BaseResponse):
         _dict = self.to_dict()
         if "provider" in _dict:
             _dict["provider"] = [
-                Provider.from_dict(provider) for provider in _dict["provider"]
+                ThinkProvider.from_dict(provider) for provider in _dict["provider"]
             ]
         if "functions" in _dict:
             _dict["functions"] = [
                 Function.from_dict(functions) for functions in _dict["functions"]
+            ]
+        return _dict[key]
+
+
+@dataclass
+class Listen(BaseResponse):
+    """
+    This class defines any configuration settings for the Listen model.
+    """
+
+    provider: ListenProvider = field(default_factory=ListenProvider)
+
+    def __getitem__(self, key):
+        _dict = self.to_dict()
+        if "provider" in _dict:
+            _dict["provider"] = [
+                ListenProvider.from_dict(provider) for provider in _dict["provider"]
+            ]
+        return _dict[key]
+
+
+@dataclass
+class Speak(BaseResponse):
+    """
+    This class defines any configuration settings for the Speak model.
+    """
+
+    provider: SpeakProvider = field(default_factory=SpeakProvider)
+    endpoint: Optional[Endpoint] = field(
+        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
+    )
+
+    def __getitem__(self, key):
+        _dict = self.to_dict()
+        if "provider" in _dict:
+            _dict["provider"] = [
+                SpeakProvider.from_dict(provider) for provider in _dict["provider"]
+            ]
+        if "endpoint" in _dict:
+            _dict["endpoint"] = [
+                Endpoint.from_dict(endpoint) for endpoint in _dict["endpoint"]
             ]
         return _dict[key]
 
@@ -181,6 +303,9 @@ class Agent(BaseResponse):
     listen: Listen = field(default_factory=Listen)
     think: Think = field(default_factory=Think)
     speak: Speak = field(default_factory=Speak)
+    greeting: Optional[str] = field(
+        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
+    )
 
     def __getitem__(self, key):
         _dict = self.to_dict()
@@ -236,35 +361,24 @@ class Audio(BaseResponse):
 
 
 @dataclass
-class Context(BaseResponse):
+class Language(BaseResponse):
     """
-    This class defines any configuration settings for the context.
+    Define the language for the agent.
     """
 
-    messages: Optional[List[Tuple[str, str]]] = field(
-        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
-    )
-    replay: Optional[bool] = field(default=False)
-
-    def __getitem__(self, key):
-        _dict = self.to_dict()
-        if "messages" in _dict:
-            _dict["messages"] = _dict["messages"].copy()
-        return _dict[key]
+    type: str = field(default="en")
 
 
 @dataclass
-class SettingsConfigurationOptions(BaseResponse):
+class SettingsOptions(BaseResponse):
     """
-    The client should send a SettingsConfiguration message immediately after opening the websocket and before sending any audio.
+    The client should send a Settings message immediately after opening the websocket and before sending any audio.
     """
 
-    type: str = str(AgentWebSocketEvents.SettingsConfiguration)
+    experimental: Optional[bool] = field(default=False)
+    type: str = str(AgentWebSocketEvents.Settings)
     audio: Audio = field(default_factory=Audio)
     agent: Agent = field(default_factory=Agent)
-    context: Optional[Context] = field(
-        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
-    )
 
     def __getitem__(self, key):
         _dict = self.to_dict()
@@ -272,10 +386,6 @@ class SettingsConfigurationOptions(BaseResponse):
             _dict["audio"] = [Audio.from_dict(audio) for audio in _dict["audio"]]
         if "agent" in _dict:
             _dict["agent"] = [Agent.from_dict(agent) for agent in _dict["agent"]]
-        if "context" in _dict:
-            _dict["context"] = [
-                Context.from_dict(context) for context in _dict["context"]
-            ]
         return _dict[key]
 
     def check(self):
