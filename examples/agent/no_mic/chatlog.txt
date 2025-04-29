@@ -1,0 +1,14 @@
+Connection opened: {
+    "type": "Open"
+}
+Error: {
+    "description": "Exception in AgentWebSocketClient._process_text",
+    "message": "'session_id'",
+    "type": "Exception"
+}
+Connection closed: {
+    "type": "Close"
+}
+Connection closed: {
+    "type": "Close"
+}
