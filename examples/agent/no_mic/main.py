@@ -2,23 +2,185 @@
 # Use of this source code is governed by a MIT license that can be found in the LICENSE file.
 # SPDX-License-Identifier: MIT
 
+# 1. Install the SDK
+# pip install deepgram-sdk requests
+
+# 2. Import dependencies and set up the main function
 import requests
 import wave
 import io
 import time
+import os
+import json
+import threading
 from datetime import datetime
-from deepgram.utils import verboselogs
 
 from deepgram import (
     DeepgramClient,
     DeepgramClientOptions,
     AgentWebSocketEvents,
+    AgentKeepAlive,
 )
 from deepgram.clients.agent.v1.websocket.options import SettingsOptions
 
-# Add debug prints for imports
-print("Checking imports...")
+def main():
+    try:
+        # 3. Initialize the Voice Agent
+        api_key = os.getenv("DEEPGRAM_API_KEY")
+        if not api_key:
+            raise ValueError("DEEPGRAM_API_KEY environment variable is not set")
+        print(f"API Key found: {api_key[:5]}...")  # Only print first 5 chars for security
 
+        # Initialize Deepgram client
+        config = DeepgramClientOptions(
+            options={
+                "keepalive": "true",
+                "speaker_playback": "true",
+            },
+        )
+        deepgram = DeepgramClient(api_key, config)
+        connection = deepgram.agent.websocket.v("1")
+        print("Created WebSocket connection...")
+
+        # 4. Configure the Agent
+        options = SettingsOptions()
+        # Audio input configuration
+        options.audio.input.encoding = "linear16"
+        options.audio.input.sample_rate = 24000
+        # Audio output configuration
+        options.audio.output.encoding = "linear16"
+        options.audio.output.sample_rate = 16000  # Match JS example
+        options.audio.output.container = "wav"
+        # Agent configuration
+        options.agent.language = "en"
+        options.agent.listen.provider.type = "deepgram"
+        options.agent.listen.model = "nova-3"
+        options.agent.think.provider.type = "open_ai"
+        options.agent.think.model = "gpt-4o-mini"
+        options.agent.think.prompt = "You are a friendly AI assistant."
+        options.agent.speak.provider.type = "deepgram"
+        options.agent.speak.model = "aura-2-thalia-en"
+        options.agent.greeting = "Hello! How can I help you today?"
+
+        # 5. Send Keep Alive messages
+        def send_keep_alive():
+            while True:
+                time.sleep(5)
+                print("Keep alive!")
+                connection.send(str(AgentKeepAlive()))
+
+        # Start keep-alive in a separate thread
+        keep_alive_thread = threading.Thread(target=send_keep_alive, daemon=True)
+        keep_alive_thread.start()
+
+        # 6. Setup Event Handlers
+        audio_buffer = bytearray()
+        file_counter = 0
+
+        def on_audio_data(self, data, **kwargs):
+            nonlocal audio_buffer
+            audio_buffer.extend(data)
+            print(f"Received audio data, length: {len(data)} bytes")
+
+        def on_agent_audio_done(self, agent_audio_done, **kwargs):
+            nonlocal audio_buffer, file_counter
+            print(f"Agent audio done: {agent_audio_done}")
+            with open(f"output-{file_counter}.wav", 'wb') as f:
+                f.write(create_wav_header())
+                f.write(audio_buffer)
+            audio_buffer = bytearray()
+            file_counter += 1
+
+        def on_conversation_text(self, conversation_text, **kwargs):
+            print(f"Conversation Text: {conversation_text}")
+            with open("chatlog.txt", 'a') as chatlog:
+                chatlog.write(f"{json.dumps(conversation_text.__dict__)}\n")
+
+        def on_welcome(self, welcome, **kwargs):
+            print(f"Welcome message received: {welcome}")
+            with open("chatlog.txt", 'a') as chatlog:
+                chatlog.write(f"Welcome message: {welcome}\n")
+
+        def on_settings_applied(self, settings_applied, **kwargs):
+            print(f"Settings applied: {settings_applied}")
+            with open("chatlog.txt", 'a') as chatlog:
+                chatlog.write(f"Settings applied: {settings_applied}\n")
+
+        def on_user_started_speaking(self, user_started_speaking, **kwargs):
+            print(f"User Started Speaking: {user_started_speaking}")
+            with open("chatlog.txt", 'a') as chatlog:
+                chatlog.write(f"User Started Speaking: {user_started_speaking}\n")
+
+        def on_agent_thinking(self, agent_thinking, **kwargs):
+            print(f"Agent Thinking: {agent_thinking}")
+            with open("chatlog.txt", 'a') as chatlog:
+                chatlog.write(f"Agent Thinking: {agent_thinking}\n")
+
+        def on_agent_started_speaking(self, agent_started_speaking, **kwargs):
+            print(f"Agent Started Speaking: {agent_started_speaking}")
+            with open("chatlog.txt", 'a') as chatlog:
+                chatlog.write(f"Agent Started Speaking: {agent_started_speaking}\n")
+
+        def on_close(self, close, **kwargs):
+            print(f"Connection closed: {close}")
+            with open("chatlog.txt", 'a') as chatlog:
+                chatlog.write(f"Connection closed: {close}\n")
+
+        def on_error(self, error, **kwargs):
+            print(f"Error: {error}")
+            print(f"Error message: {error.message if hasattr(error, 'message') else 'No message'}")
+            with open("chatlog.txt", 'a') as chatlog:
+                chatlog.write(f"Error: {error}\n")
+
+        def on_unhandled(self, unhandled, **kwargs):
+            print(f"Unhandled event: {unhandled}")
+            with open("chatlog.txt", 'a') as chatlog:
+                chatlog.write(f"Unhandled event: {unhandled}\n")
+
+        # Register handlers
+        connection.on(AgentWebSocketEvents.AudioData, on_audio_data)
+        connection.on(AgentWebSocketEvents.AgentAudioDone, on_agent_audio_done)
+        connection.on(AgentWebSocketEvents.ConversationText, on_conversation_text)
+        connection.on(AgentWebSocketEvents.Welcome, on_welcome)
+        connection.on(AgentWebSocketEvents.SettingsApplied, on_settings_applied)
+        connection.on(AgentWebSocketEvents.UserStartedSpeaking, on_user_started_speaking)
+        connection.on(AgentWebSocketEvents.AgentThinking, on_agent_thinking)
+        connection.on(AgentWebSocketEvents.AgentStartedSpeaking, on_agent_started_speaking)
+        connection.on(AgentWebSocketEvents.Close, on_close)
+        connection.on(AgentWebSocketEvents.Error, on_error)
+        connection.on(AgentWebSocketEvents.Unhandled, on_unhandled)
+
+        # Start the connection
+        print("Starting WebSocket connection...")
+        if not connection.start(options):
+            print("Failed to start connection")
+            return
+        print("WebSocket connection started successfully")
+
+        # Stream audio
+        print("Downloading and sending audio...")
+        response = requests.get("https://dpgr.am/spacewalk.wav", stream=True)
+        # Skip WAV header
+        response.raw.read(44)
+
+        chunk_size = 8192
+        for chunk in response.iter_content(chunk_size=chunk_size):
+            if chunk:
+                connection.send(chunk)
+                time.sleep(0.1)  # Small delay between chunks
+
+        # Wait for processing
+        print("Waiting for processing to complete...")
+        time.sleep(30)  # Or use a more sophisticated completion check
+
+        # Cleanup
+        connection.finish()
+        print("Finished")
+
+    except Exception as e:
+        print(f"Error: {str(e)}")
+
+# WAV Header Functions
 def create_wav_header(sample_rate=24000, bits_per_sample=16, channels=1):
     """Create a WAV header with the specified parameters"""
     byte_rate = sample_rate * channels * (bits_per_sample // 8)
@@ -43,212 +205,6 @@ def create_wav_header(sample_rate=24000, bits_per_sample=16, channels=1):
     header[40:44] = b'\x00\x00\x00\x00'  # Subchunk2Size (to be updated later)
 
     return header
-
-def update_wav_header(file_path, data_size):
-    """Update the WAV header with the correct file size"""
-    with open(file_path, 'r+b') as f:
-        # Update file size in RIFF header (file size - 8)
-        f.seek(4)
-        f.write((data_size + 36).to_bytes(4, 'little'))
-        # Update data size in data chunk
-        f.seek(40)
-        f.write(data_size.to_bytes(4, 'little'))
-
-def convert_audio_to_linear16(audio_data, input_sample_rate=24000, output_sample_rate=24000):
-    """Convert audio data to linear16 format with the correct sample rate"""
-    print(f"Converting audio data from {input_sample_rate}Hz to {output_sample_rate}Hz")
-    print(f"Input audio data length: {len(audio_data)} bytes")
-
-    # Create a temporary WAV file in memory
-    with io.BytesIO() as wav_buffer:
-        with wave.open(wav_buffer, 'wb') as wav_file:
-            wav_file.setnchannels(1)  # Mono
-            wav_file.setsampwidth(2)  # 16-bit
-            wav_file.setframerate(input_sample_rate)
-            wav_file.writeframes(audio_data)
-
-        # Read the WAV file
-        wav_buffer.seek(0)
-        with wave.open(wav_buffer, 'rb') as wav_file:
-            # Get the audio data
-            audio_data = wav_file.readframes(wav_file.getnframes())
-            print(f"Converted audio data length: {len(audio_data)} bytes")
-            return audio_data
-
-def main():
-    try:
-        print("Starting main function...")
-        # URL of the audio file to process
-        url = "https://dpgr.am/spacewalk.wav"
-        chatlog_file = "chatlog.txt"
-
-        # Initialize variables for audio handling
-        last_audio_time = datetime.now()
-        audio_file_count = 0
-
-        # Initialize Deepgram client
-        config: DeepgramClientOptions = DeepgramClientOptions(
-            options={
-                "keepalive": "true",
-                "speaker_playback": "true",
-            },
-        )
-        print("Created DeepgramClientOptions...")
-
-        deepgram: DeepgramClient = DeepgramClient("", config)
-        print("Created DeepgramClient...")
-
-        dg_connection = deepgram.agent.websocket.v("1")
-        print("Created WebSocket connection...")
-
-        # Open chatlog file for writing
-        with open(chatlog_file, 'w') as chatlog:
-            def on_open(self, open, **kwargs):
-                print(f"\n\nConnection opened: {open}\n\n")
-                chatlog.write(f"Connection opened: {open}\n")
-
-            def on_audio_data(self, data, **kwargs):
-                nonlocal last_audio_time, audio_file_count
-                print("Received audio data, length:", len(data))
-
-                try:
-                    # If the last audio response is more than 7 seconds ago, create a new file
-                    if (datetime.now() - last_audio_time).total_seconds() > 7:
-                        audio_file_count += 1
-                        output_file = f"output_{audio_file_count}.wav"
-
-                        # Create new WAV file with header
-                        with open(output_file, 'wb') as f:
-                            f.write(create_wav_header())
-                            f.write(data)
-                    else:
-                        # Append audio data to the current file
-                        with open(f"output_{audio_file_count}.wav", 'ab') as f:
-                            f.write(data)
-
-                    last_audio_time = datetime.now()
-                except IOError as e:
-                    print(f"Error writing to file: {e}")
-                except Exception as e:
-                    print(f"Unexpected error handling audio data: {e}")
-
-            def on_agent_audio_done(self, agent_audio_done, **kwargs):
-                print(f"\n\n{agent_audio_done}\n\n")
-                chatlog.write(f"Agent audio done: {agent_audio_done}\n")
-
-                # Update the WAV header with the correct file size
-                if audio_file_count > 0:
-                    try:
-                        output_file = f"output_{audio_file_count}.wav"
-                        with open(output_file, 'rb') as f:
-                            f.seek(0, 2)  # Seek to end of file
-                            file_size = f.tell()
-                        update_wav_header(output_file, file_size - 44)  # Subtract header size
-                    except IOError as e:
-                        print(f"Error updating WAV header: {e}")
-                    except Exception as e:
-                        print(f"Unexpected error updating WAV header: {e}")
-
-            def on_welcome(self, welcome, **kwargs):
-                print(f"\n\n{welcome}\n\n")
-                chatlog.write(f"Welcome message: {welcome}\n")
-
-            def on_settings_applied(self, settings_applied, **kwargs):
-                print(f"\n\n{settings_applied}\n\n")
-                chatlog.write(f"Settings applied: {settings_applied}\n")
-
-            def on_conversation_text(self, conversation_text, **kwargs):
-                print(f"\n\n{conversation_text}\n\n")
-                chatlog.write(f"Conversation: {conversation_text}\n")
-
-            def on_user_started_speaking(self, user_started_speaking, **kwargs):
-                print(f"\n\n{user_started_speaking}\n\n")
-                chatlog.write(f"User started speaking: {user_started_speaking}\n")
-
-            def on_agent_thinking(self, agent_thinking, **kwargs):
-                print(f"\n\n{agent_thinking}\n\n")
-                chatlog.write(f"Agent thinking: {agent_thinking}\n")
-
-            def on_agent_started_speaking(self, agent_started_speaking, **kwargs):
-                print(f"\n\n{agent_started_speaking}\n\n")
-                chatlog.write(f"Agent started speaking: {agent_started_speaking}\n")
-
-            def on_close(self, close, **kwargs):
-                print(f"\n\n{close}\n\n")
-                chatlog.write(f"Connection closed: {close}\n")
-
-            def on_error(self, error, **kwargs):
-                print(f"\n\nError occurred: {error}\n\n")
-                chatlog.write(f"Error: {error}\n")
-
-            def on_unhandled(self, unhandled, **kwargs):
-                print(f"\n\n{unhandled}\n\n")
-                chatlog.write(f"Unhandled event: {unhandled}\n")
-
-            # Register event handlers
-            dg_connection.on(AgentWebSocketEvents.Open, on_open)
-            dg_connection.on(AgentWebSocketEvents.AudioData, on_audio_data)
-            dg_connection.on(AgentWebSocketEvents.AgentAudioDone, on_agent_audio_done)
-            dg_connection.on(AgentWebSocketEvents.Welcome, on_welcome)
-            dg_connection.on(AgentWebSocketEvents.SettingsApplied, on_settings_applied)
-            dg_connection.on(AgentWebSocketEvents.ConversationText, on_conversation_text)
-            dg_connection.on(AgentWebSocketEvents.UserStartedSpeaking, on_user_started_speaking)
-            dg_connection.on(AgentWebSocketEvents.AgentThinking, on_agent_thinking)
-            dg_connection.on(AgentWebSocketEvents.AgentStartedSpeaking, on_agent_started_speaking)
-            dg_connection.on(AgentWebSocketEvents.Close, on_close)
-            dg_connection.on(AgentWebSocketEvents.Error, on_error)
-            dg_connection.on(AgentWebSocketEvents.Unhandled, on_unhandled)
-
-            # Configure agent settings
-            options: SettingsOptions = SettingsOptions()
-            # Audio input configuration
-            options.audio.input.encoding = "linear16"
-            options.audio.input.sample_rate = 24000
-            # Audio output configuration
-            options.audio.output.encoding = "linear16"
-            options.audio.output.sample_rate = 24000
-            options.audio.output.container = "wav"
-            # Agent configuration
-            options.agent.language = "en"
-            options.agent.listen.provider.type = "deepgram"
-            options.agent.listen.model = "nova-3"
-            options.agent.think.provider.type = "open_ai"
-            options.agent.think.model = "gpt-4o-mini"
-            options.agent.think.prompt = "You are a friendly AI assistant."
-            options.agent.speak.provider.type = "deepgram"
-            options.agent.speak.model = "aura-2-thalia-en"
-            options.agent.greeting = "Hello! How can I help you today?"
-
-            if dg_connection.start(options) is False:
-                print("Failed to start connection")
-                return
-
-            # Download and send audio data
-            print("Downloading and sending audio...")
-            response = requests.get(url, stream=True)
-            for chunk in response.iter_content(chunk_size=8192):
-                if chunk:
-                    dg_connection.send(chunk)
-
-            # Wait for processing to complete
-            print("Waiting for processing to complete...")
-            time.sleep(5)  # Give some time for processing
-
-            print("\n\nProcessing complete. Check output_*.wav and chatlog.txt for results.\n\n")
-
-            # Close the connection
-            dg_connection.finish()
-
-            print("Finished")
-
-    except ImportError as e:
-        print(f"Import Error Details: {e}")
-        print(f"Error occurred in module: {getattr(e, 'name', 'unknown')}")
-        print(f"Path that failed: {getattr(e, 'path', 'unknown')}")
-    except Exception as e:
-        print(f"Unexpected error type: {type(e)}")
-        print(f"Error message: {str(e)}")
-        print(f"Error occurred in: {__file__}")
 
 if __name__ == "__main__":
     main()

@@ -2,6 +2,7 @@
 
 # general
 python-dotenv
+requests
 
 # streaming libs
 pyaudio
