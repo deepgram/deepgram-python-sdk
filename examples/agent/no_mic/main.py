@@ -2,10 +2,7 @@
 # Use of this source code is governed by a MIT license that can be found in the LICENSE file.
 # SPDX-License-Identifier: MIT
 
-# 1. Install the SDK
-# pip install deepgram-sdk requests
-
-# 2. Import dependencies and set up the main function
+# Import dependencies and set up the main function
 import requests
 import wave
 import io
@@ -25,7 +22,7 @@ from deepgram.clients.agent.v1.websocket.options import SettingsOptions
 
 def main():
     try:
-        # 3. Initialize the Voice Agent
+        # Initialize the Voice Agent
         api_key = os.getenv("DEEPGRAM_API_KEY")
         if not api_key:
             raise ValueError("DEEPGRAM_API_KEY environment variable is not set")
@@ -62,7 +59,7 @@ def main():
         options.agent.speak.model = "aura-2-thalia-en"
         options.agent.greeting = "Hello! How can I help you today?"
 
-        # 5. Send Keep Alive messages
+        # Send Keep Alive messages
         def send_keep_alive():
             while True:
                 time.sleep(5)
@@ -73,7 +70,7 @@ def main():
         keep_alive_thread = threading.Thread(target=send_keep_alive, daemon=True)
         keep_alive_thread.start()
 
-        # 6. Setup Event Handlers
+        # Setup Event Handlers
         audio_buffer = bytearray()
         file_counter = 0
 
