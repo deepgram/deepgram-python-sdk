@@ -225,7 +225,12 @@ class AgentWebSocketClient(
         else:
             raise DeepgramError("Invalid options type")
 
-        if self._settings.agent.listen.provider.keyterms is not None and self._settings.agent.listen.provider.model is not None and not self._settings.agent.listen.provider.model.startswith("nova-3"):
+        if (
+            self._settings.agent.listen.provider
+            and self._settings.agent.listen.provider.keyterms is not None
+            and self._settings.agent.listen.provider.model is not None
+            and not self._settings.agent.listen.provider.model.startswith("nova-3")
+        ):
             raise DeepgramError("Keyterms are only supported for nova-3 models")
 
         try:

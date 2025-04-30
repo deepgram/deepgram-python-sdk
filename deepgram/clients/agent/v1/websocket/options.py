@@ -218,8 +218,6 @@ class SpeakProvider(BaseResponse):
             _dict["voice"] = [
                 CartesiaVoice.from_dict(voice) for voice in _dict["voice"]
             ]
-        if "language" in _dict:
-            _dict["language"] = [str(language) for language in _dict["language"]]
         return _dict[key]
 
 
@@ -242,14 +240,14 @@ class Think(BaseResponse):
 
     def __getitem__(self, key):
         _dict = self.to_dict()
-        if "provider" in _dict:
-            _dict["provider"] = [
-                ThinkProvider.from_dict(provider) for provider in _dict["provider"]
-            ]
-        if "functions" in _dict:
+        if "provider" in _dict and isinstance(_dict["provider"], dict):
+            _dict["provider"] = ThinkProvider.from_dict(_dict["provider"])
+        if "functions" in _dict and isinstance(_dict["functions"], list):
             _dict["functions"] = [
-                Function.from_dict(functions) for functions in _dict["functions"]
+                Function.from_dict(function) for function in _dict["functions"]
             ]
+        if "endpoint" in _dict and isinstance(_dict["endpoint"], dict):
+            _dict["endpoint"] = Endpoint.from_dict(_dict["endpoint"])
         return _dict[key]
 
 
@@ -263,10 +261,8 @@ class Listen(BaseResponse):
 
     def __getitem__(self, key):
         _dict = self.to_dict()
-        if "provider" in _dict:
-            _dict["provider"] = [
-                ListenProvider.from_dict(provider) for provider in _dict["provider"]
-            ]
+        if "provider" in _dict and isinstance(_dict["provider"], dict):
+            _dict["provider"] = ListenProvider.from_dict(_dict["provider"])
         return _dict[key]
 
 
@@ -283,14 +279,10 @@ class Speak(BaseResponse):
 
     def __getitem__(self, key):
         _dict = self.to_dict()
-        if "provider" in _dict:
-            _dict["provider"] = [
-                SpeakProvider.from_dict(provider) for provider in _dict["provider"]
-            ]
-        if "endpoint" in _dict:
-            _dict["endpoint"] = [
-                Endpoint.from_dict(endpoint) for endpoint in _dict["endpoint"]
-            ]
+        if "provider" in _dict and isinstance(_dict["provider"], dict):
+            _dict["provider"] = SpeakProvider.from_dict(_dict["provider"])
+        if "endpoint" in _dict and isinstance(_dict["endpoint"], dict):
+            _dict["endpoint"] = Endpoint.from_dict(_dict["endpoint"])
         return _dict[key]
 
 
@@ -309,12 +301,12 @@ class Agent(BaseResponse):
 
     def __getitem__(self, key):
         _dict = self.to_dict()
-        if "listen" in _dict:
-            _dict["listen"] = [Listen.from_dict(listen) for listen in _dict["listen"]]
-        if "think" in _dict:
-            _dict["think"] = [Think.from_dict(think) for think in _dict["think"]]
-        if "speak" in _dict:
-            _dict["speak"] = [Speak.from_dict(speak) for speak in _dict["speak"]]
+        if "listen" in _dict and isinstance(_dict["listen"], dict):
+            _dict["listen"] = Listen.from_dict(_dict["listen"])
+        if "think" in _dict and isinstance(_dict["think"], dict):
+            _dict["think"] = Think.from_dict(_dict["think"])
+        if "speak" in _dict and isinstance(_dict["speak"], dict):
+            _dict["speak"] = Speak.from_dict(_dict["speak"])
         return _dict[key]
 
 
@@ -353,10 +345,10 @@ class Audio(BaseResponse):
 
     def __getitem__(self, key):
         _dict = self.to_dict()
-        if "input" in _dict:
-            _dict["input"] = [Input.from_dict(input) for input in _dict["input"]]
-        if "output" in _dict:
-            _dict["output"] = [Output.from_dict(output) for output in _dict["output"]]
+        if "input" in _dict and isinstance(_dict["input"], dict):
+            _dict["input"] = Input.from_dict(_dict["input"])
+        if "output" in _dict and isinstance(_dict["output"], dict):
+            _dict["output"] = Output.from_dict(_dict["output"])
         return _dict[key]
 
 
@@ -382,10 +374,10 @@ class SettingsOptions(BaseResponse):
 
     def __getitem__(self, key):
         _dict = self.to_dict()
-        if "audio" in _dict:
-            _dict["audio"] = [Audio.from_dict(audio) for audio in _dict["audio"]]
-        if "agent" in _dict:
-            _dict["agent"] = [Agent.from_dict(agent) for agent in _dict["agent"]]
+        if "audio" in _dict and isinstance(_dict["audio"], dict):
+            _dict["audio"] = Audio.from_dict(_dict["audio"])
+        if "agent" in _dict and isinstance(_dict["agent"], dict):
+            _dict["agent"] = Agent.from_dict(_dict["agent"])
         return _dict[key]
 
     def check(self):
