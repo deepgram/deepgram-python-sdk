@@ -26,13 +26,13 @@ def main():
         api_key = os.getenv("DEEPGRAM_API_KEY")
         if not api_key:
             raise ValueError("DEEPGRAM_API_KEY environment variable is not set")
-        print(f"API Key found: {api_key[:5]}...")  # Only print first 5 chars for security
+        print(f"API Key found:")
 
         # Initialize Deepgram client
         config = DeepgramClientOptions(
             options={
                 "keepalive": "true",
-                "speaker_playback": "true",
+                # "speaker_playback": "true",
             },
         )
         deepgram = DeepgramClient(api_key, config)
@@ -46,7 +46,7 @@ def main():
         options.audio.input.sample_rate = 24000
         # Audio output configuration
         options.audio.output.encoding = "linear16"
-        options.audio.output.sample_rate = 16000  # Match JS example
+        options.audio.output.sample_rate = 24000
         options.audio.output.container = "wav"
         # Agent configuration
         options.agent.language = "en"
@@ -73,20 +73,28 @@ def main():
         # Setup Event Handlers
         audio_buffer = bytearray()
         file_counter = 0
+        processing_complete = False
 
         def on_audio_data(self, data, **kwargs):
             nonlocal audio_buffer
             audio_buffer.extend(data)
-            print(f"Received audio data, length: {len(data)} bytes")
+            print(f"Received audio data from agent: {len(data)} bytes")
+            print(f"Total buffer size: {len(audio_buffer)} bytes")
+            print(f"Audio data format: {data[:16].hex()}...")
 
         def on_agent_audio_done(self, agent_audio_done, **kwargs):
-            nonlocal audio_buffer, file_counter
+            nonlocal audio_buffer, file_counter, processing_complete
+            print(f"AgentAudioDone event received")
+            print(f"Buffer size at completion: {len(audio_buffer)} bytes")
             print(f"Agent audio done: {agent_audio_done}")
-            with open(f"output-{file_counter}.wav", 'wb') as f:
-                f.write(create_wav_header())
-                f.write(audio_buffer)
+            if len(audio_buffer) > 0:
+                with open(f"output-{file_counter}.wav", 'wb') as f:
+                    f.write(create_wav_header())
+                    f.write(audio_buffer)
+                print(f"Created output-{file_counter}.wav")
             audio_buffer = bytearray()
             file_counter += 1
+            processing_complete = True
 
         def on_conversation_text(self, conversation_text, **kwargs):
             print(f"Conversation Text: {conversation_text}")
@@ -114,6 +122,8 @@ def main():
                 chatlog.write(f"Agent Thinking: {agent_thinking}\n")
 
         def on_agent_started_speaking(self, agent_started_speaking, **kwargs):
+            nonlocal audio_buffer
+            audio_buffer = bytearray()  # Reset buffer for new response
             print(f"Agent Started Speaking: {agent_started_speaking}")
             with open("chatlog.txt", 'a') as chatlog:
                 chatlog.write(f"Agent Started Speaking: {agent_started_speaking}\n")
@@ -125,7 +135,6 @@ def main():
 
         def on_error(self, error, **kwargs):
             print(f"Error: {error}")
-            print(f"Error message: {error.message if hasattr(error, 'message') else 'No message'}")
             with open("chatlog.txt", 'a') as chatlog:
                 chatlog.write(f"Error: {error}\n")
 
@@ -146,6 +155,7 @@ def main():
         connection.on(AgentWebSocketEvents.Close, on_close)
         connection.on(AgentWebSocketEvents.Error, on_error)
         connection.on(AgentWebSocketEvents.Unhandled, on_unhandled)
+        print("Event handlers registered")
 
         # Start the connection
         print("Starting WebSocket connection...")
@@ -158,17 +168,43 @@ def main():
         print("Downloading and sending audio...")
         response = requests.get("https://dpgr.am/spacewalk.wav", stream=True)
         # Skip WAV header
-        response.raw.read(44)
+        header = response.raw.read(44)
+
+        # Verify WAV header
+        if header[0:4] != b'RIFF' or header[8:12] != b'WAVE':
+            print("Invalid WAV header")
+            return
+
+        # Extract sample rate from header
+        sample_rate = int.from_bytes(header[24:28], 'little')
 
         chunk_size = 8192
+        total_bytes_sent = 0
+        chunk_count = 0
         for chunk in response.iter_content(chunk_size=chunk_size):
             if chunk:
+                print(f"Sending chunk {chunk_count}: {len(chunk)} bytes")
                 connection.send(chunk)
+                total_bytes_sent += len(chunk)
+                chunk_count += 1
                 time.sleep(0.1)  # Small delay between chunks
+
+        print(f"Total audio data sent: {total_bytes_sent} bytes in {chunk_count} chunks")
+        print("Waiting for agent response...")
 
         # Wait for processing
         print("Waiting for processing to complete...")
-        time.sleep(30)  # Or use a more sophisticated completion check
+        start_time = time.time()
+        timeout = 30  # 30 second timeout
+
+        while not processing_complete and (time.time() - start_time) < timeout:
+            time.sleep(1)
+            print(f"Still waiting for agent response... ({int(time.time() - start_time)}s elapsed)")
+
+        if not processing_complete:
+            print("Processing timed out after 30 seconds")
+        else:
+            print("Processing complete. Check output-*.wav and chatlog.txt for results.")
 
         # Cleanup
         connection.finish()

@@ -25,7 +25,7 @@ class WelcomeResponse(BaseResponse):
     """
 
     type: str
-    session_id: str
+    request_id: str
 
 
 @dataclass
