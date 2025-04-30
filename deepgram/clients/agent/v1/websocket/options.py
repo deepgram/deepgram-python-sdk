@@ -112,18 +112,12 @@ class Function(BaseResponse):
 
     def __getitem__(self, key):
         _dict = self.to_dict()
-        if "parameters" in _dict:
-            _dict["parameters"] = [
-                Parameters.from_dict(parameters) for parameters in _dict["parameters"]
-            ]
-        if "headers" in _dict:
-            _dict["headers"] = [
-                Header.from_dict(headers) for headers in _dict["headers"]
-            ]
-        if "endpoint" in _dict:
-            _dict["endpoint"] = [
-                Endpoint.from_dict(endpoint) for endpoint in _dict["endpoint"]
-            ]
+        if "parameters" in _dict and isinstance(_dict["parameters"], dict):
+            _dict["parameters"] = Parameters.from_dict(_dict["parameters"])
+        if "headers" in _dict and isinstance(_dict["headers"], list):
+            _dict["headers"] = [Header.from_dict(header) for header in _dict["headers"]]
+        if "endpoint" in _dict and isinstance(_dict["endpoint"], dict):
+            _dict["endpoint"] = Endpoint.from_dict(_dict["endpoint"])
         return _dict[key]
 
 
@@ -155,7 +149,7 @@ class ListenProvider(BaseResponse):
 
     def __getitem__(self, key):
         _dict = self.to_dict()
-        if "keyterms" in _dict:
+        if "keyterms" in _dict and isinstance(_dict["keyterms"], list):
             _dict["keyterms"] = [str(keyterm) for keyterm in _dict["keyterms"]]
         return _dict[key]
 
@@ -214,10 +208,8 @@ class SpeakProvider(BaseResponse):
 
     def __getitem__(self, key):
         _dict = self.to_dict()
-        if "voice" in _dict:
-            _dict["voice"] = [
-                CartesiaVoice.from_dict(voice) for voice in _dict["voice"]
-            ]
+        if "voice" in _dict and isinstance(_dict["voice"], dict):
+            _dict["voice"] = CartesiaVoice.from_dict(_dict["voice"])
         return _dict[key]
 
 
