@@ -134,10 +134,10 @@ class CartesiaVoice(BaseResponse):
     """
 
     mode: str = field(
-        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
+        default="", metadata=dataclass_config(exclude=lambda f: f is None or f == "")
     )
     id: str = field(
-        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
+        default="", metadata=dataclass_config(exclude=lambda f: f is None or f == "")
     )
 
 
