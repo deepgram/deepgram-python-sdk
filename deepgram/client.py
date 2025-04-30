@@ -338,7 +338,6 @@ from .clients import (
     ConversationTextResponse,
     UserStartedSpeakingResponse,
     AgentThinkingResponse,
-    FunctionCalling,
     FunctionCallRequest,
     AgentStartedSpeakingResponse,
     AgentAudioDoneResponse,

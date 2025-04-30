@@ -147,8 +147,8 @@ class ListenProvider(BaseResponse):
     This class defines the provider for the Listen model.
     """
 
-    type: str = field(default="deepgram")
-    model: str = field(default="nova-3")
+    type: str = field(default="")
+    model: str = field(default="")
     keyterms: Optional[List[str]] = field(
         default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
@@ -427,7 +427,7 @@ class UpdateSpeakOptions(BaseResponse):
     """
 
     type: str = str(AgentWebSocketEvents.UpdateSpeak)
-    model: str = field(default="")
+    speak: Speak = field(default_factory=Speak)
 
 
 # InjectAgentMessage

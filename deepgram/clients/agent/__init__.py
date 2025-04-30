@@ -22,7 +22,6 @@ from .client import (
     ConversationTextResponse,
     UserStartedSpeakingResponse,
     AgentThinkingResponse,
-    FunctionCalling,
     FunctionCallRequest,
     AgentStartedSpeakingResponse,
     AgentAudioDoneResponse,

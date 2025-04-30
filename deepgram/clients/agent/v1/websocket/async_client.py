@@ -21,7 +21,6 @@ from .response import (
     ConversationTextResponse,
     UserStartedSpeakingResponse,
     AgentThinkingResponse,
-    FunctionCalling,
     FunctionCallRequest,
     AgentStartedSpeakingResponse,
     AgentAudioDoneResponse,
@@ -430,16 +429,6 @@ class AsyncAgentWebSocketClient(
                     await self._emit(
                         AgentWebSocketEvents(AgentWebSocketEvents.AgentThinking),
                         agent_thinking=agent_thinking_result,
-                        **dict(cast(Dict[Any, Any], self._kwargs)),
-                    )
-                case AgentWebSocketEvents.FunctionCalling:
-                    function_calling_result: FunctionCalling = (
-                        FunctionCalling.from_json(message)
-                    )
-                    self._logger.verbose("FunctionCalling: %s", function_calling_result)
-                    await self._emit(
-                        AgentWebSocketEvents(AgentWebSocketEvents.FunctionCalling),
-                        function_calling=function_calling_result,
                         **dict(cast(Dict[Any, Any], self._kwargs)),
                     )
                 case AgentWebSocketEvents.FunctionCallRequest:
