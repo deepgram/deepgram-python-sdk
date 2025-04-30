@@ -166,8 +166,8 @@ class ThinkProvider(BaseResponse):
     This class defines the provider for the Think model.
     """
 
-    type: str = field(default="open_ai")
-    model: str = field(default="gpt-4o-mini")
+    type: Optional[str] = field(default=None)
+    model: Optional[str] = field(default=None)
     temperature: Optional[float] = field(
         default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
