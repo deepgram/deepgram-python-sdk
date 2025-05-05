@@ -48,3 +48,18 @@ Here are a few types of contributions that we would be interested in hearing abo
 ## Making Code Contributions
 
 for those interested in contributing code to the project, please review the [Code Contribution Guide](https://github.com/deepgram/deepgram-python-sdk/blob/main/.github/CODE_CONTRIBUTIONS_GUIDE.md) for more details.
+
+## Building Locally
+
+Assuming you are using `pipenv`:
+
+```bash
+# Install deps
+pipenv install
+# Build package
+pipenv run python3 -m build
+# Install package from local build
+pipenv install ./dist/deepgram_sdk-0.0.0.tar.gz
+# Try an example!
+DEEPGRAM_API_KEY=<key> pipenv run python3 examples/agent/async_simple/main.py
+```

@@ -324,7 +324,6 @@ from .client import (
     ConversationTextResponse,
     UserStartedSpeakingResponse,
     AgentThinkingResponse,
-    FunctionCalling,
     FunctionCallRequest,
     AgentStartedSpeakingResponse,
     AgentAudioDoneResponse,
@@ -333,27 +332,29 @@ from .client import (
 
 from .client import (
     # top level
-    SettingsConfigurationOptions,
-    UpdateInstructionsOptions,
+    SettingsOptions,
+    UpdatePromptOptions,
     UpdateSpeakOptions,
     InjectAgentMessageOptions,
     FunctionCallResponse,
     AgentKeepAlive,
     # sub level
     Listen,
+    ListenProvider,
     Speak,
+    SpeakProvider,
     Header,
     Item,
     Properties,
     Parameters,
     Function,
-    Provider,
     Think,
+    ThinkProvider,
     Agent,
     Input,
     Output,
     Audio,
-    Context,
+    Endpoint,
 )
 
 # utilities

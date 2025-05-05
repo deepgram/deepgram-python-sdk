@@ -21,3 +21,6 @@ dist/
 build/
 poetry.lock
 
+# examples
+chatlog.txt
+output_*.wav

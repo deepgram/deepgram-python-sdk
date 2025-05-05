@@ -11,7 +11,7 @@ from deepgram import (
     DeepgramClient,
     DeepgramClientOptions,
     AgentWebSocketEvents,
-    SettingsConfigurationOptions,
+    SettingsOptions,
 )
 
 TTS_TEXT = "Hello, this is a text to speech example using Deepgram."
@@ -73,9 +73,6 @@ async def main():
         async def on_agent_thinking(self, agent_thinking, **kwargs):
             print(f"\n\n{agent_thinking}\n\n")
 
-        async def on_function_calling(self, function_calling, **kwargs):
-            print(f"\n\n{function_calling}\n\n")
-
         async def on_agent_started_speaking(self, agent_started_speaking, **kwargs):
             print(f"\n\n{agent_started_speaking}\n\n")
 
@@ -100,7 +97,6 @@ async def main():
             AgentWebSocketEvents.UserStartedSpeaking, on_user_started_speaking
         )
         dg_connection.on(AgentWebSocketEvents.AgentThinking, on_agent_thinking)
-        dg_connection.on(AgentWebSocketEvents.FunctionCalling, on_function_calling)
         dg_connection.on(
             AgentWebSocketEvents.AgentStartedSpeaking, on_agent_started_speaking
         )
@@ -110,10 +106,16 @@ async def main():
         dg_connection.on(AgentWebSocketEvents.Unhandled, on_unhandled)
 
         # connect to websocket
-        options = SettingsConfigurationOptions()
+        options = SettingsOptions()
         options.agent.think.provider.type = "open_ai"
-        options.agent.think.model = "gpt-4o-mini"
-        options.agent.think.instructions = "You are a helpful AI assistant."
+        options.agent.think.provider.model = "gpt-4o-mini"
+        options.agent.think.prompt = "You are a helpful AI assistant."
+        options.greeting = "Hello, this is a text to speech example using Deepgram."
+        options.agent.listen.provider.keyterms = ["hello", "goodbye"]
+        options.agent.listen.provider.model = "nova-3"
+        options.agent.listen.provider.type = "deepgram"
+        options.language = "en"
+
 
         print("\n\nPress Enter to stop...\n\n")
         if await dg_connection.start(options) is False:

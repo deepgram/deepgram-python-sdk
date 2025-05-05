@@ -25,7 +25,7 @@ class WelcomeResponse(BaseResponse):
     """
 
     type: str
-    session_id: str
+    request_id: str
 
 
 @dataclass
@@ -61,19 +61,11 @@ class UserStartedSpeakingResponse(BaseResponse):
 class AgentThinkingResponse(BaseResponse):
     """
     The server will send an AgentThinking message to inform the client of a non-verbalized agent thought.
+    You will ONLY receive this message if you have set `experimental` to true.
     """
 
     type: str
     content: str
-
-
-@dataclass
-class FunctionCalling(BaseResponse):
-    """
-    The server will sometimes send FunctionCalling messages when making function calls to help the client developer debug function calling workflows.
-    """
-
-    type: str
 
 
 @dataclass

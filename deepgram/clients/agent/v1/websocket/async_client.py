@@ -21,7 +21,6 @@ from .response import (
     ConversationTextResponse,
     UserStartedSpeakingResponse,
     AgentThinkingResponse,
-    FunctionCalling,
     FunctionCallRequest,
     AgentStartedSpeakingResponse,
     AgentAudioDoneResponse,
@@ -31,8 +30,8 @@ from .response import (
     UnhandledResponse,
 )
 from .options import (
-    SettingsConfigurationOptions,
-    UpdateInstructionsOptions,
+    SettingsOptions,
+    UpdatePromptOptions,
     UpdateSpeakOptions,
     InjectAgentMessageOptions,
     FunctionCallResponse,
@@ -79,7 +78,7 @@ class AsyncAgentWebSocketClient(
     _kwargs: Optional[Dict] = None
     _addons: Optional[Dict] = None
     # note the distinction here. We can't use _config because it's already used in the parent
-    _settings: Optional[SettingsConfigurationOptions] = None
+    _settings: Optional[SettingsOptions] = None
     _headers: Optional[Dict] = None
 
     _speaker_created: bool = False
@@ -98,7 +97,7 @@ class AsyncAgentWebSocketClient(
         self._config = config
 
         # needs to be "wss://agent.deepgram.com/agent"
-        self._endpoint = "agent"
+        self._endpoint = "v1/agent/converse"
 
         # override the endpoint since it needs to be "wss://agent.deepgram.com/agent"
         self._config.url = "agent.deepgram.com"
@@ -179,7 +178,7 @@ class AsyncAgentWebSocketClient(
     # pylint: disable=too-many-branches,too-many-statements
     async def start(
         self,
-        options: Optional[SettingsConfigurationOptions] = None,
+        options: Optional[SettingsOptions] = None,
         addons: Optional[Dict] = None,
         headers: Optional[Dict] = None,
         members: Optional[Dict] = None,
@@ -195,7 +194,7 @@ class AsyncAgentWebSocketClient(
         self._logger.info("members: %s", members)
         self._logger.info("kwargs: %s", kwargs)
 
-        if isinstance(options, SettingsConfigurationOptions) and not options.check():
+        if isinstance(options, SettingsOptions) and not options.check():
             self._logger.error("settings.check failed")
             self._logger.debug("AsyncAgentWebSocketClient.start LEAVE")
             raise DeepgramError("Fatal agent settings error")
@@ -213,19 +212,19 @@ class AsyncAgentWebSocketClient(
         else:
             self._kwargs = {}
 
-        if isinstance(options, SettingsConfigurationOptions):
+        if isinstance(options, SettingsOptions):
             self._logger.info("options is class")
             self._settings = options
         elif isinstance(options, dict):
             self._logger.info("options is dict")
-            self._settings = SettingsConfigurationOptions.from_dict(options)
+            self._settings = SettingsOptions.from_dict(options)
         elif isinstance(options, str):
             self._logger.info("options is json")
-            self._settings = SettingsConfigurationOptions.from_json(options)
+            self._settings = SettingsOptions.from_json(options)
         else:
             raise DeepgramError("Invalid options type")
 
-        if self._settings.agent.listen.keyterms is not None and self._settings.agent.listen.model is not None and not self._settings.agent.listen.model.startswith("nova-3"):
+        if self._settings.agent.listen.provider.keyterms is not None and self._settings.agent.listen.provider.model is not None and not self._settings.agent.listen.provider.model.startswith("nova-3"):
             raise DeepgramError("Keyterms are only supported for nova-3 models")
 
         try:
@@ -277,14 +276,14 @@ class AsyncAgentWebSocketClient(
             self._logger.debug("number of active threads: %s", threading.active_count())
 
             # send the configurationsetting message
-            self._logger.notice("Sending ConfigurationSettings...")
+            self._logger.notice("Sending Settings...")
             ret_send_cs = await self.send(str(self._settings))
             if not ret_send_cs:
-                self._logger.error("ConfigurationSettings failed")
+                self._logger.error("Settings failed")
 
                 err_error: ErrorResponse = ErrorResponse(
                     "Exception in AsyncAgentWebSocketClient.start",
-                    "ConfigurationSettings failed to send",
+                    "Settings failed to send",
                     "Exception",
                 )
                 await self._emit(
@@ -430,16 +429,6 @@ class AsyncAgentWebSocketClient(
                     await self._emit(
                         AgentWebSocketEvents(AgentWebSocketEvents.AgentThinking),
                         agent_thinking=agent_thinking_result,
-                        **dict(cast(Dict[Any, Any], self._kwargs)),
-                    )
-                case AgentWebSocketEvents.FunctionCalling:
-                    function_calling_result: FunctionCalling = (
-                        FunctionCalling.from_json(message)
-                    )
-                    self._logger.verbose("FunctionCalling: %s", function_calling_result)
-                    await self._emit(
-                        AgentWebSocketEvents(AgentWebSocketEvents.FunctionCalling),
-                        function_calling=function_calling_result,
                         **dict(cast(Dict[Any, Any], self._kwargs)),
                     )
                 case AgentWebSocketEvents.FunctionCallRequest:

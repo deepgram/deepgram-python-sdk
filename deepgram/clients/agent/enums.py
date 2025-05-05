@@ -21,7 +21,6 @@ class AgentWebSocketEvents(StrEnum):
     ConversationText: str = "ConversationText"
     UserStartedSpeaking: str = "UserStartedSpeaking"
     AgentThinking: str = "AgentThinking"
-    FunctionCalling: str = "FunctionCalling"
     FunctionCallRequest: str = "FunctionCallRequest"
     AgentStartedSpeaking: str = "AgentStartedSpeaking"
     AgentAudioDone: str = "AgentAudioDone"
@@ -29,8 +28,8 @@ class AgentWebSocketEvents(StrEnum):
     Unhandled: str = "Unhandled"
 
     # client
-    SettingsConfiguration: str = "SettingsConfiguration"
-    UpdateInstructions: str = "UpdateInstructions"
+    Settings: str = "Settings"
+    UpdatePrompt: str = "UpdatePrompt"
     UpdateSpeak: str = "UpdateSpeak"
     InjectAgentMessage: str = "InjectAgentMessage"
     InjectionRefused: str = "InjectionRefused"
