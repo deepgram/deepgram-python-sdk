@@ -12,7 +12,7 @@ from deepgram import DeepgramClient, SpeakOptions, PrerecordedOptions, FileSourc
 
 from tests.utils import save_metadata_string
 
-TTS_MODEL = "aura-asteria-en"
+TTS_MODEL = "aura-2-thalia-en"
 STT_MODEL = "general-nova-3"
 
 # response constants

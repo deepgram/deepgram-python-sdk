@@ -15,7 +15,7 @@ from deepgram import DeepgramClient, SpeakOptions, PrerecordedOptions, FileSourc
 
 from tests.utils import read_metadata_string, save_metadata_string
 
-MODEL = "aura-asteria-en"
+MODEL = "aura-2-thalia-en"
 
 # response constants
 TEXT1 = "Hello, world."
@@ -27,7 +27,7 @@ input_output = [
         SpeakOptions(model=MODEL, encoding="linear16", sample_rate=24000),
         {
             "content_type": ["audio/wav"],
-            "model_name": ["aura-asteria-en"],
+            "model_name": ["aura-2-thalia-en"],
             "characters": ["13"],
         },
     ),
