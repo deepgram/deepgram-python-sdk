@@ -23,7 +23,7 @@ class SpeakWSOptions(BaseResponse):
     """
 
     model: Optional[str] = field(
-        default="aura-asteria-en",
+        default="aura-2-thalia-en",
         metadata=dataclass_config(exclude=lambda f: f is None),
     )
     encoding: Optional[str] = field(
