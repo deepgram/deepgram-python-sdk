@@ -343,7 +343,6 @@ from .client import (
     ListenProvider,
     Speak,
     SpeakProvider,
-    Header,
     Item,
     Properties,
     Parameters,

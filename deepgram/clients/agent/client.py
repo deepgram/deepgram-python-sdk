@@ -40,7 +40,6 @@ from .v1 import (
     ListenProvider as LatestListenProvider,
     Speak as LatestSpeak,
     SpeakProvider as LatestSpeakProvider,
-    Header as LatestHeader,
     Item as LatestItem,
     Properties as LatestProperties,
     Parameters as LatestParameters,
@@ -88,7 +87,6 @@ Listen = LatestListen
 ListenProvider = LatestListenProvider
 Speak = LatestSpeak
 SpeakProvider = LatestSpeakProvider
-Header = LatestHeader
 Item = LatestItem
 Properties = LatestProperties
 Parameters = LatestParameters
