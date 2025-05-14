@@ -357,7 +357,6 @@ from .clients import (
     ListenProvider,
     Speak,
     SpeakProvider,
-    Header,
     Item,
     Properties,
     Parameters,
