@@ -2,7 +2,7 @@
 # Use of this source code is governed by a MIT license that can be found in the LICENSE file.
 # SPDX-License-Identifier: MIT
 
-from typing import List, Optional, Union, Any, Tuple
+from typing import List, Optional, Union, Any, Tuple, Dict
 import logging
 
 from dataclasses import dataclass, field
@@ -77,17 +77,33 @@ class Endpoint(BaseResponse):
 
     method: Optional[str] = field(default="POST")
     url: str = field(default="")
-    headers: Optional[List[Header]] = field(
+    headers: Optional[Union[Dict[str, str], List[Header]]] = field(
         default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
 
     def __getitem__(self, key):
         _dict = self.to_dict()
         if "headers" in _dict:
-            _dict["headers"] = [
-                Header.from_dict(headers) for headers in _dict["headers"]
-            ]
+            if isinstance(self.headers, list):
+                _dict["headers"] = [
+                    Header.from_dict(headers) if isinstance(headers, dict) else headers
+                    for headers in _dict["headers"]
+                ]
+            elif isinstance(self.headers, dict):
+                _dict["headers"] = self.headers
         return _dict[key]
+
+    def to_dict(self) -> dict:
+        """
+        Convert the endpoint to a dictionary, properly handling headers.
+        """
+        result = super().to_dict()
+        if self.headers:
+            if isinstance(self.headers, dict):
+                result["headers"] = self.headers
+            else:
+                result["headers"] = {h.key: h.value for h in self.headers}
+        return result
 
 
 @dataclass
