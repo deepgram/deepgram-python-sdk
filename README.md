@@ -82,7 +82,8 @@ pip install deepgram-sdk
 ```
 
 ## Transcription (Synchronous)
-### Remote Files
+
+### Remote Files (Synchronous)
 
 ``` python
 from deepgram import DeepgramClient, PrerecordedOptions
@@ -108,7 +109,8 @@ response = DeepgramClient().listen.rest.v("1").transcribe_url(
 [See the Example for more info](./examples/speech-to-text/rest/file/main.py).
 
 ## Transcription (Asynchronous / Callbacks)
-### Remote Files
+
+### Remote Files (Asynchronous)
 
 ``` python
 @TODO
@@ -118,7 +120,7 @@ response = DeepgramClient().listen.rest.v("1").transcribe_url(
 
 [See the Example for more info](./examples/speech-to-text/rest/async_file/main.py).
 
-### Local Files
+### Local Files (Asynchronous)
 
 ``` python
 @TODO
@@ -127,198 +129,242 @@ response = DeepgramClient().listen.rest.v("1").transcribe_url(
 [See our API reference for more info](https://developers.deepgram.com/reference/speech-to-text-api/listen).
 
 ## Transcription (Live / Streaming)
+
 ### Live Audio
 
 ``` python
 @TODO
 ```
 
-[See our API reference for more info]().
+[See our API reference for more info](https://developers.deepgram.com/reference/streaming-api)
 
-[See the Example for more info]()
+[See the Example for more info](./examples/speech-to-text/streaming/main.py)
 
 ## Transcribing to Captions
+
 @TODO
 
-[See our API reference for more info]().
+[See our API reference for more info](https://developers.deepgram.com/reference/captions-api)
 
 ## Voice Agent
+
 @TODO
 
-[See our API reference for more info]().
+[See our API reference for more info](https://developers.deepgram.com/reference/voice-agent-api)
 
-[See the Example for more info]()
+[See the Example for more info](./examples/voice-agent/main.py)
 
 ## Text to Speech
+
 @TODO
 
-[See our API reference for more info]().
+[See our API reference for more info](https://developers.deepgram.com/reference/text-to-speech-api)
 
-[See the Example for more info]()
+[See the Example for more info](./examples/text-to-speech/main.py)
 
 ## Text Intelligence
+
 @TODO
 
-[See our API reference for more info]().
+[See our API reference for more info](https://developers.deepgram.com/reference/text-intelligence-api)
 
-[See the Example for more info]()
+[See the Example for more info](./examples/text-intelligence/main.py)
 
 ## Authentication
+
 ### Get Token Details
+
 @TODO
 
-[See our API reference for more info]().
+[See our API reference for more info](https://developers.deepgram.com/reference/authentication-api)
 
-[See the Example for more info]()
+[See the Example for more info](./examples/authentication/main.py)
 
 ## Projects
+
 ### Get Projects
+
 @TODO
 
-[See our API reference for more info]().
+[See our API reference for more info](https://developers.deepgram.com/reference/projects-api)
 
 ### Get Project
+
 @TODO
 
-[See our API reference for more info]().
+[See our API reference for more info](https://developers.deepgram.com/reference/projects-api)
 
 ### Update Project
+
 @TODO
 
-[See our API reference for more info]().
+[See our API reference for more info](https://developers.deepgram.com/reference/projects-api)
 
 ### Delete Project
+
 @TODO
 
-[See our API reference for more info]().
+[See our API reference for more info](https://developers.deepgram.com/reference/projects-api)
 
 ## Keys
+
 ### List Keys
+
 @TODO
 
-[See our API reference for more info]().
+[See our API reference for more info](https://developers.deepgram.com/reference/keys-api)
 
 ### Get Key
+
 @TODO
 
-[See our API reference for more info]().
+[See our API reference for more info](https://developers.deepgram.com/reference/keys-api)
 
 ### Create Key
+
 @TODO
 
-[See our API reference for more info]().
+[See our API reference for more info](https://developers.deepgram.com/reference/keys-api)
 
 ### Delete Key
+
 @TODO
 
-[See our API reference for more info]().
+[See our API reference for more info](https://developers.deepgram.com/reference/keys-api)
 
 ## Members
+
 ### Get Members
+
 @TODO
 
-[See our API reference for more info]().
+[See our API reference for more info](https://developers.deepgram.com/reference/members-api)
 
 ### Remove Member
+
 @TODO
 
-[See our API reference for more info]().
+[See our API reference for more info](https://developers.deepgram.com/reference/members-api)
 
 ## Scopes
+
 ### Get Member Scopes
+
 @TODO
 
-[See our API reference for more info]().
+[See our API reference for more info](https://developers.deepgram.com/reference/scopes-api)
 
 ### Update Scope
+
 @TODO
 
-[See our API reference for more info]().
+[See our API reference for more info](https://developers.deepgram.com/reference/scopes-api)
 
 ## Invitations
+
 ### List Invites
+
 @TODO
 
-[See our API reference for more info]().
+[See our API reference for more info](https://developers.deepgram.com/reference/invites-api)
 
 ### Send Invite
+
 @TODO
 
-[See our API reference for more info]().
+[See our API reference for more info](https://developers.deepgram.com/reference/invites-api)
 
 ### Delete Invite
+
 @TODO
 
-[See our API reference for more info]().
+[See our API reference for more info](https://developers.deepgram.com/reference/invites-api)
 
 ### Leave Project
+
 @TODO
 
-[See our API reference for more info]().
+[See our API reference for more info](https://developers.deepgram.com/reference/projects-api)
 
 ## Usage
+
 ### Get All Requests
+
 @TODO
 
-[See our API reference for more info]().
+[See our API reference for more info](https://developers.deepgram.com/reference/requests-api)
 
 ### Get Request
+
 @TODO
 
-[See our API reference for more info]().
+[See our API reference for more info](https://developers.deepgram.com/reference/requests-api)
 
 ### Summarize Usage
+
 @TODO
 
-[See our API reference for more info]().
+[See our API reference for more info](https://developers.deepgram.com/reference/usage-api)
 
 ### Get Fields
+
 @TODO
 
-[See our API reference for more info]().
+[See our API reference for more info](https://developers.deepgram.com/reference/usage-api)
 
 ## Billing
+
 ### Get All Balances
+
 @TODO
 
-[See our API reference for more info]().
+[See our API reference for more info](https://developers.deepgram.com/reference/balances-api)
 
 ### Get Balance
+
 @TODO
 
-[See our API reference for more info]().
+[See our API reference for more info](https://developers.deepgram.com/reference/balances-api)
 
 ## Models
+
 ### Get All Models
+
 @TODO
 
-[See our API reference for more info]().
+[See our API reference for more info](https://developers.deepgram.com/reference/models-api)
 
 ### Get Model
+
 @TODO
 
-[See our API reference for more info]().
+[See our API reference for more info](https://developers.deepgram.com/reference/models-api)
 
 ## On-Prem APIs
+
 ### List On-Prem credentials
+
 @TODO
 
-[See our API reference for more info]().
+[See our API reference for more info](https://developers.deepgram.com/reference/on-prem-api)
 
 ### Get On-Prem credentials
+
 @TODO
 
-[See our API reference for more info]().
+[See our API reference for more info](https://developers.deepgram.com/reference/on-prem-api)
 
 ### Create On-Prem credentials
+
 @TODO
 
-[See our API reference for more info]().
+[See our API reference for more info](https://developers.deepgram.com/reference/on-prem-api)
 
 ### Delete On-Prem credentials
+
 @TODO
 
-[See our API reference for more info]().
+[See our API reference for more info](https://developers.deepgram.com/reference/on-prem-api)
 
 ## Pinning Versions
 To ensure your application remains stable and reliable, we recommend using version pinning in your project. This is a best practice in Python development that helps prevent unexpected changes. You can pin to a major version (like `==4.*`) for a good balance of stability and updates, or to a specific version (like `==4.1.0`) for maximum stability. We've included some helpful resources about [version pinning](https://discuss.python.org/t/how-to-pin-a-package-to-a-specific-major-version-or-lower/17077) and [dependency management](https://www.easypost.com/dependency-pinning-guide) if you'd like to learn more. For a deeper understanding of how version numbers work, check out[semantic versioning](https://semver.org/).
