@@ -5,16 +5,57 @@
 
 Official Python SDK for [Deepgram](https://www.deepgram.com/). Power your apps with world-class speech and Language AI models.
 
-- [Deepgram Python SDK](#deepgram-python-sdk)
-- [Documentation](#documentation)
-- [Getting an API Key](#getting-an-api-key)
-- [Requirements](#requirements)
-- [Installation](#installation)
-- [Quickstarts](#quickstarts)
-  - [PreRecorded Audio Transcription Quickstart](#prerecorded-audio-transcription-quickstart)
-  - [Live Audio Transcription Quickstart](#live-audio-transcription-quickstart)
-  - [Self-Hosted](#self-hosted)
-- [Examples](#examples)
+- [Transcription (Synchronous)](#transcription-synchronous)
+  - [Remote Files](#remote-files)
+  - [Local Files](#local-files)
+- [Transcription (Asynchronous / Callbacks)](#transcription-asynchronous--callbacks)
+  - [Remote Files](#remote-files-1)
+  - [Local Files](#local-files-1)
+- [Transcription (Live / Streaming)](#transcription-live--streaming)
+  - [Live Audio](#live-audio)
+- [Transcribing to Captions](#transcribing-to-captions)
+- [Voice Agent](#voice-agent)
+- [Text to Speech](#text-to-speech)
+- [Text Intelligence](#text-intelligence)
+- [Authentication](#authentication)
+  - [Get Token Details](#get-token-details)
+- [Projects](#projects)
+  - [Get Projects](#get-projects)
+  - [Get Project](#get-project)
+  - [Update Project](#update-project)
+  - [Delete Project](#delete-project)
+- [Keys](#keys)
+  - [List Keys](#list-keys)
+  - [Get Key](#get-key)
+  - [Create Key](#create-key)
+  - [Delete Key](#delete-key)
+- [Members](#members)
+  - [Get Members](#get-members)
+  - [Remove Member](#remove-member)
+- [Scopes](#scopes)
+  - [Get Member Scopes](#get-member-scopes)
+  - [Update Scope](#update-scope)
+- [Invitations](#invitations)
+  - [List Invites](#list-invites)
+  - [Send Invite](#send-invite)
+  - [Delete Invite](#delete-invite)
+  - [Leave Project](#leave-project)
+- [Usage](#usage)
+  - [Get All Requests](#get-all-requests)
+  - [Get Request](#get-request)
+  - [Summarize Usage](#summarize-usage)
+  - [Get Fields](#get-fields)
+- [Billing](#billing)
+  - [Get All Balances](#get-all-balances)
+  - [Get Balance](#get-balance)
+- [Models](#models)
+  - [Get All Models](#get-all-models)
+  - [Get Model](#get-model)
+- [On-Prem APIs](#on-prem-apis)
+  - [List On-Prem credentials](#list-on-prem-credentials)
+  - [Get On-Prem credentials](#get-on-prem-credentials)
+  - [Create On-Prem credentials](#create-on-prem-credentials)
+  - [Delete On-Prem credentials](#delete-on-prem-credentials)
 - [Logging](#logging)
 - [Backwards Compatibility](#backwards-compatibility)
 - [Development and Contributing](#development-and-contributing)
@@ -34,196 +75,265 @@ You can learn more about the Deepgram API at [developers.deepgram.com](https://d
 
 ## Installation
 
-To install the latest version available (which will guarantee change over time):
+To install the latest version available:
 
 ```sh
 pip install deepgram-sdk
 ```
 
-If you are going to write an application to consume this SDK, it's [highly recommended](https://discuss.python.org/t/how-to-pin-a-package-to-a-specific-major-version-or-lower/17077) and a [programming staple](https://www.easypost.com/dependency-pinning-guide) to pin to at **least** a major version of an SDK (ie `==2.*`) or **with due diligence**, to a minor and/or specific version (ie `==2.1.*` or `==2.12.0`, respectively). If you are unfamiliar with [semantic versioning or semver](https://semver.org/), it's a must-read.
+## Transcription (Synchronous)
+### Remote Files
 
-In a `requirements.txt` file, pinning to a major (or minor) version, like if you want to stick to using the SDK `v2.12.0` release, that can be done like this:
+``` python
+from deepgram import DeepgramClient, PrerecordedOptions
+
+response = DeepgramClient().listen.rest.v("1").transcribe_url(
+    source={"url": "https://dpgr.am/spacewalk.wav"},
+    options=PrerecordedOptions(model="nova-3")
+)
+```
+
+[See our API reference for more info](https://developers.deepgram.com/reference/speech-to-text-api/listen).
+
+[See the Example for more info](./examples/speech-to-text/rest/sync/url/main.py).
+
+### Local Files
+
+``` python
+@TODO
+```
+
+[See our API reference for more info](https://developers.deepgram.com/reference/speech-to-text-api/listen).
+
+[See the Example for more info](./examples/speech-to-text/rest/file/main.py).
+
+## Transcription (Asynchronous / Callbacks)
+### Remote Files
+
+``` python
+@TODO
+```
+
+[See our API reference for more info](https://developers.deepgram.com/reference/speech-to-text-api/listen).
+
+[See the Example for more info](./examples/speech-to-text/rest/async_file/main.py).
+
+### Local Files
+
+``` python
+@TODO
+```
+
+[See our API reference for more info](https://developers.deepgram.com/reference/speech-to-text-api/listen).
+
+## Transcription (Live / Streaming)
+### Live Audio
+
+``` python
+@TODO
+```
+
+[See our API reference for more info]().
+
+[See the Example for more info]()
+
+## Transcribing to Captions
+@TODO
+
+[See our API reference for more info]().
+
+## Voice Agent
+@TODO
+
+[See our API reference for more info]().
+
+[See the Example for more info]()
+
+## Text to Speech
+@TODO
+
+[See our API reference for more info]().
+
+[See the Example for more info]()
+
+## Text Intelligence
+@TODO
+
+[See our API reference for more info]().
+
+[See the Example for more info]()
+
+## Authentication
+### Get Token Details
+@TODO
+
+[See our API reference for more info]().
+
+[See the Example for more info]()
+
+## Projects
+### Get Projects
+@TODO
+
+[See our API reference for more info]().
+
+### Get Project
+@TODO
+
+[See our API reference for more info]().
+
+### Update Project
+@TODO
+
+[See our API reference for more info]().
+
+### Delete Project
+@TODO
+
+[See our API reference for more info]().
+
+## Keys
+### List Keys
+@TODO
+
+[See our API reference for more info]().
+
+### Get Key
+@TODO
+
+[See our API reference for more info]().
+
+### Create Key
+@TODO
+
+[See our API reference for more info]().
+
+### Delete Key
+@TODO
+
+[See our API reference for more info]().
+
+## Members
+### Get Members
+@TODO
+
+[See our API reference for more info]().
+
+### Remove Member
+@TODO
+
+[See our API reference for more info]().
+
+## Scopes
+### Get Member Scopes
+@TODO
+
+[See our API reference for more info]().
+
+### Update Scope
+@TODO
+
+[See our API reference for more info]().
+
+## Invitations
+### List Invites
+@TODO
+
+[See our API reference for more info]().
+
+### Send Invite
+@TODO
+
+[See our API reference for more info]().
+
+### Delete Invite
+@TODO
+
+[See our API reference for more info]().
+
+### Leave Project
+@TODO
+
+[See our API reference for more info]().
+
+## Usage
+### Get All Requests
+@TODO
+
+[See our API reference for more info]().
+
+### Get Request
+@TODO
+
+[See our API reference for more info]().
+
+### Summarize Usage
+@TODO
+
+[See our API reference for more info]().
+
+### Get Fields
+@TODO
+
+[See our API reference for more info]().
+
+## Billing
+### Get All Balances
+@TODO
+
+[See our API reference for more info]().
+
+### Get Balance
+@TODO
+
+[See our API reference for more info]().
+
+## Models
+### Get All Models
+@TODO
+
+[See our API reference for more info]().
+
+### Get Model
+@TODO
+
+[See our API reference for more info]().
+
+## On-Prem APIs
+### List On-Prem credentials
+@TODO
+
+[See our API reference for more info]().
+
+### Get On-Prem credentials
+@TODO
+
+[See our API reference for more info]().
+
+### Create On-Prem credentials
+@TODO
+
+[See our API reference for more info]().
+
+### Delete On-Prem credentials
+@TODO
+
+[See our API reference for more info]().
+
+## Pinning Versions
+To ensure your application remains stable and reliable, we recommend using version pinning in your project. This is a best practice in Python development that helps prevent unexpected changes. You can pin to a major version (like `==4.*`) for a good balance of stability and updates, or to a specific version (like `==4.1.0`) for maximum stability. We've included some helpful resources about [version pinning](https://discuss.python.org/t/how-to-pin-a-package-to-a-specific-major-version-or-lower/17077) and [dependency management](https://www.easypost.com/dependency-pinning-guide) if you'd like to learn more. For a deeper understanding of how version numbers work, check out[semantic versioning](https://semver.org/).
+
+In a `requirements.txt` file, you can pin to a specific version like this:
 
 ```sh
-deepgram-sdk==2.*
+deepgram-sdk==4.1.0
 ```
 
 Or using pip:
 
 ```sh
-pip install deepgram-sdk==2.*
+pip install deepgram-sdk==4.1.0
 ```
-
-Pinning to a specific version can be done like this in a `requirements.txt` file:
-
-```sh
-deepgram-sdk==2.12.0
-```
-
-Or using pip:
-
-```sh
-pip install deepgram-sdk==2.12.0
-```
-
-We guarantee that major interfaces will not break in a given major semver (ie `2.*` release). However, all bets are off moving from a `2.*` to `3.*` major release. This follows standard semver best-practices.
-
-## Quickstarts
-
-This SDK aims to reduce complexity and abtract/hide some internal Deepgram details that clients shouldn't need to know about.  However you can still tweak options and settings if you need.
-
-### PreRecorded Audio Transcription Quickstart
-
-You can find a [walkthrough](https://developers.deepgram.com/docs/python-sdk-pre-recorded-transcription) on our documentation site. Transcribing Pre-Recorded Audio can be done using the following sample code:
-
-```python
-AUDIO_URL = {
-    "url": "https://static.deepgram.com/examples/Bueller-Life-moves-pretty-fast.wav"
-}
-
-## STEP 1 Create a Deepgram client using the API key from environment variables
-deepgram: DeepgramClient = DeepgramClient("", ClientOptionsFromEnv())
-
-## STEP 2 Call the transcribe_url method on the prerecorded class
-options: PrerecordedOptions = PrerecordedOptions(
-    model="nova-3",
-    smart_format=True,
-)
-response = deepgram.listen.rest.v("1").transcribe_url(AUDIO_URL, options)
-print(f"response: {response}\n\n")
-```
-
-### Live Audio Transcription Quickstart
-
-You can find a [walkthrough](https://developers.deepgram.com/docs/python-sdk-streaming-transcription) on our documentation site. Transcribing Live Audio can be done using the following sample code:
-
-```python
-deepgram: DeepgramClient = DeepgramClient()
-
-dg_connection = deepgram.listen.websocket.v("1")
-
-def on_open(self, open, **kwargs):
-    print(f"\n\n{open}\n\n")
-
-def on_message(self, result, **kwargs):
-    sentence = result.channel.alternatives[0].transcript
-    if len(sentence) == 0:
-        return
-    print(f"speaker: {sentence}")
-
-def on_metadata(self, metadata, **kwargs):
-    print(f"\n\n{metadata}\n\n")
-
-def on_speech_started(self, speech_started, **kwargs):
-    print(f"\n\n{speech_started}\n\n")
-
-def on_utterance_end(self, utterance_end, **kwargs):
-    print(f"\n\n{utterance_end}\n\n")
-
-def on_error(self, error, **kwargs):
-    print(f"\n\n{error}\n\n")
-
-def on_close(self, close, **kwargs):
-    print(f"\n\n{close}\n\n")
-
-dg_connection.on(LiveTranscriptionEvents.Open, on_open)
-dg_connection.on(LiveTranscriptionEvents.Transcript, on_message)
-dg_connection.on(LiveTranscriptionEvents.Metadata, on_metadata)
-dg_connection.on(LiveTranscriptionEvents.SpeechStarted, on_speech_started)
-dg_connection.on(LiveTranscriptionEvents.UtteranceEnd, on_utterance_end)
-dg_connection.on(LiveTranscriptionEvents.Error, on_error)
-dg_connection.on(LiveTranscriptionEvents.Close, on_close)
-
-options: LiveOptions = LiveOptions(
-    model="nova-3",
-    punctuate=True,
-    language="en-US",
-    encoding="linear16",
-    channels=1,
-    sample_rate=16000,
-    ## To get UtteranceEnd, the following must be set:
-    interim_results=True,
-    utterance_end_ms="1000",
-    vad_events=True,
-)
-dg_connection.start(options)
-
-## create microphone
-microphone = Microphone(dg_connection.send)
-
-## start microphone
-microphone.start()
-
-## wait until finished
-input("Press Enter to stop recording...\n\n")
-
-## Wait for the microphone to close
-microphone.finish()
-
-## Indicate that we've finished
-dg_connection.finish()
-
-print("Finished")
-```
-
-### Self-Hosted
-
-To use the SDKs with self-hosted, please see our self-hosted developer documentation for more information:
-
-<https://developers.deepgram.com/docs/using-sdks-with-self-hosted#python-sdk>
-
-## Examples
-
-There are examples for **every** API call in this SDK. You can find all of these examples in the [examples folder](https://github.com/deepgram/deepgram-python-sdk/tree/main/examples) at the root of this repo.
-
-Before running any of these examples, then you need to take a look at the README and install the following dependencies:
-
-```bash
-pip install -r examples/requirements-examples.txt
-```
-
-To run each example set the `DEEPGRAM_API_KEY` as an environment variable, then `cd` into each example folder and execute the example with: `python main.py` or `python3 main.py`.
-
-### Agent
-
-- Simple - [examples/agent/simple](https://github.com/deepgram/deepgram-python-sdk/blob/main/examples/agent/simple/main.py)
-- Async Simple - [examples/agent/async_simple](https://github.com/deepgram/deepgram-python-sdk/blob/main/examples/agent/async_simple/main.py)
-
-### Text to Speech
-
-- Asynchronous - [examples/text-to-speech](https://github.com/deepgram/deepgram-python-sdk/blob/main/examples/text-to-speech/rest/file/async_hello_world/main.py)
-- Synchronous - [examples/text-to-speech](https://github.com/deepgram/deepgram-python-sdk/blob/main/examples/text-to-speech/rest/file/hello_world/main.py)
-
-### Analyze Text
-
-- Intent Recognition - [examples/analyze/intent](https://github.com/deepgram/deepgram-python-sdk/blob/main/examples/analyze/intent/main.py)
-- Sentiment Analysis - [examples/sentiment/intent](https://github.com/deepgram/deepgram-python-sdk/blob/main/examples/analyze/sentiment/main.py)
-- Summarization - [examples/analyze/intent](https://github.com/deepgram/deepgram-python-sdk/blob/main/examples/analyze/summary/main.py)
-- Topic Detection - [examples/analyze/intent](https://github.com/deepgram/deepgram-python-sdk/blob/main/examples/analyze/topic/main.py)
-
-### PreRecorded Audio
-
-- Transcription From an Audio File - [examples/prerecorded/file](https://github.com/deepgram/deepgram-python-sdk/blob/main/examples/speech-to-text/rest/file/main.py)
-- Transcription From an URL - [examples/prerecorded/url](https://github.com/deepgram/deepgram-python-sdk/blob/main/examples/speech-to-text/rest/url/main.py)
-- Intent Recognition - [examples/speech-to-text/rest/intent](https://github.com/deepgram/deepgram-python-sdk/blob/main/examples/speech-to-text/rest/intent/main.py)
-- Sentiment Analysis - [examples/speech-to-text/rest/sentiment](https://github.com/deepgram/deepgram-python-sdk/blob/main/examples/speech-to-text/rest/sentiment/main.py)
-- Summarization - [examples/speech-to-text/rest/summary](https://github.com/deepgram/deepgram-python-sdk/blob/main/examples/speech-to-text/rest/summary/main.py)
-- Topic Detection - [examples/speech-to-text/rest/topic](https://github.com/deepgram/deepgram-python-sdk/blob/main/examples/speech-to-text/rest/topic/main.py)
-
-### Live Audio Transcription
-
-- From a Microphone - [examples/streaming/microphone](https://github.com/deepgram/deepgram-python-sdk/blob/main/examples/speech-to-text/websocket/microphone/main.py)
-- From an HTTP Endpoint - [examples/streaming/http](https://github.com/deepgram/deepgram-python-sdk/blob/main/examples/speech-to-text/rest/async_url/main.py)
-
-Management API exercise the full [CRUD](https://en.wikipedia.org/wiki/Create,_read,_update_and_delete) operations for:
-
-- Balances - [examples/manage/balances](https://github.com/deepgram/deepgram-python-sdk/blob/main/examples/manage/balances/main.py)
-- Invitations - [examples/manage/invitations](https://github.com/deepgram/deepgram-python-sdk/blob/main/examples/manage/invitations/main.py)
-- Keys - [examples/manage/keys](https://github.com/deepgram/deepgram-python-sdk/blob/main/examples/manage/keys/main.py)
-- Members - [examples/manage/members](https://github.com/deepgram/deepgram-python-sdk/blob/main/examples/manage/members/main.py)
-- Projects - [examples/manage/projects](https://github.com/deepgram/deepgram-python-sdk/blob/main/examples/manage/projects/main.py)
-- Scopes - [examples/manage/scopes](https://github.com/deepgram/deepgram-python-sdk/blob/main/examples/manage/scopes/main.py)
-- Usage - [examples/manage/usage](https://github.com/deepgram/deepgram-python-sdk/blob/main/examples/manage/usage/main.py)
 
 ## Logging
 
@@ -242,29 +352,7 @@ config: DeepgramClientOptions = DeepgramClientOptions(
 deepgram: DeepgramClient = DeepgramClient("", config)
 ```
 
-## Backwards Compatibility
-
-Older SDK versions will receive Priority 1 (P1) bug support only. Security issues, both in our code and dependencies, are promptly addressed. Significant bugs without clear workarounds are also given priority attention.
-
-## Development and Contributing
-
-Interested in contributing? We ❤️ pull requests!
-
-To make sure our community is safe for all, be sure to review and agree to our
-[Code of Conduct](https://github.com/deepgram/deepgram-python-sdk/blob/main/.github/CODE_OF_CONDUCT.md). Then see the
-[Contribution](https://github.com/deepgram/deepgram-python-sdk/blob/main/.github/CONTRIBUTING.md) guidelines for more information.
-
-### Prerequisites
-
-In order to develop new features for the SDK itself, you first need to uninstall any previous installation of the `deepgram-sdk` and then install/pip the dependencies contained in the `requirements.txt` then instruct python (via pip) to use the SDK by installing it locally.
-
-From the root of the repo, that would entail:
-
-```bash
-pip uninstall deepgram-sdk
-pip install -r requirements.txt
-pip install -e .
-```
+## Testing
 
 ### Daily and Unit Tests
 
@@ -274,7 +362,7 @@ If you are looking to use, run, contribute or modify to the daily/unit tests, th
 pip install -r requirements-dev.txt
 ```
 
-#### Daily Tests
+### Daily Tests
 
 The daily tests invoke a series of checks against the actual/real API endpoint and save the results in the `tests/response_data` folder. This response data is updated nightly to reflect the latest response from the server. Running the daily tests does require a `DEEPGRAM_API_KEY` set in your environment variables.
 
@@ -290,6 +378,30 @@ The unit tests invoke a series of checks against mock endpoints using the respon
 
 ```bash
 make unit-test
+```
+
+## Backwards Compatibility
+
+We follow semantic versioning (semver) to ensure a smooth upgrade experience. Within a major version (like `4.*`), we will maintain backward compatibility so your code will continue to work without breaking changes. When we release a new major version (like moving from `3.*` to `4.*`), we may introduce breaking changes to improve the SDK. We'll always document these changes clearly in our release notes to help you upgrade smoothly.
+
+Older SDK versions will receive Priority 1 (P1) bug support only. Security issues, both in our code and dependencies, are promptly addressed. Significant bugs without clear workarounds are also given priority attention.
+
+## Development and Contributing
+
+Interested in contributing? We ❤️ pull requests!
+
+To make sure our community is safe for all, be sure to review and agree to our
+[Code of Conduct](CODE_OF_CONDUCT.md). Then see the
+[Contribution](CONTRIBUTING.md) guidelines for more information.
+
+In order to develop new features for the SDK itself, you first need to uninstall any previous installation of the `deepgram-sdk` and then install/pip the dependencies contained in the `requirements.txt` then instruct python (via pip) to use the SDK by installing it locally.
+
+From the root of the repo, that would entail:
+
+```bash
+pip uninstall deepgram-sdk
+pip install -r requirements.txt
+pip install -e .
 ```
 
 ## Getting Help
