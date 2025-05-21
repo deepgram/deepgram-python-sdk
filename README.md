@@ -5,17 +5,17 @@
 
 Official Python SDK for [Deepgram](https://www.deepgram.com/). Power your apps with world-class speech and Language AI models.
 
-- [Transcription (Synchronous)](#transcription-synchronous)
+- [Pre-Recorded (Synchronous)](#pre-recorded-synchronous)
   - [Remote Files (Synchronous)](#remote-files-synchronous)
-  - [Local Files](#local-files)
-- [Transcription (Asynchronous / Callbacks)](#transcription-asynchronous--callbacks)
+  - [Local Files (Synchronous)](#local-files-synchronous)
+- [Pre-Recorded (Asynchronous / Callbacks)](#pre-recorded-asynchronous--callbacks)
   - [Remote Files (Asynchronous)](#remote-files-asynchronous)
   - [Local Files (Asynchronous)](#local-files-asynchronous)
-- [Transcription (Live / Streaming)](#transcription-live--streaming)
-  - [Live Audio](#live-audio)
+- [Streaming Audio](#streaming-audio)
 - [Transcribing to Captions](#transcribing-to-captions)
 - [Voice Agent](#voice-agent)
-- [Text to Speech](#text-to-speech)
+- [Text to Speech REST](#text-to-speech-rest)
+- [Text to Speech Streaming](#text-to-speech-streaming)
 - [Text Intelligence](#text-intelligence)
 - [Authentication](#authentication)
   - [Get Token Details](#get-token-details)
@@ -81,16 +81,29 @@ To install the latest version available:
 pip install deepgram-sdk
 ```
 
-## Transcription (Synchronous)
+## Pre-Recorded Initialization & Options
+
+```python
+from deepgram import DeepgramClient
+
+# Initialize the client
+deepgram = DeepgramClient("YOUR_API_KEY")  # Replace with your API key
+
+# set options
+from deepgram import PrerecordedOptions
+response = deepgram.listen.rest.v("1").transcribe_url(
+    source={"url": "https://dpgr.am/spacewalk.wav"},
+    options=PrerecordedOptions(model="nova-3") # Apply other options
+)
+```
+
+## Pre-Recorded (Synchronous)
 
 ### Remote Files (Synchronous)
 
-``` python
-from deepgram import DeepgramClient, PrerecordedOptions
-
-response = DeepgramClient().listen.rest.v("1").transcribe_url(
-    source={"url": "https://dpgr.am/spacewalk.wav"},
-    options=PrerecordedOptions(model="nova-3")
+```python
+response = deepgram.listen.rest.v("1").transcribe_url(
+    source={"url": "https://dpgr.am/spacewalk.wav"}
 )
 ```
 
@@ -98,73 +111,216 @@ response = DeepgramClient().listen.rest.v("1").transcribe_url(
 
 [See the Example for more info](./examples/speech-to-text/rest/sync/url/main.py).
 
-### Local Files
+### Local Files (Synchronous)
 
-``` python
-@TODO
+```python
+response = deepgram.listen.rest.v("1").transcribe_file(
+    source=open("path/to/your/audio.wav", "rb")
+)
 ```
 
 [See our API reference for more info](https://developers.deepgram.com/reference/speech-to-text-api/listen).
 
-[See the Example for more info](./examples/speech-to-text/rest/file/main.py).
+[See the Example for more info](./examples/speech-to-text/rest/sync/file/main.py).
 
-## Transcription (Asynchronous / Callbacks)
+## Pre-Recorded (Asynchronous / Callbacks)
 
 ### Remote Files (Asynchronous)
 
-``` python
-@TODO
+```python
+response = deepgram.listen.rest.v("1").transcribe_url_async(
+    source={"url": "https://dpgr.am/spacewalk.wav"},
+    callback_url="https://your-callback-url.com/webhook"
+)
 ```
 
 [See our API reference for more info](https://developers.deepgram.com/reference/speech-to-text-api/listen).
 
-[See the Example for more info](./examples/speech-to-text/rest/async_file/main.py).
+[See the Example for more info](./examples/speech-to-text/rest/async/url/main.py).
 
 ### Local Files (Asynchronous)
 
-``` python
-@TODO
+```python
+response = deepgram.listen.rest.v("1").transcribe_file_async(
+    source=open("path/to/your/audio.wav", "rb"),
+    callback_url="https://your-callback-url.com/webhook"
+)
 ```
 
 [See our API reference for more info](https://developers.deepgram.com/reference/speech-to-text-api/listen).
 
-## Transcription (Live / Streaming)
+[See the Example for more info](./examples/speech-to-text/rest/async/file/main.py).
 
-### Live Audio
+## Streaming Audio
 
-``` python
-@TODO
+```python
+from deepgram import LiveOptions, LiveTranscriptionEvents
+
+# Create a websocket connection
+connection = deepgram.listen.websocket.v("1")
+
+# Handle transcription events
+@connection.on(LiveTranscriptionEvents.Transcript)
+def handle_transcript(result):
+    print(result.channel.alternatives[0].transcript)
+
+# Start connection with streaming options
+connection.start(LiveOptions(model="nova-3", language="en-US"))
+
+# Send audio data
+connection.send(open("path/to/your/audio.wav", "rb").read())
+
+# Close when done
+connection.finish()
 ```
 
-[See our API reference for more info](https://developers.deepgram.com/reference/streaming-api)
+[See our API reference for more info](https://developers.deepgram.com/reference/streaming-api).
 
-[See the Example for more info](./examples/speech-to-text/streaming/main.py)
+[See the Examples for more info](./examples/speech-to-text/websocket/).
 
 ## Transcribing to Captions
 
-@TODO
+### WebVTT
 
-[See our API reference for more info](https://developers.deepgram.com/reference/captions-api)
+```python
+from deepgram_captions import DeepgramConverter, webvtt
+
+transcription = DeepgramConverter(dg_response)
+captions = webvtt(transcription)
+```
+
+### SRT
+
+```python
+from deepgram_captions import DeepgramConverter, srt
+
+transcription = DeepgramConverter(dg_response)
+captions = srt(transcription)
+```
+
+[See our stand alone captions library for more information.](https://github.com/deepgram/deepgram-python-captions).
 
 ## Voice Agent
 
-@TODO
+```python
+from deepgram import (
+    DeepgramClient,
+    SettingsOptions
+)
 
-[See our API reference for more info](https://developers.deepgram.com/reference/voice-agent-api)
+deepgram = DeepgramClient("YOUR_API_KEY")
 
-[See the Example for more info](./examples/voice-agent/main.py)
+# Create websocket connection
+connection = deepgram.agent.websocket.v("1")
 
-## Text to Speech
+# Configure agent settings
+options = SettingsOptions()
+options.language = "en"
+options.agent.think.provider.type = "open_ai"
+options.agent.think.provider.model = "gpt-4o-mini"
+options.agent.think.prompt = "You are a helpful AI assistant."
+options.agent.listen.provider.type = "deepgram"
+options.agent.listen.provider.model = "nova-3"
+options.agent.speak.provider.type = "deepgram"
+options.agent.speak.provider.model ="aura-2-thalia-en"
 
-@TODO
+options.greeting = "Hello, I'm your AI assistant."
 
-[See our API reference for more info](https://developers.deepgram.com/reference/text-to-speech-api)
+# Start the connection
+connection.start(options)
 
-[See the Example for more info](./examples/text-to-speech/main.py)
+# Close the connection
+connection.finish()
+```
+
+This example demonstrates:
+
+- Setting up a WebSocket connection
+- Configuring the agent with speech, language, and audio settings
+- Handling various agent events (speech, transcripts, audio)
+- Sending audio data and keeping the connection alive
+
+For a complete implementation, you would need to:
+
+1. Add your audio input source (e.g., microphone)
+2. Implement audio playback for the agent's responses
+3. Handle any function calls if your agent uses them
+4. Add proper error handling and connection management
+
+[See our API reference for more info](https://developers.deepgram.com/reference/voice-agent-api/agent).
+
+[See the Examples for more info](./examples/agent/).
+
+## Text to Speech REST
+
+```python
+from deepgram import DeepgramClient, SpeakOptions
+
+# Initialize the client
+deepgram = DeepgramClient("YOUR_API_KEY")
+
+# Configure speech options
+options = SpeakOptions(model="aura-2-thalia-en")
+
+# Convert text to speech and save to file
+response = deepgram.speak.rest.v("1").save(
+    "output.mp3",
+    {"text": "Hello world!"},
+    options
+)
+```
+
+[See our API reference for more info](https://developers.deepgram.com/reference/text-to-speech-api/speak).
+
+[See the Example for more info](./examples/text-to-speech/rest/).
+
+## Text to Speech Streaming
+
+```python
+from deepgram import (
+    DeepgramClient,
+    SpeakWSOptions,
+    SpeakWebSocketEvents
+)
+
+# Initialize the client
+deepgram = DeepgramClient("YOUR_API_KEY")
+
+# Create websocket connection
+connection = deepgram.speak.websocket.v("1")
+
+# Handle audio data
+@connection.on(SpeakWebSocketEvents.AudioData)
+def handle_audio(data):
+    # Process audio data or play it
+    pass
+
+# Configure streaming options
+options = SpeakWSOptions(
+    model="aura-2-thalia-en",
+    encoding="linear16",
+    sample_rate=16000
+)
+
+# Start connection and send text
+connection.start(options)
+connection.send_text("Hello, this is a text to speech example.")
+connection.flush()
+connection.wait_for_complete()
+
+# Close when done
+connection.finish()
+```
+
+[See our API reference for more info](https://developers.deepgram.com/reference/text-to-speech-api/speak).
+
+[See the Example for more info](./examples/text-to-speech/websocket/).
 
 ## Text Intelligence
 
+```python
 @TODO
+```
 
 [See our API reference for more info](https://developers.deepgram.com/reference/text-intelligence-api)
 
@@ -174,7 +330,9 @@ response = DeepgramClient().listen.rest.v("1").transcribe_url(
 
 ### Get Token Details
 
+```python
 @TODO
+```
 
 [See our API reference for more info](https://developers.deepgram.com/reference/authentication-api)
 
@@ -184,25 +342,33 @@ response = DeepgramClient().listen.rest.v("1").transcribe_url(
 
 ### Get Projects
 
+```python
 @TODO
+```
 
 [See our API reference for more info](https://developers.deepgram.com/reference/projects-api)
 
 ### Get Project
 
+```python
 @TODO
+```
 
 [See our API reference for more info](https://developers.deepgram.com/reference/projects-api)
 
 ### Update Project
 
+```python
 @TODO
+```
 
 [See our API reference for more info](https://developers.deepgram.com/reference/projects-api)
 
 ### Delete Project
 
+```python
 @TODO
+```
 
 [See our API reference for more info](https://developers.deepgram.com/reference/projects-api)
 
@@ -210,25 +376,33 @@ response = DeepgramClient().listen.rest.v("1").transcribe_url(
 
 ### List Keys
 
+```python
 @TODO
+```
 
 [See our API reference for more info](https://developers.deepgram.com/reference/keys-api)
 
 ### Get Key
 
+```python
 @TODO
+```
 
 [See our API reference for more info](https://developers.deepgram.com/reference/keys-api)
 
 ### Create Key
 
+```python
 @TODO
+```
 
 [See our API reference for more info](https://developers.deepgram.com/reference/keys-api)
 
 ### Delete Key
 
+```python
 @TODO
+```
 
 [See our API reference for more info](https://developers.deepgram.com/reference/keys-api)
 
@@ -236,13 +410,17 @@ response = DeepgramClient().listen.rest.v("1").transcribe_url(
 
 ### Get Members
 
+```python
 @TODO
+```
 
 [See our API reference for more info](https://developers.deepgram.com/reference/members-api)
 
 ### Remove Member
 
+```python
 @TODO
+```
 
 [See our API reference for more info](https://developers.deepgram.com/reference/members-api)
 
@@ -250,13 +428,17 @@ response = DeepgramClient().listen.rest.v("1").transcribe_url(
 
 ### Get Member Scopes
 
+```python
 @TODO
+```
 
 [See our API reference for more info](https://developers.deepgram.com/reference/scopes-api)
 
 ### Update Scope
 
+```python
 @TODO
+```
 
 [See our API reference for more info](https://developers.deepgram.com/reference/scopes-api)
 
@@ -264,25 +446,33 @@ response = DeepgramClient().listen.rest.v("1").transcribe_url(
 
 ### List Invites
 
+```python
 @TODO
+```
 
 [See our API reference for more info](https://developers.deepgram.com/reference/invites-api)
 
 ### Send Invite
 
+```python
 @TODO
+```
 
 [See our API reference for more info](https://developers.deepgram.com/reference/invites-api)
 
 ### Delete Invite
 
+```python
 @TODO
+```
 
 [See our API reference for more info](https://developers.deepgram.com/reference/invites-api)
 
 ### Leave Project
 
+```python
 @TODO
+```
 
 [See our API reference for more info](https://developers.deepgram.com/reference/projects-api)
 
@@ -290,25 +480,33 @@ response = DeepgramClient().listen.rest.v("1").transcribe_url(
 
 ### Get All Requests
 
+```python
 @TODO
+```
 
 [See our API reference for more info](https://developers.deepgram.com/reference/requests-api)
 
 ### Get Request
 
+```python
 @TODO
+```
 
 [See our API reference for more info](https://developers.deepgram.com/reference/requests-api)
 
 ### Summarize Usage
 
+```python
 @TODO
+```
 
 [See our API reference for more info](https://developers.deepgram.com/reference/usage-api)
 
 ### Get Fields
 
+```python
 @TODO
+```
 
 [See our API reference for more info](https://developers.deepgram.com/reference/usage-api)
 
@@ -316,13 +514,17 @@ response = DeepgramClient().listen.rest.v("1").transcribe_url(
 
 ### Get All Balances
 
+```python
 @TODO
+```
 
 [See our API reference for more info](https://developers.deepgram.com/reference/balances-api)
 
 ### Get Balance
 
+```python
 @TODO
+```
 
 [See our API reference for more info](https://developers.deepgram.com/reference/balances-api)
 
@@ -330,13 +532,17 @@ response = DeepgramClient().listen.rest.v("1").transcribe_url(
 
 ### Get All Models
 
+```python
 @TODO
+```
 
 [See our API reference for more info](https://developers.deepgram.com/reference/models-api)
 
 ### Get Model
 
+```python
 @TODO
+```
 
 [See our API reference for more info](https://developers.deepgram.com/reference/models-api)
 
@@ -344,29 +550,38 @@ response = DeepgramClient().listen.rest.v("1").transcribe_url(
 
 ### List On-Prem credentials
 
+```python
 @TODO
+```
 
 [See our API reference for more info](https://developers.deepgram.com/reference/on-prem-api)
 
 ### Get On-Prem credentials
 
+```python
 @TODO
+```
 
 [See our API reference for more info](https://developers.deepgram.com/reference/on-prem-api)
 
 ### Create On-Prem credentials
 
+```python
 @TODO
+```
 
 [See our API reference for more info](https://developers.deepgram.com/reference/on-prem-api)
 
 ### Delete On-Prem credentials
 
+```python
 @TODO
+```
 
 [See our API reference for more info](https://developers.deepgram.com/reference/on-prem-api)
 
 ## Pinning Versions
+
 To ensure your application remains stable and reliable, we recommend using version pinning in your project. This is a best practice in Python development that helps prevent unexpected changes. You can pin to a major version (like `==4.*`) for a good balance of stability and updates, or to a specific version (like `==4.1.0`) for maximum stability. We've included some helpful resources about [version pinning](https://discuss.python.org/t/how-to-pin-a-package-to-a-specific-major-version-or-lower/17077) and [dependency management](https://www.easypost.com/dependency-pinning-guide) if you'd like to learn more. For a deeper understanding of how version numbers work, check out[semantic versioning](https://semver.org/).
 
 In a `requirements.txt` file, you can pin to a specific version like this:
