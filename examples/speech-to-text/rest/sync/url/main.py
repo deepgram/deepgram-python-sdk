@@ -40,9 +40,6 @@ def main():
         options: PrerecordedOptions = PrerecordedOptions(
             model="nova-3",
             smart_format=True,
-            utterances=True,
-            punctuate=True,
-            diarize=True,
         )
 
         before = datetime.now()
