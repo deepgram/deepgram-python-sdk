@@ -6,11 +6,11 @@
 Official Python SDK for [Deepgram](https://www.deepgram.com/). Power your apps with world-class speech and Language AI models.
 
 - [Transcription (Synchronous)](#transcription-synchronous)
-  - [Remote Files](#remote-files)
+  - [Remote Files (Synchronous)](#remote-files-synchronous)
   - [Local Files](#local-files)
 - [Transcription (Asynchronous / Callbacks)](#transcription-asynchronous--callbacks)
-  - [Remote Files](#remote-files-1)
-  - [Local Files](#local-files-1)
+  - [Remote Files (Asynchronous)](#remote-files-asynchronous)
+  - [Local Files (Asynchronous)](#local-files-asynchronous)
 - [Transcription (Live / Streaming)](#transcription-live--streaming)
   - [Live Audio](#live-audio)
 - [Transcribing to Captions](#transcribing-to-captions)
