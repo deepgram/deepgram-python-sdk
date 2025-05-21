@@ -19,6 +19,7 @@ Official Python SDK for [Deepgram](https://www.deepgram.com/). Power your apps w
 - [Text Intelligence](#text-intelligence)
 - [Authentication](#authentication)
   - [Get Token Details](#get-token-details)
+  - [Grant Token](#grant-token)
 - [Projects](#projects)
   - [Get Projects](#get-projects)
   - [Get Project](#get-project)
@@ -81,29 +82,27 @@ To install the latest version available:
 pip install deepgram-sdk
 ```
 
-## Pre-Recorded Initialization & Options
+## Initialization
+
+All the examples below will require `DeepgramClient`.
 
 ```python
 from deepgram import DeepgramClient
 
 # Initialize the client
 deepgram = DeepgramClient("YOUR_API_KEY")  # Replace with your API key
-
-# set options
-from deepgram import PrerecordedOptions
-response = deepgram.listen.rest.v("1").transcribe_url(
-    source={"url": "https://dpgr.am/spacewalk.wav"},
-    options=PrerecordedOptions(model="nova-3") # Apply other options
-)
 ```
 
 ## Pre-Recorded (Synchronous)
 
 ### Remote Files (Synchronous)
 
+Transcribe audio from a URL.
+
 ```python
 response = deepgram.listen.rest.v("1").transcribe_url(
     source={"url": "https://dpgr.am/spacewalk.wav"}
+    options=PrerecordedOptions(model="nova-3") # Apply other options
 )
 ```
 
@@ -113,9 +112,12 @@ response = deepgram.listen.rest.v("1").transcribe_url(
 
 ### Local Files (Synchronous)
 
+Transcribe audio from a file.
+
 ```python
 response = deepgram.listen.rest.v("1").transcribe_file(
     source=open("path/to/your/audio.wav", "rb")
+    options=PrerecordedOptions(model="nova-3") # Apply other options
 )
 ```
 
@@ -127,10 +129,13 @@ response = deepgram.listen.rest.v("1").transcribe_file(
 
 ### Remote Files (Asynchronous)
 
+Transcribe audio from a URL.
+
 ```python
 response = deepgram.listen.rest.v("1").transcribe_url_async(
     source={"url": "https://dpgr.am/spacewalk.wav"},
     callback_url="https://your-callback-url.com/webhook"
+    options=PrerecordedOptions(model="nova-3") # Apply other options
 )
 ```
 
@@ -140,10 +145,13 @@ response = deepgram.listen.rest.v("1").transcribe_url_async(
 
 ### Local Files (Asynchronous)
 
+Transcribe audio from a file.
+
 ```python
 response = deepgram.listen.rest.v("1").transcribe_file_async(
     source=open("path/to/your/audio.wav", "rb"),
     callback_url="https://your-callback-url.com/webhook"
+    options=PrerecordedOptions(model="nova-3") # Apply other options
 )
 ```
 
@@ -152,6 +160,8 @@ response = deepgram.listen.rest.v("1").transcribe_file_async(
 [See the Example for more info](./examples/speech-to-text/rest/async/file/main.py).
 
 ## Streaming Audio
+
+Transcribe streaming audio.
 
 ```python
 from deepgram import LiveOptions, LiveTranscriptionEvents
@@ -180,6 +190,8 @@ connection.finish()
 
 ## Transcribing to Captions
 
+Transcribe audio to captions.
+
 ### WebVTT
 
 ```python
@@ -202,13 +214,12 @@ captions = srt(transcription)
 
 ## Voice Agent
 
+Configure a Voice Agent.
+
 ```python
 from deepgram import (
-    DeepgramClient,
     SettingsOptions
 )
-
-deepgram = DeepgramClient("YOUR_API_KEY")
 
 # Create websocket connection
 connection = deepgram.agent.websocket.v("1")
@@ -253,11 +264,10 @@ For a complete implementation, you would need to:
 
 ## Text to Speech REST
 
-```python
-from deepgram import DeepgramClient, SpeakOptions
+Convert text into speech using the REST API.
 
-# Initialize the client
-deepgram = DeepgramClient("YOUR_API_KEY")
+```python
+from deepgram import SpeakOptions
 
 # Configure speech options
 options = SpeakOptions(model="aura-2-thalia-en")
@@ -276,24 +286,19 @@ response = deepgram.speak.rest.v("1").save(
 
 ## Text to Speech Streaming
 
+Convert streaming text into speech using a Websocket.
+
 ```python
 from deepgram import (
-    DeepgramClient,
     SpeakWSOptions,
     SpeakWebSocketEvents
 )
-
-# Initialize the client
-deepgram = DeepgramClient("YOUR_API_KEY")
 
 # Create websocket connection
 connection = deepgram.speak.websocket.v("1")
 
 # Handle audio data
 @connection.on(SpeakWebSocketEvents.AudioData)
-def handle_audio(data):
-    # Process audio data or play it
-    pass
 
 # Configure streaming options
 options = SpeakWSOptions(
@@ -314,63 +319,101 @@ connection.finish()
 
 [See our API reference for more info](https://developers.deepgram.com/reference/text-to-speech-api/speak).
 
-[See the Example for more info](./examples/text-to-speech/websocket/).
+[See the Examples for more info](./examples/text-to-speech/websocket/).
 
 ## Text Intelligence
 
+Analyze text.
+
 ```python
-@TODO
+from deepgram import ReadOptions
+
+# Configure read options
+options = ReadOptions(
+    model="nova-3",
+    language="en"
+)
+
+# Process text for intelligence
+response = deepgram.read.rest.v("1").process(
+    text="The quick brown fox jumps over the lazy dog.",
+    options=options
+)
 ```
 
-[See our API reference for more info](https://developers.deepgram.com/reference/text-intelligence-api)
+[See our API reference for more info](https://developers.deepgram.com/reference/text-intelligence-api/text-read).
 
-[See the Example for more info](./examples/text-intelligence/main.py)
 
 ## Authentication
 
 ### Get Token Details
 
+Retrieves the details of the current authentication token.
+
 ```python
-@TODO
+response = deepgram.manage.rest.v("1").get_token_details()
 ```
 
-[See our API reference for more info](https://developers.deepgram.com/reference/authentication-api)
+[See our API reference for more info](https://developers.deepgram.com/reference/authentication).
 
-[See the Example for more info](./examples/authentication/main.py)
+### Grant Token
+
+Creates a temporary token with a 30-second TTL.
+
+```python
+response = deepgram.auth.v("1").grant_token()
+
+```
+
+[See our API reference for more info](https://developers.deepgram.com/reference/token-based-auth-api/grant-token).
+
+[See The Examples for more info](./examples/auth/)
 
 ## Projects
 
 ### Get Projects
 
+Returns all projects accessible by the API key.
+
 ```python
-@TODO
+response = deepgram.manage.rest.v("1").get_projects()
 ```
 
-[See our API reference for more info](https://developers.deepgram.com/reference/projects-api)
+[See our API reference for more info](https://developers.deepgram.com/reference/management-api/projects/list)
+
+[See The Example for more info](./examples/manage/projects/main.py)
 
 ### Get Project
 
+Retrieves a specific project based on the provided project_id.
+
 ```python
-@TODO
+response = deepgram.manage.rest.v("1").get_project(myId)
 ```
 
-[See our API reference for more info](https://developers.deepgram.com/reference/projects-api)
+[See our API reference for more info](https://developers.deepgram.com/reference/management-api/projects/get)
+
+[See The Example for more info](./examples/manage/projects/main.py)
 
 ### Update Project
 
 ```python
-@TODO
+response = deepgram.manage.rest.v("1").update_project(myId, options)
 ```
 
-[See our API reference for more info](https://developers.deepgram.com/reference/projects-api)
+[See our API reference for more info](https://developers.deepgram.com/reference/management-api/projects/update)
+
+[See The Example for more info](./examples/manage/projects/main.py)
 
 ### Delete Project
 
 ```python
-@TODO
+response = deepgram.manage.rest.v("1").delete_project(myId)
 ```
 
-[See our API reference for more info](https://developers.deepgram.com/reference/projects-api)
+[See our API reference for more info](https://developers.deepgram.com/reference/management-api/projects/delete)
+
+[See The Example for more info](./examples/manage/projects/main.py)
 
 ## Keys
 
