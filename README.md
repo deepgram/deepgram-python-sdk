@@ -343,7 +343,6 @@ response = deepgram.read.rest.v("1").process(
 
 [See our API reference for more info](https://developers.deepgram.com/reference/text-intelligence-api/text-read).
 
-
 ## Authentication
 
 ### Get Token Details
@@ -376,140 +375,182 @@ response = deepgram.auth.v("1").grant_token()
 Returns all projects accessible by the API key.
 
 ```python
-response = deepgram.manage.rest.v("1").get_projects()
+response = deepgram.manage.v("1").get_projects()
 ```
 
-[See our API reference for more info](https://developers.deepgram.com/reference/management-api/projects/list)
+[See our API reference for more info](https://developers.deepgram.com/reference/management-api/projects/list).
 
-[See The Example for more info](./examples/manage/projects/main.py)
+[See The Example for more info](./examples/manage/projects/main.py).
 
 ### Get Project
 
 Retrieves a specific project based on the provided project_id.
 
 ```python
-response = deepgram.manage.rest.v("1").get_project(myId)
+response = deepgram.manage.v("1").get_project(myProjectId)
 ```
 
-[See our API reference for more info](https://developers.deepgram.com/reference/management-api/projects/get)
+[See our API reference for more info](https://developers.deepgram.com/reference/management-api/projects/get).
 
-[See The Example for more info](./examples/manage/projects/main.py)
+[See The Example for more info](./examples/manage/projects/main.py).
 
 ### Update Project
 
+Update a project.
+
 ```python
-response = deepgram.manage.rest.v("1").update_project(myId, options)
+response = deepgram.manage.v("1").update_project(myProjectId, options)
 ```
 
-[See our API reference for more info](https://developers.deepgram.com/reference/management-api/projects/update)
+[See our API reference for more info](https://developers.deepgram.com/reference/management-api/projects/update).
 
-[See The Example for more info](./examples/manage/projects/main.py)
+[See The Example for more info](./examples/manage/projects/main.py).
 
 ### Delete Project
 
+Delete a project.
+
 ```python
-response = deepgram.manage.rest.v("1").delete_project(myId)
+response = deepgram.manage.v("1").delete_project(myProjectId)
 ```
 
-[See our API reference for more info](https://developers.deepgram.com/reference/management-api/projects/delete)
+[See our API reference for more info](https://developers.deepgram.com/reference/management-api/projects/delete).
 
-[See The Example for more info](./examples/manage/projects/main.py)
+[See The Example for more info](./examples/manage/projects/main.py).
 
 ## Keys
 
 ### List Keys
 
+Retrieves all keys associated with the provided project_id.
+
 ```python
-@TODO
+response = deepgram.manage.v("1").get_keys(myProjectId)
 ```
 
-[See our API reference for more info](https://developers.deepgram.com/reference/keys-api)
+[See our API reference for more info](https://developers.deepgram.com/reference/management-api/keys/list)
+
+[See The Example for more info](./examples/manage/keys/main.py).
 
 ### Get Key
 
+Retrieves a specific key associated with the provided project_id.
+
 ```python
-@TODO
+response = deepgram.manage.v("1").get_key(myProjectId, myKeyId)
 ```
 
-[See our API reference for more info](https://developers.deepgram.com/reference/keys-api)
+[See our API reference for more info](https://developers.deepgram.com/reference/management-api/keys/get)
+
+[See The Example for more info](./examples/manage/keys/main.py).
 
 ### Create Key
 
+Creates an API key with the provided scopes.
+
 ```python
-@TODO
+ response = deepgram.manage.v("1").create_key(myProjectId, options)
 ```
 
-[See our API reference for more info](https://developers.deepgram.com/reference/keys-api)
+[See our API reference for more info](https://developers.deepgram.com/reference/management-api/keys/create)
+
+[See The Example for more info](./examples/manage/keys/main.py).
 
 ### Delete Key
 
+Deletes a specific key associated with the provided project_id.
+
 ```python
-@TODO
+response = deepgram.manage.v("1").delete_key(myProjectId, myKeyId)
 ```
 
-[See our API reference for more info](https://developers.deepgram.com/reference/keys-api)
+[See our API reference for more info](https://developers.deepgram.com/reference/management-api/keys/delete)
+
+[See The Example for more info](./examples/manage/keys/main.py).
 
 ## Members
 
 ### Get Members
 
+Retrieves account objects for all of the accounts in the specified project_id.
+
 ```python
-@TODO
+response = deepgram.manage.v("1").get_members(myProjectId)
 ```
 
-[See our API reference for more info](https://developers.deepgram.com/reference/members-api)
+[See our API reference for more info](https://developers.deepgram.com/reference/management-api/members/list).
+
+[See The Example for more info](./examples/manage/members/main.py).
 
 ### Remove Member
 
+Removes member account for specified member_id.
+
 ```python
-@TODO
+response = deepgram.manage.v("1").remove_member(myProjectId, MemberId)
 ```
 
-[See our API reference for more info](https://developers.deepgram.com/reference/members-api)
+[See our API reference for more info](https://developers.deepgram.com/reference/management-api/members/delete).
+
+[See The Example for more info](./examples/manage/members/main.py).
 
 ## Scopes
 
 ### Get Member Scopes
 
+Retrieves scopes of the specified member in the specified project.
+
 ```python
-@TODO
+response = deepgram.manage.v("1").get_member_scopes(myProjectId, memberId)
 ```
 
-[See our API reference for more info](https://developers.deepgram.com/reference/scopes-api)
+[See our API reference for more info](https://developers.deepgram.com/reference/management-api/scopes/list).
+
+[See The Example for more info](./examples/manage/scopes/main.py).
 
 ### Update Scope
 
+Updates the scope for the specified member in the specified project.
+
 ```python
-@TODO
+response = deepgram.manage.v("1").update_member_scope(myProjectId, memberId, options)
 ```
 
-[See our API reference for more info](https://developers.deepgram.com/reference/scopes-api)
+[See our API reference for more info](https://developers.deepgram.com/reference/management-api/scopes/update).
+
+[See The Example for more info](./examples/manage/scopes/main.py).
 
 ## Invitations
 
 ### List Invites
 
+Retrieves all invitations associated with the provided project_id.
+
 ```python
 @TODO
 ```
 
-[See our API reference for more info](https://developers.deepgram.com/reference/invites-api)
+[See our API reference for more info](https://developers.deepgram.com/reference/invites-api).
 
 ### Send Invite
 
+Sends an invitation to the provided email address.
+
 ```python
 @TODO
 ```
 
-[See our API reference for more info](https://developers.deepgram.com/reference/invites-api)
+[See our API reference for more info](https://developers.deepgram.com/reference/invites-api).
 
 ### Delete Invite
 
+Removes the specified invitation from the project.
+
 ```python
 @TODO
 ```
 
-[See our API reference for more info](https://developers.deepgram.com/reference/invites-api)
+[See our API reference for more info](https://developers.deepgram.com/reference/invites-api).
 
 ### Leave Project
 
@@ -517,7 +558,7 @@ response = deepgram.manage.rest.v("1").delete_project(myId)
 @TODO
 ```
 
-[See our API reference for more info](https://developers.deepgram.com/reference/projects-api)
+[See our API reference for more info](https://developers.deepgram.com/reference/projects-api).
 
 ## Usage
 
@@ -527,7 +568,7 @@ response = deepgram.manage.rest.v("1").delete_project(myId)
 @TODO
 ```
 
-[See our API reference for more info](https://developers.deepgram.com/reference/requests-api)
+[See our API reference for more info](https://developers.deepgram.com/reference/requests-api).
 
 ### Get Request
 
@@ -535,7 +576,7 @@ response = deepgram.manage.rest.v("1").delete_project(myId)
 @TODO
 ```
 
-[See our API reference for more info](https://developers.deepgram.com/reference/requests-api)
+[See our API reference for more info](https://developers.deepgram.com/reference/requests-api).
 
 ### Summarize Usage
 
@@ -543,7 +584,7 @@ response = deepgram.manage.rest.v("1").delete_project(myId)
 @TODO
 ```
 
-[See our API reference for more info](https://developers.deepgram.com/reference/usage-api)
+[See our API reference for more info](https://developers.deepgram.com/reference/usage-api).
 
 ### Get Fields
 
@@ -551,7 +592,7 @@ response = deepgram.manage.rest.v("1").delete_project(myId)
 @TODO
 ```
 
-[See our API reference for more info](https://developers.deepgram.com/reference/usage-api)
+[See our API reference for more info](https://developers.deepgram.com/reference/usage-api).
 
 ## Billing
 
@@ -561,7 +602,7 @@ response = deepgram.manage.rest.v("1").delete_project(myId)
 @TODO
 ```
 
-[See our API reference for more info](https://developers.deepgram.com/reference/balances-api)
+[See our API reference for more info](https://developers.deepgram.com/reference/balances-api).
 
 ### Get Balance
 
@@ -569,7 +610,7 @@ response = deepgram.manage.rest.v("1").delete_project(myId)
 @TODO
 ```
 
-[See our API reference for more info](https://developers.deepgram.com/reference/balances-api)
+[See our API reference for more info](https://developers.deepgram.com/reference/balances-api).
 
 ## Models
 
@@ -579,7 +620,7 @@ response = deepgram.manage.rest.v("1").delete_project(myId)
 @TODO
 ```
 
-[See our API reference for more info](https://developers.deepgram.com/reference/models-api)
+[See our API reference for more info](https://developers.deepgram.com/reference/models-api).
 
 ### Get Model
 
@@ -587,7 +628,7 @@ response = deepgram.manage.rest.v("1").delete_project(myId)
 @TODO
 ```
 
-[See our API reference for more info](https://developers.deepgram.com/reference/models-api)
+[See our API reference for more info](https://developers.deepgram.com/reference/models-api).
 
 ## On-Prem APIs
 
@@ -597,7 +638,7 @@ response = deepgram.manage.rest.v("1").delete_project(myId)
 @TODO
 ```
 
-[See our API reference for more info](https://developers.deepgram.com/reference/on-prem-api)
+[See our API reference for more info](https://developers.deepgram.com/reference/on-prem-api).
 
 ### Get On-Prem credentials
 
@@ -605,7 +646,7 @@ response = deepgram.manage.rest.v("1").delete_project(myId)
 @TODO
 ```
 
-[See our API reference for more info](https://developers.deepgram.com/reference/on-prem-api)
+[See our API reference for more info](https://developers.deepgram.com/reference/on-prem-api).
 
 ### Create On-Prem credentials
 
@@ -613,7 +654,7 @@ response = deepgram.manage.rest.v("1").delete_project(myId)
 @TODO
 ```
 
-[See our API reference for more info](https://developers.deepgram.com/reference/on-prem-api)
+[See our API reference for more info](https://developers.deepgram.com/reference/on-prem-api).
 
 ### Delete On-Prem credentials
 
@@ -621,7 +662,7 @@ response = deepgram.manage.rest.v("1").delete_project(myId)
 @TODO
 ```
 
-[See our API reference for more info](https://developers.deepgram.com/reference/on-prem-api)
+[See our API reference for more info](https://developers.deepgram.com/reference/on-prem-api).
 
 ## Pinning Versions
 
