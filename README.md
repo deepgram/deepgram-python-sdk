@@ -84,7 +84,7 @@ pip install deepgram-sdk
 
 ## Initialization
 
-All the examples below will require `DeepgramClient`.
+All of the examples below will require `DeepgramClient`.
 
 ```python
 from deepgram import DeepgramClient
