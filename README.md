@@ -50,7 +50,7 @@ Official Python SDK for [Deepgram](https://www.deepgram.com/). Power your apps w
   - [Get All Balances](#get-all-balances)
   - [Get Balance](#get-balance)
 - [Models](#models)
-  - [Get All Models](#get-all-models)
+  - [Get All Project Models](#get-all-project-models)
   - [Get Model](#get-model)
 - [On-Prem APIs](#on-prem-apis)
   - [List On-Prem credentials](#list-on-prem-credentials)
@@ -100,8 +100,11 @@ deepgram = DeepgramClient("YOUR_API_KEY")  # Replace with your API key
 Transcribe audio from a URL.
 
 ```python
+
+from deepgram import PrerecordedOptions
+
 response = deepgram.listen.rest.v("1").transcribe_url(
-    source={"url": "https://dpgr.am/spacewalk.wav"}
+    source={"url": "https://dpgr.am/spacewalk.wav"},
     options=PrerecordedOptions(model="nova-3") # Apply other options
 )
 ```
@@ -115,8 +118,10 @@ response = deepgram.listen.rest.v("1").transcribe_url(
 Transcribe audio from a file.
 
 ```python
+from deepgram import PrerecordedOptions
+
 response = deepgram.listen.rest.v("1").transcribe_file(
-    source=open("path/to/your/audio.wav", "rb")
+    source=open("path/to/your/audio.wav", "rb"),
     options=PrerecordedOptions(model="nova-3") # Apply other options
 )
 ```
@@ -132,9 +137,11 @@ response = deepgram.listen.rest.v("1").transcribe_file(
 Transcribe audio from a URL.
 
 ```python
+from deepgram import PrerecordedOptions
+
 response = deepgram.listen.rest.v("1").transcribe_url_async(
     source={"url": "https://dpgr.am/spacewalk.wav"},
-    callback_url="https://your-callback-url.com/webhook"
+    callback_url="https://your-callback-url.com/webhook",
     options=PrerecordedOptions(model="nova-3") # Apply other options
 )
 ```
@@ -148,9 +155,11 @@ response = deepgram.listen.rest.v("1").transcribe_url_async(
 Transcribe audio from a file.
 
 ```python
+from deepgram import PrerecordedOptions
+
 response = deepgram.listen.rest.v("1").transcribe_file_async(
     source=open("path/to/your/audio.wav", "rb"),
-    callback_url="https://your-callback-url.com/webhook"
+    callback_url="https://your-callback-url.com/webhook",
     options=PrerecordedOptions(model="nova-3") # Apply other options
 )
 ```
@@ -527,142 +536,160 @@ response = deepgram.manage.v("1").update_member_scope(myProjectId, memberId, opt
 Retrieves all invitations associated with the provided project_id.
 
 ```python
-@TODO
+response = deepgram.manage.v("1").get_invites(myProjectId)
 ```
 
-[See our API reference for more info](https://developers.deepgram.com/reference/invites-api).
+[See our API reference for more info](https://developers.deepgram.com/reference/management-api/invitations/list).
 
 ### Send Invite
 
 Sends an invitation to the provided email address.
 
 ```python
-@TODO
+response = deepgram.manage.v("1").send_invite(myProjectId, options)
 ```
 
-[See our API reference for more info](https://developers.deepgram.com/reference/invites-api).
+[See our API reference for more info](https://developers.deepgram.com/reference/management-api/invitations/create).
 
 ### Delete Invite
 
 Removes the specified invitation from the project.
 
 ```python
-@TODO
+response = deepgram.manage.v("1").delete_invite(myProjectId, email)
 ```
 
-[See our API reference for more info](https://developers.deepgram.com/reference/invites-api).
+[See our API reference for more info](https://developers.deepgram.com/reference/management-api/invitations/delete).
 
 ### Leave Project
 
 ```python
-@TODO
+response = deepgram.manage.v("1").leave_project(myProjectId)
 ```
 
-[See our API reference for more info](https://developers.deepgram.com/reference/projects-api).
+[See our API reference for more info](https://developers.deepgram.com/reference/management-api/invitations/leave).
 
 ## Usage
 
 ### Get All Requests
 
+Retrieves all requests associated with the provided project_id based on the provided options.
+
 ```python
-@TODO
+response = deepgram.manage.v("1").get_usage_requests(myProjectId)
 ```
 
-[See our API reference for more info](https://developers.deepgram.com/reference/requests-api).
+[See our API reference for more info](https://developers.deepgram.com/reference/management-api/usage/list-requests).
 
 ### Get Request
 
-```python
-@TODO
-```
-
-[See our API reference for more info](https://developers.deepgram.com/reference/requests-api).
-
-### Summarize Usage
+Retrieves a specific request associated with the provided project_id
 
 ```python
-@TODO
+response = deepgram.manage.v("1").get_usage_request(myProjectId, RequestId)
 ```
 
-[See our API reference for more info](https://developers.deepgram.com/reference/usage-api).
+[See our API reference for more info](https://developers.deepgram.com/reference/management-api/usage/get-request).
 
 ### Get Fields
 
+Lists the features, models, tags, languages, and processing method used for requests in the specified project.
+
 ```python
-@TODO
+response = deepgram.manage.v("1").get_usage_fields(myProjectId)
 ```
 
-[See our API reference for more info](https://developers.deepgram.com/reference/usage-api).
+[See our API reference for more info](https://developers.deepgram.com/reference/management-api/usage/list-fields).
+
+### Summarize Usage
+
+`Deprecated` Retrieves the usage for a specific project. Use Get Project Usage Breakdown for a more comprehensive usage summary.
+
+```python
+response = deepgram.manage.v("1").get_usage_summary(myProjectId)
+```
+
+[See our API reference for more info](https://developers.deepgram.com/reference/management-api/usage/get).
 
 ## Billing
 
 ### Get All Balances
 
+Retrieves the list of balance info for the specified project.
+
 ```python
-@TODO
+response = deepgram.manage.v("1").get_balances(myProjectId)
 ```
 
-[See our API reference for more info](https://developers.deepgram.com/reference/balances-api).
+[See our API reference for more info](https://developers.deepgram.com/reference/management-api/balances/list).
 
 ### Get Balance
 
+Retrieves the balance info for the specified project and balance_id.
+
 ```python
-@TODO
+response = deepgram.manage.v("1").get_balance(myProjectId)
 ```
 
-[See our API reference for more info](https://developers.deepgram.com/reference/balances-api).
+[See our API reference for more info](https://developers.deepgram.com/reference/management-api/balances/get).
 
 ## Models
 
-### Get All Models
+### Get All Project Models
+
+Retrieves all models available for a given project.
 
 ```python
-@TODO
+response = deepgram.manage.v("1").get_project_models(myProjectId)
 ```
 
-[See our API reference for more info](https://developers.deepgram.com/reference/models-api).
+[See our API reference for more info](https://developers.deepgram.com/reference/management-api/projects/list-models).
 
 ### Get Model
 
+Retrieves details of a specific model.
+
 ```python
-@TODO
+response = deepgram.manage.v("1").get_project_model(myProjectId, ModelId)
 ```
 
-[See our API reference for more info](https://developers.deepgram.com/reference/models-api).
+[See our API reference for more info](https://developers.deepgram.com/reference/management-api/projects/get-model).
 
 ## On-Prem APIs
 
 ### List On-Prem credentials
 
+Lists sets of distribution credentials for the specified project.
+
 ```python
-@TODO
+response = deepgram.selfhosted.v("1").list_selfhosted_credentials(projectId)
 ```
 
-[See our API reference for more info](https://developers.deepgram.com/reference/on-prem-api).
+[See our API reference for more info](https://developers.deepgram.com/reference/self-hosted-api/list-credentials).
 
 ### Get On-Prem credentials
 
 ```python
-@TODO
+response = deepgram.selfhosted.v("1").get_selfhosted_credentials(projectId, distributionCredentialsId)
 ```
 
-[See our API reference for more info](https://developers.deepgram.com/reference/on-prem-api).
+[See our API reference for more info](https://developers.deepgram.com/reference/self-hosted-api/get-credentials).
 
 ### Create On-Prem credentials
 
 ```python
-@TODO
+response = deepgram.selfhosted.v("1").create_selfhosted_credentials(project_id, options)
 ```
 
-[See our API reference for more info](https://developers.deepgram.com/reference/on-prem-api).
+[See our API reference for more info](https://developers.deepgram.com/reference/self-hosted-api/create-credentials).
 
 ### Delete On-Prem credentials
 
 ```python
-@TODO
+response = deepgram.selfhosted.v("1").delete_selfhosted_credentials(projectId, distributionCredentialId)
 ```
 
-[See our API reference for more info](https://developers.deepgram.com/reference/on-prem-api).
+[See our API reference for more info](https://developers.deepgram.com/reference/self-hosted-api/delete-credentials).
 
 ## Pinning Versions
 
