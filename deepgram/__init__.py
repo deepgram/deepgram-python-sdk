@@ -342,7 +342,6 @@ from .client import (
     Listen,
     ListenProvider,
     Speak,
-    SpeakProvider,
     Header,
     Item,
     Properties,

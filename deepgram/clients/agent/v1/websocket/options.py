@@ -2,7 +2,7 @@
 # Use of this source code is governed by a MIT license that can be found in the LICENSE file.
 # SPDX-License-Identifier: MIT
 
-from typing import List, Optional, Union, Any, Tuple
+from typing import List, Optional, Union, Any, Tuple, Dict
 import logging
 
 from dataclasses import dataclass, field
@@ -168,52 +168,6 @@ class ThinkProvider(BaseResponse):
 
 
 @dataclass
-class SpeakProvider(BaseResponse):
-    """
-    This class defines the provider for the Speak model.
-    """
-
-    type: Optional[str] = field(default="deepgram")
-    """
-    Deepgram OR OpenAI model to use.
-    """
-    model: Optional[str] = field(
-        default="aura-2-thalia-en",
-        metadata=dataclass_config(exclude=lambda f: f is None),
-    )
-    """
-    ElevenLabs or Cartesia model to use.
-    """
-    model_id: Optional[str] = field(
-        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
-    )
-    """
-    Cartesia voice configuration.
-    """
-    voice: Optional[CartesiaVoice] = field(
-        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
-    )
-    """
-    Cartesia language.
-    """
-    language: Optional[str] = field(
-        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
-    )
-    """
-    ElevenLabs language.
-    """
-    language_code: Optional[str] = field(
-        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
-    )
-
-    def __getitem__(self, key):
-        _dict = self.to_dict()
-        if "voice" in _dict and isinstance(_dict["voice"], dict):
-            _dict["voice"] = CartesiaVoice.from_dict(_dict["voice"])
-        return _dict[key]
-
-
-@dataclass
 class Think(BaseResponse):
     """
     This class defines any configuration settings for the Think model.
@@ -264,15 +218,26 @@ class Speak(BaseResponse):
     This class defines any configuration settings for the Speak model.
     """
 
-    provider: SpeakProvider = field(default_factory=SpeakProvider)
+    provider: dict = field(default_factory=dict)
     endpoint: Optional[Endpoint] = field(
         default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
 
+    def __post_init__(self):
+        # Allow attribute-style access to provider dict
+        class AttrDict(dict):
+            def __getattr__(self, name):
+                try:
+                    return self[name]
+                except KeyError:
+                    raise AttributeError(name)
+            def __setattr__(self, name, value):
+                self[name] = value
+        if not isinstance(self.provider, AttrDict):
+            self.provider = AttrDict(self.provider)
+
     def __getitem__(self, key):
         _dict = self.to_dict()
-        if "provider" in _dict and isinstance(_dict["provider"], dict):
-            _dict["provider"] = SpeakProvider.from_dict(_dict["provider"])
         if "endpoint" in _dict and isinstance(_dict["endpoint"], dict):
             _dict["endpoint"] = Endpoint.from_dict(_dict["endpoint"])
         return _dict[key]

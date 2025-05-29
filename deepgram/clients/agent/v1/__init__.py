@@ -44,7 +44,6 @@ from .websocket import (
     Listen,
     ListenProvider,
     Speak,
-    SpeakProvider,
     Header,
     Item,
     Properties,

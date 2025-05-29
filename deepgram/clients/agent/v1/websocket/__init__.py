@@ -35,7 +35,6 @@ from .options import (
     Listen,
     ListenProvider,
     Speak,
-    SpeakProvider,
     Header,
     Item,
     Properties,

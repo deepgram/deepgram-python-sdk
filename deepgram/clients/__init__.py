@@ -365,7 +365,6 @@ from .agent import (
     Listen,
     ListenProvider,
     Speak,
-    SpeakProvider,
     Header,
     Item,
     Properties,
