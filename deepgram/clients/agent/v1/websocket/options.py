@@ -225,11 +225,13 @@ class Speak(BaseResponse):
 
     def __post_init__(self):
         # Allow attribute-style access to provider dict
+        # pylint: disable=missing-class-docstring
         class AttrDict(dict):
             def __getattr__(self, name):
                 try:
                     return self[name]
                 except KeyError:
+                    # pylint: disable=raise-missing-from
                     raise AttributeError(name)
             def __setattr__(self, name, value):
                 self[name] = value
