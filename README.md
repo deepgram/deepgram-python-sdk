@@ -687,6 +687,8 @@ response = deepgram.selfhosted.v("1").list_selfhosted_credentials(projectId)
 
 ### Get On-Prem credentials
 
+Returns a set of distribution credentials for the specified project.
+
 ```python
 response = deepgram.selfhosted.v("1").get_selfhosted_credentials(projectId, distributionCredentialsId)
 ```
@@ -695,6 +697,8 @@ response = deepgram.selfhosted.v("1").get_selfhosted_credentials(projectId, dist
 
 ### Create On-Prem credentials
 
+Creates a set of distribution credentials for the specified project.
+
 ```python
 response = deepgram.selfhosted.v("1").create_selfhosted_credentials(project_id, options)
 ```
@@ -702,6 +706,8 @@ response = deepgram.selfhosted.v("1").create_selfhosted_credentials(project_id, 
 [See our API reference for more info](https://developers.deepgram.com/reference/self-hosted-api/create-credentials).
 
 ### Delete On-Prem credentials
+
+Deletes a set of distribution credentials for the specified project.
 
 ```python
 response = deepgram.selfhosted.v("1").delete_selfhosted_credentials(projectId, distributionCredentialId)
