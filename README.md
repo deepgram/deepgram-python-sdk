@@ -5,6 +5,14 @@
 
 Official Python SDK for [Deepgram](https://www.deepgram.com/). Power your apps with world-class speech and Language AI models.
 
+- [Documentation](#documentation)
+- [Migrating from earlier versions](#migrating-from-earlier-versions)
+  - [V2 to V3](#v2-to-v3)
+  - [V3.*\ to V4](#v3-to-v4)
+- [Requirements](#requirements)
+- [Installation](#installation)
+- [Initialization](#initialization)
+  - [Getting an API Key](#getting-an-api-key)
 - [Pre-Recorded (Synchronous)](#pre-recorded-synchronous)
   - [Remote Files (Synchronous)](#remote-files-synchronous)
   - [Local Files (Synchronous)](#local-files-synchronous)
@@ -66,9 +74,15 @@ Official Python SDK for [Deepgram](https://www.deepgram.com/). Power your apps w
 
 You can learn more about the Deepgram API at [developers.deepgram.com](https://developers.deepgram.com/docs).
 
-## Getting an API Key
+## Migrating from earlier versions
 
-🔑 To access the Deepgram API you will need a [free Deepgram API Key](https://console.deepgram.com/signup?jump=keys).
+### V2 to V3
+
+We have published [a migration guide on our docs](https://developers.deepgram.com/sdks/python-sdk/v2-to-v3-migration), showing how to move from v2 to v3.
+
+### V3.\* to V4
+
+The Voice Agent interfaces have been updated to use the new Voice Agent V1 API. Please refer to our [Documentation](https://developers.deepgram.com/docs/voice-agent-v1-migration) on Migration to new V1 Agent API.
 
 ## Requirements
 
@@ -92,6 +106,10 @@ from deepgram import DeepgramClient
 # Initialize the client
 deepgram = DeepgramClient("YOUR_API_KEY")  # Replace with your API key
 ```
+
+### Getting an API Key
+
+🔑 To access the Deepgram API you will need a [free Deepgram API Key](https://console.deepgram.com/signup?jump=keys).
 
 ## Pre-Recorded (Synchronous)
 
