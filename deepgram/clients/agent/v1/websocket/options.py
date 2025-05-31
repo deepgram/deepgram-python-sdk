@@ -363,6 +363,7 @@ class SettingsOptions(BaseResponse):
     type: str = str(AgentWebSocketEvents.Settings)
     audio: Audio = field(default_factory=Audio)
     agent: Agent = field(default_factory=Agent)
+    language: Language = field(default_factory=Language)
 
     def __getitem__(self, key):
         _dict = self.to_dict()
@@ -370,6 +371,8 @@ class SettingsOptions(BaseResponse):
             _dict["audio"] = Audio.from_dict(_dict["audio"])
         if "agent" in _dict and isinstance(_dict["agent"], dict):
             _dict["agent"] = Agent.from_dict(_dict["agent"])
+        if "language" in _dict and isinstance(_dict["language"], dict):
+            _dict["language"] = Language.from_dict(_dict["language"])
         return _dict[key]
 
     def check(self):
