@@ -212,6 +212,13 @@ class SpeakProvider(BaseResponse):
             _dict["voice"] = CartesiaVoice.from_dict(_dict["voice"])
         return _dict[key]
 
+@dataclass
+class Language(BaseResponse):
+    """
+    Define the language for the agent.
+    """
+
+    type: str = field(default="en")
 
 @dataclass
 class Think(BaseResponse):
@@ -284,6 +291,7 @@ class Agent(BaseResponse):
     This class defines any configuration settings for the Agent model.
     """
 
+    language: Language = field(default_factory=Language)
     listen: Listen = field(default_factory=Listen)
     think: Think = field(default_factory=Think)
     speak: Speak = field(default_factory=Speak)
@@ -293,6 +301,8 @@ class Agent(BaseResponse):
 
     def __getitem__(self, key):
         _dict = self.to_dict()
+        if "language" in _dict and isinstance(_dict["language"], dict):
+            _dict["language"] = Language.from_dict(_dict["language"])
         if "listen" in _dict and isinstance(_dict["listen"], dict):
             _dict["listen"] = Listen.from_dict(_dict["listen"])
         if "think" in _dict and isinstance(_dict["think"], dict):
@@ -300,8 +310,6 @@ class Agent(BaseResponse):
         if "speak" in _dict and isinstance(_dict["speak"], dict):
             _dict["speak"] = Speak.from_dict(_dict["speak"])
         return _dict[key]
-
-
 @dataclass
 class Input(BaseResponse):
     """
@@ -343,16 +351,6 @@ class Audio(BaseResponse):
             _dict["output"] = Output.from_dict(_dict["output"])
         return _dict[key]
 
-
-@dataclass
-class Language(BaseResponse):
-    """
-    Define the language for the agent.
-    """
-
-    type: str = field(default="en")
-
-
 @dataclass
 class SettingsOptions(BaseResponse):
     """
@@ -363,7 +361,6 @@ class SettingsOptions(BaseResponse):
     type: str = str(AgentWebSocketEvents.Settings)
     audio: Audio = field(default_factory=Audio)
     agent: Agent = field(default_factory=Agent)
-    language: Language = field(default_factory=Language)
 
     def __getitem__(self, key):
         _dict = self.to_dict()
@@ -371,9 +368,6 @@ class SettingsOptions(BaseResponse):
             _dict["audio"] = Audio.from_dict(_dict["audio"])
         if "agent" in _dict and isinstance(_dict["agent"], dict):
             _dict["agent"] = Agent.from_dict(_dict["agent"])
-        if "language" in _dict and isinstance(_dict["language"], dict):
-            _dict["language"] = Language.from_dict(_dict["language"])
-        return _dict[key]
 
     def check(self):
         """
