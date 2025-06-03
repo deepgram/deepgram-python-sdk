@@ -291,7 +291,7 @@ class Agent(BaseResponse):
     This class defines any configuration settings for the Agent model.
     """
 
-    language: Language = field(default_factory=Language)
+    language: str = field(default="en")
     listen: Listen = field(default_factory=Listen)
     think: Think = field(default_factory=Think)
     speak: Speak = field(default_factory=Speak)
