@@ -138,7 +138,7 @@ def main():
         options.agent.listen.provider.keyterms = ["hello", "goodbye"]
         options.agent.listen.provider.model = "nova-3"
         options.agent.listen.provider.type = "deepgram"
-        options.language = "en"
+        options.agent.language = "en"
         if dg_connection.start(options) is False:
             print("Failed to start connection")
             return
