@@ -2,7 +2,7 @@
 # Use of this source code is governed by a MIT license that can be found in the LICENSE file.
 # SPDX-License-Identifier: MIT
 
-from typing import List, Optional, Union, Any, Tuple
+from typing import List, Optional, Dict
 import logging
 
 from dataclasses import dataclass, field
@@ -15,16 +15,6 @@ from ....common import BaseResponse
 
 
 # ConfigurationSettings
-
-
-@dataclass
-class Header(BaseResponse):
-    """
-    This class defines a single key/value pair for a header.
-    """
-
-    key: str
-    value: str
 
 
 @dataclass
@@ -75,18 +65,16 @@ class Endpoint(BaseResponse):
     Define a custom endpoint for the agent.
     """
 
-    method: Optional[str] = field(default="POST")
+    method: Optional[str] = field(default=None, metadata=dataclass_config(exclude=lambda f: f is None))
     url: str = field(default="")
-    headers: Optional[List[Header]] = field(
+    headers: Optional[Dict[str, str]] = field(
         default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
 
     def __getitem__(self, key):
         _dict = self.to_dict()
-        if "headers" in _dict:
-            _dict["headers"] = [
-                Header.from_dict(headers) for headers in _dict["headers"]
-            ]
+        if "headers" in _dict and isinstance(_dict["headers"], dict):
+            _dict["headers"] = {str(k): str(v) for k, v in _dict["headers"].items()}
         return _dict[key]
 
 
@@ -100,7 +88,7 @@ class Function(BaseResponse):
     description: str
     url: str
     method: str
-    headers: Optional[List[Header]] = field(
+    headers: Optional[Dict[str, str]] = field(
         default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
     parameters: Optional[Parameters] = field(
@@ -114,8 +102,8 @@ class Function(BaseResponse):
         _dict = self.to_dict()
         if "parameters" in _dict and isinstance(_dict["parameters"], dict):
             _dict["parameters"] = Parameters.from_dict(_dict["parameters"])
-        if "headers" in _dict and isinstance(_dict["headers"], list):
-            _dict["headers"] = [Header.from_dict(header) for header in _dict["headers"]]
+        if "headers" in _dict and isinstance(_dict["headers"], dict):
+            _dict["headers"] = {str(k): str(v) for k, v in _dict["headers"].items()}
         if "endpoint" in _dict and isinstance(_dict["endpoint"], dict):
             _dict["endpoint"] = Endpoint.from_dict(_dict["endpoint"])
         return _dict[key]
@@ -246,7 +234,7 @@ class Think(BaseResponse):
 @dataclass
 class Listen(BaseResponse):
     """
-    This class defines any configuration settings for the Listen model.
+    This class defines any configuration for the Listen model.
     """
 
     provider: ListenProvider = field(default_factory=ListenProvider)
