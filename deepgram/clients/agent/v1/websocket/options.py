@@ -211,15 +211,6 @@ class SpeakProvider(BaseResponse):
         if "voice" in _dict and isinstance(_dict["voice"], dict):
             _dict["voice"] = CartesiaVoice.from_dict(_dict["voice"])
         return _dict[key]
-
-@dataclass
-class Language(BaseResponse):
-    """
-    Define the language for the agent.
-    """
-
-    type: str = field(default="en")
-
 @dataclass
 class Think(BaseResponse):
     """
@@ -301,8 +292,6 @@ class Agent(BaseResponse):
 
     def __getitem__(self, key):
         _dict = self.to_dict()
-        if "language" in _dict and isinstance(_dict["language"], dict):
-            _dict["language"] = Language.from_dict(_dict["language"])
         if "listen" in _dict and isinstance(_dict["listen"], dict):
             _dict["listen"] = Listen.from_dict(_dict["listen"])
         if "think" in _dict and isinstance(_dict["think"], dict):
