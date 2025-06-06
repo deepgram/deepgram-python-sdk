@@ -74,19 +74,14 @@ class Endpoint(BaseResponse):
     """
     Define a custom endpoint for the agent.
     """
-
-    method: Optional[str] = field(default="POST")
     url: str = field(default="")
-    headers: Optional[List[Header]] = field(
-        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
+    headers: Optional[dict] = field(
+        default=None,
+        metadata=dataclass_config(exclude=lambda f: f is None)
     )
 
     def __getitem__(self, key):
         _dict = self.to_dict()
-        if "headers" in _dict:
-            _dict["headers"] = [
-                Header.from_dict(headers) for headers in _dict["headers"]
-            ]
         return _dict[key]
 
 
@@ -168,6 +163,24 @@ class ThinkProvider(BaseResponse):
 
 
 @dataclass
+class AWSPollyCredentials(BaseResponse):
+    """
+    This class defines the credentials for AWS Polly provider.
+    """
+    type: str = field(default="IAM")  # Either "IAM" or "STS"
+    region: str = field(default="")
+    access_key_id: str = field(default="")
+    secret_access_key: str = field(default="")
+    session_token: Optional[str] = field(
+        default=None,
+        metadata=dataclass_config(exclude=lambda f: f is None)
+    )
+
+    def __getitem__(self, key):
+        return self.to_dict()[key]
+
+
+@dataclass
 class SpeakProvider(BaseResponse):
     """
     This class defines the provider for the Speak model.
@@ -175,42 +188,61 @@ class SpeakProvider(BaseResponse):
 
     type: Optional[str] = field(default="deepgram")
     """
-    Deepgram OR OpenAI model to use.
+    Provider type: deepgram, openai, aws_polly, etc.
     """
     model: Optional[str] = field(
         default="aura-2-thalia-en",
         metadata=dataclass_config(exclude=lambda f: f is None),
     )
     """
-    ElevenLabs or Cartesia model to use.
+    Deepgram OR OpenAI Model to use for TTS
     """
     model_id: Optional[str] = field(
         default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
     """
-    Cartesia voice configuration.
+    Eleven Labs OR Cartesia Model ID to use
     """
-    voice: Optional[CartesiaVoice] = field(
+    voice: Optional[Union[CartesiaVoice, str]] = field(
         default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
     """
-    Cartesia language.
+    Voice to use (CartesiaVoice object or string for AWS Polly voice name).
     """
     language: Optional[str] = field(
         default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
     """
-    ElevenLabs language.
+    Cartesia language code
     """
     language_code: Optional[str] = field(
         default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
+    """
+    Language code (e.g., en-US for AWS Polly).
+    """
+    engine: Optional[str] = field(
+        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
+    )
+    """
+    Engine type (e.g., standard, neural for AWS Polly).
+    """
+    credentials: Optional[AWSPollyCredentials] = field(
+        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
+    )
+    """
+    AWS Polly credentials configuration.
+    """
 
     def __getitem__(self, key):
         _dict = self.to_dict()
         if "voice" in _dict and isinstance(_dict["voice"], dict):
             _dict["voice"] = CartesiaVoice.from_dict(_dict["voice"])
+        if "credentials" in _dict and isinstance(_dict["credentials"], dict):
+            _dict["credentials"] = AWSPollyCredentials.from_dict(_dict["credentials"])
         return _dict[key]
+
+
 @dataclass
 class Think(BaseResponse):
     """
@@ -299,6 +331,8 @@ class Agent(BaseResponse):
         if "speak" in _dict and isinstance(_dict["speak"], dict):
             _dict["speak"] = Speak.from_dict(_dict["speak"])
         return _dict[key]
+
+
 @dataclass
 class Input(BaseResponse):
     """
@@ -339,6 +373,7 @@ class Audio(BaseResponse):
         if "output" in _dict and isinstance(_dict["output"], dict):
             _dict["output"] = Output.from_dict(_dict["output"])
         return _dict[key]
+
 
 @dataclass
 class SettingsOptions(BaseResponse):
