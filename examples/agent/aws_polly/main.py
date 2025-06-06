@@ -15,6 +15,7 @@ from deepgram.clients.agent.v1.websocket.options import (
     AWSPollyCredentials,
     Endpoint,
     SpeakProvider,
+    Header,
 )
 
 def main():
@@ -122,7 +123,14 @@ def main():
 
         # Configure AWS Polly endpoint
         options.agent.speak.endpoint = Endpoint(
-            url="https://polly.us-east-1.amazonaws.com/v1/speech" # use your correct AWS region
+            method="POST",  # Explicitly set the method for AWS Polly
+            url="https://polly.us-east-1.amazonaws.com/v1/speech", #use the correct region
+            headers=[
+                Header(
+                    key="Content-Type",
+                    value="application/json"
+                )
+            ]
         )
 
         # Optional greeting message

@@ -74,14 +74,18 @@ class Endpoint(BaseResponse):
     """
     Define a custom endpoint for the agent.
     """
+    method: Optional[str] = field(default="POST")
     url: str = field(default="")
-    headers: Optional[dict] = field(
-        default=None,
-        metadata=dataclass_config(exclude=lambda f: f is None)
+    headers: Optional[List[Header]] = field(
+        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
 
     def __getitem__(self, key):
         _dict = self.to_dict()
+        if "headers" in _dict:
+            _dict["headers"] = [
+                Header.from_dict(headers) for headers in _dict["headers"]
+            ]
         return _dict[key]
 
 
