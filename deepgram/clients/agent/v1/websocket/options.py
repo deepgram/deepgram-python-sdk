@@ -68,6 +68,16 @@ class Parameters(BaseResponse):
             _dict["properties"] = _dict["properties"].copy()
         return _dict[key]
 
+class Provider(dict):
+    def __getattr__(self, name):
+        try:
+            return self[name]
+        except KeyError:
+            # pylint: disable=raise-missing-from
+            raise AttributeError(name)
+    def __setattr__(self, name, value):
+        self[name] = value
+
 
 @dataclass
 class Endpoint(BaseResponse):
@@ -122,58 +132,12 @@ class Function(BaseResponse):
 
 
 @dataclass
-class CartesiaVoice(BaseResponse):
-    """
-    This class defines the voice for the Cartesia model.
-    """
-
-    mode: str = field(
-        default="", metadata=dataclass_config(exclude=lambda f: f is None or f == "")
-    )
-    id: str = field(
-        default="", metadata=dataclass_config(exclude=lambda f: f is None or f == "")
-    )
-
-
-@dataclass
-class ListenProvider(BaseResponse):
-    """
-    This class defines the provider for the Listen model.
-    """
-
-    type: str = field(default="")
-    model: str = field(default="")
-    keyterms: Optional[List[str]] = field(
-        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
-    )
-
-    def __getitem__(self, key):
-        _dict = self.to_dict()
-        if "keyterms" in _dict and isinstance(_dict["keyterms"], list):
-            _dict["keyterms"] = [str(keyterm) for keyterm in _dict["keyterms"]]
-        return _dict[key]
-
-
-@dataclass
-class ThinkProvider(BaseResponse):
-    """
-    This class defines the provider for the Think model.
-    """
-
-    type: Optional[str] = field(default=None)
-    model: Optional[str] = field(default=None)
-    temperature: Optional[float] = field(
-        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
-    )
-
-
-@dataclass
 class Think(BaseResponse):
     """
     This class defines any configuration settings for the Think model.
     """
 
-    provider: ThinkProvider = field(default_factory=ThinkProvider)
+    provider: Provider = field(default_factory=Provider)
     functions: Optional[List[Function]] = field(
         default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
@@ -184,10 +148,12 @@ class Think(BaseResponse):
         default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
 
+    def __post_init__(self):
+        if not isinstance(self.provider, Provider):
+            self.provider = Provider(self.provider)
+
     def __getitem__(self, key):
         _dict = self.to_dict()
-        if "provider" in _dict and isinstance(_dict["provider"], dict):
-            _dict["provider"] = ThinkProvider.from_dict(_dict["provider"])
         if "functions" in _dict and isinstance(_dict["functions"], list):
             _dict["functions"] = [
                 Function.from_dict(function) for function in _dict["functions"]
@@ -203,12 +169,14 @@ class Listen(BaseResponse):
     This class defines any configuration settings for the Listen model.
     """
 
-    provider: ListenProvider = field(default_factory=ListenProvider)
+    provider: Provider = field(default_factory=Provider)
+
+    def __post_init__(self):
+        if not isinstance(self.provider, Provider):
+            self.provider = Provider(self.provider)
 
     def __getitem__(self, key):
         _dict = self.to_dict()
-        if "provider" in _dict and isinstance(_dict["provider"], dict):
-            _dict["provider"] = ListenProvider.from_dict(_dict["provider"])
         return _dict[key]
 
 
@@ -218,25 +186,14 @@ class Speak(BaseResponse):
     This class defines any configuration settings for the Speak model.
     """
 
-    provider: dict = field(default_factory=dict)
+    provider: Provider = field(default_factory=Provider)
     endpoint: Optional[Endpoint] = field(
         default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
 
     def __post_init__(self):
-        # Allow attribute-style access to provider dict
-        # pylint: disable=missing-class-docstring
-        class AttrDict(dict):
-            def __getattr__(self, name):
-                try:
-                    return self[name]
-                except KeyError:
-                    # pylint: disable=raise-missing-from
-                    raise AttributeError(name)
-            def __setattr__(self, name, value):
-                self[name] = value
-        if not isinstance(self.provider, AttrDict):
-            self.provider = AttrDict(self.provider)
+        if not isinstance(self.provider, Provider):
+            self.provider = Provider(self.provider)
 
     def __getitem__(self, key):
         _dict = self.to_dict()

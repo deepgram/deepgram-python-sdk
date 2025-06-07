@@ -42,7 +42,6 @@ from .websocket import (
     AgentKeepAlive,
     # sub level
     Listen,
-    ListenProvider,
     Speak,
     Header,
     Item,
@@ -50,7 +49,7 @@ from .websocket import (
     Parameters,
     Function,
     Think,
-    ThinkProvider,
+    Provider,
     Agent,
     Input,
     Output,

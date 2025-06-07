@@ -354,7 +354,6 @@ from .clients import (
     AgentKeepAlive,
     # sub level
     Listen,
-    ListenProvider,
     Speak,
     Header,
     Item,
@@ -362,7 +361,7 @@ from .clients import (
     Parameters,
     Function,
     Think,
-    ThinkProvider,
+    Provider,
     Agent,
     Input,
     Output,

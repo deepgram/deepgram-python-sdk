@@ -37,7 +37,6 @@ from .v1 import (
     AgentKeepAlive as LatestAgentKeepAlive,
     # sub level
     Listen as LatestListen,
-    ListenProvider as LatestListenProvider,
     Speak as LatestSpeak,
     Header as LatestHeader,
     Item as LatestItem,
@@ -45,7 +44,7 @@ from .v1 import (
     Parameters as LatestParameters,
     Function as LatestFunction,
     Think as LatestThink,
-    ThinkProvider as LatestThinkProvider,
+    Provider as LatestProvider,
     Agent as LatestAgent,
     Input as LatestInput,
     Output as LatestOutput,
@@ -84,7 +83,6 @@ FunctionCallResponse = LatestFunctionCallResponse
 AgentKeepAlive = LatestAgentKeepAlive
 
 Listen = LatestListen
-ListenProvider = LatestListenProvider
 Speak = LatestSpeak
 Header = LatestHeader
 Item = LatestItem
@@ -92,7 +90,7 @@ Properties = LatestProperties
 Parameters = LatestParameters
 Function = LatestFunction
 Think = LatestThink
-ThinkProvider = LatestThinkProvider
+Provider = LatestProvider
 Agent = LatestAgent
 Input = LatestInput
 Output = LatestOutput

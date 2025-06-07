@@ -33,7 +33,6 @@ from .options import (
     AgentKeepAlive,
     # sub level
     Listen,
-    ListenProvider,
     Speak,
     Header,
     Item,
@@ -41,7 +40,7 @@ from .options import (
     Parameters,
     Function,
     Think,
-    ThinkProvider,
+    Provider,
     Agent,
     Input,
     Output,

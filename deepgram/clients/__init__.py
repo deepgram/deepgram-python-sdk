@@ -363,7 +363,6 @@ from .agent import (
     AgentKeepAlive,
     # sub level
     Listen,
-    ListenProvider,
     Speak,
     Header,
     Item,
@@ -371,7 +370,7 @@ from .agent import (
     Parameters,
     Function,
     Think,
-    ThinkProvider,
+    Provider,
     Agent,
     Input,
     Output,
