@@ -69,6 +69,9 @@ class Parameters(BaseResponse):
         return _dict[key]
 
 class Provider(dict):
+    """
+    Generic attribute class for provider objects.
+    """
     def __getattr__(self, name):
         try:
             return self[name]
