@@ -208,6 +208,7 @@ class Agent(BaseResponse):
     This class defines any configuration settings for the Agent model.
     """
 
+    language: str = field(default="en")
     listen: Listen = field(default_factory=Listen)
     think: Think = field(default_factory=Think)
     speak: Speak = field(default_factory=Speak)
@@ -224,8 +225,6 @@ class Agent(BaseResponse):
         if "speak" in _dict and isinstance(_dict["speak"], dict):
             _dict["speak"] = Speak.from_dict(_dict["speak"])
         return _dict[key]
-
-
 @dataclass
 class Input(BaseResponse):
     """
@@ -267,16 +266,6 @@ class Audio(BaseResponse):
             _dict["output"] = Output.from_dict(_dict["output"])
         return _dict[key]
 
-
-@dataclass
-class Language(BaseResponse):
-    """
-    Define the language for the agent.
-    """
-
-    type: str = field(default="en")
-
-
 @dataclass
 class SettingsOptions(BaseResponse):
     """
@@ -294,7 +283,6 @@ class SettingsOptions(BaseResponse):
             _dict["audio"] = Audio.from_dict(_dict["audio"])
         if "agent" in _dict and isinstance(_dict["agent"], dict):
             _dict["agent"] = Agent.from_dict(_dict["agent"])
-        return _dict[key]
 
     def check(self):
         """
