@@ -2,7 +2,7 @@
 # Use of this source code is governed by a MIT license that can be found in the LICENSE file.
 # SPDX-License-Identifier: MIT
 
-from typing import List, Optional, Union, Any, Tuple
+from typing import List, Optional, Union, Any, Tuple, Dict
 import logging
 
 from dataclasses import dataclass, field
@@ -68,6 +68,19 @@ class Parameters(BaseResponse):
             _dict["properties"] = _dict["properties"].copy()
         return _dict[key]
 
+class Provider(dict):
+    """
+    Generic attribute class for provider objects.
+    """
+    def __getattr__(self, name):
+        try:
+            return self[name]
+        except KeyError:
+            # pylint: disable=raise-missing-from
+            raise AttributeError(name)
+    def __setattr__(self, name, value):
+        self[name] = value
+
 
 @dataclass
 class Endpoint(BaseResponse):
@@ -122,102 +135,12 @@ class Function(BaseResponse):
 
 
 @dataclass
-class CartesiaVoice(BaseResponse):
-    """
-    This class defines the voice for the Cartesia model.
-    """
-
-    mode: str = field(
-        default="", metadata=dataclass_config(exclude=lambda f: f is None or f == "")
-    )
-    id: str = field(
-        default="", metadata=dataclass_config(exclude=lambda f: f is None or f == "")
-    )
-
-
-@dataclass
-class ListenProvider(BaseResponse):
-    """
-    This class defines the provider for the Listen model.
-    """
-
-    type: str = field(default="")
-    model: str = field(default="")
-    keyterms: Optional[List[str]] = field(
-        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
-    )
-
-    def __getitem__(self, key):
-        _dict = self.to_dict()
-        if "keyterms" in _dict and isinstance(_dict["keyterms"], list):
-            _dict["keyterms"] = [str(keyterm) for keyterm in _dict["keyterms"]]
-        return _dict[key]
-
-
-@dataclass
-class ThinkProvider(BaseResponse):
-    """
-    This class defines the provider for the Think model.
-    """
-
-    type: Optional[str] = field(default=None)
-    model: Optional[str] = field(default=None)
-    temperature: Optional[float] = field(
-        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
-    )
-
-
-@dataclass
-class SpeakProvider(BaseResponse):
-    """
-    This class defines the provider for the Speak model.
-    """
-
-    type: Optional[str] = field(default="deepgram")
-    """
-    Deepgram OR OpenAI model to use.
-    """
-    model: Optional[str] = field(
-        default="aura-2-thalia-en",
-        metadata=dataclass_config(exclude=lambda f: f is None),
-    )
-    """
-    ElevenLabs or Cartesia model to use.
-    """
-    model_id: Optional[str] = field(
-        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
-    )
-    """
-    Cartesia voice configuration.
-    """
-    voice: Optional[CartesiaVoice] = field(
-        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
-    )
-    """
-    Cartesia language.
-    """
-    language: Optional[str] = field(
-        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
-    )
-    """
-    ElevenLabs language.
-    """
-    language_code: Optional[str] = field(
-        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
-    )
-
-    def __getitem__(self, key):
-        _dict = self.to_dict()
-        if "voice" in _dict and isinstance(_dict["voice"], dict):
-            _dict["voice"] = CartesiaVoice.from_dict(_dict["voice"])
-        return _dict[key]
-@dataclass
 class Think(BaseResponse):
     """
     This class defines any configuration settings for the Think model.
     """
 
-    provider: ThinkProvider = field(default_factory=ThinkProvider)
+    provider: Provider = field(default_factory=Provider)
     functions: Optional[List[Function]] = field(
         default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
@@ -228,10 +151,12 @@ class Think(BaseResponse):
         default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
 
+    def __post_init__(self):
+        if not isinstance(self.provider, Provider):
+            self.provider = Provider(self.provider)
+
     def __getitem__(self, key):
         _dict = self.to_dict()
-        if "provider" in _dict and isinstance(_dict["provider"], dict):
-            _dict["provider"] = ThinkProvider.from_dict(_dict["provider"])
         if "functions" in _dict and isinstance(_dict["functions"], list):
             _dict["functions"] = [
                 Function.from_dict(function) for function in _dict["functions"]
@@ -247,12 +172,14 @@ class Listen(BaseResponse):
     This class defines any configuration settings for the Listen model.
     """
 
-    provider: ListenProvider = field(default_factory=ListenProvider)
+    provider: Provider = field(default_factory=Provider)
+
+    def __post_init__(self):
+        if not isinstance(self.provider, Provider):
+            self.provider = Provider(self.provider)
 
     def __getitem__(self, key):
         _dict = self.to_dict()
-        if "provider" in _dict and isinstance(_dict["provider"], dict):
-            _dict["provider"] = ListenProvider.from_dict(_dict["provider"])
         return _dict[key]
 
 
@@ -262,15 +189,17 @@ class Speak(BaseResponse):
     This class defines any configuration settings for the Speak model.
     """
 
-    provider: SpeakProvider = field(default_factory=SpeakProvider)
+    provider: Provider = field(default_factory=Provider)
     endpoint: Optional[Endpoint] = field(
         default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
 
+    def __post_init__(self):
+        if not isinstance(self.provider, Provider):
+            self.provider = Provider(self.provider)
+
     def __getitem__(self, key):
         _dict = self.to_dict()
-        if "provider" in _dict and isinstance(_dict["provider"], dict):
-            _dict["provider"] = SpeakProvider.from_dict(_dict["provider"])
         if "endpoint" in _dict and isinstance(_dict["endpoint"], dict):
             _dict["endpoint"] = Endpoint.from_dict(_dict["endpoint"])
         return _dict[key]
