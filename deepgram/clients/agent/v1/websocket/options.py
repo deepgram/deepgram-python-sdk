@@ -2,7 +2,7 @@
 # Use of this source code is governed by a MIT license that can be found in the LICENSE file.
 # SPDX-License-Identifier: MIT
 
-from typing import List, Optional, Union, Any, Tuple, Dict
+from typing import List, Optional, Union, Any, Tuple, Dict, Literal
 import logging
 
 from dataclasses import dataclass, field
@@ -148,6 +148,9 @@ class Think(BaseResponse):
         default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
     prompt: Optional[str] = field(
+        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
+    )
+    context_length: Optional[Union[int, Literal["max"]]] = field(
         default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
 
