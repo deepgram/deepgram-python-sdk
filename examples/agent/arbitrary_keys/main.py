@@ -2,6 +2,8 @@
 # Use of this source code is governed by a MIT license that can be found in the LICENSE file.
 # SPDX-License-Identifier: MIT
 
+# This example should fail, due to the arbitrary key being included in the settings payload.
+
 # Import dependencies and set up the main function
 import requests
 import wave
@@ -91,7 +93,8 @@ def main():
 
         # Cleanup
         connection.finish()
-        print("Finished")
+        print("Finished! You should see an error for the arbitrary key - scroll up and you can see it is included in the settings payload.")
+        print("If you do not see that error, this example has failed.")
 
     except Exception as e:
         print(f"Error: {str(e)}")
