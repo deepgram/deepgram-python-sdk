@@ -56,7 +56,7 @@ def main():
         options.agent.think.provider.model = "gpt-4o-mini"
         options.agent.think.prompt = "You are a friendly AI assistant."
         options.agent.speak.provider.type = "deepgram"
-        options.agent.speak.model = "aura-2-thalia-en"
+        options.agent.speak.provider.model = "aura-2-thalia-en"
         options.agent.greeting = "Hello! How can I help you today?"
 
         # Send Keep Alive messages
