@@ -42,7 +42,7 @@ def main():
                 "microphone_record": "true",
                 "speaker_playback": "true",
             },
-            # verbose=verboselogs.DEBUG,
+            verbose=verboselogs.SPAM,
         )
         print("Created DeepgramClientOptions...")
 

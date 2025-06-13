@@ -140,7 +140,7 @@ class Think(BaseResponse):
     This class defines any configuration settings for the Think model.
     """
 
-    provider: Provider = field(default_factory=Provider)
+    provider: Provider = field(default_factory=Provider, metadata=dataclass_config(exclude=lambda f: f is None or (isinstance(f, dict) and not f)))
     functions: Optional[List[Function]] = field(
         default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
@@ -155,7 +155,7 @@ class Think(BaseResponse):
     )
 
     def __post_init__(self):
-        if not isinstance(self.provider, Provider):
+        if not isinstance(self.provider, Provider) and self.provider is not None and not (isinstance(self.provider, dict) and not self.provider):
             self.provider = Provider(self.provider)
 
     def __getitem__(self, key):
@@ -175,10 +175,10 @@ class Listen(BaseResponse):
     This class defines any configuration settings for the Listen model.
     """
 
-    provider: Provider = field(default_factory=Provider)
+    provider: Provider = field(default_factory=Provider, metadata=dataclass_config(exclude=lambda f: f is None or (isinstance(f, dict) and not f)))
 
     def __post_init__(self):
-        if not isinstance(self.provider, Provider):
+        if not isinstance(self.provider, Provider) and self.provider is not None and not (isinstance(self.provider, dict) and not self.provider):
             self.provider = Provider(self.provider)
 
     def __getitem__(self, key):
@@ -192,13 +192,13 @@ class Speak(BaseResponse):
     This class defines any configuration settings for the Speak model.
     """
 
-    provider: Provider = field(default_factory=Provider)
+    provider: Provider = field(default_factory=Provider, metadata=dataclass_config(exclude=lambda f: f is None or (isinstance(f, dict) and not f)))
     endpoint: Optional[Endpoint] = field(
         default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
 
     def __post_init__(self):
-        if not isinstance(self.provider, Provider):
+        if not isinstance(self.provider, Provider) and self.provider is not None and not (isinstance(self.provider, dict) and not self.provider):
             self.provider = Provider(self.provider)
 
     def __getitem__(self, key):
@@ -215,9 +215,9 @@ class Agent(BaseResponse):
     """
 
     language: str = field(default="en")
-    listen: Listen = field(default_factory=Listen)
-    think: Think = field(default_factory=Think)
-    speak: Speak = field(default_factory=Speak)
+    listen: Listen = field(default_factory=Listen, metadata=dataclass_config(exclude=lambda f: f is None or (isinstance(f, dict) and not f)))
+    think: Think = field(default_factory=Think, metadata=dataclass_config(exclude=lambda f: f is None or (isinstance(f, dict) and not f)))
+    speak: Speak = field(default_factory=Speak, metadata=dataclass_config(exclude=lambda f: f is None or (isinstance(f, dict) and not f)))
     greeting: Optional[str] = field(
         default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
