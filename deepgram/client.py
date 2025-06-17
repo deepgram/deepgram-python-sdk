@@ -11,377 +11,53 @@ import deprecation  # type: ignore
 from . import __version__
 from .utils import verboselogs
 
-# common
-# pylint: disable=unused-import
 from .clients import (
-    TextSource,
-    BufferSource,
-    StreamSource,
-    FileSource,
-    UrlSource,
-)
-from .clients import BaseResponse
-from .clients import (
-    Average,
-    Intent,
-    Intents,
-    IntentsInfo,
-    Segment,
-    SentimentInfo,
-    Sentiment,
-    Sentiments,
-    SummaryInfo,
-    Topic,
-    Topics,
-    TopicsInfo,
-)
-from .clients import (
-    ModelInfo,
-    Hit,
-    Search,
-)
-from .clients import (
-    OpenResponse,
-    CloseResponse,
-    UnhandledResponse,
-    ErrorResponse,
-)
-from .clients import (
-    DeepgramError,
-    DeepgramTypeError,
-    DeepgramModuleError,
-    DeepgramApiError,
-    DeepgramUnknownApiError,
+    TextSource, BufferSource, StreamSource, FileSource, UrlSource,
+    BaseResponse,
+    Average, Intent, Intents, IntentsInfo, Segment, SentimentInfo, Sentiment, Sentiments, SummaryInfo, Topic, Topics, TopicsInfo,
+    ModelInfo, Hit, Search,
+    OpenResponse, CloseResponse, UnhandledResponse, ErrorResponse,
+    DeepgramError, DeepgramTypeError, DeepgramModuleError, DeepgramApiError, DeepgramUnknownApiError,
+    ListenRouter, ReadRouter, SpeakRouter, AgentRouter,
+    LiveClient, AsyncLiveClient, ListenWebSocketClient, AsyncListenWebSocketClient, ListenWebSocketOptions, LiveOptions, LiveTranscriptionEvents,
+    LiveResultResponse, ListenWSMetadataResponse, SpeechStartedResponse, UtteranceEndResponse,
+    ListenWSMetadata, ListenWSAlternative, ListenWSChannel, ListenWSWord,
+    PreRecordedStreamSource, PrerecordedSource, ListenRestSource,
+    PreRecordedClient, AsyncPreRecordedClient, ListenRESTClient, AsyncListenRESTClient,
+    ListenRESTOptions, PrerecordedOptions,
+    AsyncPrerecordedResponse, PrerecordedResponse, SyncPrerecordedResponse,
+    Entity, ListenRESTMetadata, Paragraph, Paragraphs, ListenRESTResults, Sentence, Summaries, SummaryV1, SummaryV2, Translation, Utterance, Warning,
+    ListenRESTAlternative, ListenRESTChannel, ListenRESTWord,
+    ReadClient, AsyncReadClient, AnalyzeClient, AsyncAnalyzeClient, AnalyzeOptions, AnalyzeStreamSource, AnalyzeSource,
+    AsyncAnalyzeResponse, SyncAnalyzeResponse, AnalyzeResponse, AnalyzeMetadata, AnalyzeResults, AnalyzeSummary,
+    SpeakRESTOptions, SpeakOptions, SpeakSource, SpeakRestSource, SpeakRESTSource,
+    SpeakClient, SpeakRESTClient, AsyncSpeakRESTClient,
+    SpeakResponse, SpeakRESTResponse,
+    SpeakWebSocketEvents, SpeakWebSocketMessage, SpeakWSOptions,
+    SpeakWebSocketClient, AsyncSpeakWebSocketClient, SpeakWSClient, AsyncSpeakWSClient,
+    SpeakWSMetadataResponse, FlushedResponse, ClearedResponse, WarningResponse,
+    AuthRESTClient, AsyncAuthRESTClient, GrantTokenResponse,
+    ManageClient, AsyncManageClient, ProjectOptions, KeyOptions, ScopeOptions, InviteOptions, UsageRequestOptions, UsageSummaryOptions, UsageFieldsOptions,
+    Message, ProjectsResponse, ModelResponse, ModelsResponse, MembersResponse, KeyResponse, KeysResponse, ScopesResponse, InvitesResponse, UsageRequest,
+    UsageResponse, UsageRequestsResponse, UsageSummaryResponse, UsageFieldsResponse, BalancesResponse,
+    Project, STTDetails, TTSMetadata, TTSDetails, Member, Key, Invite, Config, STTUsageDetails, Callback, TokenDetail, SpeechSegment, TTSUsageDetails,
+    STTTokens, TTSTokens, UsageSummaryResults, Resolution, UsageModel, Balance,
+    OnPremClient, AsyncOnPremClient, SelfHostedClient, AsyncSelfHostedClient,
+    AgentWebSocketEvents, AgentWebSocketClient, AsyncAgentWebSocketClient,
+    WelcomeResponse, SettingsAppliedResponse, ConversationTextResponse, UserStartedSpeakingResponse, AgentThinkingResponse, FunctionCallRequest,
+    AgentStartedSpeakingResponse, AgentAudioDoneResponse, InjectionRefusedResponse,
+    SettingsOptions, UpdatePromptOptions, UpdateSpeakOptions, InjectAgentMessageOptions, FunctionCallResponse, AgentKeepAlive,
+    Listen, Speak, Header, Item, Properties, Parameters, Function, Think, Provider, Agent, Input, Output, Audio, Endpoint,
 )
 
-# listen client
-from .clients import ListenRouter, ReadRouter, SpeakRouter, AgentRouter
-
-# speech-to-text
-from .clients import LiveClient, AsyncLiveClient  # backward compat
-from .clients import (
-    ListenWebSocketClient,
-    AsyncListenWebSocketClient,
-)
-from .clients import (
-    ListenWebSocketOptions,
-    LiveOptions,
-    LiveTranscriptionEvents,
-)
-
-# live client responses
-from .clients import (
-    #### top level
-    LiveResultResponse,
-    ListenWSMetadataResponse,
-    SpeechStartedResponse,
-    UtteranceEndResponse,
-    #### common websocket response
-    # OpenResponse,
-    # CloseResponse,
-    # ErrorResponse,
-    # UnhandledResponse,
-    #### unique
-    ListenWSMetadata,
-    ListenWSAlternative,
-    ListenWSChannel,
-    ListenWSWord,
-)
-
-# prerecorded
-from .clients import (
-    # common
-    # UrlSource,
-    # BufferSource,
-    # StreamSource,
-    # TextSource,
-    # FileSource,
-    # unique
-    PreRecordedStreamSource,
-    PrerecordedSource,
-    ListenRestSource,
-)
-
-from .clients import (
-    PreRecordedClient,
-    AsyncPreRecordedClient,
-)  # backward compat
-from .clients import (
-    ListenRESTClient,
-    AsyncListenRESTClient,
-)
-from .clients import (
-    ListenRESTOptions,
-    PrerecordedOptions,
-)
-
-# rest client responses
-from .clients import (
-    #### top level
-    AsyncPrerecordedResponse,
-    PrerecordedResponse,
-    SyncPrerecordedResponse,
-    #### shared
-    # Average,
-    # Intent,
-    # Intents,
-    # IntentsInfo,
-    # Segment,
-    # SentimentInfo,
-    # Sentiment,
-    # Sentiments,
-    # SummaryInfo,
-    # Topic,
-    # Topics,
-    # TopicsInfo,
-    #### between rest and websocket
-    # ModelInfo,
-    # Alternative,
-    # Hit,
-    # Search,
-    # Channel,
-    # Word,
-    # unique
-    Entity,
-    ListenRESTMetadata,
-    Paragraph,
-    Paragraphs,
-    ListenRESTResults,
-    Sentence,
-    Summaries,
-    SummaryV1,
-    SummaryV2,
-    Translation,
-    Utterance,
-    Warning,
-    ListenRESTAlternative,
-    ListenRESTChannel,
-    ListenRESTWord,
-)
-
-# read
-from .clients import ReadClient, AsyncReadClient
-from .clients import AnalyzeClient, AsyncAnalyzeClient
-from .clients import (
-    AnalyzeOptions,
-    AnalyzeStreamSource,
-    AnalyzeSource,
-)
-
-# read client responses
-from .clients import (
-    #### top level
-    AsyncAnalyzeResponse,
-    SyncAnalyzeResponse,
-    AnalyzeResponse,
-    #### shared
-    # Average,
-    # Intent,
-    # Intents,
-    # IntentsInfo,
-    # Segment,
-    # SentimentInfo,
-    # Sentiment,
-    # Sentiments,
-    # SummaryInfo,
-    # Topic,
-    # Topics,
-    # TopicsInfo,
-    #### unique
-    AnalyzeMetadata,
-    AnalyzeResults,
-    AnalyzeSummary,
-)
-
-# speak
-## speak REST
-from .clients import (
-    #### top level
-    SpeakRESTOptions,
-    SpeakOptions,  # backward compat
-    #### common
-    # TextSource,
-    # BufferSource,
-    # StreamSource,
-    # FileSource,
-    #### unique
-    SpeakSource,
-    SpeakRestSource,
-    SpeakRESTSource,
-)
-
-from .clients import (
-    SpeakClient,  # backward compat
-    SpeakRESTClient,
-    AsyncSpeakRESTClient,
-)
-
-from .clients import (
-    SpeakResponse,  # backward compat
-    SpeakRESTResponse,
-)
-
-## speak WebSocket
-from .clients import SpeakWebSocketEvents, SpeakWebSocketMessage
-
-from .clients import (
-    SpeakWSOptions,
-)
-
-from .clients import (
-    SpeakWebSocketClient,
-    AsyncSpeakWebSocketClient,
-    SpeakWSClient,
-    AsyncSpeakWSClient,
-)
-
-from .clients import (
-    #### top level
-    SpeakWSMetadataResponse,
-    FlushedResponse,
-    ClearedResponse,
-    WarningResponse,
-    #### common websocket response
-    # OpenResponse,
-    # CloseResponse,
-    # UnhandledResponse,
-    # ErrorResponse,
-)
-
-# auth client classes
-from .clients import AuthRESTClient, AsyncAuthRESTClient
-
-# auth client responses
-from .clients import (
-    GrantTokenResponse,
-)
-
-# manage client classes/input
-from .clients import ManageClient, AsyncManageClient
-from .clients import (
-    ProjectOptions,
-    KeyOptions,
-    ScopeOptions,
-    InviteOptions,
-    UsageRequestOptions,
-    UsageSummaryOptions,
-    UsageFieldsOptions,
-)
-
-# manage client responses
-from .clients import (
-    #### top level
-    Message,
-    ProjectsResponse,
-    ModelResponse,
-    ModelsResponse,
-    MembersResponse,
-    KeyResponse,
-    KeysResponse,
-    ScopesResponse,
-    InvitesResponse,
-    UsageRequest,
-    UsageResponse,
-    UsageRequestsResponse,
-    UsageSummaryResponse,
-    UsageFieldsResponse,
-    BalancesResponse,
-    #### shared
-    Project,
-    STTDetails,
-    TTSMetadata,
-    TTSDetails,
-    Member,
-    Key,
-    Invite,
-    Config,
-    STTUsageDetails,
-    Callback,
-    TokenDetail,
-    SpeechSegment,
-    TTSUsageDetails,
-    STTTokens,
-    TTSTokens,
-    UsageSummaryResults,
-    Resolution,
-    UsageModel,
-    Balance,
-)
-
-# on-prem
-from .clients import (
-    OnPremClient,
-    AsyncOnPremClient,
-    SelfHostedClient,
-    AsyncSelfHostedClient,
-)
-
-
-# agent
-from .clients import AgentWebSocketEvents
-
-# websocket
-from .clients import (
-    AgentWebSocketClient,
-    AsyncAgentWebSocketClient,
-)
-
-from .clients import (
-    #### common websocket response
-    # OpenResponse,
-    # CloseResponse,
-    # ErrorResponse,
-    # UnhandledResponse,
-    #### unique
-    WelcomeResponse,
-    SettingsAppliedResponse,
-    ConversationTextResponse,
-    UserStartedSpeakingResponse,
-    AgentThinkingResponse,
-    FunctionCallRequest,
-    AgentStartedSpeakingResponse,
-    AgentAudioDoneResponse,
-    InjectionRefusedResponse,
-)
-
-from .clients import (
-    # top level
-    SettingsOptions,
-    UpdatePromptOptions,
-    UpdateSpeakOptions,
-    InjectAgentMessageOptions,
-    FunctionCallResponse,
-    AgentKeepAlive,
-    # sub level
-    Listen,
-    Speak,
-    Header,
-    Item,
-    Properties,
-    Parameters,
-    Function,
-    Think,
-    Provider,
-    Agent,
-    Input,
-    Output,
-    Audio,
-    Endpoint,
-)
-
-
-# client errors and options
 from .options import DeepgramClientOptions, ClientOptionsFromEnv
 from .errors import DeepgramApiKeyError
 
-# pylint: enable=unused-import
 
-
-class Deepgram:  # pylint: disable=broad-exception-raised
+class Deepgram:
     """
     The Deepgram class is no longer a class in version 3 of this SDK.
     """
-
     def __init__(self, *anything):
         raise Exception(
             """
@@ -416,15 +92,6 @@ class DeepgramClient:
 
     Raises:
         DeepgramApiKeyError: If the API key is missing or invalid.
-
-    Methods:
-        listen: Returns a ListenClient instance for interacting with Deepgram's transcription services.
-
-        manage: (Preferred) Returns a Threaded ManageClient instance for managing Deepgram resources.
-        selfhosted: (Preferred) Returns an Threaded SelfHostedClient instance for interacting with Deepgram's on-premises API.
-
-        asyncmanage: Returns an (Async) ManageClient instance for managing Deepgram resources.
-        asyncselfhosted: Returns an (Async) SelfHostedClient instance for interacting with Deepgram's on-premises API.
     """
 
     _config: DeepgramClientOptions
@@ -438,17 +105,17 @@ class DeepgramClient:
         self._logger = verboselogs.VerboseLogger(__name__)
         self._logger.addHandler(logging.StreamHandler())
 
-        if api_key == "" and config is not None:
+        if not api_key and config is not None:
             self._logger.info("Attempting to set API key from config object")
             api_key = config.api_key
-        if api_key == "":
+        if not api_key:
             self._logger.info("Attempting to set API key from environment variable")
             api_key = os.getenv("DEEPGRAM_API_KEY", "")
-        if api_key == "":
+        if not api_key:
             self._logger.warning("WARNING: API key is missing")
 
         self.api_key = api_key
-        if config is None:  # Use default configuration
+        if config is None:
             self._config = DeepgramClientOptions(self.api_key)
         else:
             config.set_apikey(self.api_key)
@@ -456,23 +123,17 @@ class DeepgramClient:
 
     @property
     def listen(self):
-        """
-        Returns a Listen dot-notation router for interacting with Deepgram's transcription services.
-        """
+        """Returns a Listen dot-notation router for interacting with Deepgram's transcription services."""
         return ListenRouter(self._config)
 
     @property
     def read(self):
-        """
-        Returns a Read dot-notation router for interacting with Deepgram's read services.
-        """
+        """Returns a Read dot-notation router for interacting with Deepgram's read services."""
         return ReadRouter(self._config)
 
     @property
     def speak(self):
-        """
-        Returns a Speak dot-notation router for interacting with Deepgram's speak services.
-        """
+        """Returns a Speak dot-notation router for interacting with Deepgram's speak services."""
         return SpeakRouter(self._config)
 
     @property
@@ -483,37 +144,27 @@ class DeepgramClient:
         details="deepgram.asyncspeak is deprecated. Use deepgram.speak.asyncrest instead.",
     )
     def asyncspeak(self):
-        """
-        DEPRECATED: deepgram.asyncspeak is deprecated. Use deepgram.speak.asyncrest instead.
-        """
+        """DEPRECATED: deepgram.asyncspeak is deprecated. Use deepgram.speak.asyncrest instead."""
         return self.Version(self._config, "asyncspeak")
 
     @property
     def manage(self):
-        """
-        Returns a ManageClient instance for managing Deepgram resources.
-        """
+        """Returns a ManageClient instance for managing Deepgram resources."""
         return self.Version(self._config, "manage")
 
     @property
     def asyncmanage(self):
-        """
-        Returns an AsyncManageClient instance for managing Deepgram resources.
-        """
+        """Returns an AsyncManageClient instance for managing Deepgram resources."""
         return self.Version(self._config, "asyncmanage")
 
     @property
     def auth(self):
-        """
-        Returns an AuthRESTClient instance for managing short-lived tokens.
-        """
+        """Returns an AuthRESTClient instance for managing short-lived tokens."""
         return self.Version(self._config, "auth")
 
     @property
     def asyncauth(self):
-        """
-        Returns an AsyncAuthRESTClient instance for managing short-lived tokens.
-        """
+        """Returns an AsyncAuthRESTClient instance for managing short-lived tokens."""
         return self.Version(self._config, "asyncauth")
 
     @property
@@ -524,16 +175,12 @@ class DeepgramClient:
         details="deepgram.onprem is deprecated. Use deepgram.speak.selfhosted instead.",
     )
     def onprem(self):
-        """
-        DEPRECATED: deepgram.onprem is deprecated. Use deepgram.speak.selfhosted instead.
-        """
+        """DEPRECATED: deepgram.onprem is deprecated. Use deepgram.speak.selfhosted instead."""
         return self.Version(self._config, "selfhosted")
 
     @property
     def selfhosted(self):
-        """
-        Returns an SelfHostedClient instance for interacting with Deepgram's on-premises API.
-        """
+        """Returns an SelfHostedClient instance for interacting with Deepgram's on-premises API."""
         return self.Version(self._config, "selfhosted")
 
     @property
@@ -544,26 +191,29 @@ class DeepgramClient:
         details="deepgram.asynconprem is deprecated. Use deepgram.speak.asyncselfhosted instead.",
     )
     def asynconprem(self):
-        """
-        DEPRECATED: deepgram.asynconprem is deprecated. Use deepgram.speak.asyncselfhosted instead.
-        """
+        """DEPRECATED: deepgram.asynconprem is deprecated. Use deepgram.speak.asyncselfhosted instead."""
         return self.Version(self._config, "asyncselfhosted")
 
     @property
     def asyncselfhosted(self):
-        """
-        Returns an AsyncSelfHostedClient instance for interacting with Deepgram's on-premises API.
-        """
+        """Returns an AsyncSelfHostedClient instance for interacting with Deepgram's on-premises API."""
         return self.Version(self._config, "asyncselfhosted")
 
     @property
     def agent(self):
-        """
-        Returns a Agent dot-notation router for interacting with Deepgram's speak services.
-        """
+        """Returns a Agent dot-notation router for interacting with Deepgram's speak services."""
         return AgentRouter(self._config)
 
-    # INTERNAL CLASSES
+    def upgrade(self):
+        """
+        Returns the recommended upgrade instructions for the Deepgram SDK.
+        """
+        return (
+            "To upgrade to the latest Deepgram SDK, run:\n"
+            "    pip install --upgrade deepgram-sdk\n"
+            "For more information, see the README or visit https://github.com/deepgram/deepgram-python-sdk"
+        )
+
     class Version:
         """
         Represents a version of the Deepgram API.
@@ -577,91 +227,57 @@ class DeepgramClient:
             self._logger = verboselogs.VerboseLogger(__name__)
             self._logger.addHandler(logging.StreamHandler())
             self._logger.setLevel(config.verbose)
-
             self._config = config
             self._parent = parent
 
-        # FUTURE VERSIONING:
-        # When v2 or v1.1beta1 or etc. This allows easy access to the latest version of the API.
-        # @property
-        # def latest(self):
-        #     match self._parent:
-        #         case "manage":
-        #             return ManageClient(self._config)
-        #         case "selfhosted":
-        #             return SelfHostedClient(self._config)
-        #         case _:
-        #             raise DeepgramModuleError("Invalid parent")
-
         def v(self, version: str = ""):
-            # pylint: disable-msg=too-many-statements
             """
             Returns a client for the specified version of the API.
             """
             self._logger.debug("Version.v ENTER")
-            self._logger.info("version: %s", version)
-            if len(version) == 0:
+            self._logger.info(f"version: {version}")
+            if not version:
                 self._logger.error("version is empty")
                 self._logger.debug("Version.v LEAVE")
                 raise DeepgramModuleError("Invalid module version")
 
-            parent = ""
-            filename = ""
-            classname = ""
             match self._parent:
                 case "manage":
-                    parent = "manage"
-                    filename = "client"
-                    classname = "ManageClient"
+                    parent, filename, classname = "manage", "client", "ManageClient"
                 case "asyncmanage":
-                    parent = "manage"
-                    filename = "async_client"
-                    classname = "AsyncManageClient"
+                    parent, filename, classname = "manage", "async_client", "AsyncManageClient"
                 case "asyncspeak":
                     return AsyncSpeakRESTClient(self._config)
                 case "selfhosted":
-                    parent = "selfhosted"
-                    filename = "client"
-                    classname = "SelfHostedClient"
+                    parent, filename, classname = "selfhosted", "client", "SelfHostedClient"
                 case "asyncselfhosted":
-                    parent = "selfhosted"
-                    filename = "async_client"
-                    classname = "AsyncSelfHostedClient"
+                    parent, filename, classname = "selfhosted", "async_client", "AsyncSelfHostedClient"
                 case "auth":
-                    parent = "auth"
-                    filename = "client"
-                    classname = "AuthRESTClient"
+                    parent, filename, classname = "auth", "client", "AuthRESTClient"
                 case "asyncauth":
-                    parent = "auth"
-                    filename = "async_client"
-                    classname = "AsyncAuthRESTClient"
+                    parent, filename, classname = "auth", "async_client", "AsyncAuthRESTClient"
                 case _:
-                    self._logger.error("parent unknown: %s", self._parent)
+                    self._logger.error(f"parent unknown: {self._parent}")
                     self._logger.debug("Version.v LEAVE")
                     raise DeepgramModuleError("Invalid parent type")
 
-            # create class path
             path = f"deepgram.clients.{parent}.v{version}.{filename}"
-            self._logger.info("path: %s", path)
-            self._logger.info("classname: %s", classname)
+            self._logger.info(f"path: {path}")
+            self._logger.info(f"classname: {classname}")
 
-            # import class
             mod = import_module(path)
             if mod is None:
                 self._logger.error("module path is None")
                 self._logger.debug("Version.v LEAVE")
                 raise DeepgramModuleError("Unable to find package")
 
-            my_class = getattr(mod, classname)
+            my_class = getattr(mod, classname, None)
             if my_class is None:
                 self._logger.error("my_class is None")
                 self._logger.debug("Version.v LEAVE")
                 raise DeepgramModuleError("Unable to find class")
 
-            # instantiate class
             my_class_instance = my_class(self._config)
             self._logger.notice("Version.v succeeded")
             self._logger.debug("Version.v LEAVE")
             return my_class_instance
-
-        # pylint: enable-msg=too-many-statements
