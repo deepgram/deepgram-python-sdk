@@ -8,6 +8,7 @@ Official Python SDK for [Deepgram](https://www.deepgram.com/). Power your apps w
 - [Deepgram Python SDK](#deepgram-python-sdk)
 - [Documentation](#documentation)
 - [Getting an API Key](#getting-an-api-key)
+- [Authentication](#authentication)
 - [Requirements](#requirements)
 - [Installation](#installation)
 - [Quickstarts](#quickstarts)
@@ -27,6 +28,57 @@ You can learn more about the Deepgram API at [developers.deepgram.com](https://d
 ## Getting an API Key
 
 🔑 To access the Deepgram API you will need a [free Deepgram API Key](https://console.deepgram.com/signup?jump=keys).
+
+## Authentication
+
+The Deepgram Python SDK supports two authentication methods:
+
+### API Key Authentication (Token)
+
+Use your Deepgram API key for authentication. This is the traditional method:
+
+```python
+from deepgram import DeepgramClient, DeepgramClientOptions
+
+# Method 1: Using environment variable
+# Set DEEPGRAM_API_KEY in your environment
+deepgram = DeepgramClient()
+
+# Method 2: Using constructor parameter
+deepgram = DeepgramClient(api_key="your-deepgram-api-key")
+
+# Method 3: Using config object
+config = DeepgramClientOptions(api_key="your-deepgram-api-key")
+deepgram = DeepgramClient(config=config)
+```
+
+### Access Token Authentication (Bearer)
+
+Use a Deepgram access token for authentication. This method uses Bearer token authentication:
+
+```python
+from deepgram import DeepgramClient, DeepgramClientOptions
+
+# Method 1: Using environment variable
+# Set DEEPGRAM_ACCESS_TOKEN in your environment
+deepgram = DeepgramClient()
+
+# Method 2: Using constructor parameter
+deepgram = DeepgramClient(access_token="your-access-token")
+
+# Method 3: Using config object
+config = DeepgramClientOptions(access_token="your-access-token")
+deepgram = DeepgramClient(config=config)
+```
+
+### Environment Variables
+
+The SDK supports the following environment variables:
+
+- `DEEPGRAM_API_KEY`: Your Deepgram API key
+- `DEEPGRAM_ACCESS_TOKEN`: Your Deepgram access token
+
+When both environment variables are set, `DEEPGRAM_ACCESS_TOKEN` takes precedence.
 
 ## Requirements
 
@@ -70,7 +122,7 @@ We guarantee that major interfaces will not break in a given major semver (ie `2
 
 ## Quickstarts
 
-This SDK aims to reduce complexity and abtract/hide some internal Deepgram details that clients shouldn't need to know about.  However you can still tweak options and settings if you need.
+This SDK aims to reduce complexity and abtract/hide some internal Deepgram details that clients shouldn't need to know about. However you can still tweak options and settings if you need.
 
 ### PreRecorded Audio Transcription Quickstart
 
