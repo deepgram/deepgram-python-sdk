@@ -51,12 +51,12 @@ def main():
         # Agent configuration
         options.agent.language = "en"
         options.agent.listen.provider.type = "deepgram"
-        options.agent.listen.model = "nova-3"
+        options.agent.listen.provider.model = "nova-3"
         options.agent.think.provider.type = "open_ai"
-        options.agent.think.model = "gpt-4o-mini"
+        options.agent.think.provider.model = "gpt-4o-mini"
         options.agent.think.prompt = "You are a friendly AI assistant."
         options.agent.speak.provider.type = "deepgram"
-        options.agent.speak.model = "aura-2-thalia-en"
+        options.agent.speak.provider.model = "aura-2-thalia-en"
         options.agent.greeting = "Hello! How can I help you today?"
 
         # Send Keep Alive messages
