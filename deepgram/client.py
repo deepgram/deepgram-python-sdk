@@ -71,17 +71,17 @@ from .clients import (
 
 # live client responses
 from .clients import (
-    #### top level
+    # top level
     LiveResultResponse,
     ListenWSMetadataResponse,
     SpeechStartedResponse,
     UtteranceEndResponse,
-    #### common websocket response
+    # common websocket response
     # OpenResponse,
     # CloseResponse,
     # ErrorResponse,
     # UnhandledResponse,
-    #### unique
+    # unique
     ListenWSMetadata,
     ListenWSAlternative,
     ListenWSChannel,
@@ -117,11 +117,11 @@ from .clients import (
 
 # rest client responses
 from .clients import (
-    #### top level
+    # top level
     AsyncPrerecordedResponse,
     PrerecordedResponse,
     SyncPrerecordedResponse,
-    #### shared
+    # shared
     # Average,
     # Intent,
     # Intents,
@@ -134,7 +134,7 @@ from .clients import (
     # Topic,
     # Topics,
     # TopicsInfo,
-    #### between rest and websocket
+    # between rest and websocket
     # ModelInfo,
     # Alternative,
     # Hit,
@@ -170,11 +170,11 @@ from .clients import (
 
 # read client responses
 from .clients import (
-    #### top level
+    # top level
     AsyncAnalyzeResponse,
     SyncAnalyzeResponse,
     AnalyzeResponse,
-    #### shared
+    # shared
     # Average,
     # Intent,
     # Intents,
@@ -187,24 +187,24 @@ from .clients import (
     # Topic,
     # Topics,
     # TopicsInfo,
-    #### unique
+    # unique
     AnalyzeMetadata,
     AnalyzeResults,
     AnalyzeSummary,
 )
 
 # speak
-## speak REST
+# speak REST
 from .clients import (
-    #### top level
+    # top level
     SpeakRESTOptions,
     SpeakOptions,  # backward compat
-    #### common
+    # common
     # TextSource,
     # BufferSource,
     # StreamSource,
     # FileSource,
-    #### unique
+    # unique
     SpeakSource,
     SpeakRestSource,
     SpeakRESTSource,
@@ -221,7 +221,7 @@ from .clients import (
     SpeakRESTResponse,
 )
 
-## speak WebSocket
+# speak WebSocket
 from .clients import SpeakWebSocketEvents, SpeakWebSocketMessage
 
 from .clients import (
@@ -236,12 +236,12 @@ from .clients import (
 )
 
 from .clients import (
-    #### top level
+    # top level
     SpeakWSMetadataResponse,
     FlushedResponse,
     ClearedResponse,
     WarningResponse,
-    #### common websocket response
+    # common websocket response
     # OpenResponse,
     # CloseResponse,
     # UnhandledResponse,
@@ -270,7 +270,7 @@ from .clients import (
 
 # manage client responses
 from .clients import (
-    #### top level
+    # top level
     Message,
     ProjectsResponse,
     ModelResponse,
@@ -286,7 +286,7 @@ from .clients import (
     UsageSummaryResponse,
     UsageFieldsResponse,
     BalancesResponse,
-    #### shared
+    # shared
     Project,
     STTDetails,
     TTSMetadata,
@@ -327,12 +327,12 @@ from .clients import (
 )
 
 from .clients import (
-    #### common websocket response
+    # common websocket response
     # OpenResponse,
     # CloseResponse,
     # ErrorResponse,
     # UnhandledResponse,
-    #### unique
+    # unique
     WelcomeResponse,
     SettingsAppliedResponse,
     ConversationTextResponse,
@@ -414,10 +414,11 @@ class DeepgramClient:
 
     Attributes:
         api_key (str): The Deepgram API key used for authentication.
+        access_token (str): The Deepgram access token used for authentication.
         config_options (DeepgramClientOptions): An optional configuration object specifying client options.
 
     Raises:
-        DeepgramApiKeyError: If the API key is missing or invalid.
+        DeepgramApiKeyError: If both API key and access token are missing or invalid.
 
     Methods:
         listen: Returns a ListenClient instance for interacting with Deepgram's transcription services.
@@ -435,26 +436,52 @@ class DeepgramClient:
     def __init__(
         self,
         api_key: str = "",
+        access_token: str = "",
         config: Optional[DeepgramClientOptions] = None,
     ):
         self._logger = verboselogs.VerboseLogger(__name__)
         self._logger.addHandler(logging.StreamHandler())
 
-        if api_key == "" and config is not None:
-            self._logger.info("Attempting to set API key from config object")
-            api_key = config.api_key
-        if api_key == "":
-            self._logger.info("Attempting to set API key from environment variable")
-            api_key = os.getenv("DEEPGRAM_API_KEY", "")
-        if api_key == "":
-            self._logger.warning("WARNING: API key is missing")
+        # Handle credential extraction from config first
+        if api_key == "" and access_token == "" and config is not None:
 
-        self.api_key = api_key
+            self._logger.info(
+                "Attempting to set credentials from config object")
+            api_key = config.api_key
+            access_token = config.access_token
+
+        # Fallback to environment variables only if no explicit credentials provided
+        if api_key == "" and access_token == "":
+
+            self._logger.info(
+                "Attempting to get credentials from environment variables")
+            access_token = os.getenv("DEEPGRAM_ACCESS_TOKEN", "")
+            if access_token == "":
+                api_key = os.getenv("DEEPGRAM_API_KEY", "")
+
+        # Log warnings for missing credentials
+        if api_key == "" and access_token == "":
+            self._logger.warning(
+                "WARNING: Neither API key nor access token is provided")
+
         if config is None:  # Use default configuration
-            self._config = DeepgramClientOptions(self.api_key)
+
+            self._config = DeepgramClientOptions(
+                api_key=api_key, access_token=access_token)
         else:
-            config.set_apikey(self.api_key)
+
+            # Update config with credentials, preferring access_token
+            if access_token:
+
+                config.set_access_token(access_token)
+            elif api_key:
+
+                config.set_apikey(api_key)
             self._config = config
+
+        # Store credentials for backward compatibility - extract from final config
+        self.api_key = self._config.api_key
+        self.access_token = self._config.access_token
 
     @property
     def listen(self):
