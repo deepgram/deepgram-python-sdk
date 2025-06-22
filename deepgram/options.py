@@ -142,7 +142,8 @@ class DeepgramClientOptions:  # pylint: disable=too-many-instance-attributes
         """
         is_auto_flush_reply_enabled: Returns True if the client is configured to auto-flush for listen.
         """
-        auto_flush_reply_delta = float(self.options.get("auto_flush_reply_delta", 0))
+        auto_flush_reply_delta = float(
+            self.options.get("auto_flush_reply_delta", 0))
         return (
             isinstance(auto_flush_reply_delta, numbers.Number)
             and auto_flush_reply_delta > 0
@@ -152,7 +153,8 @@ class DeepgramClientOptions:  # pylint: disable=too-many-instance-attributes
         """
         is_auto_flush_speak_enabled: Returns True if the client is configured to auto-flush for speak.
         """
-        auto_flush_speak_delta = float(self.options.get("auto_flush_speak_delta", 0))
+        auto_flush_speak_delta = float(
+            self.options.get("auto_flush_speak_delta", 0))
         return (
             isinstance(auto_flush_speak_delta, numbers.Number)
             and auto_flush_speak_delta > 0
@@ -198,17 +200,17 @@ class ClientOptionsFromEnv(
         if access_token is None:
             access_token = ""
 
-        # Prioritize API key for backward compatibility, fallback to access token
-        # This ensures existing DEEPGRAM_API_KEY users continue working as before
-        if api_key == "":
-            api_key = os.getenv("DEEPGRAM_API_KEY", "")
-
-        if access_token == "" and api_key == "":
+        # Prioritize access token over API key
+        if access_token == "":
             access_token = os.getenv("DEEPGRAM_ACCESS_TOKEN", "")
+
+        if api_key == "" and access_token == "":
+            api_key = os.getenv("DEEPGRAM_API_KEY", "")
 
         # Require at least one form of authentication
         if api_key == "" and access_token == "":
-            self._logger.critical("Neither Deepgram API KEY nor ACCESS TOKEN is set")
+            self._logger.critical(
+                "Neither Deepgram API KEY nor ACCESS TOKEN is set")
             raise DeepgramApiKeyError(
                 "Neither Deepgram API KEY nor ACCESS TOKEN is set"
             )
@@ -260,7 +262,8 @@ class ClientOptionsFromEnv(
             for x in range(0, 20):
                 header = os.getenv(f"DEEPGRAM_HEADER_{x}", None)
                 if header is not None:
-                    headers[header] = os.getenv(f"DEEPGRAM_HEADER_VALUE_{x}", None)
+                    headers[header] = os.getenv(
+                        f"DEEPGRAM_HEADER_VALUE_{x}", None)
                     self._logger.debug(
                         "Deepgram header %s is set with value %s",
                         header,
@@ -277,7 +280,8 @@ class ClientOptionsFromEnv(
             for x in range(0, 20):
                 param = os.getenv(f"DEEPGRAM_PARAM_{x}", None)
                 if param is not None:
-                    options[param] = os.getenv(f"DEEPGRAM_PARAM_VALUE_{x}", None)
+                    options[param] = os.getenv(
+                        f"DEEPGRAM_PARAM_VALUE_{x}", None)
                     self._logger.debug(
                         "Deepgram option %s is set with value %s", param, options[param]
                     )

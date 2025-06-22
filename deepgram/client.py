@@ -446,19 +446,20 @@ class DeepgramClient:
 
         # Handle credential extraction from config first
         if api_key == "" and access_token == "" and config is not None:
-            self._logger.info("Attempting to set credentials from config object")
+            self._logger.info(
+                "Attempting to set credentials from config object")
             api_key = config.api_key
             access_token = config.access_token
 
         # Fallback to environment variables if no explicit credentials provided
-        # Prioritize API key for backward compatibility
+        # Prioritize access token over API key
         if api_key == "" and access_token == "":
             self._logger.info(
                 "Attempting to get credentials from environment variables"
             )
-            api_key = os.getenv("DEEPGRAM_API_KEY", "")
-            if api_key == "":
-                access_token = os.getenv("DEEPGRAM_ACCESS_TOKEN", "")
+            access_token = os.getenv("DEEPGRAM_ACCESS_TOKEN", "")
+            if access_token == "":
+                api_key = os.getenv("DEEPGRAM_API_KEY", "")
 
         # Log warnings for missing credentials
         if api_key == "" and access_token == "":

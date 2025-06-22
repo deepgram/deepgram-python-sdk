@@ -128,11 +128,11 @@ class TestEnvironmentVariableResolution:
         'DEEPGRAM_ACCESS_TOKEN': 'env-access-token'
     }, clear=True)
     def test_access_token_env_var_priority_over_api_key(self):
-        """Test that DEEPGRAM_API_KEY takes priority over DEEPGRAM_ACCESS_TOKEN for backward compatibility"""
+        """Test that DEEPGRAM_ACCESS_TOKEN takes priority over DEEPGRAM_API_KEY"""
         client = DeepgramClient()
 
         auth_header = client._config.headers.get('Authorization', '')
-        assert auth_header == "Token env-api-key"
+        assert auth_header == "Bearer env-access-token"
 
     @patch.dict(os.environ, {}, clear=True)
     def test_no_env_vars_no_auth_header(self):
@@ -185,12 +185,12 @@ class TestClientOptionsFromEnv:
         'DEEPGRAM_ACCESS_TOKEN': 'env-access-token'
     }, clear=True)
     def test_client_options_from_env_priority(self):
-        """Test ClientOptionsFromEnv prioritizes API key for backward compatibility"""
+        """Test ClientOptionsFromEnv prioritizes access token over API key"""
         config = ClientOptionsFromEnv()
         client = DeepgramClient(config=config)
 
         auth_header = client._config.headers.get('Authorization', '')
-        assert auth_header == "Token env-api-key"
+        assert auth_header == "Bearer env-access-token"
 
     @patch.dict(os.environ, {}, clear=True)
     def test_client_options_from_env_no_credentials_raises_error(self):
