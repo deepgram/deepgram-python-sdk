@@ -42,7 +42,9 @@ class AuthRESTClient(AbstractSyncRestClient):
 
         url = f"{self._config.url}/{self._endpoint}"
         self._logger.info("url: %s", url)
-        result = self.post(url, headers={"Authorization": f"Token {self._config.api_key}"})
+        result = self.post(
+            url, headers={"Authorization": f"Token {self._config.api_key}"}
+        )
         self._logger.info("json: %s", result)
         res = GrantTokenResponse.from_json(result)
         self._logger.verbose("result: %s", res)

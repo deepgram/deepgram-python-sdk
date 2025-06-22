@@ -23,10 +23,10 @@ def find_example_scripts():
 
     # Walk through all subdirectories to find main.py files
     for root, dirs, files in os.walk(examples_dir):
-        if 'main.py' in files:
-            script_path = Path(root) / 'main.py'
+        if "main.py" in files:
+            script_path = Path(root) / "main.py"
             # Skip the all.py script itself
-            if script_path.name != 'all.py' and script_path != Path(__file__):
+            if script_path.name != "all.py" and script_path != Path(__file__):
                 relative_path = script_path.relative_to(examples_dir.parent)
                 example_scripts.append(str(relative_path))
 
@@ -38,15 +38,15 @@ def should_skip_example(script_path):
     """Check if an example should be skipped (e.g., requires special setup)."""
     skip_patterns = [
         # Skip microphone examples that require audio input
-        'microphone',
+        "microphone",
         # Skip callback examples that require running servers
-        'callback',
+        "callback",
         # Skip agent examples that might require special setup
-        'agent',
+        "agent",
         # Skip async examples for now to avoid complexity
-        'async',
+        "async",
         # Skip examples that require special dependencies
-        'hello_world_play',  # requires sounddevice
+        "hello_world_play",  # requires sounddevice
     ]
 
     return any(pattern in script_path.lower() for pattern in skip_patterns)
@@ -65,7 +65,7 @@ def run_example(script_path):
             stdout=subprocess.PIPE,
             stderr=subprocess.STDOUT,
             universal_newlines=True,
-            bufsize=1
+            bufsize=1,
         )
 
         # Stream output in real-time
@@ -115,8 +115,7 @@ def main():
     skipped_scripts = [s for s in scripts if should_skip_example(s)]
 
     if skipped_scripts:
-        print(
-            f"⏭️  Skipping {len(skipped_scripts)} scripts requiring special setup:")
+        print(f"⏭️  Skipping {len(skipped_scripts)} scripts requiring special setup:")
         for script in skipped_scripts:
             print(f"   - {script}")
 
@@ -160,8 +159,7 @@ def main():
             print(f"   - {script}")
         return 1
     else:
-        print(
-            f"\n🎉 All {success_count} runnable examples executed successfully!")
+        print(f"\n🎉 All {success_count} runnable examples executed successfully!")
         return 0
 
 

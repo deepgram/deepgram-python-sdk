@@ -446,8 +446,7 @@ class DeepgramClient:
 
         # Handle credential extraction from config first
         if api_key == "" and access_token == "" and config is not None:
-            self._logger.info(
-                "Attempting to set credentials from config object")
+            self._logger.info("Attempting to set credentials from config object")
             api_key = config.api_key
             access_token = config.access_token
 
@@ -455,7 +454,8 @@ class DeepgramClient:
         # Prioritize API key for backward compatibility
         if api_key == "" and access_token == "":
             self._logger.info(
-                "Attempting to get credentials from environment variables")
+                "Attempting to get credentials from environment variables"
+            )
             api_key = os.getenv("DEEPGRAM_API_KEY", "")
             if api_key == "":
                 access_token = os.getenv("DEEPGRAM_ACCESS_TOKEN", "")
@@ -463,11 +463,13 @@ class DeepgramClient:
         # Log warnings for missing credentials
         if api_key == "" and access_token == "":
             self._logger.warning(
-                "WARNING: Neither API key nor access token is provided")
+                "WARNING: Neither API key nor access token is provided"
+            )
 
         if config is None:  # Use default configuration
             self._config = DeepgramClientOptions(
-                api_key=api_key, access_token=access_token)
+                api_key=api_key, access_token=access_token
+            )
         else:
             # Update config with credentials only if we have valid credentials
             # This ensures empty strings don't overwrite existing config credentials

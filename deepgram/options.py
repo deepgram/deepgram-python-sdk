@@ -30,6 +30,7 @@ class DeepgramClientOptions:  # pylint: disable=too-many-instance-attributes
     """
 
     _logger: verboselogs.VerboseLogger
+    headers: Dict[str, str]
     _inspect_listen: bool = False
     _inspect_speak: bool = False
 
@@ -82,7 +83,7 @@ class DeepgramClientOptions:  # pylint: disable=too-many-instance-attributes
         """
         self.api_key = api_key
         self.access_token = ""  # Clear access token when setting API key
-        self._update_headers(headers=getattr(self, '_custom_headers', {}))
+        self._update_headers(headers=getattr(self, "_custom_headers", {}))
 
     def set_access_token(self, access_token: str):
         """
@@ -93,7 +94,7 @@ class DeepgramClientOptions:  # pylint: disable=too-many-instance-attributes
         """
         self.access_token = access_token
         self.api_key = ""  # Clear API key when setting access token
-        self._update_headers(headers=getattr(self, '_custom_headers', {}))
+        self._update_headers(headers=getattr(self, "_custom_headers", {}))
 
     def _get_url(self, url) -> str:
         if not re.match(r"^https?://", url, re.IGNORECASE):
@@ -102,12 +103,15 @@ class DeepgramClientOptions:  # pylint: disable=too-many-instance-attributes
 
     def _update_headers(self, headers: Optional[Dict] = None):
         # Initialize headers if not already set, otherwise preserve existing custom headers
-        if not hasattr(self, 'headers') or self.headers is None:
+        if not hasattr(self, "headers") or self.headers is None:
             self.headers = {}
         else:
             # Preserve existing custom headers but allow auth headers to be updated
-            existing_custom_headers = {k: v for k, v in self.headers.items()
-                                       if k not in ['Accept', 'Authorization', 'User-Agent']}
+            existing_custom_headers = {
+                k: v
+                for k, v in self.headers.items()
+                if k not in ["Accept", "Authorization", "User-Agent"]
+            }
             self.headers = existing_custom_headers
 
         self.headers["Accept"] = "application/json"
@@ -119,9 +123,9 @@ class DeepgramClientOptions:  # pylint: disable=too-many-instance-attributes
         elif self.access_token:
             self.headers["Authorization"] = f"Bearer {self.access_token}"
 
-        self.headers[
-            "User-Agent"
-        ] = f"@deepgram/sdk/{__version__} python/{sys.version_info[1]}.{sys.version_info[2]}"
+        self.headers["User-Agent"] = (
+            f"@deepgram/sdk/{__version__} python/{sys.version_info[1]}.{sys.version_info[2]}"
+        )
         # Overwrite / add any headers that were passed in
         if headers:
             self.headers.update(headers)
@@ -138,8 +142,7 @@ class DeepgramClientOptions:  # pylint: disable=too-many-instance-attributes
         """
         is_auto_flush_reply_enabled: Returns True if the client is configured to auto-flush for listen.
         """
-        auto_flush_reply_delta = float(
-            self.options.get("auto_flush_reply_delta", 0))
+        auto_flush_reply_delta = float(self.options.get("auto_flush_reply_delta", 0))
         return (
             isinstance(auto_flush_reply_delta, numbers.Number)
             and auto_flush_reply_delta > 0
@@ -149,8 +152,7 @@ class DeepgramClientOptions:  # pylint: disable=too-many-instance-attributes
         """
         is_auto_flush_speak_enabled: Returns True if the client is configured to auto-flush for speak.
         """
-        auto_flush_speak_delta = float(
-            self.options.get("auto_flush_speak_delta", 0))
+        auto_flush_speak_delta = float(self.options.get("auto_flush_speak_delta", 0))
         return (
             isinstance(auto_flush_speak_delta, numbers.Number)
             and auto_flush_speak_delta > 0
@@ -206,10 +208,10 @@ class ClientOptionsFromEnv(
 
         # Require at least one form of authentication
         if api_key == "" and access_token == "":
-            self._logger.critical(
-                "Neither Deepgram API KEY nor ACCESS TOKEN is set")
+            self._logger.critical("Neither Deepgram API KEY nor ACCESS TOKEN is set")
             raise DeepgramApiKeyError(
-                "Neither Deepgram API KEY nor ACCESS TOKEN is set")
+                "Neither Deepgram API KEY nor ACCESS TOKEN is set"
+            )
 
         if url == "":
             url = os.getenv("DEEPGRAM_HOST", "api.deepgram.com")
@@ -258,8 +260,7 @@ class ClientOptionsFromEnv(
             for x in range(0, 20):
                 header = os.getenv(f"DEEPGRAM_HEADER_{x}", None)
                 if header is not None:
-                    headers[header] = os.getenv(
-                        f"DEEPGRAM_HEADER_VALUE_{x}", None)
+                    headers[header] = os.getenv(f"DEEPGRAM_HEADER_VALUE_{x}", None)
                     self._logger.debug(
                         "Deepgram header %s is set with value %s",
                         header,
@@ -276,8 +277,7 @@ class ClientOptionsFromEnv(
             for x in range(0, 20):
                 param = os.getenv(f"DEEPGRAM_PARAM_{x}", None)
                 if param is not None:
-                    options[param] = os.getenv(
-                        f"DEEPGRAM_PARAM_VALUE_{x}", None)
+                    options[param] = os.getenv(f"DEEPGRAM_PARAM_VALUE_{x}", None)
                     self._logger.debug(
                         "Deepgram option %s is set with value %s", param, options[param]
                     )
@@ -288,5 +288,10 @@ class ClientOptionsFromEnv(
                 options = None
 
         super().__init__(
-            api_key=api_key, access_token=access_token, url=url, verbose=verbose, headers=headers, options=options
+            api_key=api_key,
+            access_token=access_token,
+            url=url,
+            verbose=verbose,
+            headers=headers,
+            options=options,
         )
