@@ -75,7 +75,7 @@ class LiveOptions(BaseResponse):  # pylint: disable=too-many-instance-attributes
         default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
     model: Optional[str] = field(
-        default="None", metadata=dataclass_config(exclude=lambda f: f is None)
+        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
     multichannel: Optional[bool] = field(
         default=None, metadata=dataclass_config(exclude=lambda f: f is None)

@@ -113,11 +113,11 @@ class DeepgramClientOptions:  # pylint: disable=too-many-instance-attributes
         self.headers["Accept"] = "application/json"
 
         # Set authorization header based on available credentials
-        # Prefer access_token over api_key if both are provided
-        if self.access_token:
-            self.headers["Authorization"] = f"Bearer {self.access_token}"
-        elif self.api_key:
+        # Prefer api_key over access_token for backward compatibility
+        if self.api_key:
             self.headers["Authorization"] = f"Token {self.api_key}"
+        elif self.access_token:
+            self.headers["Authorization"] = f"Bearer {self.access_token}"
 
         self.headers[
             "User-Agent"
@@ -196,13 +196,13 @@ class ClientOptionsFromEnv(
         if access_token is None:
             access_token = ""
 
-        # Try to get access token from environment first, then API key
-        # This maintains backward compatibility while supporting the new access token
-        if access_token == "":
-            access_token = os.getenv("DEEPGRAM_ACCESS_TOKEN", "")
-
-        if api_key == "" and access_token == "":
+        # Prioritize API key for backward compatibility, fallback to access token
+        # This ensures existing DEEPGRAM_API_KEY users continue working as before
+        if api_key == "":
             api_key = os.getenv("DEEPGRAM_API_KEY", "")
+
+        if access_token == "" and api_key == "":
+            access_token = os.getenv("DEEPGRAM_ACCESS_TOKEN", "")
 
         # Require at least one form of authentication
         if api_key == "" and access_token == "":

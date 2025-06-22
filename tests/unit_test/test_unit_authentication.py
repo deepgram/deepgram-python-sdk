@@ -42,6 +42,7 @@ class TestHeaderGeneration:
         auth_header = client._config.headers.get('Authorization', '')
         assert auth_header == "Bearer direct-access-token"
 
+    @patch.dict(os.environ, {}, clear=True)
     def test_no_credentials_no_auth_header(self):
         """Test that no authorization header is set when no credentials are provided"""
         config = DeepgramClientOptions()
@@ -50,6 +51,7 @@ class TestHeaderGeneration:
         auth_header = client._config.headers.get('Authorization', '')
         assert auth_header == ""
 
+    @patch.dict(os.environ, {}, clear=True)
     def test_empty_credentials_no_auth_header(self):
         """Test that empty credentials don't generate authorization headers"""
         config = DeepgramClientOptions(api_key="", access_token="")
@@ -60,28 +62,28 @@ class TestHeaderGeneration:
 
 
 class TestCredentialPriority:
-    """Test that access tokens take precedence over API keys when both are provided"""
+    """Test that API keys take precedence over access tokens for backward compatibility"""
 
     def test_access_token_priority_in_config(self):
-        """Test access token takes priority in config object"""
+        """Test API key takes priority in config object for backward compatibility"""
         config = DeepgramClientOptions(
-            api_key="should-be-ignored",
-            access_token="priority-token"
+            api_key="priority-api-key",
+            access_token="should-be-ignored"
         )
         client = DeepgramClient(config=config)
 
         auth_header = client._config.headers.get('Authorization', '')
-        assert auth_header == "Bearer priority-token"
+        assert auth_header == "Token priority-api-key"
 
     def test_access_token_priority_in_client_constructor(self):
-        """Test access token takes priority in client constructor"""
+        """Test API key takes priority in client constructor for backward compatibility"""
         client = DeepgramClient(
-            api_key="should-be-ignored",
-            access_token="priority-token"
+            api_key="priority-api-key",
+            access_token="should-be-ignored"
         )
 
         auth_header = client._config.headers.get('Authorization', '')
-        assert auth_header == "Bearer priority-token"
+        assert auth_header == "Token priority-api-key"
 
     def test_access_token_priority_mixed_sources(self):
         """Test access token priority with mixed initialization sources"""
@@ -126,11 +128,11 @@ class TestEnvironmentVariableResolution:
         'DEEPGRAM_ACCESS_TOKEN': 'env-access-token'
     }, clear=True)
     def test_access_token_env_var_priority_over_api_key(self):
-        """Test that DEEPGRAM_ACCESS_TOKEN takes priority over DEEPGRAM_API_KEY"""
+        """Test that DEEPGRAM_API_KEY takes priority over DEEPGRAM_ACCESS_TOKEN for backward compatibility"""
         client = DeepgramClient()
 
         auth_header = client._config.headers.get('Authorization', '')
-        assert auth_header == "Bearer env-access-token"
+        assert auth_header == "Token env-api-key"
 
     @patch.dict(os.environ, {}, clear=True)
     def test_no_env_vars_no_auth_header(self):
@@ -183,12 +185,12 @@ class TestClientOptionsFromEnv:
         'DEEPGRAM_ACCESS_TOKEN': 'env-access-token'
     }, clear=True)
     def test_client_options_from_env_priority(self):
-        """Test ClientOptionsFromEnv priority when both env vars are set"""
+        """Test ClientOptionsFromEnv prioritizes API key for backward compatibility"""
         config = ClientOptionsFromEnv()
         client = DeepgramClient(config=config)
 
         auth_header = client._config.headers.get('Authorization', '')
-        assert auth_header == "Bearer env-access-token"
+        assert auth_header == "Token env-api-key"
 
     @patch.dict(os.environ, {}, clear=True)
     def test_client_options_from_env_no_credentials_raises_error(self):
@@ -284,6 +286,7 @@ class TestAuthSwitching:
 class TestErrorHandling:
     """Test error handling scenarios"""
 
+    @patch.dict(os.environ, {}, clear=True)
     def test_no_credentials_warning_logged(self):
         """Test that appropriate warning is logged when no credentials are provided"""
         import logging
@@ -316,9 +319,9 @@ class TestErrorHandling:
         # No explicit credentials, should use config values
         client = DeepgramClient(config=config)
 
-        # Access token should take priority
+        # API key should take priority for backward compatibility
         auth_header = client._config.headers.get('Authorization', '')
-        assert auth_header == "Bearer config-access-token"
+        assert auth_header == "Token config-api-key"
 
     def test_header_preservation_across_updates(self):
         """Test that other headers are preserved during auth updates"""

@@ -434,28 +434,31 @@ class DeepgramClient:
     def __init__(
         self,
         api_key: str = "",
-        access_token: str = "",
         config: Optional[DeepgramClientOptions] = None,
+        access_token: str = "",
     ):
         self._logger = verboselogs.VerboseLogger(__name__)
         self._logger.addHandler(logging.StreamHandler())
 
+        # Normalize empty strings to None for consistent handling
+        api_key = api_key if api_key else ""
+        access_token = access_token if access_token else ""
+
         # Handle credential extraction from config first
         if api_key == "" and access_token == "" and config is not None:
-
             self._logger.info(
                 "Attempting to set credentials from config object")
             api_key = config.api_key
             access_token = config.access_token
 
-        # Fallback to environment variables only if no explicit credentials provided
+        # Fallback to environment variables if no explicit credentials provided
+        # Prioritize API key for backward compatibility
         if api_key == "" and access_token == "":
-
             self._logger.info(
                 "Attempting to get credentials from environment variables")
-            access_token = os.getenv("DEEPGRAM_ACCESS_TOKEN", "")
-            if access_token == "":
-                api_key = os.getenv("DEEPGRAM_API_KEY", "")
+            api_key = os.getenv("DEEPGRAM_API_KEY", "")
+            if api_key == "":
+                access_token = os.getenv("DEEPGRAM_ACCESS_TOKEN", "")
 
         # Log warnings for missing credentials
         if api_key == "" and access_token == "":
@@ -463,18 +466,16 @@ class DeepgramClient:
                 "WARNING: Neither API key nor access token is provided")
 
         if config is None:  # Use default configuration
-
             self._config = DeepgramClientOptions(
                 api_key=api_key, access_token=access_token)
         else:
-
-            # Update config with credentials, preferring access_token
-            if access_token:
-
-                config.set_access_token(access_token)
-            elif api_key:
-
+            # Update config with credentials only if we have valid credentials
+            # This ensures empty strings don't overwrite existing config credentials
+            # Prioritize API key for backward compatibility
+            if api_key and api_key != "":
                 config.set_apikey(api_key)
+            elif access_token and access_token != "":
+                config.set_access_token(access_token)
             self._config = config
 
         # Store credentials for backward compatibility - extract from final config
