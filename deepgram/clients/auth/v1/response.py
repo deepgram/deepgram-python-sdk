@@ -9,16 +9,18 @@ from ...common import (
     BaseResponse,
 )
 
+
 @dataclass
 class GrantTokenResponse(BaseResponse):
     """
     The response object for the authentication grant token endpoint.
     """
+
     access_token: str = field(
-        metadata=dataclass_config(field_name='access_token'),
+        metadata=dataclass_config(field_name="access_token"),
         default="",
     )
     expires_in: int = field(
-        metadata=dataclass_config(field_name='expires_in'),
+        metadata=dataclass_config(field_name="expires_in"),
         default=30,
     )

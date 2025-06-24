@@ -22,6 +22,7 @@ from deepgram import (
 )
 from deepgram.clients.agent.v1.websocket.options import SettingsOptions
 
+
 def main():
     try:
         # Initialize the Voice Agent
@@ -64,17 +65,17 @@ def main():
 
         def on_welcome(self, welcome, **kwargs):
             print(f"Welcome message received: {welcome}")
-            with open("chatlog.txt", 'a') as chatlog:
+            with open("chatlog.txt", "a") as chatlog:
                 chatlog.write(f"Welcome message: {welcome}\n")
 
         def on_settings_applied(self, settings_applied, **kwargs):
             print(f"Settings applied: {settings_applied}")
-            with open("chatlog.txt", 'a') as chatlog:
+            with open("chatlog.txt", "a") as chatlog:
                 chatlog.write(f"Settings applied: {settings_applied}\n")
 
         def on_error(self, error, **kwargs):
             print(f"Error received: {error}")
-            with open("chatlog.txt", 'a') as chatlog:
+            with open("chatlog.txt", "a") as chatlog:
                 chatlog.write(f"Error: {error}\n")
 
         # Register handlers
@@ -93,11 +94,14 @@ def main():
 
         # Cleanup
         connection.finish()
-        print("Finished! You should see an error for the arbitrary key - scroll up and you can see it is included in the settings payload.")
+        print(
+            "Finished! You should see an error for the arbitrary key - scroll up and you can see it is included in the settings payload."
+        )
         print("If you do not see that error, this example has failed.")
 
     except Exception as e:
         print(f"Error: {str(e)}")
+
 
 if __name__ == "__main__":
     main()

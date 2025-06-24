@@ -116,7 +116,6 @@ async def main():
         options.agent.listen.provider.type = "deepgram"
         options.agent.language = "en"
 
-
         print("\n\nPress Enter to stop...\n\n")
         if await dg_connection.start(options) is False:
             print("Failed to start connection")

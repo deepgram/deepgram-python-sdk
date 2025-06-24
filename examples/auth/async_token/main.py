@@ -7,12 +7,10 @@ import os
 from dotenv import load_dotenv
 from deepgram.utils import verboselogs
 
-from deepgram import (
-    DeepgramClient,
-    DeepgramClientOptions
-)
+from deepgram import DeepgramClient, DeepgramClientOptions
 
 load_dotenv()
+
 
 async def main():
     try:
@@ -20,7 +18,9 @@ async def main():
         config = DeepgramClientOptions(
             verbose=verboselogs.SPAM,
         )
-        deepgram: DeepgramClient = DeepgramClient(os.getenv("DEEPGRAM_API_KEY", ""), config)
+        deepgram: DeepgramClient = DeepgramClient(
+            os.getenv("DEEPGRAM_API_KEY", ""), config
+        )
 
         # STEP 2 Call the grant_token method on the auth rest class
         response = await deepgram.asyncauth.v("1").grant_token()

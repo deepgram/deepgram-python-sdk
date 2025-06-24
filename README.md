@@ -8,7 +8,7 @@ Official Python SDK for [Deepgram](https://www.deepgram.com/). Power your apps w
 - [Documentation](#documentation)
 - [Migrating from earlier versions](#migrating-from-earlier-versions)
   - [V2 to V3](#v2-to-v3)
-  - [V3.*\ to V4](#v3-to-v4)
+  - [V3.\*\ to V4](#v3-to-v4)
 - [Requirements](#requirements)
 - [Installation](#installation)
 - [Initialization](#initialization)
@@ -129,8 +129,6 @@ response = deepgram.listen.rest.v("1").transcribe_url(
 
 [See our API reference for more info](https://developers.deepgram.com/reference/speech-to-text-api/listen).
 
-[See the Example for more info](./examples/speech-to-text/rest/sync/url/main.py).
-
 ### Local Files (Synchronous)
 
 Transcribe audio from a file.
@@ -145,8 +143,6 @@ response = deepgram.listen.rest.v("1").transcribe_file(
 ```
 
 [See our API reference for more info](https://developers.deepgram.com/reference/speech-to-text-api/listen).
-
-[See the Example for more info](./examples/speech-to-text/rest/sync/file/main.py).
 
 ## Pre-Recorded (Asynchronous / Callbacks)
 
@@ -166,8 +162,6 @@ response = deepgram.listen.rest.v("1").transcribe_url_async(
 
 [See our API reference for more info](https://developers.deepgram.com/reference/speech-to-text-api/listen).
 
-[See the Example for more info](./examples/speech-to-text/rest/async/url/main.py).
-
 ### Local Files (Asynchronous)
 
 Transcribe audio from a file.
@@ -183,8 +177,6 @@ response = deepgram.listen.rest.v("1").transcribe_file_async(
 ```
 
 [See our API reference for more info](https://developers.deepgram.com/reference/speech-to-text-api/listen).
-
-[See the Example for more info](./examples/speech-to-text/rest/async/file/main.py).
 
 ## Streaming Audio
 
@@ -212,8 +204,6 @@ connection.finish()
 ```
 
 [See our API reference for more info](https://developers.deepgram.com/reference/streaming-api).
-
-[See the Examples for more info](./examples/speech-to-text/websocket/).
 
 ## Transcribing to Captions
 
@@ -287,8 +277,6 @@ For a complete implementation, you would need to:
 
 [See our API reference for more info](https://developers.deepgram.com/reference/voice-agent-api/agent).
 
-[See the Examples for more info](./examples/agent/).
-
 ## Text to Speech REST
 
 Convert text into speech using the REST API.
@@ -308,8 +296,6 @@ response = deepgram.speak.rest.v("1").save(
 ```
 
 [See our API reference for more info](https://developers.deepgram.com/reference/text-to-speech-api/speak).
-
-[See the Example for more info](./examples/text-to-speech/rest/).
 
 ## Text to Speech Streaming
 
@@ -346,8 +332,6 @@ connection.finish()
 
 [See our API reference for more info](https://developers.deepgram.com/reference/text-to-speech-api/speak).
 
-[See the Examples for more info](./examples/text-to-speech/websocket/).
-
 ## Text Intelligence
 
 Analyze text.
@@ -372,28 +356,126 @@ response = deepgram.read.rest.v("1").process(
 
 ## Authentication
 
-### Get Token Details
+The Deepgram Python SDK supports multiple authentication methods to provide flexibility and enhanced security for your applications.
 
-Retrieves the details of the current authentication token.
+### Authentication Methods
+
+#### API Key Authentication (Traditional)
+
+The traditional method using your Deepgram API key:
+
+```python
+from deepgram import DeepgramClient
+
+# Direct API key
+client = DeepgramClient(api_key="YOUR_API_KEY")
+
+# Or using environment variable DEEPGRAM_API_KEY
+client = DeepgramClient()  # Auto-detects from environment
+```
+
+#### Bearer Token Authentication (OAuth 2.0)
+
+Use short-lived access tokens for enhanced security:
+
+```python
+from deepgram import DeepgramClient
+
+# Direct access token
+client = DeepgramClient(access_token="YOUR_ACCESS_TOKEN")
+
+# Or using environment variable DEEPGRAM_ACCESS_TOKEN
+client = DeepgramClient()  # Auto-detects from environment
+```
+
+### Authentication Priority
+
+When multiple credentials are provided, the SDK follows this priority order:
+
+1. **Explicit `access_token` parameter** (highest priority)
+2. **Explicit `api_key` parameter**
+3. **`DEEPGRAM_ACCESS_TOKEN` environment variable**
+4. **`DEEPGRAM_API_KEY` environment variable** (lowest priority)
+
+### Environment Variables
+
+Set your credentials using environment variables:
+
+```bash
+# For API key authentication
+export DEEPGRAM_API_KEY="your-deepgram-api-key"
+
+# For bearer token authentication
+export DEEPGRAM_ACCESS_TOKEN="your-access-token"
+```
+
+### Dynamic Authentication Switching
+
+Switch between authentication methods at runtime:
+
+```python
+from deepgram import DeepgramClient, DeepgramClientOptions
+
+# Start with API key
+config = DeepgramClientOptions(api_key="your-api-key")
+client = DeepgramClient(config=config)
+
+# Switch to access token
+client._config.set_access_token("your-access-token")
+
+# Switch back to API key
+client._config.set_apikey("your-api-key")
+```
+
+### Complete Bearer Token Workflow
+
+Here's a practical example of using API keys to obtain access tokens:
+
+```python
+from deepgram import DeepgramClient
+
+# Step 1: Create client with API key
+api_client = DeepgramClient(api_key="your-api-key")
+
+# Step 2: Get a short-lived access token (30-second TTL)
+response = api_client.auth.v("1").grant_token()
+access_token = response.access_token
+
+# Step 3: Create new client with Bearer token
+bearer_client = DeepgramClient(access_token=access_token)
+
+# Step 4: Use the Bearer client for API calls
+transcription = bearer_client.listen.rest.v("1").transcribe_url(
+    {"url": "https://dpgr.am/spacewalk.wav"}
+)
+```
+
+### Benefits of Bearer Token Authentication
+
+- **Enhanced Security**: Short-lived tokens (30-second expiration) minimize risk
+- **OAuth 2.0 Compliance**: Standard bearer token format
+- **Scope Limitation**: Tokens can be scoped to specific permissions
+- **Audit Trail**: Better tracking of token usage vs API keys
+
+### Authentication Management
+
+#### Get Token Details
+
+Retrieves the details of the current authentication token:
 
 ```python
 response = deepgram.manage.rest.v("1").get_token_details()
 ```
 
-[See our API reference for more info](https://developers.deepgram.com/reference/authentication).
+#### Grant Token
 
-### Grant Token
-
-Creates a temporary token with a 30-second TTL.
+Creates a temporary token with a 30-second TTL:
 
 ```python
 response = deepgram.auth.v("1").grant_token()
-
 ```
 
 [See our API reference for more info](https://developers.deepgram.com/reference/token-based-auth-api/grant-token).
-
-[See The Examples for more info](./examples/auth/)
 
 ## Projects
 
@@ -407,8 +489,6 @@ response = deepgram.manage.v("1").get_projects()
 
 [See our API reference for more info](https://developers.deepgram.com/reference/management-api/projects/list).
 
-[See The Example for more info](./examples/manage/projects/main.py).
-
 ### Get Project
 
 Retrieves a specific project based on the provided project_id.
@@ -418,8 +498,6 @@ response = deepgram.manage.v("1").get_project(myProjectId)
 ```
 
 [See our API reference for more info](https://developers.deepgram.com/reference/management-api/projects/get).
-
-[See The Example for more info](./examples/manage/projects/main.py).
 
 ### Update Project
 
@@ -431,8 +509,6 @@ response = deepgram.manage.v("1").update_project(myProjectId, options)
 
 [See our API reference for more info](https://developers.deepgram.com/reference/management-api/projects/update).
 
-[See The Example for more info](./examples/manage/projects/main.py).
-
 ### Delete Project
 
 Delete a project.
@@ -442,8 +518,6 @@ response = deepgram.manage.v("1").delete_project(myProjectId)
 ```
 
 [See our API reference for more info](https://developers.deepgram.com/reference/management-api/projects/delete).
-
-[See The Example for more info](./examples/manage/projects/main.py).
 
 ## Keys
 
@@ -457,8 +531,6 @@ response = deepgram.manage.v("1").get_keys(myProjectId)
 
 [See our API reference for more info](https://developers.deepgram.com/reference/management-api/keys/list)
 
-[See The Example for more info](./examples/manage/keys/main.py).
-
 ### Get Key
 
 Retrieves a specific key associated with the provided project_id.
@@ -468,8 +540,6 @@ response = deepgram.manage.v("1").get_key(myProjectId, myKeyId)
 ```
 
 [See our API reference for more info](https://developers.deepgram.com/reference/management-api/keys/get)
-
-[See The Example for more info](./examples/manage/keys/main.py).
 
 ### Create Key
 
@@ -481,8 +551,6 @@ Creates an API key with the provided scopes.
 
 [See our API reference for more info](https://developers.deepgram.com/reference/management-api/keys/create)
 
-[See The Example for more info](./examples/manage/keys/main.py).
-
 ### Delete Key
 
 Deletes a specific key associated with the provided project_id.
@@ -492,8 +560,6 @@ response = deepgram.manage.v("1").delete_key(myProjectId, myKeyId)
 ```
 
 [See our API reference for more info](https://developers.deepgram.com/reference/management-api/keys/delete)
-
-[See The Example for more info](./examples/manage/keys/main.py).
 
 ## Members
 
@@ -507,8 +573,6 @@ response = deepgram.manage.v("1").get_members(myProjectId)
 
 [See our API reference for more info](https://developers.deepgram.com/reference/management-api/members/list).
 
-[See The Example for more info](./examples/manage/members/main.py).
-
 ### Remove Member
 
 Removes member account for specified member_id.
@@ -518,8 +582,6 @@ response = deepgram.manage.v("1").remove_member(myProjectId, MemberId)
 ```
 
 [See our API reference for more info](https://developers.deepgram.com/reference/management-api/members/delete).
-
-[See The Example for more info](./examples/manage/members/main.py).
 
 ## Scopes
 
@@ -533,8 +595,6 @@ response = deepgram.manage.v("1").get_member_scopes(myProjectId, memberId)
 
 [See our API reference for more info](https://developers.deepgram.com/reference/management-api/scopes/list).
 
-[See The Example for more info](./examples/manage/scopes/main.py).
-
 ### Update Scope
 
 Updates the scope for the specified member in the specified project.
@@ -544,8 +604,6 @@ response = deepgram.manage.v("1").update_member_scope(myProjectId, memberId, opt
 ```
 
 [See our API reference for more info](https://developers.deepgram.com/reference/management-api/scopes/update).
-
-[See The Example for more info](./examples/manage/scopes/main.py).
 
 ## Invitations
 

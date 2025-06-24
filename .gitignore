@@ -24,3 +24,7 @@ poetry.lock
 # examples
 chatlog.txt
 output_*.wav
+
+# test artifacts
+output.wav
+test.mp3
