@@ -9,7 +9,6 @@ import json
 import time
 import requests
 import base64
-import openai
 from streamlit_webrtc import webrtc_streamer, AudioProcessorBase
 import av
 import pyperclip
@@ -85,13 +84,14 @@ def bot_typing_animation():
     with st.spinner("Bot is typing..."):
         time.sleep(1.5)
 
+# Add markdown/LaTeX/emoji support in chat bubbles
 def chat_bubble(role, text, avatar_img=None, emotion=None):
     emoji = EMOTION_EMOJI.get(emotion, "") if emotion else ""
     border = "3px solid #ffd700" if emotion == "joy" else ("3px solid #ffb3b3" if emotion == "sadness" else "3px solid #b3c6ff")
     if role == 'user':
-        st.markdown(f"<div style='display:flex;align-items:center;'><img src='https://randomuser.me/api/portraits/men/1.jpg' width='40' style='border-radius:50%;margin-right:8px;'/><div style='background:#e6f7ff;padding:10px 16px;border-radius:16px 16px 16px 0;max-width:70%;'>{text}</div></div>", unsafe_allow_html=True)
+        st.markdown(f"<div style='display:flex;align-items:center;'><img src='https://randomuser.me/api/portraits/men/1.jpg' width='40' style='border-radius:50%;margin-right:8px;'/><div style='background:#e6f7ff;padding:10px 16px;border-radius:16px 16px 16px 0;max-width:70%;'>" + st.markdown(text, unsafe_allow_html=True) + "</div></div>", unsafe_allow_html=True)
     else:
-        st.markdown(f"<div style='display:flex;align-items:center;'><img src='{avatar_img}' width='40' style='border-radius:50%;margin-right:8px;border:{border};'/><div style='background:#fffbe6;padding:10px 16px;border-radius:16px 16px 0 16px;max-width:70%;'>{emoji} {text}</div></div>", unsafe_allow_html=True)
+        st.markdown(f"<div style='display:flex;align-items:center;'><img src='{avatar_img}' width='40' style='border-radius:50%;margin-right:8px;border:{border};'/><div style='background:#fffbe6;padding:10px 16px;border-radius:16px 16px 0 16px;max-width:70%;'>{emoji} " + st.markdown(text, unsafe_allow_html=True) + "</div></div>", unsafe_allow_html=True)
 
 def animated_avatar_overlay(emotion):
     if emotion == "joy":
@@ -213,6 +213,45 @@ def get_custom_persona():
             st.sidebar.markdown(f"- **{name}**: {data['desc']}")
 get_custom_persona()
 
+# --- Remove Sage Advisor and ensure Girlfriend persona is always available and default ---
+if 'Sage Advisor' in ADVANCED_AGENTS:
+    del ADVANCED_AGENTS['Sage Advisor']
+if 'Girlfriend' not in ADVANCED_AGENTS:
+    ADVANCED_AGENTS['Girlfriend'] = {
+        "name": "Girlfriend",
+        "desc": "A loving, caring, and supportive partner.",
+        "style": "Caring & Supportive",
+        "voice": "aura-asteria-en",
+        "avatar": "https://randomuser.me/api/portraits/women/44.jpg"
+    }
+# Always default to Girlfriend persona if nothing else is selected
+if 'selected_avatar' not in st.session_state or not st.session_state['selected_avatar']:
+    selected_avatar = 'Girlfriend'
+    persona_style = ADVANCED_AGENTS['Girlfriend']['style']
+    voice_model = ADVANCED_AGENTS['Girlfriend']['voice']
+    avatar_img_url = ADVANCED_AGENTS['Girlfriend']['avatar']
+    st.session_state['selected_avatar'] = selected_avatar
+
+# --- Persona management: allow user to add/modify personas in sidebar ---
+def manage_personas():
+    st.sidebar.markdown('---')
+    st.sidebar.subheader('🛠️ Manage Personas')
+    new_name = st.sidebar.text_input('New Persona Name', key='new_persona_name')
+    new_desc = st.sidebar.text_area('Description', key='new_persona_desc')
+    new_style = st.sidebar.text_input('Style', key='new_persona_style')
+    new_voice = st.sidebar.text_input('Voice', key='new_persona_voice')
+    new_avatar = st.sidebar.text_input('Avatar URL', key='new_persona_avatar')
+    if st.sidebar.button('Add/Update Persona') and new_name:
+        ADVANCED_AGENTS[new_name] = {
+            "name": new_name,
+            "desc": new_desc or "A unique AI persona.",
+            "style": new_style or "Caring & Supportive",
+            "voice": new_voice or "aura-asteria-en",
+            "avatar": new_avatar or "https://randomuser.me/api/portraits/women/44.jpg"
+        }
+        st.sidebar.success(f'Persona "{new_name}" added/updated!')
+manage_personas()
+
 # ========== CHAT MEMORY & CONTEXT WINDOW ==========
 if 'chat_memory' not in st.session_state:
     st.session_state['chat_memory'] = []
@@ -230,13 +269,222 @@ if col_mem2.button('📂 Load Chat Memory'):
     load_chat_memory()
     st.success('Chat memory loaded!')
 
+# ========== SUPER AGENTS & GLOWS AI AGENTS ==========
+SUPER_AGENTS = {
+    "n12": {
+        "name": "N12 Super Agent",
+        "desc": "An ultra-advanced, multi-modal AI agent with deep reasoning, web search, and creative skills.",
+        "style": "Analytical & Creative",
+        "voice": "aura-athena-en",
+        "avatar": "https://randomuser.me/api/portraits/men/99.jpg"
+    },
+    "glow": {
+        "name": "Glow AI Agent",
+        "desc": "A glowing, empathetic, and emotionally intelligent AI for support and coaching.",
+        "style": "Empathetic & Supportive",
+        "voice": "aura-asteria-en",
+        "avatar": "https://randomuser.me/api/portraits/women/99.jpg"
+    }
+}
+
+def get_super_agent():
+    st.sidebar.markdown('---')
+    st.sidebar.subheader('🤖 Super Agents')
+    agent_key = st.sidebar.selectbox('Choose a Super Agent', list(SUPER_AGENTS.keys()) + ["None"], format_func=lambda x: SUPER_AGENTS[x]["name"] if x in SUPER_AGENTS else "None")
+    if agent_key in SUPER_AGENTS:
+        agent = SUPER_AGENTS[agent_key]
+        st.sidebar.image(agent["avatar"], width=120, caption=agent["name"])
+        st.sidebar.markdown(f"*{agent['desc']}*")
+        return agent
+    return None
+
+super_agent = get_super_agent()
+if super_agent:
+    selected_avatar = super_agent["name"]
+    persona_style = super_agent["style"]
+    voice_model = super_agent["voice"]
+    avatar_img_url = super_agent["avatar"]
+
+# ========== MORE ADVANCED AGENTS ==========
+ADVANCED_AGENTS = {
+    "sage": {
+        "name": "Sage Advisor",
+        "desc": "A wise, strategic advisor for business and life decisions.",
+        "style": "Strategic & Insightful",
+        "voice": "aura-zeus-en",
+        "avatar": "https://randomuser.me/api/portraits/men/88.jpg"
+    },
+    "spark": {
+        "name": "Spark Creative",
+        "desc": "A creative AI for brainstorming, art, and innovation.",
+        "style": "Creative & Playful",
+        "voice": "aura-asteria-en",
+        "avatar": "https://randomuser.me/api/portraits/women/88.jpg"
+    },
+    "guardian": {
+        "name": "Guardian AI",
+        "desc": "A protective, security-focused agent for privacy and safety advice.",
+        "style": "Protective & Cautious",
+        "voice": "aura-orion-en",
+        "avatar": "https://randomuser.me/api/portraits/men/77.jpg"
+    }
+}
+
+# --- Remove Sage Advisor and ensure Girlfriend persona is always available and default ---
+if 'Sage Advisor' in ADVANCED_AGENTS:
+    del ADVANCED_AGENTS['Sage Advisor']
+if 'Girlfriend' not in ADVANCED_AGENTS:
+    ADVANCED_AGENTS['Girlfriend'] = {
+        "name": "Girlfriend",
+        "desc": "A loving, caring, and supportive partner.",
+        "style": "Caring & Supportive",
+        "voice": "aura-asteria-en",
+        "avatar": "https://randomuser.me/api/portraits/women/44.jpg"
+    }
+# Always default to Girlfriend persona if nothing else is selected
+if 'selected_avatar' not in st.session_state or not st.session_state['selected_avatar']:
+    selected_avatar = 'Girlfriend'
+    persona_style = ADVANCED_AGENTS['Girlfriend']['style']
+    voice_model = ADVANCED_AGENTS['Girlfriend']['voice']
+    avatar_img_url = ADVANCED_AGENTS['Girlfriend']['avatar']
+    st.session_state['selected_avatar'] = selected_avatar
+
+def get_advanced_agent():
+    st.sidebar.markdown('---')
+    st.sidebar.subheader('🦾 Advanced Agents')
+    agent_key = st.sidebar.selectbox('Choose an Advanced Agent', list(ADVANCED_AGENTS.keys()) + ["None"], format_func=lambda x: ADVANCED_AGENTS[x]["name"] if x in ADVANCED_AGENTS else "None")
+    if agent_key in ADVANCED_AGENTS:
+        agent = ADVANCED_AGENTS[agent_key]
+        st.sidebar.image(agent["avatar"], width=120, caption=agent["name"])
+        st.sidebar.markdown(f"*{agent['desc']}*")
+        return agent
+    return None
+
+advanced_agent = get_advanced_agent()
+if advanced_agent:
+    selected_avatar = advanced_agent["name"]
+    persona_style = advanced_agent["style"]
+    voice_model = advanced_agent["voice"]
+    avatar_img_url = advanced_agent["avatar"]
+
+# ========== ADVANCED ROUTES (EXAMPLES) ==========
+# Example: Route to different AI logic based on agent
+if selected_avatar == "Guardian AI":
+    st.info("Guardian AI is active: All responses will be privacy/security focused.")
+    # You could add custom logic here for security/privacy Q&A
+elif selected_avatar == "Spark Creative":
+    st.info("Spark Creative is active: All responses will be creative and playful.")
+    # Add creative prompt engineering or image generation
+elif selected_avatar == "Sage Advisor":
+    st.info("Sage Advisor is active: All responses will be strategic and insightful.")
+    # Add business/strategy prompt engineering
+
+# ========== ROBUST ERROR HANDLING DECORATOR ==========
+def robust(func):
+    def wrapper(*args, **kwargs):
+        try:
+            return func(*args, **kwargs)
+        except Exception as e:
+            st.error(f"[Robust Error] {func.__name__}: {e}")
+            return None
+    return wrapper
+# Example usage: decorate all API calls and risky logic with @robust
+
+# ========== UI POLISH & MODERN UX ==========
+# Add a floating action button for quick help and feedback
+st.markdown('''
+<style>
+.fab {
+  position: fixed;
+  bottom: 32px;
+  right: 32px;
+  width: 64px;
+  height: 64px;
+  background: linear-gradient(135deg, #6e8efb 0%, #a777e3 100%);
+  border-radius: 50%;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  cursor: pointer;
+}
+.fab-icon {
+  color: white;
+  font-size: 32px;
+}
+</style>
+<div class="fab" onclick="window.open('https://github.com/deepgram-devs/deepgram-python-sdk/issues', '_blank')">
+  <span class="fab-icon">💡</span>
+</div>
+''', unsafe_allow_html=True)
+
+# Add a theme toggle button
+def theme_toggle():
+    if 'theme_mode' not in st.session_state:
+        st.session_state['theme_mode'] = 'Light'
+    if st.button('🌗 Toggle Theme'):
+        st.session_state['theme_mode'] = 'Dark' if st.session_state['theme_mode'] == 'Light' else 'Light'
+    st.markdown(f"<style>{THEME_CSS[st.session_state['theme_mode']]}</style>", unsafe_allow_html=True)
+theme_toggle()
+
+# --- Ensure get_persona_defaults is defined before use ---
+def get_persona_defaults(selected_avatar, persona_style):
+    if selected_avatar in AVATAR_DEFAULTS:
+        desc = AVATAR_DEFAULTS[selected_avatar]["desc"]
+        style = persona_style
+    elif selected_avatar in SUPER_AGENTS:
+        desc = SUPER_AGENTS[selected_avatar]["desc"]
+        style = SUPER_AGENTS[selected_avatar]["style"]
+    elif selected_avatar in ADVANCED_AGENTS:
+        desc = ADVANCED_AGENTS[selected_avatar]["desc"]
+        style = ADVANCED_AGENTS[selected_avatar]["style"]
+    else:
+        desc = "A unique AI persona."
+        style = persona_style
+    return desc, style
+
+# --- Ensure user_feelings and user_problem are always defined at the top ---
+if 'user_feelings' not in st.session_state:
+    st.session_state['user_feelings'] = ''
+if 'user_problem' not in st.session_state:
+    st.session_state['user_problem'] = ''
+user_feelings = st.session_state['user_feelings']
+user_problem = st.session_state['user_problem']
+
+# --- Ensure openai is always imported ---
+import openai
+
+# --- Ensure get_persona_prompt_safe is defined before use ---
+def get_persona_prompt_safe(selected_avatar, persona_style, mood_prompt):
+    persona_desc = persona_prompts.get(selected_avatar, "A unique AI persona.")
+    style_desc = style_prompts.get(persona_style, f"Respond in the style: {persona_style}.")
+    return f"{persona_desc} {style_desc} {mood_prompt}"
+
+# --- Ensure track_emotion is defined before use ---
+def track_emotion(emotion, score):
+    if 'emotion_trajectory' not in st.session_state:
+        st.session_state['emotion_trajectory'] = []
+    st.session_state['emotion_trajectory'].append({'emotion': emotion, 'score': score, 'timestamp': time.time()})
+
 # ========== MAIN UI ==========
 st.title("🌟 World-Class AI Voice Companion")
 col1, col2 = st.columns([1, 6])
 with col1:
     st.markdown(f"<div style='border: 4px solid #b3c6ff; border-radius: 50%; width: 88px; height: 88px; display: flex; align-items: center; justify-content: center;'><img src='{avatar_img_url}' width='80' style='border-radius:50%;'/></div>", unsafe_allow_html=True)
 with col2:
-    st.markdown(f"**{selected_avatar}**: {AVATAR_DEFAULTS[selected_avatar]['desc']}")
+    # Use correct avatar description for all agent types (robust for all cases)
+    avatar_desc = None
+    if selected_avatar in AVATAR_DEFAULTS:
+        avatar_desc = AVATAR_DEFAULTS[selected_avatar]["desc"]
+    elif 'super_agent' in locals() and super_agent and 'desc' in super_agent:
+        avatar_desc = super_agent["desc"]
+    elif 'advanced_agent' in locals() and advanced_agent and 'desc' in advanced_agent:
+        avatar_desc = advanced_agent["desc"]
+    else:
+        avatar_desc = "A unique AI persona."
+
+    st.markdown(f"**{selected_avatar}**: {avatar_desc}")
 
 st.markdown("""
 **How to use:**
@@ -349,7 +597,7 @@ with tab_chat:
                     "Funny & Lighthearted": "Respond with humor and warmth."
                 }
                 mood_prompt = f"Your mood is at {mood}/10."
-                prompt = f"{persona_prompts[selected_avatar]} {style_prompts[persona_style]} {mood_prompt}"
+                prompt = get_persona_prompt_safe(selected_avatar, persona_style, mood_prompt)
                 response_text = None
                 if openai_api_key:
                     openai.api_key = openai_api_key
@@ -402,6 +650,9 @@ with tab_chat:
                 # Show mood board GIF if emotion detected
                 if detected_emotion and detected_emotion in mood_gifs:
                     st.image(mood_gifs[detected_emotion], width=200, caption=f"Mood: {detected_emotion}")
+                # --- Track emotion trajectory ---
+                if detected_emotion:
+                    track_emotion(detected_emotion, emotion_score)
 
 with tab_live:
     st.header("📞 Live Voice Conversation (Push-to-Talk)")
@@ -526,7 +777,7 @@ with tab_web:
                 "Funny & Lighthearted": "Respond with humor and warmth."
             }
             mood_prompt = f"Your mood is at {mood}/10."
-            prompt = f"{persona_prompts[selected_avatar]} {style_prompts[persona_style]} {mood_prompt}"
+            prompt = get_persona_prompt_safe(selected_avatar, persona_style, mood_prompt)
             response_text = None
             if openai_api_key:
                 client = openai.OpenAI(api_key=openai_api_key)
@@ -579,75 +830,64 @@ with tab_web:
             # Show mood board GIF if emotion detected
             if detected_emotion and detected_emotion in mood_gifs:
                 st.image(mood_gifs[detected_emotion], width=200, caption=f"Mood: {detected_emotion}")
+            # --- Track emotion trajectory ---
+            if detected_emotion:
+                track_emotion(detected_emotion, emotion_score)
 
-# ========== WEB SEARCH FEATURE ==========
+# ========== RESEARCH-INSPIRED ADVANCED PERSONALIZATION (2025) ==========
+# 1. Dynamic relationship graph: track user-agent relationships and adapt support
+if 'relationship_graph' not in st.session_state:
+    st.session_state['relationship_graph'] = {}
+def update_relationship_graph(persona, emotion, score):
+    g = st.session_state['relationship_graph']
+    if persona not in g:
+        g[persona] = {'interactions': 0, 'emotion_sum': 0, 'last_emotion': None}
+    g[persona]['interactions'] += 1
+    g[persona]['emotion_sum'] += score if score else 0
+    g[persona]['last_emotion'] = emotion
+    st.session_state['relationship_graph'] = g
 
-def web_search(query):
-    # Try DuckDuckGo, fallback to SerpAPI if available
-    serpapi_key = st.session_state.get('serpapi_key') or os.getenv('SERPAPI_KEY')
-    # Try DuckDuckGo first
-    try:
-        resp = requests.get(f'https://api.duckduckgo.com/?q={query}&format=json&no_redirect=1', timeout=10)
-        if resp.status_code == 200:
-            data = resp.json()
-            if data.get('AbstractText'):
-                return data['AbstractText']
-            elif data.get('Answer'):
-                return data['Answer']
-            elif data.get('RelatedTopics') and data['RelatedTopics']:
-                for topic in data['RelatedTopics']:
-                    if isinstance(topic, dict) and topic.get('Text'):
-                        return topic['Text']
-            return 'No instant answer found, but you can try searching online.'
-    except Exception as e:
-        return f'Web search error: {e}'
-    # If SerpAPI key is available, try SerpAPI
-    if serpapi_key:
-        try:
-            serp_url = f'https://serpapi.com/search.json?q={query}&api_key={serpapi_key}'
-            resp = requests.get(serp_url, timeout=10)
-            if resp.status_code == 200:
-                data = resp.json()
-                if 'answer_box' in data and data['answer_box']:
-                    if 'answer' in data['answer_box']:
-                        return data['answer_box']['answer']
-                    if 'snippet' in data['answer_box']:
-                        return data['answer_box']['snippet']
-                if 'organic_results' in data and data['organic_results']:
-                    return data['organic_results'][0].get('snippet', 'No direct answer found.')
-            return 'No results found from SerpAPI.'
-        except Exception as e:
-            return f'SerpAPI web search error: {e}'
-    return 'No instant answer found, but you can try searching online.'
+# 2. Personalized agent adaptation: agent adapts based on relationship graph
 
-if 'web_search_query' not in st.session_state:
-    st.session_state['web_search_query'] = ''
-search_query = st.text_input('What do you want to search for?', key='web_search_query')
-if st.button('🔎 Web Search (Ask the Web)'):
-    if search_query:
-        search_results = web_search(search_query)
-        st.info(search_results)
+def get_personalized_agent(persona):
+    g = st.session_state['relationship_graph']
+    if persona in g and g[persona]['interactions'] > 5:
+        avg_emotion = g[persona]['emotion_sum'] / g[persona]['interactions']
+        if avg_emotion < 0.3:
+            return f"{persona} is extra supportive and checks in on you more often."
+        elif avg_emotion > 0.7:
+            return f"{persona} is playful and encourages you to try new things!"
+    return f"{persona} is here for you as always."
 
-# ========== IMAGE UPLOAD & VISION ==========
-st.markdown('---')
-st.subheader('🖼️ Image Upload & Vision (Beta)')
-image_file = st.file_uploader('Upload an image to analyze or ask about:', type=['png', 'jpg', 'jpeg', 'webp'])
-if image_file and openai_api_key:
-    import io
-    from PIL import Image
-    image = Image.open(image_file)
-    st.image(image, caption='Uploaded Image', use_column_width=True)
-    question = st.text_input('Ask a question about this image:')
-    if st.button('Analyze Image') and question:
-        client = openai.OpenAI(api_key=openai_api_key)
-        response = client.chat.completions.create(
-            model="gpt-4-vision-preview",
-            messages=[
-                {"role": "user", "content": [
-                    {"type": "text", "text": question},
-                    {"type": "image_url", "image_url": {"url": "data:image/png;base64," + base64.b64encode(image_file.read()).decode()}}
-                ]}
-            ],
-            max_tokens=300
-        )
-        st.success(response.choices[0].message.content)
+# 3. Research-inspired: Theory of Mind (ToM) simulation
+# The agent tries to infer your beliefs, desires, and intentions from your chat history
+
+def infer_user_state():
+    # Use multi-turn memory and emotion trajectory
+    memory = st.session_state.get('multi_turn_memory', [])
+    emotions = st.session_state.get('emotion_trajectory', [])
+    if not memory or not emotions:
+        return "I'm still getting to know you!"
+    last_user = memory[-1]['user'] if memory else ''
+    last_emotion = emotions[-1]['emotion'] if emotions else ''
+    # Simple ToM: if user is often sad and asks for advice, infer need for support
+    if last_emotion == 'sadness' and 'help' in last_user.lower():
+        return "You may be feeling down and looking for encouragement."
+    if last_emotion == 'joy' and 'share' in last_user.lower():
+        return "You want to celebrate good news!"
+    return "I'm learning your needs and will adapt to support you."
+
+# 4. Personalized daily check-in (inspired by digital mental health research)
+import datetime
+last_checkin = st.session_state.get('last_checkin', None)
+today = datetime.date.today().isoformat()
+if last_checkin != today:
+    st.sidebar.info("👋 Daily check-in: How are you feeling today?")
+    st.session_state['last_checkin'] = today
+
+# 5. Show relationship graph and ToM inference in sidebar for transparency
+st.sidebar.markdown('---')
+st.sidebar.subheader('🤝 Relationship Insights')
+for persona, data in st.session_state['relationship_graph'].items():
+    st.sidebar.markdown(f"**{persona}**: {data['interactions']} chats, last emotion: {data['last_emotion']}")
+st.sidebar.markdown(f"**AI Inference:** {infer_user_state()}")
