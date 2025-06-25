@@ -77,19 +77,21 @@
 </span><span id="L-9"><a href="#L-9"><span class="linenos"> 9</span></a>    <span class="n">BaseResponse</span><span class="p">,</span>
 </span><span id="L-10"><a href="#L-10"><span class="linenos">10</span></a><span class="p">)</span>
 </span><span id="L-11"><a href="#L-11"><span class="linenos">11</span></a>
-</span><span id="L-12"><a href="#L-12"><span class="linenos">12</span></a><span class="nd">@dataclass</span>
-</span><span id="L-13"><a href="#L-13"><span class="linenos">13</span></a><span class="k">class</span><span class="w"> </span><span class="nc">GrantTokenResponse</span><span class="p">(</span><span class="n">BaseResponse</span><span class="p">):</span>
-</span><span id="L-14"><a href="#L-14"><span class="linenos">14</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="L-15"><a href="#L-15"><span class="linenos">15</span></a><span class="sd">    The response object for the authentication grant token endpoint.</span>
-</span><span id="L-16"><a href="#L-16"><span class="linenos">16</span></a><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="L-17"><a href="#L-17"><span class="linenos">17</span></a>    <span class="n">access_token</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span>
-</span><span id="L-18"><a href="#L-18"><span class="linenos">18</span></a>        <span class="n">metadata</span><span class="o">=</span><span class="n">dataclass_config</span><span class="p">(</span><span class="n">field_name</span><span class="o">=</span><span class="s1">&#39;access_token&#39;</span><span class="p">),</span>
-</span><span id="L-19"><a href="#L-19"><span class="linenos">19</span></a>        <span class="n">default</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
-</span><span id="L-20"><a href="#L-20"><span class="linenos">20</span></a>    <span class="p">)</span>
-</span><span id="L-21"><a href="#L-21"><span class="linenos">21</span></a>    <span class="n">expires_in</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span>
-</span><span id="L-22"><a href="#L-22"><span class="linenos">22</span></a>        <span class="n">metadata</span><span class="o">=</span><span class="n">dataclass_config</span><span class="p">(</span><span class="n">field_name</span><span class="o">=</span><span class="s1">&#39;expires_in&#39;</span><span class="p">),</span>
-</span><span id="L-23"><a href="#L-23"><span class="linenos">23</span></a>        <span class="n">default</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span>
-</span><span id="L-24"><a href="#L-24"><span class="linenos">24</span></a>    <span class="p">)</span>
+</span><span id="L-12"><a href="#L-12"><span class="linenos">12</span></a>
+</span><span id="L-13"><a href="#L-13"><span class="linenos">13</span></a><span class="nd">@dataclass</span>
+</span><span id="L-14"><a href="#L-14"><span class="linenos">14</span></a><span class="k">class</span><span class="w"> </span><span class="nc">GrantTokenResponse</span><span class="p">(</span><span class="n">BaseResponse</span><span class="p">):</span>
+</span><span id="L-15"><a href="#L-15"><span class="linenos">15</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="L-16"><a href="#L-16"><span class="linenos">16</span></a><span class="sd">    The response object for the authentication grant token endpoint.</span>
+</span><span id="L-17"><a href="#L-17"><span class="linenos">17</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="L-18"><a href="#L-18"><span class="linenos">18</span></a>
+</span><span id="L-19"><a href="#L-19"><span class="linenos">19</span></a>    <span class="n">access_token</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span>
+</span><span id="L-20"><a href="#L-20"><span class="linenos">20</span></a>        <span class="n">metadata</span><span class="o">=</span><span class="n">dataclass_config</span><span class="p">(</span><span class="n">field_name</span><span class="o">=</span><span class="s2">&quot;access_token&quot;</span><span class="p">),</span>
+</span><span id="L-21"><a href="#L-21"><span class="linenos">21</span></a>        <span class="n">default</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+</span><span id="L-22"><a href="#L-22"><span class="linenos">22</span></a>    <span class="p">)</span>
+</span><span id="L-23"><a href="#L-23"><span class="linenos">23</span></a>    <span class="n">expires_in</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span>
+</span><span id="L-24"><a href="#L-24"><span class="linenos">24</span></a>        <span class="n">metadata</span><span class="o">=</span><span class="n">dataclass_config</span><span class="p">(</span><span class="n">field_name</span><span class="o">=</span><span class="s2">&quot;expires_in&quot;</span><span class="p">),</span>
+</span><span id="L-25"><a href="#L-25"><span class="linenos">25</span></a>        <span class="n">default</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span>
+</span><span id="L-26"><a href="#L-26"><span class="linenos">26</span></a>    <span class="p">)</span>
 </span></pre></div>
 
 
@@ -106,19 +108,20 @@
 
     </div>
     <a class="headerlink" href="#GrantTokenResponse"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="GrantTokenResponse-13"><a href="#GrantTokenResponse-13"><span class="linenos">13</span></a><span class="nd">@dataclass</span>
-</span><span id="GrantTokenResponse-14"><a href="#GrantTokenResponse-14"><span class="linenos">14</span></a><span class="k">class</span><span class="w"> </span><span class="nc">GrantTokenResponse</span><span class="p">(</span><span class="n">BaseResponse</span><span class="p">):</span>
-</span><span id="GrantTokenResponse-15"><a href="#GrantTokenResponse-15"><span class="linenos">15</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="GrantTokenResponse-16"><a href="#GrantTokenResponse-16"><span class="linenos">16</span></a><span class="sd">    The response object for the authentication grant token endpoint.</span>
-</span><span id="GrantTokenResponse-17"><a href="#GrantTokenResponse-17"><span class="linenos">17</span></a><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="GrantTokenResponse-18"><a href="#GrantTokenResponse-18"><span class="linenos">18</span></a>    <span class="n">access_token</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span>
-</span><span id="GrantTokenResponse-19"><a href="#GrantTokenResponse-19"><span class="linenos">19</span></a>        <span class="n">metadata</span><span class="o">=</span><span class="n">dataclass_config</span><span class="p">(</span><span class="n">field_name</span><span class="o">=</span><span class="s1">&#39;access_token&#39;</span><span class="p">),</span>
-</span><span id="GrantTokenResponse-20"><a href="#GrantTokenResponse-20"><span class="linenos">20</span></a>        <span class="n">default</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
-</span><span id="GrantTokenResponse-21"><a href="#GrantTokenResponse-21"><span class="linenos">21</span></a>    <span class="p">)</span>
-</span><span id="GrantTokenResponse-22"><a href="#GrantTokenResponse-22"><span class="linenos">22</span></a>    <span class="n">expires_in</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span>
-</span><span id="GrantTokenResponse-23"><a href="#GrantTokenResponse-23"><span class="linenos">23</span></a>        <span class="n">metadata</span><span class="o">=</span><span class="n">dataclass_config</span><span class="p">(</span><span class="n">field_name</span><span class="o">=</span><span class="s1">&#39;expires_in&#39;</span><span class="p">),</span>
-</span><span id="GrantTokenResponse-24"><a href="#GrantTokenResponse-24"><span class="linenos">24</span></a>        <span class="n">default</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span>
-</span><span id="GrantTokenResponse-25"><a href="#GrantTokenResponse-25"><span class="linenos">25</span></a>    <span class="p">)</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="GrantTokenResponse-14"><a href="#GrantTokenResponse-14"><span class="linenos">14</span></a><span class="nd">@dataclass</span>
+</span><span id="GrantTokenResponse-15"><a href="#GrantTokenResponse-15"><span class="linenos">15</span></a><span class="k">class</span><span class="w"> </span><span class="nc">GrantTokenResponse</span><span class="p">(</span><span class="n">BaseResponse</span><span class="p">):</span>
+</span><span id="GrantTokenResponse-16"><a href="#GrantTokenResponse-16"><span class="linenos">16</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="GrantTokenResponse-17"><a href="#GrantTokenResponse-17"><span class="linenos">17</span></a><span class="sd">    The response object for the authentication grant token endpoint.</span>
+</span><span id="GrantTokenResponse-18"><a href="#GrantTokenResponse-18"><span class="linenos">18</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="GrantTokenResponse-19"><a href="#GrantTokenResponse-19"><span class="linenos">19</span></a>
+</span><span id="GrantTokenResponse-20"><a href="#GrantTokenResponse-20"><span class="linenos">20</span></a>    <span class="n">access_token</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span>
+</span><span id="GrantTokenResponse-21"><a href="#GrantTokenResponse-21"><span class="linenos">21</span></a>        <span class="n">metadata</span><span class="o">=</span><span class="n">dataclass_config</span><span class="p">(</span><span class="n">field_name</span><span class="o">=</span><span class="s2">&quot;access_token&quot;</span><span class="p">),</span>
+</span><span id="GrantTokenResponse-22"><a href="#GrantTokenResponse-22"><span class="linenos">22</span></a>        <span class="n">default</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+</span><span id="GrantTokenResponse-23"><a href="#GrantTokenResponse-23"><span class="linenos">23</span></a>    <span class="p">)</span>
+</span><span id="GrantTokenResponse-24"><a href="#GrantTokenResponse-24"><span class="linenos">24</span></a>    <span class="n">expires_in</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span>
+</span><span id="GrantTokenResponse-25"><a href="#GrantTokenResponse-25"><span class="linenos">25</span></a>        <span class="n">metadata</span><span class="o">=</span><span class="n">dataclass_config</span><span class="p">(</span><span class="n">field_name</span><span class="o">=</span><span class="s2">&quot;expires_in&quot;</span><span class="p">),</span>
+</span><span id="GrantTokenResponse-26"><a href="#GrantTokenResponse-26"><span class="linenos">26</span></a>        <span class="n">default</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span>
+</span><span id="GrantTokenResponse-27"><a href="#GrantTokenResponse-27"><span class="linenos">27</span></a>    <span class="p">)</span>
 </span></pre></div>
 
 
