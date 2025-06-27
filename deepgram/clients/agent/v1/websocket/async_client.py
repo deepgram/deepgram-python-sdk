@@ -34,6 +34,7 @@ from .options import (
     UpdatePromptOptions,
     UpdateSpeakOptions,
     InjectAgentMessageOptions,
+    InjectUserMessageOptions,
     FunctionCallResponse,
     AgentKeepAlive,
 )
@@ -616,6 +617,54 @@ class AsyncAgentWebSocketClient(
 
         self._logger.notice("keep_alive succeeded")
         self._logger.spam("AsyncAgentWebSocketClient.keep_alive LEAVE")
+
+        return True
+
+    async def inject_user_message(self, options: InjectUserMessageOptions) -> bool:
+        """
+        Injects a user message to trigger an agent response from text input.
+        """
+        self._logger.spam("AsyncAgentWebSocketClient.inject_user_message ENTER")
+
+        if not isinstance(options, InjectUserMessageOptions):
+            self._logger.error("options must be of type InjectUserMessageOptions")
+            self._logger.spam("AsyncAgentWebSocketClient.inject_user_message LEAVE")
+            return False
+
+        self._logger.notice("Sending InjectUserMessage...")
+        ret = await self.send(str(options))
+
+        if not ret:
+            self._logger.error("inject_user_message failed")
+            self._logger.spam("AsyncAgentWebSocketClient.inject_user_message LEAVE")
+            return False
+
+        self._logger.notice("inject_user_message succeeded")
+        self._logger.spam("AsyncAgentWebSocketClient.inject_user_message LEAVE")
+
+        return True
+
+    async def send_function_call_response(self, response: FunctionCallResponse) -> bool:
+        """
+        Sends a function call response back to the agent.
+        """
+        self._logger.spam("AsyncAgentWebSocketClient.send_function_call_response ENTER")
+
+        if not isinstance(response, FunctionCallResponse):
+            self._logger.error("response must be of type FunctionCallResponse")
+            self._logger.spam("AsyncAgentWebSocketClient.send_function_call_response LEAVE")
+            return False
+
+        self._logger.notice("Sending FunctionCallResponse...")
+        ret = await self.send(str(response))
+
+        if not ret:
+            self._logger.error("send_function_call_response failed")
+            self._logger.spam("AsyncAgentWebSocketClient.send_function_call_response LEAVE")
+            return False
+
+        self._logger.notice("send_function_call_response succeeded")
+        self._logger.spam("AsyncAgentWebSocketClient.send_function_call_response LEAVE")
 
         return True
 

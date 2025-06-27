@@ -359,6 +359,7 @@ from .agent import (
     UpdatePromptOptions,
     UpdateSpeakOptions,
     InjectAgentMessageOptions,
+    InjectUserMessageOptions,
     FunctionCallResponse,
     AgentKeepAlive,
     # sub level

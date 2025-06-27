@@ -32,5 +32,7 @@ class AgentWebSocketEvents(StrEnum):
     UpdatePrompt: str = "UpdatePrompt"
     UpdateSpeak: str = "UpdateSpeak"
     InjectAgentMessage: str = "InjectAgentMessage"
+    InjectUserMessage: str = "InjectUserMessage"
     InjectionRefused: str = "InjectionRefused"
     AgentKeepAlive: str = "AgentKeepAlive"
+

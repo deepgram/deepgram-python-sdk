@@ -33,6 +33,7 @@ from .v1 import (
     UpdatePromptOptions as LatestUpdatePromptOptions,
     UpdateSpeakOptions as LatestUpdateSpeakOptions,
     InjectAgentMessageOptions as LatestInjectAgentMessageOptions,
+    InjectUserMessageOptions as LatestInjectUserMessageOptions,
     FunctionCallResponse as LatestFunctionCallResponse,
     AgentKeepAlive as LatestAgentKeepAlive,
     # sub level
@@ -79,6 +80,7 @@ SettingsOptions = LatestSettingsOptions
 UpdatePromptOptions = LatestUpdatePromptOptions
 UpdateSpeakOptions = LatestUpdateSpeakOptions
 InjectAgentMessageOptions = LatestInjectAgentMessageOptions
+InjectUserMessageOptions = LatestInjectUserMessageOptions
 FunctionCallResponse = LatestFunctionCallResponse
 AgentKeepAlive = LatestAgentKeepAlive
 
