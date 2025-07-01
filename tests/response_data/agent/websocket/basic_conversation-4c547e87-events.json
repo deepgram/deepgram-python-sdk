@@ -1,0 +1,63 @@
+[
+  {
+    "type": "Open",
+    "timestamp": 1751066099.555504
+  },
+  {
+    "type": "Welcome",
+    "data": {
+      "type": "Welcome",
+      "request_id": "146d4f07-2406-418c-8ef0-8a7be4426512"
+    }
+  },
+  {
+    "type": "SettingsApplied",
+    "data": {
+      "type": "SettingsApplied"
+    }
+  },
+  {
+    "type": "ConversationText",
+    "data": {
+      "type": "ConversationText",
+      "role": "user",
+      "content": "Hello, can you help me with a simple question?"
+    }
+  },
+  {
+    "type": "ConversationText",
+    "data": {
+      "type": "ConversationText",
+      "role": "assistant",
+      "content": "Of course!"
+    }
+  },
+  {
+    "type": "ConversationText",
+    "data": {
+      "type": "ConversationText",
+      "role": "user",
+      "content": "What is 2 + 2?"
+    }
+  },
+  {
+    "type": "AgentAudioDone",
+    "data": {
+      "type": "AgentAudioDone"
+    }
+  },
+  {
+    "type": "ConversationText",
+    "data": {
+      "type": "ConversationText",
+      "role": "assistant",
+      "content": "2 + 2 equals 4."
+    }
+  },
+  {
+    "type": "AgentAudioDone",
+    "data": {
+      "type": "AgentAudioDone"
+    }
+  }
+]

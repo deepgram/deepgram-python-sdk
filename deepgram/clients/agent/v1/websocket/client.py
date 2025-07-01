@@ -640,30 +640,6 @@ class AgentWebSocketClient(
 
         return True
 
-    def send_function_call_response(self, response: FunctionCallResponse) -> bool:
-        """
-        Sends a function call response back to the agent.
-        """
-        self._logger.spam("AgentWebSocketClient.send_function_call_response ENTER")
-
-        if not isinstance(response, FunctionCallResponse):
-            self._logger.error("response must be of type FunctionCallResponse")
-            self._logger.spam("AgentWebSocketClient.send_function_call_response LEAVE")
-            return False
-
-        self._logger.notice("Sending FunctionCallResponse...")
-        ret = self.send(str(response))
-
-        if not ret:
-            self._logger.error("send_function_call_response failed")
-            self._logger.spam("AgentWebSocketClient.send_function_call_response LEAVE")
-            return False
-
-        self._logger.notice("send_function_call_response succeeded")
-        self._logger.spam("AgentWebSocketClient.send_function_call_response LEAVE")
-
-        return True
-
     def _close_message(self) -> bool:
         # TODO: No known API close message # pylint: disable=fixme
         # return self.send(json.dumps({"type": "Close"}))

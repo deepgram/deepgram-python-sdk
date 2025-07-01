@@ -4,9 +4,7 @@ from unittest.mock import patch, MagicMock
 
 from deepgram import (
     DeepgramClient,
-    DeepgramClientOptions,
     InjectUserMessageOptions,
-    FunctionCallResponse
 )
 
 class TestAgentInjectUserMessage:
@@ -41,17 +39,3 @@ class TestAgentInjectUserMessage:
         # Should return False for invalid type
         result = connection.inject_user_message("not an options object")
         assert result == False
-
-    @patch('deepgram.clients.agent.v1.websocket.client.AgentWebSocketClient.send')
-    def test_send_function_call_response_success(self, mock_send):
-        """Test successful function call response"""
-        mock_send.return_value = True
-
-        client = DeepgramClient("fake-key")
-        connection = client.agent.websocket.v("1")
-        response = FunctionCallResponse(function_call_id="test-id", output="success")
-
-        result = connection.send_function_call_response(response)
-
-        assert result == True
-        mock_send.assert_called_once_with(str(response))

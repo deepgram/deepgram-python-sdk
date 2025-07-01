@@ -1,0 +1,35 @@
+[
+  {
+    "type": "Open",
+    "timestamp": 1751065488.5167072
+  },
+  {
+    "type": "Welcome",
+    "data": {
+      "type": "Welcome",
+      "request_id": "3d5df19f-9aba-427c-80e9-1ec19e710091"
+    }
+  },
+  {
+    "type": "SettingsApplied",
+    "data": {
+      "type": "SettingsApplied"
+    }
+  },
+  {
+    "type": "ConversationText",
+    "data": {
+      "type": "ConversationText",
+      "role": "user",
+      "content": "What's the weather like in San Francisco?"
+    }
+  },
+  {
+    "type": "Error",
+    "data": {
+      "description": "Exception in AgentWebSocketClient._process_text",
+      "message": "'function_name'",
+      "type": "Exception"
+    }
+  }
+]

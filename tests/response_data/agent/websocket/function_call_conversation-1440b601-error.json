@@ -1,0 +1,24 @@
+{
+  "error": "Test ID: function_call_conversation-1440b601 - Should receive SettingsApplied event\nassert 'SettingsApplied' in ['Open', 'Welcome', 'Error']",
+  "events": [
+    {
+      "type": "Open",
+      "timestamp": 1751065909.678367
+    },
+    {
+      "type": "Welcome",
+      "data": {
+        "type": "Welcome",
+        "request_id": "ae93645d-9b6e-437d-befb-6aa61bd80928"
+      }
+    },
+    {
+      "type": "Error",
+      "data": {
+        "description": "Error parsing client message. Check the agent.think.functions[0].method field against the API spec.",
+        "message": "",
+        "type": "Error"
+      }
+    }
+  ]
+}

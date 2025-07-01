@@ -28,6 +28,3 @@ output_*.wav
 # test artifacts
 output.wav
 test.mp3
-
-# test data
-tests/response_data

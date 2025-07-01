@@ -1,0 +1,35 @@
+{
+  "name": "basic_conversation",
+  "agent_config": {
+    "think": {
+      "provider": {
+        "type": "open_ai",
+        "model": "gpt-4o-mini"
+      },
+      "prompt": "You are a helpful AI assistant. Keep responses brief."
+    },
+    "speak": {
+      "provider": {
+        "type": "deepgram",
+        "model": "aura-2-thalia-en"
+      }
+    },
+    "listen": {
+      "provider": {
+        "type": "deepgram",
+        "model": "nova-3"
+      }
+    },
+    "language": "en"
+  },
+  "inject_messages": [
+    "Hello, can you help me with a simple question?",
+    "What is 2 + 2?"
+  ],
+  "expected_events": [
+    "Welcome",
+    "SettingsApplied",
+    "ConversationText",
+    "AgentAudioDone"
+  ]
+}
