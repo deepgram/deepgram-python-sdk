@@ -249,8 +249,10 @@ options.agent.think.provider.model = "gpt-4o-mini"
 options.agent.think.prompt = "You are a helpful AI assistant."
 options.agent.listen.provider.type = "deepgram"
 options.agent.listen.provider.model = "nova-3"
+
+# Option 1: Single TTS provider (backward compatible)
 options.agent.speak.provider.type = "deepgram"
-options.agent.speak.provider.model ="aura-2-thalia-en"
+options.agent.speak.provider.model = "aura-2-thalia-en"
 
 options.greeting = "Hello, I'm your AI assistant."
 
@@ -259,6 +261,52 @@ connection.start(options)
 
 # Close the connection
 connection.finish()
+```
+
+### Multiple TTS Providers (Fallback Support)
+
+For enhanced reliability, configure multiple TTS providers with automatic fallback:
+
+```python
+from deepgram import (
+    SettingsOptions,
+    Speak,
+    Endpoint,
+    Header
+)
+
+# Primary TTS provider
+primary_tts = Speak()
+primary_tts.provider.type = "deepgram"
+primary_tts.provider.model = "aura-2-zeus-en"
+
+# Fallback TTS provider
+fallback_tts = Speak()
+fallback_tts.provider.type = "open_ai"
+fallback_tts.provider.model = "tts-1"
+fallback_tts.provider.voice = "shimmer"
+fallback_tts.endpoint = Endpoint()
+fallback_tts.endpoint.url = "https://api.openai.com/v1/audio/speech"
+fallback_tts.endpoint.headers = [
+    Header(key="authorization", value="Bearer {{OPENAI_API_KEY}}")
+]
+
+# Configure agent with fallback providers
+options = SettingsOptions()
+options.language = "en"
+options.agent.think.provider.type = "open_ai"
+options.agent.think.provider.model = "gpt-4o-mini"
+options.agent.think.prompt = "You are a helpful AI assistant."
+options.agent.listen.provider.type = "deepgram"
+options.agent.listen.provider.model = "nova-3"
+
+# Option 2: Multiple TTS providers (with fallback)
+options.agent.speak = [primary_tts, fallback_tts]
+
+options.greeting = "Hello, I'm your AI assistant with fallback TTS."
+
+# Start the connection
+connection.start(options)
 ```
 
 This example demonstrates:
