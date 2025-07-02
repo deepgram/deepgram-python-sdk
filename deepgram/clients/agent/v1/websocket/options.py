@@ -280,33 +280,14 @@ class Agent(BaseResponse):
 
     def __post_init__(self):
         """Handle conversion of dict/list data to proper Speak objects"""
-        # Handle listen conversion (existing pattern)
-        if (
-            not isinstance(self.listen, Listen)
-            and self.listen is not None
-            and not (isinstance(self.listen, dict) and not self.listen)
-        ):
-            self.listen = Listen.from_dict(self.listen)
-
-        # Handle think conversion (existing pattern)
-        if (
-            not isinstance(self.think, Think)
-            and self.think is not None
-            and not (isinstance(self.think, dict) and not self.think)
-        ):
-            self.think = Think.from_dict(self.think)
-
-        # Handle speak conversion (new OneOf pattern)
+        # Handle speak conversion (OneOf pattern)
         if isinstance(self.speak, list):
-            # Convert list of dicts to list of Speak objects
             self.speak = [
                 Speak.from_dict(item) if isinstance(item, dict) else item
                 for item in self.speak
             ]
         elif isinstance(self.speak, dict):
-            # Convert single dict to Speak object
             self.speak = Speak.from_dict(self.speak)
-        # If it's already a Speak object or None, leave it as is
 
     def __getitem__(self, key):
         _dict = self.to_dict()
