@@ -876,4 +876,3 @@ project, let us know! You can either:
 - [Open an issue in this repository](https://github.com/deepgram/deepgram-python-sdk/issues/new)
 - [Join the Deepgram Github Discussions Community](https://github.com/orgs/deepgram/discussions)
 - [Join the Deepgram Discord Community](https://discord.gg/xWRaCDBtW4)
-
