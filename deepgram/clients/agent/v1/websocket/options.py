@@ -411,6 +411,20 @@ class InjectAgentMessageOptions(BaseResponse):
     message: str = field(default="")
 
 
+# InjectUserMessage
+
+
+@dataclass
+class InjectUserMessageOptions(BaseResponse):
+    """
+    The client can send an InjectUserMessage to interact with the agent using text input.
+    This is useful when you need to trigger an agent response from text input.
+    """
+
+    type: str = str(AgentWebSocketEvents.InjectUserMessage)
+    content: str = field(default="")
+
+
 # Function Call Response
 
 

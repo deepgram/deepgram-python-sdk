@@ -29,6 +29,7 @@ from .options import (
     UpdatePromptOptions,
     UpdateSpeakOptions,
     InjectAgentMessageOptions,
+    InjectUserMessageOptions,
     FunctionCallResponse,
     AgentKeepAlive,
     # sub level
