@@ -93,16 +93,12 @@ class Endpoint(BaseResponse):
 
     method: Optional[str] = field(default="POST")
     url: str = field(default="")
-    headers: Optional[List[Header]] = field(
+    headers: Optional[Dict[str, str]] = field(
         default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
 
     def __getitem__(self, key):
         _dict = self.to_dict()
-        if "headers" in _dict:
-            _dict["headers"] = [
-                Header.from_dict(headers) for headers in _dict["headers"]
-            ]
         return _dict[key]
 
 
@@ -116,7 +112,7 @@ class Function(BaseResponse):
     description: str
     url: str
     method: str
-    headers: Optional[List[Header]] = field(
+    headers: Optional[Dict[str, str]] = field(
         default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
     parameters: Optional[Parameters] = field(
@@ -130,8 +126,6 @@ class Function(BaseResponse):
         _dict = self.to_dict()
         if "parameters" in _dict and isinstance(_dict["parameters"], dict):
             _dict["parameters"] = Parameters.from_dict(_dict["parameters"])
-        if "headers" in _dict and isinstance(_dict["headers"], list):
-            _dict["headers"] = [Header.from_dict(header) for header in _dict["headers"]]
         if "endpoint" in _dict and isinstance(_dict["endpoint"], dict):
             _dict["endpoint"] = Endpoint.from_dict(_dict["endpoint"])
         return _dict[key]
