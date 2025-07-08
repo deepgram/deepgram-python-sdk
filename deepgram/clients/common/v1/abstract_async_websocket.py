@@ -488,7 +488,7 @@ class AbstractAsyncWebSocketClient(ABC):  # pylint: disable=too-many-instance-at
             return True
 
         except asyncio.CancelledError as e:
-            self._logger.error("tasks cancelled error: %s", e)
+            self._logger.debug("tasks cancelled error: %s", e)
             self._logger.debug("AbstractAsyncWebSocketClient.finish LEAVE")
             return True
 
