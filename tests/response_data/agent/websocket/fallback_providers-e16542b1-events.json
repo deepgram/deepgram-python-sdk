@@ -1,0 +1,174 @@
+[
+  {
+    "type": "Open",
+    "timestamp": 1752277263.491301,
+    "data": {
+      "type": "Open"
+    }
+  },
+  {
+    "type": "Welcome",
+    "timestamp": 1752277263.527771,
+    "data": {
+      "type": "Welcome",
+      "request_id": "9bb0bdf0-59c2-46f5-a996-072ccb772dd2"
+    }
+  },
+  {
+    "type": "SettingsApplied",
+    "timestamp": 1752277263.5676641,
+    "data": {
+      "type": "SettingsApplied"
+    }
+  },
+  {
+    "type": "ConversationText",
+    "timestamp": 1752277264.5746439,
+    "data": {
+      "type": "ConversationText",
+      "role": "user",
+      "content": "Hello, can you test speaking with fallback providers?"
+    }
+  },
+  {
+    "type": "Unhandled",
+    "timestamp": 1752277264.575543,
+    "data": {
+      "type": "Unhandled",
+      "raw": "{\"type\":\"History\",\"role\":\"user\",\"content\":\"Hello, can you test speaking with fallback providers?\"}"
+    }
+  },
+  {
+    "type": "Unhandled",
+    "timestamp": 1752277264.576749,
+    "data": {
+      "type": "Unhandled",
+      "raw": "{\"type\":\"EndOfThought\"}"
+    }
+  },
+  {
+    "type": "ConversationText",
+    "timestamp": 1752277265.185289,
+    "data": {
+      "type": "ConversationText",
+      "role": "assistant",
+      "content": "Hello!"
+    }
+  },
+  {
+    "type": "Unhandled",
+    "timestamp": 1752277265.185565,
+    "data": {
+      "type": "Unhandled",
+      "raw": "{\"type\":\"History\",\"role\":\"assistant\",\"content\":\"Hello!\"}"
+    }
+  },
+  {
+    "type": "AgentStartedSpeaking",
+    "timestamp": 1752277265.1857631,
+    "data": {
+      "total_latency": 0.61122847,
+      "tts_latency": 0.297981232,
+      "ttt_latency": 0.313247167
+    }
+  },
+  {
+    "type": "ConversationText",
+    "timestamp": 1752277266.0513039,
+    "data": {
+      "type": "ConversationText",
+      "role": "assistant",
+      "content": "Yes, I can help you understand how fallback providers work or address any specific questions you have about them."
+    }
+  },
+  {
+    "type": "Unhandled",
+    "timestamp": 1752277266.0524411,
+    "data": {
+      "type": "Unhandled",
+      "raw": "{\"type\":\"History\",\"role\":\"assistant\",\"content\":\"Yes, I can help you understand how fallback providers work or address any specific questions you have about them.\"}"
+    }
+  },
+  {
+    "type": "ConversationText",
+    "timestamp": 1752277266.132467,
+    "data": {
+      "type": "ConversationText",
+      "role": "user",
+      "content": "Please say something else to test the fallback."
+    }
+  },
+  {
+    "type": "Unhandled",
+    "timestamp": 1752277266.132909,
+    "data": {
+      "type": "Unhandled",
+      "raw": "{\"type\":\"History\",\"role\":\"user\",\"content\":\"Please say something else to test the fallback.\"}"
+    }
+  },
+  {
+    "type": "Unhandled",
+    "timestamp": 1752277266.133173,
+    "data": {
+      "type": "Unhandled",
+      "raw": "{\"type\":\"EndOfThought\"}"
+    }
+  },
+  {
+    "type": "AgentAudioDone",
+    "timestamp": 1752277266.133388,
+    "data": {
+      "type": "AgentAudioDone"
+    }
+  },
+  {
+    "type": "ConversationText",
+    "timestamp": 1752277266.877735,
+    "data": {
+      "type": "ConversationText",
+      "role": "assistant",
+      "content": "Sure!"
+    }
+  },
+  {
+    "type": "Unhandled",
+    "timestamp": 1752277266.878641,
+    "data": {
+      "type": "Unhandled",
+      "raw": "{\"type\":\"History\",\"role\":\"assistant\",\"content\":\"Sure!\"}"
+    }
+  },
+  {
+    "type": "AgentStartedSpeaking",
+    "timestamp": 1752277266.87955,
+    "data": {
+      "total_latency": 0.789943356,
+      "tts_latency": 0.295038023,
+      "ttt_latency": 0.494905252
+    }
+  },
+  {
+    "type": "ConversationText",
+    "timestamp": 1752277267.479746,
+    "data": {
+      "type": "ConversationText",
+      "role": "assistant",
+      "content": "How can I assist you further today?"
+    }
+  },
+  {
+    "type": "Unhandled",
+    "timestamp": 1752277267.480844,
+    "data": {
+      "type": "Unhandled",
+      "raw": "{\"type\":\"History\",\"role\":\"assistant\",\"content\":\"How can I assist you further today?\"}"
+    }
+  },
+  {
+    "type": "AgentAudioDone",
+    "timestamp": 1752277267.716893,
+    "data": {
+      "type": "AgentAudioDone"
+    }
+  }
+]

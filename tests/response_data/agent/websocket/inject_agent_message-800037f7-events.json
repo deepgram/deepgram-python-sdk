@@ -1,0 +1,75 @@
+[
+  {
+    "type": "Open",
+    "timestamp": 1752275909.885432,
+    "data": {
+      "type": "Open"
+    }
+  },
+  {
+    "type": "Welcome",
+    "timestamp": 1752275909.914839,
+    "data": {
+      "type": "Welcome",
+      "request_id": "4f34b723-a7ee-4dcb-b24a-aeaf20963905"
+    }
+  },
+  {
+    "type": "SettingsApplied",
+    "timestamp": 1752275909.95723,
+    "data": {
+      "type": "SettingsApplied"
+    }
+  },
+  {
+    "type": "ConversationText",
+    "timestamp": 1752275910.9646258,
+    "data": {
+      "type": "ConversationText",
+      "role": "user",
+      "content": "Hello, I'm going to inject some agent messages."
+    }
+  },
+  {
+    "type": "Unhandled",
+    "timestamp": 1752275910.965034,
+    "data": {
+      "type": "Unhandled",
+      "raw": "{\"type\":\"History\",\"role\":\"user\",\"content\":\"Hello, I'm going to inject some agent messages.\"}"
+    }
+  },
+  {
+    "type": "Unhandled",
+    "timestamp": 1752275910.965467,
+    "data": {
+      "type": "Unhandled",
+      "raw": "{\"type\":\"EndOfThought\"}"
+    }
+  },
+  {
+    "type": "ConversationText",
+    "timestamp": 1752275911.849447,
+    "data": {
+      "type": "ConversationText",
+      "role": "assistant",
+      "content": "Sure, go ahead!"
+    }
+  },
+  {
+    "type": "Unhandled",
+    "timestamp": 1752275911.849788,
+    "data": {
+      "type": "Unhandled",
+      "raw": "{\"type\":\"History\",\"role\":\"assistant\",\"content\":\"Sure, go ahead!\"}"
+    }
+  },
+  {
+    "type": "AgentStartedSpeaking",
+    "timestamp": 1752275911.850084,
+    "data": {
+      "total_latency": 0.780141509,
+      "tts_latency": 0.30484981,
+      "ttt_latency": 0.475291647
+    }
+  }
+]
