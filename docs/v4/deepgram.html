@@ -405,49 +405,50 @@ deepgram    </h1>
 </span><span id="L-336"><a href="#L-336"><span class="linenos">336</span></a>    <span class="n">UpdatePromptOptions</span><span class="p">,</span>
 </span><span id="L-337"><a href="#L-337"><span class="linenos">337</span></a>    <span class="n">UpdateSpeakOptions</span><span class="p">,</span>
 </span><span id="L-338"><a href="#L-338"><span class="linenos">338</span></a>    <span class="n">InjectAgentMessageOptions</span><span class="p">,</span>
-</span><span id="L-339"><a href="#L-339"><span class="linenos">339</span></a>    <span class="n">FunctionCallResponse</span><span class="p">,</span>
-</span><span id="L-340"><a href="#L-340"><span class="linenos">340</span></a>    <span class="n">AgentKeepAlive</span><span class="p">,</span>
-</span><span id="L-341"><a href="#L-341"><span class="linenos">341</span></a>    <span class="c1"># sub level</span>
-</span><span id="L-342"><a href="#L-342"><span class="linenos">342</span></a>    <span class="n">Listen</span><span class="p">,</span>
-</span><span id="L-343"><a href="#L-343"><span class="linenos">343</span></a>    <span class="n">Speak</span><span class="p">,</span>
-</span><span id="L-344"><a href="#L-344"><span class="linenos">344</span></a>    <span class="n">Header</span><span class="p">,</span>
-</span><span id="L-345"><a href="#L-345"><span class="linenos">345</span></a>    <span class="n">Item</span><span class="p">,</span>
-</span><span id="L-346"><a href="#L-346"><span class="linenos">346</span></a>    <span class="n">Properties</span><span class="p">,</span>
-</span><span id="L-347"><a href="#L-347"><span class="linenos">347</span></a>    <span class="n">Parameters</span><span class="p">,</span>
-</span><span id="L-348"><a href="#L-348"><span class="linenos">348</span></a>    <span class="n">Function</span><span class="p">,</span>
-</span><span id="L-349"><a href="#L-349"><span class="linenos">349</span></a>    <span class="n">Think</span><span class="p">,</span>
-</span><span id="L-350"><a href="#L-350"><span class="linenos">350</span></a>    <span class="n">Provider</span><span class="p">,</span>
-</span><span id="L-351"><a href="#L-351"><span class="linenos">351</span></a>    <span class="n">Agent</span><span class="p">,</span>
-</span><span id="L-352"><a href="#L-352"><span class="linenos">352</span></a>    <span class="n">Input</span><span class="p">,</span>
-</span><span id="L-353"><a href="#L-353"><span class="linenos">353</span></a>    <span class="n">Output</span><span class="p">,</span>
-</span><span id="L-354"><a href="#L-354"><span class="linenos">354</span></a>    <span class="n">Audio</span><span class="p">,</span>
-</span><span id="L-355"><a href="#L-355"><span class="linenos">355</span></a>    <span class="n">Endpoint</span><span class="p">,</span>
-</span><span id="L-356"><a href="#L-356"><span class="linenos">356</span></a><span class="p">)</span>
-</span><span id="L-357"><a href="#L-357"><span class="linenos">357</span></a>
-</span><span id="L-358"><a href="#L-358"><span class="linenos">358</span></a><span class="c1"># utilities</span>
-</span><span id="L-359"><a href="#L-359"><span class="linenos">359</span></a><span class="c1"># pylint: disable=wrong-import-position</span>
-</span><span id="L-360"><a href="#L-360"><span class="linenos">360</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">.audio</span><span class="w"> </span><span class="kn">import</span> <span class="n">Microphone</span><span class="p">,</span> <span class="n">DeepgramMicrophoneError</span>
-</span><span id="L-361"><a href="#L-361"><span class="linenos">361</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">.audio</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
-</span><span id="L-362"><a href="#L-362"><span class="linenos">362</span></a>    <span class="n">INPUT_LOGGING</span><span class="p">,</span>
-</span><span id="L-363"><a href="#L-363"><span class="linenos">363</span></a>    <span class="n">INPUT_CHANNELS</span><span class="p">,</span>
-</span><span id="L-364"><a href="#L-364"><span class="linenos">364</span></a>    <span class="n">INPUT_RATE</span><span class="p">,</span>
-</span><span id="L-365"><a href="#L-365"><span class="linenos">365</span></a>    <span class="n">INPUT_CHUNK</span><span class="p">,</span>
-</span><span id="L-366"><a href="#L-366"><span class="linenos">366</span></a><span class="p">)</span>
-</span><span id="L-367"><a href="#L-367"><span class="linenos">367</span></a>
-</span><span id="L-368"><a href="#L-368"><span class="linenos">368</span></a><span class="n">LOGGING</span> <span class="o">=</span> <span class="n">INPUT_LOGGING</span>
-</span><span id="L-369"><a href="#L-369"><span class="linenos">369</span></a><span class="n">CHANNELS</span> <span class="o">=</span> <span class="n">INPUT_CHANNELS</span>
-</span><span id="L-370"><a href="#L-370"><span class="linenos">370</span></a><span class="n">RATE</span> <span class="o">=</span> <span class="n">INPUT_RATE</span>
-</span><span id="L-371"><a href="#L-371"><span class="linenos">371</span></a><span class="n">CHUNK</span> <span class="o">=</span> <span class="n">INPUT_CHUNK</span>
-</span><span id="L-372"><a href="#L-372"><span class="linenos">372</span></a>
-</span><span id="L-373"><a href="#L-373"><span class="linenos">373</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">.audio</span><span class="w"> </span><span class="kn">import</span> <span class="n">Speaker</span>
-</span><span id="L-374"><a href="#L-374"><span class="linenos">374</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">.audio</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
-</span><span id="L-375"><a href="#L-375"><span class="linenos">375</span></a>    <span class="n">OUTPUT_LOGGING</span><span class="p">,</span>
-</span><span id="L-376"><a href="#L-376"><span class="linenos">376</span></a>    <span class="n">OUTPUT_CHANNELS</span><span class="p">,</span>
-</span><span id="L-377"><a href="#L-377"><span class="linenos">377</span></a>    <span class="n">OUTPUT_RATE</span><span class="p">,</span>
-</span><span id="L-378"><a href="#L-378"><span class="linenos">378</span></a>    <span class="n">OUTPUT_CHUNK</span><span class="p">,</span>
-</span><span id="L-379"><a href="#L-379"><span class="linenos">379</span></a><span class="p">)</span>
-</span><span id="L-380"><a href="#L-380"><span class="linenos">380</span></a>
-</span><span id="L-381"><a href="#L-381"><span class="linenos">381</span></a><span class="c1"># pylint: enable=wrong-import-position</span>
+</span><span id="L-339"><a href="#L-339"><span class="linenos">339</span></a>    <span class="n">InjectUserMessageOptions</span><span class="p">,</span>
+</span><span id="L-340"><a href="#L-340"><span class="linenos">340</span></a>    <span class="n">FunctionCallResponse</span><span class="p">,</span>
+</span><span id="L-341"><a href="#L-341"><span class="linenos">341</span></a>    <span class="n">AgentKeepAlive</span><span class="p">,</span>
+</span><span id="L-342"><a href="#L-342"><span class="linenos">342</span></a>    <span class="c1"># sub level</span>
+</span><span id="L-343"><a href="#L-343"><span class="linenos">343</span></a>    <span class="n">Listen</span><span class="p">,</span>
+</span><span id="L-344"><a href="#L-344"><span class="linenos">344</span></a>    <span class="n">Speak</span><span class="p">,</span>
+</span><span id="L-345"><a href="#L-345"><span class="linenos">345</span></a>    <span class="n">Header</span><span class="p">,</span>
+</span><span id="L-346"><a href="#L-346"><span class="linenos">346</span></a>    <span class="n">Item</span><span class="p">,</span>
+</span><span id="L-347"><a href="#L-347"><span class="linenos">347</span></a>    <span class="n">Properties</span><span class="p">,</span>
+</span><span id="L-348"><a href="#L-348"><span class="linenos">348</span></a>    <span class="n">Parameters</span><span class="p">,</span>
+</span><span id="L-349"><a href="#L-349"><span class="linenos">349</span></a>    <span class="n">Function</span><span class="p">,</span>
+</span><span id="L-350"><a href="#L-350"><span class="linenos">350</span></a>    <span class="n">Think</span><span class="p">,</span>
+</span><span id="L-351"><a href="#L-351"><span class="linenos">351</span></a>    <span class="n">Provider</span><span class="p">,</span>
+</span><span id="L-352"><a href="#L-352"><span class="linenos">352</span></a>    <span class="n">Agent</span><span class="p">,</span>
+</span><span id="L-353"><a href="#L-353"><span class="linenos">353</span></a>    <span class="n">Input</span><span class="p">,</span>
+</span><span id="L-354"><a href="#L-354"><span class="linenos">354</span></a>    <span class="n">Output</span><span class="p">,</span>
+</span><span id="L-355"><a href="#L-355"><span class="linenos">355</span></a>    <span class="n">Audio</span><span class="p">,</span>
+</span><span id="L-356"><a href="#L-356"><span class="linenos">356</span></a>    <span class="n">Endpoint</span><span class="p">,</span>
+</span><span id="L-357"><a href="#L-357"><span class="linenos">357</span></a><span class="p">)</span>
+</span><span id="L-358"><a href="#L-358"><span class="linenos">358</span></a>
+</span><span id="L-359"><a href="#L-359"><span class="linenos">359</span></a><span class="c1"># utilities</span>
+</span><span id="L-360"><a href="#L-360"><span class="linenos">360</span></a><span class="c1"># pylint: disable=wrong-import-position</span>
+</span><span id="L-361"><a href="#L-361"><span class="linenos">361</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">.audio</span><span class="w"> </span><span class="kn">import</span> <span class="n">Microphone</span><span class="p">,</span> <span class="n">DeepgramMicrophoneError</span>
+</span><span id="L-362"><a href="#L-362"><span class="linenos">362</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">.audio</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+</span><span id="L-363"><a href="#L-363"><span class="linenos">363</span></a>    <span class="n">INPUT_LOGGING</span><span class="p">,</span>
+</span><span id="L-364"><a href="#L-364"><span class="linenos">364</span></a>    <span class="n">INPUT_CHANNELS</span><span class="p">,</span>
+</span><span id="L-365"><a href="#L-365"><span class="linenos">365</span></a>    <span class="n">INPUT_RATE</span><span class="p">,</span>
+</span><span id="L-366"><a href="#L-366"><span class="linenos">366</span></a>    <span class="n">INPUT_CHUNK</span><span class="p">,</span>
+</span><span id="L-367"><a href="#L-367"><span class="linenos">367</span></a><span class="p">)</span>
+</span><span id="L-368"><a href="#L-368"><span class="linenos">368</span></a>
+</span><span id="L-369"><a href="#L-369"><span class="linenos">369</span></a><span class="n">LOGGING</span> <span class="o">=</span> <span class="n">INPUT_LOGGING</span>
+</span><span id="L-370"><a href="#L-370"><span class="linenos">370</span></a><span class="n">CHANNELS</span> <span class="o">=</span> <span class="n">INPUT_CHANNELS</span>
+</span><span id="L-371"><a href="#L-371"><span class="linenos">371</span></a><span class="n">RATE</span> <span class="o">=</span> <span class="n">INPUT_RATE</span>
+</span><span id="L-372"><a href="#L-372"><span class="linenos">372</span></a><span class="n">CHUNK</span> <span class="o">=</span> <span class="n">INPUT_CHUNK</span>
+</span><span id="L-373"><a href="#L-373"><span class="linenos">373</span></a>
+</span><span id="L-374"><a href="#L-374"><span class="linenos">374</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">.audio</span><span class="w"> </span><span class="kn">import</span> <span class="n">Speaker</span>
+</span><span id="L-375"><a href="#L-375"><span class="linenos">375</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">.audio</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+</span><span id="L-376"><a href="#L-376"><span class="linenos">376</span></a>    <span class="n">OUTPUT_LOGGING</span><span class="p">,</span>
+</span><span id="L-377"><a href="#L-377"><span class="linenos">377</span></a>    <span class="n">OUTPUT_CHANNELS</span><span class="p">,</span>
+</span><span id="L-378"><a href="#L-378"><span class="linenos">378</span></a>    <span class="n">OUTPUT_RATE</span><span class="p">,</span>
+</span><span id="L-379"><a href="#L-379"><span class="linenos">379</span></a>    <span class="n">OUTPUT_CHUNK</span><span class="p">,</span>
+</span><span id="L-380"><a href="#L-380"><span class="linenos">380</span></a><span class="p">)</span>
+</span><span id="L-381"><a href="#L-381"><span class="linenos">381</span></a>
+</span><span id="L-382"><a href="#L-382"><span class="linenos">382</span></a><span class="c1"># pylint: enable=wrong-import-position</span>
 </span></pre></div>
 
 
