@@ -93,16 +93,12 @@ class Endpoint(BaseResponse):
 
     method: Optional[str] = field(default="POST")
     url: str = field(default="")
-    headers: Optional[List[Header]] = field(
+    headers: Optional[Dict[str, str]] = field(
         default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
 
     def __getitem__(self, key):
         _dict = self.to_dict()
-        if "headers" in _dict:
-            _dict["headers"] = [
-                Header.from_dict(headers) for headers in _dict["headers"]
-            ]
         return _dict[key]
 
 
@@ -116,7 +112,7 @@ class Function(BaseResponse):
     description: str
     url: str
     method: str
-    headers: Optional[List[Header]] = field(
+    headers: Optional[Dict[str, str]] = field(
         default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
     parameters: Optional[Parameters] = field(
@@ -130,8 +126,6 @@ class Function(BaseResponse):
         _dict = self.to_dict()
         if "parameters" in _dict and isinstance(_dict["parameters"], dict):
             _dict["parameters"] = Parameters.from_dict(_dict["parameters"])
-        if "headers" in _dict and isinstance(_dict["headers"], list):
-            _dict["headers"] = [Header.from_dict(header) for header in _dict["headers"]]
         if "endpoint" in _dict and isinstance(_dict["endpoint"], dict):
             _dict["endpoint"] = Endpoint.from_dict(_dict["endpoint"])
         return _dict[key]
@@ -273,17 +267,21 @@ class Agent(BaseResponse):
             or (isinstance(f, Think) and not f)
         ),
     )
-    speak: Speak = field(
-        default_factory=Speak,
-        metadata=dataclass_config(
-            exclude=lambda f: f is None
-            or (isinstance(f, dict) and not f)
-            or (isinstance(f, Speak) and not f)
-        ),
-    )
+    speak: Union[Speak, List[Speak]] = field(default_factory=Speak)
     greeting: Optional[str] = field(
         default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
+
+    def __post_init__(self):
+        """Handle conversion of dict/list data to proper Speak objects"""
+        # Handle speak conversion (OneOf pattern)
+        if isinstance(self.speak, list):
+            self.speak = [
+                Speak.from_dict(item) if isinstance(item, dict) else item
+                for item in self.speak
+            ]
+        elif isinstance(self.speak, dict):
+            self.speak = Speak.from_dict(self.speak)
 
     def __getitem__(self, key):
         _dict = self.to_dict()
@@ -291,8 +289,11 @@ class Agent(BaseResponse):
             _dict["listen"] = Listen.from_dict(_dict["listen"])
         if "think" in _dict and isinstance(_dict["think"], dict):
             _dict["think"] = Think.from_dict(_dict["think"])
-        if "speak" in _dict and isinstance(_dict["speak"], dict):
-            _dict["speak"] = Speak.from_dict(_dict["speak"])
+        if "speak" in _dict:
+            if isinstance(_dict["speak"], list):
+                _dict["speak"] = [Speak.from_dict(item) for item in _dict["speak"]]
+            elif isinstance(_dict["speak"], dict):
+                _dict["speak"] = Speak.from_dict(_dict["speak"])
         return _dict[key]
 
 
@@ -395,7 +396,19 @@ class UpdateSpeakOptions(BaseResponse):
     """
 
     type: str = str(AgentWebSocketEvents.UpdateSpeak)
-    speak: Speak = field(default_factory=Speak)
+    speak: Union[Speak, List[Speak]] = field(default_factory=Speak)
+
+    def __post_init__(self):
+        """Handle conversion of dict/list data to proper Speak objects"""
+        if isinstance(self.speak, list):
+            # Convert list of dicts to list of Speak objects
+            self.speak = [
+                Speak.from_dict(item) if isinstance(item, dict) else item
+                for item in self.speak
+            ]
+        elif isinstance(self.speak, dict):
+            # Convert single dict to Speak object
+            self.speak = Speak.from_dict(self.speak)
 
 
 # InjectAgentMessage
@@ -409,6 +422,20 @@ class InjectAgentMessageOptions(BaseResponse):
 
     type: str = str(AgentWebSocketEvents.InjectAgentMessage)
     message: str = field(default="")
+
+
+# InjectUserMessage
+
+
+@dataclass
+class InjectUserMessageOptions(BaseResponse):
+    """
+    The client can send an InjectUserMessage to interact with the agent using text input.
+    This is useful when you need to trigger an agent response from text input.
+    """
+
+    type: str = str(AgentWebSocketEvents.InjectUserMessage)
+    content: str = field(default="")
 
 
 # Function Call Response

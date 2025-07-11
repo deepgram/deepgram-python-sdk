@@ -336,6 +336,7 @@ from .client import (
     UpdatePromptOptions,
     UpdateSpeakOptions,
     InjectAgentMessageOptions,
+    InjectUserMessageOptions,
     FunctionCallResponse,
     AgentKeepAlive,
     # sub level
