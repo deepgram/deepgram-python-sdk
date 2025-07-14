@@ -18,6 +18,7 @@ from deepgram import (
     InjectUserMessageOptions,
     FunctionCallRequest,
     FunctionCallResponse,
+    InjectAgentMessageOptions,
 )
 
 from tests.utils import save_metadata_string
@@ -80,9 +81,91 @@ test_cases = [
         "test_inject_agent_message": False,
         "test_function_calls": False
     },
-    # NOTE: Temporarily removed function_call_conversation and inject_agent_message tests
-    # - function_call_conversation: API returns error "Check the agent.think.functions[0].method field against the API spec"
-    # - inject_agent_message: SDK missing inject_agent_message method implementation
+    {
+        "name": "inject_agent_message",
+        "description": "Test inject_agent_message functionality (expected to fail until #553 is resolved)",
+        "agent_config": {
+            "think": {
+                "provider": {"type": "open_ai", "model": "gpt-4o-mini"},
+                "prompt": "You are a helpful assistant. Keep responses brief and conversational."
+            },
+            "speak": {"provider": {"type": "deepgram", "model": "aura-2-thalia-en"}},
+            "listen": {"provider": {"type": "deepgram", "model": "nova-3"}},
+            "language": "en"
+        },
+        "inject_messages": [
+            "Hello, I'm going to inject some agent messages."
+        ],
+        "agent_messages": [
+            "Hello! I'm an agent message injected directly.",
+            "This is another agent message to test the functionality."
+        ],
+        "expected_events": [
+            "Welcome",
+            "SettingsApplied",
+            "ConversationText"
+        ],
+        "conditional_events": [
+            "AgentStartedSpeaking",
+            "AgentAudioDone"
+        ],
+        "test_inject_user_message": True,
+        "test_inject_agent_message": True,
+        "test_function_calls": False,
+        "expect_error": True  # Still expecting errors due to SDK function calling bugs (#528)
+    },
+    {
+        "name": "function_call_conversation",
+        "description": "Test function calling with corrected HTTP method case (expected to fail due to #528)",
+        "agent_config": {
+            "think": {
+                "provider": {"type": "open_ai", "model": "gpt-4o-mini"},
+                "prompt": "You are a helpful assistant that can call functions to get weather information.",
+                "functions": [
+                    {
+                        "name": "get_weather",
+                        "description": "Get current weather information for a location",
+                        "parameters": {
+                            "type": "object",
+                            "properties": {
+                                "location": {
+                                    "type": "string",
+                                    "description": "The location to get weather for"
+                                }
+                            },
+                            "required": ["location"]
+                        },
+                        "method": "get",
+                        "url": "https://api.example.com/weather"
+                    }
+                ]
+            },
+            "speak": {"provider": {"type": "deepgram", "model": "aura-2-thalia-en"}},
+            "listen": {"provider": {"type": "deepgram", "model": "nova-3"}},
+            "language": "en"
+        },
+        "inject_messages": [
+            "What's the weather like in New York?",
+            "Can you also check the weather in London?"
+        ],
+        "expected_events": [
+            "Welcome",
+            "SettingsApplied",
+            "ConversationText"
+        ],
+        "conditional_events": [
+            "FunctionCallRequest",
+            "AgentStartedSpeaking",
+            "AgentAudioDone"
+        ],
+        "test_inject_user_message": True,
+        "test_inject_agent_message": False,
+        "test_function_calls": True,
+        "expect_error": True  # Still expecting errors due to SDK function calling bugs
+    },
+    # NOTE: function_call_conversation and inject_agent_message tests are marked as xfail
+    # - function_call_conversation: #528 - SDK function calling structure doesn't match new API spec
+    # - inject_agent_message: #553 - SDK missing inject_agent_message method implementation
     # TODO: These should be re-enabled once the bugs are fixed
 ]
 
@@ -94,12 +177,23 @@ def test_daily_agent_websocket(test_case: Dict[str, Any]):
 
     This test covers:
     1. Basic conversation flow
-    2. Function calling (including SDK bug testing)
+    2. Function calling
     3. Fallback provider functionality
     4. InjectUserMessage and InjectAgentMessage
     5. Comprehensive event validation
     6. Error handling and recovery
+
+    Note: Some events like EndOfThought may appear as "Unhandled" - this is expected
+    as they are not officially documented as supported features yet.
+
+    Note: some features might have bugs, like inject_agent_message and function_call_conversation. We intend to fix these in the future and update the tests.
     """
+
+    # Mark tests as expected to fail for known issues
+    if test_case["name"] == "inject_agent_message":
+        pytest.xfail(reason="#553 - inject_agent_message method not implemented in SDK")
+    elif test_case["name"] == "function_call_conversation":
+        pytest.xfail(reason="#528 - SDK function calling structure doesn't match new API spec")
 
     # Check for required environment variables
     if not os.getenv("DEEPGRAM_API_KEY"):
@@ -140,7 +234,6 @@ def test_daily_agent_websocket(test_case: Dict[str, Any]):
     config = DeepgramClientOptions(
         options={
             "keepalive": "true",
-            "speaker_playback": "true",
             "experimental": "true"  # Enable experimental features
         }
     )
@@ -298,6 +391,7 @@ def test_daily_agent_websocket(test_case: Dict[str, Any]):
             "timestamp": time.time(),
             "data": unhandled.to_dict()
         })
+        # Note: EndOfThought events are expected to be unhandled as they're not officially documented as supported features yet
         print(f"❓ Unhandled: {unhandled.to_dict()}")
 
     # Register all event handlers
@@ -361,6 +455,36 @@ def test_daily_agent_websocket(test_case: Dict[str, Any]):
                 if response_timeout >= 30:
                     print(f"⚠️  Agent did not respond to message {i+1} within timeout")
 
+        # Test 3: Inject agent messages (if enabled)
+        if test_case.get("test_inject_agent_message", False):
+            print("\n--- Test 3: InjectAgentMessage Testing ---")
+            for i, message in enumerate(test_case.get("agent_messages", [])):
+                print(f"📤 Injecting agent message {i+1}: '{message}'")
+                time.sleep(1)  # Allow previous conversation to settle
+
+                options = InjectAgentMessageOptions(message=message)
+                inject_success = dg_connection.inject_agent_message(options)
+
+                if inject_success:
+                    print(f"✓ Agent message {i+1} injected successfully")
+                else:
+                    print(f"❌ Agent message {i+1} injection failed")
+
+                # Wait for any response or events
+                response_timeout = 0
+                initial_event_count = len(received_events)
+
+                while response_timeout < 15:
+                    if len(received_events) > initial_event_count:
+                        recent_events = [e["type"] for e in received_events[initial_event_count:]]
+                        print(f"📊 Events after agent message {i+1}: {recent_events}")
+                        break
+                    time.sleep(0.5)
+                    response_timeout += 1
+
+                if response_timeout >= 15:
+                    print(f"⚠️  No events received after agent message {i+1}")
+
         # Allow final processing
         time.sleep(3)
         print("\n--- Test Results Analysis ---")
@@ -369,9 +493,28 @@ def test_daily_agent_websocket(test_case: Dict[str, Any]):
         event_types = [event["type"] for event in received_events]
         print(f"📊 Received events: {event_types}")
 
+        # Check for required events (always expected)
         for expected_event in test_case["expected_events"]:
             assert expected_event in event_types, f"Test ID: {unique} - Should receive {expected_event} event"
             print(f"✓ Expected event received: {expected_event}")
+
+        # Check for conditional events (only if no error expected or no error occurred)
+        conditional_events = test_case.get("conditional_events", [])
+        expect_error = test_case.get("expect_error", False)
+
+        if conditional_events:
+            if expect_error:
+                # For error scenarios, check if conditional events are present but don't require them
+                for conditional_event in conditional_events:
+                    if conditional_event in event_types:
+                        print(f"✓ Conditional event received: {conditional_event}")
+                    else:
+                        print(f"ℹ️  Conditional event not received (expected in error scenario): {conditional_event}")
+            else:
+                # For non-error scenarios, require conditional events
+                for conditional_event in conditional_events:
+                    assert conditional_event in event_types, f"Test ID: {unique} - Should receive {conditional_event} event"
+                    print(f"✓ Conditional event received: {conditional_event}")
 
         # Test 5: Validate conversation flow
         if test_case.get("test_inject_user_message", False) and test_case["inject_messages"]:
@@ -468,6 +611,11 @@ def test_daily_agent_websocket(test_case: Dict[str, Any]):
     print(f"   Function calls: {len(function_calls)}")
     print(f"   SDK bugs detected: {len(function_call_bugs)}")
     print(f"   Injection refused: {len(injection_refused_events)}")
+
+    # Count and report unhandled events
+    unhandled_events = [e for e in received_events if e["type"] == "Unhandled"]
+    if unhandled_events:
+        print(f"   Unhandled events: {len(unhandled_events)} (expected for undocumented features like EndOfThought)")
 
     # If function call bugs were detected, provide detailed information
     if function_call_bugs:
