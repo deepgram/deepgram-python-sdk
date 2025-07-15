@@ -347,6 +347,7 @@ from .agent import (
     ConversationTextResponse,
     UserStartedSpeakingResponse,
     AgentThinkingResponse,
+    FunctionCall,
     FunctionCallRequest,
     AgentStartedSpeakingResponse,
     AgentAudioDoneResponse,

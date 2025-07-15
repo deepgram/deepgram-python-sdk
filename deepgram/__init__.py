@@ -324,6 +324,7 @@ from .client import (
     ConversationTextResponse,
     UserStartedSpeakingResponse,
     AgentThinkingResponse,
+    FunctionCall,
     FunctionCallRequest,
     AgentStartedSpeakingResponse,
     AgentAudioDoneResponse,

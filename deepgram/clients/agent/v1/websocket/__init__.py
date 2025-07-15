@@ -18,6 +18,7 @@ from .response import (
     ConversationTextResponse,
     UserStartedSpeakingResponse,
     AgentThinkingResponse,
+    FunctionCall,
     FunctionCallRequest,
     AgentStartedSpeakingResponse,
     AgentAudioDoneResponse,
