@@ -3,6 +3,7 @@
 # SPDX-License-Identifier: MIT
 
 import logging
+from typing import Optional
 
 from ....utils import verboselogs
 from ....options import DeepgramClientOptions
@@ -28,7 +29,7 @@ class AsyncAuthRESTClient(AbstractAsyncRestClient):
         self._endpoint = "v1/auth/grant"
         super().__init__(config)
 
-    async def grant_token(self, ttl_seconds: int = None):
+    async def grant_token(self, ttl_seconds: Optional[int] = None):
         """
         Generates a temporary JWT with a configurable TTL.
 
