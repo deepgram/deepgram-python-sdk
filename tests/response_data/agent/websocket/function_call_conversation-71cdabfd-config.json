@@ -1,0 +1,61 @@
+{
+  "name": "function_call_conversation",
+  "description": "Test function calling with weather API - demonstrates SDK bug",
+  "agent_config": {
+    "think": {
+      "provider": {
+        "type": "open_ai",
+        "model": "gpt-4o-mini"
+      },
+      "prompt": "You are a helpful assistant that can check weather. Use the get_weather function when users ask about weather.",
+      "functions": [
+        {
+          "name": "get_weather",
+          "description": "Get current weather for a location",
+          "url": "https://api.weather.com/v1/weather",
+          "method": "GET",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "location": {
+                "type": "string",
+                "description": "The city and state/country for the weather request"
+              }
+            },
+            "required": [
+              "location"
+            ]
+          }
+        }
+      ]
+    },
+    "speak": {
+      "provider": {
+        "type": "deepgram",
+        "model": "aura-2-thalia-en"
+      }
+    },
+    "listen": {
+      "provider": {
+        "type": "deepgram",
+        "model": "nova-3"
+      }
+    },
+    "language": "en"
+  },
+  "inject_messages": [
+    "Hello, what's the weather like in New York?",
+    "How about in London?"
+  ],
+  "expected_events": [
+    "Welcome",
+    "SettingsApplied",
+    "ConversationText",
+    "FunctionCallRequest",
+    "AgentStartedSpeaking",
+    "AgentAudioDone"
+  ],
+  "test_inject_user_message": true,
+  "test_inject_agent_message": false,
+  "test_function_calls": true
+}

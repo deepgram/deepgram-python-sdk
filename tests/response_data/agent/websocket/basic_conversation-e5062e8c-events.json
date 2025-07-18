@@ -1,0 +1,26 @@
+[
+  {
+    "type": "Open",
+    "timestamp": 1752529261.19441,
+    "data": {
+      "type": "Open"
+    }
+  },
+  {
+    "type": "Welcome",
+    "timestamp": 1752529261.236177,
+    "data": {
+      "type": "Welcome",
+      "request_id": "b17f0618-a671-4fcf-aa55-c2328feeb40d"
+    }
+  },
+  {
+    "type": "Error",
+    "timestamp": 1752529261.274173,
+    "data": {
+      "description": "Error parsing client message. Check the agent.listen.model field against the API spec.",
+      "message": "",
+      "type": "Error"
+    }
+  }
+]
