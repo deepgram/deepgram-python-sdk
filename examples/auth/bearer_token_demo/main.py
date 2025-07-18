@@ -30,9 +30,9 @@ def main():
             f"API client created with auth: {api_client._config.headers.get('Authorization', 'Not set')}"
         )
 
-        # STEP 2 Use the API key client to get an access token
-        print("\nStep 2: Getting access token...")
-        response = api_client.auth.v("1").grant_token()
+        # STEP 2 Use the API key client to get an access token with custom TTL
+        print("\nStep 2: Getting access token with custom TTL (600 seconds)...")
+        response = api_client.auth.v("1").grant_token(ttl_seconds=600)
         access_token = response.access_token
         print(f"Access token received: {access_token[:20]}...{access_token[-10:]}")
         print(f"Token expires in: {response.expires_in} seconds")
