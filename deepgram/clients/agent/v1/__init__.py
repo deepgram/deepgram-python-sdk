@@ -26,6 +26,7 @@ from .websocket import (
     ConversationTextResponse,
     UserStartedSpeakingResponse,
     AgentThinkingResponse,
+    FunctionCall,
     FunctionCallRequest,
     AgentStartedSpeakingResponse,
     AgentAudioDoneResponse,

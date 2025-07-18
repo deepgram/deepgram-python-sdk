@@ -21,6 +21,7 @@ from .v1 import (
     ConversationTextResponse as LatestConversationTextResponse,
     UserStartedSpeakingResponse as LatestUserStartedSpeakingResponse,
     AgentThinkingResponse as LatestAgentThinkingResponse,
+    FunctionCall as LatestFunctionCall,
     FunctionCallRequest as LatestFunctionCallRequest,
     AgentStartedSpeakingResponse as LatestAgentStartedSpeakingResponse,
     AgentAudioDoneResponse as LatestAgentAudioDoneResponse,
@@ -70,6 +71,7 @@ SettingsAppliedResponse = LatestSettingsAppliedResponse
 ConversationTextResponse = LatestConversationTextResponse
 UserStartedSpeakingResponse = LatestUserStartedSpeakingResponse
 AgentThinkingResponse = LatestAgentThinkingResponse
+FunctionCall = LatestFunctionCall
 FunctionCallRequest = LatestFunctionCallRequest
 AgentStartedSpeakingResponse = LatestAgentStartedSpeakingResponse
 AgentAudioDoneResponse = LatestAgentAudioDoneResponse
