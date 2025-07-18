@@ -640,6 +640,30 @@ class AgentWebSocketClient(
 
         return True
 
+    def inject_agent_message(self, options: InjectAgentMessageOptions) -> bool:
+        """
+        Injects an agent message to immediately trigger an agent statement.
+        """
+        self._logger.spam("AgentWebSocketClient.inject_agent_message ENTER")
+
+        if not isinstance(options, InjectAgentMessageOptions):
+            self._logger.error("options must be of type InjectAgentMessageOptions")
+            self._logger.spam("AgentWebSocketClient.inject_agent_message LEAVE")
+            return False
+
+        self._logger.notice("Sending InjectAgentMessage...")
+        ret = self.send(str(options))
+
+        if not ret:
+            self._logger.error("inject_agent_message failed")
+            self._logger.spam("AgentWebSocketClient.inject_agent_message LEAVE")
+            return False
+
+        self._logger.notice("inject_agent_message succeeded")
+        self._logger.spam("AgentWebSocketClient.inject_agent_message LEAVE")
+
+        return True
+
     def _close_message(self) -> bool:
         # TODO: No known API close message # pylint: disable=fixme
         # return self.send(json.dumps({"type": "Close"}))
