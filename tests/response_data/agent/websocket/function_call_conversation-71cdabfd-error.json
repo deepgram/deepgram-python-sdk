@@ -1,0 +1,33 @@
+{
+  "error": "Test ID: function_call_conversation-71cdabfd - Should receive SettingsApplied event\nassert 'SettingsApplied' in ['Open', 'Welcome', 'Error']",
+  "events": [
+    {
+      "type": "Open",
+      "timestamp": 1752275864.535816,
+      "data": {
+        "type": "Open"
+      }
+    },
+    {
+      "type": "Welcome",
+      "timestamp": 1752275864.564481,
+      "data": {
+        "type": "Welcome",
+        "request_id": "56146094-4cc2-44e2-9ab3-a2898fe7837e"
+      }
+    },
+    {
+      "type": "Error",
+      "timestamp": 1752275864.6050282,
+      "data": {
+        "description": "Error parsing client message. Check the agent.think.functions[0].method field against the API spec.",
+        "message": "",
+        "type": "Error"
+      }
+    }
+  ],
+  "function_calls": [],
+  "function_call_bugs": [],
+  "conversation_texts": [],
+  "injection_refused": []
+}
