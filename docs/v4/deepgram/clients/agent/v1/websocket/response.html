@@ -103,6 +103,27 @@
 
             </li>
             <li>
+                    <a class="class" href="#FunctionCall">FunctionCall</a>
+                            <ul class="memberlist">
+                        <li>
+                                <a class="function" href="#FunctionCall.__init__">FunctionCall</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#FunctionCall.id">id</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#FunctionCall.name">name</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#FunctionCall.arguments">arguments</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#FunctionCall.client_side">client_side</a>
+                        </li>
+                </ul>
+
+            </li>
+            <li>
                     <a class="class" href="#FunctionCallRequest">FunctionCallRequest</a>
                             <ul class="memberlist">
                         <li>
@@ -112,13 +133,7 @@
                                 <a class="variable" href="#FunctionCallRequest.type">type</a>
                         </li>
                         <li>
-                                <a class="variable" href="#FunctionCallRequest.function_name">function_name</a>
-                        </li>
-                        <li>
-                                <a class="variable" href="#FunctionCallRequest.function_call_id">function_call_id</a>
-                        </li>
-                        <li>
-                                <a class="variable" href="#FunctionCallRequest.input">input</a>
+                                <a class="variable" href="#FunctionCallRequest.functions">functions</a>
                         </li>
                 </ul>
 
@@ -257,44 +272,71 @@
 </span><span id="L-69"><a href="#L-69"><span class="linenos"> 69</span></a>
 </span><span id="L-70"><a href="#L-70"><span class="linenos"> 70</span></a>
 </span><span id="L-71"><a href="#L-71"><span class="linenos"> 71</span></a><span class="nd">@dataclass</span>
-</span><span id="L-72"><a href="#L-72"><span class="linenos"> 72</span></a><span class="k">class</span><span class="w"> </span><span class="nc">FunctionCallRequest</span><span class="p">(</span><span class="n">BaseResponse</span><span class="p">):</span>
+</span><span id="L-72"><a href="#L-72"><span class="linenos"> 72</span></a><span class="k">class</span><span class="w"> </span><span class="nc">FunctionCall</span><span class="p">(</span><span class="n">BaseResponse</span><span class="p">):</span>
 </span><span id="L-73"><a href="#L-73"><span class="linenos"> 73</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="L-74"><a href="#L-74"><span class="linenos"> 74</span></a><span class="sd">    The FunctionCallRequest message is used to call a function from the server to the client.</span>
+</span><span id="L-74"><a href="#L-74"><span class="linenos"> 74</span></a><span class="sd">    Individual function call within a FunctionCallRequest.</span>
 </span><span id="L-75"><a href="#L-75"><span class="linenos"> 75</span></a><span class="sd">    &quot;&quot;&quot;</span>
 </span><span id="L-76"><a href="#L-76"><span class="linenos"> 76</span></a>
-</span><span id="L-77"><a href="#L-77"><span class="linenos"> 77</span></a>    <span class="nb">type</span><span class="p">:</span> <span class="nb">str</span>
-</span><span id="L-78"><a href="#L-78"><span class="linenos"> 78</span></a>    <span class="n">function_name</span><span class="p">:</span> <span class="nb">str</span>
-</span><span id="L-79"><a href="#L-79"><span class="linenos"> 79</span></a>    <span class="n">function_call_id</span><span class="p">:</span> <span class="nb">str</span>
-</span><span id="L-80"><a href="#L-80"><span class="linenos"> 80</span></a>    <span class="nb">input</span><span class="p">:</span> <span class="nb">str</span>
+</span><span id="L-77"><a href="#L-77"><span class="linenos"> 77</span></a>    <span class="nb">id</span><span class="p">:</span> <span class="nb">str</span>
+</span><span id="L-78"><a href="#L-78"><span class="linenos"> 78</span></a>    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
+</span><span id="L-79"><a href="#L-79"><span class="linenos"> 79</span></a>    <span class="n">arguments</span><span class="p">:</span> <span class="nb">str</span>
+</span><span id="L-80"><a href="#L-80"><span class="linenos"> 80</span></a>    <span class="n">client_side</span><span class="p">:</span> <span class="nb">bool</span>
 </span><span id="L-81"><a href="#L-81"><span class="linenos"> 81</span></a>
 </span><span id="L-82"><a href="#L-82"><span class="linenos"> 82</span></a>
 </span><span id="L-83"><a href="#L-83"><span class="linenos"> 83</span></a><span class="nd">@dataclass</span>
-</span><span id="L-84"><a href="#L-84"><span class="linenos"> 84</span></a><span class="k">class</span><span class="w"> </span><span class="nc">AgentStartedSpeakingResponse</span><span class="p">(</span><span class="n">BaseResponse</span><span class="p">):</span>
+</span><span id="L-84"><a href="#L-84"><span class="linenos"> 84</span></a><span class="k">class</span><span class="w"> </span><span class="nc">FunctionCallRequest</span><span class="p">(</span><span class="n">BaseResponse</span><span class="p">):</span>
 </span><span id="L-85"><a href="#L-85"><span class="linenos"> 85</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="L-86"><a href="#L-86"><span class="linenos"> 86</span></a><span class="sd">    The server will send an AgentStartedSpeaking message when it begins streaming an agent audio response to the client for playback.</span>
+</span><span id="L-86"><a href="#L-86"><span class="linenos"> 86</span></a><span class="sd">    The FunctionCallRequest message is used to call a function from the server to the client.</span>
 </span><span id="L-87"><a href="#L-87"><span class="linenos"> 87</span></a><span class="sd">    &quot;&quot;&quot;</span>
 </span><span id="L-88"><a href="#L-88"><span class="linenos"> 88</span></a>
-</span><span id="L-89"><a href="#L-89"><span class="linenos"> 89</span></a>    <span class="n">total_latency</span><span class="p">:</span> <span class="nb">float</span>
-</span><span id="L-90"><a href="#L-90"><span class="linenos"> 90</span></a>    <span class="n">tts_latency</span><span class="p">:</span> <span class="nb">float</span>
-</span><span id="L-91"><a href="#L-91"><span class="linenos"> 91</span></a>    <span class="n">ttt_latency</span><span class="p">:</span> <span class="nb">float</span>
-</span><span id="L-92"><a href="#L-92"><span class="linenos"> 92</span></a>
-</span><span id="L-93"><a href="#L-93"><span class="linenos"> 93</span></a>
-</span><span id="L-94"><a href="#L-94"><span class="linenos"> 94</span></a><span class="nd">@dataclass</span>
-</span><span id="L-95"><a href="#L-95"><span class="linenos"> 95</span></a><span class="k">class</span><span class="w"> </span><span class="nc">AgentAudioDoneResponse</span><span class="p">(</span><span class="n">BaseResponse</span><span class="p">):</span>
-</span><span id="L-96"><a href="#L-96"><span class="linenos"> 96</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="L-97"><a href="#L-97"><span class="linenos"> 97</span></a><span class="sd">    The server will send an AgentAudioDone message immediately after it sends the last audio message in a piece of agent speech.</span>
-</span><span id="L-98"><a href="#L-98"><span class="linenos"> 98</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="L-89"><a href="#L-89"><span class="linenos"> 89</span></a>    <span class="nb">type</span><span class="p">:</span> <span class="nb">str</span>
+</span><span id="L-90"><a href="#L-90"><span class="linenos"> 90</span></a>    <span class="n">functions</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">FunctionCall</span><span class="p">]</span>
+</span><span id="L-91"><a href="#L-91"><span class="linenos"> 91</span></a>
+</span><span id="L-92"><a href="#L-92"><span class="linenos"> 92</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">__post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="L-93"><a href="#L-93"><span class="linenos"> 93</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Convert dict functions to FunctionCall objects if needed.&quot;&quot;&quot;</span>
+</span><span id="L-94"><a href="#L-94"><span class="linenos"> 94</span></a>        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">functions</span><span class="p">:</span>
+</span><span id="L-95"><a href="#L-95"><span class="linenos"> 95</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">functions</span> <span class="o">=</span> <span class="p">[</span>
+</span><span id="L-96"><a href="#L-96"><span class="linenos"> 96</span></a>                <span class="n">FunctionCall</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">func</span><span class="p">)</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)</span> <span class="k">else</span> <span class="n">func</span>
+</span><span id="L-97"><a href="#L-97"><span class="linenos"> 97</span></a>                <span class="k">for</span> <span class="n">func</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">functions</span>
+</span><span id="L-98"><a href="#L-98"><span class="linenos"> 98</span></a>            <span class="p">]</span>
 </span><span id="L-99"><a href="#L-99"><span class="linenos"> 99</span></a>
-</span><span id="L-100"><a href="#L-100"><span class="linenos">100</span></a>    <span class="nb">type</span><span class="p">:</span> <span class="nb">str</span>
-</span><span id="L-101"><a href="#L-101"><span class="linenos">101</span></a>
-</span><span id="L-102"><a href="#L-102"><span class="linenos">102</span></a>
-</span><span id="L-103"><a href="#L-103"><span class="linenos">103</span></a><span class="nd">@dataclass</span>
-</span><span id="L-104"><a href="#L-104"><span class="linenos">104</span></a><span class="k">class</span><span class="w"> </span><span class="nc">InjectionRefusedResponse</span><span class="p">(</span><span class="n">BaseResponse</span><span class="p">):</span>
-</span><span id="L-105"><a href="#L-105"><span class="linenos">105</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="L-106"><a href="#L-106"><span class="linenos">106</span></a><span class="sd">    The server will send an InjectionRefused message when an InjectAgentMessage request is ignored because it arrived while the user was speaking or while the server was sending audio for an agent response.</span>
-</span><span id="L-107"><a href="#L-107"><span class="linenos">107</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="L-100"><a href="#L-100"><span class="linenos">100</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+</span><span id="L-101"><a href="#L-101"><span class="linenos">101</span></a>        <span class="n">_dict</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
+</span><span id="L-102"><a href="#L-102"><span class="linenos">102</span></a>        <span class="k">if</span> <span class="s2">&quot;functions&quot;</span> <span class="ow">in</span> <span class="n">_dict</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">_dict</span><span class="p">[</span><span class="s2">&quot;functions&quot;</span><span class="p">],</span> <span class="nb">list</span><span class="p">):</span>
+</span><span id="L-103"><a href="#L-103"><span class="linenos">103</span></a>            <span class="n">_dict</span><span class="p">[</span><span class="s2">&quot;functions&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
+</span><span id="L-104"><a href="#L-104"><span class="linenos">104</span></a>                <span class="n">FunctionCall</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">func</span><span class="p">)</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)</span> <span class="k">else</span> <span class="n">func</span>
+</span><span id="L-105"><a href="#L-105"><span class="linenos">105</span></a>                <span class="k">for</span> <span class="n">func</span> <span class="ow">in</span> <span class="n">_dict</span><span class="p">[</span><span class="s2">&quot;functions&quot;</span><span class="p">]</span>
+</span><span id="L-106"><a href="#L-106"><span class="linenos">106</span></a>            <span class="p">]</span>
+</span><span id="L-107"><a href="#L-107"><span class="linenos">107</span></a>        <span class="k">return</span> <span class="n">_dict</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
 </span><span id="L-108"><a href="#L-108"><span class="linenos">108</span></a>
-</span><span id="L-109"><a href="#L-109"><span class="linenos">109</span></a>    <span class="nb">type</span><span class="p">:</span> <span class="nb">str</span>
+</span><span id="L-109"><a href="#L-109"><span class="linenos">109</span></a>
+</span><span id="L-110"><a href="#L-110"><span class="linenos">110</span></a><span class="nd">@dataclass</span>
+</span><span id="L-111"><a href="#L-111"><span class="linenos">111</span></a><span class="k">class</span><span class="w"> </span><span class="nc">AgentStartedSpeakingResponse</span><span class="p">(</span><span class="n">BaseResponse</span><span class="p">):</span>
+</span><span id="L-112"><a href="#L-112"><span class="linenos">112</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="L-113"><a href="#L-113"><span class="linenos">113</span></a><span class="sd">    The server will send an AgentStartedSpeaking message when it begins streaming an agent audio response to the client for playback.</span>
+</span><span id="L-114"><a href="#L-114"><span class="linenos">114</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="L-115"><a href="#L-115"><span class="linenos">115</span></a>
+</span><span id="L-116"><a href="#L-116"><span class="linenos">116</span></a>    <span class="n">total_latency</span><span class="p">:</span> <span class="nb">float</span>
+</span><span id="L-117"><a href="#L-117"><span class="linenos">117</span></a>    <span class="n">tts_latency</span><span class="p">:</span> <span class="nb">float</span>
+</span><span id="L-118"><a href="#L-118"><span class="linenos">118</span></a>    <span class="n">ttt_latency</span><span class="p">:</span> <span class="nb">float</span>
+</span><span id="L-119"><a href="#L-119"><span class="linenos">119</span></a>
+</span><span id="L-120"><a href="#L-120"><span class="linenos">120</span></a>
+</span><span id="L-121"><a href="#L-121"><span class="linenos">121</span></a><span class="nd">@dataclass</span>
+</span><span id="L-122"><a href="#L-122"><span class="linenos">122</span></a><span class="k">class</span><span class="w"> </span><span class="nc">AgentAudioDoneResponse</span><span class="p">(</span><span class="n">BaseResponse</span><span class="p">):</span>
+</span><span id="L-123"><a href="#L-123"><span class="linenos">123</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="L-124"><a href="#L-124"><span class="linenos">124</span></a><span class="sd">    The server will send an AgentAudioDone message immediately after it sends the last audio message in a piece of agent speech.</span>
+</span><span id="L-125"><a href="#L-125"><span class="linenos">125</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="L-126"><a href="#L-126"><span class="linenos">126</span></a>
+</span><span id="L-127"><a href="#L-127"><span class="linenos">127</span></a>    <span class="nb">type</span><span class="p">:</span> <span class="nb">str</span>
+</span><span id="L-128"><a href="#L-128"><span class="linenos">128</span></a>
+</span><span id="L-129"><a href="#L-129"><span class="linenos">129</span></a>
+</span><span id="L-130"><a href="#L-130"><span class="linenos">130</span></a><span class="nd">@dataclass</span>
+</span><span id="L-131"><a href="#L-131"><span class="linenos">131</span></a><span class="k">class</span><span class="w"> </span><span class="nc">InjectionRefusedResponse</span><span class="p">(</span><span class="n">BaseResponse</span><span class="p">):</span>
+</span><span id="L-132"><a href="#L-132"><span class="linenos">132</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="L-133"><a href="#L-133"><span class="linenos">133</span></a><span class="sd">    The server will send an InjectionRefused message when an InjectAgentMessage request is ignored because it arrived while the user was speaking or while the server was sending audio for an agent response.</span>
+</span><span id="L-134"><a href="#L-134"><span class="linenos">134</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="L-135"><a href="#L-135"><span class="linenos">135</span></a>
+</span><span id="L-136"><a href="#L-136"><span class="linenos">136</span></a>    <span class="nb">type</span><span class="p">:</span> <span class="nb">str</span>
 </span></pre></div>
 
 
@@ -644,6 +686,101 @@ You will ONLY receive this message if you have set <code>experimental</code> to 
                                 </dl>
                             </div>
                 </section>
+                <section id="FunctionCall">
+                            <input id="FunctionCall-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+<div class="attr class">
+                    <div class="decorator decorator-dataclass">@dataclass</div>
+
+    <span class="def">class</span>
+    <span class="name">FunctionCall</span><wbr>(<span class="base"><a href="../../../common/v1/shared_response.html#BaseResponse">deepgram.clients.common.v1.shared_response.BaseResponse</a></span>):
+
+                <label class="view-source-button" for="FunctionCall-view-source"><span>View Source</span></label>
+
+    </div>
+    <a class="headerlink" href="#FunctionCall"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="FunctionCall-72"><a href="#FunctionCall-72"><span class="linenos">72</span></a><span class="nd">@dataclass</span>
+</span><span id="FunctionCall-73"><a href="#FunctionCall-73"><span class="linenos">73</span></a><span class="k">class</span><span class="w"> </span><span class="nc">FunctionCall</span><span class="p">(</span><span class="n">BaseResponse</span><span class="p">):</span>
+</span><span id="FunctionCall-74"><a href="#FunctionCall-74"><span class="linenos">74</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="FunctionCall-75"><a href="#FunctionCall-75"><span class="linenos">75</span></a><span class="sd">    Individual function call within a FunctionCallRequest.</span>
+</span><span id="FunctionCall-76"><a href="#FunctionCall-76"><span class="linenos">76</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="FunctionCall-77"><a href="#FunctionCall-77"><span class="linenos">77</span></a>
+</span><span id="FunctionCall-78"><a href="#FunctionCall-78"><span class="linenos">78</span></a>    <span class="nb">id</span><span class="p">:</span> <span class="nb">str</span>
+</span><span id="FunctionCall-79"><a href="#FunctionCall-79"><span class="linenos">79</span></a>    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
+</span><span id="FunctionCall-80"><a href="#FunctionCall-80"><span class="linenos">80</span></a>    <span class="n">arguments</span><span class="p">:</span> <span class="nb">str</span>
+</span><span id="FunctionCall-81"><a href="#FunctionCall-81"><span class="linenos">81</span></a>    <span class="n">client_side</span><span class="p">:</span> <span class="nb">bool</span>
+</span></pre></div>
+
+
+            <div class="docstring"><p>Individual function call within a FunctionCallRequest.</p>
+</div>
+
+
+                            <div id="FunctionCall.__init__" class="classattr">
+                                <div class="attr function">
+            
+        <span class="name">FunctionCall</span><span class="signature pdoc-code condensed">(<span class="param"><span class="nb">id</span><span class="p">:</span> <span class="nb">str</span>, </span><span class="param"><span class="n">name</span><span class="p">:</span> <span class="nb">str</span>, </span><span class="param"><span class="n">arguments</span><span class="p">:</span> <span class="nb">str</span>, </span><span class="param"><span class="n">client_side</span><span class="p">:</span> <span class="nb">bool</span></span>)</span>
+
+        
+    </div>
+    <a class="headerlink" href="#FunctionCall.__init__"></a>
+    
+    
+
+                            </div>
+                            <div id="FunctionCall.id" class="classattr">
+                                <div class="attr variable">
+            <span class="name">id</span><span class="annotation">: str</span>
+
+        
+    </div>
+    <a class="headerlink" href="#FunctionCall.id"></a>
+    
+    
+
+                            </div>
+                            <div id="FunctionCall.name" class="classattr">
+                                <div class="attr variable">
+            <span class="name">name</span><span class="annotation">: str</span>
+
+        
+    </div>
+    <a class="headerlink" href="#FunctionCall.name"></a>
+    
+    
+
+                            </div>
+                            <div id="FunctionCall.arguments" class="classattr">
+                                <div class="attr variable">
+            <span class="name">arguments</span><span class="annotation">: str</span>
+
+        
+    </div>
+    <a class="headerlink" href="#FunctionCall.arguments"></a>
+    
+    
+
+                            </div>
+                            <div id="FunctionCall.client_side" class="classattr">
+                                <div class="attr variable">
+            <span class="name">client_side</span><span class="annotation">: bool</span>
+
+        
+    </div>
+    <a class="headerlink" href="#FunctionCall.client_side"></a>
+    
+    
+
+                            </div>
+                            <div class="inherited">
+                                <h5>Inherited Members</h5>
+                                <dl>
+                                    <div><dt><a href="../../../common/v1/shared_response.html#BaseResponse">deepgram.clients.common.v1.shared_response.BaseResponse</a></dt>
+                                <dd id="FunctionCall.eval" class="function"><a href="../../../common/v1/shared_response.html#BaseResponse.eval">eval</a></dd>
+
+            </div>
+                                </dl>
+                            </div>
+                </section>
                 <section id="FunctionCallRequest">
                             <input id="FunctionCallRequest-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
 <div class="attr class">
@@ -656,16 +793,31 @@ You will ONLY receive this message if you have set <code>experimental</code> to 
 
     </div>
     <a class="headerlink" href="#FunctionCallRequest"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="FunctionCallRequest-72"><a href="#FunctionCallRequest-72"><span class="linenos">72</span></a><span class="nd">@dataclass</span>
-</span><span id="FunctionCallRequest-73"><a href="#FunctionCallRequest-73"><span class="linenos">73</span></a><span class="k">class</span><span class="w"> </span><span class="nc">FunctionCallRequest</span><span class="p">(</span><span class="n">BaseResponse</span><span class="p">):</span>
-</span><span id="FunctionCallRequest-74"><a href="#FunctionCallRequest-74"><span class="linenos">74</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="FunctionCallRequest-75"><a href="#FunctionCallRequest-75"><span class="linenos">75</span></a><span class="sd">    The FunctionCallRequest message is used to call a function from the server to the client.</span>
-</span><span id="FunctionCallRequest-76"><a href="#FunctionCallRequest-76"><span class="linenos">76</span></a><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="FunctionCallRequest-77"><a href="#FunctionCallRequest-77"><span class="linenos">77</span></a>
-</span><span id="FunctionCallRequest-78"><a href="#FunctionCallRequest-78"><span class="linenos">78</span></a>    <span class="nb">type</span><span class="p">:</span> <span class="nb">str</span>
-</span><span id="FunctionCallRequest-79"><a href="#FunctionCallRequest-79"><span class="linenos">79</span></a>    <span class="n">function_name</span><span class="p">:</span> <span class="nb">str</span>
-</span><span id="FunctionCallRequest-80"><a href="#FunctionCallRequest-80"><span class="linenos">80</span></a>    <span class="n">function_call_id</span><span class="p">:</span> <span class="nb">str</span>
-</span><span id="FunctionCallRequest-81"><a href="#FunctionCallRequest-81"><span class="linenos">81</span></a>    <span class="nb">input</span><span class="p">:</span> <span class="nb">str</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="FunctionCallRequest-84"><a href="#FunctionCallRequest-84"><span class="linenos"> 84</span></a><span class="nd">@dataclass</span>
+</span><span id="FunctionCallRequest-85"><a href="#FunctionCallRequest-85"><span class="linenos"> 85</span></a><span class="k">class</span><span class="w"> </span><span class="nc">FunctionCallRequest</span><span class="p">(</span><span class="n">BaseResponse</span><span class="p">):</span>
+</span><span id="FunctionCallRequest-86"><a href="#FunctionCallRequest-86"><span class="linenos"> 86</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="FunctionCallRequest-87"><a href="#FunctionCallRequest-87"><span class="linenos"> 87</span></a><span class="sd">    The FunctionCallRequest message is used to call a function from the server to the client.</span>
+</span><span id="FunctionCallRequest-88"><a href="#FunctionCallRequest-88"><span class="linenos"> 88</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="FunctionCallRequest-89"><a href="#FunctionCallRequest-89"><span class="linenos"> 89</span></a>
+</span><span id="FunctionCallRequest-90"><a href="#FunctionCallRequest-90"><span class="linenos"> 90</span></a>    <span class="nb">type</span><span class="p">:</span> <span class="nb">str</span>
+</span><span id="FunctionCallRequest-91"><a href="#FunctionCallRequest-91"><span class="linenos"> 91</span></a>    <span class="n">functions</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">FunctionCall</span><span class="p">]</span>
+</span><span id="FunctionCallRequest-92"><a href="#FunctionCallRequest-92"><span class="linenos"> 92</span></a>
+</span><span id="FunctionCallRequest-93"><a href="#FunctionCallRequest-93"><span class="linenos"> 93</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">__post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="FunctionCallRequest-94"><a href="#FunctionCallRequest-94"><span class="linenos"> 94</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Convert dict functions to FunctionCall objects if needed.&quot;&quot;&quot;</span>
+</span><span id="FunctionCallRequest-95"><a href="#FunctionCallRequest-95"><span class="linenos"> 95</span></a>        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">functions</span><span class="p">:</span>
+</span><span id="FunctionCallRequest-96"><a href="#FunctionCallRequest-96"><span class="linenos"> 96</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">functions</span> <span class="o">=</span> <span class="p">[</span>
+</span><span id="FunctionCallRequest-97"><a href="#FunctionCallRequest-97"><span class="linenos"> 97</span></a>                <span class="n">FunctionCall</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">func</span><span class="p">)</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)</span> <span class="k">else</span> <span class="n">func</span>
+</span><span id="FunctionCallRequest-98"><a href="#FunctionCallRequest-98"><span class="linenos"> 98</span></a>                <span class="k">for</span> <span class="n">func</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">functions</span>
+</span><span id="FunctionCallRequest-99"><a href="#FunctionCallRequest-99"><span class="linenos"> 99</span></a>            <span class="p">]</span>
+</span><span id="FunctionCallRequest-100"><a href="#FunctionCallRequest-100"><span class="linenos">100</span></a>
+</span><span id="FunctionCallRequest-101"><a href="#FunctionCallRequest-101"><span class="linenos">101</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+</span><span id="FunctionCallRequest-102"><a href="#FunctionCallRequest-102"><span class="linenos">102</span></a>        <span class="n">_dict</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
+</span><span id="FunctionCallRequest-103"><a href="#FunctionCallRequest-103"><span class="linenos">103</span></a>        <span class="k">if</span> <span class="s2">&quot;functions&quot;</span> <span class="ow">in</span> <span class="n">_dict</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">_dict</span><span class="p">[</span><span class="s2">&quot;functions&quot;</span><span class="p">],</span> <span class="nb">list</span><span class="p">):</span>
+</span><span id="FunctionCallRequest-104"><a href="#FunctionCallRequest-104"><span class="linenos">104</span></a>            <span class="n">_dict</span><span class="p">[</span><span class="s2">&quot;functions&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
+</span><span id="FunctionCallRequest-105"><a href="#FunctionCallRequest-105"><span class="linenos">105</span></a>                <span class="n">FunctionCall</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">func</span><span class="p">)</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)</span> <span class="k">else</span> <span class="n">func</span>
+</span><span id="FunctionCallRequest-106"><a href="#FunctionCallRequest-106"><span class="linenos">106</span></a>                <span class="k">for</span> <span class="n">func</span> <span class="ow">in</span> <span class="n">_dict</span><span class="p">[</span><span class="s2">&quot;functions&quot;</span><span class="p">]</span>
+</span><span id="FunctionCallRequest-107"><a href="#FunctionCallRequest-107"><span class="linenos">107</span></a>            <span class="p">]</span>
+</span><span id="FunctionCallRequest-108"><a href="#FunctionCallRequest-108"><span class="linenos">108</span></a>        <span class="k">return</span> <span class="n">_dict</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
 </span></pre></div>
 
 
@@ -676,7 +828,7 @@ You will ONLY receive this message if you have set <code>experimental</code> to 
                             <div id="FunctionCallRequest.__init__" class="classattr">
                                 <div class="attr function">
             
-        <span class="name">FunctionCallRequest</span><span class="signature pdoc-code condensed">(<span class="param"><span class="nb">type</span><span class="p">:</span> <span class="nb">str</span>, </span><span class="param"><span class="n">function_name</span><span class="p">:</span> <span class="nb">str</span>, </span><span class="param"><span class="n">function_call_id</span><span class="p">:</span> <span class="nb">str</span>, </span><span class="param"><span class="nb">input</span><span class="p">:</span> <span class="nb">str</span></span>)</span>
+        <span class="name">FunctionCallRequest</span><span class="signature pdoc-code multiline">(<span class="param">	<span class="nb">type</span><span class="p">:</span> <span class="nb">str</span>,</span><span class="param">	<span class="n">functions</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n"><a href="#FunctionCall">FunctionCall</a></span><span class="p">]</span></span>)</span>
 
         
     </div>
@@ -696,35 +848,13 @@ You will ONLY receive this message if you have set <code>experimental</code> to 
     
 
                             </div>
-                            <div id="FunctionCallRequest.function_name" class="classattr">
+                            <div id="FunctionCallRequest.functions" class="classattr">
                                 <div class="attr variable">
-            <span class="name">function_name</span><span class="annotation">: str</span>
+            <span class="name">functions</span><span class="annotation">: List[<a href="#FunctionCall">FunctionCall</a>]</span>
 
         
     </div>
-    <a class="headerlink" href="#FunctionCallRequest.function_name"></a>
-    
-    
-
-                            </div>
-                            <div id="FunctionCallRequest.function_call_id" class="classattr">
-                                <div class="attr variable">
-            <span class="name">function_call_id</span><span class="annotation">: str</span>
-
-        
-    </div>
-    <a class="headerlink" href="#FunctionCallRequest.function_call_id"></a>
-    
-    
-
-                            </div>
-                            <div id="FunctionCallRequest.input" class="classattr">
-                                <div class="attr variable">
-            <span class="name">input</span><span class="annotation">: str</span>
-
-        
-    </div>
-    <a class="headerlink" href="#FunctionCallRequest.input"></a>
+    <a class="headerlink" href="#FunctionCallRequest.functions"></a>
     
     
 
@@ -751,15 +881,15 @@ You will ONLY receive this message if you have set <code>experimental</code> to 
 
     </div>
     <a class="headerlink" href="#AgentStartedSpeakingResponse"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="AgentStartedSpeakingResponse-84"><a href="#AgentStartedSpeakingResponse-84"><span class="linenos">84</span></a><span class="nd">@dataclass</span>
-</span><span id="AgentStartedSpeakingResponse-85"><a href="#AgentStartedSpeakingResponse-85"><span class="linenos">85</span></a><span class="k">class</span><span class="w"> </span><span class="nc">AgentStartedSpeakingResponse</span><span class="p">(</span><span class="n">BaseResponse</span><span class="p">):</span>
-</span><span id="AgentStartedSpeakingResponse-86"><a href="#AgentStartedSpeakingResponse-86"><span class="linenos">86</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="AgentStartedSpeakingResponse-87"><a href="#AgentStartedSpeakingResponse-87"><span class="linenos">87</span></a><span class="sd">    The server will send an AgentStartedSpeaking message when it begins streaming an agent audio response to the client for playback.</span>
-</span><span id="AgentStartedSpeakingResponse-88"><a href="#AgentStartedSpeakingResponse-88"><span class="linenos">88</span></a><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="AgentStartedSpeakingResponse-89"><a href="#AgentStartedSpeakingResponse-89"><span class="linenos">89</span></a>
-</span><span id="AgentStartedSpeakingResponse-90"><a href="#AgentStartedSpeakingResponse-90"><span class="linenos">90</span></a>    <span class="n">total_latency</span><span class="p">:</span> <span class="nb">float</span>
-</span><span id="AgentStartedSpeakingResponse-91"><a href="#AgentStartedSpeakingResponse-91"><span class="linenos">91</span></a>    <span class="n">tts_latency</span><span class="p">:</span> <span class="nb">float</span>
-</span><span id="AgentStartedSpeakingResponse-92"><a href="#AgentStartedSpeakingResponse-92"><span class="linenos">92</span></a>    <span class="n">ttt_latency</span><span class="p">:</span> <span class="nb">float</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="AgentStartedSpeakingResponse-111"><a href="#AgentStartedSpeakingResponse-111"><span class="linenos">111</span></a><span class="nd">@dataclass</span>
+</span><span id="AgentStartedSpeakingResponse-112"><a href="#AgentStartedSpeakingResponse-112"><span class="linenos">112</span></a><span class="k">class</span><span class="w"> </span><span class="nc">AgentStartedSpeakingResponse</span><span class="p">(</span><span class="n">BaseResponse</span><span class="p">):</span>
+</span><span id="AgentStartedSpeakingResponse-113"><a href="#AgentStartedSpeakingResponse-113"><span class="linenos">113</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="AgentStartedSpeakingResponse-114"><a href="#AgentStartedSpeakingResponse-114"><span class="linenos">114</span></a><span class="sd">    The server will send an AgentStartedSpeaking message when it begins streaming an agent audio response to the client for playback.</span>
+</span><span id="AgentStartedSpeakingResponse-115"><a href="#AgentStartedSpeakingResponse-115"><span class="linenos">115</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="AgentStartedSpeakingResponse-116"><a href="#AgentStartedSpeakingResponse-116"><span class="linenos">116</span></a>
+</span><span id="AgentStartedSpeakingResponse-117"><a href="#AgentStartedSpeakingResponse-117"><span class="linenos">117</span></a>    <span class="n">total_latency</span><span class="p">:</span> <span class="nb">float</span>
+</span><span id="AgentStartedSpeakingResponse-118"><a href="#AgentStartedSpeakingResponse-118"><span class="linenos">118</span></a>    <span class="n">tts_latency</span><span class="p">:</span> <span class="nb">float</span>
+</span><span id="AgentStartedSpeakingResponse-119"><a href="#AgentStartedSpeakingResponse-119"><span class="linenos">119</span></a>    <span class="n">ttt_latency</span><span class="p">:</span> <span class="nb">float</span>
 </span></pre></div>
 
 
@@ -834,13 +964,13 @@ You will ONLY receive this message if you have set <code>experimental</code> to 
 
     </div>
     <a class="headerlink" href="#AgentAudioDoneResponse"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="AgentAudioDoneResponse-95"><a href="#AgentAudioDoneResponse-95"><span class="linenos"> 95</span></a><span class="nd">@dataclass</span>
-</span><span id="AgentAudioDoneResponse-96"><a href="#AgentAudioDoneResponse-96"><span class="linenos"> 96</span></a><span class="k">class</span><span class="w"> </span><span class="nc">AgentAudioDoneResponse</span><span class="p">(</span><span class="n">BaseResponse</span><span class="p">):</span>
-</span><span id="AgentAudioDoneResponse-97"><a href="#AgentAudioDoneResponse-97"><span class="linenos"> 97</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="AgentAudioDoneResponse-98"><a href="#AgentAudioDoneResponse-98"><span class="linenos"> 98</span></a><span class="sd">    The server will send an AgentAudioDone message immediately after it sends the last audio message in a piece of agent speech.</span>
-</span><span id="AgentAudioDoneResponse-99"><a href="#AgentAudioDoneResponse-99"><span class="linenos"> 99</span></a><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="AgentAudioDoneResponse-100"><a href="#AgentAudioDoneResponse-100"><span class="linenos">100</span></a>
-</span><span id="AgentAudioDoneResponse-101"><a href="#AgentAudioDoneResponse-101"><span class="linenos">101</span></a>    <span class="nb">type</span><span class="p">:</span> <span class="nb">str</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="AgentAudioDoneResponse-122"><a href="#AgentAudioDoneResponse-122"><span class="linenos">122</span></a><span class="nd">@dataclass</span>
+</span><span id="AgentAudioDoneResponse-123"><a href="#AgentAudioDoneResponse-123"><span class="linenos">123</span></a><span class="k">class</span><span class="w"> </span><span class="nc">AgentAudioDoneResponse</span><span class="p">(</span><span class="n">BaseResponse</span><span class="p">):</span>
+</span><span id="AgentAudioDoneResponse-124"><a href="#AgentAudioDoneResponse-124"><span class="linenos">124</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="AgentAudioDoneResponse-125"><a href="#AgentAudioDoneResponse-125"><span class="linenos">125</span></a><span class="sd">    The server will send an AgentAudioDone message immediately after it sends the last audio message in a piece of agent speech.</span>
+</span><span id="AgentAudioDoneResponse-126"><a href="#AgentAudioDoneResponse-126"><span class="linenos">126</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="AgentAudioDoneResponse-127"><a href="#AgentAudioDoneResponse-127"><span class="linenos">127</span></a>
+</span><span id="AgentAudioDoneResponse-128"><a href="#AgentAudioDoneResponse-128"><span class="linenos">128</span></a>    <span class="nb">type</span><span class="p">:</span> <span class="nb">str</span>
 </span></pre></div>
 
 
@@ -893,13 +1023,13 @@ You will ONLY receive this message if you have set <code>experimental</code> to 
 
     </div>
     <a class="headerlink" href="#InjectionRefusedResponse"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="InjectionRefusedResponse-104"><a href="#InjectionRefusedResponse-104"><span class="linenos">104</span></a><span class="nd">@dataclass</span>
-</span><span id="InjectionRefusedResponse-105"><a href="#InjectionRefusedResponse-105"><span class="linenos">105</span></a><span class="k">class</span><span class="w"> </span><span class="nc">InjectionRefusedResponse</span><span class="p">(</span><span class="n">BaseResponse</span><span class="p">):</span>
-</span><span id="InjectionRefusedResponse-106"><a href="#InjectionRefusedResponse-106"><span class="linenos">106</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="InjectionRefusedResponse-107"><a href="#InjectionRefusedResponse-107"><span class="linenos">107</span></a><span class="sd">    The server will send an InjectionRefused message when an InjectAgentMessage request is ignored because it arrived while the user was speaking or while the server was sending audio for an agent response.</span>
-</span><span id="InjectionRefusedResponse-108"><a href="#InjectionRefusedResponse-108"><span class="linenos">108</span></a><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="InjectionRefusedResponse-109"><a href="#InjectionRefusedResponse-109"><span class="linenos">109</span></a>
-</span><span id="InjectionRefusedResponse-110"><a href="#InjectionRefusedResponse-110"><span class="linenos">110</span></a>    <span class="nb">type</span><span class="p">:</span> <span class="nb">str</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="InjectionRefusedResponse-131"><a href="#InjectionRefusedResponse-131"><span class="linenos">131</span></a><span class="nd">@dataclass</span>
+</span><span id="InjectionRefusedResponse-132"><a href="#InjectionRefusedResponse-132"><span class="linenos">132</span></a><span class="k">class</span><span class="w"> </span><span class="nc">InjectionRefusedResponse</span><span class="p">(</span><span class="n">BaseResponse</span><span class="p">):</span>
+</span><span id="InjectionRefusedResponse-133"><a href="#InjectionRefusedResponse-133"><span class="linenos">133</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="InjectionRefusedResponse-134"><a href="#InjectionRefusedResponse-134"><span class="linenos">134</span></a><span class="sd">    The server will send an InjectionRefused message when an InjectAgentMessage request is ignored because it arrived while the user was speaking or while the server was sending audio for an agent response.</span>
+</span><span id="InjectionRefusedResponse-135"><a href="#InjectionRefusedResponse-135"><span class="linenos">135</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="InjectionRefusedResponse-136"><a href="#InjectionRefusedResponse-136"><span class="linenos">136</span></a>
+</span><span id="InjectionRefusedResponse-137"><a href="#InjectionRefusedResponse-137"><span class="linenos">137</span></a>    <span class="nb">type</span><span class="p">:</span> <span class="nb">str</span>
 </span></pre></div>
 
 
