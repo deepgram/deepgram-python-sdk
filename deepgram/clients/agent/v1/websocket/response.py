@@ -69,15 +69,42 @@ class AgentThinkingResponse(BaseResponse):
 
 
 @dataclass
+class FunctionCall(BaseResponse):
+    """
+    Individual function call within a FunctionCallRequest.
+    """
+
+    id: str
+    name: str
+    arguments: str
+    client_side: bool
+
+
+@dataclass
 class FunctionCallRequest(BaseResponse):
     """
     The FunctionCallRequest message is used to call a function from the server to the client.
     """
 
     type: str
-    function_name: str
-    function_call_id: str
-    input: str
+    functions: List[FunctionCall]
+
+    def __post_init__(self):
+        """Convert dict functions to FunctionCall objects if needed."""
+        if self.functions:
+            self.functions = [
+                FunctionCall.from_dict(func) if isinstance(func, dict) else func
+                for func in self.functions
+            ]
+
+    def __getitem__(self, key):
+        _dict = self.to_dict()
+        if "functions" in _dict and isinstance(_dict["functions"], list):
+            _dict["functions"] = [
+                FunctionCall.from_dict(func) if isinstance(func, dict) else func
+                for func in _dict["functions"]
+            ]
+        return _dict[key]
 
 
 @dataclass

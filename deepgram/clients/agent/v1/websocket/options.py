@@ -448,8 +448,9 @@ class FunctionCallResponse(BaseResponse):
     """
 
     type: str = "FunctionCallResponse"
-    function_call_id: str = field(default="")
-    output: str = field(default="")
+    id: str = field(default="")
+    name: str = field(default="")
+    content: str = field(default="")
 
 
 # Agent Keep Alive
