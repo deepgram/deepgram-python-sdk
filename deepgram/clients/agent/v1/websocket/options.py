@@ -274,6 +274,9 @@ class Agent(BaseResponse):
     mip_opt_out: Optional[bool] = field(
         default=False, metadata=dataclass_config(exclude=lambda f: f is None)
     )
+    tags: Optional[List[str]] = field(
+        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
+    )
 
     def __post_init__(self):
         """Handle conversion of dict/list data to proper Speak objects"""
