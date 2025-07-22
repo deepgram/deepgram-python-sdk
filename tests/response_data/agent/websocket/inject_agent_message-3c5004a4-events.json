@@ -1,0 +1,147 @@
+[
+  {
+    "type": "Welcome",
+    "timestamp": 1753219298.635536,
+    "data": {
+      "type": "Welcome",
+      "request_id": "d923581c-c27b-4d96-aef0-643fbae5e0fb"
+    }
+  },
+  {
+    "type": "Open",
+    "timestamp": 1753219298.63597,
+    "data": {
+      "type": "Open"
+    }
+  },
+  {
+    "type": "SettingsApplied",
+    "timestamp": 1753219298.67933,
+    "data": {
+      "type": "SettingsApplied"
+    }
+  },
+  {
+    "type": "ConversationText",
+    "timestamp": 1753219299.690475,
+    "data": {
+      "type": "ConversationText",
+      "role": "user",
+      "content": "Hello, I'm going to inject some agent messages."
+    }
+  },
+  {
+    "type": "Unhandled",
+    "timestamp": 1753219299.690911,
+    "data": {
+      "type": "Unhandled",
+      "raw": "{\"type\":\"History\",\"role\":\"user\",\"content\":\"Hello, I'm going to inject some agent messages.\"}"
+    }
+  },
+  {
+    "type": "Unhandled",
+    "timestamp": 1753219299.691176,
+    "data": {
+      "type": "Unhandled",
+      "raw": "{\"type\":\"EndOfThought\"}"
+    }
+  },
+  {
+    "type": "ConversationText",
+    "timestamp": 1753219300.442058,
+    "data": {
+      "type": "ConversationText",
+      "role": "assistant",
+      "content": "Sure!"
+    }
+  },
+  {
+    "type": "Unhandled",
+    "timestamp": 1753219300.443295,
+    "data": {
+      "type": "Unhandled",
+      "raw": "{\"type\":\"History\",\"role\":\"assistant\",\"content\":\"Sure!\"}"
+    }
+  },
+  {
+    "type": "AgentStartedSpeaking",
+    "timestamp": 1753219300.444074,
+    "data": {
+      "total_latency": 0.695635887,
+      "tts_latency": 0.26384091,
+      "ttt_latency": 0.431794651
+    }
+  },
+  {
+    "type": "ConversationText",
+    "timestamp": 1753219300.980101,
+    "data": {
+      "type": "ConversationText",
+      "role": "assistant",
+      "content": "Go ahead and inject those messages whenever you're ready."
+    }
+  },
+  {
+    "type": "Unhandled",
+    "timestamp": 1753219300.980541,
+    "data": {
+      "type": "Unhandled",
+      "raw": "{\"type\":\"History\",\"role\":\"assistant\",\"content\":\"Go ahead and inject those messages whenever you're ready.\"}"
+    }
+  },
+  {
+    "type": "AgentAudioDone",
+    "timestamp": 1753219301.379833,
+    "data": {
+      "type": "AgentAudioDone"
+    }
+  },
+  {
+    "type": "ConversationText",
+    "timestamp": 1753219301.771287,
+    "data": {
+      "type": "ConversationText",
+      "role": "assistant",
+      "content": "Hello! I'm an agent message injected directly."
+    }
+  },
+  {
+    "type": "Unhandled",
+    "timestamp": 1753219301.772002,
+    "data": {
+      "type": "Unhandled",
+      "raw": "{\"type\":\"History\",\"role\":\"assistant\",\"content\":\"Hello! I'm an agent message injected directly.\"}"
+    }
+  },
+  {
+    "type": "AgentAudioDone",
+    "timestamp": 1753219302.426421,
+    "data": {
+      "type": "AgentAudioDone"
+    }
+  },
+  {
+    "type": "ConversationText",
+    "timestamp": 1753219303.0076108,
+    "data": {
+      "type": "ConversationText",
+      "role": "assistant",
+      "content": "This is another agent message to test the functionality."
+    }
+  },
+  {
+    "type": "Unhandled",
+    "timestamp": 1753219303.013221,
+    "data": {
+      "type": "Unhandled",
+      "raw": "{\"type\":\"History\",\"role\":\"assistant\",\"content\":\"This is another agent message to test the functionality.\"}"
+    }
+  },
+  {
+    "type": "AgentAudioDone",
+    "timestamp": 1753219303.867712,
+    "data": {
+      "type": "AgentAudioDone"
+    }
+  }
+]

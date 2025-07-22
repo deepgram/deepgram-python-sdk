@@ -1,0 +1,40 @@
+{
+  "function_calls": [
+    {
+      "type": "FunctionCallRequest",
+      "functions": [
+        {
+          "id": "call_BdZmuwyqy15qpX8PG4RxQijs",
+          "name": "get_weather",
+          "arguments": "{\"location\":\"New York\"}",
+          "client_side": true
+        }
+      ]
+    },
+    {
+      "type": "FunctionCallRequest",
+      "functions": [
+        {
+          "id": "call_7EHtiwEKh2Vhl4f7UZgAry7B",
+          "name": "get_weather",
+          "arguments": "{\"location\":\"New York\"}",
+          "client_side": true
+        }
+      ]
+    },
+    {
+      "type": "FunctionCallRequest",
+      "functions": [
+        {
+          "id": "call_Mr1wtrrEWrsf8EizUWSZBs8u",
+          "name": "get_weather",
+          "arguments": "{\"location\":\"London\"}",
+          "client_side": true
+        }
+      ]
+    }
+  ],
+  "sdk_bugs_detected": [],
+  "total_calls": 3,
+  "total_bugs": 0
+}

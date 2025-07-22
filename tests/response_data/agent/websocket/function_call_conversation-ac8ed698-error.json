@@ -1,0 +1,226 @@
+{
+  "error": "Test ID: function_call_conversation-ac8ed698 - Should receive AgentAudioDone event\nassert 'AgentAudioDone' in ['Welcome', 'Open', 'SettingsApplied', 'ConversationText', 'Unhandled', 'Unhandled', ...]",
+  "events": [
+    {
+      "type": "Welcome",
+      "timestamp": 1753222195.699274,
+      "data": {
+        "type": "Welcome",
+        "request_id": "a79a6072-fa4d-47d5-a819-2d630b35bede"
+      }
+    },
+    {
+      "type": "Open",
+      "timestamp": 1753222195.6993961,
+      "data": {
+        "type": "Open"
+      }
+    },
+    {
+      "type": "SettingsApplied",
+      "timestamp": 1753222195.737854,
+      "data": {
+        "type": "SettingsApplied"
+      }
+    },
+    {
+      "type": "ConversationText",
+      "timestamp": 1753222196.740225,
+      "data": {
+        "type": "ConversationText",
+        "role": "user",
+        "content": "What's the weather like in New York?"
+      }
+    },
+    {
+      "type": "Unhandled",
+      "timestamp": 1753222196.7409039,
+      "data": {
+        "type": "Unhandled",
+        "raw": "{\"type\":\"History\",\"role\":\"user\",\"content\":\"What's the weather like in New York?\"}"
+      }
+    },
+    {
+      "type": "Unhandled",
+      "timestamp": 1753222196.741329,
+      "data": {
+        "type": "Unhandled",
+        "raw": "{\"type\":\"EndOfThought\"}"
+      }
+    },
+    {
+      "type": "FunctionCallRequest",
+      "timestamp": 1753222197.412294,
+      "data": {
+        "type": "FunctionCallRequest",
+        "functions": [
+          {
+            "id": "call_BdZmuwyqy15qpX8PG4RxQijs",
+            "name": "get_weather",
+            "arguments": "{\"location\":\"New York\"}",
+            "client_side": true
+          }
+        ]
+      }
+    },
+    {
+      "type": "Unhandled",
+      "timestamp": 1753222197.449692,
+      "data": {
+        "type": "Unhandled",
+        "raw": "{\"type\":\"History\",\"function_calls\":[{\"id\":\"call_BdZmuwyqy15qpX8PG4RxQijs\",\"name\":\"get_weather\",\"client_side\":true,\"arguments\":\"{\\\"location\\\":\\\"New York\\\"}\",\"response\":\"{\\\"success\\\": true, \\\"result\\\": \\\"Mock function response\\\", \\\"timestamp\\\": 1753222197.412491}\"}]}"
+      }
+    },
+    {
+      "type": "ConversationText",
+      "timestamp": 1753222198.2465181,
+      "data": {
+        "type": "ConversationText",
+        "role": "user",
+        "content": "Can you also check the weather in London?"
+      }
+    },
+    {
+      "type": "Unhandled",
+      "timestamp": 1753222198.2468832,
+      "data": {
+        "type": "Unhandled",
+        "raw": "{\"type\":\"History\",\"role\":\"user\",\"content\":\"Can you also check the weather in London?\"}"
+      }
+    },
+    {
+      "type": "Unhandled",
+      "timestamp": 1753222198.2471108,
+      "data": {
+        "type": "Unhandled",
+        "raw": "{\"type\":\"EndOfThought\"}"
+      }
+    },
+    {
+      "type": "FunctionCallRequest",
+      "timestamp": 1753222199.153654,
+      "data": {
+        "type": "FunctionCallRequest",
+        "functions": [
+          {
+            "id": "call_7EHtiwEKh2Vhl4f7UZgAry7B",
+            "name": "get_weather",
+            "arguments": "{\"location\":\"New York\"}",
+            "client_side": true
+          }
+        ]
+      }
+    },
+    {
+      "type": "Unhandled",
+      "timestamp": 1753222199.192016,
+      "data": {
+        "type": "Unhandled",
+        "raw": "{\"type\":\"History\",\"function_calls\":[{\"id\":\"call_7EHtiwEKh2Vhl4f7UZgAry7B\",\"name\":\"get_weather\",\"client_side\":true,\"arguments\":\"{\\\"location\\\": \\\"New York\\\"}\",\"response\":\"{\\\"success\\\": true, \\\"result\\\": \\\"Mock function response\\\", \\\"timestamp\\\": 1753222199.153964}\"}]}"
+      }
+    },
+    {
+      "type": "FunctionCallRequest",
+      "timestamp": 1753222199.192825,
+      "data": {
+        "type": "FunctionCallRequest",
+        "functions": [
+          {
+            "id": "call_Mr1wtrrEWrsf8EizUWSZBs8u",
+            "name": "get_weather",
+            "arguments": "{\"location\":\"London\"}",
+            "client_side": true
+          }
+        ]
+      }
+    },
+    {
+      "type": "Unhandled",
+      "timestamp": 1753222199.2321181,
+      "data": {
+        "type": "Unhandled",
+        "raw": "{\"type\":\"History\",\"function_calls\":[{\"id\":\"call_Mr1wtrrEWrsf8EizUWSZBs8u\",\"name\":\"get_weather\",\"client_side\":true,\"arguments\":\"{\\\"location\\\": \\\"London\\\"}\",\"response\":\"{\\\"success\\\": true, \\\"result\\\": \\\"Mock function response\\\", \\\"timestamp\\\": 1753222199.192872}\"}]}"
+      }
+    },
+    {
+      "type": "ConversationText",
+      "timestamp": 1753222200.167891,
+      "data": {
+        "type": "ConversationText",
+        "role": "assistant",
+        "content": "I retrieved the weather information for both New York and London, but the responses are mock data."
+      }
+    },
+    {
+      "type": "Unhandled",
+      "timestamp": 1753222200.168396,
+      "data": {
+        "type": "Unhandled",
+        "raw": "{\"type\":\"History\",\"role\":\"assistant\",\"content\":\"I retrieved the weather information for both New York and London, but the responses are mock data.\"}"
+      }
+    },
+    {
+      "type": "AgentStartedSpeaking",
+      "timestamp": 1753222200.168876,
+      "data": {
+        "total_latency": 1.9185820059999998,
+        "tts_latency": 0.303857378,
+        "ttt_latency": 1.6147244760000001
+      }
+    }
+  ],
+  "function_calls": [
+    {
+      "type": "FunctionCallRequest",
+      "functions": [
+        {
+          "id": "call_BdZmuwyqy15qpX8PG4RxQijs",
+          "name": "get_weather",
+          "arguments": "{\"location\":\"New York\"}",
+          "client_side": true
+        }
+      ]
+    },
+    {
+      "type": "FunctionCallRequest",
+      "functions": [
+        {
+          "id": "call_7EHtiwEKh2Vhl4f7UZgAry7B",
+          "name": "get_weather",
+          "arguments": "{\"location\":\"New York\"}",
+          "client_side": true
+        }
+      ]
+    },
+    {
+      "type": "FunctionCallRequest",
+      "functions": [
+        {
+          "id": "call_Mr1wtrrEWrsf8EizUWSZBs8u",
+          "name": "get_weather",
+          "arguments": "{\"location\":\"London\"}",
+          "client_side": true
+        }
+      ]
+    }
+  ],
+  "function_call_bugs": [],
+  "conversation_texts": [
+    {
+      "type": "ConversationText",
+      "role": "user",
+      "content": "What's the weather like in New York?"
+    },
+    {
+      "type": "ConversationText",
+      "role": "user",
+      "content": "Can you also check the weather in London?"
+    },
+    {
+      "type": "ConversationText",
+      "role": "assistant",
+      "content": "I retrieved the weather information for both New York and London, but the responses are mock data."
+    }
+  ],
+  "injection_refused": []
+}

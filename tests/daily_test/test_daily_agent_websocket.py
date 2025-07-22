@@ -83,7 +83,7 @@ test_cases = [
     },
     {
         "name": "inject_agent_message",
-        "description": "Test inject_agent_message functionality (expected to fail until #553 is resolved)",
+        "description": "Test inject_agent_message functionality",
         "agent_config": {
             "think": {
                 "provider": {"type": "open_ai", "model": "gpt-4o-mini"},
@@ -112,11 +112,11 @@ test_cases = [
         "test_inject_user_message": True,
         "test_inject_agent_message": True,
         "test_function_calls": False,
-        "expect_error": True  # Still expecting errors due to SDK function calling bugs (#528)
+        "expect_error": False  # Function calling should now work properly
     },
     {
         "name": "function_call_conversation",
-        "description": "Test function calling with corrected HTTP method case (expected to fail due to #528)",
+        "description": "Test function calling functionality",
         "agent_config": {
             "think": {
                 "provider": {"type": "open_ai", "model": "gpt-4o-mini"},
@@ -135,8 +135,10 @@ test_cases = [
                             },
                             "required": ["location"]
                         },
-                        "method": "get",
-                        "url": "https://api.example.com/weather"
+                        # For server side function testing only. Leave commented out to test client side unless you have a real URL to use here.
+                        # "endpoint": {
+                        #     "url": "https://api.example.com/weather",
+                        #     "method": "GET"
                     }
                 ]
             },
@@ -161,14 +163,36 @@ test_cases = [
         "test_inject_user_message": True,
         "test_inject_agent_message": False,
         "test_function_calls": True,
-        "expect_error": True  # Still expecting errors due to SDK function calling bugs
+        "expect_error": False
     },
-    # NOTE: function_call_conversation and inject_agent_message tests are marked as xfail
-    # - function_call_conversation: #528 - SDK function calling structure doesn't match new API spec
-    # - inject_agent_message: #553 - SDK missing inject_agent_message method implementation
-    # TODO: These should be re-enabled once the bugs are fixed
+    {
+        "name": "agent_tags",
+        "description": "Test agent tags functionality with metadata labeling",
+        "agent_config": {
+            "think": {
+                "provider": {"type": "open_ai", "model": "gpt-4o-mini"},
+                "prompt": "You are a helpful AI assistant for testing tag functionality."
+            },
+            "speak": {"provider": {"type": "deepgram", "model": "aura-2-thalia-en"}},
+            "listen": {"provider": {"type": "deepgram", "model": "nova-3"}},
+            "language": "en"
+        },
+        "inject_messages": [
+            "Hello, this is a test of agent tags functionality.",
+            "Can you confirm you are working with tags enabled?"
+        ],
+        "expected_events": [
+            "Welcome",
+            "SettingsApplied",
+            "ConversationText",
+            "AgentAudioDone"
+        ],
+        "test_inject_user_message": True,
+        "test_inject_agent_message": False,
+        "test_function_calls": False,
+        "test_agent_tags": True
+    },
 ]
-
 
 @pytest.mark.parametrize("test_case", test_cases)
 def test_daily_agent_websocket(test_case: Dict[str, Any]):
@@ -188,12 +212,6 @@ def test_daily_agent_websocket(test_case: Dict[str, Any]):
 
     Note: some features might have bugs, like inject_agent_message and function_call_conversation. We intend to fix these in the future and update the tests.
     """
-
-    # Mark tests as expected to fail for known issues
-    if test_case["name"] == "inject_agent_message":
-        pytest.xfail(reason="#553 - inject_agent_message method not implemented in SDK")
-    elif test_case["name"] == "function_call_conversation":
-        pytest.xfail(reason="#528 - SDK function calling structure doesn't match new API spec")
 
     # Check for required environment variables
     if not os.getenv("DEEPGRAM_API_KEY"):
@@ -328,22 +346,24 @@ def test_daily_agent_websocket(test_case: Dict[str, Any]):
             })
             print(f"🚨 SDK Bug detected: {bug_details}")
 
-        # Respond to function call using current SDK structure (even though it's wrong)
+        # Respond to function call using new API structure
         try:
-            if hasattr(function_call_request, 'function_call_id'):
-                # Use SDK's incorrect structure
+            if function_call_request.functions and len(function_call_request.functions) > 0:
+                # Use new API spec structure
+                first_function = function_call_request.functions[0]
                 response = FunctionCallResponse(
-                    function_call_id=function_call_request.function_call_id,
-                    output=json.dumps({
+                    id=first_function.id,
+                    name=first_function.name,
+                    content=json.dumps({
                         "success": True,
                         "result": "Mock function response",
                         "timestamp": time.time()
                     })
                 )
-                dg_connection.send_function_call_response(response)
-                print(f"✓ Function call response sent using SDK structure")
+                dg_connection.send(response.to_json())
+                print(f"✓ Function call response sent using new API structure")
             else:
-                print(f"❌ Cannot respond to function call - no function_call_id field")
+                print(f"❌ Cannot respond to function call - no functions in request")
         except Exception as e:
             print(f"❌ Function call response failed: {e}")
             received_events.append({
@@ -409,7 +429,13 @@ def test_daily_agent_websocket(test_case: Dict[str, Any]):
     try:
         # Create enhanced settings from test case
         settings = SettingsOptions()
-        settings.agent = test_case["agent_config"]
+
+        # Handle special agent tags test case by adding tags to the config
+        agent_config = test_case["agent_config"].copy()
+        if test_case.get("test_agent_tags", False):
+            agent_config["tags"] = ["test", "daily"]
+
+        settings.agent = agent_config
         settings.experimental = True  # Enable experimental features
 
         print(f"🔧 Starting connection with settings: {settings.to_dict()}")
@@ -521,6 +547,25 @@ def test_daily_agent_websocket(test_case: Dict[str, Any]):
             assert len(conversation_text_list) > 0, f"Test ID: {unique} - Should receive conversation text"
             print(f"✓ Conversation flow validated ({len(conversation_text_list)} conversation texts)")
 
+        # Test 5a: Validate agent tags configuration
+        if test_case.get("test_agent_tags", False):
+            print("\n--- Agent Tags Validation ---")
+            # Verify tags were properly set in the agent configuration
+            expected_tags = test_case["agent_config"].get("tags", [])
+            if expected_tags:
+                # Verify settings contain the expected tags
+                settings_dict = settings.to_dict()
+                agent_tags = settings_dict.get("agent", {}).get("tags", [])
+                assert agent_tags == expected_tags, f"Test ID: {unique} - Agent tags should match expected tags"
+                print(f"✓ Agent tags validated: {agent_tags}")
+
+                # Verify tags are properly formatted (list of strings)
+                assert isinstance(agent_tags, list), f"Test ID: {unique} - Tags should be a list"
+                assert all(isinstance(tag, str) for tag in agent_tags), f"Test ID: {unique} - All tags should be strings"
+                print(f"✓ Agent tags format validated: {len(agent_tags)} tags, all strings")
+            else:
+                print("ℹ️  No tags specified for this test case")
+
         # Test 6: Validate function calls and detect SDK bugs
         if test_case.get("test_function_calls", False):
             print("\n--- Function Call Analysis ---")
@@ -611,6 +656,11 @@ def test_daily_agent_websocket(test_case: Dict[str, Any]):
     print(f"   Function calls: {len(function_calls)}")
     print(f"   SDK bugs detected: {len(function_call_bugs)}")
     print(f"   Injection refused: {len(injection_refused_events)}")
+
+    # Report agent tags information if applicable
+    if test_case.get("test_agent_tags", False):
+        expected_tags = test_case["agent_config"].get("tags", [])
+        print(f"   Agent tags tested: {expected_tags}")
 
     # Count and report unhandled events
     unhandled_events = [e for e in received_events if e["type"] == "Unhandled"]

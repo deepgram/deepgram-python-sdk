@@ -1,0 +1,26 @@
+[
+  {
+    "type": "Welcome",
+    "timestamp": 1753219310.077087,
+    "data": {
+      "type": "Welcome",
+      "request_id": "dec2fbbe-a4dc-41d2-94f7-08ede6ba9ca2"
+    }
+  },
+  {
+    "type": "Open",
+    "timestamp": 1753219310.0772,
+    "data": {
+      "type": "Open"
+    }
+  },
+  {
+    "type": "Error",
+    "timestamp": 1753219310.116746,
+    "data": {
+      "description": "Error parsing client message. Check the agent.tags field against the API spec.",
+      "message": "",
+      "type": "Error"
+    }
+  }
+]

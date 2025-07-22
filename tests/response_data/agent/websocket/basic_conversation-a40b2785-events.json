@@ -1,29 +1,29 @@
 [
   {
     "type": "Welcome",
-    "timestamp": 1753203336.429816,
+    "timestamp": 1753219281.41069,
     "data": {
       "type": "Welcome",
-      "request_id": "082a5910-d8d2-46bf-bb5b-041d72608b6a"
+      "request_id": "772095bc-1657-46ff-b1b6-8cfa818e07c0"
     }
   },
   {
     "type": "Open",
-    "timestamp": 1753203336.429893,
+    "timestamp": 1753219281.410957,
     "data": {
       "type": "Open"
     }
   },
   {
     "type": "SettingsApplied",
-    "timestamp": 1753203336.4700532,
+    "timestamp": 1753219281.452846,
     "data": {
       "type": "SettingsApplied"
     }
   },
   {
     "type": "ConversationText",
-    "timestamp": 1753203337.479187,
+    "timestamp": 1753219282.4607658,
     "data": {
       "type": "ConversationText",
       "role": "user",
@@ -32,7 +32,7 @@
   },
   {
     "type": "Unhandled",
-    "timestamp": 1753203337.479456,
+    "timestamp": 1753219282.461718,
     "data": {
       "type": "Unhandled",
       "raw": "{\"type\":\"History\",\"role\":\"user\",\"content\":\"Hello, can you help me with a simple question?\"}"
@@ -40,7 +40,7 @@
   },
   {
     "type": "Unhandled",
-    "timestamp": 1753203337.479625,
+    "timestamp": 1753219282.462167,
     "data": {
       "type": "Unhandled",
       "raw": "{\"type\":\"EndOfThought\"}"
@@ -48,7 +48,7 @@
   },
   {
     "type": "ConversationText",
-    "timestamp": 1753203338.188013,
+    "timestamp": 1753219283.229033,
     "data": {
       "type": "ConversationText",
       "role": "assistant",
@@ -57,7 +57,7 @@
   },
   {
     "type": "Unhandled",
-    "timestamp": 1753203338.188781,
+    "timestamp": 1753219283.229741,
     "data": {
       "type": "Unhandled",
       "raw": "{\"type\":\"History\",\"role\":\"assistant\",\"content\":\"Of course!\"}"
@@ -65,16 +65,16 @@
   },
   {
     "type": "AgentStartedSpeaking",
-    "timestamp": 1753203338.210849,
+    "timestamp": 1753219283.2303739,
     "data": {
-      "total_latency": 0.697808067,
-      "tts_latency": 0.328015878,
-      "ttt_latency": 0.369791813
+      "total_latency": 0.772759896,
+      "tts_latency": 0.307324524,
+      "ttt_latency": 0.465435224
     }
   },
   {
     "type": "ConversationText",
-    "timestamp": 1753203338.988863,
+    "timestamp": 1753219283.963474,
     "data": {
       "type": "ConversationText",
       "role": "user",
@@ -83,7 +83,7 @@
   },
   {
     "type": "Unhandled",
-    "timestamp": 1753203338.989373,
+    "timestamp": 1753219283.96488,
     "data": {
       "type": "Unhandled",
       "raw": "{\"type\":\"History\",\"role\":\"user\",\"content\":\"What is 2 + 2?\"}"
@@ -91,7 +91,7 @@
   },
   {
     "type": "Unhandled",
-    "timestamp": 1753203338.9896162,
+    "timestamp": 1753219283.965205,
     "data": {
       "type": "Unhandled",
       "raw": "{\"type\":\"EndOfThought\"}"
@@ -99,14 +99,47 @@
   },
   {
     "type": "AgentAudioDone",
-    "timestamp": 1753203338.989822,
+    "timestamp": 1753219283.9655879,
     "data": {
       "type": "AgentAudioDone"
     }
   },
   {
     "type": "ConversationText",
-    "timestamp": 1753203340.495636,
+    "timestamp": 1753219284.900428,
+    "data": {
+      "type": "ConversationText",
+      "role": "assistant",
+      "content": "2 + 2 equals 4!"
+    }
+  },
+  {
+    "type": "Unhandled",
+    "timestamp": 1753219284.900877,
+    "data": {
+      "type": "Unhandled",
+      "raw": "{\"type\":\"History\",\"role\":\"assistant\",\"content\":\"2 + 2 equals 4!\"}"
+    }
+  },
+  {
+    "type": "AgentStartedSpeaking",
+    "timestamp": 1753219284.9012392,
+    "data": {
+      "total_latency": 0.938680761,
+      "tts_latency": 0.368475985,
+      "ttt_latency": 0.570204632
+    }
+  },
+  {
+    "type": "AgentAudioDone",
+    "timestamp": 1753219285.265577,
+    "data": {
+      "type": "AgentAudioDone"
+    }
+  },
+  {
+    "type": "ConversationText",
+    "timestamp": 1753219285.465951,
     "data": {
       "type": "ConversationText",
       "role": "user",
@@ -115,7 +148,7 @@
   },
   {
     "type": "Unhandled",
-    "timestamp": 1753203340.496216,
+    "timestamp": 1753219285.466645,
     "data": {
       "type": "Unhandled",
       "raw": "{\"type\":\"History\",\"role\":\"user\",\"content\":\"Thank you for your help.\"}"
@@ -123,7 +156,7 @@
   },
   {
     "type": "Unhandled",
-    "timestamp": 1753203340.496487,
+    "timestamp": 1753219285.46726,
     "data": {
       "type": "Unhandled",
       "raw": "{\"type\":\"EndOfThought\"}"
@@ -131,33 +164,7 @@
   },
   {
     "type": "ConversationText",
-    "timestamp": 1753203341.735554,
-    "data": {
-      "type": "ConversationText",
-      "role": "assistant",
-      "content": "2 + 2 equals 4."
-    }
-  },
-  {
-    "type": "Unhandled",
-    "timestamp": 1753203341.736407,
-    "data": {
-      "type": "Unhandled",
-      "raw": "{\"type\":\"History\",\"role\":\"assistant\",\"content\":\"2 + 2 equals 4.\"}"
-    }
-  },
-  {
-    "type": "AgentStartedSpeaking",
-    "timestamp": 1753203341.736911,
-    "data": {
-      "total_latency": 1.239211232,
-      "tts_latency": 0.324056078,
-      "ttt_latency": 0.915154734
-    }
-  },
-  {
-    "type": "ConversationText",
-    "timestamp": 1753203344.137312,
+    "timestamp": 1753219286.057046,
     "data": {
       "type": "ConversationText",
       "role": "assistant",
@@ -166,15 +173,41 @@
   },
   {
     "type": "Unhandled",
-    "timestamp": 1753203344.137831,
+    "timestamp": 1753219286.05823,
     "data": {
       "type": "Unhandled",
       "raw": "{\"type\":\"History\",\"role\":\"assistant\",\"content\":\"You're welcome!\"}"
     }
   },
   {
+    "type": "AgentStartedSpeaking",
+    "timestamp": 1753219286.058699,
+    "data": {
+      "total_latency": 0.591201329,
+      "tts_latency": 0.296251193,
+      "ttt_latency": 0.294949977
+    }
+  },
+  {
+    "type": "ConversationText",
+    "timestamp": 1753219287.1395469,
+    "data": {
+      "type": "ConversationText",
+      "role": "assistant",
+      "content": "If you have any more questions, feel free to ask!"
+    }
+  },
+  {
+    "type": "Unhandled",
+    "timestamp": 1753219287.1406322,
+    "data": {
+      "type": "Unhandled",
+      "raw": "{\"type\":\"History\",\"role\":\"assistant\",\"content\":\"If you have any more questions, feel free to ask!\"}"
+    }
+  },
+  {
     "type": "AgentAudioDone",
-    "timestamp": 1753203344.154071,
+    "timestamp": 1753219287.255647,
     "data": {
       "type": "AgentAudioDone"
     }

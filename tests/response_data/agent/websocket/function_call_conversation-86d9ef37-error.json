@@ -1,0 +1,33 @@
+{
+  "error": "Test ID: function_call_conversation-86d9ef37 - InjectUserMessage should succeed for message 1\nassert False",
+  "events": [
+    {
+      "type": "Welcome",
+      "timestamp": 1753219642.2740219,
+      "data": {
+        "type": "Welcome",
+        "request_id": "2e827d44-60c1-4669-85b4-e0cae9d5a3a6"
+      }
+    },
+    {
+      "type": "Open",
+      "timestamp": 1753219642.274113,
+      "data": {
+        "type": "Open"
+      }
+    },
+    {
+      "type": "Error",
+      "timestamp": 1753219642.333447,
+      "data": {
+        "description": "Failed to resolve endpoint: https://api.example.com/weather",
+        "message": "",
+        "type": "Error"
+      }
+    }
+  ],
+  "function_calls": [],
+  "function_call_bugs": [],
+  "conversation_texts": [],
+  "injection_refused": []
+}

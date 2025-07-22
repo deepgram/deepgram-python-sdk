@@ -1,0 +1,26 @@
+[
+  {
+    "type": "Welcome",
+    "timestamp": 1753214320.69774,
+    "data": {
+      "type": "Welcome",
+      "request_id": "4623ed85-3bd6-44f4-8273-d954914f55f3"
+    }
+  },
+  {
+    "type": "Open",
+    "timestamp": 1753214320.6978738,
+    "data": {
+      "type": "Open"
+    }
+  },
+  {
+    "type": "Error",
+    "timestamp": 1753214320.7371142,
+    "data": {
+      "description": "Error parsing client message. Check the agent.think.functions[0].method field against the API spec.",
+      "message": "",
+      "type": "Error"
+    }
+  }
+]
