@@ -60,11 +60,9 @@ class TestAgentTags:
         result = options.to_dict()
 
         # With default None and exclude=lambda f: f is None metadata,
-        # the field should be excluded from serialization when it's None
+        # the field should be excluded from serialization entirely when it's None
         assert "agent" in result
-        # tags should not be present in the serialized dict when None
-        if "tags" in result.get("agent", {}):
-            assert result["agent"]["tags"] is None
+        assert "tags" not in result["agent"], "tags field should be excluded when None"
 
     def test_tags_serialization_with_values(self):
         """Test that tags with values is included in serialization"""
