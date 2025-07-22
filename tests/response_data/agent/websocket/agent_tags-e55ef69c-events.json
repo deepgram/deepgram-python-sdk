@@ -1,26 +1,157 @@
 [
   {
     "type": "Welcome",
-    "timestamp": 1753219310.077087,
+    "timestamp": 1753227768.859661,
     "data": {
       "type": "Welcome",
-      "request_id": "dec2fbbe-a4dc-41d2-94f7-08ede6ba9ca2"
+      "request_id": "fa081638-9b0f-4bca-bf2c-171834e47c63"
     }
   },
   {
     "type": "Open",
-    "timestamp": 1753219310.0772,
+    "timestamp": 1753227768.859784,
     "data": {
       "type": "Open"
     }
   },
   {
-    "type": "Error",
-    "timestamp": 1753219310.116746,
+    "type": "SettingsApplied",
+    "timestamp": 1753227768.899924,
     "data": {
-      "description": "Error parsing client message. Check the agent.tags field against the API spec.",
-      "message": "",
-      "type": "Error"
+      "type": "SettingsApplied"
+    }
+  },
+  {
+    "type": "ConversationText",
+    "timestamp": 1753227769.902178,
+    "data": {
+      "type": "ConversationText",
+      "role": "user",
+      "content": "Hello, this is a test of agent tags functionality."
+    }
+  },
+  {
+    "type": "Unhandled",
+    "timestamp": 1753227769.9026618,
+    "data": {
+      "type": "Unhandled",
+      "raw": "{\"type\":\"History\",\"role\":\"user\",\"content\":\"Hello, this is a test of agent tags functionality.\"}"
+    }
+  },
+  {
+    "type": "Unhandled",
+    "timestamp": 1753227769.902944,
+    "data": {
+      "type": "Unhandled",
+      "raw": "{\"type\":\"EndOfThought\"}"
+    }
+  },
+  {
+    "type": "ConversationText",
+    "timestamp": 1753227770.8069482,
+    "data": {
+      "type": "ConversationText",
+      "role": "assistant",
+      "content": "Hello!"
+    }
+  },
+  {
+    "type": "Unhandled",
+    "timestamp": 1753227770.808238,
+    "data": {
+      "type": "Unhandled",
+      "raw": "{\"type\":\"History\",\"role\":\"assistant\",\"content\":\"Hello!\"}"
+    }
+  },
+  {
+    "type": "AgentStartedSpeaking",
+    "timestamp": 1753227770.809474,
+    "data": {
+      "total_latency": 0.899556415,
+      "tts_latency": 0.292038154,
+      "ttt_latency": 0.607518048
+    }
+  },
+  {
+    "type": "ConversationText",
+    "timestamp": 1753227771.41433,
+    "data": {
+      "type": "ConversationText",
+      "role": "user",
+      "content": "Can you confirm you are working with tags enabled?"
+    }
+  },
+  {
+    "type": "Unhandled",
+    "timestamp": 1753227771.414956,
+    "data": {
+      "type": "Unhandled",
+      "raw": "{\"type\":\"History\",\"role\":\"user\",\"content\":\"Can you confirm you are working with tags enabled?\"}"
+    }
+  },
+  {
+    "type": "Unhandled",
+    "timestamp": 1753227771.415602,
+    "data": {
+      "type": "Unhandled",
+      "raw": "{\"type\":\"EndOfThought\"}"
+    }
+  },
+  {
+    "type": "AgentAudioDone",
+    "timestamp": 1753227771.415809,
+    "data": {
+      "type": "AgentAudioDone"
+    }
+  },
+  {
+    "type": "ConversationText",
+    "timestamp": 1753227772.2835531,
+    "data": {
+      "type": "ConversationText",
+      "role": "assistant",
+      "content": "Yes, I can confirm that I am capable of working with tags."
+    }
+  },
+  {
+    "type": "Unhandled",
+    "timestamp": 1753227772.284348,
+    "data": {
+      "type": "Unhandled",
+      "raw": "{\"type\":\"History\",\"role\":\"assistant\",\"content\":\"Yes, I can confirm that I am capable of working with tags.\"}"
+    }
+  },
+  {
+    "type": "AgentStartedSpeaking",
+    "timestamp": 1753227772.2850182,
+    "data": {
+      "total_latency": 0.775661168,
+      "tts_latency": 0.294746921,
+      "ttt_latency": 0.480914027
+    }
+  },
+  {
+    "type": "ConversationText",
+    "timestamp": 1753227775.969724,
+    "data": {
+      "type": "ConversationText",
+      "role": "assistant",
+      "content": "How can I assist you with tags today?"
+    }
+  },
+  {
+    "type": "Unhandled",
+    "timestamp": 1753227775.970811,
+    "data": {
+      "type": "Unhandled",
+      "raw": "{\"type\":\"History\",\"role\":\"assistant\",\"content\":\"How can I assist you with tags today?\"}"
+    }
+  },
+  {
+    "type": "AgentAudioDone",
+    "timestamp": 1753227776.050046,
+    "data": {
+      "type": "AgentAudioDone"
     }
   }
 ]

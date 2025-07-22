@@ -1,29 +1,29 @@
 [
   {
     "type": "Welcome",
-    "timestamp": 1753219298.635536,
+    "timestamp": 1753227717.23721,
     "data": {
       "type": "Welcome",
-      "request_id": "d923581c-c27b-4d96-aef0-643fbae5e0fb"
+      "request_id": "60bb7911-f88e-4e44-b4a7-b43f73191a0a"
     }
   },
   {
     "type": "Open",
-    "timestamp": 1753219298.63597,
+    "timestamp": 1753227717.244735,
     "data": {
       "type": "Open"
     }
   },
   {
     "type": "SettingsApplied",
-    "timestamp": 1753219298.67933,
+    "timestamp": 1753227717.285293,
     "data": {
       "type": "SettingsApplied"
     }
   },
   {
     "type": "ConversationText",
-    "timestamp": 1753219299.690475,
+    "timestamp": 1753227718.295187,
     "data": {
       "type": "ConversationText",
       "role": "user",
@@ -32,7 +32,7 @@
   },
   {
     "type": "Unhandled",
-    "timestamp": 1753219299.690911,
+    "timestamp": 1753227718.295889,
     "data": {
       "type": "Unhandled",
       "raw": "{\"type\":\"History\",\"role\":\"user\",\"content\":\"Hello, I'm going to inject some agent messages.\"}"
@@ -40,7 +40,7 @@
   },
   {
     "type": "Unhandled",
-    "timestamp": 1753219299.691176,
+    "timestamp": 1753227718.296138,
     "data": {
       "type": "Unhandled",
       "raw": "{\"type\":\"EndOfThought\"}"
@@ -48,57 +48,57 @@
   },
   {
     "type": "ConversationText",
-    "timestamp": 1753219300.442058,
+    "timestamp": 1753227718.984404,
     "data": {
       "type": "ConversationText",
       "role": "assistant",
-      "content": "Sure!"
+      "content": "Sure, go ahead!"
     }
   },
   {
     "type": "Unhandled",
-    "timestamp": 1753219300.443295,
+    "timestamp": 1753227718.984961,
     "data": {
       "type": "Unhandled",
-      "raw": "{\"type\":\"History\",\"role\":\"assistant\",\"content\":\"Sure!\"}"
+      "raw": "{\"type\":\"History\",\"role\":\"assistant\",\"content\":\"Sure, go ahead!\"}"
     }
   },
   {
     "type": "AgentStartedSpeaking",
-    "timestamp": 1753219300.444074,
+    "timestamp": 1753227718.985353,
     "data": {
-      "total_latency": 0.695635887,
-      "tts_latency": 0.26384091,
-      "ttt_latency": 0.431794651
+      "total_latency": 0.694540312,
+      "tts_latency": 0.306018085,
+      "ttt_latency": 0.388521758
     }
   },
   {
     "type": "ConversationText",
-    "timestamp": 1753219300.980101,
+    "timestamp": 1753227720.546889,
     "data": {
       "type": "ConversationText",
       "role": "assistant",
-      "content": "Go ahead and inject those messages whenever you're ready."
+      "content": "What do you need help with?"
     }
   },
   {
     "type": "Unhandled",
-    "timestamp": 1753219300.980541,
+    "timestamp": 1753227720.5487318,
     "data": {
       "type": "Unhandled",
-      "raw": "{\"type\":\"History\",\"role\":\"assistant\",\"content\":\"Go ahead and inject those messages whenever you're ready.\"}"
+      "raw": "{\"type\":\"History\",\"role\":\"assistant\",\"content\":\"What do you need help with?\"}"
     }
   },
   {
     "type": "AgentAudioDone",
-    "timestamp": 1753219301.379833,
+    "timestamp": 1753227720.571433,
     "data": {
       "type": "AgentAudioDone"
     }
   },
   {
     "type": "ConversationText",
-    "timestamp": 1753219301.771287,
+    "timestamp": 1753227720.8562078,
     "data": {
       "type": "ConversationText",
       "role": "assistant",
@@ -107,7 +107,7 @@
   },
   {
     "type": "Unhandled",
-    "timestamp": 1753219301.772002,
+    "timestamp": 1753227720.856742,
     "data": {
       "type": "Unhandled",
       "raw": "{\"type\":\"History\",\"role\":\"assistant\",\"content\":\"Hello! I'm an agent message injected directly.\"}"
@@ -115,14 +115,14 @@
   },
   {
     "type": "AgentAudioDone",
-    "timestamp": 1753219302.426421,
+    "timestamp": 1753227721.576858,
     "data": {
       "type": "AgentAudioDone"
     }
   },
   {
     "type": "ConversationText",
-    "timestamp": 1753219303.0076108,
+    "timestamp": 1753227722.209704,
     "data": {
       "type": "ConversationText",
       "role": "assistant",
@@ -131,7 +131,7 @@
   },
   {
     "type": "Unhandled",
-    "timestamp": 1753219303.013221,
+    "timestamp": 1753227722.210735,
     "data": {
       "type": "Unhandled",
       "raw": "{\"type\":\"History\",\"role\":\"assistant\",\"content\":\"This is another agent message to test the functionality.\"}"
@@ -139,7 +139,7 @@
   },
   {
     "type": "AgentAudioDone",
-    "timestamp": 1753219303.867712,
+    "timestamp": 1753227722.886472,
     "data": {
       "type": "AgentAudioDone"
     }

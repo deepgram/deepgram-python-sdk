@@ -1,29 +1,29 @@
 [
   {
     "type": "Welcome",
-    "timestamp": 1753219281.41069,
+    "timestamp": 1753227666.100551,
     "data": {
       "type": "Welcome",
-      "request_id": "772095bc-1657-46ff-b1b6-8cfa818e07c0"
+      "request_id": "f1946023-ebdf-4b5b-acea-eebf1a64099c"
     }
   },
   {
     "type": "Open",
-    "timestamp": 1753219281.410957,
+    "timestamp": 1753227666.1006238,
     "data": {
       "type": "Open"
     }
   },
   {
     "type": "SettingsApplied",
-    "timestamp": 1753219281.452846,
+    "timestamp": 1753227666.140966,
     "data": {
       "type": "SettingsApplied"
     }
   },
   {
     "type": "ConversationText",
-    "timestamp": 1753219282.4607658,
+    "timestamp": 1753227667.143826,
     "data": {
       "type": "ConversationText",
       "role": "user",
@@ -32,7 +32,7 @@
   },
   {
     "type": "Unhandled",
-    "timestamp": 1753219282.461718,
+    "timestamp": 1753227667.144792,
     "data": {
       "type": "Unhandled",
       "raw": "{\"type\":\"History\",\"role\":\"user\",\"content\":\"Hello, can you help me with a simple question?\"}"
@@ -40,7 +40,7 @@
   },
   {
     "type": "Unhandled",
-    "timestamp": 1753219282.462167,
+    "timestamp": 1753227667.1452649,
     "data": {
       "type": "Unhandled",
       "raw": "{\"type\":\"EndOfThought\"}"
@@ -48,7 +48,7 @@
   },
   {
     "type": "ConversationText",
-    "timestamp": 1753219283.229033,
+    "timestamp": 1753227667.835079,
     "data": {
       "type": "ConversationText",
       "role": "assistant",
@@ -57,7 +57,7 @@
   },
   {
     "type": "Unhandled",
-    "timestamp": 1753219283.229741,
+    "timestamp": 1753227667.8356779,
     "data": {
       "type": "Unhandled",
       "raw": "{\"type\":\"History\",\"role\":\"assistant\",\"content\":\"Of course!\"}"
@@ -65,16 +65,40 @@
   },
   {
     "type": "AgentStartedSpeaking",
-    "timestamp": 1753219283.2303739,
+    "timestamp": 1753227667.8361442,
     "data": {
-      "total_latency": 0.772759896,
-      "tts_latency": 0.307324524,
-      "ttt_latency": 0.465435224
+      "total_latency": 0.621795885,
+      "tts_latency": 0.320229048,
+      "ttt_latency": 0.301566666
     }
   },
   {
     "type": "ConversationText",
-    "timestamp": 1753219283.963474,
+    "timestamp": 1753227668.646663,
+    "data": {
+      "type": "ConversationText",
+      "role": "assistant",
+      "content": "What\u2019s your question?"
+    }
+  },
+  {
+    "type": "Unhandled",
+    "timestamp": 1753227668.653588,
+    "data": {
+      "type": "Unhandled",
+      "raw": "{\"type\":\"History\",\"role\":\"assistant\",\"content\":\"What\u2019s your question?\"}"
+    }
+  },
+  {
+    "type": "AgentAudioDone",
+    "timestamp": 1753227668.680437,
+    "data": {
+      "type": "AgentAudioDone"
+    }
+  },
+  {
+    "type": "ConversationText",
+    "timestamp": 1753227668.693471,
     "data": {
       "type": "ConversationText",
       "role": "user",
@@ -83,7 +107,7 @@
   },
   {
     "type": "Unhandled",
-    "timestamp": 1753219283.96488,
+    "timestamp": 1753227668.693804,
     "data": {
       "type": "Unhandled",
       "raw": "{\"type\":\"History\",\"role\":\"user\",\"content\":\"What is 2 + 2?\"}"
@@ -91,22 +115,15 @@
   },
   {
     "type": "Unhandled",
-    "timestamp": 1753219283.965205,
+    "timestamp": 1753227668.694011,
     "data": {
       "type": "Unhandled",
       "raw": "{\"type\":\"EndOfThought\"}"
     }
   },
   {
-    "type": "AgentAudioDone",
-    "timestamp": 1753219283.9655879,
-    "data": {
-      "type": "AgentAudioDone"
-    }
-  },
-  {
     "type": "ConversationText",
-    "timestamp": 1753219284.900428,
+    "timestamp": 1753227669.544214,
     "data": {
       "type": "ConversationText",
       "role": "assistant",
@@ -115,7 +132,7 @@
   },
   {
     "type": "Unhandled",
-    "timestamp": 1753219284.900877,
+    "timestamp": 1753227669.5447512,
     "data": {
       "type": "Unhandled",
       "raw": "{\"type\":\"History\",\"role\":\"assistant\",\"content\":\"2 + 2 equals 4!\"}"
@@ -123,23 +140,23 @@
   },
   {
     "type": "AgentStartedSpeaking",
-    "timestamp": 1753219284.9012392,
+    "timestamp": 1753227669.545132,
     "data": {
-      "total_latency": 0.938680761,
-      "tts_latency": 0.368475985,
-      "ttt_latency": 0.570204632
+      "total_latency": 0.883424541,
+      "tts_latency": 0.334757401,
+      "ttt_latency": 0.548667063
     }
   },
   {
     "type": "AgentAudioDone",
-    "timestamp": 1753219285.265577,
+    "timestamp": 1753227669.989839,
     "data": {
       "type": "AgentAudioDone"
     }
   },
   {
     "type": "ConversationText",
-    "timestamp": 1753219285.465951,
+    "timestamp": 1753227670.165709,
     "data": {
       "type": "ConversationText",
       "role": "user",
@@ -148,7 +165,7 @@
   },
   {
     "type": "Unhandled",
-    "timestamp": 1753219285.466645,
+    "timestamp": 1753227670.166462,
     "data": {
       "type": "Unhandled",
       "raw": "{\"type\":\"History\",\"role\":\"user\",\"content\":\"Thank you for your help.\"}"
@@ -156,7 +173,7 @@
   },
   {
     "type": "Unhandled",
-    "timestamp": 1753219285.46726,
+    "timestamp": 1753227670.1669571,
     "data": {
       "type": "Unhandled",
       "raw": "{\"type\":\"EndOfThought\"}"
@@ -164,33 +181,33 @@
   },
   {
     "type": "ConversationText",
-    "timestamp": 1753219286.057046,
+    "timestamp": 1753227671.462424,
     "data": {
       "type": "ConversationText",
       "role": "assistant",
-      "content": "You're welcome!"
+      "content": "You\u2019re welcome!"
     }
   },
   {
     "type": "Unhandled",
-    "timestamp": 1753219286.05823,
+    "timestamp": 1753227671.4668841,
     "data": {
       "type": "Unhandled",
-      "raw": "{\"type\":\"History\",\"role\":\"assistant\",\"content\":\"You're welcome!\"}"
+      "raw": "{\"type\":\"History\",\"role\":\"assistant\",\"content\":\"You\u2019re welcome!\"}"
     }
   },
   {
     "type": "AgentStartedSpeaking",
-    "timestamp": 1753219286.058699,
+    "timestamp": 1753227671.4679081,
     "data": {
-      "total_latency": 0.591201329,
-      "tts_latency": 0.296251193,
-      "ttt_latency": 0.294949977
+      "total_latency": 1.296888864,
+      "tts_latency": 0.302491265,
+      "ttt_latency": 0.994397511
     }
   },
   {
     "type": "ConversationText",
-    "timestamp": 1753219287.1395469,
+    "timestamp": 1753227672.655342,
     "data": {
       "type": "ConversationText",
       "role": "assistant",
@@ -199,7 +216,7 @@
   },
   {
     "type": "Unhandled",
-    "timestamp": 1753219287.1406322,
+    "timestamp": 1753227672.6601222,
     "data": {
       "type": "Unhandled",
       "raw": "{\"type\":\"History\",\"role\":\"assistant\",\"content\":\"If you have any more questions, feel free to ask!\"}"
@@ -207,7 +224,7 @@
   },
   {
     "type": "AgentAudioDone",
-    "timestamp": 1753219287.255647,
+    "timestamp": 1753227672.691493,
     "data": {
       "type": "AgentAudioDone"
     }

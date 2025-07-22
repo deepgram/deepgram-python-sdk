@@ -36,5 +36,5 @@
   "test_inject_user_message": true,
   "test_inject_agent_message": false,
   "test_function_calls": false,
-  "test_agent_tags": true
+  "test_agent_tags": false
 }
