@@ -321,7 +321,7 @@ class Context(BaseResponse):
 
 
 @dataclass
-class Agent(BaseResponse):
+class Agent(BaseResponse):  # pylint: disable=too-many-instance-attributes
     """
     This class defines any configuration settings for the Agent model.
     """
