@@ -42,6 +42,7 @@ from .websocket import (
     InjectUserMessageOptions,
     FunctionCallResponse,
     AgentKeepAlive,
+    Flags,
     # sub level
     Listen,
     Speak,
@@ -57,4 +58,8 @@ from .websocket import (
     Output,
     Audio,
     Endpoint,
+    Context,
+    HistoryConversationMessage,
+    HistoryFunctionCallsMessage,
+    FunctionCallHistory,
 )

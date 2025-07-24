@@ -33,6 +33,7 @@ from .options import (
     InjectUserMessageOptions,
     FunctionCallResponse,
     AgentKeepAlive,
+    Flags,
     # sub level
     Listen,
     Speak,
@@ -48,4 +49,8 @@ from .options import (
     Output,
     Audio,
     Endpoint,
+    Context,
+    HistoryConversationMessage,
+    HistoryFunctionCallsMessage,
+    FunctionCallHistory,
 )

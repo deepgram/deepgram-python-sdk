@@ -37,6 +37,7 @@ from .v1 import (
     InjectUserMessageOptions as LatestInjectUserMessageOptions,
     FunctionCallResponse as LatestFunctionCallResponse,
     AgentKeepAlive as LatestAgentKeepAlive,
+    Flags as LatestFlags,
     # sub level
     Listen as LatestListen,
     Speak as LatestSpeak,
@@ -52,6 +53,10 @@ from .v1 import (
     Output as LatestOutput,
     Audio as LatestAudio,
     Endpoint as LatestEndpoint,
+    Context as LatestContext,
+    HistoryConversationMessage as LatestHistoryConversationMessage,
+    HistoryFunctionCallsMessage as LatestHistoryFunctionCallsMessage,
+    FunctionCallHistory as LatestFunctionCallHistory,
 )
 
 
@@ -85,6 +90,7 @@ InjectAgentMessageOptions = LatestInjectAgentMessageOptions
 InjectUserMessageOptions = LatestInjectUserMessageOptions
 FunctionCallResponse = LatestFunctionCallResponse
 AgentKeepAlive = LatestAgentKeepAlive
+Flags = LatestFlags
 
 Listen = LatestListen
 Speak = LatestSpeak
@@ -100,3 +106,7 @@ Input = LatestInput
 Output = LatestOutput
 Audio = LatestAudio
 Endpoint = LatestEndpoint
+Context = LatestContext
+HistoryConversationMessage = LatestHistoryConversationMessage
+HistoryFunctionCallsMessage = LatestHistoryFunctionCallsMessage
+FunctionCallHistory = LatestFunctionCallHistory
