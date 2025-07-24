@@ -244,6 +244,82 @@ class Speak(BaseResponse):
         return _dict[key]
 
 
+# History and Context classes for Function Call Context / History feature
+
+@dataclass
+class Flags(BaseResponse):
+    """
+    This class defines configuration flags for the agent settings.
+    """
+
+    history: bool = field(default=True)
+
+
+@dataclass
+class HistoryConversationMessage(BaseResponse):
+    """
+    This class defines a conversation text message as part of the conversation history.
+    """
+
+    type: str = field(default="History")
+    role: str = field(default="")  # "user" or "assistant"
+    content: str = field(default="")
+
+
+@dataclass
+class FunctionCallHistory(BaseResponse):
+    """
+    This class defines a single function call in the history.
+    """
+
+    id: str = field(default="")
+    name: str = field(default="")
+    client_side: bool = field(default=False)
+    arguments: str = field(default="")
+    response: str = field(default="")
+
+
+@dataclass
+class HistoryFunctionCallsMessage(BaseResponse):
+    """
+    This class defines function call messages as part of the conversation history.
+    """
+
+    type: str = field(default="History")
+    function_calls: List[FunctionCallHistory] = field(default_factory=list)
+
+    def __post_init__(self):
+        """Convert dict function_calls to FunctionCallHistory objects if needed."""
+        if self.function_calls:
+            self.function_calls = [
+                FunctionCallHistory.from_dict(call) if isinstance(call, dict) else call
+                for call in self.function_calls
+            ]
+
+
+@dataclass
+class Context(BaseResponse):
+    """
+    This class defines the conversation context including the history of messages and function calls.
+    """
+
+    messages: List[Union[HistoryConversationMessage, HistoryFunctionCallsMessage]] = field(default_factory=list)
+
+    def __post_init__(self):
+        """Convert dict messages to appropriate message objects if needed."""
+        if self.messages:
+            converted_messages = []
+            for message in self.messages:
+                if isinstance(message, dict):
+                    if "function_calls" in message:
+                        converted_messages.append(HistoryFunctionCallsMessage.from_dict(message))
+                    else:
+                        converted_messages.append(HistoryConversationMessage.from_dict(message))
+                else:
+                    converted_messages.append(message)
+            self.messages = converted_messages
+
+
 @dataclass
 class Agent(BaseResponse):
     """
@@ -277,6 +353,9 @@ class Agent(BaseResponse):
     tags: Optional[List[str]] = field(
         default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
+    context: Optional[Context] = field(
+        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
+    )
 
     def __post_init__(self):
         """Handle conversion of dict/list data to proper Speak objects"""
@@ -300,6 +379,8 @@ class Agent(BaseResponse):
                 _dict["speak"] = [Speak.from_dict(item) for item in _dict["speak"]]
             elif isinstance(_dict["speak"], dict):
                 _dict["speak"] = Speak.from_dict(_dict["speak"])
+        if "context" in _dict and isinstance(_dict["context"], dict):
+            _dict["context"] = Context.from_dict(_dict["context"])
         return _dict[key]
 
 
@@ -355,6 +436,9 @@ class SettingsOptions(BaseResponse):
     type: str = str(AgentWebSocketEvents.Settings)
     audio: Audio = field(default_factory=Audio)
     agent: Agent = field(default_factory=Agent)
+    flags: Optional[Flags] = field(
+        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
+    )
 
     def __getitem__(self, key):
         _dict = self.to_dict()
@@ -362,6 +446,9 @@ class SettingsOptions(BaseResponse):
             _dict["audio"] = Audio.from_dict(_dict["audio"])
         if "agent" in _dict and isinstance(_dict["agent"], dict):
             _dict["agent"] = Agent.from_dict(_dict["agent"])
+        if "flags" in _dict and isinstance(_dict["flags"], dict):
+            _dict["flags"] = Flags.from_dict(_dict["flags"])
+        return _dict[key]
 
     def check(self):
         """
