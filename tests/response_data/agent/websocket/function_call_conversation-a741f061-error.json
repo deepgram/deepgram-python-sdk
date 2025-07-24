@@ -1,0 +1,33 @@
+{
+  "error": "Test ID: function_call_conversation-a741f061 - InjectUserMessage should succeed for message 1\nassert False",
+  "events": [
+    {
+      "type": "Welcome",
+      "timestamp": 1753219427.974943,
+      "data": {
+        "type": "Welcome",
+        "request_id": "314a4b10-adff-460b-a8e6-aafdcabe4037"
+      }
+    },
+    {
+      "type": "Open",
+      "timestamp": 1753219427.975035,
+      "data": {
+        "type": "Open"
+      }
+    },
+    {
+      "type": "Error",
+      "timestamp": 1753219428.014424,
+      "data": {
+        "description": "Error parsing client message. Check the agent.think.functions[0].method field against the API spec.",
+        "message": "",
+        "type": "Error"
+      }
+    }
+  ],
+  "function_calls": [],
+  "function_call_bugs": [],
+  "conversation_texts": [],
+  "injection_refused": []
+}

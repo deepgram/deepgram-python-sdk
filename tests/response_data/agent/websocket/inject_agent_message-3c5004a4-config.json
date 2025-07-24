@@ -1,0 +1,46 @@
+{
+  "name": "inject_agent_message",
+  "description": "Test inject_agent_message functionality",
+  "agent_config": {
+    "think": {
+      "provider": {
+        "type": "open_ai",
+        "model": "gpt-4o-mini"
+      },
+      "prompt": "You are a helpful assistant. Keep responses brief and conversational."
+    },
+    "speak": {
+      "provider": {
+        "type": "deepgram",
+        "model": "aura-2-thalia-en"
+      }
+    },
+    "listen": {
+      "provider": {
+        "type": "deepgram",
+        "model": "nova-3"
+      }
+    },
+    "language": "en"
+  },
+  "inject_messages": [
+    "Hello, I'm going to inject some agent messages."
+  ],
+  "agent_messages": [
+    "Hello! I'm an agent message injected directly.",
+    "This is another agent message to test the functionality."
+  ],
+  "expected_events": [
+    "Welcome",
+    "SettingsApplied",
+    "ConversationText"
+  ],
+  "conditional_events": [
+    "AgentStartedSpeaking",
+    "AgentAudioDone"
+  ],
+  "test_inject_user_message": true,
+  "test_inject_agent_message": true,
+  "test_function_calls": false,
+  "expect_error": false
+}

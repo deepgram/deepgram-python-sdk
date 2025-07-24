@@ -1,0 +1,193 @@
+[
+  {
+    "type": "Welcome",
+    "timestamp": 1753228511.85825,
+    "data": {
+      "type": "Welcome",
+      "request_id": "b42d13ac-befd-4831-a761-aed8775d8b50"
+    }
+  },
+  {
+    "type": "Open",
+    "timestamp": 1753228511.85844,
+    "data": {
+      "type": "Open"
+    }
+  },
+  {
+    "type": "SettingsApplied",
+    "timestamp": 1753228511.903687,
+    "data": {
+      "type": "SettingsApplied"
+    }
+  },
+  {
+    "type": "ConversationText",
+    "timestamp": 1753228512.903751,
+    "data": {
+      "type": "ConversationText",
+      "role": "user",
+      "content": "What's the weather like in New York?"
+    }
+  },
+  {
+    "type": "Unhandled",
+    "timestamp": 1753228512.904285,
+    "data": {
+      "type": "Unhandled",
+      "raw": "{\"type\":\"History\",\"role\":\"user\",\"content\":\"What's the weather like in New York?\"}"
+    }
+  },
+  {
+    "type": "Unhandled",
+    "timestamp": 1753228512.904526,
+    "data": {
+      "type": "Unhandled",
+      "raw": "{\"type\":\"EndOfThought\"}"
+    }
+  },
+  {
+    "type": "FunctionCallRequest",
+    "timestamp": 1753228513.850025,
+    "data": {
+      "type": "FunctionCallRequest",
+      "functions": [
+        {
+          "id": "call_yxQWSqDn7ywFRGYOCQiJlO9o",
+          "name": "get_weather",
+          "arguments": "{\"location\":\"New York\"}",
+          "client_side": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "Unhandled",
+    "timestamp": 1753228513.888638,
+    "data": {
+      "type": "Unhandled",
+      "raw": "{\"type\":\"History\",\"function_calls\":[{\"id\":\"call_yxQWSqDn7ywFRGYOCQiJlO9o\",\"name\":\"get_weather\",\"client_side\":true,\"arguments\":\"{\\\"location\\\":\\\"New York\\\"}\",\"response\":\"{\\\"success\\\": true, \\\"result\\\": \\\"Mock function response\\\", \\\"timestamp\\\": 1753228513.8502111}\"}]}"
+    }
+  },
+  {
+    "type": "ConversationText",
+    "timestamp": 1753228514.4142878,
+    "data": {
+      "type": "ConversationText",
+      "role": "user",
+      "content": "Can you also check the weather in London?"
+    }
+  },
+  {
+    "type": "Unhandled",
+    "timestamp": 1753228514.415294,
+    "data": {
+      "type": "Unhandled",
+      "raw": "{\"type\":\"History\",\"role\":\"user\",\"content\":\"Can you also check the weather in London?\"}"
+    }
+  },
+  {
+    "type": "Unhandled",
+    "timestamp": 1753228514.415547,
+    "data": {
+      "type": "Unhandled",
+      "raw": "{\"type\":\"EndOfThought\"}"
+    }
+  },
+  {
+    "type": "FunctionCallRequest",
+    "timestamp": 1753228515.823966,
+    "data": {
+      "type": "FunctionCallRequest",
+      "functions": [
+        {
+          "id": "call_LETUBepn3ixCas4K6roRhCKp",
+          "name": "get_weather",
+          "arguments": "{\"location\":\"New York\"}",
+          "client_side": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "Unhandled",
+    "timestamp": 1753228515.861561,
+    "data": {
+      "type": "Unhandled",
+      "raw": "{\"type\":\"History\",\"function_calls\":[{\"id\":\"call_LETUBepn3ixCas4K6roRhCKp\",\"name\":\"get_weather\",\"client_side\":true,\"arguments\":\"{\\\"location\\\": \\\"New York\\\"}\",\"response\":\"{\\\"success\\\": true, \\\"result\\\": \\\"Mock function response\\\", \\\"timestamp\\\": 1753228515.824028}\"}]}"
+    }
+  },
+  {
+    "type": "FunctionCallRequest",
+    "timestamp": 1753228515.906487,
+    "data": {
+      "type": "FunctionCallRequest",
+      "functions": [
+        {
+          "id": "call_u0X991rN72NPNzVWIBEkjs3B",
+          "name": "get_weather",
+          "arguments": "{\"location\":\"London\"}",
+          "client_side": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "Unhandled",
+    "timestamp": 1753228515.94297,
+    "data": {
+      "type": "Unhandled",
+      "raw": "{\"type\":\"History\",\"function_calls\":[{\"id\":\"call_u0X991rN72NPNzVWIBEkjs3B\",\"name\":\"get_weather\",\"client_side\":true,\"arguments\":\"{\\\"location\\\": \\\"London\\\"}\",\"response\":\"{\\\"success\\\": true, \\\"result\\\": \\\"Mock function response\\\", \\\"timestamp\\\": 1753228515.906594}\"}]}"
+    }
+  },
+  {
+    "type": "ConversationText",
+    "timestamp": 1753228517.4861739,
+    "data": {
+      "type": "ConversationText",
+      "role": "assistant",
+      "content": "I checked the weather for both New York and London, but I received a mock response instead of the actual weather details."
+    }
+  },
+  {
+    "type": "Unhandled",
+    "timestamp": 1753228517.487475,
+    "data": {
+      "type": "Unhandled",
+      "raw": "{\"type\":\"History\",\"role\":\"assistant\",\"content\":\"I checked the weather for both New York and London, but I received a mock response instead of the actual weather details.\"}"
+    }
+  },
+  {
+    "type": "AgentStartedSpeaking",
+    "timestamp": 1753228517.4882,
+    "data": {
+      "total_latency": 3.071444767,
+      "tts_latency": 0.309131878,
+      "ttt_latency": 2.762312509
+    }
+  },
+  {
+    "type": "ConversationText",
+    "timestamp": 1753228524.3720949,
+    "data": {
+      "type": "ConversationText",
+      "role": "assistant",
+      "content": "If you would like, I can try again to get the accurate weather information."
+    }
+  },
+  {
+    "type": "Unhandled",
+    "timestamp": 1753228524.374215,
+    "data": {
+      "type": "Unhandled",
+      "raw": "{\"type\":\"History\",\"role\":\"assistant\",\"content\":\"If you would like, I can try again to get the accurate weather information.\"}"
+    }
+  },
+  {
+    "type": "AgentAudioDone",
+    "timestamp": 1753228524.430342,
+    "data": {
+      "type": "AgentAudioDone"
+    }
+  }
+]

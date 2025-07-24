@@ -1,0 +1,33 @@
+{
+  "error": "Test ID: agent_tags-d9fabdd0 - InjectUserMessage should succeed for message 1\nassert False",
+  "events": [
+    {
+      "type": "Welcome",
+      "timestamp": 1753209853.168361,
+      "data": {
+        "type": "Welcome",
+        "request_id": "e9b280f8-f5ac-4979-9d55-975eff0b1bba"
+      }
+    },
+    {
+      "type": "Open",
+      "timestamp": 1753209853.1684449,
+      "data": {
+        "type": "Open"
+      }
+    },
+    {
+      "type": "Error",
+      "timestamp": 1753209853.2099042,
+      "data": {
+        "description": "Error parsing client message. Check the agent.tags field against the API spec.",
+        "message": "",
+        "type": "Error"
+      }
+    }
+  ],
+  "function_calls": [],
+  "function_call_bugs": [],
+  "conversation_texts": [],
+  "injection_refused": []
+}
