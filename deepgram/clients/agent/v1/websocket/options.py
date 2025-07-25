@@ -271,9 +271,6 @@ class Agent(BaseResponse):
     greeting: Optional[str] = field(
         default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
-    mip_opt_out: Optional[bool] = field(
-        default=False, metadata=dataclass_config(exclude=lambda f: f is None)
-    )
     tags: Optional[List[str]] = field(
         default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
@@ -355,6 +352,9 @@ class SettingsOptions(BaseResponse):
     type: str = str(AgentWebSocketEvents.Settings)
     audio: Audio = field(default_factory=Audio)
     agent: Agent = field(default_factory=Agent)
+    mip_opt_out: Optional[bool] = field(
+        default=False, metadata=dataclass_config(exclude=lambda f: f is None)
+    )
 
     def __getitem__(self, key):
         _dict = self.to_dict()

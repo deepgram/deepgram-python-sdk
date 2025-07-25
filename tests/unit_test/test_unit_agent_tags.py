@@ -162,19 +162,19 @@ class TestAgentTags:
         options.agent.language = "en"
         options.agent.tags = ["integration", "test"]
         options.agent.greeting = "Hello, this is a tagged conversation"
-        options.agent.mip_opt_out = True
+        options.mip_opt_out = True
 
         assert options.agent.language == "en"
         assert options.agent.tags == ["integration", "test"]
         assert options.agent.greeting == "Hello, this is a tagged conversation"
-        assert options.agent.mip_opt_out == True
+        assert options.mip_opt_out == True
 
         # Test serialization with multiple fields
         result = options.to_dict()
         assert result["agent"]["language"] == "en"
         assert result["agent"]["tags"] == ["integration", "test"]
         assert result["agent"]["greeting"] == "Hello, this is a tagged conversation"
-        assert result["agent"]["mip_opt_out"] == True
+        assert result["mip_opt_out"] == True
 
     def test_tags_type_validation(self):
         """Test that tags accepts list of strings"""
