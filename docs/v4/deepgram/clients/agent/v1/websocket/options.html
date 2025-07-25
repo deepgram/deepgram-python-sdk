@@ -217,7 +217,7 @@
                                 <a class="variable" href="#Agent.greeting">greeting</a>
                         </li>
                         <li>
-                                <a class="variable" href="#Agent.mip_opt_out">mip_opt_out</a>
+                                <a class="variable" href="#Agent.tags">tags</a>
                         </li>
                 </ul>
 
@@ -290,6 +290,9 @@
                         </li>
                         <li>
                                 <a class="variable" href="#SettingsOptions.agent">agent</a>
+                        </li>
+                        <li>
+                                <a class="variable" href="#SettingsOptions.mip_opt_out">mip_opt_out</a>
                         </li>
                         <li>
                                 <a class="function" href="#SettingsOptions.check">check</a>
@@ -684,8 +687,8 @@
 </span><span id="L-271"><a href="#L-271"><span class="linenos">271</span></a>    <span class="n">greeting</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span>
 </span><span id="L-272"><a href="#L-272"><span class="linenos">272</span></a>        <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="n">dataclass_config</span><span class="p">(</span><span class="n">exclude</span><span class="o">=</span><span class="k">lambda</span> <span class="n">f</span><span class="p">:</span> <span class="n">f</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span>
 </span><span id="L-273"><a href="#L-273"><span class="linenos">273</span></a>    <span class="p">)</span>
-</span><span id="L-274"><a href="#L-274"><span class="linenos">274</span></a>    <span class="n">mip_opt_out</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span>
-</span><span id="L-275"><a href="#L-275"><span class="linenos">275</span></a>        <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="n">dataclass_config</span><span class="p">(</span><span class="n">exclude</span><span class="o">=</span><span class="k">lambda</span> <span class="n">f</span><span class="p">:</span> <span class="n">f</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span>
+</span><span id="L-274"><a href="#L-274"><span class="linenos">274</span></a>    <span class="n">tags</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span>
+</span><span id="L-275"><a href="#L-275"><span class="linenos">275</span></a>        <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="n">dataclass_config</span><span class="p">(</span><span class="n">exclude</span><span class="o">=</span><span class="k">lambda</span> <span class="n">f</span><span class="p">:</span> <span class="n">f</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span>
 </span><span id="L-276"><a href="#L-276"><span class="linenos">276</span></a>    <span class="p">)</span>
 </span><span id="L-277"><a href="#L-277"><span class="linenos">277</span></a>
 </span><span id="L-278"><a href="#L-278"><span class="linenos">278</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">__post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -765,120 +768,123 @@
 </span><span id="L-352"><a href="#L-352"><span class="linenos">352</span></a>    <span class="nb">type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">AgentWebSocketEvents</span><span class="o">.</span><span class="n">Settings</span><span class="p">)</span>
 </span><span id="L-353"><a href="#L-353"><span class="linenos">353</span></a>    <span class="n">audio</span><span class="p">:</span> <span class="n">Audio</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="n">Audio</span><span class="p">)</span>
 </span><span id="L-354"><a href="#L-354"><span class="linenos">354</span></a>    <span class="n">agent</span><span class="p">:</span> <span class="n">Agent</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="n">Agent</span><span class="p">)</span>
-</span><span id="L-355"><a href="#L-355"><span class="linenos">355</span></a>
-</span><span id="L-356"><a href="#L-356"><span class="linenos">356</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
-</span><span id="L-357"><a href="#L-357"><span class="linenos">357</span></a>        <span class="n">_dict</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
-</span><span id="L-358"><a href="#L-358"><span class="linenos">358</span></a>        <span class="k">if</span> <span class="s2">&quot;audio&quot;</span> <span class="ow">in</span> <span class="n">_dict</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">_dict</span><span class="p">[</span><span class="s2">&quot;audio&quot;</span><span class="p">],</span> <span class="nb">dict</span><span class="p">):</span>
-</span><span id="L-359"><a href="#L-359"><span class="linenos">359</span></a>            <span class="n">_dict</span><span class="p">[</span><span class="s2">&quot;audio&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Audio</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">_dict</span><span class="p">[</span><span class="s2">&quot;audio&quot;</span><span class="p">])</span>
-</span><span id="L-360"><a href="#L-360"><span class="linenos">360</span></a>        <span class="k">if</span> <span class="s2">&quot;agent&quot;</span> <span class="ow">in</span> <span class="n">_dict</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">_dict</span><span class="p">[</span><span class="s2">&quot;agent&quot;</span><span class="p">],</span> <span class="nb">dict</span><span class="p">):</span>
-</span><span id="L-361"><a href="#L-361"><span class="linenos">361</span></a>            <span class="n">_dict</span><span class="p">[</span><span class="s2">&quot;agent&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Agent</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">_dict</span><span class="p">[</span><span class="s2">&quot;agent&quot;</span><span class="p">])</span>
-</span><span id="L-362"><a href="#L-362"><span class="linenos">362</span></a>
-</span><span id="L-363"><a href="#L-363"><span class="linenos">363</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">check</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="L-364"><a href="#L-364"><span class="linenos">364</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="L-365"><a href="#L-365"><span class="linenos">365</span></a><span class="sd">        Check the options for any deprecated or soon-to-be-deprecated options.</span>
-</span><span id="L-366"><a href="#L-366"><span class="linenos">366</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="L-367"><a href="#L-367"><span class="linenos">367</span></a>        <span class="n">logger</span> <span class="o">=</span> <span class="n">verboselogs</span><span class="o">.</span><span class="n">VerboseLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
-</span><span id="L-368"><a href="#L-368"><span class="linenos">368</span></a>        <span class="n">logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">StreamHandler</span><span class="p">())</span>
-</span><span id="L-369"><a href="#L-369"><span class="linenos">369</span></a>        <span class="n">prev</span> <span class="o">=</span> <span class="n">logger</span><span class="o">.</span><span class="n">level</span>
-</span><span id="L-370"><a href="#L-370"><span class="linenos">370</span></a>        <span class="n">logger</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">verboselogs</span><span class="o">.</span><span class="n">ERROR</span><span class="p">)</span>
-</span><span id="L-371"><a href="#L-371"><span class="linenos">371</span></a>
-</span><span id="L-372"><a href="#L-372"><span class="linenos">372</span></a>        <span class="c1"># do we need to check anything here?</span>
-</span><span id="L-373"><a href="#L-373"><span class="linenos">373</span></a>
-</span><span id="L-374"><a href="#L-374"><span class="linenos">374</span></a>        <span class="n">logger</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">prev</span><span class="p">)</span>
-</span><span id="L-375"><a href="#L-375"><span class="linenos">375</span></a>
-</span><span id="L-376"><a href="#L-376"><span class="linenos">376</span></a>        <span class="k">return</span> <span class="kc">True</span>
-</span><span id="L-377"><a href="#L-377"><span class="linenos">377</span></a>
+</span><span id="L-355"><a href="#L-355"><span class="linenos">355</span></a>    <span class="n">mip_opt_out</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span>
+</span><span id="L-356"><a href="#L-356"><span class="linenos">356</span></a>        <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="n">dataclass_config</span><span class="p">(</span><span class="n">exclude</span><span class="o">=</span><span class="k">lambda</span> <span class="n">f</span><span class="p">:</span> <span class="n">f</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span>
+</span><span id="L-357"><a href="#L-357"><span class="linenos">357</span></a>    <span class="p">)</span>
+</span><span id="L-358"><a href="#L-358"><span class="linenos">358</span></a>
+</span><span id="L-359"><a href="#L-359"><span class="linenos">359</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+</span><span id="L-360"><a href="#L-360"><span class="linenos">360</span></a>        <span class="n">_dict</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
+</span><span id="L-361"><a href="#L-361"><span class="linenos">361</span></a>        <span class="k">if</span> <span class="s2">&quot;audio&quot;</span> <span class="ow">in</span> <span class="n">_dict</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">_dict</span><span class="p">[</span><span class="s2">&quot;audio&quot;</span><span class="p">],</span> <span class="nb">dict</span><span class="p">):</span>
+</span><span id="L-362"><a href="#L-362"><span class="linenos">362</span></a>            <span class="n">_dict</span><span class="p">[</span><span class="s2">&quot;audio&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Audio</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">_dict</span><span class="p">[</span><span class="s2">&quot;audio&quot;</span><span class="p">])</span>
+</span><span id="L-363"><a href="#L-363"><span class="linenos">363</span></a>        <span class="k">if</span> <span class="s2">&quot;agent&quot;</span> <span class="ow">in</span> <span class="n">_dict</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">_dict</span><span class="p">[</span><span class="s2">&quot;agent&quot;</span><span class="p">],</span> <span class="nb">dict</span><span class="p">):</span>
+</span><span id="L-364"><a href="#L-364"><span class="linenos">364</span></a>            <span class="n">_dict</span><span class="p">[</span><span class="s2">&quot;agent&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Agent</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">_dict</span><span class="p">[</span><span class="s2">&quot;agent&quot;</span><span class="p">])</span>
+</span><span id="L-365"><a href="#L-365"><span class="linenos">365</span></a>
+</span><span id="L-366"><a href="#L-366"><span class="linenos">366</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">check</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="L-367"><a href="#L-367"><span class="linenos">367</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="L-368"><a href="#L-368"><span class="linenos">368</span></a><span class="sd">        Check the options for any deprecated or soon-to-be-deprecated options.</span>
+</span><span id="L-369"><a href="#L-369"><span class="linenos">369</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="L-370"><a href="#L-370"><span class="linenos">370</span></a>        <span class="n">logger</span> <span class="o">=</span> <span class="n">verboselogs</span><span class="o">.</span><span class="n">VerboseLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+</span><span id="L-371"><a href="#L-371"><span class="linenos">371</span></a>        <span class="n">logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">StreamHandler</span><span class="p">())</span>
+</span><span id="L-372"><a href="#L-372"><span class="linenos">372</span></a>        <span class="n">prev</span> <span class="o">=</span> <span class="n">logger</span><span class="o">.</span><span class="n">level</span>
+</span><span id="L-373"><a href="#L-373"><span class="linenos">373</span></a>        <span class="n">logger</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">verboselogs</span><span class="o">.</span><span class="n">ERROR</span><span class="p">)</span>
+</span><span id="L-374"><a href="#L-374"><span class="linenos">374</span></a>
+</span><span id="L-375"><a href="#L-375"><span class="linenos">375</span></a>        <span class="c1"># do we need to check anything here?</span>
+</span><span id="L-376"><a href="#L-376"><span class="linenos">376</span></a>
+</span><span id="L-377"><a href="#L-377"><span class="linenos">377</span></a>        <span class="n">logger</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">prev</span><span class="p">)</span>
 </span><span id="L-378"><a href="#L-378"><span class="linenos">378</span></a>
-</span><span id="L-379"><a href="#L-379"><span class="linenos">379</span></a><span class="c1"># UpdatePrompt</span>
+</span><span id="L-379"><a href="#L-379"><span class="linenos">379</span></a>        <span class="k">return</span> <span class="kc">True</span>
 </span><span id="L-380"><a href="#L-380"><span class="linenos">380</span></a>
 </span><span id="L-381"><a href="#L-381"><span class="linenos">381</span></a>
-</span><span id="L-382"><a href="#L-382"><span class="linenos">382</span></a><span class="nd">@dataclass</span>
-</span><span id="L-383"><a href="#L-383"><span class="linenos">383</span></a><span class="k">class</span><span class="w"> </span><span class="nc">UpdatePromptOptions</span><span class="p">(</span><span class="n">BaseResponse</span><span class="p">):</span>
-</span><span id="L-384"><a href="#L-384"><span class="linenos">384</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="L-385"><a href="#L-385"><span class="linenos">385</span></a><span class="sd">    The client can send an UpdatePrompt message to provide a new prompt to the Think model in the middle of a conversation.</span>
-</span><span id="L-386"><a href="#L-386"><span class="linenos">386</span></a><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="L-387"><a href="#L-387"><span class="linenos">387</span></a>
-</span><span id="L-388"><a href="#L-388"><span class="linenos">388</span></a>    <span class="nb">type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">AgentWebSocketEvents</span><span class="o">.</span><span class="n">UpdatePrompt</span><span class="p">)</span>
-</span><span id="L-389"><a href="#L-389"><span class="linenos">389</span></a>    <span class="n">prompt</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+</span><span id="L-382"><a href="#L-382"><span class="linenos">382</span></a><span class="c1"># UpdatePrompt</span>
+</span><span id="L-383"><a href="#L-383"><span class="linenos">383</span></a>
+</span><span id="L-384"><a href="#L-384"><span class="linenos">384</span></a>
+</span><span id="L-385"><a href="#L-385"><span class="linenos">385</span></a><span class="nd">@dataclass</span>
+</span><span id="L-386"><a href="#L-386"><span class="linenos">386</span></a><span class="k">class</span><span class="w"> </span><span class="nc">UpdatePromptOptions</span><span class="p">(</span><span class="n">BaseResponse</span><span class="p">):</span>
+</span><span id="L-387"><a href="#L-387"><span class="linenos">387</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="L-388"><a href="#L-388"><span class="linenos">388</span></a><span class="sd">    The client can send an UpdatePrompt message to provide a new prompt to the Think model in the middle of a conversation.</span>
+</span><span id="L-389"><a href="#L-389"><span class="linenos">389</span></a><span class="sd">    &quot;&quot;&quot;</span>
 </span><span id="L-390"><a href="#L-390"><span class="linenos">390</span></a>
-</span><span id="L-391"><a href="#L-391"><span class="linenos">391</span></a>
-</span><span id="L-392"><a href="#L-392"><span class="linenos">392</span></a><span class="c1"># UpdateSpeak</span>
+</span><span id="L-391"><a href="#L-391"><span class="linenos">391</span></a>    <span class="nb">type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">AgentWebSocketEvents</span><span class="o">.</span><span class="n">UpdatePrompt</span><span class="p">)</span>
+</span><span id="L-392"><a href="#L-392"><span class="linenos">392</span></a>    <span class="n">prompt</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
 </span><span id="L-393"><a href="#L-393"><span class="linenos">393</span></a>
 </span><span id="L-394"><a href="#L-394"><span class="linenos">394</span></a>
-</span><span id="L-395"><a href="#L-395"><span class="linenos">395</span></a><span class="nd">@dataclass</span>
-</span><span id="L-396"><a href="#L-396"><span class="linenos">396</span></a><span class="k">class</span><span class="w"> </span><span class="nc">UpdateSpeakOptions</span><span class="p">(</span><span class="n">BaseResponse</span><span class="p">):</span>
-</span><span id="L-397"><a href="#L-397"><span class="linenos">397</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="L-398"><a href="#L-398"><span class="linenos">398</span></a><span class="sd">    The client can send an UpdateSpeak message to change the Speak model in the middle of a conversation.</span>
-</span><span id="L-399"><a href="#L-399"><span class="linenos">399</span></a><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="L-400"><a href="#L-400"><span class="linenos">400</span></a>
-</span><span id="L-401"><a href="#L-401"><span class="linenos">401</span></a>    <span class="nb">type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">AgentWebSocketEvents</span><span class="o">.</span><span class="n">UpdateSpeak</span><span class="p">)</span>
-</span><span id="L-402"><a href="#L-402"><span class="linenos">402</span></a>    <span class="n">speak</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Speak</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">Speak</span><span class="p">]]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="n">Speak</span><span class="p">)</span>
+</span><span id="L-395"><a href="#L-395"><span class="linenos">395</span></a><span class="c1"># UpdateSpeak</span>
+</span><span id="L-396"><a href="#L-396"><span class="linenos">396</span></a>
+</span><span id="L-397"><a href="#L-397"><span class="linenos">397</span></a>
+</span><span id="L-398"><a href="#L-398"><span class="linenos">398</span></a><span class="nd">@dataclass</span>
+</span><span id="L-399"><a href="#L-399"><span class="linenos">399</span></a><span class="k">class</span><span class="w"> </span><span class="nc">UpdateSpeakOptions</span><span class="p">(</span><span class="n">BaseResponse</span><span class="p">):</span>
+</span><span id="L-400"><a href="#L-400"><span class="linenos">400</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="L-401"><a href="#L-401"><span class="linenos">401</span></a><span class="sd">    The client can send an UpdateSpeak message to change the Speak model in the middle of a conversation.</span>
+</span><span id="L-402"><a href="#L-402"><span class="linenos">402</span></a><span class="sd">    &quot;&quot;&quot;</span>
 </span><span id="L-403"><a href="#L-403"><span class="linenos">403</span></a>
-</span><span id="L-404"><a href="#L-404"><span class="linenos">404</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">__post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="L-405"><a href="#L-405"><span class="linenos">405</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Handle conversion of dict/list data to proper Speak objects&quot;&quot;&quot;</span>
-</span><span id="L-406"><a href="#L-406"><span class="linenos">406</span></a>        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">speak</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
-</span><span id="L-407"><a href="#L-407"><span class="linenos">407</span></a>            <span class="c1"># Convert list of dicts to list of Speak objects</span>
-</span><span id="L-408"><a href="#L-408"><span class="linenos">408</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">speak</span> <span class="o">=</span> <span class="p">[</span>
-</span><span id="L-409"><a href="#L-409"><span class="linenos">409</span></a>                <span class="n">Speak</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">item</span><span class="p">)</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)</span> <span class="k">else</span> <span class="n">item</span>
-</span><span id="L-410"><a href="#L-410"><span class="linenos">410</span></a>                <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">speak</span>
-</span><span id="L-411"><a href="#L-411"><span class="linenos">411</span></a>            <span class="p">]</span>
-</span><span id="L-412"><a href="#L-412"><span class="linenos">412</span></a>        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">speak</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
-</span><span id="L-413"><a href="#L-413"><span class="linenos">413</span></a>            <span class="c1"># Convert single dict to Speak object</span>
-</span><span id="L-414"><a href="#L-414"><span class="linenos">414</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">speak</span> <span class="o">=</span> <span class="n">Speak</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">speak</span><span class="p">)</span>
-</span><span id="L-415"><a href="#L-415"><span class="linenos">415</span></a>
-</span><span id="L-416"><a href="#L-416"><span class="linenos">416</span></a>
-</span><span id="L-417"><a href="#L-417"><span class="linenos">417</span></a><span class="c1"># InjectAgentMessage</span>
+</span><span id="L-404"><a href="#L-404"><span class="linenos">404</span></a>    <span class="nb">type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">AgentWebSocketEvents</span><span class="o">.</span><span class="n">UpdateSpeak</span><span class="p">)</span>
+</span><span id="L-405"><a href="#L-405"><span class="linenos">405</span></a>    <span class="n">speak</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Speak</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">Speak</span><span class="p">]]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="n">Speak</span><span class="p">)</span>
+</span><span id="L-406"><a href="#L-406"><span class="linenos">406</span></a>
+</span><span id="L-407"><a href="#L-407"><span class="linenos">407</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">__post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="L-408"><a href="#L-408"><span class="linenos">408</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Handle conversion of dict/list data to proper Speak objects&quot;&quot;&quot;</span>
+</span><span id="L-409"><a href="#L-409"><span class="linenos">409</span></a>        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">speak</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+</span><span id="L-410"><a href="#L-410"><span class="linenos">410</span></a>            <span class="c1"># Convert list of dicts to list of Speak objects</span>
+</span><span id="L-411"><a href="#L-411"><span class="linenos">411</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">speak</span> <span class="o">=</span> <span class="p">[</span>
+</span><span id="L-412"><a href="#L-412"><span class="linenos">412</span></a>                <span class="n">Speak</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">item</span><span class="p">)</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)</span> <span class="k">else</span> <span class="n">item</span>
+</span><span id="L-413"><a href="#L-413"><span class="linenos">413</span></a>                <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">speak</span>
+</span><span id="L-414"><a href="#L-414"><span class="linenos">414</span></a>            <span class="p">]</span>
+</span><span id="L-415"><a href="#L-415"><span class="linenos">415</span></a>        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">speak</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+</span><span id="L-416"><a href="#L-416"><span class="linenos">416</span></a>            <span class="c1"># Convert single dict to Speak object</span>
+</span><span id="L-417"><a href="#L-417"><span class="linenos">417</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">speak</span> <span class="o">=</span> <span class="n">Speak</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">speak</span><span class="p">)</span>
 </span><span id="L-418"><a href="#L-418"><span class="linenos">418</span></a>
 </span><span id="L-419"><a href="#L-419"><span class="linenos">419</span></a>
-</span><span id="L-420"><a href="#L-420"><span class="linenos">420</span></a><span class="nd">@dataclass</span>
-</span><span id="L-421"><a href="#L-421"><span class="linenos">421</span></a><span class="k">class</span><span class="w"> </span><span class="nc">InjectAgentMessageOptions</span><span class="p">(</span><span class="n">BaseResponse</span><span class="p">):</span>
-</span><span id="L-422"><a href="#L-422"><span class="linenos">422</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="L-423"><a href="#L-423"><span class="linenos">423</span></a><span class="sd">    The client can send an InjectAgentMessage to immediately trigger an agent statement. If the injection request arrives while the user is speaking, or while the server is in the middle of sending audio for an agent response, then the request will be ignored and the server will reply with an InjectionRefused.</span>
-</span><span id="L-424"><a href="#L-424"><span class="linenos">424</span></a><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="L-425"><a href="#L-425"><span class="linenos">425</span></a>
-</span><span id="L-426"><a href="#L-426"><span class="linenos">426</span></a>    <span class="nb">type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">AgentWebSocketEvents</span><span class="o">.</span><span class="n">InjectAgentMessage</span><span class="p">)</span>
-</span><span id="L-427"><a href="#L-427"><span class="linenos">427</span></a>    <span class="n">message</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+</span><span id="L-420"><a href="#L-420"><span class="linenos">420</span></a><span class="c1"># InjectAgentMessage</span>
+</span><span id="L-421"><a href="#L-421"><span class="linenos">421</span></a>
+</span><span id="L-422"><a href="#L-422"><span class="linenos">422</span></a>
+</span><span id="L-423"><a href="#L-423"><span class="linenos">423</span></a><span class="nd">@dataclass</span>
+</span><span id="L-424"><a href="#L-424"><span class="linenos">424</span></a><span class="k">class</span><span class="w"> </span><span class="nc">InjectAgentMessageOptions</span><span class="p">(</span><span class="n">BaseResponse</span><span class="p">):</span>
+</span><span id="L-425"><a href="#L-425"><span class="linenos">425</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="L-426"><a href="#L-426"><span class="linenos">426</span></a><span class="sd">    The client can send an InjectAgentMessage to immediately trigger an agent statement. If the injection request arrives while the user is speaking, or while the server is in the middle of sending audio for an agent response, then the request will be ignored and the server will reply with an InjectionRefused.</span>
+</span><span id="L-427"><a href="#L-427"><span class="linenos">427</span></a><span class="sd">    &quot;&quot;&quot;</span>
 </span><span id="L-428"><a href="#L-428"><span class="linenos">428</span></a>
-</span><span id="L-429"><a href="#L-429"><span class="linenos">429</span></a>
-</span><span id="L-430"><a href="#L-430"><span class="linenos">430</span></a><span class="c1"># InjectUserMessage</span>
+</span><span id="L-429"><a href="#L-429"><span class="linenos">429</span></a>    <span class="nb">type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">AgentWebSocketEvents</span><span class="o">.</span><span class="n">InjectAgentMessage</span><span class="p">)</span>
+</span><span id="L-430"><a href="#L-430"><span class="linenos">430</span></a>    <span class="n">message</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
 </span><span id="L-431"><a href="#L-431"><span class="linenos">431</span></a>
 </span><span id="L-432"><a href="#L-432"><span class="linenos">432</span></a>
-</span><span id="L-433"><a href="#L-433"><span class="linenos">433</span></a><span class="nd">@dataclass</span>
-</span><span id="L-434"><a href="#L-434"><span class="linenos">434</span></a><span class="k">class</span><span class="w"> </span><span class="nc">InjectUserMessageOptions</span><span class="p">(</span><span class="n">BaseResponse</span><span class="p">):</span>
-</span><span id="L-435"><a href="#L-435"><span class="linenos">435</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="L-436"><a href="#L-436"><span class="linenos">436</span></a><span class="sd">    The client can send an InjectUserMessage to interact with the agent using text input.</span>
-</span><span id="L-437"><a href="#L-437"><span class="linenos">437</span></a><span class="sd">    This is useful when you need to trigger an agent response from text input.</span>
-</span><span id="L-438"><a href="#L-438"><span class="linenos">438</span></a><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="L-439"><a href="#L-439"><span class="linenos">439</span></a>
-</span><span id="L-440"><a href="#L-440"><span class="linenos">440</span></a>    <span class="nb">type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">AgentWebSocketEvents</span><span class="o">.</span><span class="n">InjectUserMessage</span><span class="p">)</span>
-</span><span id="L-441"><a href="#L-441"><span class="linenos">441</span></a>    <span class="n">content</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+</span><span id="L-433"><a href="#L-433"><span class="linenos">433</span></a><span class="c1"># InjectUserMessage</span>
+</span><span id="L-434"><a href="#L-434"><span class="linenos">434</span></a>
+</span><span id="L-435"><a href="#L-435"><span class="linenos">435</span></a>
+</span><span id="L-436"><a href="#L-436"><span class="linenos">436</span></a><span class="nd">@dataclass</span>
+</span><span id="L-437"><a href="#L-437"><span class="linenos">437</span></a><span class="k">class</span><span class="w"> </span><span class="nc">InjectUserMessageOptions</span><span class="p">(</span><span class="n">BaseResponse</span><span class="p">):</span>
+</span><span id="L-438"><a href="#L-438"><span class="linenos">438</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="L-439"><a href="#L-439"><span class="linenos">439</span></a><span class="sd">    The client can send an InjectUserMessage to interact with the agent using text input.</span>
+</span><span id="L-440"><a href="#L-440"><span class="linenos">440</span></a><span class="sd">    This is useful when you need to trigger an agent response from text input.</span>
+</span><span id="L-441"><a href="#L-441"><span class="linenos">441</span></a><span class="sd">    &quot;&quot;&quot;</span>
 </span><span id="L-442"><a href="#L-442"><span class="linenos">442</span></a>
-</span><span id="L-443"><a href="#L-443"><span class="linenos">443</span></a>
-</span><span id="L-444"><a href="#L-444"><span class="linenos">444</span></a><span class="c1"># Function Call Response</span>
+</span><span id="L-443"><a href="#L-443"><span class="linenos">443</span></a>    <span class="nb">type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">AgentWebSocketEvents</span><span class="o">.</span><span class="n">InjectUserMessage</span><span class="p">)</span>
+</span><span id="L-444"><a href="#L-444"><span class="linenos">444</span></a>    <span class="n">content</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
 </span><span id="L-445"><a href="#L-445"><span class="linenos">445</span></a>
 </span><span id="L-446"><a href="#L-446"><span class="linenos">446</span></a>
-</span><span id="L-447"><a href="#L-447"><span class="linenos">447</span></a><span class="nd">@dataclass</span>
-</span><span id="L-448"><a href="#L-448"><span class="linenos">448</span></a><span class="k">class</span><span class="w"> </span><span class="nc">FunctionCallResponse</span><span class="p">(</span><span class="n">BaseResponse</span><span class="p">):</span>
-</span><span id="L-449"><a href="#L-449"><span class="linenos">449</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="L-450"><a href="#L-450"><span class="linenos">450</span></a><span class="sd">    TheFunctionCallResponse message is a JSON command that the client should reply with every time there is a FunctionCallRequest received.</span>
-</span><span id="L-451"><a href="#L-451"><span class="linenos">451</span></a><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="L-452"><a href="#L-452"><span class="linenos">452</span></a>
-</span><span id="L-453"><a href="#L-453"><span class="linenos">453</span></a>    <span class="nb">type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;FunctionCallResponse&quot;</span>
-</span><span id="L-454"><a href="#L-454"><span class="linenos">454</span></a>    <span class="nb">id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
-</span><span id="L-455"><a href="#L-455"><span class="linenos">455</span></a>    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
-</span><span id="L-456"><a href="#L-456"><span class="linenos">456</span></a>    <span class="n">content</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
-</span><span id="L-457"><a href="#L-457"><span class="linenos">457</span></a>
-</span><span id="L-458"><a href="#L-458"><span class="linenos">458</span></a>
-</span><span id="L-459"><a href="#L-459"><span class="linenos">459</span></a><span class="c1"># Agent Keep Alive</span>
+</span><span id="L-447"><a href="#L-447"><span class="linenos">447</span></a><span class="c1"># Function Call Response</span>
+</span><span id="L-448"><a href="#L-448"><span class="linenos">448</span></a>
+</span><span id="L-449"><a href="#L-449"><span class="linenos">449</span></a>
+</span><span id="L-450"><a href="#L-450"><span class="linenos">450</span></a><span class="nd">@dataclass</span>
+</span><span id="L-451"><a href="#L-451"><span class="linenos">451</span></a><span class="k">class</span><span class="w"> </span><span class="nc">FunctionCallResponse</span><span class="p">(</span><span class="n">BaseResponse</span><span class="p">):</span>
+</span><span id="L-452"><a href="#L-452"><span class="linenos">452</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="L-453"><a href="#L-453"><span class="linenos">453</span></a><span class="sd">    TheFunctionCallResponse message is a JSON command that the client should reply with every time there is a FunctionCallRequest received.</span>
+</span><span id="L-454"><a href="#L-454"><span class="linenos">454</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="L-455"><a href="#L-455"><span class="linenos">455</span></a>
+</span><span id="L-456"><a href="#L-456"><span class="linenos">456</span></a>    <span class="nb">type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;FunctionCallResponse&quot;</span>
+</span><span id="L-457"><a href="#L-457"><span class="linenos">457</span></a>    <span class="nb">id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+</span><span id="L-458"><a href="#L-458"><span class="linenos">458</span></a>    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+</span><span id="L-459"><a href="#L-459"><span class="linenos">459</span></a>    <span class="n">content</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
 </span><span id="L-460"><a href="#L-460"><span class="linenos">460</span></a>
 </span><span id="L-461"><a href="#L-461"><span class="linenos">461</span></a>
-</span><span id="L-462"><a href="#L-462"><span class="linenos">462</span></a><span class="nd">@dataclass</span>
-</span><span id="L-463"><a href="#L-463"><span class="linenos">463</span></a><span class="k">class</span><span class="w"> </span><span class="nc">AgentKeepAlive</span><span class="p">(</span><span class="n">BaseResponse</span><span class="p">):</span>
-</span><span id="L-464"><a href="#L-464"><span class="linenos">464</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="L-465"><a href="#L-465"><span class="linenos">465</span></a><span class="sd">    The KeepAlive message is a JSON command that you can use to ensure that the server does not close the connection.</span>
-</span><span id="L-466"><a href="#L-466"><span class="linenos">466</span></a><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="L-467"><a href="#L-467"><span class="linenos">467</span></a>
-</span><span id="L-468"><a href="#L-468"><span class="linenos">468</span></a>    <span class="nb">type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;KeepAlive&quot;</span>
+</span><span id="L-462"><a href="#L-462"><span class="linenos">462</span></a><span class="c1"># Agent Keep Alive</span>
+</span><span id="L-463"><a href="#L-463"><span class="linenos">463</span></a>
+</span><span id="L-464"><a href="#L-464"><span class="linenos">464</span></a>
+</span><span id="L-465"><a href="#L-465"><span class="linenos">465</span></a><span class="nd">@dataclass</span>
+</span><span id="L-466"><a href="#L-466"><span class="linenos">466</span></a><span class="k">class</span><span class="w"> </span><span class="nc">AgentKeepAlive</span><span class="p">(</span><span class="n">BaseResponse</span><span class="p">):</span>
+</span><span id="L-467"><a href="#L-467"><span class="linenos">467</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="L-468"><a href="#L-468"><span class="linenos">468</span></a><span class="sd">    The KeepAlive message is a JSON command that you can use to ensure that the server does not close the connection.</span>
+</span><span id="L-469"><a href="#L-469"><span class="linenos">469</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="L-470"><a href="#L-470"><span class="linenos">470</span></a>
+</span><span id="L-471"><a href="#L-471"><span class="linenos">471</span></a>    <span class="nb">type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;KeepAlive&quot;</span>
 </span></pre></div>
 
 
@@ -1814,8 +1820,8 @@
 </span><span id="Agent-272"><a href="#Agent-272"><span class="linenos">272</span></a>    <span class="n">greeting</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span>
 </span><span id="Agent-273"><a href="#Agent-273"><span class="linenos">273</span></a>        <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="n">dataclass_config</span><span class="p">(</span><span class="n">exclude</span><span class="o">=</span><span class="k">lambda</span> <span class="n">f</span><span class="p">:</span> <span class="n">f</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span>
 </span><span id="Agent-274"><a href="#Agent-274"><span class="linenos">274</span></a>    <span class="p">)</span>
-</span><span id="Agent-275"><a href="#Agent-275"><span class="linenos">275</span></a>    <span class="n">mip_opt_out</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span>
-</span><span id="Agent-276"><a href="#Agent-276"><span class="linenos">276</span></a>        <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="n">dataclass_config</span><span class="p">(</span><span class="n">exclude</span><span class="o">=</span><span class="k">lambda</span> <span class="n">f</span><span class="p">:</span> <span class="n">f</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span>
+</span><span id="Agent-275"><a href="#Agent-275"><span class="linenos">275</span></a>    <span class="n">tags</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span>
+</span><span id="Agent-276"><a href="#Agent-276"><span class="linenos">276</span></a>        <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="n">dataclass_config</span><span class="p">(</span><span class="n">exclude</span><span class="o">=</span><span class="k">lambda</span> <span class="n">f</span><span class="p">:</span> <span class="n">f</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span>
 </span><span id="Agent-277"><a href="#Agent-277"><span class="linenos">277</span></a>    <span class="p">)</span>
 </span><span id="Agent-278"><a href="#Agent-278"><span class="linenos">278</span></a>
 </span><span id="Agent-279"><a href="#Agent-279"><span class="linenos">279</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">__post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -1851,7 +1857,7 @@
                             <div id="Agent.__init__" class="classattr">
                                 <div class="attr function">
             
-        <span class="name">Agent</span><span class="signature pdoc-code multiline">(<span class="param">	<span class="n">language</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;en&#39;</span>,</span><span class="param">	<span class="n">listen</span><span class="p">:</span> <span class="n"><a href="#Listen">Listen</a></span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">factory</span><span class="o">&gt;</span>,</span><span class="param">	<span class="n">think</span><span class="p">:</span> <span class="n"><a href="#Think">Think</a></span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">factory</span><span class="o">&gt;</span>,</span><span class="param">	<span class="n">speak</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n"><a href="#Speak">Speak</a></span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n"><a href="#Speak">Speak</a></span><span class="p">]]</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">factory</span><span class="o">&gt;</span>,</span><span class="param">	<span class="n">greeting</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>,</span><span class="param">	<span class="n">mip_opt_out</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span></span>)</span>
+        <span class="name">Agent</span><span class="signature pdoc-code multiline">(<span class="param">	<span class="n">language</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;en&#39;</span>,</span><span class="param">	<span class="n">listen</span><span class="p">:</span> <span class="n"><a href="#Listen">Listen</a></span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">factory</span><span class="o">&gt;</span>,</span><span class="param">	<span class="n">think</span><span class="p">:</span> <span class="n"><a href="#Think">Think</a></span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">factory</span><span class="o">&gt;</span>,</span><span class="param">	<span class="n">speak</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n"><a href="#Speak">Speak</a></span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n"><a href="#Speak">Speak</a></span><span class="p">]]</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">factory</span><span class="o">&gt;</span>,</span><span class="param">	<span class="n">greeting</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>,</span><span class="param">	<span class="n">tags</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span></span>)</span>
 
         
     </div>
@@ -1917,14 +1923,14 @@
     
 
                             </div>
-                            <div id="Agent.mip_opt_out" class="classattr">
+                            <div id="Agent.tags" class="classattr">
                                 <div class="attr variable">
-            <span class="name">mip_opt_out</span><span class="annotation">: Optional[bool]</span>        =
-<span class="default_value">False</span>
+            <span class="name">tags</span><span class="annotation">: Optional[List[str]]</span>        =
+<span class="default_value">None</span>
 
         
     </div>
-    <a class="headerlink" href="#Agent.mip_opt_out"></a>
+    <a class="headerlink" href="#Agent.tags"></a>
     
     
 
@@ -2214,28 +2220,31 @@
 </span><span id="SettingsOptions-353"><a href="#SettingsOptions-353"><span class="linenos">353</span></a>    <span class="nb">type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">AgentWebSocketEvents</span><span class="o">.</span><span class="n">Settings</span><span class="p">)</span>
 </span><span id="SettingsOptions-354"><a href="#SettingsOptions-354"><span class="linenos">354</span></a>    <span class="n">audio</span><span class="p">:</span> <span class="n">Audio</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="n">Audio</span><span class="p">)</span>
 </span><span id="SettingsOptions-355"><a href="#SettingsOptions-355"><span class="linenos">355</span></a>    <span class="n">agent</span><span class="p">:</span> <span class="n">Agent</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="n">Agent</span><span class="p">)</span>
-</span><span id="SettingsOptions-356"><a href="#SettingsOptions-356"><span class="linenos">356</span></a>
-</span><span id="SettingsOptions-357"><a href="#SettingsOptions-357"><span class="linenos">357</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
-</span><span id="SettingsOptions-358"><a href="#SettingsOptions-358"><span class="linenos">358</span></a>        <span class="n">_dict</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
-</span><span id="SettingsOptions-359"><a href="#SettingsOptions-359"><span class="linenos">359</span></a>        <span class="k">if</span> <span class="s2">&quot;audio&quot;</span> <span class="ow">in</span> <span class="n">_dict</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">_dict</span><span class="p">[</span><span class="s2">&quot;audio&quot;</span><span class="p">],</span> <span class="nb">dict</span><span class="p">):</span>
-</span><span id="SettingsOptions-360"><a href="#SettingsOptions-360"><span class="linenos">360</span></a>            <span class="n">_dict</span><span class="p">[</span><span class="s2">&quot;audio&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Audio</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">_dict</span><span class="p">[</span><span class="s2">&quot;audio&quot;</span><span class="p">])</span>
-</span><span id="SettingsOptions-361"><a href="#SettingsOptions-361"><span class="linenos">361</span></a>        <span class="k">if</span> <span class="s2">&quot;agent&quot;</span> <span class="ow">in</span> <span class="n">_dict</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">_dict</span><span class="p">[</span><span class="s2">&quot;agent&quot;</span><span class="p">],</span> <span class="nb">dict</span><span class="p">):</span>
-</span><span id="SettingsOptions-362"><a href="#SettingsOptions-362"><span class="linenos">362</span></a>            <span class="n">_dict</span><span class="p">[</span><span class="s2">&quot;agent&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Agent</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">_dict</span><span class="p">[</span><span class="s2">&quot;agent&quot;</span><span class="p">])</span>
-</span><span id="SettingsOptions-363"><a href="#SettingsOptions-363"><span class="linenos">363</span></a>
-</span><span id="SettingsOptions-364"><a href="#SettingsOptions-364"><span class="linenos">364</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">check</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="SettingsOptions-365"><a href="#SettingsOptions-365"><span class="linenos">365</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="SettingsOptions-366"><a href="#SettingsOptions-366"><span class="linenos">366</span></a><span class="sd">        Check the options for any deprecated or soon-to-be-deprecated options.</span>
-</span><span id="SettingsOptions-367"><a href="#SettingsOptions-367"><span class="linenos">367</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="SettingsOptions-368"><a href="#SettingsOptions-368"><span class="linenos">368</span></a>        <span class="n">logger</span> <span class="o">=</span> <span class="n">verboselogs</span><span class="o">.</span><span class="n">VerboseLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
-</span><span id="SettingsOptions-369"><a href="#SettingsOptions-369"><span class="linenos">369</span></a>        <span class="n">logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">StreamHandler</span><span class="p">())</span>
-</span><span id="SettingsOptions-370"><a href="#SettingsOptions-370"><span class="linenos">370</span></a>        <span class="n">prev</span> <span class="o">=</span> <span class="n">logger</span><span class="o">.</span><span class="n">level</span>
-</span><span id="SettingsOptions-371"><a href="#SettingsOptions-371"><span class="linenos">371</span></a>        <span class="n">logger</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">verboselogs</span><span class="o">.</span><span class="n">ERROR</span><span class="p">)</span>
-</span><span id="SettingsOptions-372"><a href="#SettingsOptions-372"><span class="linenos">372</span></a>
-</span><span id="SettingsOptions-373"><a href="#SettingsOptions-373"><span class="linenos">373</span></a>        <span class="c1"># do we need to check anything here?</span>
-</span><span id="SettingsOptions-374"><a href="#SettingsOptions-374"><span class="linenos">374</span></a>
-</span><span id="SettingsOptions-375"><a href="#SettingsOptions-375"><span class="linenos">375</span></a>        <span class="n">logger</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">prev</span><span class="p">)</span>
-</span><span id="SettingsOptions-376"><a href="#SettingsOptions-376"><span class="linenos">376</span></a>
-</span><span id="SettingsOptions-377"><a href="#SettingsOptions-377"><span class="linenos">377</span></a>        <span class="k">return</span> <span class="kc">True</span>
+</span><span id="SettingsOptions-356"><a href="#SettingsOptions-356"><span class="linenos">356</span></a>    <span class="n">mip_opt_out</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span>
+</span><span id="SettingsOptions-357"><a href="#SettingsOptions-357"><span class="linenos">357</span></a>        <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="n">dataclass_config</span><span class="p">(</span><span class="n">exclude</span><span class="o">=</span><span class="k">lambda</span> <span class="n">f</span><span class="p">:</span> <span class="n">f</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span>
+</span><span id="SettingsOptions-358"><a href="#SettingsOptions-358"><span class="linenos">358</span></a>    <span class="p">)</span>
+</span><span id="SettingsOptions-359"><a href="#SettingsOptions-359"><span class="linenos">359</span></a>
+</span><span id="SettingsOptions-360"><a href="#SettingsOptions-360"><span class="linenos">360</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+</span><span id="SettingsOptions-361"><a href="#SettingsOptions-361"><span class="linenos">361</span></a>        <span class="n">_dict</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
+</span><span id="SettingsOptions-362"><a href="#SettingsOptions-362"><span class="linenos">362</span></a>        <span class="k">if</span> <span class="s2">&quot;audio&quot;</span> <span class="ow">in</span> <span class="n">_dict</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">_dict</span><span class="p">[</span><span class="s2">&quot;audio&quot;</span><span class="p">],</span> <span class="nb">dict</span><span class="p">):</span>
+</span><span id="SettingsOptions-363"><a href="#SettingsOptions-363"><span class="linenos">363</span></a>            <span class="n">_dict</span><span class="p">[</span><span class="s2">&quot;audio&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Audio</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">_dict</span><span class="p">[</span><span class="s2">&quot;audio&quot;</span><span class="p">])</span>
+</span><span id="SettingsOptions-364"><a href="#SettingsOptions-364"><span class="linenos">364</span></a>        <span class="k">if</span> <span class="s2">&quot;agent&quot;</span> <span class="ow">in</span> <span class="n">_dict</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">_dict</span><span class="p">[</span><span class="s2">&quot;agent&quot;</span><span class="p">],</span> <span class="nb">dict</span><span class="p">):</span>
+</span><span id="SettingsOptions-365"><a href="#SettingsOptions-365"><span class="linenos">365</span></a>            <span class="n">_dict</span><span class="p">[</span><span class="s2">&quot;agent&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Agent</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">_dict</span><span class="p">[</span><span class="s2">&quot;agent&quot;</span><span class="p">])</span>
+</span><span id="SettingsOptions-366"><a href="#SettingsOptions-366"><span class="linenos">366</span></a>
+</span><span id="SettingsOptions-367"><a href="#SettingsOptions-367"><span class="linenos">367</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">check</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="SettingsOptions-368"><a href="#SettingsOptions-368"><span class="linenos">368</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="SettingsOptions-369"><a href="#SettingsOptions-369"><span class="linenos">369</span></a><span class="sd">        Check the options for any deprecated or soon-to-be-deprecated options.</span>
+</span><span id="SettingsOptions-370"><a href="#SettingsOptions-370"><span class="linenos">370</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="SettingsOptions-371"><a href="#SettingsOptions-371"><span class="linenos">371</span></a>        <span class="n">logger</span> <span class="o">=</span> <span class="n">verboselogs</span><span class="o">.</span><span class="n">VerboseLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+</span><span id="SettingsOptions-372"><a href="#SettingsOptions-372"><span class="linenos">372</span></a>        <span class="n">logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">StreamHandler</span><span class="p">())</span>
+</span><span id="SettingsOptions-373"><a href="#SettingsOptions-373"><span class="linenos">373</span></a>        <span class="n">prev</span> <span class="o">=</span> <span class="n">logger</span><span class="o">.</span><span class="n">level</span>
+</span><span id="SettingsOptions-374"><a href="#SettingsOptions-374"><span class="linenos">374</span></a>        <span class="n">logger</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">verboselogs</span><span class="o">.</span><span class="n">ERROR</span><span class="p">)</span>
+</span><span id="SettingsOptions-375"><a href="#SettingsOptions-375"><span class="linenos">375</span></a>
+</span><span id="SettingsOptions-376"><a href="#SettingsOptions-376"><span class="linenos">376</span></a>        <span class="c1"># do we need to check anything here?</span>
+</span><span id="SettingsOptions-377"><a href="#SettingsOptions-377"><span class="linenos">377</span></a>
+</span><span id="SettingsOptions-378"><a href="#SettingsOptions-378"><span class="linenos">378</span></a>        <span class="n">logger</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">prev</span><span class="p">)</span>
+</span><span id="SettingsOptions-379"><a href="#SettingsOptions-379"><span class="linenos">379</span></a>
+</span><span id="SettingsOptions-380"><a href="#SettingsOptions-380"><span class="linenos">380</span></a>        <span class="k">return</span> <span class="kc">True</span>
 </span></pre></div>
 
 
@@ -2246,7 +2255,7 @@
                             <div id="SettingsOptions.__init__" class="classattr">
                                 <div class="attr function">
             
-        <span class="name">SettingsOptions</span><span class="signature pdoc-code multiline">(<span class="param">	<span class="n">experimental</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>,</span><span class="param">	<span class="nb">type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;Settings&#39;</span>,</span><span class="param">	<span class="n">audio</span><span class="p">:</span> <span class="n"><a href="#Audio">Audio</a></span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">factory</span><span class="o">&gt;</span>,</span><span class="param">	<span class="n">agent</span><span class="p">:</span> <span class="n"><a href="#Agent">Agent</a></span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">factory</span><span class="o">&gt;</span></span>)</span>
+        <span class="name">SettingsOptions</span><span class="signature pdoc-code multiline">(<span class="param">	<span class="n">experimental</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>,</span><span class="param">	<span class="nb">type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;Settings&#39;</span>,</span><span class="param">	<span class="n">audio</span><span class="p">:</span> <span class="n"><a href="#Audio">Audio</a></span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">factory</span><span class="o">&gt;</span>,</span><span class="param">	<span class="n">agent</span><span class="p">:</span> <span class="n"><a href="#Agent">Agent</a></span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">factory</span><span class="o">&gt;</span>,</span><span class="param">	<span class="n">mip_opt_out</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span></span>)</span>
 
         
     </div>
@@ -2301,6 +2310,18 @@
     
 
                             </div>
+                            <div id="SettingsOptions.mip_opt_out" class="classattr">
+                                <div class="attr variable">
+            <span class="name">mip_opt_out</span><span class="annotation">: Optional[bool]</span>        =
+<span class="default_value">False</span>
+
+        
+    </div>
+    <a class="headerlink" href="#SettingsOptions.mip_opt_out"></a>
+    
+    
+
+                            </div>
                             <div id="SettingsOptions.check" class="classattr">
                                         <input id="SettingsOptions.check-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
 <div class="attr function">
@@ -2312,20 +2333,20 @@
 
     </div>
     <a class="headerlink" href="#SettingsOptions.check"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="SettingsOptions.check-364"><a href="#SettingsOptions.check-364"><span class="linenos">364</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">check</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="SettingsOptions.check-365"><a href="#SettingsOptions.check-365"><span class="linenos">365</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="SettingsOptions.check-366"><a href="#SettingsOptions.check-366"><span class="linenos">366</span></a><span class="sd">        Check the options for any deprecated or soon-to-be-deprecated options.</span>
-</span><span id="SettingsOptions.check-367"><a href="#SettingsOptions.check-367"><span class="linenos">367</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="SettingsOptions.check-368"><a href="#SettingsOptions.check-368"><span class="linenos">368</span></a>        <span class="n">logger</span> <span class="o">=</span> <span class="n">verboselogs</span><span class="o">.</span><span class="n">VerboseLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
-</span><span id="SettingsOptions.check-369"><a href="#SettingsOptions.check-369"><span class="linenos">369</span></a>        <span class="n">logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">StreamHandler</span><span class="p">())</span>
-</span><span id="SettingsOptions.check-370"><a href="#SettingsOptions.check-370"><span class="linenos">370</span></a>        <span class="n">prev</span> <span class="o">=</span> <span class="n">logger</span><span class="o">.</span><span class="n">level</span>
-</span><span id="SettingsOptions.check-371"><a href="#SettingsOptions.check-371"><span class="linenos">371</span></a>        <span class="n">logger</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">verboselogs</span><span class="o">.</span><span class="n">ERROR</span><span class="p">)</span>
-</span><span id="SettingsOptions.check-372"><a href="#SettingsOptions.check-372"><span class="linenos">372</span></a>
-</span><span id="SettingsOptions.check-373"><a href="#SettingsOptions.check-373"><span class="linenos">373</span></a>        <span class="c1"># do we need to check anything here?</span>
-</span><span id="SettingsOptions.check-374"><a href="#SettingsOptions.check-374"><span class="linenos">374</span></a>
-</span><span id="SettingsOptions.check-375"><a href="#SettingsOptions.check-375"><span class="linenos">375</span></a>        <span class="n">logger</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">prev</span><span class="p">)</span>
-</span><span id="SettingsOptions.check-376"><a href="#SettingsOptions.check-376"><span class="linenos">376</span></a>
-</span><span id="SettingsOptions.check-377"><a href="#SettingsOptions.check-377"><span class="linenos">377</span></a>        <span class="k">return</span> <span class="kc">True</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="SettingsOptions.check-367"><a href="#SettingsOptions.check-367"><span class="linenos">367</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">check</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="SettingsOptions.check-368"><a href="#SettingsOptions.check-368"><span class="linenos">368</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="SettingsOptions.check-369"><a href="#SettingsOptions.check-369"><span class="linenos">369</span></a><span class="sd">        Check the options for any deprecated or soon-to-be-deprecated options.</span>
+</span><span id="SettingsOptions.check-370"><a href="#SettingsOptions.check-370"><span class="linenos">370</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="SettingsOptions.check-371"><a href="#SettingsOptions.check-371"><span class="linenos">371</span></a>        <span class="n">logger</span> <span class="o">=</span> <span class="n">verboselogs</span><span class="o">.</span><span class="n">VerboseLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+</span><span id="SettingsOptions.check-372"><a href="#SettingsOptions.check-372"><span class="linenos">372</span></a>        <span class="n">logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">StreamHandler</span><span class="p">())</span>
+</span><span id="SettingsOptions.check-373"><a href="#SettingsOptions.check-373"><span class="linenos">373</span></a>        <span class="n">prev</span> <span class="o">=</span> <span class="n">logger</span><span class="o">.</span><span class="n">level</span>
+</span><span id="SettingsOptions.check-374"><a href="#SettingsOptions.check-374"><span class="linenos">374</span></a>        <span class="n">logger</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">verboselogs</span><span class="o">.</span><span class="n">ERROR</span><span class="p">)</span>
+</span><span id="SettingsOptions.check-375"><a href="#SettingsOptions.check-375"><span class="linenos">375</span></a>
+</span><span id="SettingsOptions.check-376"><a href="#SettingsOptions.check-376"><span class="linenos">376</span></a>        <span class="c1"># do we need to check anything here?</span>
+</span><span id="SettingsOptions.check-377"><a href="#SettingsOptions.check-377"><span class="linenos">377</span></a>
+</span><span id="SettingsOptions.check-378"><a href="#SettingsOptions.check-378"><span class="linenos">378</span></a>        <span class="n">logger</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">prev</span><span class="p">)</span>
+</span><span id="SettingsOptions.check-379"><a href="#SettingsOptions.check-379"><span class="linenos">379</span></a>
+</span><span id="SettingsOptions.check-380"><a href="#SettingsOptions.check-380"><span class="linenos">380</span></a>        <span class="k">return</span> <span class="kc">True</span>
 </span></pre></div>
 
 
@@ -2356,14 +2377,14 @@
 
     </div>
     <a class="headerlink" href="#UpdatePromptOptions"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="UpdatePromptOptions-383"><a href="#UpdatePromptOptions-383"><span class="linenos">383</span></a><span class="nd">@dataclass</span>
-</span><span id="UpdatePromptOptions-384"><a href="#UpdatePromptOptions-384"><span class="linenos">384</span></a><span class="k">class</span><span class="w"> </span><span class="nc">UpdatePromptOptions</span><span class="p">(</span><span class="n">BaseResponse</span><span class="p">):</span>
-</span><span id="UpdatePromptOptions-385"><a href="#UpdatePromptOptions-385"><span class="linenos">385</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="UpdatePromptOptions-386"><a href="#UpdatePromptOptions-386"><span class="linenos">386</span></a><span class="sd">    The client can send an UpdatePrompt message to provide a new prompt to the Think model in the middle of a conversation.</span>
-</span><span id="UpdatePromptOptions-387"><a href="#UpdatePromptOptions-387"><span class="linenos">387</span></a><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="UpdatePromptOptions-388"><a href="#UpdatePromptOptions-388"><span class="linenos">388</span></a>
-</span><span id="UpdatePromptOptions-389"><a href="#UpdatePromptOptions-389"><span class="linenos">389</span></a>    <span class="nb">type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">AgentWebSocketEvents</span><span class="o">.</span><span class="n">UpdatePrompt</span><span class="p">)</span>
-</span><span id="UpdatePromptOptions-390"><a href="#UpdatePromptOptions-390"><span class="linenos">390</span></a>    <span class="n">prompt</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="UpdatePromptOptions-386"><a href="#UpdatePromptOptions-386"><span class="linenos">386</span></a><span class="nd">@dataclass</span>
+</span><span id="UpdatePromptOptions-387"><a href="#UpdatePromptOptions-387"><span class="linenos">387</span></a><span class="k">class</span><span class="w"> </span><span class="nc">UpdatePromptOptions</span><span class="p">(</span><span class="n">BaseResponse</span><span class="p">):</span>
+</span><span id="UpdatePromptOptions-388"><a href="#UpdatePromptOptions-388"><span class="linenos">388</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="UpdatePromptOptions-389"><a href="#UpdatePromptOptions-389"><span class="linenos">389</span></a><span class="sd">    The client can send an UpdatePrompt message to provide a new prompt to the Think model in the middle of a conversation.</span>
+</span><span id="UpdatePromptOptions-390"><a href="#UpdatePromptOptions-390"><span class="linenos">390</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="UpdatePromptOptions-391"><a href="#UpdatePromptOptions-391"><span class="linenos">391</span></a>
+</span><span id="UpdatePromptOptions-392"><a href="#UpdatePromptOptions-392"><span class="linenos">392</span></a>    <span class="nb">type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">AgentWebSocketEvents</span><span class="o">.</span><span class="n">UpdatePrompt</span><span class="p">)</span>
+</span><span id="UpdatePromptOptions-393"><a href="#UpdatePromptOptions-393"><span class="linenos">393</span></a>    <span class="n">prompt</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
 </span></pre></div>
 
 
@@ -2429,26 +2450,26 @@
 
     </div>
     <a class="headerlink" href="#UpdateSpeakOptions"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="UpdateSpeakOptions-396"><a href="#UpdateSpeakOptions-396"><span class="linenos">396</span></a><span class="nd">@dataclass</span>
-</span><span id="UpdateSpeakOptions-397"><a href="#UpdateSpeakOptions-397"><span class="linenos">397</span></a><span class="k">class</span><span class="w"> </span><span class="nc">UpdateSpeakOptions</span><span class="p">(</span><span class="n">BaseResponse</span><span class="p">):</span>
-</span><span id="UpdateSpeakOptions-398"><a href="#UpdateSpeakOptions-398"><span class="linenos">398</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="UpdateSpeakOptions-399"><a href="#UpdateSpeakOptions-399"><span class="linenos">399</span></a><span class="sd">    The client can send an UpdateSpeak message to change the Speak model in the middle of a conversation.</span>
-</span><span id="UpdateSpeakOptions-400"><a href="#UpdateSpeakOptions-400"><span class="linenos">400</span></a><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="UpdateSpeakOptions-401"><a href="#UpdateSpeakOptions-401"><span class="linenos">401</span></a>
-</span><span id="UpdateSpeakOptions-402"><a href="#UpdateSpeakOptions-402"><span class="linenos">402</span></a>    <span class="nb">type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">AgentWebSocketEvents</span><span class="o">.</span><span class="n">UpdateSpeak</span><span class="p">)</span>
-</span><span id="UpdateSpeakOptions-403"><a href="#UpdateSpeakOptions-403"><span class="linenos">403</span></a>    <span class="n">speak</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Speak</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">Speak</span><span class="p">]]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="n">Speak</span><span class="p">)</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="UpdateSpeakOptions-399"><a href="#UpdateSpeakOptions-399"><span class="linenos">399</span></a><span class="nd">@dataclass</span>
+</span><span id="UpdateSpeakOptions-400"><a href="#UpdateSpeakOptions-400"><span class="linenos">400</span></a><span class="k">class</span><span class="w"> </span><span class="nc">UpdateSpeakOptions</span><span class="p">(</span><span class="n">BaseResponse</span><span class="p">):</span>
+</span><span id="UpdateSpeakOptions-401"><a href="#UpdateSpeakOptions-401"><span class="linenos">401</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="UpdateSpeakOptions-402"><a href="#UpdateSpeakOptions-402"><span class="linenos">402</span></a><span class="sd">    The client can send an UpdateSpeak message to change the Speak model in the middle of a conversation.</span>
+</span><span id="UpdateSpeakOptions-403"><a href="#UpdateSpeakOptions-403"><span class="linenos">403</span></a><span class="sd">    &quot;&quot;&quot;</span>
 </span><span id="UpdateSpeakOptions-404"><a href="#UpdateSpeakOptions-404"><span class="linenos">404</span></a>
-</span><span id="UpdateSpeakOptions-405"><a href="#UpdateSpeakOptions-405"><span class="linenos">405</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">__post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="UpdateSpeakOptions-406"><a href="#UpdateSpeakOptions-406"><span class="linenos">406</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Handle conversion of dict/list data to proper Speak objects&quot;&quot;&quot;</span>
-</span><span id="UpdateSpeakOptions-407"><a href="#UpdateSpeakOptions-407"><span class="linenos">407</span></a>        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">speak</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
-</span><span id="UpdateSpeakOptions-408"><a href="#UpdateSpeakOptions-408"><span class="linenos">408</span></a>            <span class="c1"># Convert list of dicts to list of Speak objects</span>
-</span><span id="UpdateSpeakOptions-409"><a href="#UpdateSpeakOptions-409"><span class="linenos">409</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">speak</span> <span class="o">=</span> <span class="p">[</span>
-</span><span id="UpdateSpeakOptions-410"><a href="#UpdateSpeakOptions-410"><span class="linenos">410</span></a>                <span class="n">Speak</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">item</span><span class="p">)</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)</span> <span class="k">else</span> <span class="n">item</span>
-</span><span id="UpdateSpeakOptions-411"><a href="#UpdateSpeakOptions-411"><span class="linenos">411</span></a>                <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">speak</span>
-</span><span id="UpdateSpeakOptions-412"><a href="#UpdateSpeakOptions-412"><span class="linenos">412</span></a>            <span class="p">]</span>
-</span><span id="UpdateSpeakOptions-413"><a href="#UpdateSpeakOptions-413"><span class="linenos">413</span></a>        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">speak</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
-</span><span id="UpdateSpeakOptions-414"><a href="#UpdateSpeakOptions-414"><span class="linenos">414</span></a>            <span class="c1"># Convert single dict to Speak object</span>
-</span><span id="UpdateSpeakOptions-415"><a href="#UpdateSpeakOptions-415"><span class="linenos">415</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">speak</span> <span class="o">=</span> <span class="n">Speak</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">speak</span><span class="p">)</span>
+</span><span id="UpdateSpeakOptions-405"><a href="#UpdateSpeakOptions-405"><span class="linenos">405</span></a>    <span class="nb">type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">AgentWebSocketEvents</span><span class="o">.</span><span class="n">UpdateSpeak</span><span class="p">)</span>
+</span><span id="UpdateSpeakOptions-406"><a href="#UpdateSpeakOptions-406"><span class="linenos">406</span></a>    <span class="n">speak</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Speak</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">Speak</span><span class="p">]]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="n">Speak</span><span class="p">)</span>
+</span><span id="UpdateSpeakOptions-407"><a href="#UpdateSpeakOptions-407"><span class="linenos">407</span></a>
+</span><span id="UpdateSpeakOptions-408"><a href="#UpdateSpeakOptions-408"><span class="linenos">408</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">__post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="UpdateSpeakOptions-409"><a href="#UpdateSpeakOptions-409"><span class="linenos">409</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Handle conversion of dict/list data to proper Speak objects&quot;&quot;&quot;</span>
+</span><span id="UpdateSpeakOptions-410"><a href="#UpdateSpeakOptions-410"><span class="linenos">410</span></a>        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">speak</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+</span><span id="UpdateSpeakOptions-411"><a href="#UpdateSpeakOptions-411"><span class="linenos">411</span></a>            <span class="c1"># Convert list of dicts to list of Speak objects</span>
+</span><span id="UpdateSpeakOptions-412"><a href="#UpdateSpeakOptions-412"><span class="linenos">412</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">speak</span> <span class="o">=</span> <span class="p">[</span>
+</span><span id="UpdateSpeakOptions-413"><a href="#UpdateSpeakOptions-413"><span class="linenos">413</span></a>                <span class="n">Speak</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">item</span><span class="p">)</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)</span> <span class="k">else</span> <span class="n">item</span>
+</span><span id="UpdateSpeakOptions-414"><a href="#UpdateSpeakOptions-414"><span class="linenos">414</span></a>                <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">speak</span>
+</span><span id="UpdateSpeakOptions-415"><a href="#UpdateSpeakOptions-415"><span class="linenos">415</span></a>            <span class="p">]</span>
+</span><span id="UpdateSpeakOptions-416"><a href="#UpdateSpeakOptions-416"><span class="linenos">416</span></a>        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">speak</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+</span><span id="UpdateSpeakOptions-417"><a href="#UpdateSpeakOptions-417"><span class="linenos">417</span></a>            <span class="c1"># Convert single dict to Speak object</span>
+</span><span id="UpdateSpeakOptions-418"><a href="#UpdateSpeakOptions-418"><span class="linenos">418</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">speak</span> <span class="o">=</span> <span class="n">Speak</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">speak</span><span class="p">)</span>
 </span></pre></div>
 
 
@@ -2513,14 +2534,14 @@
 
     </div>
     <a class="headerlink" href="#InjectAgentMessageOptions"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="InjectAgentMessageOptions-421"><a href="#InjectAgentMessageOptions-421"><span class="linenos">421</span></a><span class="nd">@dataclass</span>
-</span><span id="InjectAgentMessageOptions-422"><a href="#InjectAgentMessageOptions-422"><span class="linenos">422</span></a><span class="k">class</span><span class="w"> </span><span class="nc">InjectAgentMessageOptions</span><span class="p">(</span><span class="n">BaseResponse</span><span class="p">):</span>
-</span><span id="InjectAgentMessageOptions-423"><a href="#InjectAgentMessageOptions-423"><span class="linenos">423</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="InjectAgentMessageOptions-424"><a href="#InjectAgentMessageOptions-424"><span class="linenos">424</span></a><span class="sd">    The client can send an InjectAgentMessage to immediately trigger an agent statement. If the injection request arrives while the user is speaking, or while the server is in the middle of sending audio for an agent response, then the request will be ignored and the server will reply with an InjectionRefused.</span>
-</span><span id="InjectAgentMessageOptions-425"><a href="#InjectAgentMessageOptions-425"><span class="linenos">425</span></a><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="InjectAgentMessageOptions-426"><a href="#InjectAgentMessageOptions-426"><span class="linenos">426</span></a>
-</span><span id="InjectAgentMessageOptions-427"><a href="#InjectAgentMessageOptions-427"><span class="linenos">427</span></a>    <span class="nb">type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">AgentWebSocketEvents</span><span class="o">.</span><span class="n">InjectAgentMessage</span><span class="p">)</span>
-</span><span id="InjectAgentMessageOptions-428"><a href="#InjectAgentMessageOptions-428"><span class="linenos">428</span></a>    <span class="n">message</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="InjectAgentMessageOptions-424"><a href="#InjectAgentMessageOptions-424"><span class="linenos">424</span></a><span class="nd">@dataclass</span>
+</span><span id="InjectAgentMessageOptions-425"><a href="#InjectAgentMessageOptions-425"><span class="linenos">425</span></a><span class="k">class</span><span class="w"> </span><span class="nc">InjectAgentMessageOptions</span><span class="p">(</span><span class="n">BaseResponse</span><span class="p">):</span>
+</span><span id="InjectAgentMessageOptions-426"><a href="#InjectAgentMessageOptions-426"><span class="linenos">426</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="InjectAgentMessageOptions-427"><a href="#InjectAgentMessageOptions-427"><span class="linenos">427</span></a><span class="sd">    The client can send an InjectAgentMessage to immediately trigger an agent statement. If the injection request arrives while the user is speaking, or while the server is in the middle of sending audio for an agent response, then the request will be ignored and the server will reply with an InjectionRefused.</span>
+</span><span id="InjectAgentMessageOptions-428"><a href="#InjectAgentMessageOptions-428"><span class="linenos">428</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="InjectAgentMessageOptions-429"><a href="#InjectAgentMessageOptions-429"><span class="linenos">429</span></a>
+</span><span id="InjectAgentMessageOptions-430"><a href="#InjectAgentMessageOptions-430"><span class="linenos">430</span></a>    <span class="nb">type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">AgentWebSocketEvents</span><span class="o">.</span><span class="n">InjectAgentMessage</span><span class="p">)</span>
+</span><span id="InjectAgentMessageOptions-431"><a href="#InjectAgentMessageOptions-431"><span class="linenos">431</span></a>    <span class="n">message</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
 </span></pre></div>
 
 
@@ -2586,15 +2607,15 @@
 
     </div>
     <a class="headerlink" href="#InjectUserMessageOptions"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="InjectUserMessageOptions-434"><a href="#InjectUserMessageOptions-434"><span class="linenos">434</span></a><span class="nd">@dataclass</span>
-</span><span id="InjectUserMessageOptions-435"><a href="#InjectUserMessageOptions-435"><span class="linenos">435</span></a><span class="k">class</span><span class="w"> </span><span class="nc">InjectUserMessageOptions</span><span class="p">(</span><span class="n">BaseResponse</span><span class="p">):</span>
-</span><span id="InjectUserMessageOptions-436"><a href="#InjectUserMessageOptions-436"><span class="linenos">436</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="InjectUserMessageOptions-437"><a href="#InjectUserMessageOptions-437"><span class="linenos">437</span></a><span class="sd">    The client can send an InjectUserMessage to interact with the agent using text input.</span>
-</span><span id="InjectUserMessageOptions-438"><a href="#InjectUserMessageOptions-438"><span class="linenos">438</span></a><span class="sd">    This is useful when you need to trigger an agent response from text input.</span>
-</span><span id="InjectUserMessageOptions-439"><a href="#InjectUserMessageOptions-439"><span class="linenos">439</span></a><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="InjectUserMessageOptions-440"><a href="#InjectUserMessageOptions-440"><span class="linenos">440</span></a>
-</span><span id="InjectUserMessageOptions-441"><a href="#InjectUserMessageOptions-441"><span class="linenos">441</span></a>    <span class="nb">type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">AgentWebSocketEvents</span><span class="o">.</span><span class="n">InjectUserMessage</span><span class="p">)</span>
-</span><span id="InjectUserMessageOptions-442"><a href="#InjectUserMessageOptions-442"><span class="linenos">442</span></a>    <span class="n">content</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="InjectUserMessageOptions-437"><a href="#InjectUserMessageOptions-437"><span class="linenos">437</span></a><span class="nd">@dataclass</span>
+</span><span id="InjectUserMessageOptions-438"><a href="#InjectUserMessageOptions-438"><span class="linenos">438</span></a><span class="k">class</span><span class="w"> </span><span class="nc">InjectUserMessageOptions</span><span class="p">(</span><span class="n">BaseResponse</span><span class="p">):</span>
+</span><span id="InjectUserMessageOptions-439"><a href="#InjectUserMessageOptions-439"><span class="linenos">439</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="InjectUserMessageOptions-440"><a href="#InjectUserMessageOptions-440"><span class="linenos">440</span></a><span class="sd">    The client can send an InjectUserMessage to interact with the agent using text input.</span>
+</span><span id="InjectUserMessageOptions-441"><a href="#InjectUserMessageOptions-441"><span class="linenos">441</span></a><span class="sd">    This is useful when you need to trigger an agent response from text input.</span>
+</span><span id="InjectUserMessageOptions-442"><a href="#InjectUserMessageOptions-442"><span class="linenos">442</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="InjectUserMessageOptions-443"><a href="#InjectUserMessageOptions-443"><span class="linenos">443</span></a>
+</span><span id="InjectUserMessageOptions-444"><a href="#InjectUserMessageOptions-444"><span class="linenos">444</span></a>    <span class="nb">type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">AgentWebSocketEvents</span><span class="o">.</span><span class="n">InjectUserMessage</span><span class="p">)</span>
+</span><span id="InjectUserMessageOptions-445"><a href="#InjectUserMessageOptions-445"><span class="linenos">445</span></a>    <span class="n">content</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
 </span></pre></div>
 
 
@@ -2661,16 +2682,16 @@ This is useful when you need to trigger an agent response from text input.</p>
 
     </div>
     <a class="headerlink" href="#FunctionCallResponse"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="FunctionCallResponse-448"><a href="#FunctionCallResponse-448"><span class="linenos">448</span></a><span class="nd">@dataclass</span>
-</span><span id="FunctionCallResponse-449"><a href="#FunctionCallResponse-449"><span class="linenos">449</span></a><span class="k">class</span><span class="w"> </span><span class="nc">FunctionCallResponse</span><span class="p">(</span><span class="n">BaseResponse</span><span class="p">):</span>
-</span><span id="FunctionCallResponse-450"><a href="#FunctionCallResponse-450"><span class="linenos">450</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="FunctionCallResponse-451"><a href="#FunctionCallResponse-451"><span class="linenos">451</span></a><span class="sd">    TheFunctionCallResponse message is a JSON command that the client should reply with every time there is a FunctionCallRequest received.</span>
-</span><span id="FunctionCallResponse-452"><a href="#FunctionCallResponse-452"><span class="linenos">452</span></a><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="FunctionCallResponse-453"><a href="#FunctionCallResponse-453"><span class="linenos">453</span></a>
-</span><span id="FunctionCallResponse-454"><a href="#FunctionCallResponse-454"><span class="linenos">454</span></a>    <span class="nb">type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;FunctionCallResponse&quot;</span>
-</span><span id="FunctionCallResponse-455"><a href="#FunctionCallResponse-455"><span class="linenos">455</span></a>    <span class="nb">id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
-</span><span id="FunctionCallResponse-456"><a href="#FunctionCallResponse-456"><span class="linenos">456</span></a>    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
-</span><span id="FunctionCallResponse-457"><a href="#FunctionCallResponse-457"><span class="linenos">457</span></a>    <span class="n">content</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="FunctionCallResponse-451"><a href="#FunctionCallResponse-451"><span class="linenos">451</span></a><span class="nd">@dataclass</span>
+</span><span id="FunctionCallResponse-452"><a href="#FunctionCallResponse-452"><span class="linenos">452</span></a><span class="k">class</span><span class="w"> </span><span class="nc">FunctionCallResponse</span><span class="p">(</span><span class="n">BaseResponse</span><span class="p">):</span>
+</span><span id="FunctionCallResponse-453"><a href="#FunctionCallResponse-453"><span class="linenos">453</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="FunctionCallResponse-454"><a href="#FunctionCallResponse-454"><span class="linenos">454</span></a><span class="sd">    TheFunctionCallResponse message is a JSON command that the client should reply with every time there is a FunctionCallRequest received.</span>
+</span><span id="FunctionCallResponse-455"><a href="#FunctionCallResponse-455"><span class="linenos">455</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="FunctionCallResponse-456"><a href="#FunctionCallResponse-456"><span class="linenos">456</span></a>
+</span><span id="FunctionCallResponse-457"><a href="#FunctionCallResponse-457"><span class="linenos">457</span></a>    <span class="nb">type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;FunctionCallResponse&quot;</span>
+</span><span id="FunctionCallResponse-458"><a href="#FunctionCallResponse-458"><span class="linenos">458</span></a>    <span class="nb">id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+</span><span id="FunctionCallResponse-459"><a href="#FunctionCallResponse-459"><span class="linenos">459</span></a>    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+</span><span id="FunctionCallResponse-460"><a href="#FunctionCallResponse-460"><span class="linenos">460</span></a>    <span class="n">content</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
 </span></pre></div>
 
 
@@ -2760,13 +2781,13 @@ This is useful when you need to trigger an agent response from text input.</p>
 
     </div>
     <a class="headerlink" href="#AgentKeepAlive"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="AgentKeepAlive-463"><a href="#AgentKeepAlive-463"><span class="linenos">463</span></a><span class="nd">@dataclass</span>
-</span><span id="AgentKeepAlive-464"><a href="#AgentKeepAlive-464"><span class="linenos">464</span></a><span class="k">class</span><span class="w"> </span><span class="nc">AgentKeepAlive</span><span class="p">(</span><span class="n">BaseResponse</span><span class="p">):</span>
-</span><span id="AgentKeepAlive-465"><a href="#AgentKeepAlive-465"><span class="linenos">465</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="AgentKeepAlive-466"><a href="#AgentKeepAlive-466"><span class="linenos">466</span></a><span class="sd">    The KeepAlive message is a JSON command that you can use to ensure that the server does not close the connection.</span>
-</span><span id="AgentKeepAlive-467"><a href="#AgentKeepAlive-467"><span class="linenos">467</span></a><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="AgentKeepAlive-468"><a href="#AgentKeepAlive-468"><span class="linenos">468</span></a>
-</span><span id="AgentKeepAlive-469"><a href="#AgentKeepAlive-469"><span class="linenos">469</span></a>    <span class="nb">type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;KeepAlive&quot;</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="AgentKeepAlive-466"><a href="#AgentKeepAlive-466"><span class="linenos">466</span></a><span class="nd">@dataclass</span>
+</span><span id="AgentKeepAlive-467"><a href="#AgentKeepAlive-467"><span class="linenos">467</span></a><span class="k">class</span><span class="w"> </span><span class="nc">AgentKeepAlive</span><span class="p">(</span><span class="n">BaseResponse</span><span class="p">):</span>
+</span><span id="AgentKeepAlive-468"><a href="#AgentKeepAlive-468"><span class="linenos">468</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="AgentKeepAlive-469"><a href="#AgentKeepAlive-469"><span class="linenos">469</span></a><span class="sd">    The KeepAlive message is a JSON command that you can use to ensure that the server does not close the connection.</span>
+</span><span id="AgentKeepAlive-470"><a href="#AgentKeepAlive-470"><span class="linenos">470</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="AgentKeepAlive-471"><a href="#AgentKeepAlive-471"><span class="linenos">471</span></a>
+</span><span id="AgentKeepAlive-472"><a href="#AgentKeepAlive-472"><span class="linenos">472</span></a>    <span class="nb">type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;KeepAlive&quot;</span>
 </span></pre></div>
 
 
