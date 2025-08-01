@@ -271,9 +271,7 @@ class Agent(BaseResponse):
     greeting: Optional[str] = field(
         default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
-    tags: Optional[List[str]] = field(
-        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
-    )
+
 
     def __post_init__(self):
         """Handle conversion of dict/list data to proper Speak objects"""
@@ -350,6 +348,9 @@ class SettingsOptions(BaseResponse):
 
     experimental: Optional[bool] = field(default=False)
     type: str = str(AgentWebSocketEvents.Settings)
+    tags: Optional[List[str]] = field(
+        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
+    )
     audio: Audio = field(default_factory=Audio)
     agent: Agent = field(default_factory=Agent)
     mip_opt_out: Optional[bool] = field(

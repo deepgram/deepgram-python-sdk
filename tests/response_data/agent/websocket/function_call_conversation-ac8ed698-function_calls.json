@@ -4,7 +4,7 @@
       "type": "FunctionCallRequest",
       "functions": [
         {
-          "id": "call_yxQWSqDn7ywFRGYOCQiJlO9o",
+          "id": "call_jYXNwi9tuPqhgrtiIJxoqsaz",
           "name": "get_weather",
           "arguments": "{\"location\":\"New York\"}",
           "client_side": true
@@ -15,7 +15,7 @@
       "type": "FunctionCallRequest",
       "functions": [
         {
-          "id": "call_LETUBepn3ixCas4K6roRhCKp",
+          "id": "call_YwxHZk3V0XhsWPt7JueJMMqe",
           "name": "get_weather",
           "arguments": "{\"location\":\"New York\"}",
           "client_side": true
@@ -26,7 +26,7 @@
       "type": "FunctionCallRequest",
       "functions": [
         {
-          "id": "call_u0X991rN72NPNzVWIBEkjs3B",
+          "id": "call_DveXgRjUM8ICh61bmHyyUMAA",
           "name": "get_weather",
           "arguments": "{\"location\":\"London\"}",
           "client_side": true
