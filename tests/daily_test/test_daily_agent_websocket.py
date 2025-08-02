@@ -433,10 +433,10 @@ def test_daily_agent_websocket(test_case: Dict[str, Any]):
 
         # Handle special agent tags test case by adding tags to the config
         agent_config = test_case["agent_config"].copy()
-        if test_case.get("test_agent_tags", False):
-            agent_config["tags"] = ["test", "daily"]
-
         settings.agent = agent_config
+
+        if test_case.get("test_agent_tags", False):
+            settings.tags = ["test", "daily"]
         settings.experimental = True  # Enable experimental features
 
         print(f"🔧 Starting connection with settings: {settings.to_dict()}")
@@ -568,7 +568,7 @@ def test_daily_agent_websocket(test_case: Dict[str, Any]):
             expected_tags = ["test", "daily"]
             # Verify settings contain the expected tags
             settings_dict = settings.to_dict()
-            agent_tags = settings_dict.get("agent", {}).get("tags", [])
+            agent_tags = settings_dict.get("tags", [])
             assert agent_tags == expected_tags, f"Test ID: {unique} - Agent tags should match expected tags"
             print(f"✓ Agent tags validated: {agent_tags}")
 

@@ -1,29 +1,29 @@
 [
   {
     "type": "Welcome",
-    "timestamp": 1753228460.734095,
+    "timestamp": 1754089177.534934,
     "data": {
       "type": "Welcome",
-      "request_id": "dfd30789-0c4d-4c19-b994-771f4fb9661e"
+      "request_id": "a923abe9-006b-430a-a02c-c74411d9aac7"
     }
   },
   {
     "type": "Open",
-    "timestamp": 1753228460.734293,
+    "timestamp": 1754089177.5350668,
     "data": {
       "type": "Open"
     }
   },
   {
     "type": "SettingsApplied",
-    "timestamp": 1753228460.7778182,
+    "timestamp": 1754089177.5740302,
     "data": {
       "type": "SettingsApplied"
     }
   },
   {
     "type": "ConversationText",
-    "timestamp": 1753228461.776698,
+    "timestamp": 1754089178.5788832,
     "data": {
       "type": "ConversationText",
       "role": "user",
@@ -32,7 +32,7 @@
   },
   {
     "type": "Unhandled",
-    "timestamp": 1753228461.7773771,
+    "timestamp": 1754089178.579328,
     "data": {
       "type": "Unhandled",
       "raw": "{\"type\":\"History\",\"role\":\"user\",\"content\":\"Hello, can you test speaking with fallback providers?\"}"
@@ -40,7 +40,7 @@
   },
   {
     "type": "Unhandled",
-    "timestamp": 1753228461.777649,
+    "timestamp": 1754089178.5795121,
     "data": {
       "type": "Unhandled",
       "raw": "{\"type\":\"EndOfThought\"}"
@@ -48,7 +48,7 @@
   },
   {
     "type": "ConversationText",
-    "timestamp": 1753228462.3662138,
+    "timestamp": 1754089179.623884,
     "data": {
       "type": "ConversationText",
       "role": "assistant",
@@ -57,7 +57,7 @@
   },
   {
     "type": "Unhandled",
-    "timestamp": 1753228462.367912,
+    "timestamp": 1754089179.624897,
     "data": {
       "type": "Unhandled",
       "raw": "{\"type\":\"History\",\"role\":\"assistant\",\"content\":\"Hello!\"}"
@@ -65,33 +65,16 @@
   },
   {
     "type": "AgentStartedSpeaking",
-    "timestamp": 1753228462.3687549,
+    "timestamp": 1754089179.6257951,
     "data": {
-      "total_latency": 0.590445984,
-      "tts_latency": 0.247604155,
-      "ttt_latency": 0.342841613
+      "total_latency": 1.043773834,
+      "tts_latency": 0.378058042,
+      "ttt_latency": 0.665715682
     }
   },
   {
     "type": "ConversationText",
-    "timestamp": 1753228462.9290051,
-    "data": {
-      "type": "ConversationText",
-      "role": "assistant",
-      "content": "I can\u2019t directly test speaking with fallback providers, but I can help answer questions or provide information on how to do it."
-    }
-  },
-  {
-    "type": "Unhandled",
-    "timestamp": 1753228462.930422,
-    "data": {
-      "type": "Unhandled",
-      "raw": "{\"type\":\"History\",\"role\":\"assistant\",\"content\":\"I can\u2019t directly test speaking with fallback providers, but I can help answer questions or provide information on how to do it.\"}"
-    }
-  },
-  {
-    "type": "ConversationText",
-    "timestamp": 1753228463.3225222,
+    "timestamp": 1754089180.093214,
     "data": {
       "type": "ConversationText",
       "role": "user",
@@ -100,7 +83,7 @@
   },
   {
     "type": "Unhandled",
-    "timestamp": 1753228463.323008,
+    "timestamp": 1754089180.093871,
     "data": {
       "type": "Unhandled",
       "raw": "{\"type\":\"History\",\"role\":\"user\",\"content\":\"Please say something else to test the fallback.\"}"
@@ -108,7 +91,7 @@
   },
   {
     "type": "Unhandled",
-    "timestamp": 1753228463.3232908,
+    "timestamp": 1754089180.094195,
     "data": {
       "type": "Unhandled",
       "raw": "{\"type\":\"EndOfThought\"}"
@@ -116,14 +99,14 @@
   },
   {
     "type": "AgentAudioDone",
-    "timestamp": 1753228463.482819,
+    "timestamp": 1754089180.0944588,
     "data": {
       "type": "AgentAudioDone"
     }
   },
   {
     "type": "ConversationText",
-    "timestamp": 1753228464.009558,
+    "timestamp": 1754089180.754755,
     "data": {
       "type": "ConversationText",
       "role": "assistant",
@@ -132,7 +115,7 @@
   },
   {
     "type": "Unhandled",
-    "timestamp": 1753228464.01006,
+    "timestamp": 1754089180.7552261,
     "data": {
       "type": "Unhandled",
       "raw": "{\"type\":\"History\",\"role\":\"assistant\",\"content\":\"Sure!\"}"
@@ -140,16 +123,16 @@
   },
   {
     "type": "AgentStartedSpeaking",
-    "timestamp": 1753228464.010366,
+    "timestamp": 1754089180.7559838,
     "data": {
-      "total_latency": 0.72579095,
-      "tts_latency": 0.330375132,
-      "ttt_latency": 0.395415633
+      "total_latency": 0.539705597,
+      "tts_latency": 0.261027007,
+      "ttt_latency": 0.27867806
     }
   },
   {
     "type": "ConversationText",
-    "timestamp": 1753228464.625689,
+    "timestamp": 1754089181.231325,
     "data": {
       "type": "ConversationText",
       "role": "assistant",
@@ -158,7 +141,7 @@
   },
   {
     "type": "Unhandled",
-    "timestamp": 1753228464.6269162,
+    "timestamp": 1754089181.232203,
     "data": {
       "type": "Unhandled",
       "raw": "{\"type\":\"History\",\"role\":\"assistant\",\"content\":\"How can I assist you today?\"}"
@@ -166,7 +149,7 @@
   },
   {
     "type": "AgentAudioDone",
-    "timestamp": 1753228464.7008698,
+    "timestamp": 1754089181.2641761,
     "data": {
       "type": "AgentAudioDone"
     }
