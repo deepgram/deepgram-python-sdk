@@ -38,6 +38,9 @@ class SpeakRESTOptions(BaseResponse):
     bit_rate: Optional[int] = field(
         default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
+    mip_opt_out: Optional[bool] = field(
+        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
+    )
 
     def check(self):
         """
