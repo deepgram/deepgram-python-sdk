@@ -42,7 +42,7 @@ def main():
                 "microphone_record": "true",
                 "speaker_playback": "true",
             },
-            verbose=verboselogs.SPAM,
+            verbose=verboselogs.INFO,
         )
         print("Created DeepgramClientOptions...")
 
@@ -138,6 +138,8 @@ def main():
         options.agent.listen.provider.keyterms = ["hello", "goodbye"]
         options.agent.listen.provider.model = "nova-3"
         options.agent.listen.provider.type = "deepgram"
+        options.agent.speak.provider.type = "deepgram"
+        options.agent.speak.provider.model = "aura-2-thalia-en"
         options.agent.language = "en"
         if dg_connection.start(options) is False:
             print("Failed to start connection")
