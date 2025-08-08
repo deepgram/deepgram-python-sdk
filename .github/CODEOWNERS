@@ -1,0 +1,6 @@
+# Global code owners - these users will be requested for review on all API SPEC PRs
+# DX TEAM Members
+* @lukeocodes
+
+# Future Reference: you can also specify owners for specific paths if needed:
+# /src/ @username1 @username2
