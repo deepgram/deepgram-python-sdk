@@ -347,9 +347,12 @@ class Agent(BaseResponse):
     greeting: Optional[str] = field(
         default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
+    context: Optional[Context] = field(
+        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
+    )
 
     def __post_init__(self):
-        """Handle conversion of dict/list data to proper Speak objects"""
+        """Handle conversion of dict/list data to proper Speak objects and Context objects"""
         # Handle speak conversion (OneOf pattern)
         if isinstance(self.speak, list):
             self.speak = [
@@ -358,6 +361,10 @@ class Agent(BaseResponse):
             ]
         elif isinstance(self.speak, dict):
             self.speak = Speak.from_dict(self.speak)
+
+        # Handle context conversion
+        if isinstance(self.context, dict):
+            self.context = Context.from_dict(self.context)
 
     def __getitem__(self, key):
         _dict = self.to_dict()
@@ -432,6 +439,9 @@ class SettingsOptions(BaseResponse):
     agent: Agent = field(default_factory=Agent)
     mip_opt_out: Optional[bool] = field(
         default=False, metadata=dataclass_config(exclude=lambda f: f is None)
+    )
+    flags: Optional[Flags] = field(
+        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
 
     def __getitem__(self, key):
