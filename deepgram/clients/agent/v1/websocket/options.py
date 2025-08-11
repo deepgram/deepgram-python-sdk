@@ -322,7 +322,7 @@ class Context(BaseResponse):
         for message in self.messages:
             if message is None:
                 continue
-            elif isinstance(message, dict):
+            if isinstance(message, dict):
                 if "function_calls" in message:
                     converted_messages.append(HistoryFunctionCallsMessage.from_dict(message))
                 else:
