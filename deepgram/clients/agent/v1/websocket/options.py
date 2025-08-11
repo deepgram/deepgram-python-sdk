@@ -321,7 +321,7 @@ class Context(BaseResponse):
 
 
 @dataclass
-class Agent(BaseResponse):  # pylint: disable=too-many-instance-attributes
+class Agent(BaseResponse):
     """
     This class defines any configuration settings for the Agent model.
     """
@@ -347,19 +347,6 @@ class Agent(BaseResponse):  # pylint: disable=too-many-instance-attributes
     greeting: Optional[str] = field(
         default=None, metadata=dataclass_config(exclude=lambda f: f is None)
     )
-<<<<<<< HEAD
-
-=======
-    mip_opt_out: Optional[bool] = field(
-        default=False, metadata=dataclass_config(exclude=lambda f: f is None)
-    )
-    tags: Optional[List[str]] = field(
-        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
-    )
-    context: Optional[Context] = field(
-        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
-    )
->>>>>>> 5e0a9d2 (feat: add support for agent context history)
 
     def __post_init__(self):
         """Handle conversion of dict/list data to proper Speak objects"""
@@ -443,13 +430,8 @@ class SettingsOptions(BaseResponse):
     )
     audio: Audio = field(default_factory=Audio)
     agent: Agent = field(default_factory=Agent)
-<<<<<<< HEAD
     mip_opt_out: Optional[bool] = field(
         default=False, metadata=dataclass_config(exclude=lambda f: f is None)
-=======
-    flags: Optional[Flags] = field(
-        default=None, metadata=dataclass_config(exclude=lambda f: f is None)
->>>>>>> 5e0a9d2 (feat: add support for agent context history)
     )
 
     def __getitem__(self, key):
