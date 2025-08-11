@@ -204,7 +204,7 @@ def main():
                     name=function_call.name,
                     content=json.dumps({"error": "Invalid JSON in function arguments"})
                 )
-                dg_connection.send_function_call_response(response)
+                dg_connection.send(response.to_json())
             except Exception as e:
                 print(f"❌ Error in function call: {e}")
                 response = FunctionCallResponse(
@@ -212,7 +212,7 @@ def main():
                     name=function_call.name,
                     content=json.dumps({"error": str(e)})
                 )
-                dg_connection.send_function_call_response(response)
+                dg_connection.send(response.to_json())
 
         def on_agent_started_speaking(self, agent_started_speaking, **kwargs):
             print(f"🗣️  Agent started speaking: {agent_started_speaking}")
