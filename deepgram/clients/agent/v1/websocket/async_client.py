@@ -30,6 +30,10 @@ from .response import (
     UnhandledResponse,
 )
 from .options import (
+    HistoryConversationMessage,
+    HistoryFunctionCallsMessage,
+)
+from .options import (
     SettingsOptions,
     UpdatePromptOptions,
     UpdateSpeakOptions,
@@ -476,6 +480,30 @@ class AsyncAgentWebSocketClient(
                     await self._emit(
                         AgentWebSocketEvents(AgentWebSocketEvents.InjectionRefused),
                         injection_refused=injection_refused_result,
+                        **dict(cast(Dict[Any, Any], self._kwargs)),
+                    )
+                case AgentWebSocketEvents.History:
+                    # Determine if this is conversation history or function call history
+                    if "role" in data and "content" in data:
+                        # This is conversation history
+                        history_result: HistoryConversationMessage = (
+                            HistoryConversationMessage.from_json(message)
+                        )
+                        self._logger.verbose("HistoryConversationMessage: %s", history_result)
+                    elif "function_calls" in data:
+                        # This is function call history
+                        history_result: HistoryFunctionCallsMessage = (
+                            HistoryFunctionCallsMessage.from_json(message)
+                        )
+                        self._logger.verbose("HistoryFunctionCallsMessage: %s", history_result)
+                    else:
+                        # Fallback for unknown History format
+                        history_result = data
+                        self._logger.verbose("History (unknown format): %s", history_result)
+
+                    await self._emit(
+                        AgentWebSocketEvents(AgentWebSocketEvents.History),
+                        history=history_result,
                         **dict(cast(Dict[Any, Any], self._kwargs)),
                     )
                 case AgentWebSocketEvents.Close:

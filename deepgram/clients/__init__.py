@@ -363,6 +363,7 @@ from .agent import (
     InjectUserMessageOptions,
     FunctionCallResponse,
     AgentKeepAlive,
+    Flags,
     # sub level
     Listen,
     Speak,
@@ -378,4 +379,8 @@ from .agent import (
     Output,
     Audio,
     Endpoint,
+    Context,
+    HistoryConversationMessage,
+    HistoryFunctionCallsMessage,
+    FunctionCallHistory,
 )
