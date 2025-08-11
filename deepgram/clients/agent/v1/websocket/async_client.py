@@ -484,17 +484,15 @@ class AsyncAgentWebSocketClient(
                     )
                 case AgentWebSocketEvents.History:
                     # Determine if this is conversation history or function call history
+                    history_result: Union[HistoryConversationMessage, HistoryFunctionCallsMessage, Dict[Any, Any]]
+
                     if "role" in data and "content" in data:
                         # This is conversation history
-                        history_result: HistoryConversationMessage = (
-                            HistoryConversationMessage.from_json(message)
-                        )
+                        history_result = HistoryConversationMessage.from_json(message)
                         self._logger.verbose("HistoryConversationMessage: %s", history_result)
                     elif "function_calls" in data:
                         # This is function call history
-                        history_result: HistoryFunctionCallsMessage = (
-                            HistoryFunctionCallsMessage.from_json(message)
-                        )
+                        history_result = HistoryFunctionCallsMessage.from_json(message)
                         self._logger.verbose("HistoryFunctionCallsMessage: %s", history_result)
                     else:
                         # Fallback for unknown History format

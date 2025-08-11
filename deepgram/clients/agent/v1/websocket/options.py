@@ -289,12 +289,18 @@ class HistoryFunctionCallsMessage(BaseResponse):
     function_calls: List[FunctionCallHistory] = field(default_factory=list)
 
     def __post_init__(self):
-        """Convert dict function_calls to FunctionCallHistory objects if needed."""
-        if self.function_calls:
-            self.function_calls = [
-                FunctionCallHistory.from_dict(call) if isinstance(call, dict) else call
-                for call in self.function_calls
-            ]
+        """Convert dict function_calls to FunctionCallHistory objects; normalize None."""
+        if not self.function_calls:
+            self.function_calls = []
+            return
+
+        # Convert dicts and filter out any None values for safety
+        converted_calls = [
+            FunctionCallHistory.from_dict(call) if isinstance(call, dict) else call
+            for call in self.function_calls
+            if call is not None
+        ]
+        self.function_calls = [call for call in converted_calls if call is not None]
 
 
 @dataclass
@@ -306,18 +312,24 @@ class Context(BaseResponse):
     messages: List[Union[HistoryConversationMessage, HistoryFunctionCallsMessage]] = field(default_factory=list)
 
     def __post_init__(self):
-        """Convert dict messages to appropriate message objects if needed."""
-        if self.messages:
-            converted_messages = []
-            for message in self.messages:
-                if isinstance(message, dict):
-                    if "function_calls" in message:
-                        converted_messages.append(HistoryFunctionCallsMessage.from_dict(message))
-                    else:
-                        converted_messages.append(HistoryConversationMessage.from_dict(message))
+        """Convert dict messages to appropriate message objects; normalize None."""
+        if not self.messages:
+            self.messages = []
+            return
+
+        # Convert dicts to appropriate message objects and filter out None values
+        converted_messages = []
+        for message in self.messages:
+            if message is None:
+                continue
+            elif isinstance(message, dict):
+                if "function_calls" in message:
+                    converted_messages.append(HistoryFunctionCallsMessage.from_dict(message))
                 else:
-                    converted_messages.append(message)
-            self.messages = converted_messages
+                    converted_messages.append(HistoryConversationMessage.from_dict(message))
+            else:
+                converted_messages.append(message)
+        self.messages = converted_messages
 
 
 @dataclass
