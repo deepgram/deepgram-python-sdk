@@ -347,17 +347,24 @@ connection.finish()
 Analyze text.
 
 ```python
-from deepgram import ReadOptions
+from deepgram import AnalyzeOptions, TextSource
 
-# Configure read options
-options = ReadOptions(
-    model="nova-3",
-    language="en"
+# Configure analyze options
+options = AnalyzeOptions(
+    language="en",
+    sentiment=True,
+    intents=True,
+    topics=True
 )
 
+# Create text source
+source: TextSource = {
+    "buffer": "The quick brown fox jumps over the lazy dog."
+}
+
 # Process text for intelligence
-response = deepgram.read.rest.v("1").process(
-    text="The quick brown fox jumps over the lazy dog.",
+response = deepgram.read.analyze.v("1").analyze_text(
+    source,
     options=options
 )
 ```
