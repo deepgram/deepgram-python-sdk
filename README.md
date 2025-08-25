@@ -351,10 +351,10 @@ from deepgram import AnalyzeOptions, TextSource
 
 # Configure analyze options
 options = AnalyzeOptions(
-    language="en",
     sentiment=True,
     intents=True,
-    topics=True
+    topics=True,
+    summarize=True
 )
 
 # Create text source
