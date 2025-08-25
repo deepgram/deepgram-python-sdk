@@ -118,12 +118,17 @@ deepgram = DeepgramClient("YOUR_API_KEY")  # Replace with your API key
 Transcribe audio from a URL.
 
 ```python
+from deepgram import PrerecordedOptions, UrlSource
 
-from deepgram import PrerecordedOptions
+payload: UrlSource = {
+    "url": "https://dpgr.am/spacewalk.wav"
+}
+
+options = PrerecordedOptions(model="nova-3") # Apply other options
 
 response = deepgram.listen.rest.v("1").transcribe_url(
-    source={"url": "https://dpgr.am/spacewalk.wav"},
-    options=PrerecordedOptions(model="nova-3") # Apply other options
+    payload,
+    options
 )
 ```
 
@@ -134,11 +139,20 @@ response = deepgram.listen.rest.v("1").transcribe_url(
 Transcribe audio from a file.
 
 ```python
-from deepgram import PrerecordedOptions
+from deepgram import PrerecordedOptions, FileSource
+
+with open("path/to/your/audio.wav", "rb") as file:
+    buffer_data = file.read()
+
+payload: FileSource = {
+    "buffer": buffer_data,
+}
+
+options = PrerecordedOptions(model="nova-3") # Apply other options
 
 response = deepgram.listen.rest.v("1").transcribe_file(
-    source=open("path/to/your/audio.wav", "rb"),
-    options=PrerecordedOptions(model="nova-3") # Apply other options
+    payload,
+    options
 )
 ```
 
@@ -151,12 +165,18 @@ response = deepgram.listen.rest.v("1").transcribe_file(
 Transcribe audio from a URL.
 
 ```python
-from deepgram import PrerecordedOptions
+from deepgram import PrerecordedOptions, UrlSource
 
-response = deepgram.listen.rest.v("1").transcribe_url_async(
-    source={"url": "https://dpgr.am/spacewalk.wav"},
-    callback_url="https://your-callback-url.com/webhook",
-    options=PrerecordedOptions(model="nova-3") # Apply other options
+payload: UrlSource = {
+    "url": "https://dpgr.am/spacewalk.wav"
+}
+
+options = PrerecordedOptions(model="nova-3") # Apply other options
+
+response = deepgram.listen.rest.v("1").transcribe_url_callback(
+    payload,
+    "https://your-callback-url.com/webhook",
+    options=options
 )
 ```
 
@@ -167,12 +187,21 @@ response = deepgram.listen.rest.v("1").transcribe_url_async(
 Transcribe audio from a file.
 
 ```python
-from deepgram import PrerecordedOptions
+from deepgram import PrerecordedOptions, FileSource
 
-response = deepgram.listen.rest.v("1").transcribe_file_async(
-    source=open("path/to/your/audio.wav", "rb"),
-    callback_url="https://your-callback-url.com/webhook",
-    options=PrerecordedOptions(model="nova-3") # Apply other options
+with open("path/to/your/audio.wav", "rb") as file:
+    buffer_data = file.read()
+
+payload: FileSource = {
+    "buffer": buffer_data,
+}
+
+options = PrerecordedOptions(model="nova-3") # Apply other options
+
+response = deepgram.listen.rest.v("1").transcribe_file_callback(
+    payload,
+    "https://your-callback-url.com/webhook",
+    options=options
 )
 ```
 
@@ -358,14 +387,14 @@ options = AnalyzeOptions(
 )
 
 # Create text source
-source: TextSource = {
+payload: TextSource = {
     "buffer": "The quick brown fox jumps over the lazy dog."
 }
 
 # Process text for intelligence
 response = deepgram.read.analyze.v("1").analyze_text(
-    source,
-    options=options
+    payload,
+    options
 )
 ```
 
