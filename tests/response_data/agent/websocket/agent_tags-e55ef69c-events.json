@@ -1,29 +1,29 @@
 [
   {
     "type": "Welcome",
-    "timestamp": 1754089254.059805,
+    "timestamp": 1754948270.721306,
     "data": {
       "type": "Welcome",
-      "request_id": "60cc0bbe-be55-4c34-b0c6-e9c138885967"
+      "request_id": "132eb644-166e-4800-802e-7e90ea636b21"
     }
   },
   {
     "type": "Open",
-    "timestamp": 1754089254.060123,
+    "timestamp": 1754948270.72157,
     "data": {
       "type": "Open"
     }
   },
   {
     "type": "SettingsApplied",
-    "timestamp": 1754089254.1029801,
+    "timestamp": 1754948270.7652748,
     "data": {
       "type": "SettingsApplied"
     }
   },
   {
     "type": "ConversationText",
-    "timestamp": 1754089255.110622,
+    "timestamp": 1754948271.768172,
     "data": {
       "type": "ConversationText",
       "role": "user",
@@ -32,15 +32,7 @@
   },
   {
     "type": "Unhandled",
-    "timestamp": 1754089255.1114728,
-    "data": {
-      "type": "Unhandled",
-      "raw": "{\"type\":\"History\",\"role\":\"user\",\"content\":\"Hello, this is a test of agent tags functionality.\"}"
-    }
-  },
-  {
-    "type": "Unhandled",
-    "timestamp": 1754089255.111763,
+    "timestamp": 1754948271.768724,
     "data": {
       "type": "Unhandled",
       "raw": "{\"type\":\"EndOfThought\"}"
@@ -48,7 +40,7 @@
   },
   {
     "type": "ConversationText",
-    "timestamp": 1754089256.122815,
+    "timestamp": 1754948272.522288,
     "data": {
       "type": "ConversationText",
       "role": "assistant",
@@ -56,25 +48,26 @@
     }
   },
   {
-    "type": "Unhandled",
-    "timestamp": 1754089256.12335,
-    "data": {
-      "type": "Unhandled",
-      "raw": "{\"type\":\"History\",\"role\":\"assistant\",\"content\":\"Hello!\"}"
-    }
-  },
-  {
     "type": "AgentStartedSpeaking",
-    "timestamp": 1754089256.12362,
+    "timestamp": 1754948272.5331469,
     "data": {
-      "total_latency": 0.962977896,
-      "tts_latency": 0.368340208,
-      "ttt_latency": 0.594637578
+      "total_latency": 0.751554899,
+      "tts_latency": 0.368593096,
+      "ttt_latency": 0.382961593
     }
   },
   {
     "type": "ConversationText",
-    "timestamp": 1754089256.6148539,
+    "timestamp": 1754948273.247007,
+    "data": {
+      "type": "ConversationText",
+      "role": "assistant",
+      "content": "It seems you're testing the agent tags functionality."
+    }
+  },
+  {
+    "type": "ConversationText",
+    "timestamp": 1754948273.330629,
     "data": {
       "type": "ConversationText",
       "role": "user",
@@ -83,15 +76,7 @@
   },
   {
     "type": "Unhandled",
-    "timestamp": 1754089256.615833,
-    "data": {
-      "type": "Unhandled",
-      "raw": "{\"type\":\"History\",\"role\":\"user\",\"content\":\"Can you confirm you are working with tags enabled?\"}"
-    }
-  },
-  {
-    "type": "Unhandled",
-    "timestamp": 1754089256.616431,
+    "timestamp": 1754948273.331824,
     "data": {
       "type": "Unhandled",
       "raw": "{\"type\":\"EndOfThought\"}"
@@ -99,57 +84,41 @@
   },
   {
     "type": "AgentAudioDone",
-    "timestamp": 1754089256.616906,
+    "timestamp": 1754948273.480625,
     "data": {
       "type": "AgentAudioDone"
     }
   },
   {
     "type": "ConversationText",
-    "timestamp": 1754089257.768304,
+    "timestamp": 1754948274.393117,
     "data": {
       "type": "ConversationText",
       "role": "assistant",
-      "content": "Yes, I can confirm that I am able to work with tags."
-    }
-  },
-  {
-    "type": "Unhandled",
-    "timestamp": 1754089257.768838,
-    "data": {
-      "type": "Unhandled",
-      "raw": "{\"type\":\"History\",\"role\":\"assistant\",\"content\":\"Yes, I can confirm that I am able to work with tags.\"}"
+      "content": "Yes, I can confirm that I'm set up to work with tags enabled."
     }
   },
   {
     "type": "AgentStartedSpeaking",
-    "timestamp": 1754089257.7692642,
+    "timestamp": 1754948274.3937778,
     "data": {
-      "total_latency": 1.157360975,
-      "tts_latency": 0.385327765,
-      "ttt_latency": 0.7720331
+      "total_latency": 0.996282726,
+      "tts_latency": 0.314806037,
+      "ttt_latency": 0.681476589
     }
   },
   {
     "type": "ConversationText",
-    "timestamp": 1754089261.3335302,
+    "timestamp": 1754948277.976524,
     "data": {
       "type": "ConversationText",
       "role": "assistant",
-      "content": "How can I assist you with them?"
-    }
-  },
-  {
-    "type": "Unhandled",
-    "timestamp": 1754089261.334396,
-    "data": {
-      "type": "Unhandled",
-      "raw": "{\"type\":\"History\",\"role\":\"assistant\",\"content\":\"How can I assist you with them?\"}"
+      "content": "How can I assist you with the tags functionality?"
     }
   },
   {
     "type": "AgentAudioDone",
-    "timestamp": 1754089261.371368,
+    "timestamp": 1754948277.981493,
     "data": {
       "type": "AgentAudioDone"
     }

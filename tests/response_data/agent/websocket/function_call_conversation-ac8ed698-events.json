@@ -1,29 +1,29 @@
 [
   {
     "type": "Welcome",
-    "timestamp": 1754089229.198654,
+    "timestamp": 1754948245.3951008,
     "data": {
       "type": "Welcome",
-      "request_id": "b304cd18-7297-46c6-a441-b2fc4e5a2922"
+      "request_id": "c808d204-8bea-4d20-8514-9c69710aaaff"
     }
   },
   {
     "type": "Open",
-    "timestamp": 1754089229.198943,
+    "timestamp": 1754948245.395226,
     "data": {
       "type": "Open"
     }
   },
   {
     "type": "SettingsApplied",
-    "timestamp": 1754089229.240551,
+    "timestamp": 1754948245.434721,
     "data": {
       "type": "SettingsApplied"
     }
   },
   {
     "type": "ConversationText",
-    "timestamp": 1754089230.2495959,
+    "timestamp": 1754948246.4364889,
     "data": {
       "type": "ConversationText",
       "role": "user",
@@ -32,15 +32,7 @@
   },
   {
     "type": "Unhandled",
-    "timestamp": 1754089230.250344,
-    "data": {
-      "type": "Unhandled",
-      "raw": "{\"type\":\"History\",\"role\":\"user\",\"content\":\"What's the weather like in New York?\"}"
-    }
-  },
-  {
-    "type": "Unhandled",
-    "timestamp": 1754089230.250602,
+    "timestamp": 1754948246.4373288,
     "data": {
       "type": "Unhandled",
       "raw": "{\"type\":\"EndOfThought\"}"
@@ -48,12 +40,12 @@
   },
   {
     "type": "FunctionCallRequest",
-    "timestamp": 1754089230.9693499,
+    "timestamp": 1754948247.5643442,
     "data": {
       "type": "FunctionCallRequest",
       "functions": [
         {
-          "id": "call_jYXNwi9tuPqhgrtiIJxoqsaz",
+          "id": "call_bbDFsGyBeInV2H26OAICjPhg",
           "name": "get_weather",
           "arguments": "{\"location\":\"New York\"}",
           "client_side": true
@@ -62,16 +54,8 @@
     }
   },
   {
-    "type": "Unhandled",
-    "timestamp": 1754089231.014071,
-    "data": {
-      "type": "Unhandled",
-      "raw": "{\"type\":\"History\",\"function_calls\":[{\"id\":\"call_jYXNwi9tuPqhgrtiIJxoqsaz\",\"name\":\"get_weather\",\"client_side\":true,\"arguments\":\"{\\\"location\\\":\\\"New York\\\"}\",\"response\":\"{\\\"success\\\": true, \\\"result\\\": \\\"Mock function response\\\", \\\"timestamp\\\": 1754089230.9695292}\"}]}"
-    }
-  },
-  {
     "type": "ConversationText",
-    "timestamp": 1754089231.766838,
+    "timestamp": 1754948247.94738,
     "data": {
       "type": "ConversationText",
       "role": "user",
@@ -80,15 +64,7 @@
   },
   {
     "type": "Unhandled",
-    "timestamp": 1754089231.7678668,
-    "data": {
-      "type": "Unhandled",
-      "raw": "{\"type\":\"History\",\"role\":\"user\",\"content\":\"Can you also check the weather in London?\"}"
-    }
-  },
-  {
-    "type": "Unhandled",
-    "timestamp": 1754089231.769166,
+    "timestamp": 1754948247.948669,
     "data": {
       "type": "Unhandled",
       "raw": "{\"type\":\"EndOfThought\"}"
@@ -96,12 +72,12 @@
   },
   {
     "type": "FunctionCallRequest",
-    "timestamp": 1754089233.014444,
+    "timestamp": 1754948249.277836,
     "data": {
       "type": "FunctionCallRequest",
       "functions": [
         {
-          "id": "call_YwxHZk3V0XhsWPt7JueJMMqe",
+          "id": "call_5kvNcSk1Pk3XxV07ZyasrDIQ",
           "name": "get_weather",
           "arguments": "{\"location\":\"New York\"}",
           "client_side": true
@@ -110,21 +86,13 @@
     }
   },
   {
-    "type": "Unhandled",
-    "timestamp": 1754089233.05795,
-    "data": {
-      "type": "Unhandled",
-      "raw": "{\"type\":\"History\",\"function_calls\":[{\"id\":\"call_YwxHZk3V0XhsWPt7JueJMMqe\",\"name\":\"get_weather\",\"client_side\":true,\"arguments\":\"{\\\"location\\\": \\\"New York\\\"}\",\"response\":\"{\\\"success\\\": true, \\\"result\\\": \\\"Mock function response\\\", \\\"timestamp\\\": 1754089233.014666}\"}]}"
-    }
-  },
-  {
     "type": "FunctionCallRequest",
-    "timestamp": 1754089233.0595121,
+    "timestamp": 1754948249.32042,
     "data": {
       "type": "FunctionCallRequest",
       "functions": [
         {
-          "id": "call_DveXgRjUM8ICh61bmHyyUMAA",
+          "id": "call_m5zpyzvzTSvc57ZLsj4l5DXj",
           "name": "get_weather",
           "arguments": "{\"location\":\"London\"}",
           "client_side": true
@@ -133,59 +101,44 @@
     }
   },
   {
-    "type": "Unhandled",
-    "timestamp": 1754089233.0992022,
-    "data": {
-      "type": "Unhandled",
-      "raw": "{\"type\":\"History\",\"function_calls\":[{\"id\":\"call_DveXgRjUM8ICh61bmHyyUMAA\",\"name\":\"get_weather\",\"client_side\":true,\"arguments\":\"{\\\"location\\\": \\\"London\\\"}\",\"response\":\"{\\\"success\\\": true, \\\"result\\\": \\\"Mock function response\\\", \\\"timestamp\\\": 1754089233.0596192}\"}]}"
-    }
-  },
-  {
     "type": "ConversationText",
-    "timestamp": 1754089234.274155,
+    "timestamp": 1754948250.94256,
     "data": {
       "type": "ConversationText",
       "role": "assistant",
-      "content": "I checked the weather in New York and London, but it seems the responses are placeholder data."
-    }
-  },
-  {
-    "type": "Unhandled",
-    "timestamp": 1754089234.275143,
-    "data": {
-      "type": "Unhandled",
-      "raw": "{\"type\":\"History\",\"role\":\"assistant\",\"content\":\"I checked the weather in New York and London, but it seems the responses are placeholder data.\"}"
+      "content": "I checked the weather for both New York and London, but the response returned is a mock function response."
     }
   },
   {
     "type": "AgentStartedSpeaking",
-    "timestamp": 1754089234.2811031,
+    "timestamp": 1754948250.943639,
     "data": {
-      "total_latency": 2.5165708799999997,
-      "tts_latency": 0.37659356,
-      "ttt_latency": 2.139977173
+      "total_latency": 2.875424046,
+      "tts_latency": 0.37155966,
+      "ttt_latency": 2.503864104
     }
   },
   {
     "type": "ConversationText",
-    "timestamp": 1754089239.476382,
+    "timestamp": 1754948256.58231,
     "data": {
       "type": "ConversationText",
       "role": "assistant",
-      "content": "Would you like me to try again?"
+      "content": "Unfortunately, it doesn't provide specific weather details."
     }
   },
   {
-    "type": "Unhandled",
-    "timestamp": 1754089239.4781692,
+    "type": "ConversationText",
+    "timestamp": 1754948260.070521,
     "data": {
-      "type": "Unhandled",
-      "raw": "{\"type\":\"History\",\"role\":\"assistant\",\"content\":\"Would you like me to try again?\"}"
+      "type": "ConversationText",
+      "role": "assistant",
+      "content": "If you need information about a specific aspect of the weather, such as temperature, humidity, or conditions, please let me know!"
     }
   },
   {
     "type": "AgentAudioDone",
-    "timestamp": 1754089239.5617201,
+    "timestamp": 1754948260.24,
     "data": {
       "type": "AgentAudioDone"
     }

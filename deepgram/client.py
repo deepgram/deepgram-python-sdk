@@ -354,6 +354,7 @@ from .clients import (
     InjectUserMessageOptions,
     FunctionCallResponse,
     AgentKeepAlive,
+    Flags,
     # sub level
     Listen,
     Speak,
@@ -369,6 +370,10 @@ from .clients import (
     Output,
     Audio,
     Endpoint,
+    Context,
+    HistoryConversationMessage,
+    HistoryFunctionCallsMessage,
+    FunctionCallHistory,
 )
 
 

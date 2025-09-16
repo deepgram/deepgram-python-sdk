@@ -24,6 +24,7 @@ class AgentWebSocketEvents(StrEnum):
     FunctionCallRequest: str = "FunctionCallRequest"
     AgentStartedSpeaking: str = "AgentStartedSpeaking"
     AgentAudioDone: str = "AgentAudioDone"
+    History: str = "History"
     Error: str = "Error"
     Unhandled: str = "Unhandled"
 
