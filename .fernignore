@@ -1,0 +1,27 @@
+# Development, Configuration Files & Documentation
+README.md
+CONTRIBUTING.md
+.vscode/
+.gitignore
+mypy.ini
+websockets-reference.md
+
+# Examples
+examples/
+
+# Test Files
+tests/unit/
+tests/integration/
+
+# Custom Extensions & Clients
+src/deepgram/client.py
+src/deepgram/extensions/
+
+# Socket Client Implementations
+src/deepgram/agent/v1/socket_client.py
+src/deepgram/listen/v1/socket_client.py
+src/deepgram/listen/v2/socket_client.py
+src/deepgram/speak/v1/socket_client.py
+
+# Bug Fixes
+src/deepgram/listen/client.py

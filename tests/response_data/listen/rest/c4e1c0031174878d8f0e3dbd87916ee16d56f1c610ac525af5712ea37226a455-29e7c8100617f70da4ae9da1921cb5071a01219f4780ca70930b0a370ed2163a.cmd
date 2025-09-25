@@ -1,1 +1,0 @@
-{"url": "https://static.deepgram.com/examples/Bueller-Life-moves-pretty-fast.wav"}
