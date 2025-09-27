@@ -23,6 +23,7 @@ from deepgram.types.get_project_v1response import GetProjectV1Response
 from deepgram.types.list_models_v1response import ListModelsV1Response
 from deepgram.types.get_model_v1response import GetModelV1Response
 from deepgram.types.get_model_v1response_batch import GetModelV1ResponseBatch
+from deepgram.types.get_model_v1response_metadata import GetModelV1ResponseMetadata
 
 
 class TestManageClient:
@@ -620,7 +621,7 @@ class TestModelsClient:
         result = client.get(model_id)
         
         assert result is not None
-        assert isinstance(result, GetModelV1Response)
+        assert isinstance(result, (GetModelV1ResponseBatch, GetModelV1ResponseMetadata))
         assert result.model_id == model_id
         
         # Verify raw client was called with correct parameters
@@ -665,7 +666,7 @@ class TestModelsClient:
         result = await client.get(model_id)
         
         assert result is not None
-        assert isinstance(result, GetModelV1Response)
+        assert isinstance(result, (GetModelV1ResponseBatch, GetModelV1ResponseMetadata))
         assert result.model_id == "nova-2-general"  # From mock response
         
         # Verify async raw client was called with correct parameters
