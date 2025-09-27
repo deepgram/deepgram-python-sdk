@@ -22,7 +22,7 @@ class AgentV1FunctionCallRequestFunction(UniversalBaseModel):
     """Whether the function should be executed client-side"""
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:
         class Config:
             frozen = True
@@ -42,7 +42,7 @@ class AgentV1FunctionCallRequestEvent(UniversalBaseModel):
     """Array of functions to be called"""
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:
         class Config:
             frozen = True

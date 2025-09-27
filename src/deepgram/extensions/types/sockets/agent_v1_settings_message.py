@@ -29,7 +29,7 @@ class AgentV1AudioInput(UniversalBaseModel):
     """Sample rate in Hz. Common values are 16000, 24000, 44100, 48000"""
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:
         class Config:
             frozen = True
@@ -53,7 +53,7 @@ class AgentV1AudioOutput(UniversalBaseModel):
     """Audio container format. If omitted, defaults to 'none'"""
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:
         class Config:
             frozen = True
@@ -71,7 +71,7 @@ class AgentV1AudioConfig(UniversalBaseModel):
     """Audio output configuration"""
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:
         class Config:
             frozen = True
@@ -92,7 +92,7 @@ class AgentV1HistoryMessage(UniversalBaseModel):
     """The actual statement that was spoken"""
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:
         class Config:
             frozen = True
@@ -119,7 +119,7 @@ class AgentV1FunctionCall(UniversalBaseModel):
     """Response from the function call"""
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:
         class Config:
             frozen = True
@@ -137,7 +137,7 @@ class AgentV1HistoryFunctionCalls(UniversalBaseModel):
     """List of function call objects"""
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:
         class Config:
             frozen = True
@@ -152,7 +152,7 @@ class AgentV1Flags(UniversalBaseModel):
     """Enable or disable history message reporting"""
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:
         class Config:
             frozen = True
@@ -168,7 +168,7 @@ class AgentV1Context(UniversalBaseModel):
     """Conversation history as a list of messages and function calls"""
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:
         class Config:
             frozen = True
@@ -193,7 +193,7 @@ class AgentV1ListenProvider(UniversalBaseModel):
     """Applies smart formatting to improve transcript readability (Deepgram providers only)"""
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:
         class Config:
             frozen = True
@@ -208,7 +208,7 @@ class AgentV1Listen(UniversalBaseModel):
     """Listen provider configuration"""
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:
         class Config:
             frozen = True
@@ -227,7 +227,7 @@ class AgentV1Endpoint(UniversalBaseModel):
     """Custom headers for the endpoint"""
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:
         class Config:
             frozen = True
@@ -255,7 +255,7 @@ class AgentV1AwsCredentials(UniversalBaseModel):
     """AWS session token (required for STS only)"""
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:
         class Config:
             frozen = True
@@ -280,7 +280,7 @@ class AgentV1Function(UniversalBaseModel):
     """The Function endpoint to call. if not passed, function is called client-side"""
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:
         class Config:
             frozen = True
@@ -305,7 +305,7 @@ class AgentV1OpenAiThinkProvider(UniversalBaseModel):
     """OpenAI temperature (0-2)"""
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:
         class Config:
             frozen = True
@@ -332,7 +332,7 @@ class AgentV1AwsBedrockThinkProvider(UniversalBaseModel):
     """AWS credentials type (STS short-lived or IAM long-lived)"""
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:
         class Config:
             frozen = True
@@ -353,7 +353,7 @@ class AgentV1AnthropicThinkProvider(UniversalBaseModel):
     """Anthropic temperature (0-1)"""
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:
         class Config:
             frozen = True
@@ -374,7 +374,7 @@ class AgentV1GoogleThinkProvider(UniversalBaseModel):
     """Google temperature (0-2)"""
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:
         class Config:
             frozen = True
@@ -395,7 +395,7 @@ class AgentV1GroqThinkProvider(UniversalBaseModel):
     """Groq temperature (0-2)"""
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:
         class Config:
             frozen = True
@@ -427,7 +427,7 @@ class AgentV1Think(UniversalBaseModel):
     """Specifies the number of characters retained in context between user messages, agent responses, and function calls"""
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:
         class Config:
             frozen = True
@@ -471,7 +471,7 @@ class AgentV1DeepgramSpeakProvider(UniversalBaseModel):
     """Deepgram TTS model"""
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:
         class Config:
             frozen = True
@@ -492,7 +492,7 @@ class AgentV1ElevenLabsSpeakProvider(UniversalBaseModel):
     """Eleven Labs optional language code"""
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:
         class Config:
             frozen = True
@@ -510,7 +510,7 @@ class AgentV1CartesiaVoice(UniversalBaseModel):
     """Cartesia voice ID"""
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:
         class Config:
             frozen = True
@@ -534,7 +534,7 @@ class AgentV1CartesiaSpeakProvider(UniversalBaseModel):
     """Cartesia language code"""
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:
         class Config:
             frozen = True
@@ -555,7 +555,7 @@ class AgentV1OpenAiSpeakProvider(UniversalBaseModel):
     """OpenAI voice"""
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:
         class Config:
             frozen = True
@@ -582,7 +582,7 @@ class AgentV1AwsPollySpeakProvider(UniversalBaseModel):
     """AWS credentials"""
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:
         class Config:
             frozen = True
@@ -605,7 +605,7 @@ class AgentV1SpeakProviderConfig(UniversalBaseModel):
     """Optional if provider is Deepgram. Required for non-Deepgram TTS providers"""
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:
         class Config:
             frozen = True
@@ -637,7 +637,7 @@ class AgentV1Agent(UniversalBaseModel):
     """Optional message that agent will speak at the start"""
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:
         class Config:
             frozen = True
@@ -672,7 +672,7 @@ class AgentV1SettingsMessage(UniversalBaseModel):
     """To opt out of Deepgram Model Improvement Program"""
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:
         class Config:
             frozen = True

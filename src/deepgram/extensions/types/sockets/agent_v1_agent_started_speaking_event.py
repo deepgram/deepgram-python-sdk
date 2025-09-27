@@ -25,7 +25,7 @@ class AgentV1AgentStartedSpeakingEvent(UniversalBaseModel):
     """The portion of total latency attributable to text-to-text (usually an LLM)"""
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:
         class Config:
             frozen = True

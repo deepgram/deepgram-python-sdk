@@ -15,7 +15,7 @@ class AgentV1ControlMessage(UniversalBaseModel):
     """Message type identifier"""
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:
         class Config:
             frozen = True

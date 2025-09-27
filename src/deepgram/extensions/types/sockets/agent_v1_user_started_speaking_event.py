@@ -15,7 +15,7 @@ class AgentV1UserStartedSpeakingEvent(UniversalBaseModel):
     """Message type identifier indicating that the user has begun speaking"""
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:
         class Config:
             frozen = True
