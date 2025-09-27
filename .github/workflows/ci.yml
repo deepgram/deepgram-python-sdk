@@ -18,7 +18,7 @@ jobs:
       - name: Install dependencies
         run: poetry install
       - name: Compile
-        run: poetry run mypy .
+        run: poetry run mypy src/
   test:
     runs-on: ubuntu-latest
     needs: compile
