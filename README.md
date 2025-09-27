@@ -11,6 +11,11 @@ The official Python SDK for Deepgram's automated speech recognition, text-to-spe
 
 Comprehensive API documentation and guides are available at [developers.deepgram.com](https://developers.deepgram.com).
 
+### Migrating From Earlier Versions
+
+- [v2 to v3+](./docs/Migrating-v2-to-v3.md)
+- [v3+ to v5](./docs/Migrating-v3-to-v5.md) (current)
+
 ## Installation
 
 Install the Deepgram Python SDK using pip:
