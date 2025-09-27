@@ -6,13 +6,14 @@ CONTRIBUTING.md
 mypy.ini
 websockets-reference.md
 .github/
+scripts/run_examples.sh
 
 # Examples
 examples/
 
 # Test Files
 tests/unit/
-tests/integration/
+tests/integrations/
 
 # Custom Extensions & Clients
 src/deepgram/client.py
