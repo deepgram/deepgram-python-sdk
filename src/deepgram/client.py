@@ -186,7 +186,7 @@ def _apply_bearer_authorization_override(client_wrapper: BaseClientWrapper, bear
         client_wrapper.httpx_client.base_headers = client_wrapper.get_headers
 
 class DeepgramClient(BaseClient):
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, **kwargs) -> None:
         access_token: Optional[str] = kwargs.pop("access_token", None)
         telemetry_opt_out: bool = bool(kwargs.pop("telemetry_opt_out", True))
         telemetry_handler: Optional[TelemetryHandler] = kwargs.pop("telemetry_handler", None)
@@ -222,7 +222,7 @@ class DeepgramClient(BaseClient):
         )
 
 class AsyncDeepgramClient(AsyncBaseClient):
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, **kwargs) -> None:
         access_token: Optional[str] = kwargs.pop("access_token", None)
         telemetry_opt_out: bool = bool(kwargs.pop("telemetry_opt_out", True))
         telemetry_handler: Optional[TelemetryHandler] = kwargs.pop("telemetry_handler", None)

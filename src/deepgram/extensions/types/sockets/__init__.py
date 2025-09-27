@@ -81,7 +81,6 @@ if typing.TYPE_CHECKING:
         AgentV1OpenAiSpeakProvider,
         AgentV1AwsPollySpeakProvider,
         AgentV1SpeakProviderConfig,
-        AgentV1Speak,
         AgentV1Agent,
     )
     
@@ -172,7 +171,6 @@ __all__ = [
     "AgentV1OpenAiSpeakProvider",
     "AgentV1AwsPollySpeakProvider",
     "AgentV1SpeakProviderConfig",
-    "AgentV1Speak",
     "AgentV1Agent",
     
     # Union types
@@ -206,7 +204,7 @@ def __getattr__(name: str) -> typing.Any:
             "AgentV1ElevenLabsSpeakProvider", "AgentV1CartesiaVoice",
             "AgentV1CartesiaSpeakProvider", "AgentV1OpenAiSpeakProvider",
             "AgentV1AwsPollySpeakProvider", "AgentV1SpeakProviderConfig",
-            "AgentV1Speak", "AgentV1Agent"
+            "AgentV1Agent"
         }
         
         if name in nested_agent_types:

@@ -27,8 +27,8 @@ except ImportError:
         from websockets import WebSocketClientProtocol  # type: ignore
     except ImportError:
         # Fallback types
-        WebSocketClientProtocol = typing.Any
-        websockets_sync_connection = typing.Any
+        WebSocketClientProtocol = typing.Any  # type: ignore[misc,assignment]
+        websockets_sync_connection = typing.Any  # type: ignore[misc,assignment]
 
 
 class SocketEvents(typing.Protocol):
@@ -65,7 +65,7 @@ class SocketEvents(typing.Protocol):
 
 def _capture_request_details(method: str, url: str, headers: typing.Dict[str, str] | None = None, **kwargs) -> typing.Dict[str, typing.Any]:
     """Capture request details for telemetry (avoiding circular import)."""
-    details = {
+    details: typing.Dict[str, typing.Any] = {
         "method": method,
         "url": url,
     }
@@ -368,10 +368,10 @@ def apply_websocket_instrumentation(socket_events: SocketEvents | None = None):
     """Apply WebSocket instrumentation globally using monkey-patching."""
     try:
         # Patch sync websockets
-        if not hasattr(websockets_sync_client.connect, '_deepgram_instrumented'):
+        if not hasattr(websockets_sync_client.connect, '_deepgram_instrumented'):  # type: ignore[attr-defined]
             original_sync_connect = websockets_sync_client.connect
             websockets_sync_client.connect = _instrument_sync_connect(original_sync_connect, socket_events)
-            websockets_sync_client.connect._deepgram_instrumented = True
+            websockets_sync_client.connect._deepgram_instrumented = True  # type: ignore[attr-defined]
     except Exception:
         pass
     
@@ -379,26 +379,26 @@ def apply_websocket_instrumentation(socket_events: SocketEvents | None = None):
         # Patch async websockets (legacy)
         try:
             from websockets.legacy.client import connect as legacy_connect
-            if not hasattr(legacy_connect, '_deepgram_instrumented'):
+            if not hasattr(legacy_connect, '_deepgram_instrumented'):  # type: ignore[attr-defined]
                 instrumented_legacy = _instrument_async_connect(legacy_connect, socket_events)
                 
                 # Replace in the module
                 import websockets.legacy.client as legacy_client
                 legacy_client.connect = instrumented_legacy
-                instrumented_legacy._deepgram_instrumented = True
+                instrumented_legacy._deepgram_instrumented = True  # type: ignore[attr-defined]
         except ImportError:
             pass
         
         # Patch async websockets (current)
         try:
             from websockets import connect as current_connect
-            if not hasattr(current_connect, '_deepgram_instrumented'):
+            if not hasattr(current_connect, '_deepgram_instrumented'):  # type: ignore[attr-defined]
                 instrumented_current = _instrument_async_connect(current_connect, socket_events)
                 
                 # Replace in the module  
                 import websockets
                 websockets.connect = instrumented_current
-                instrumented_current._deepgram_instrumented = True
+                instrumented_current._deepgram_instrumented = True  # type: ignore[attr-defined]
         except ImportError:
             pass
             

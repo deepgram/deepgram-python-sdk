@@ -7,13 +7,13 @@ from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 # Cross-version constrained types
 if IS_PYDANTIC_V2:
-    IntContextLength = typing.Annotated[int, pydantic.Field(ge=2)]
-    Temperature0to2 = typing.Annotated[float, pydantic.Field(ge=0, le=2)]
-    Temperature0to1 = typing.Annotated[float, pydantic.Field(ge=0, le=1)]
+    IntContextLength = typing.Annotated[int, pydantic.Field(ge=2)]  # type: ignore[misc,assignment]
+    Temperature0to2 = typing.Annotated[float, pydantic.Field(ge=0, le=2)]  # type: ignore[misc,assignment]
+    Temperature0to1 = typing.Annotated[float, pydantic.Field(ge=0, le=1)]  # type: ignore[misc,assignment]
 else:
-    IntContextLength = pydantic.conint(ge=2)  # type: ignore[attr-defined]
-    Temperature0to2 = pydantic.confloat(ge=0, le=2)  # type: ignore[attr-defined]
-    Temperature0to1 = pydantic.confloat(ge=0, le=1)  # type: ignore[attr-defined]
+    IntContextLength = pydantic.conint(ge=2)  # type: ignore[attr-defined,misc,assignment,no-redef]
+    Temperature0to2 = pydantic.confloat(ge=0, le=2)  # type: ignore[attr-defined,misc,assignment,no-redef]
+    Temperature0to1 = pydantic.confloat(ge=0, le=1)  # type: ignore[attr-defined,misc,assignment,no-redef]
 
 
 class AgentV1AudioInput(UniversalBaseModel):

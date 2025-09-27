@@ -5,6 +5,7 @@ CONTRIBUTING.md
 .gitignore
 mypy.ini
 websockets-reference.md
+.github/
 
 # Examples
 examples/

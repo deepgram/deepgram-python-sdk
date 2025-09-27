@@ -133,7 +133,6 @@ class TelemetrySocketEvents(SocketEvents):
         try:
             self._handler.on_ws_close(
                 url=url,
-                extras=None,
             )
         except Exception:
             pass
@@ -184,7 +183,7 @@ def capture_request_details(
     **kwargs
 ) -> dict[str, Any]:
     """Capture comprehensive request details for telemetry (keys only for privacy)."""
-    details = {}
+    details: dict[str, Any] = {}
     
     if method:
         details['method'] = method
@@ -235,7 +234,7 @@ def _extract_url_structure(url: str) -> dict[str, Any]:
         from urllib.parse import parse_qs, urlparse
         
         parsed = urlparse(url)
-        structure = {
+        structure: dict[str, Any] = {
             'scheme': parsed.scheme,
             'hostname': parsed.hostname,
             'port': parsed.port,

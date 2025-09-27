@@ -297,8 +297,9 @@ class BatchingTelemetryHandler(TelemetryHandler):
         }
         
         # Add handshake response headers to extras
-        if event.get("handshake_response_headers"):
-            for header_name, header_value in event["handshake_response_headers"].items():
+        handshake_headers = event.get("handshake_response_headers")
+        if handshake_headers and hasattr(handshake_headers, 'items'):
+            for header_name, header_value in handshake_headers.items():  # type: ignore[attr-defined]
                 safe_header_name = header_name.lower().replace('-', '_')
                 enhanced_extras[f"handshake_{safe_header_name}"] = str(header_value)
         
