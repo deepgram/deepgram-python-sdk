@@ -1,30 +1,5 @@
-# general
-
-# environment artifacts
-.venv
-.env
-venv/
-venv.bak/
-.vscode/
-.DS_Store
-Pipfile
-Pipfile.lock
-
-# python artifacts
-__pycache__
-*.egg-info
-dist/
 .mypy_cache/
-.pytest_cache/
-
-# build
-build/
-poetry.lock
-
-# examples
-chatlog.txt
-output_*.wav
-
-# test artifacts
-output.wav
-test.mp3
+.ruff_cache/
+__pycache__/
+dist/
+poetry.toml

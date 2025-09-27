@@ -1,78 +1,15 @@
-# Deepgram Python SDK
+# Deepgram API Python Library
 
-[![Discord](https://dcbadge.vercel.app/api/server/xWRaCDBtW4?style=flat)](https://discord.gg/xWRaCDBtW4) [![CI](https://img.shields.io/github/actions/workflow/status/deepgram/deepgram-python-sdk/CI.yaml?branch=main)](https://github.com/deepgram/deepgram-python-sdk/actions/workflows/CI.yaml?branch=main) [![PyPI](https://img.shields.io/pypi/v/deepgram-sdk)](https://pypi.org/project/deepgram-sdk/)
-[![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-v2.0%20adopted-ff69b4.svg?style=flat-rounded)](./.github/CODE_OF_CONDUCT.md)
+![](https://developers.deepgram.com)
 
-Official Python SDK for [Deepgram](https://www.deepgram.com/). Power your apps with world-class speech and Language AI models.
+[![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=https%3A%2F%2Fgithub.com%2Fdeepgram%2Fdeepgram-python-sdk)
+[![pypi](https://img.shields.io/pypi/v/deepgram)](https://pypi.python.org/pypi/deepgram)
 
-- [Documentation](#documentation)
-- [Migrating from earlier versions](#migrating-from-earlier-versions)
-  - [V2 to V3](#v2-to-v3)
-  - [V3.\*\ to V4](#v3-to-v4)
-- [Requirements](#requirements)
-- [Installation](#installation)
-- [Initialization](#initialization)
-  - [Getting an API Key](#getting-an-api-key)
-- [Pre-Recorded (Synchronous)](#pre-recorded-synchronous)
-  - [Remote Files (Synchronous)](#remote-files-synchronous)
-  - [Local Files (Synchronous)](#local-files-synchronous)
-- [Pre-Recorded (Asynchronous / Callbacks)](#pre-recorded-asynchronous--callbacks)
-  - [Remote Files (Asynchronous)](#remote-files-asynchronous)
-  - [Local Files (Asynchronous)](#local-files-asynchronous)
-- [Streaming Audio](#streaming-audio)
-- [Transcribing to Captions](#transcribing-to-captions)
-- [Voice Agent](#voice-agent)
-- [Text to Speech REST](#text-to-speech-rest)
-- [Text to Speech Streaming](#text-to-speech-streaming)
-- [Text Intelligence](#text-intelligence)
-- [Authentication](#authentication)
-  - [Get Token Details](#get-token-details)
-  - [Grant Token](#grant-token)
-- [Projects](#projects)
-  - [Get Projects](#get-projects)
-  - [Get Project](#get-project)
-  - [Update Project](#update-project)
-  - [Delete Project](#delete-project)
-- [Keys](#keys)
-  - [List Keys](#list-keys)
-  - [Get Key](#get-key)
-  - [Create Key](#create-key)
-  - [Delete Key](#delete-key)
-- [Members](#members)
-  - [Get Members](#get-members)
-  - [Remove Member](#remove-member)
-- [Scopes](#scopes)
-  - [Get Member Scopes](#get-member-scopes)
-  - [Update Scope](#update-scope)
-- [Invitations](#invitations)
-  - [List Invites](#list-invites)
-  - [Send Invite](#send-invite)
-  - [Delete Invite](#delete-invite)
-  - [Leave Project](#leave-project)
-- [Usage](#usage)
-  - [Get All Requests](#get-all-requests)
-  - [Get Request](#get-request)
-  - [Summarize Usage](#summarize-usage)
-  - [Get Fields](#get-fields)
-- [Billing](#billing)
-  - [Get All Balances](#get-all-balances)
-  - [Get Balance](#get-balance)
-- [Models](#models)
-  - [Get All Project Models](#get-all-project-models)
-  - [Get Model](#get-model)
-- [On-Prem APIs](#on-prem-apis)
-  - [List On-Prem credentials](#list-on-prem-credentials)
-  - [Get On-Prem credentials](#get-on-prem-credentials)
-  - [Create On-Prem credentials](#create-on-prem-credentials)
-  - [Delete On-Prem credentials](#delete-on-prem-credentials)
-- [Logging](#logging)
-- [Backwards Compatibility](#backwards-compatibility)
-- [Development and Contributing](#development-and-contributing)
-- [Getting Help](#getting-help)
+Power your apps with world-class speech and Language AI models
 
 ## Documentation
 
-You can learn more about the Deepgram API at [developers.deepgram.com](https://developers.deepgram.com/docs).
+API reference documentation is available [here](https://developers.deepgram.com/reference/deepgram-api-overview).
 
 ## Migrating from earlier versions
 
@@ -90,10 +27,8 @@ The Voice Agent interfaces have been updated to use the new Voice Agent V1 API. 
 
 ## Installation
 
-To install the latest version available:
-
 ```sh
-pip install deepgram-sdk
+pip install deepgram
 ```
 
 ## Initialization
@@ -691,47 +626,22 @@ response = deepgram.manage.v("1").leave_project(myProjectId)
 
 [See our API reference for more info](https://developers.deepgram.com/reference/management-api/invitations/leave).
 
+## Reference
+
+A full reference for this library is available [here](https://github.com/deepgram/deepgram-python-sdk/blob/HEAD/./reference.md).
+
 ## Usage
 
-### Get All Requests
-
-Retrieves all requests associated with the provided project_id based on the provided options.
+Instantiate and use the client with the following:
 
 ```python
-response = deepgram.manage.v("1").get_usage_requests(myProjectId)
+from deepgram import DeepgramClient
+
+client = DeepgramClient(
+    api_key="YOUR_API_KEY",
+)
+client.listen.v1.media.transcribe_file()
 ```
-
-[See our API reference for more info](https://developers.deepgram.com/reference/management-api/usage/list-requests).
-
-### Get Request
-
-Retrieves a specific request associated with the provided project_id
-
-```python
-response = deepgram.manage.v("1").get_usage_request(myProjectId, RequestId)
-```
-
-[See our API reference for more info](https://developers.deepgram.com/reference/management-api/usage/get-request).
-
-### Get Fields
-
-Lists the features, models, tags, languages, and processing method used for requests in the specified project.
-
-```python
-response = deepgram.manage.v("1").get_usage_fields(myProjectId)
-```
-
-[See our API reference for more info](https://developers.deepgram.com/reference/management-api/usage/list-fields).
-
-### Summarize Usage
-
-`Deprecated` Retrieves the usage for a specific project. Use Get Project Usage Breakdown for a more comprehensive usage summary.
-
-```python
-response = deepgram.manage.v("1").get_usage_summary(myProjectId)
-```
-
-[See our API reference for more info](https://developers.deepgram.com/reference/management-api/usage/get).
 
 ## Billing
 
@@ -912,3 +822,181 @@ project, let us know! You can either:
 - [Open an issue in this repository](https://github.com/deepgram/deepgram-python-sdk/issues/new)
 - [Join the Deepgram Github Discussions Community](https://github.com/orgs/deepgram/discussions)
 - [Join the Deepgram Discord Community](https://discord.gg/xWRaCDBtW4)
+
+## Async Client
+
+The SDK also exports an `async` client so that you can make non-blocking calls to our API.
+
+```python
+import asyncio
+
+from deepgram import AsyncDeepgramClient
+
+client = AsyncDeepgramClient(
+    api_key="YOUR_API_KEY",
+)
+
+
+async def main() -> None:
+    await client.listen.v1.media.transcribe_file()
+
+
+asyncio.run(main())
+```
+
+## Exception Handling
+
+When the API returns a non-success status code (4xx or 5xx response), a subclass of the following error
+will be thrown.
+
+```python
+from deepgram.core.api_error import ApiError
+
+try:
+    client.listen.v1.media.transcribe_file(...)
+except ApiError as e:
+    print(e.status_code)
+    print(e.body)
+```
+
+## Websockets
+
+The SDK supports both sync and async websocket connections for real-time, low-latency communication. Sockets can be created using the `connect` method, which returns a context manager. 
+You can either iterate through the returned `SocketClient` to process messages as they arrive, or attach handlers to respond to specific events.
+
+```python
+
+# Connect to the websocket (Sync)
+import threading
+
+from deepgram import DeepgramClient
+
+client = DeepgramClient(...)
+
+with client.v1.connect() as socket:
+    # Iterate over the messages as they arrive
+    for message in socket
+        print(message)
+
+    # Or, attach handlers to specific events
+    socket.on(EventType.OPEN, lambda _: print("open"))
+    socket.on(EventType.MESSAGE, lambda message: print("received message", message))
+    socket.on(EventType.CLOSE, lambda _: print("close"))
+    socket.on(EventType.ERROR, lambda error: print("error", error))
+
+
+    # Start the listening loop in a background thread
+    listener_thread = threading.Thread(target=socket.start_listening, daemon=True)
+    listener_thread.start()
+```
+
+```python
+
+# Connect to the websocket (Async)
+import asyncio
+
+from deepgram import AsyncDeepgramClient
+
+client = AsyncDeepgramClient(...)
+
+async with client.v1.connect() as socket:
+    # Iterate over the messages as they arrive
+    async for message in socket
+        print(message)
+
+    # Or, attach handlers to specific events
+    socket.on(EventType.OPEN, lambda _: print("open"))
+    socket.on(EventType.MESSAGE, lambda message: print("received message", message))
+    socket.on(EventType.CLOSE, lambda _: print("close"))
+    socket.on(EventType.ERROR, lambda error: print("error", error))
+
+
+    # Start listening for events in an asyncio task
+    listen_task = asyncio.create_task(socket.start_listening())
+```
+
+## Advanced
+
+### Access Raw Response Data
+
+The SDK provides access to raw response data, including headers, through the `.with_raw_response` property.
+The `.with_raw_response` property returns a "raw" client that can be used to access the `.headers` and `.data` attributes.
+
+```python
+from deepgram import DeepgramClient
+
+client = DeepgramClient(
+    ...,
+)
+response = client.listen.v1.media.with_raw_response.transcribe_file(...)
+print(response.headers)  # access the response headers
+print(response.data)  # access the underlying object
+```
+
+### Retries
+
+The SDK is instrumented with automatic retries with exponential backoff. A request will be retried as long
+as the request is deemed retryable and the number of retry attempts has not grown larger than the configured
+retry limit (default: 2).
+
+A request is deemed retryable when any of the following HTTP status codes is returned:
+
+- [408](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/408) (Timeout)
+- [429](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429) (Too Many Requests)
+- [5XX](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500) (Internal Server Errors)
+
+Use the `max_retries` request option to configure this behavior.
+
+```python
+client.listen.v1.media.transcribe_file(..., request_options={
+    "max_retries": 1
+})
+```
+
+### Timeouts
+
+The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
+
+```python
+
+from deepgram import DeepgramClient
+
+client = DeepgramClient(
+    ...,
+    timeout=20.0,
+)
+
+
+# Override timeout for a specific method
+client.listen.v1.media.transcribe_file(..., request_options={
+    "timeout_in_seconds": 1
+})
+```
+
+### Custom Client
+
+You can override the `httpx` client to customize it for your use-case. Some common use-cases include support for proxies
+and transports.
+
+```python
+import httpx
+from deepgram import DeepgramClient
+
+client = DeepgramClient(
+    ...,
+    httpx_client=httpx.Client(
+        proxies="http://my.test.proxy.example.com",
+        transport=httpx.HTTPTransport(local_address="0.0.0.0"),
+    ),
+)
+```
+
+## Contributing
+
+While we value open-source contributions to this SDK, this library is generated programmatically.
+Additions made directly to this library would have to be moved over to our generation code,
+otherwise they would be overwritten upon the next generated release. Feel free to open a PR as
+a proof of concept, but know that we will not be able to merge it as-is. We suggest opening
+an issue first to discuss with us!
+
+On the other hand, contributions to the README are always very welcome!

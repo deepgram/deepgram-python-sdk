@@ -1,7 +1,0 @@
-{
-  "default": true,
-  "line_length": false,
-  "MD024": { "allow_different_nesting": true },
-  "MD026": { "punctuation": ".,;:!" },
-  "MD046": { "style": "fenced" }
-}
