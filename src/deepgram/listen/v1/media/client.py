@@ -4,7 +4,6 @@ import typing
 
 from ....core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ....core.request_options import RequestOptions
-from ....types.listen_v1response import ListenV1Response
 from .raw_client import AsyncRawMediaClient, RawMediaClient
 from .types.media_transcribe_request_callback_method import MediaTranscribeRequestCallbackMethod
 from .types.media_transcribe_request_custom_intent_mode import MediaTranscribeRequestCustomIntentMode
@@ -14,6 +13,7 @@ from .types.media_transcribe_request_language import MediaTranscribeRequestLangu
 from .types.media_transcribe_request_model import MediaTranscribeRequestModel
 from .types.media_transcribe_request_summarize import MediaTranscribeRequestSummarize
 from .types.media_transcribe_request_version import MediaTranscribeRequestVersion
+from .types.media_transcribe_response import MediaTranscribeResponse
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -74,7 +74,7 @@ class MediaClient:
         utt_split: typing.Optional[float] = None,
         version: typing.Optional[MediaTranscribeRequestVersion] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> ListenV1Response:
+    ) -> MediaTranscribeResponse:
         """
         Transcribe audio and video using Deepgram's speech-to-text REST API
 
@@ -192,8 +192,8 @@ class MediaClient:
 
         Returns
         -------
-        ListenV1Response
-            Successful transcription
+        MediaTranscribeResponse
+            Returns either transcription results, or a request_id when using a callback.
 
         Examples
         --------
@@ -287,7 +287,7 @@ class MediaClient:
         utt_split: typing.Optional[float] = None,
         version: typing.Optional[MediaTranscribeRequestVersion] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> ListenV1Response:
+    ) -> MediaTranscribeResponse:
         """
         Transcribe audio and video using Deepgram's speech-to-text REST API
 
@@ -405,8 +405,8 @@ class MediaClient:
 
         Returns
         -------
-        ListenV1Response
-            Successful transcription
+        MediaTranscribeResponse
+            Returns either transcription results, or a request_id when using a callback.
 
         Examples
         --------
@@ -514,7 +514,7 @@ class AsyncMediaClient:
         utt_split: typing.Optional[float] = None,
         version: typing.Optional[MediaTranscribeRequestVersion] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> ListenV1Response:
+    ) -> MediaTranscribeResponse:
         """
         Transcribe audio and video using Deepgram's speech-to-text REST API
 
@@ -632,8 +632,8 @@ class AsyncMediaClient:
 
         Returns
         -------
-        ListenV1Response
-            Successful transcription
+        MediaTranscribeResponse
+            Returns either transcription results, or a request_id when using a callback.
 
         Examples
         --------
@@ -735,7 +735,7 @@ class AsyncMediaClient:
         utt_split: typing.Optional[float] = None,
         version: typing.Optional[MediaTranscribeRequestVersion] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> ListenV1Response:
+    ) -> MediaTranscribeResponse:
         """
         Transcribe audio and video using Deepgram's speech-to-text REST API
 
@@ -853,8 +853,8 @@ class AsyncMediaClient:
 
         Returns
         -------
-        ListenV1Response
-            Successful transcription
+        MediaTranscribeResponse
+            Returns either transcription results, or a request_id when using a callback.
 
         Examples
         --------

@@ -14,6 +14,7 @@ if typing.TYPE_CHECKING:
     from .media_transcribe_request_model import MediaTranscribeRequestModel
     from .media_transcribe_request_summarize import MediaTranscribeRequestSummarize
     from .media_transcribe_request_version import MediaTranscribeRequestVersion
+    from .media_transcribe_response import MediaTranscribeResponse
 _dynamic_imports: typing.Dict[str, str] = {
     "MediaTranscribeRequestCallbackMethod": ".media_transcribe_request_callback_method",
     "MediaTranscribeRequestCustomIntentMode": ".media_transcribe_request_custom_intent_mode",
@@ -23,6 +24,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "MediaTranscribeRequestModel": ".media_transcribe_request_model",
     "MediaTranscribeRequestSummarize": ".media_transcribe_request_summarize",
     "MediaTranscribeRequestVersion": ".media_transcribe_request_version",
+    "MediaTranscribeResponse": ".media_transcribe_response",
 }
 
 
@@ -54,4 +56,5 @@ __all__ = [
     "MediaTranscribeRequestModel",
     "MediaTranscribeRequestSummarize",
     "MediaTranscribeRequestVersion",
+    "MediaTranscribeResponse",
 ]

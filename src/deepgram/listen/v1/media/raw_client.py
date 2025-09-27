@@ -10,7 +10,6 @@ from ....core.pydantic_utilities import parse_obj_as
 from ....core.request_options import RequestOptions
 from ....errors.bad_request_error import BadRequestError
 from ....types.error_response import ErrorResponse
-from ....types.listen_v1response import ListenV1Response
 from .types.media_transcribe_request_callback_method import MediaTranscribeRequestCallbackMethod
 from .types.media_transcribe_request_custom_intent_mode import MediaTranscribeRequestCustomIntentMode
 from .types.media_transcribe_request_custom_topic_mode import MediaTranscribeRequestCustomTopicMode
@@ -19,6 +18,7 @@ from .types.media_transcribe_request_language import MediaTranscribeRequestLangu
 from .types.media_transcribe_request_model import MediaTranscribeRequestModel
 from .types.media_transcribe_request_summarize import MediaTranscribeRequestSummarize
 from .types.media_transcribe_request_version import MediaTranscribeRequestVersion
+from .types.media_transcribe_response import MediaTranscribeResponse
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -68,7 +68,7 @@ class RawMediaClient:
         utt_split: typing.Optional[float] = None,
         version: typing.Optional[MediaTranscribeRequestVersion] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> HttpResponse[ListenV1Response]:
+    ) -> HttpResponse[MediaTranscribeResponse]:
         """
         Transcribe audio and video using Deepgram's speech-to-text REST API
 
@@ -186,8 +186,8 @@ class RawMediaClient:
 
         Returns
         -------
-        HttpResponse[ListenV1Response]
-            Successful transcription
+        HttpResponse[MediaTranscribeResponse]
+            Returns either transcription results, or a request_id when using a callback.
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/listen",
@@ -242,9 +242,9 @@ class RawMediaClient:
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    ListenV1Response,
+                    MediaTranscribeResponse,
                     parse_obj_as(
-                        type_=ListenV1Response,  # type: ignore
+                        type_=MediaTranscribeResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -305,7 +305,7 @@ class RawMediaClient:
         utt_split: typing.Optional[float] = None,
         version: typing.Optional[MediaTranscribeRequestVersion] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> HttpResponse[ListenV1Response]:
+    ) -> HttpResponse[MediaTranscribeResponse]:
         """
         Transcribe audio and video using Deepgram's speech-to-text REST API
 
@@ -423,8 +423,8 @@ class RawMediaClient:
 
         Returns
         -------
-        HttpResponse[ListenV1Response]
-            Successful transcription
+        HttpResponse[MediaTranscribeResponse]
+            Returns either transcription results, or a request_id when using a callback.
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/listen",
@@ -477,9 +477,9 @@ class RawMediaClient:
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    ListenV1Response,
+                    MediaTranscribeResponse,
                     parse_obj_as(
-                        type_=ListenV1Response,  # type: ignore
+                        type_=MediaTranscribeResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -545,7 +545,7 @@ class AsyncRawMediaClient:
         utt_split: typing.Optional[float] = None,
         version: typing.Optional[MediaTranscribeRequestVersion] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncHttpResponse[ListenV1Response]:
+    ) -> AsyncHttpResponse[MediaTranscribeResponse]:
         """
         Transcribe audio and video using Deepgram's speech-to-text REST API
 
@@ -663,8 +663,8 @@ class AsyncRawMediaClient:
 
         Returns
         -------
-        AsyncHttpResponse[ListenV1Response]
-            Successful transcription
+        AsyncHttpResponse[MediaTranscribeResponse]
+            Returns either transcription results, or a request_id when using a callback.
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/listen",
@@ -719,9 +719,9 @@ class AsyncRawMediaClient:
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    ListenV1Response,
+                    MediaTranscribeResponse,
                     parse_obj_as(
-                        type_=ListenV1Response,  # type: ignore
+                        type_=MediaTranscribeResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -782,7 +782,7 @@ class AsyncRawMediaClient:
         utt_split: typing.Optional[float] = None,
         version: typing.Optional[MediaTranscribeRequestVersion] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncHttpResponse[ListenV1Response]:
+    ) -> AsyncHttpResponse[MediaTranscribeResponse]:
         """
         Transcribe audio and video using Deepgram's speech-to-text REST API
 
@@ -900,8 +900,8 @@ class AsyncRawMediaClient:
 
         Returns
         -------
-        AsyncHttpResponse[ListenV1Response]
-            Successful transcription
+        AsyncHttpResponse[MediaTranscribeResponse]
+            Returns either transcription results, or a request_id when using a callback.
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/listen",
@@ -954,9 +954,9 @@ class AsyncRawMediaClient:
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    ListenV1Response,
+                    MediaTranscribeResponse,
                     parse_obj_as(
-                        type_=ListenV1Response,  # type: ignore
+                        type_=MediaTranscribeResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
