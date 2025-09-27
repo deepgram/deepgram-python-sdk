@@ -9,6 +9,7 @@ import functools
 import time
 import typing
 from contextlib import asynccontextmanager, contextmanager
+from typing import Union
 
 import websockets.exceptions
 import websockets.sync.client as websockets_sync_client
@@ -38,9 +39,9 @@ class SocketEvents(typing.Protocol):
         self,
         *,
         url: str,
-        headers: typing.Mapping[str, str] | None = None,
-        extras: typing.Mapping[str, str] | None = None,
-        request_details: typing.Mapping[str, typing.Any] | None = None,
+        headers: Union[typing.Mapping[str, str], None] = None,
+        extras: Union[typing.Mapping[str, str], None] = None,
+        request_details: Union[typing.Mapping[str, typing.Any], None] = None,
     ) -> None: ...
     
     def on_ws_error(
@@ -49,8 +50,8 @@ class SocketEvents(typing.Protocol):
         url: str,
         error: BaseException,
         duration_ms: float,
-        request_details: typing.Mapping[str, typing.Any] | None = None,
-        response_details: typing.Mapping[str, typing.Any] | None = None,
+        request_details: Union[typing.Mapping[str, typing.Any], None] = None,
+        response_details: Union[typing.Mapping[str, typing.Any], None] = None,
     ) -> None: ...
     
     def on_ws_close(
@@ -58,12 +59,12 @@ class SocketEvents(typing.Protocol):
         *,
         url: str,
         duration_ms: float,
-        request_details: typing.Mapping[str, typing.Any] | None = None,
-        response_details: typing.Mapping[str, typing.Any] | None = None,
+        request_details: Union[typing.Mapping[str, typing.Any], None] = None,
+        response_details: Union[typing.Mapping[str, typing.Any], None] = None,
     ) -> None: ...
 
 
-def _capture_request_details(method: str, url: str, headers: typing.Dict[str, str] | None = None, **kwargs) -> typing.Dict[str, typing.Any]:
+def _capture_request_details(method: str, url: str, headers: Union[typing.Dict[str, str], None] = None, **kwargs) -> typing.Dict[str, typing.Any]:
     """Capture request details for telemetry (avoiding circular import)."""
     details: typing.Dict[str, typing.Any] = {
         "method": method,
@@ -89,11 +90,11 @@ def _capture_response_details(**kwargs) -> typing.Dict[str, typing.Any]:
     return details
 
 
-def _instrument_sync_connect(original_connect, events: SocketEvents | None = None):
+def _instrument_sync_connect(original_connect, events: Union[SocketEvents, None] = None):
     """Wrap sync websockets.sync.client.connect to add telemetry."""
     
     @functools.wraps(original_connect)
-    def instrumented_connect(uri, *args, additional_headers: typing.Dict[str, str] | None = None, **kwargs):
+    def instrumented_connect(uri, *args, additional_headers: Union[typing.Dict[str, str], None] = None, **kwargs):
         start_time = time.perf_counter()
         
         # Capture detailed request information including all connection parameters
@@ -216,11 +217,11 @@ def _instrument_sync_connect(original_connect, events: SocketEvents | None = Non
     return instrumented_connect
 
 
-def _instrument_async_connect(original_connect, events: SocketEvents | None = None):
+def _instrument_async_connect(original_connect, events: Union[SocketEvents, None] = None):
     """Wrap async websockets.connect to add telemetry."""
     
     @functools.wraps(original_connect)
-    def instrumented_connect(uri, *args, extra_headers: typing.Dict[str, str] | None = None, **kwargs):
+    def instrumented_connect(uri, *args, extra_headers: Union[typing.Dict[str, str], None] = None, **kwargs):
         start_time = time.perf_counter()
         
         # Capture detailed request information including all connection parameters
@@ -364,7 +365,7 @@ def _instrument_async_connect(original_connect, events: SocketEvents | None = No
     return instrumented_connect
 
 
-def apply_websocket_instrumentation(socket_events: SocketEvents | None = None):
+def apply_websocket_instrumentation(socket_events: Union[SocketEvents, None] = None):
     """Apply WebSocket instrumentation globally using monkey-patching."""
     try:
         # Patch sync websockets

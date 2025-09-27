@@ -16,8 +16,8 @@ class HttpEvents(typing.Protocol):
         *,
         method: str,
         url: str,
-        headers: typing.Mapping[str, str] | None,
-        extras: typing.Mapping[str, str] | None = None,
+        headers: typing.Union[typing.Mapping[str, str], None],
+        extras: typing.Union[typing.Mapping[str, str], None] = None,
         request_details: typing.Mapping[str, typing.Any] | None = None,
     ) -> None: ...
 
@@ -28,8 +28,8 @@ class HttpEvents(typing.Protocol):
         url: str,
         status_code: int,
         duration_ms: float,
-        headers: typing.Mapping[str, str] | None,
-        extras: typing.Mapping[str, str] | None = None,
+        headers: typing.Union[typing.Mapping[str, str], None],
+        extras: typing.Union[typing.Mapping[str, str], None] = None,
         response_details: typing.Mapping[str, typing.Any] | None = None,
     ) -> None: ...
 
@@ -142,7 +142,7 @@ class InstrumentedHttpClient(GeneratedHttpClient):
             duration_ms = (time.perf_counter() - start) * 1000.0
             try:
                 if self._events is not None:
-                    response_headers = typing.cast(typing.Mapping[str, str] | None, getattr(resp, "headers", None))
+                    response_headers = typing.cast(typing.Union[typing.Mapping[str, str], None], getattr(resp, "headers", None))
                     # Filter response headers for telemetry extras
                     try:
                         from .telemetry_events import (
@@ -313,7 +313,7 @@ class InstrumentedAsyncHttpClient(GeneratedAsyncHttpClient):
             duration_ms = (time.perf_counter() - start) * 1000.0
             try:
                 if self._events is not None:
-                    response_headers = typing.cast(typing.Mapping[str, str] | None, getattr(resp, "headers", None))
+                    response_headers = typing.cast(typing.Union[typing.Mapping[str, str], None], getattr(resp, "headers", None))
                     # Filter response headers for telemetry extras
                     try:
                         from .telemetry_events import (

@@ -2,18 +2,23 @@
 
 import typing
 
+try:
+    from typing import Annotated  # type: ignore[attr-defined,assignment]
+except ImportError:
+    from typing_extensions import Annotated  # type: ignore[import-untyped,assignment]
+
 import pydantic
 from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 # Cross-version constrained types
 if IS_PYDANTIC_V2:
-    IntContextLength = typing.Annotated[int, pydantic.Field(ge=2)]  # type: ignore[misc,assignment]
-    Temperature0to2 = typing.Annotated[float, pydantic.Field(ge=0, le=2)]  # type: ignore[misc,assignment]
-    Temperature0to1 = typing.Annotated[float, pydantic.Field(ge=0, le=1)]  # type: ignore[misc,assignment]
+    IntContextLength = Annotated[int, pydantic.Field(ge=2)]  # type: ignore[misc,assignment,attr-defined,valid-type]
+    Temperature0to2 = Annotated[float, pydantic.Field(ge=0, le=2)]  # type: ignore[misc,assignment,attr-defined,valid-type]
+    Temperature0to1 = Annotated[float, pydantic.Field(ge=0, le=1)]  # type: ignore[misc,assignment,attr-defined,valid-type]
 else:
-    IntContextLength = pydantic.conint(ge=2)  # type: ignore[attr-defined,misc,assignment,no-redef]
-    Temperature0to2 = pydantic.confloat(ge=0, le=2)  # type: ignore[attr-defined,misc,assignment,no-redef]
-    Temperature0to1 = pydantic.confloat(ge=0, le=1)  # type: ignore[attr-defined,misc,assignment,no-redef]
+    IntContextLength = pydantic.conint(ge=2)  # type: ignore[attr-defined,misc,assignment,no-redef,valid-type]
+    Temperature0to2 = pydantic.confloat(ge=0, le=2)  # type: ignore[attr-defined,misc,assignment,no-redef,valid-type]
+    Temperature0to1 = pydantic.confloat(ge=0, le=1)  # type: ignore[attr-defined,misc,assignment,no-redef,valid-type]
 
 
 class AgentV1AudioInput(UniversalBaseModel):
