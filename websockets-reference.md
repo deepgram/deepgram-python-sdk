@@ -48,8 +48,8 @@ with client.listen.v1.connect(model="nova-3") as connection:
     connection.on(EventType.CLOSE, lambda _: print("Connection closed"))
     connection.on(EventType.ERROR, lambda error: print(f"Caught: {error}"))
 
-    # Start listening in a background thread
-    threading.Thread(target=connection.start_listening, daemon=True).start()
+    # Start listening
+    connection.start_listening()
 
     # Send audio data
     from deepgram.extensions.types.sockets import ListenV1MediaMessage
@@ -96,7 +96,7 @@ async def main():
         connection.on(EventType.ERROR, lambda error: print(f"Caught: {error}"))
 
         # Start listening
-        listen_task = asyncio.create_task(connection.start_listening())
+        await connection.start_listening()
 
         # Send audio data
         from deepgram.extensions.types.sockets import ListenV1MediaMessage
@@ -106,13 +106,37 @@ async def main():
         from deepgram.extensions.types.sockets import ListenV1ControlMessage
         await connection.send_control(ListenV1ControlMessage(type="KeepAlive"))
 
-        # Wait and cleanup
-        await asyncio.sleep(3)
-        listen_task.cancel()
-
 asyncio.run(main())
 
 ```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 📤 Send Methods
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**`send_media(message)`** — Send binary audio data for transcription
+
+- `ListenV1MediaMessage(data=audio_bytes)`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**`send_control(message)`** — Send control messages to manage the connection
+
+- `ListenV1ControlMessage(type="KeepAlive")` — Keep the connection alive
+- `ListenV1ControlMessage(type="Finalize")` — Finalize the transcription
 
 </dd>
 </dl>
@@ -424,8 +448,8 @@ with client.listen.v2.connect(
     connection.on(EventType.CLOSE, lambda _: print("Connection closed"))
     connection.on(EventType.ERROR, lambda error: print(f"Caught: {error}"))
 
-    # Start listening in a background thread
-    threading.Thread(target=connection.start_listening, daemon=True).start()
+    # Start listening
+    connection.start_listening()
 
     # Send audio data
     from deepgram.extensions.types.sockets import ListenV2MediaMessage
@@ -476,7 +500,7 @@ async def main():
         connection.on(EventType.ERROR, lambda error: print(f"Caught: {error}"))
 
         # Start listening
-        listen_task = asyncio.create_task(connection.start_listening())
+        await connection.start_listening()
 
         # Send audio data
         from deepgram.extensions.types.sockets import ListenV2MediaMessage
@@ -486,13 +510,36 @@ async def main():
         from deepgram.extensions.types.sockets import ListenV2ControlMessage
         await connection.send_control(ListenV2ControlMessage(type="CloseStream"))
 
-        # Wait and cleanup
-        await asyncio.sleep(3)
-        listen_task.cancel()
-
 asyncio.run(main())
 
 ```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 📤 Send Methods
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**`send_media(message)`** — Send binary audio data for transcription
+
+- `ListenV2MediaMessage(data=audio_bytes)`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**`send_control(message)`** — Send control messages to manage the connection
+
+- `ListenV2ControlMessage(type="CloseStream")` — Close the audio stream
 
 </dd>
 </dl>
@@ -655,8 +702,8 @@ with client.speak.v1.connect(
     connection.on(EventType.CLOSE, lambda _: print("Connection closed"))
     connection.on(EventType.ERROR, lambda error: print(f"Caught: {error}"))
 
-    # Start listening in a background thread
-    threading.Thread(target=connection.start_listening, daemon=True).start()
+    # Start listening
+    connection.start_listening()
 
     # Send text to be converted to speech
     from deepgram.extensions.types.sockets import SpeakV1TextMessage
@@ -711,7 +758,7 @@ async def main():
         connection.on(EventType.ERROR, lambda error: print(f"Caught: {error}"))
 
         # Start listening
-        listen_task = asyncio.create_task(connection.start_listening())
+        await connection.start_listening()
 
         # Send text to be converted to speech
         from deepgram.extensions.types.sockets import SpeakV1TextMessage
@@ -722,13 +769,38 @@ async def main():
         await connection.send_control(SpeakV1ControlMessage(type="Flush"))
         await connection.send_control(SpeakV1ControlMessage(type="Close"))
 
-        # Wait and cleanup
-        await asyncio.sleep(3)
-        listen_task.cancel()
-
 asyncio.run(main())
 
 ```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 📤 Send Methods
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**`send_text(message)`** — Send text to be converted to speech
+
+- `SpeakV1TextMessage(text="Hello, world!")`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**`send_control(message)`** — Send control messages to manage speech synthesis
+
+- `SpeakV1ControlMessage(type="Flush")` — Process all queued text immediately
+- `SpeakV1ControlMessage(type="Clear")` — Clear the text queue
+- `SpeakV1ControlMessage(type="Close")` — Close the connection
 
 </dd>
 </dl>
@@ -894,8 +966,8 @@ with client.agent.v1.connect() as agent:
     agent.on(EventType.CLOSE, lambda _: print("Connection closed"))
     agent.on(EventType.ERROR, lambda error: print(f"Caught: {error}"))
 
-    # Start listening in a background thread
-    threading.Thread(target=agent.start_listening, daemon=True).start()
+    # Start listening
+    agent.start_listening()
 
     # Send audio data
     from deepgram.extensions.types.sockets import AgentV1MediaMessage
@@ -991,7 +1063,7 @@ async def main():
         agent.on(EventType.ERROR, lambda error: print(f"Caught: {error}"))
 
         # Start listening
-        listen_task = asyncio.create_task(agent.start_listening())
+        await agent.start_listening()
 
         # Send audio data
         from deepgram.extensions.types.sockets import AgentV1MediaMessage
@@ -1000,10 +1072,6 @@ async def main():
         # Send control messages
         from deepgram.extensions.types.sockets import AgentV1ControlMessage
         await agent.send_control(AgentV1ControlMessage(type="KeepAlive"))
-
-        # Wait and cleanup
-        await asyncio.sleep(3)
-        listen_task.cancel()
 
 asyncio.run(main())
 
@@ -1039,7 +1107,7 @@ asyncio.run(main())
 </dd>
 </dl>
 
-#### 🔧 Agent Methods
+#### 📤 Send Methods
 
 <dl>
 <dd>
@@ -1047,7 +1115,9 @@ asyncio.run(main())
 <dl>
 <dd>
 
-**send_settings(message: AgentV1SettingsMessage)** — Send initial agent configuration settings
+**`send_settings(message)`** — Send initial agent configuration settings
+
+- `AgentV1SettingsMessage(...)` — Configure audio, listen, think, and speak providers
 
 </dd>
 </dl>
@@ -1055,7 +1125,9 @@ asyncio.run(main())
 <dl>
 <dd>
 
-**send_control(message: AgentV1ControlMessage)** — Send a control message (keep_alive, etc.)
+**`send_media(message)`** — Send binary audio data to the agent
+
+- `AgentV1MediaMessage(data=audio_bytes)`
 
 </dd>
 </dl>
@@ -1063,7 +1135,9 @@ asyncio.run(main())
 <dl>
 <dd>
 
-**send_update_speak(message: AgentV1UpdateSpeakMessage)** — Update the agent's speech synthesis settings
+**`send_control(message)`** — Send control messages (keep_alive, etc.)
+
+- `AgentV1ControlMessage(type="KeepAlive")`
 
 </dd>
 </dl>
@@ -1071,7 +1145,9 @@ asyncio.run(main())
 <dl>
 <dd>
 
-**send_update_prompt(message: AgentV1UpdatePromptMessage)** — Update the agent's system prompt
+**`send_update_speak(message)`** — Update the agent's speech synthesis settings
+
+- `AgentV1UpdateSpeakMessage(...)` — Modify TTS configuration during conversation
 
 </dd>
 </dl>
@@ -1079,7 +1155,9 @@ asyncio.run(main())
 <dl>
 <dd>
 
-**send_inject_user_message(message: AgentV1InjectUserMessageMessage)** — Inject a user message into the conversation
+**`send_update_prompt(message)`** — Update the agent's system prompt
+
+- `AgentV1UpdatePromptMessage(...)` — Change the agent's behavior instructions
 
 </dd>
 </dl>
@@ -1087,7 +1165,9 @@ asyncio.run(main())
 <dl>
 <dd>
 
-**send_inject_agent_message(message: AgentV1InjectAgentMessageMessage)** — Inject an agent message into the conversation
+**`send_inject_user_message(message)`** — Inject a user message into the conversation
+
+- `AgentV1InjectUserMessageMessage(...)` — Add a simulated user input
 
 </dd>
 </dl>
@@ -1095,7 +1175,9 @@ asyncio.run(main())
 <dl>
 <dd>
 
-**send_function_call_response(message: AgentV1FunctionCallResponseMessage)** — Send the result of a function call back to the agent
+**`send_inject_agent_message(message)`** — Inject an agent message into the conversation
+
+- `AgentV1InjectAgentMessageMessage(...)` — Add a simulated agent response
 
 </dd>
 </dl>
@@ -1103,7 +1185,9 @@ asyncio.run(main())
 <dl>
 <dd>
 
-**send_media(message: AgentV1MediaMessage)** — Send binary audio data to the agent
+**`send_function_call_response(message)`** — Send the result of a function call back to the agent
+
+- `AgentV1FunctionCallResponseMessage(...)` — Provide function execution results
 
 </dd>
 </dl>
@@ -1113,77 +1197,3 @@ asyncio.run(main())
 </dd>
 </dl>
 </details>
-
-## Common WebSocket Methods
-
-### Event Handling
-
-All WebSocket connections support the following event handling pattern:
-
-```python
-from deepgram.core.events import EventType
-
-# Set up event handlers
-connection.on(EventType.OPEN, lambda _: print("Connection opened"))
-connection.on(EventType.MESSAGE, on_message_handler)
-connection.on(EventType.CLOSE, lambda _: print("Connection closed"))
-connection.on(EventType.ERROR, lambda error: print(f"Error: {error}"))
-
-# Start listening for events
-connection.start_listening()  # Synchronous
-# or
-await connection.start_listening()  # Asynchronous
-```
-
-### Authentication with Tokens
-
-You can use temporary tokens for authentication instead of API keys:
-
-```python
-from deepgram import DeepgramClient
-
-# Generate a temporary token
-auth_client = DeepgramClient(api_key="YOUR_API_KEY")
-token_response = auth_client.auth.v1.tokens.grant()
-
-# Use the token for WebSocket connection
-client = DeepgramClient(access_token=token_response.access_token)
-with client.listen.v1.connect(model="nova-3") as connection:
-    # Your WebSocket code here
-    pass
-```
-
-### Raw Response Access
-
-All WebSocket clients provide access to raw responses:
-
-```python
-# Access raw client for more control
-with client.listen.v1.with_raw_response.connect(model="nova-3") as connection:
-    # Raw connection handling
-    pass
-```
-
-### Message Types
-
-#### Listen V1/V2 Message Types
-
-- **ListenV1MediaMessage** / **ListenV2MediaMessage** — Binary audio data
-- **ListenV1ControlMessage** — Control messages (KeepAlive, Finalize, CloseStream)
-- **ListenV2ControlMessage** — Control messages (CloseStream)
-
-#### Speak V1 Message Types
-
-- **SpeakV1TextMessage** — Text to be converted to speech
-- **SpeakV1ControlMessage** — Control messages (Flush, Clear, Close)
-
-#### Agent V1 Message Types
-
-- **AgentV1SettingsMessage** — Initial configuration
-- **AgentV1ControlMessage** — Control messages
-- **AgentV1MediaMessage** — Binary audio data
-- **AgentV1UpdateSpeakMessage** — Update speech settings
-- **AgentV1UpdatePromptMessage** — Update system prompt
-- **AgentV1InjectUserMessageMessage** — Inject user message
-- **AgentV1InjectAgentMessageMessage** — Inject agent message
-- **AgentV1FunctionCallResponseMessage** — Function call response
