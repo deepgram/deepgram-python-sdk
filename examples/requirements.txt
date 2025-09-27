@@ -1,5 +1,2 @@
-asyncio
 json5
 python-dotenv>=1.0.0
-wave
-websockets>=12.0
