@@ -5,6 +5,7 @@ Tests the base TelemetryHandler interface and custom implementations.
 
 import pytest
 import typing
+from typing import Union
 import time
 from unittest.mock import Mock, patch
 
@@ -96,9 +97,9 @@ class CustomTelemetryHandler(TelemetryHandler):
         *,
         method: str,
         url: str,
-        headers: typing.Mapping[str, str] | None,
-        extras: typing.Mapping[str, str] | None = None,
-        request_details: typing.Mapping[str, typing.Any] | None = None,
+        headers: Union[typing.Mapping[str, str], None],
+        extras: Union[typing.Mapping[str, str], None] = None,
+        request_details: Union[typing.Mapping[str, typing.Any], None] = None,
     ) -> None:
         self.events.append({
             "type": "http_request",
@@ -116,9 +117,9 @@ class CustomTelemetryHandler(TelemetryHandler):
         url: str,
         status_code: int,
         duration_ms: float,
-        headers: typing.Mapping[str, str] | None,
-        extras: typing.Mapping[str, str] | None = None,
-        response_details: typing.Mapping[str, typing.Any] | None = None,
+        headers: Union[typing.Mapping[str, str], None],
+        extras: Union[typing.Mapping[str, str], None] = None,
+        response_details: Union[typing.Mapping[str, typing.Any], None] = None,
     ) -> None:
         self.events.append({
             "type": "http_response",
@@ -138,8 +139,8 @@ class CustomTelemetryHandler(TelemetryHandler):
         url: str,
         error: BaseException,
         duration_ms: float,
-        request_details: typing.Mapping[str, typing.Any] | None = None,
-        response_details: typing.Mapping[str, typing.Any] | None = None,
+        request_details: Union[typing.Mapping[str, typing.Any], None] = None,
+        response_details: Union[typing.Mapping[str, typing.Any], None] = None,
     ) -> None:
         self.events.append({
             "type": "http_error",
@@ -156,9 +157,9 @@ class CustomTelemetryHandler(TelemetryHandler):
         self, 
         *, 
         url: str, 
-        headers: typing.Mapping[str, str] | None, 
-        extras: typing.Mapping[str, str] | None = None,
-        request_details: typing.Mapping[str, typing.Any] | None = None,
+        headers: Union[typing.Mapping[str, str], None], 
+        extras: Union[typing.Mapping[str, str], None] = None,
+        request_details: Union[typing.Mapping[str, typing.Any], None] = None,
     ) -> None:
         self.events.append({
             "type": "ws_connect",
@@ -173,9 +174,9 @@ class CustomTelemetryHandler(TelemetryHandler):
         *, 
         url: str, 
         error: BaseException, 
-        extras: typing.Mapping[str, str] | None = None,
-        request_details: typing.Mapping[str, typing.Any] | None = None,
-        response_details: typing.Mapping[str, typing.Any] | None = None,
+        extras: Union[typing.Mapping[str, str], None] = None,
+        request_details: Union[typing.Mapping[str, typing.Any], None] = None,
+        response_details: Union[typing.Mapping[str, typing.Any], None] = None,
     ) -> None:
         self.events.append({
             "type": "ws_error",
