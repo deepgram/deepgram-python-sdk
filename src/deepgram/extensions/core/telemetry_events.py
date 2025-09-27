@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Any, Mapping
+from typing import Any, Dict, Mapping
 
 from ..telemetry.handler import TelemetryHandler
 from .instrumented_http import HttpEvents
@@ -138,7 +138,7 @@ class TelemetrySocketEvents(SocketEvents):
             pass
 
 
-def filter_sensitive_headers(headers: Mapping[str, str] | None) -> dict[str, str] | None:
+def filter_sensitive_headers(headers: Mapping[str, str] | None) -> Dict[str, str] | None:
     """Filter out sensitive headers from telemetry, keeping all safe headers."""
     if not headers:
         return None
@@ -162,7 +162,7 @@ def filter_sensitive_headers(headers: Mapping[str, str] | None) -> dict[str, str
     return filtered_headers if filtered_headers else None
 
 
-def extract_deepgram_headers(headers: Mapping[str, str] | None) -> dict[str, str] | None:
+def extract_deepgram_headers(headers: Mapping[str, str] | None) -> Dict[str, str] | None:
     """Extract x-dg-* headers from response headers."""
     if not headers:
         return None
@@ -181,9 +181,9 @@ def capture_request_details(
     headers: Mapping[str, str] | None = None,
     params: Mapping[str, Any] | None = None,
     **kwargs
-) -> dict[str, Any]:
+) -> Dict[str, Any]:
     """Capture comprehensive request details for telemetry (keys only for privacy)."""
-    details: dict[str, Any] = {}
+    details: Dict[str, Any] = {}
     
     if method:
         details['method'] = method
@@ -228,13 +228,13 @@ def capture_request_details(
     return details
 
 
-def _extract_url_structure(url: str) -> dict[str, Any]:
+def _extract_url_structure(url: str) -> Dict[str, Any]:
     """Extract URL structure without exposing sensitive query parameter values."""
     try:
         from urllib.parse import parse_qs, urlparse
         
         parsed = urlparse(url)
-        structure: dict[str, Any] = {
+        structure: Dict[str, Any] = {
             'scheme': parsed.scheme,
             'hostname': parsed.hostname,
             'port': parsed.port,
@@ -253,7 +253,7 @@ def _extract_url_structure(url: str) -> dict[str, Any]:
         return {'url_parse_error': True, 'url_length': len(url)}
 
 
-def capture_response_details(response: Any = None, **kwargs) -> dict[str, Any]:
+def capture_response_details(response: Any = None, **kwargs) -> Dict[str, Any]:
     """Capture comprehensive response details for telemetry (keys only for privacy)."""
     details = {}
     

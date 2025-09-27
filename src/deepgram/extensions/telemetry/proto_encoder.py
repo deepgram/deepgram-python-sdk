@@ -4,6 +4,7 @@ from __future__ import annotations
 import struct
 import time
 import typing
+from typing import Dict, List
 
 
 # --- Protobuf wire helpers (proto3) ---
@@ -136,7 +137,7 @@ def _encode_telemetry_context(ctx: typing.Mapping[str, typing.Any]) -> bytes:
     return bytes(msg)
 
 
-def _encode_telemetry_event(name: str, ts: float, attributes: dict[str, str] | None, metrics: dict[str, float] | None) -> bytes:
+def _encode_telemetry_event(name: str, ts: float, attributes: Dict[str, str] | None, metrics: Dict[str, float] | None) -> bytes:
     msg = bytearray()
     msg += _string(1, name)
     msg += _len_delimited(2, _timestamp_message(ts))
@@ -153,7 +154,7 @@ def _encode_error_event(
     severity: int,
     handled: bool,
     ts: float,
-    attributes: dict[str, str] | None,
+    attributes: Dict[str, str] | None,
     stack_trace: str | None = None,
     file: str | None = None,
     line: int | None = None,
@@ -184,8 +185,8 @@ def _encode_record(record: bytes, kind_field_number: int) -> bytes:
     return _len_delimited(2, _len_delimited(kind_field_number, record))
 
 
-def _normalize_events(events: list[dict]) -> list[bytes]:
-    out: list[bytes] = []
+def _normalize_events(events: List[dict]) -> List[bytes]:
+    out: List[bytes] = []
     for e in events:
         etype = e.get("type")
         ts = float(e.get("ts", time.time()))
@@ -362,14 +363,14 @@ def _normalize_events(events: list[dict]) -> list[bytes]:
     return out
 
 
-def encode_telemetry_batch(events: list[dict], context: typing.Mapping[str, typing.Any]) -> bytes:
+def encode_telemetry_batch(events: List[dict], context: typing.Mapping[str, typing.Any]) -> bytes:
     ctx = _encode_telemetry_context(context)
     records = b"".join(_normalize_events(events))
     batch = _len_delimited(1, ctx) + records
     return batch
 
 
-def encode_telemetry_batch_iter(events: list[dict], context: typing.Mapping[str, typing.Any]) -> typing.Iterator[bytes]:
+def encode_telemetry_batch_iter(events: List[dict], context: typing.Mapping[str, typing.Any]) -> typing.Iterator[bytes]:
     # Streaming variant: yield small chunks (context first, then each record)
     yield _len_delimited(1, _encode_telemetry_context(context))
     for rec in _normalize_events(events):

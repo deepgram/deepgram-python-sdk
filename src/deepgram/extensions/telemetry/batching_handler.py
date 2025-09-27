@@ -10,6 +10,7 @@ import traceback
 import typing
 import zlib
 from collections import Counter
+from typing import List
 
 import httpx
 from .handler import TelemetryHandler
@@ -58,7 +59,7 @@ class BatchingTelemetryHandler(TelemetryHandler):
         self._synchronous = bool(synchronous)
         if self._synchronous:
             # In synchronous mode, we do not spin a worker; we stage events locally
-            self._buffer_sync: list[dict] = []
+            self._buffer_sync: List[dict] = []
         else:
             self._queue: queue.Queue[dict] = queue.Queue(maxsize=max_queue_size)
             self._stop_event = threading.Event()
@@ -368,7 +369,7 @@ class BatchingTelemetryHandler(TelemetryHandler):
 
     def _run(self) -> None:
         last_flush = time.time()
-        buffer: list[dict] = []
+        buffer: List[dict] = []
         while not self._stop_event.is_set():
             if self._disabled:
                 break
@@ -395,7 +396,7 @@ class BatchingTelemetryHandler(TelemetryHandler):
         if buffer:
             self._flush(buffer)
 
-    def _flush(self, batch: list[dict]) -> None:
+    def _flush(self, batch: List[dict]) -> None:
         try:
             # Choose streaming iterator if provided; otherwise bytes encoder.
             # If no encoder provided, drop silently to avoid memory use.
@@ -580,7 +581,7 @@ class BatchingTelemetryHandler(TelemetryHandler):
         
         self._stop_event.set()
         # Drain any remaining events synchronously to ensure a final flush
-        drain: list[dict] = []
+        drain: List[dict] = []
         try:
             while True:
                 drain.append(self._queue.get_nowait())
@@ -621,7 +622,7 @@ class BatchingTelemetryHandler(TelemetryHandler):
                 finally:
                     self._buffer_sync = []  # type: ignore[attr-defined]
             return
-        drain: list[dict] = []
+        drain: List[dict] = []
         try:
             while True:
                 drain.append(self._queue.get_nowait())
