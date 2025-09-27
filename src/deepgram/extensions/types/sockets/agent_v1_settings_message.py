@@ -306,7 +306,7 @@ class AgentV1OpenAiThinkProvider(UniversalBaseModel):
     ]
     """OpenAI model to use"""
     
-    temperature: typing.Optional[Temperature0to2] = None
+    temperature: typing.Optional[Temperature0to2] = None  # type: ignore[valid-type]
     """OpenAI temperature (0-2)"""
 
     if IS_PYDANTIC_V2:
@@ -330,7 +330,7 @@ class AgentV1AwsBedrockThinkProvider(UniversalBaseModel):
     ]
     """AWS Bedrock model to use"""
     
-    temperature: typing.Optional[Temperature0to2] = None
+    temperature: typing.Optional[Temperature0to2] = None  # type: ignore[valid-type]
     """AWS Bedrock temperature (0-2)"""
     
     credentials: typing.Optional[AgentV1AwsCredentials] = None
@@ -354,7 +354,7 @@ class AgentV1AnthropicThinkProvider(UniversalBaseModel):
     model: typing.Literal["claude-3-5-haiku-latest", "claude-sonnet-4-20250514"]
     """Anthropic model to use"""
     
-    temperature: typing.Optional[Temperature0to1] = None
+    temperature: typing.Optional[Temperature0to1] = None  # type: ignore[valid-type]
     """Anthropic temperature (0-1)"""
 
     if IS_PYDANTIC_V2:
@@ -375,7 +375,7 @@ class AgentV1GoogleThinkProvider(UniversalBaseModel):
     model: typing.Literal["gemini-2.0-flash", "gemini-2.0-flash-lite", "gemini-2.5-flash"]
     """Google model to use"""
     
-    temperature: typing.Optional[Temperature0to2] = None
+    temperature: typing.Optional[Temperature0to2] = None  # type: ignore[valid-type]
     """Google temperature (0-2)"""
 
     if IS_PYDANTIC_V2:
@@ -396,7 +396,7 @@ class AgentV1GroqThinkProvider(UniversalBaseModel):
     model: typing.Literal["openai/gpt-oss-20b"]
     """Groq model to use"""
     
-    temperature: typing.Optional[Temperature0to2] = None
+    temperature: typing.Optional[Temperature0to2] = None  # type: ignore[valid-type]
     """Groq temperature (0-2)"""
 
     if IS_PYDANTIC_V2:
@@ -428,7 +428,7 @@ class AgentV1Think(UniversalBaseModel):
     prompt: typing.Optional[str] = None
     """System prompt"""
     
-    context_length: typing.Optional[typing.Union[typing.Literal["max"], IntContextLength]] = None
+    context_length: typing.Optional[typing.Union[typing.Literal["max"], IntContextLength]] = None  # type: ignore[valid-type]
     """Specifies the number of characters retained in context between user messages, agent responses, and function calls"""
 
     if IS_PYDANTIC_V2:
