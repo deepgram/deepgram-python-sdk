@@ -1,0 +1,71 @@
+name: "📚 Docs improvement"
+description: Fix or improve documentation, examples, or comments
+title: "[Docs]: "
+labels: ["documentation", "needs-triage"]
+body:
+  - type: input
+    id: page
+    attributes:
+      label: Affected page or section
+      placeholder: "https://docs.example.com/python/…"
+    validations:
+      required: true
+
+  - type: textarea
+    id: issue
+    attributes:
+      label: What is unclear or wrong?
+      placeholder: "Option X is outdated; code sample fails with 5.0.0"
+    validations:
+      required: true
+
+  - type: textarea
+    id: suggestion
+    attributes:
+      label: Suggested change
+      render: markdown
+      placeholder: "Replace snippet with… Add note about Python 3.12…"
+    validations:
+      required: false
+
+  - type: textarea
+    id: example
+    attributes:
+      label: Example code (if any)
+      render: python
+      placeholder: "# short snippet"
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: parity
+    attributes:
+      label: SDK parity (if relevant)
+      options:
+        - label: This change may need updates in other SDKs
+          required: false
+
+  - type: input
+    id: session_id
+    attributes:
+      label: Session ID (optional)
+      placeholder: "123e4567-e89b-12d3-a456-426614174000"
+    validations:
+      required: false
+
+  - type: input
+    id: project_id
+    attributes:
+      label: Project ID (optional)
+      placeholder: "proj_abc123"
+    validations:
+      required: false
+
+  - type: input
+    id: request_id
+    attributes:
+      label: Request ID (optional)
+      description: From API error messages or response headers (`dg-request-id`)
+      placeholder: "req_def456"
+    validations:
+      required: false
