@@ -4,6 +4,17 @@ Contributions are welcome. This is a generated library, and changes to core file
 
 Requires Python 3.8+
 
+## Fork Repository
+
+Fork this repo on GitHub.
+
+## Clone Repository
+
+```bash
+git clone https://github.com/YOUR_USERNAME/deepgram-python-sdk.git
+cd deepgram-python-sdk
+```
+
 ## Install Poetry
 
 ```bash
@@ -35,3 +46,20 @@ poetry run pip install -r examples/requirements.txt
 ```bash
 python -u examples/listen/media/transcribe_url/main.py
 ```
+
+## Commit Changes
+
+```bash
+git add .
+git commit -m "feat: your change description"
+```
+
+## Push to Fork
+
+```bash
+git push origin main
+```
+
+## Create Pull Request
+
+Open a pull request from your fork to the main repository.

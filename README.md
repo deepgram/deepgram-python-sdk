@@ -383,15 +383,16 @@ We welcome contributions to improve this SDK! However, please note that this lib
 
 ### Contribution Guidelines
 
-- **Core Library Changes**: Since this is a generated library, changes to core functionality should be proposed as issues first. We'll work with you to implement changes in our generation pipeline.
-- **Documentation**: Improvements to documentation, examples, and README are always welcome via pull requests.
-- **Bug Reports**: Please include detailed reproduction steps and environment information.
-- **Feature Requests**: Describe your use case and the problem you're trying to solve.
+See our [CONTRIBUTING](./CONTRIBUTING.md) guide.
 
 ### Requirements
 
 - Python 3.8+
 - See `pyproject.toml` for full dependency list
+
+## Community Code of Conduct
+
+Please see our community [code of conduct](https://developers.deepgram.com/code-of-conduct) before contributing to this project.
 
 ## License
 
