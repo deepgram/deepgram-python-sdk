@@ -4,11 +4,22 @@ name = "deepgram-sdk"
 [tool.poetry]
 name = "deepgram-sdk"
 version = "4.8.1"
-description = ""
-readme = "README.md"
-authors = []
-keywords = []
+description = "The official Python SDK for the Deepgram automated speech recognition platform."
+authors = ["Deepgram DevRel <devrel@deepgram.com>"]
 license = "MIT"
+readme = "README.md"
+keywords = [
+    "speech",
+    "recognition",
+    "text-to-speech",
+    "language",
+    "understanding",
+    "ai",
+    "speech-to-text",
+    "speech-to-speech",
+    "text-to-text",
+    "intelligence",
+]
 classifiers = [
     "Intended Audience :: Developers",
     "Programming Language :: Python",
@@ -27,7 +38,7 @@ classifiers = [
     "Typing :: Typed",
     "License :: OSI Approved :: MIT License",
 ]
-packages = [{ include = "deepgram", from = "src" }]
+packages = [{ include = "deepgram", "from" = "src" }]
 
 [project.urls]
 Repository = 'https://github.com/deepgram/deepgram-python-sdk'
