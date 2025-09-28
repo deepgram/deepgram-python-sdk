@@ -1,6 +1,10 @@
 {
   "packages": {
     ".": {
+      "release-type": "python",
+      "package-name": "deepgram-sdk",
+      "tag-separator": "",
+      "include-v-in-tag": true,
       "changelog-path": "CHANGELOG.md",
       "bump-minor-pre-major": false,
       "bump-patch-for-minor-pre-major": false,
