@@ -1,8 +1,8 @@
 [project]
-name = "deepgram"
+name = "deepgram-sdk"
 
 [tool.poetry]
-name = "deepgram"
+name = "deepgram-sdk"
 version = "4.8.1"
 description = ""
 readme = "README.md"
