@@ -23,6 +23,7 @@
           "field": "project.version"
         },
         {
+          "type": "generic",
           "path": "src/deepgram/core/client_wrapper.py"
         }
       ]
