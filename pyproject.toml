@@ -1,10 +1,10 @@
 [project]
 name = "deepgram-sdk"
-version = "4.8.1"
+version = "5.0.0"
 
 [tool.poetry]
 name = "deepgram-sdk"
-version = "4.8.1"
+version = "5.0.0"
 description = "The official Python SDK for the Deepgram automated speech recognition platform."
 authors = ["Deepgram DevRel <devrel@deepgram.com>"]
 license = "MIT"
