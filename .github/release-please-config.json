@@ -15,12 +15,12 @@
         {
           "type": "toml",
           "path": "pyproject.toml",
-          "field": "tool.poetry.version"
+          "jsonpath": "$.tool.poetry.version"
         },
         {
           "type": "toml",
           "path": "pyproject.toml",
-          "field": "project.version"
+          "jsonpath": "$.project.version"
         },
         {
           "type": "generic",
