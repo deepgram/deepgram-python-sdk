@@ -1,5 +1,6 @@
 [project]
 name = "deepgram-sdk"
+version = "4.8.1"
 
 [tool.poetry]
 name = "deepgram-sdk"
