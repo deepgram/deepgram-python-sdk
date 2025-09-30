@@ -47,7 +47,6 @@ from deepgram.listen.v1.media.types.media_transcribe_request_summarize import Me
 from deepgram.listen.v1.media.types.media_transcribe_request_custom_topic_mode import MediaTranscribeRequestCustomTopicMode
 from deepgram.listen.v1.media.types.media_transcribe_request_custom_intent_mode import MediaTranscribeRequestCustomIntentMode
 from deepgram.listen.v1.media.types.media_transcribe_request_encoding import MediaTranscribeRequestEncoding
-from deepgram.listen.v1.media.types.media_transcribe_request_language import MediaTranscribeRequestLanguage
 from deepgram.listen.v1.media.types.media_transcribe_request_model import MediaTranscribeRequestModel
 from deepgram.listen.v1.media.types.media_transcribe_request_version import MediaTranscribeRequestVersion
 

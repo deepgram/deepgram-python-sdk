@@ -23,7 +23,6 @@ from deepgram.read.v1.text.types.text_analyze_request_callback_method import Tex
 from deepgram.read.v1.text.types.text_analyze_request_summarize import TextAnalyzeRequestSummarize
 from deepgram.read.v1.text.types.text_analyze_request_custom_topic_mode import TextAnalyzeRequestCustomTopicMode
 from deepgram.read.v1.text.types.text_analyze_request_custom_intent_mode import TextAnalyzeRequestCustomIntentMode
-from deepgram.read.v1.text.types.text_analyze_request_language import TextAnalyzeRequestLanguage
 
 
 class TestReadClient:
