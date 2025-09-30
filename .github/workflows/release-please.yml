@@ -4,9 +4,6 @@ on:
   push:
     branches:
       - main # stable releases
-      - next # release candidates
-      - beta # beta releases
-      - alpha # alpha releases
 
 permissions:
   contents: write
@@ -94,7 +91,7 @@ jobs:
         run: poetry build
 
       - name: Publish to PyPI
-        if: ${{ needs.release-please.outputs.prerelease != 'true' }}
+        if: ${{ needs.release-please.outputs.prerelease == 'false' }}
         env:
           POETRY_PYPI_TOKEN_PYPI: ${{ secrets.PYPI_TOKEN }}
         run: poetry publish
