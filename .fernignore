@@ -7,6 +7,7 @@ mypy.ini
 websockets-reference.md
 .github/
 scripts/run_examples.sh
+docs/
 
 # Examples
 examples/
@@ -27,3 +28,4 @@ src/deepgram/speak/v1/socket_client.py
 
 # Bug Fixes
 src/deepgram/listen/client.py
+src/deepgram/core/client_wrapper.py
