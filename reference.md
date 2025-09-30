@@ -163,6 +163,40 @@ client = DeepgramClient(
     api_key="YOUR_API_KEY",
 )
 client.listen.v1.media.transcribe_url(
+    callback="callback",
+    callback_method="POST",
+    extra="extra",
+    sentiment=True,
+    summarize="v2",
+    tag="tag",
+    topics=True,
+    custom_topic="custom_topic",
+    custom_topic_mode="extended",
+    intents=True,
+    custom_intent="custom_intent",
+    custom_intent_mode="extended",
+    detect_entities=True,
+    detect_language=True,
+    diarize=True,
+    dictation=True,
+    encoding="linear16",
+    filler_words=True,
+    keywords="keywords",
+    language="language",
+    measurements=True,
+    model="nova-3",
+    multichannel=True,
+    numerals=True,
+    paragraphs=True,
+    profanity_filter=True,
+    punctuate=True,
+    redact="redact",
+    replace="replace",
+    search="search",
+    smart_format=True,
+    utterances=True,
+    utt_split=1.1,
+    version="latest",
     url="https://dpgr.am/spacewalk.wav",
 )
 
@@ -348,7 +382,7 @@ client.listen.v1.media.transcribe_url(
 <dl>
 <dd>
 
-**language:** `typing.Optional[MediaTranscribeRequestLanguage]` — The [BCP-47 language tag](https://tools.ietf.org/html/bcp47) that hints at the primary spoken language. Depending on the Model and API endpoint you choose only certain languages are available
+**language:** `typing.Optional[str]` — The [BCP-47 language tag](https://tools.ietf.org/html/bcp47) that hints at the primary spoken language. Depending on the Model and API endpoint you choose only certain languages are available
     
 </dd>
 </dl>
@@ -696,7 +730,7 @@ client.listen.v1.media.transcribe_file()
 <dl>
 <dd>
 
-**language:** `typing.Optional[MediaTranscribeRequestLanguage]` — The [BCP-47 language tag](https://tools.ietf.org/html/bcp47) that hints at the primary spoken language. Depending on the Model and API endpoint you choose only certain languages are available
+**language:** `typing.Optional[str]` — The [BCP-47 language tag](https://tools.ietf.org/html/bcp47) that hints at the primary spoken language. Depending on the Model and API endpoint you choose only certain languages are available
     
 </dd>
 </dl>
@@ -1320,6 +1354,8 @@ client = DeepgramClient(
 )
 client.manage.v1.projects.get(
     project_id="123456-7890-1234-5678-901234",
+    limit=1,
+    page=1,
 )
 
 ```
@@ -1475,7 +1511,9 @@ from deepgram import DeepgramClient
 client = DeepgramClient(
     api_key="YOUR_API_KEY",
 )
-client.manage.v1.models.list()
+client.manage.v1.models.list(
+    include_outdated=True,
+)
 
 ```
 </dd>
@@ -1766,6 +1804,7 @@ client = DeepgramClient(
 )
 client.manage.v1.projects.models.list(
     project_id="123456-7890-1234-5678-901234",
+    include_outdated=True,
 )
 
 ```
@@ -1924,6 +1963,7 @@ client = DeepgramClient(
 )
 client.manage.v1.projects.keys.list(
     project_id="123456-7890-1234-5678-901234",
+    status="active",
 )
 
 ```
@@ -2225,6 +2265,8 @@ Generates a list of requests for a specific project
 <dd>
 
 ```python
+import datetime
+
 from deepgram import DeepgramClient
 
 client = DeepgramClient(
@@ -2232,8 +2274,20 @@ client = DeepgramClient(
 )
 client.manage.v1.projects.requests.list(
     project_id="123456-7890-1234-5678-901234",
+    start=datetime.datetime.fromisoformat(
+        "2024-01-15 09:30:00+00:00",
+    ),
+    end=datetime.datetime.fromisoformat(
+        "2024-01-15 09:30:00+00:00",
+    ),
+    limit=1,
+    page=1,
     accessor="12345678-1234-1234-1234-123456789012",
     request_id="12345678-1234-1234-1234-123456789012",
+    deployment="hosted",
+    endpoint="listen",
+    method="sync",
+    status="succeeded",
 )
 
 ```
@@ -2464,10 +2518,50 @@ client = DeepgramClient(
 )
 client.manage.v1.projects.usage.get(
     project_id="123456-7890-1234-5678-901234",
+    start="start",
+    end="end",
     accessor="12345678-1234-1234-1234-123456789012",
+    alternatives=True,
+    callback_method=True,
+    callback=True,
+    channels=True,
+    custom_intent_mode=True,
+    custom_intent=True,
+    custom_topic_mode=True,
+    custom_topic=True,
+    deployment="hosted",
+    detect_entities=True,
+    detect_language=True,
+    diarize=True,
+    dictation=True,
+    encoding=True,
+    endpoint="listen",
+    extra=True,
+    filler_words=True,
+    intents=True,
+    keyterm=True,
+    keywords=True,
+    language=True,
+    measurements=True,
+    method="sync",
     model="6f548761-c9c0-429a-9315-11a1d28499c8",
+    multichannel=True,
+    numerals=True,
+    paragraphs=True,
+    profanity_filter=True,
+    punctuate=True,
+    redact=True,
+    replace=True,
     sample_rate=True,
+    search=True,
+    sentiment=True,
+    smart_format=True,
+    summarize=True,
     tag="tag1",
+    topics=True,
+    utt_split=True,
+    utterances=True,
+    version=True,
 )
 
 ```
@@ -2891,6 +2985,7 @@ client = DeepgramClient(
 )
 client.manage.v1.projects.purchases.list(
     project_id="123456-7890-1234-5678-901234",
+    limit=1,
 )
 
 ```
@@ -3288,6 +3383,8 @@ client = DeepgramClient(
 )
 client.manage.v1.projects.usage.fields.list(
     project_id="123456-7890-1234-5678-901234",
+    start="start",
+    end="end",
 )
 
 ```
@@ -3375,10 +3472,51 @@ client = DeepgramClient(
 )
 client.manage.v1.projects.usage.breakdown.get(
     project_id="123456-7890-1234-5678-901234",
+    start="start",
+    end="end",
+    grouping="accessor",
     accessor="12345678-1234-1234-1234-123456789012",
+    alternatives=True,
+    callback_method=True,
+    callback=True,
+    channels=True,
+    custom_intent_mode=True,
+    custom_intent=True,
+    custom_topic_mode=True,
+    custom_topic=True,
+    deployment="hosted",
+    detect_entities=True,
+    detect_language=True,
+    diarize=True,
+    dictation=True,
+    encoding=True,
+    endpoint="listen",
+    extra=True,
+    filler_words=True,
+    intents=True,
+    keyterm=True,
+    keywords=True,
+    language=True,
+    measurements=True,
+    method="sync",
     model="6f548761-c9c0-429a-9315-11a1d28499c8",
+    multichannel=True,
+    numerals=True,
+    paragraphs=True,
+    profanity_filter=True,
+    punctuate=True,
+    redact=True,
+    replace=True,
     sample_rate=True,
+    search=True,
+    sentiment=True,
+    smart_format=True,
+    summarize=True,
     tag="tag1",
+    topics=True,
+    utt_split=True,
+    utterances=True,
+    version=True,
 )
 
 ```
@@ -3809,6 +3947,17 @@ client = DeepgramClient(
     api_key="YOUR_API_KEY",
 )
 client.read.v1.text.analyze(
+    callback="callback",
+    callback_method="POST",
+    sentiment=True,
+    summarize="v2",
+    topics=True,
+    custom_topic="custom_topic",
+    custom_topic_mode="extended",
+    intents=True,
+    custom_intent="custom_intent",
+    custom_intent_mode="extended",
+    language="language",
     request={"url": "url"},
 )
 
@@ -3914,7 +4063,7 @@ client.read.v1.text.analyze(
 <dl>
 <dd>
 
-**language:** `typing.Optional[TextAnalyzeRequestLanguage]` — The [BCP-47 language tag](https://tools.ietf.org/html/bcp47) that hints at the primary spoken language. Depending on the Model and API endpoint you choose only certain languages are available
+**language:** `typing.Optional[str]` — The [BCP-47 language tag](https://tools.ietf.org/html/bcp47) that hints at the primary spoken language. Depending on the Model and API endpoint you choose only certain languages are available
     
 </dd>
 </dl>

@@ -16,7 +16,6 @@ from ....types.read_v1response import ReadV1Response
 from .types.text_analyze_request_callback_method import TextAnalyzeRequestCallbackMethod
 from .types.text_analyze_request_custom_intent_mode import TextAnalyzeRequestCustomIntentMode
 from .types.text_analyze_request_custom_topic_mode import TextAnalyzeRequestCustomTopicMode
-from .types.text_analyze_request_language import TextAnalyzeRequestLanguage
 from .types.text_analyze_request_summarize import TextAnalyzeRequestSummarize
 
 # this is used as the default value for optional parameters
@@ -41,7 +40,7 @@ class RawTextClient:
         intents: typing.Optional[bool] = None,
         custom_intent: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         custom_intent_mode: typing.Optional[TextAnalyzeRequestCustomIntentMode] = None,
-        language: typing.Optional[TextAnalyzeRequestLanguage] = None,
+        language: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[ReadV1Response]:
         """
@@ -81,7 +80,7 @@ class RawTextClient:
         custom_intent_mode : typing.Optional[TextAnalyzeRequestCustomIntentMode]
             Sets how the model will interpret intents submitted to the `custom_intent` param. When `strict`, the model will only return intents submitted using the `custom_intent` param. When `extended`, the model will return its own detected intents in the `custom_intent` param.
 
-        language : typing.Optional[TextAnalyzeRequestLanguage]
+        language : typing.Optional[str]
             The [BCP-47 language tag](https://tools.ietf.org/html/bcp47) that hints at the primary spoken language. Depending on the Model and API endpoint you choose only certain languages are available
 
         request_options : typing.Optional[RequestOptions]
@@ -163,7 +162,7 @@ class AsyncRawTextClient:
         intents: typing.Optional[bool] = None,
         custom_intent: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         custom_intent_mode: typing.Optional[TextAnalyzeRequestCustomIntentMode] = None,
-        language: typing.Optional[TextAnalyzeRequestLanguage] = None,
+        language: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[ReadV1Response]:
         """
@@ -203,7 +202,7 @@ class AsyncRawTextClient:
         custom_intent_mode : typing.Optional[TextAnalyzeRequestCustomIntentMode]
             Sets how the model will interpret intents submitted to the `custom_intent` param. When `strict`, the model will only return intents submitted using the `custom_intent` param. When `extended`, the model will return its own detected intents in the `custom_intent` param.
 
-        language : typing.Optional[TextAnalyzeRequestLanguage]
+        language : typing.Optional[str]
             The [BCP-47 language tag](https://tools.ietf.org/html/bcp47) that hints at the primary spoken language. Depending on the Model and API endpoint you choose only certain languages are available
 
         request_options : typing.Optional[RequestOptions]

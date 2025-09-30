@@ -93,6 +93,8 @@ class RequestsClient:
 
         Examples
         --------
+        import datetime
+
         from deepgram import DeepgramClient
 
         client = DeepgramClient(
@@ -100,8 +102,20 @@ class RequestsClient:
         )
         client.manage.v1.projects.requests.list(
             project_id="123456-7890-1234-5678-901234",
+            start=datetime.datetime.fromisoformat(
+                "2024-01-15 09:30:00+00:00",
+            ),
+            end=datetime.datetime.fromisoformat(
+                "2024-01-15 09:30:00+00:00",
+            ),
+            limit=1,
+            page=1,
             accessor="12345678-1234-1234-1234-123456789012",
             request_id="12345678-1234-1234-1234-123456789012",
+            deployment="hosted",
+            endpoint="listen",
+            method="sync",
+            status="succeeded",
         )
         """
         _response = self._raw_client.list(
@@ -242,6 +256,7 @@ class AsyncRequestsClient:
         Examples
         --------
         import asyncio
+        import datetime
 
         from deepgram import AsyncDeepgramClient
 
@@ -253,8 +268,20 @@ class AsyncRequestsClient:
         async def main() -> None:
             await client.manage.v1.projects.requests.list(
                 project_id="123456-7890-1234-5678-901234",
+                start=datetime.datetime.fromisoformat(
+                    "2024-01-15 09:30:00+00:00",
+                ),
+                end=datetime.datetime.fromisoformat(
+                    "2024-01-15 09:30:00+00:00",
+                ),
+                limit=1,
+                page=1,
                 accessor="12345678-1234-1234-1234-123456789012",
                 request_id="12345678-1234-1234-1234-123456789012",
+                deployment="hosted",
+                endpoint="listen",
+                method="sync",
+                status="succeeded",
             )
 
 

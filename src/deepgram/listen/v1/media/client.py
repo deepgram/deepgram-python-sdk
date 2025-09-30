@@ -9,7 +9,6 @@ from .types.media_transcribe_request_callback_method import MediaTranscribeReque
 from .types.media_transcribe_request_custom_intent_mode import MediaTranscribeRequestCustomIntentMode
 from .types.media_transcribe_request_custom_topic_mode import MediaTranscribeRequestCustomTopicMode
 from .types.media_transcribe_request_encoding import MediaTranscribeRequestEncoding
-from .types.media_transcribe_request_language import MediaTranscribeRequestLanguage
 from .types.media_transcribe_request_model import MediaTranscribeRequestModel
 from .types.media_transcribe_request_summarize import MediaTranscribeRequestSummarize
 from .types.media_transcribe_request_version import MediaTranscribeRequestVersion
@@ -58,7 +57,7 @@ class MediaClient:
         filler_words: typing.Optional[bool] = None,
         keyterm: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         keywords: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
-        language: typing.Optional[MediaTranscribeRequestLanguage] = None,
+        language: typing.Optional[str] = None,
         measurements: typing.Optional[bool] = None,
         model: typing.Optional[MediaTranscribeRequestModel] = None,
         multichannel: typing.Optional[bool] = None,
@@ -142,7 +141,7 @@ class MediaClient:
         keywords : typing.Optional[typing.Union[str, typing.Sequence[str]]]
             Keywords can boost or suppress specialized terminology and brands
 
-        language : typing.Optional[MediaTranscribeRequestLanguage]
+        language : typing.Optional[str]
             The [BCP-47 language tag](https://tools.ietf.org/html/bcp47) that hints at the primary spoken language. Depending on the Model and API endpoint you choose only certain languages are available
 
         measurements : typing.Optional[bool]
@@ -203,6 +202,40 @@ class MediaClient:
             api_key="YOUR_API_KEY",
         )
         client.listen.v1.media.transcribe_url(
+            callback="callback",
+            callback_method="POST",
+            extra="extra",
+            sentiment=True,
+            summarize="v2",
+            tag="tag",
+            topics=True,
+            custom_topic="custom_topic",
+            custom_topic_mode="extended",
+            intents=True,
+            custom_intent="custom_intent",
+            custom_intent_mode="extended",
+            detect_entities=True,
+            detect_language=True,
+            diarize=True,
+            dictation=True,
+            encoding="linear16",
+            filler_words=True,
+            keywords="keywords",
+            language="language",
+            measurements=True,
+            model="nova-3",
+            multichannel=True,
+            numerals=True,
+            paragraphs=True,
+            profanity_filter=True,
+            punctuate=True,
+            redact="redact",
+            replace="replace",
+            search="search",
+            smart_format=True,
+            utterances=True,
+            utt_split=1.1,
+            version="latest",
             url="https://dpgr.am/spacewalk.wav",
         )
         """
@@ -271,7 +304,7 @@ class MediaClient:
         filler_words: typing.Optional[bool] = None,
         keyterm: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         keywords: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
-        language: typing.Optional[MediaTranscribeRequestLanguage] = None,
+        language: typing.Optional[str] = None,
         measurements: typing.Optional[bool] = None,
         model: typing.Optional[MediaTranscribeRequestModel] = None,
         multichannel: typing.Optional[bool] = None,
@@ -355,7 +388,7 @@ class MediaClient:
         keywords : typing.Optional[typing.Union[str, typing.Sequence[str]]]
             Keywords can boost or suppress specialized terminology and brands
 
-        language : typing.Optional[MediaTranscribeRequestLanguage]
+        language : typing.Optional[str]
             The [BCP-47 language tag](https://tools.ietf.org/html/bcp47) that hints at the primary spoken language. Depending on the Model and API endpoint you choose only certain languages are available
 
         measurements : typing.Optional[bool]
@@ -498,7 +531,7 @@ class AsyncMediaClient:
         filler_words: typing.Optional[bool] = None,
         keyterm: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         keywords: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
-        language: typing.Optional[MediaTranscribeRequestLanguage] = None,
+        language: typing.Optional[str] = None,
         measurements: typing.Optional[bool] = None,
         model: typing.Optional[MediaTranscribeRequestModel] = None,
         multichannel: typing.Optional[bool] = None,
@@ -582,7 +615,7 @@ class AsyncMediaClient:
         keywords : typing.Optional[typing.Union[str, typing.Sequence[str]]]
             Keywords can boost or suppress specialized terminology and brands
 
-        language : typing.Optional[MediaTranscribeRequestLanguage]
+        language : typing.Optional[str]
             The [BCP-47 language tag](https://tools.ietf.org/html/bcp47) that hints at the primary spoken language. Depending on the Model and API endpoint you choose only certain languages are available
 
         measurements : typing.Optional[bool]
@@ -648,6 +681,40 @@ class AsyncMediaClient:
 
         async def main() -> None:
             await client.listen.v1.media.transcribe_url(
+                callback="callback",
+                callback_method="POST",
+                extra="extra",
+                sentiment=True,
+                summarize="v2",
+                tag="tag",
+                topics=True,
+                custom_topic="custom_topic",
+                custom_topic_mode="extended",
+                intents=True,
+                custom_intent="custom_intent",
+                custom_intent_mode="extended",
+                detect_entities=True,
+                detect_language=True,
+                diarize=True,
+                dictation=True,
+                encoding="linear16",
+                filler_words=True,
+                keywords="keywords",
+                language="language",
+                measurements=True,
+                model="nova-3",
+                multichannel=True,
+                numerals=True,
+                paragraphs=True,
+                profanity_filter=True,
+                punctuate=True,
+                redact="redact",
+                replace="replace",
+                search="search",
+                smart_format=True,
+                utterances=True,
+                utt_split=1.1,
+                version="latest",
                 url="https://dpgr.am/spacewalk.wav",
             )
 
@@ -719,7 +786,7 @@ class AsyncMediaClient:
         filler_words: typing.Optional[bool] = None,
         keyterm: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         keywords: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
-        language: typing.Optional[MediaTranscribeRequestLanguage] = None,
+        language: typing.Optional[str] = None,
         measurements: typing.Optional[bool] = None,
         model: typing.Optional[MediaTranscribeRequestModel] = None,
         multichannel: typing.Optional[bool] = None,
@@ -803,7 +870,7 @@ class AsyncMediaClient:
         keywords : typing.Optional[typing.Union[str, typing.Sequence[str]]]
             Keywords can boost or suppress specialized terminology and brands
 
-        language : typing.Optional[MediaTranscribeRequestLanguage]
+        language : typing.Optional[str]
             The [BCP-47 language tag](https://tools.ietf.org/html/bcp47) that hints at the primary spoken language. Depending on the Model and API endpoint you choose only certain languages are available
 
         measurements : typing.Optional[bool]

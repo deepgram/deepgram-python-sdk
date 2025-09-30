@@ -10,7 +10,6 @@ if typing.TYPE_CHECKING:
     from .media_transcribe_request_custom_intent_mode import MediaTranscribeRequestCustomIntentMode
     from .media_transcribe_request_custom_topic_mode import MediaTranscribeRequestCustomTopicMode
     from .media_transcribe_request_encoding import MediaTranscribeRequestEncoding
-    from .media_transcribe_request_language import MediaTranscribeRequestLanguage
     from .media_transcribe_request_model import MediaTranscribeRequestModel
     from .media_transcribe_request_summarize import MediaTranscribeRequestSummarize
     from .media_transcribe_request_version import MediaTranscribeRequestVersion
@@ -20,7 +19,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "MediaTranscribeRequestCustomIntentMode": ".media_transcribe_request_custom_intent_mode",
     "MediaTranscribeRequestCustomTopicMode": ".media_transcribe_request_custom_topic_mode",
     "MediaTranscribeRequestEncoding": ".media_transcribe_request_encoding",
-    "MediaTranscribeRequestLanguage": ".media_transcribe_request_language",
     "MediaTranscribeRequestModel": ".media_transcribe_request_model",
     "MediaTranscribeRequestSummarize": ".media_transcribe_request_summarize",
     "MediaTranscribeRequestVersion": ".media_transcribe_request_version",
@@ -34,8 +32,10 @@ def __getattr__(attr_name: str) -> typing.Any:
         raise AttributeError(f"No {attr_name} found in _dynamic_imports for module name -> {__name__}")
     try:
         module = import_module(module_name, __package__)
-        result = getattr(module, attr_name)
-        return result
+        if module_name == f".{attr_name}":
+            return module
+        else:
+            return getattr(module, attr_name)
     except ImportError as e:
         raise ImportError(f"Failed to import {attr_name} from {module_name}: {e}") from e
     except AttributeError as e:
@@ -52,7 +52,6 @@ __all__ = [
     "MediaTranscribeRequestCustomIntentMode",
     "MediaTranscribeRequestCustomTopicMode",
     "MediaTranscribeRequestEncoding",
-    "MediaTranscribeRequestLanguage",
     "MediaTranscribeRequestModel",
     "MediaTranscribeRequestSummarize",
     "MediaTranscribeRequestVersion",

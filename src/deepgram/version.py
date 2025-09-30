@@ -1,3 +1,3 @@
 from importlib import metadata
 
-__version__ = metadata.version("deepgram")
+__version__ = metadata.version("deepgram-sdk")

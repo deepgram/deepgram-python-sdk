@@ -109,6 +109,8 @@ class ProjectsClient:
         )
         client.manage.v1.projects.get(
             project_id="123456-7890-1234-5678-901234",
+            limit=1,
+            page=1,
         )
         """
         _response = self._raw_client.get(project_id, limit=limit, page=page, request_options=request_options)
@@ -305,6 +307,8 @@ class AsyncProjectsClient:
         async def main() -> None:
             await client.manage.v1.projects.get(
                 project_id="123456-7890-1234-5678-901234",
+                limit=1,
+                page=1,
             )
 
 
