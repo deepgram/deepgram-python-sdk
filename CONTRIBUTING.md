@@ -44,7 +44,7 @@ poetry run pip install -r examples/requirements.txt
 ## Run Example
 
 ```bash
-python -u examples/listen/media/transcribe_url/main.py
+poetry run python -u examples/listen/media/transcribe_url/main.py
 ```
 
 ## Commit Changes
