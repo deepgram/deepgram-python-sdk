@@ -1,9 +1,0 @@
-{
-  "channels": 1,
-  "encoding": "mulaw",
-  "language": "en-US",
-  "model": "nova-3",
-  "punctuate": true,
-  "sample_rate": 8000,
-  "smart_format": true
-}
