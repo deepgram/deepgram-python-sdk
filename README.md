@@ -1,7 +1,7 @@
 # Deepgram Python SDK
 
 ![Built with Fern](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)
-[![PyPI version](https://img.shields.io/pypi/v/deepgram-core)](https://pypi.python.org/pypi/deepgram-core)
+[![PyPI version](https://img.shields.io/pypi/v/deepgram-sdk)](https://pypi.python.org/pypi/deepgram-sdk)
 [![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
 [![MIT License](https://img.shields.io/badge/license-MIT-green.svg)](./LICENSE)
 
@@ -21,7 +21,7 @@ Comprehensive API documentation and guides are available at [developers.deepgram
 Install the Deepgram Python SDK using pip:
 
 ```bash
-pip install deepgram-core
+pip install deepgram-sdk
 ```
 
 ## Reference
