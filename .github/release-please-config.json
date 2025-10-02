@@ -17,11 +17,6 @@
           "jsonpath": "$.tool.poetry.version"
         },
         {
-          "type": "toml",
-          "path": "pyproject.toml",
-          "jsonpath": "$.project.version"
-        },
-        {
           "type": "generic",
           "path": "src/deepgram/core/client_wrapper.py"
         }
