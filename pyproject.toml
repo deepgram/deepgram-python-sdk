@@ -1,6 +1,5 @@
 [project]
 name = "deepgram-sdk"
-dynamic = ["version"]
 
 [tool.poetry]
 name = "deepgram-sdk"
