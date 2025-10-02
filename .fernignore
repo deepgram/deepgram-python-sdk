@@ -8,6 +8,7 @@ websockets-reference.md
 .github/
 scripts/run_examples.sh
 docs/
+pyproject.toml
 
 # Examples
 examples/
