@@ -23,14 +23,14 @@ class RawProjectsClient:
         self._client_wrapper = client_wrapper
 
     def delete(
-        self, project_id: typing.Optional[str], *, request_options: typing.Optional[RequestOptions] = None
+        self, project_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[DeleteProjectV1Response]:
         """
         Deletes the specified project
 
         Parameters
         ----------
-        project_id : typing.Optional[str]
+        project_id : str
             The unique identifier of the project
 
         request_options : typing.Optional[RequestOptions]
@@ -75,7 +75,7 @@ class RawProjectsClient:
 
     def update(
         self,
-        project_id: typing.Optional[str],
+        project_id: str,
         *,
         name: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -85,7 +85,7 @@ class RawProjectsClient:
 
         Parameters
         ----------
-        project_id : typing.Optional[str]
+        project_id : str
             The unique identifier of the project
 
         name : typing.Optional[str]
@@ -144,14 +144,14 @@ class AsyncRawProjectsClient:
         self._client_wrapper = client_wrapper
 
     async def delete(
-        self, project_id: typing.Optional[str], *, request_options: typing.Optional[RequestOptions] = None
+        self, project_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[DeleteProjectV1Response]:
         """
         Deletes the specified project
 
         Parameters
         ----------
-        project_id : typing.Optional[str]
+        project_id : str
             The unique identifier of the project
 
         request_options : typing.Optional[RequestOptions]
@@ -196,7 +196,7 @@ class AsyncRawProjectsClient:
 
     async def update(
         self,
-        project_id: typing.Optional[str],
+        project_id: str,
         *,
         name: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -206,7 +206,7 @@ class AsyncRawProjectsClient:
 
         Parameters
         ----------
-        project_id : typing.Optional[str]
+        project_id : str
             The unique identifier of the project
 
         name : typing.Optional[str]

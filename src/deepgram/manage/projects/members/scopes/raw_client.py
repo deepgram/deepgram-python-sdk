@@ -22,22 +22,17 @@ class RawScopesClient:
         self._client_wrapper = client_wrapper
 
     def update(
-        self,
-        project_id: typing.Optional[str],
-        member_id: typing.Optional[str],
-        *,
-        scope: str,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, project_id: str, member_id: str, *, scope: str, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[UpdateProjectMemberScopesV1Response]:
         """
         Updates the scopes for a specific member
 
         Parameters
         ----------
-        project_id : typing.Optional[str]
+        project_id : str
             The unique identifier of the project
 
-        member_id : typing.Optional[str]
+        member_id : str
             The unique identifier of the Member
 
         scope : str
@@ -96,22 +91,17 @@ class AsyncRawScopesClient:
         self._client_wrapper = client_wrapper
 
     async def update(
-        self,
-        project_id: typing.Optional[str],
-        member_id: typing.Optional[str],
-        *,
-        scope: str,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, project_id: str, member_id: str, *, scope: str, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[UpdateProjectMemberScopesV1Response]:
         """
         Updates the scopes for a specific member
 
         Parameters
         ----------
-        project_id : typing.Optional[str]
+        project_id : str
             The unique identifier of the project
 
-        member_id : typing.Optional[str]
+        member_id : str
             The unique identifier of the Member
 
         scope : str

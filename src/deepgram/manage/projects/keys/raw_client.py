@@ -25,7 +25,7 @@ class RawKeysClient:
 
     def create(
         self,
-        project_id: typing.Optional[str],
+        project_id: str,
         *,
         request: CreateKeyV1RequestOne,
         request_options: typing.Optional[RequestOptions] = None,
@@ -35,7 +35,7 @@ class RawKeysClient:
 
         Parameters
         ----------
-        project_id : typing.Optional[str]
+        project_id : str
             The unique identifier of the project
 
         request : CreateKeyV1RequestOne
@@ -86,21 +86,17 @@ class RawKeysClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def delete(
-        self,
-        project_id: typing.Optional[str],
-        key_id: typing.Optional[str],
-        *,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, project_id: str, key_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[DeleteProjectKeyV1Response]:
         """
         Deletes an API key for a specific project
 
         Parameters
         ----------
-        project_id : typing.Optional[str]
+        project_id : str
             The unique identifier of the project
 
-        key_id : typing.Optional[str]
+        key_id : str
             The unique identifier of the API key
 
         request_options : typing.Optional[RequestOptions]
@@ -150,7 +146,7 @@ class AsyncRawKeysClient:
 
     async def create(
         self,
-        project_id: typing.Optional[str],
+        project_id: str,
         *,
         request: CreateKeyV1RequestOne,
         request_options: typing.Optional[RequestOptions] = None,
@@ -160,7 +156,7 @@ class AsyncRawKeysClient:
 
         Parameters
         ----------
-        project_id : typing.Optional[str]
+        project_id : str
             The unique identifier of the project
 
         request : CreateKeyV1RequestOne
@@ -211,21 +207,17 @@ class AsyncRawKeysClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def delete(
-        self,
-        project_id: typing.Optional[str],
-        key_id: typing.Optional[str],
-        *,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, project_id: str, key_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[DeleteProjectKeyV1Response]:
         """
         Deletes an API key for a specific project
 
         Parameters
         ----------
-        project_id : typing.Optional[str]
+        project_id : str
             The unique identifier of the project
 
-        key_id : typing.Optional[str]
+        key_id : str
             The unique identifier of the API key
 
         request_options : typing.Optional[RequestOptions]

@@ -36,14 +36,14 @@ class ProjectsClient:
         return self._raw_client
 
     def delete(
-        self, project_id: typing.Optional[str], *, request_options: typing.Optional[RequestOptions] = None
+        self, project_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> DeleteProjectV1Response:
         """
         Deletes the specified project
 
         Parameters
         ----------
-        project_id : typing.Optional[str]
+        project_id : str
             The unique identifier of the project
 
         request_options : typing.Optional[RequestOptions]
@@ -70,7 +70,7 @@ class ProjectsClient:
 
     def update(
         self,
-        project_id: typing.Optional[str],
+        project_id: str,
         *,
         name: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -80,7 +80,7 @@ class ProjectsClient:
 
         Parameters
         ----------
-        project_id : typing.Optional[str]
+        project_id : str
             The unique identifier of the project
 
         name : typing.Optional[str]
@@ -144,14 +144,14 @@ class AsyncProjectsClient:
         return self._raw_client
 
     async def delete(
-        self, project_id: typing.Optional[str], *, request_options: typing.Optional[RequestOptions] = None
+        self, project_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> DeleteProjectV1Response:
         """
         Deletes the specified project
 
         Parameters
         ----------
-        project_id : typing.Optional[str]
+        project_id : str
             The unique identifier of the project
 
         request_options : typing.Optional[RequestOptions]
@@ -186,7 +186,7 @@ class AsyncProjectsClient:
 
     async def update(
         self,
-        project_id: typing.Optional[str],
+        project_id: str,
         *,
         name: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -196,7 +196,7 @@ class AsyncProjectsClient:
 
         Parameters
         ----------
-        project_id : typing.Optional[str]
+        project_id : str
             The unique identifier of the project
 
         name : typing.Optional[str]
