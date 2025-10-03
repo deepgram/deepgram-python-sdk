@@ -9,11 +9,13 @@ if typing.TYPE_CHECKING:
     from .text_analyze_request_callback_method import TextAnalyzeRequestCallbackMethod
     from .text_analyze_request_custom_intent_mode import TextAnalyzeRequestCustomIntentMode
     from .text_analyze_request_custom_topic_mode import TextAnalyzeRequestCustomTopicMode
+    from .text_analyze_request_language import TextAnalyzeRequestLanguage
     from .text_analyze_request_summarize import TextAnalyzeRequestSummarize
 _dynamic_imports: typing.Dict[str, str] = {
     "TextAnalyzeRequestCallbackMethod": ".text_analyze_request_callback_method",
     "TextAnalyzeRequestCustomIntentMode": ".text_analyze_request_custom_intent_mode",
     "TextAnalyzeRequestCustomTopicMode": ".text_analyze_request_custom_topic_mode",
+    "TextAnalyzeRequestLanguage": ".text_analyze_request_language",
     "TextAnalyzeRequestSummarize": ".text_analyze_request_summarize",
 }
 
@@ -43,5 +45,6 @@ __all__ = [
     "TextAnalyzeRequestCallbackMethod",
     "TextAnalyzeRequestCustomIntentMode",
     "TextAnalyzeRequestCustomTopicMode",
+    "TextAnalyzeRequestLanguage",
     "TextAnalyzeRequestSummarize",
 ]

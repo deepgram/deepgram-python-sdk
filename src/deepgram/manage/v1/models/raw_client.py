@@ -74,14 +74,14 @@ class RawModelsClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def get(
-        self, model_id: typing.Optional[str], *, request_options: typing.Optional[RequestOptions] = None
+        self, model_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[GetModelV1Response]:
         """
         Returns metadata for a specific public model
 
         Parameters
         ----------
-        model_id : typing.Optional[str]
+        model_id : str
             The specific UUID of the model
 
         request_options : typing.Optional[RequestOptions]
@@ -184,14 +184,14 @@ class AsyncRawModelsClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def get(
-        self, model_id: typing.Optional[str], *, request_options: typing.Optional[RequestOptions] = None
+        self, model_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[GetModelV1Response]:
         """
         Returns metadata for a specific public model
 
         Parameters
         ----------
-        model_id : typing.Optional[str]
+        model_id : str
             The specific UUID of the model
 
         request_options : typing.Optional[RequestOptions]

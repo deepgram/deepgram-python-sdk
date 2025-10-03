@@ -31,7 +31,7 @@ class RequestsClient:
 
     def list(
         self,
-        project_id: typing.Optional[str],
+        project_id: str,
         *,
         start: typing.Optional[dt.datetime] = None,
         end: typing.Optional[dt.datetime] = None,
@@ -50,7 +50,7 @@ class RequestsClient:
 
         Parameters
         ----------
-        project_id : typing.Optional[str]
+        project_id : str
             The unique identifier of the project
 
         start : typing.Optional[dt.datetime]
@@ -93,8 +93,6 @@ class RequestsClient:
 
         Examples
         --------
-        import datetime
-
         from deepgram import DeepgramClient
 
         client = DeepgramClient(
@@ -102,20 +100,8 @@ class RequestsClient:
         )
         client.manage.v1.projects.requests.list(
             project_id="123456-7890-1234-5678-901234",
-            start=datetime.datetime.fromisoformat(
-                "2024-01-15 09:30:00+00:00",
-            ),
-            end=datetime.datetime.fromisoformat(
-                "2024-01-15 09:30:00+00:00",
-            ),
-            limit=1,
-            page=1,
             accessor="12345678-1234-1234-1234-123456789012",
             request_id="12345678-1234-1234-1234-123456789012",
-            deployment="hosted",
-            endpoint="listen",
-            method="sync",
-            status="succeeded",
         )
         """
         _response = self._raw_client.list(
@@ -135,21 +121,17 @@ class RequestsClient:
         return _response.data
 
     def get(
-        self,
-        project_id: typing.Optional[str],
-        request_id: typing.Optional[str],
-        *,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, project_id: str, request_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> GetProjectRequestV1Response:
         """
         Retrieves a specific request for a specific project
 
         Parameters
         ----------
-        project_id : typing.Optional[str]
+        project_id : str
             The unique identifier of the project
 
-        request_id : typing.Optional[str]
+        request_id : str
             The unique identifier of the request
 
         request_options : typing.Optional[RequestOptions]
@@ -193,7 +175,7 @@ class AsyncRequestsClient:
 
     async def list(
         self,
-        project_id: typing.Optional[str],
+        project_id: str,
         *,
         start: typing.Optional[dt.datetime] = None,
         end: typing.Optional[dt.datetime] = None,
@@ -212,7 +194,7 @@ class AsyncRequestsClient:
 
         Parameters
         ----------
-        project_id : typing.Optional[str]
+        project_id : str
             The unique identifier of the project
 
         start : typing.Optional[dt.datetime]
@@ -256,7 +238,6 @@ class AsyncRequestsClient:
         Examples
         --------
         import asyncio
-        import datetime
 
         from deepgram import AsyncDeepgramClient
 
@@ -268,20 +249,8 @@ class AsyncRequestsClient:
         async def main() -> None:
             await client.manage.v1.projects.requests.list(
                 project_id="123456-7890-1234-5678-901234",
-                start=datetime.datetime.fromisoformat(
-                    "2024-01-15 09:30:00+00:00",
-                ),
-                end=datetime.datetime.fromisoformat(
-                    "2024-01-15 09:30:00+00:00",
-                ),
-                limit=1,
-                page=1,
                 accessor="12345678-1234-1234-1234-123456789012",
                 request_id="12345678-1234-1234-1234-123456789012",
-                deployment="hosted",
-                endpoint="listen",
-                method="sync",
-                status="succeeded",
             )
 
 
@@ -304,21 +273,17 @@ class AsyncRequestsClient:
         return _response.data
 
     async def get(
-        self,
-        project_id: typing.Optional[str],
-        request_id: typing.Optional[str],
-        *,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, project_id: str, request_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> GetProjectRequestV1Response:
         """
         Retrieves a specific request for a specific project
 
         Parameters
         ----------
-        project_id : typing.Optional[str]
+        project_id : str
             The unique identifier of the project
 
-        request_id : typing.Optional[str]
+        request_id : str
             The unique identifier of the request
 
         request_options : typing.Optional[RequestOptions]

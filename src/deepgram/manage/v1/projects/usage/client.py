@@ -37,7 +37,7 @@ class UsageClient:
 
     def get(
         self,
-        project_id: typing.Optional[str],
+        project_id: str,
         *,
         start: typing.Optional[str] = None,
         end: typing.Optional[str] = None,
@@ -90,7 +90,7 @@ class UsageClient:
 
         Parameters
         ----------
-        project_id : typing.Optional[str]
+        project_id : str
             The unique identifier of the project
 
         start : typing.Optional[str]
@@ -242,50 +242,10 @@ class UsageClient:
         )
         client.manage.v1.projects.usage.get(
             project_id="123456-7890-1234-5678-901234",
-            start="start",
-            end="end",
             accessor="12345678-1234-1234-1234-123456789012",
-            alternatives=True,
-            callback_method=True,
-            callback=True,
-            channels=True,
-            custom_intent_mode=True,
-            custom_intent=True,
-            custom_topic_mode=True,
-            custom_topic=True,
-            deployment="hosted",
-            detect_entities=True,
-            detect_language=True,
-            diarize=True,
-            dictation=True,
-            encoding=True,
-            endpoint="listen",
-            extra=True,
-            filler_words=True,
-            intents=True,
-            keyterm=True,
-            keywords=True,
-            language=True,
-            measurements=True,
-            method="sync",
             model="6f548761-c9c0-429a-9315-11a1d28499c8",
-            multichannel=True,
-            numerals=True,
-            paragraphs=True,
-            profanity_filter=True,
-            punctuate=True,
-            redact=True,
-            replace=True,
             sample_rate=True,
-            search=True,
-            sentiment=True,
-            smart_format=True,
-            summarize=True,
             tag="tag1",
-            topics=True,
-            utt_split=True,
-            utterances=True,
-            version=True,
         )
         """
         _response = self._raw_client.get(
@@ -375,7 +335,7 @@ class AsyncUsageClient:
 
     async def get(
         self,
-        project_id: typing.Optional[str],
+        project_id: str,
         *,
         start: typing.Optional[str] = None,
         end: typing.Optional[str] = None,
@@ -428,7 +388,7 @@ class AsyncUsageClient:
 
         Parameters
         ----------
-        project_id : typing.Optional[str]
+        project_id : str
             The unique identifier of the project
 
         start : typing.Optional[str]
@@ -585,50 +545,10 @@ class AsyncUsageClient:
         async def main() -> None:
             await client.manage.v1.projects.usage.get(
                 project_id="123456-7890-1234-5678-901234",
-                start="start",
-                end="end",
                 accessor="12345678-1234-1234-1234-123456789012",
-                alternatives=True,
-                callback_method=True,
-                callback=True,
-                channels=True,
-                custom_intent_mode=True,
-                custom_intent=True,
-                custom_topic_mode=True,
-                custom_topic=True,
-                deployment="hosted",
-                detect_entities=True,
-                detect_language=True,
-                diarize=True,
-                dictation=True,
-                encoding=True,
-                endpoint="listen",
-                extra=True,
-                filler_words=True,
-                intents=True,
-                keyterm=True,
-                keywords=True,
-                language=True,
-                measurements=True,
-                method="sync",
                 model="6f548761-c9c0-429a-9315-11a1d28499c8",
-                multichannel=True,
-                numerals=True,
-                paragraphs=True,
-                profanity_filter=True,
-                punctuate=True,
-                redact=True,
-                replace=True,
                 sample_rate=True,
-                search=True,
-                sentiment=True,
-                smart_format=True,
-                summarize=True,
                 tag="tag1",
-                topics=True,
-                utt_split=True,
-                utterances=True,
-                version=True,
             )
 
 

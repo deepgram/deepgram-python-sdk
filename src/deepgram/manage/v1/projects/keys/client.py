@@ -27,7 +27,7 @@ class KeysClient:
 
     def list(
         self,
-        project_id: typing.Optional[str],
+        project_id: str,
         *,
         status: typing.Optional[KeysListRequestStatus] = None,
         request_options: typing.Optional[RequestOptions] = None,
@@ -37,7 +37,7 @@ class KeysClient:
 
         Parameters
         ----------
-        project_id : typing.Optional[str]
+        project_id : str
             The unique identifier of the project
 
         status : typing.Optional[KeysListRequestStatus]
@@ -60,28 +60,23 @@ class KeysClient:
         )
         client.manage.v1.projects.keys.list(
             project_id="123456-7890-1234-5678-901234",
-            status="active",
         )
         """
         _response = self._raw_client.list(project_id, status=status, request_options=request_options)
         return _response.data
 
     def get(
-        self,
-        project_id: typing.Optional[str],
-        key_id: typing.Optional[str],
-        *,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, project_id: str, key_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> GetProjectKeyV1Response:
         """
         Retrieves information about a specified API key
 
         Parameters
         ----------
-        project_id : typing.Optional[str]
+        project_id : str
             The unique identifier of the project
 
-        key_id : typing.Optional[str]
+        key_id : str
             The unique identifier of the API key
 
         request_options : typing.Optional[RequestOptions]
@@ -125,7 +120,7 @@ class AsyncKeysClient:
 
     async def list(
         self,
-        project_id: typing.Optional[str],
+        project_id: str,
         *,
         status: typing.Optional[KeysListRequestStatus] = None,
         request_options: typing.Optional[RequestOptions] = None,
@@ -135,7 +130,7 @@ class AsyncKeysClient:
 
         Parameters
         ----------
-        project_id : typing.Optional[str]
+        project_id : str
             The unique identifier of the project
 
         status : typing.Optional[KeysListRequestStatus]
@@ -163,7 +158,6 @@ class AsyncKeysClient:
         async def main() -> None:
             await client.manage.v1.projects.keys.list(
                 project_id="123456-7890-1234-5678-901234",
-                status="active",
             )
 
 
@@ -173,21 +167,17 @@ class AsyncKeysClient:
         return _response.data
 
     async def get(
-        self,
-        project_id: typing.Optional[str],
-        key_id: typing.Optional[str],
-        *,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, project_id: str, key_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> GetProjectKeyV1Response:
         """
         Retrieves information about a specified API key
 
         Parameters
         ----------
-        project_id : typing.Optional[str]
+        project_id : str
             The unique identifier of the project
 
-        key_id : typing.Optional[str]
+        key_id : str
             The unique identifier of the API key
 
         request_options : typing.Optional[RequestOptions]

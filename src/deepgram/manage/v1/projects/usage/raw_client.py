@@ -23,7 +23,7 @@ class RawUsageClient:
 
     def get(
         self,
-        project_id: typing.Optional[str],
+        project_id: str,
         *,
         start: typing.Optional[str] = None,
         end: typing.Optional[str] = None,
@@ -76,7 +76,7 @@ class RawUsageClient:
 
         Parameters
         ----------
-        project_id : typing.Optional[str]
+        project_id : str
             The unique identifier of the project
 
         start : typing.Optional[str]
@@ -304,7 +304,7 @@ class AsyncRawUsageClient:
 
     async def get(
         self,
-        project_id: typing.Optional[str],
+        project_id: str,
         *,
         start: typing.Optional[str] = None,
         end: typing.Optional[str] = None,
@@ -357,7 +357,7 @@ class AsyncRawUsageClient:
 
         Parameters
         ----------
-        project_id : typing.Optional[str]
+        project_id : str
             The unique identifier of the project
 
         start : typing.Optional[str]

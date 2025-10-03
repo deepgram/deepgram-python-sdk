@@ -22,7 +22,7 @@ class RawKeysClient:
 
     def list(
         self,
-        project_id: typing.Optional[str],
+        project_id: str,
         *,
         status: typing.Optional[KeysListRequestStatus] = None,
         request_options: typing.Optional[RequestOptions] = None,
@@ -32,7 +32,7 @@ class RawKeysClient:
 
         Parameters
         ----------
-        project_id : typing.Optional[str]
+        project_id : str
             The unique identifier of the project
 
         status : typing.Optional[KeysListRequestStatus]
@@ -82,21 +82,17 @@ class RawKeysClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def get(
-        self,
-        project_id: typing.Optional[str],
-        key_id: typing.Optional[str],
-        *,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, project_id: str, key_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[GetProjectKeyV1Response]:
         """
         Retrieves information about a specified API key
 
         Parameters
         ----------
-        project_id : typing.Optional[str]
+        project_id : str
             The unique identifier of the project
 
-        key_id : typing.Optional[str]
+        key_id : str
             The unique identifier of the API key
 
         request_options : typing.Optional[RequestOptions]
@@ -146,7 +142,7 @@ class AsyncRawKeysClient:
 
     async def list(
         self,
-        project_id: typing.Optional[str],
+        project_id: str,
         *,
         status: typing.Optional[KeysListRequestStatus] = None,
         request_options: typing.Optional[RequestOptions] = None,
@@ -156,7 +152,7 @@ class AsyncRawKeysClient:
 
         Parameters
         ----------
-        project_id : typing.Optional[str]
+        project_id : str
             The unique identifier of the project
 
         status : typing.Optional[KeysListRequestStatus]
@@ -206,21 +202,17 @@ class AsyncRawKeysClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def get(
-        self,
-        project_id: typing.Optional[str],
-        key_id: typing.Optional[str],
-        *,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, project_id: str, key_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[GetProjectKeyV1Response]:
         """
         Retrieves information about a specified API key
 
         Parameters
         ----------
-        project_id : typing.Optional[str]
+        project_id : str
             The unique identifier of the project
 
-        key_id : typing.Optional[str]
+        key_id : str
             The unique identifier of the API key
 
         request_options : typing.Optional[RequestOptions]

@@ -25,14 +25,14 @@ class BalancesClient:
         return self._raw_client
 
     def list(
-        self, project_id: typing.Optional[str], *, request_options: typing.Optional[RequestOptions] = None
+        self, project_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> ListProjectBalancesV1Response:
         """
         Generates a list of outstanding balances for the specified project
 
         Parameters
         ----------
-        project_id : typing.Optional[str]
+        project_id : str
             The unique identifier of the project
 
         request_options : typing.Optional[RequestOptions]
@@ -58,21 +58,17 @@ class BalancesClient:
         return _response.data
 
     def get(
-        self,
-        project_id: typing.Optional[str],
-        balance_id: typing.Optional[str],
-        *,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, project_id: str, balance_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> GetProjectBalanceV1Response:
         """
         Retrieves details about the specified balance
 
         Parameters
         ----------
-        project_id : typing.Optional[str]
+        project_id : str
             The unique identifier of the project
 
-        balance_id : typing.Optional[str]
+        balance_id : str
             The unique identifier of the balance
 
         request_options : typing.Optional[RequestOptions]
@@ -115,14 +111,14 @@ class AsyncBalancesClient:
         return self._raw_client
 
     async def list(
-        self, project_id: typing.Optional[str], *, request_options: typing.Optional[RequestOptions] = None
+        self, project_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> ListProjectBalancesV1Response:
         """
         Generates a list of outstanding balances for the specified project
 
         Parameters
         ----------
-        project_id : typing.Optional[str]
+        project_id : str
             The unique identifier of the project
 
         request_options : typing.Optional[RequestOptions]
@@ -156,21 +152,17 @@ class AsyncBalancesClient:
         return _response.data
 
     async def get(
-        self,
-        project_id: typing.Optional[str],
-        balance_id: typing.Optional[str],
-        *,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, project_id: str, balance_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> GetProjectBalanceV1Response:
         """
         Retrieves details about the specified balance
 
         Parameters
         ----------
-        project_id : typing.Optional[str]
+        project_id : str
             The unique identifier of the project
 
-        balance_id : typing.Optional[str]
+        balance_id : str
             The unique identifier of the balance
 
         request_options : typing.Optional[RequestOptions]

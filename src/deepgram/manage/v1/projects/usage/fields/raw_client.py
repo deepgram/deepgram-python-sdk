@@ -20,7 +20,7 @@ class RawFieldsClient:
 
     def list(
         self,
-        project_id: typing.Optional[str],
+        project_id: str,
         *,
         start: typing.Optional[str] = None,
         end: typing.Optional[str] = None,
@@ -31,7 +31,7 @@ class RawFieldsClient:
 
         Parameters
         ----------
-        project_id : typing.Optional[str]
+        project_id : str
             The unique identifier of the project
 
         start : typing.Optional[str]
@@ -91,7 +91,7 @@ class AsyncRawFieldsClient:
 
     async def list(
         self,
-        project_id: typing.Optional[str],
+        project_id: str,
         *,
         start: typing.Optional[str] = None,
         end: typing.Optional[str] = None,
@@ -102,7 +102,7 @@ class AsyncRawFieldsClient:
 
         Parameters
         ----------
-        project_id : typing.Optional[str]
+        project_id : str
             The unique identifier of the project
 
         start : typing.Optional[str]

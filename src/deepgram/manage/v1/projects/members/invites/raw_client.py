@@ -24,14 +24,14 @@ class RawInvitesClient:
         self._client_wrapper = client_wrapper
 
     def list(
-        self, project_id: typing.Optional[str], *, request_options: typing.Optional[RequestOptions] = None
+        self, project_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[ListProjectInvitesV1Response]:
         """
         Generates a list of invites for a specific project
 
         Parameters
         ----------
-        project_id : typing.Optional[str]
+        project_id : str
             The unique identifier of the project
 
         request_options : typing.Optional[RequestOptions]
@@ -75,19 +75,14 @@ class RawInvitesClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def create(
-        self,
-        project_id: typing.Optional[str],
-        *,
-        email: str,
-        scope: str,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, project_id: str, *, email: str, scope: str, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[CreateProjectInviteV1Response]:
         """
         Generates an invite for a specific project
 
         Parameters
         ----------
-        project_id : typing.Optional[str]
+        project_id : str
             The unique identifier of the project
 
         email : str
@@ -145,21 +140,17 @@ class RawInvitesClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def delete(
-        self,
-        project_id: typing.Optional[str],
-        email: typing.Optional[str],
-        *,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, project_id: str, email: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[DeleteProjectInviteV1Response]:
         """
         Deletes an invite for a specific project
 
         Parameters
         ----------
-        project_id : typing.Optional[str]
+        project_id : str
             The unique identifier of the project
 
-        email : typing.Optional[str]
+        email : str
             The email address of the member
 
         request_options : typing.Optional[RequestOptions]
@@ -208,14 +199,14 @@ class AsyncRawInvitesClient:
         self._client_wrapper = client_wrapper
 
     async def list(
-        self, project_id: typing.Optional[str], *, request_options: typing.Optional[RequestOptions] = None
+        self, project_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[ListProjectInvitesV1Response]:
         """
         Generates a list of invites for a specific project
 
         Parameters
         ----------
-        project_id : typing.Optional[str]
+        project_id : str
             The unique identifier of the project
 
         request_options : typing.Optional[RequestOptions]
@@ -259,19 +250,14 @@ class AsyncRawInvitesClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def create(
-        self,
-        project_id: typing.Optional[str],
-        *,
-        email: str,
-        scope: str,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, project_id: str, *, email: str, scope: str, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[CreateProjectInviteV1Response]:
         """
         Generates an invite for a specific project
 
         Parameters
         ----------
-        project_id : typing.Optional[str]
+        project_id : str
             The unique identifier of the project
 
         email : str
@@ -329,21 +315,17 @@ class AsyncRawInvitesClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def delete(
-        self,
-        project_id: typing.Optional[str],
-        email: typing.Optional[str],
-        *,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, project_id: str, email: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[DeleteProjectInviteV1Response]:
         """
         Deletes an invite for a specific project
 
         Parameters
         ----------
-        project_id : typing.Optional[str]
+        project_id : str
             The unique identifier of the project
 
-        email : typing.Optional[str]
+        email : str
             The email address of the member
 
         request_options : typing.Optional[RequestOptions]

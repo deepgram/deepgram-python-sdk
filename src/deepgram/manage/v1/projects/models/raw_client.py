@@ -21,7 +21,7 @@ class RawModelsClient:
 
     def list(
         self,
-        project_id: typing.Optional[str],
+        project_id: str,
         *,
         include_outdated: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
@@ -31,7 +31,7 @@ class RawModelsClient:
 
         Parameters
         ----------
-        project_id : typing.Optional[str]
+        project_id : str
             The unique identifier of the project
 
         include_outdated : typing.Optional[bool]
@@ -81,21 +81,17 @@ class RawModelsClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def get(
-        self,
-        project_id: typing.Optional[str],
-        model_id: typing.Optional[str],
-        *,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, project_id: str, model_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[GetModelV1Response]:
         """
         Returns metadata for a specific model
 
         Parameters
         ----------
-        project_id : typing.Optional[str]
+        project_id : str
             The unique identifier of the project
 
-        model_id : typing.Optional[str]
+        model_id : str
             The specific UUID of the model
 
         request_options : typing.Optional[RequestOptions]
@@ -145,7 +141,7 @@ class AsyncRawModelsClient:
 
     async def list(
         self,
-        project_id: typing.Optional[str],
+        project_id: str,
         *,
         include_outdated: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
@@ -155,7 +151,7 @@ class AsyncRawModelsClient:
 
         Parameters
         ----------
-        project_id : typing.Optional[str]
+        project_id : str
             The unique identifier of the project
 
         include_outdated : typing.Optional[bool]
@@ -205,21 +201,17 @@ class AsyncRawModelsClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def get(
-        self,
-        project_id: typing.Optional[str],
-        model_id: typing.Optional[str],
-        *,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, project_id: str, model_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[GetModelV1Response]:
         """
         Returns metadata for a specific model
 
         Parameters
         ----------
-        project_id : typing.Optional[str]
+        project_id : str
             The unique identifier of the project
 
-        model_id : typing.Optional[str]
+        model_id : str
             The specific UUID of the model
 
         request_options : typing.Optional[RequestOptions]

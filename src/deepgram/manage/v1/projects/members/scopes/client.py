@@ -24,21 +24,17 @@ class ScopesClient:
         return self._raw_client
 
     def list(
-        self,
-        project_id: typing.Optional[str],
-        member_id: typing.Optional[str],
-        *,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, project_id: str, member_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> ListProjectMemberScopesV1Response:
         """
         Retrieves a list of scopes for a specific member
 
         Parameters
         ----------
-        project_id : typing.Optional[str]
+        project_id : str
             The unique identifier of the project
 
-        member_id : typing.Optional[str]
+        member_id : str
             The unique identifier of the Member
 
         request_options : typing.Optional[RequestOptions]
@@ -81,21 +77,17 @@ class AsyncScopesClient:
         return self._raw_client
 
     async def list(
-        self,
-        project_id: typing.Optional[str],
-        member_id: typing.Optional[str],
-        *,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, project_id: str, member_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> ListProjectMemberScopesV1Response:
         """
         Retrieves a list of scopes for a specific member
 
         Parameters
         ----------
-        project_id : typing.Optional[str]
+        project_id : str
             The unique identifier of the project
 
-        member_id : typing.Optional[str]
+        member_id : str
             The unique identifier of the Member
 
         request_options : typing.Optional[RequestOptions]

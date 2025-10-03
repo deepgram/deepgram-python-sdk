@@ -72,7 +72,7 @@ class ProjectsClient:
 
     def get(
         self,
-        project_id: typing.Optional[str],
+        project_id: str,
         *,
         limit: typing.Optional[int] = None,
         page: typing.Optional[int] = None,
@@ -83,7 +83,7 @@ class ProjectsClient:
 
         Parameters
         ----------
-        project_id : typing.Optional[str]
+        project_id : str
             The unique identifier of the project
 
         limit : typing.Optional[int]
@@ -109,22 +109,20 @@ class ProjectsClient:
         )
         client.manage.v1.projects.get(
             project_id="123456-7890-1234-5678-901234",
-            limit=1,
-            page=1,
         )
         """
         _response = self._raw_client.get(project_id, limit=limit, page=page, request_options=request_options)
         return _response.data
 
     def leave(
-        self, project_id: typing.Optional[str], *, request_options: typing.Optional[RequestOptions] = None
+        self, project_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> LeaveProjectV1Response:
         """
         Removes the authenticated account from the specific project
 
         Parameters
         ----------
-        project_id : typing.Optional[str]
+        project_id : str
             The unique identifier of the project
 
         request_options : typing.Optional[RequestOptions]
@@ -265,7 +263,7 @@ class AsyncProjectsClient:
 
     async def get(
         self,
-        project_id: typing.Optional[str],
+        project_id: str,
         *,
         limit: typing.Optional[int] = None,
         page: typing.Optional[int] = None,
@@ -276,7 +274,7 @@ class AsyncProjectsClient:
 
         Parameters
         ----------
-        project_id : typing.Optional[str]
+        project_id : str
             The unique identifier of the project
 
         limit : typing.Optional[int]
@@ -307,8 +305,6 @@ class AsyncProjectsClient:
         async def main() -> None:
             await client.manage.v1.projects.get(
                 project_id="123456-7890-1234-5678-901234",
-                limit=1,
-                page=1,
             )
 
 
@@ -318,14 +314,14 @@ class AsyncProjectsClient:
         return _response.data
 
     async def leave(
-        self, project_id: typing.Optional[str], *, request_options: typing.Optional[RequestOptions] = None
+        self, project_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> LeaveProjectV1Response:
         """
         Removes the authenticated account from the specific project
 
         Parameters
         ----------
-        project_id : typing.Optional[str]
+        project_id : str
             The unique identifier of the project
 
         request_options : typing.Optional[RequestOptions]

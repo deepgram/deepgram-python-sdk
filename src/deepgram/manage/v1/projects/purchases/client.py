@@ -25,7 +25,7 @@ class PurchasesClient:
 
     def list(
         self,
-        project_id: typing.Optional[str],
+        project_id: str,
         *,
         limit: typing.Optional[int] = None,
         request_options: typing.Optional[RequestOptions] = None,
@@ -35,7 +35,7 @@ class PurchasesClient:
 
         Parameters
         ----------
-        project_id : typing.Optional[str]
+        project_id : str
             The unique identifier of the project
 
         limit : typing.Optional[int]
@@ -58,7 +58,6 @@ class PurchasesClient:
         )
         client.manage.v1.projects.purchases.list(
             project_id="123456-7890-1234-5678-901234",
-            limit=1,
         )
         """
         _response = self._raw_client.list(project_id, limit=limit, request_options=request_options)
@@ -82,7 +81,7 @@ class AsyncPurchasesClient:
 
     async def list(
         self,
-        project_id: typing.Optional[str],
+        project_id: str,
         *,
         limit: typing.Optional[int] = None,
         request_options: typing.Optional[RequestOptions] = None,
@@ -92,7 +91,7 @@ class AsyncPurchasesClient:
 
         Parameters
         ----------
-        project_id : typing.Optional[str]
+        project_id : str
             The unique identifier of the project
 
         limit : typing.Optional[int]
@@ -120,7 +119,6 @@ class AsyncPurchasesClient:
         async def main() -> None:
             await client.manage.v1.projects.purchases.list(
                 project_id="123456-7890-1234-5678-901234",
-                limit=1,
             )
 
 

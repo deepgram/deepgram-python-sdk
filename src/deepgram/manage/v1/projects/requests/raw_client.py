@@ -27,7 +27,7 @@ class RawRequestsClient:
 
     def list(
         self,
-        project_id: typing.Optional[str],
+        project_id: str,
         *,
         start: typing.Optional[dt.datetime] = None,
         end: typing.Optional[dt.datetime] = None,
@@ -46,7 +46,7 @@ class RawRequestsClient:
 
         Parameters
         ----------
-        project_id : typing.Optional[str]
+        project_id : str
             The unique identifier of the project
 
         start : typing.Optional[dt.datetime]
@@ -132,21 +132,17 @@ class RawRequestsClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def get(
-        self,
-        project_id: typing.Optional[str],
-        request_id: typing.Optional[str],
-        *,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, project_id: str, request_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[GetProjectRequestV1Response]:
         """
         Retrieves a specific request for a specific project
 
         Parameters
         ----------
-        project_id : typing.Optional[str]
+        project_id : str
             The unique identifier of the project
 
-        request_id : typing.Optional[str]
+        request_id : str
             The unique identifier of the request
 
         request_options : typing.Optional[RequestOptions]
@@ -196,7 +192,7 @@ class AsyncRawRequestsClient:
 
     async def list(
         self,
-        project_id: typing.Optional[str],
+        project_id: str,
         *,
         start: typing.Optional[dt.datetime] = None,
         end: typing.Optional[dt.datetime] = None,
@@ -215,7 +211,7 @@ class AsyncRawRequestsClient:
 
         Parameters
         ----------
-        project_id : typing.Optional[str]
+        project_id : str
             The unique identifier of the project
 
         start : typing.Optional[dt.datetime]
@@ -301,21 +297,17 @@ class AsyncRawRequestsClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def get(
-        self,
-        project_id: typing.Optional[str],
-        request_id: typing.Optional[str],
-        *,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, project_id: str, request_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[GetProjectRequestV1Response]:
         """
         Retrieves a specific request for a specific project
 
         Parameters
         ----------
-        project_id : typing.Optional[str]
+        project_id : str
             The unique identifier of the project
 
-        request_id : typing.Optional[str]
+        request_id : str
             The unique identifier of the request
 
         request_options : typing.Optional[RequestOptions]

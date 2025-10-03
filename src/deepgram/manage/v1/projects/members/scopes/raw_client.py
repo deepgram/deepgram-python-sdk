@@ -19,21 +19,17 @@ class RawScopesClient:
         self._client_wrapper = client_wrapper
 
     def list(
-        self,
-        project_id: typing.Optional[str],
-        member_id: typing.Optional[str],
-        *,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, project_id: str, member_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[ListProjectMemberScopesV1Response]:
         """
         Retrieves a list of scopes for a specific member
 
         Parameters
         ----------
-        project_id : typing.Optional[str]
+        project_id : str
             The unique identifier of the project
 
-        member_id : typing.Optional[str]
+        member_id : str
             The unique identifier of the Member
 
         request_options : typing.Optional[RequestOptions]
@@ -82,21 +78,17 @@ class AsyncRawScopesClient:
         self._client_wrapper = client_wrapper
 
     async def list(
-        self,
-        project_id: typing.Optional[str],
-        member_id: typing.Optional[str],
-        *,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, project_id: str, member_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[ListProjectMemberScopesV1Response]:
         """
         Retrieves a list of scopes for a specific member
 
         Parameters
         ----------
-        project_id : typing.Optional[str]
+        project_id : str
             The unique identifier of the project
 
-        member_id : typing.Optional[str]
+        member_id : str
             The unique identifier of the Member
 
         request_options : typing.Optional[RequestOptions]

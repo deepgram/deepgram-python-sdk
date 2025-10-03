@@ -30,14 +30,14 @@ class DistributionCredentialsClient:
         return self._raw_client
 
     def list(
-        self, project_id: typing.Optional[str], *, request_options: typing.Optional[RequestOptions] = None
+        self, project_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> ListProjectDistributionCredentialsV1Response:
         """
         Lists sets of distribution credentials for the specified project
 
         Parameters
         ----------
-        project_id : typing.Optional[str]
+        project_id : str
             The unique identifier of the project
 
         request_options : typing.Optional[RequestOptions]
@@ -64,7 +64,7 @@ class DistributionCredentialsClient:
 
     def create(
         self,
-        project_id: typing.Optional[str],
+        project_id: str,
         *,
         scopes: typing.Optional[
             typing.Union[
@@ -81,7 +81,7 @@ class DistributionCredentialsClient:
 
         Parameters
         ----------
-        project_id : typing.Optional[str]
+        project_id : str
             The unique identifier of the project
 
         scopes : typing.Optional[typing.Union[DistributionCredentialsCreateRequestScopesItem, typing.Sequence[DistributionCredentialsCreateRequestScopesItem]]]
@@ -119,7 +119,7 @@ class DistributionCredentialsClient:
 
     def get(
         self,
-        project_id: typing.Optional[str],
+        project_id: str,
         distribution_credentials_id: str,
         *,
         request_options: typing.Optional[RequestOptions] = None,
@@ -129,7 +129,7 @@ class DistributionCredentialsClient:
 
         Parameters
         ----------
-        project_id : typing.Optional[str]
+        project_id : str
             The unique identifier of the project
 
         distribution_credentials_id : str
@@ -160,7 +160,7 @@ class DistributionCredentialsClient:
 
     def delete(
         self,
-        project_id: typing.Optional[str],
+        project_id: str,
         distribution_credentials_id: str,
         *,
         request_options: typing.Optional[RequestOptions] = None,
@@ -170,7 +170,7 @@ class DistributionCredentialsClient:
 
         Parameters
         ----------
-        project_id : typing.Optional[str]
+        project_id : str
             The unique identifier of the project
 
         distribution_credentials_id : str
@@ -216,14 +216,14 @@ class AsyncDistributionCredentialsClient:
         return self._raw_client
 
     async def list(
-        self, project_id: typing.Optional[str], *, request_options: typing.Optional[RequestOptions] = None
+        self, project_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> ListProjectDistributionCredentialsV1Response:
         """
         Lists sets of distribution credentials for the specified project
 
         Parameters
         ----------
-        project_id : typing.Optional[str]
+        project_id : str
             The unique identifier of the project
 
         request_options : typing.Optional[RequestOptions]
@@ -258,7 +258,7 @@ class AsyncDistributionCredentialsClient:
 
     async def create(
         self,
-        project_id: typing.Optional[str],
+        project_id: str,
         *,
         scopes: typing.Optional[
             typing.Union[
@@ -275,7 +275,7 @@ class AsyncDistributionCredentialsClient:
 
         Parameters
         ----------
-        project_id : typing.Optional[str]
+        project_id : str
             The unique identifier of the project
 
         scopes : typing.Optional[typing.Union[DistributionCredentialsCreateRequestScopesItem, typing.Sequence[DistributionCredentialsCreateRequestScopesItem]]]
@@ -321,7 +321,7 @@ class AsyncDistributionCredentialsClient:
 
     async def get(
         self,
-        project_id: typing.Optional[str],
+        project_id: str,
         distribution_credentials_id: str,
         *,
         request_options: typing.Optional[RequestOptions] = None,
@@ -331,7 +331,7 @@ class AsyncDistributionCredentialsClient:
 
         Parameters
         ----------
-        project_id : typing.Optional[str]
+        project_id : str
             The unique identifier of the project
 
         distribution_credentials_id : str
@@ -370,7 +370,7 @@ class AsyncDistributionCredentialsClient:
 
     async def delete(
         self,
-        project_id: typing.Optional[str],
+        project_id: str,
         distribution_credentials_id: str,
         *,
         request_options: typing.Optional[RequestOptions] = None,
@@ -380,7 +380,7 @@ class AsyncDistributionCredentialsClient:
 
         Parameters
         ----------
-        project_id : typing.Optional[str]
+        project_id : str
             The unique identifier of the project
 
         distribution_credentials_id : str
