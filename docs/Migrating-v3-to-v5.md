@@ -257,8 +257,11 @@ with client.listen.v1.connect(model="nova-3") as connection:
     connection.on(EventType.ERROR, lambda error: print(f"Error: {error}"))
 
     connection.start_listening()
-    # Send audio data (as raw bytes)
-    connection.send_media(audio_bytes)
+
+    # Read and send audio data
+    with open("path/to/your/audio.wav", "rb") as audio_file:
+        audio_bytes = audio_file.read()
+        connection.send_media(audio_bytes)
 
 ```
 
