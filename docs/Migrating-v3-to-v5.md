@@ -261,7 +261,8 @@ with client.listen.v1.connect(model="nova-3") as connection:
     # Read and send audio data
     with open("path/to/your/audio.wav", "rb") as audio_file:
         audio_bytes = audio_file.read()
-        connection.send_media(audio_bytes)
+        from deepgram.extensions.types.sockets import ListenV1MediaMessage
+        connection.send_media(ListenV1MediaMessage(audio_bytes))
 
 ```
 

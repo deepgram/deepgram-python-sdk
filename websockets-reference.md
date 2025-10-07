@@ -53,7 +53,7 @@ with client.listen.v1.connect(model="nova-3") as connection:
 
     # Send audio data
     from deepgram.extensions.types.sockets import ListenV1MediaMessage
-    connection.send_media(ListenV1MediaMessage(data=audio_bytes))
+    connection.send_media(ListenV1MediaMessage(audio_bytes))
 
     # Send control messages
     from deepgram.extensions.types.sockets import ListenV1ControlMessage
@@ -100,7 +100,7 @@ async def main():
 
         # Send audio data
         from deepgram.extensions.types.sockets import ListenV1MediaMessage
-        await connection.send_media(ListenV1MediaMessage(data=audio_bytes))
+        await connection.send_media(ListenV1MediaMessage(audio_bytes))
 
         # Send control messages
         from deepgram.extensions.types.sockets import ListenV1ControlMessage
@@ -125,7 +125,7 @@ asyncio.run(main())
 
 **`send_media(message)`** — Send binary audio data for transcription
 
-- `ListenV1MediaMessage(data=audio_bytes)`
+- `ListenV1MediaMessage(audio_bytes)`
 
 </dd>
 </dl>
