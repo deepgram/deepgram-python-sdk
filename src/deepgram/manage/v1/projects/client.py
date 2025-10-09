@@ -6,9 +6,11 @@ import typing
 
 from ....core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ....core.request_options import RequestOptions
+from ....types.delete_project_v1response import DeleteProjectV1Response
 from ....types.get_project_v1response import GetProjectV1Response
 from ....types.leave_project_v1response import LeaveProjectV1Response
 from ....types.list_projects_v1response import ListProjectsV1Response
+from ....types.update_project_v1response import UpdateProjectV1Response
 from .raw_client import AsyncRawProjectsClient, RawProjectsClient
 
 if typing.TYPE_CHECKING:
@@ -19,6 +21,8 @@ if typing.TYPE_CHECKING:
     from .purchases.client import AsyncPurchasesClient, PurchasesClient
     from .requests.client import AsyncRequestsClient, RequestsClient
     from .usage.client import AsyncUsageClient, UsageClient
+# this is used as the default value for optional parameters
+OMIT = typing.cast(typing.Any, ...)
 
 
 class ProjectsClient:
@@ -72,7 +76,7 @@ class ProjectsClient:
 
     def get(
         self,
-        project_id: typing.Optional[str],
+        project_id: str,
         *,
         limit: typing.Optional[int] = None,
         page: typing.Optional[int] = None,
@@ -83,7 +87,7 @@ class ProjectsClient:
 
         Parameters
         ----------
-        project_id : typing.Optional[str]
+        project_id : str
             The unique identifier of the project
 
         limit : typing.Optional[int]
@@ -109,22 +113,93 @@ class ProjectsClient:
         )
         client.manage.v1.projects.get(
             project_id="123456-7890-1234-5678-901234",
-            limit=1,
-            page=1,
         )
         """
         _response = self._raw_client.get(project_id, limit=limit, page=page, request_options=request_options)
         return _response.data
 
+    def delete(
+        self, project_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> DeleteProjectV1Response:
+        """
+        Deletes the specified project
+
+        Parameters
+        ----------
+        project_id : str
+            The unique identifier of the project
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        DeleteProjectV1Response
+            A project
+
+        Examples
+        --------
+        from deepgram import DeepgramClient
+
+        client = DeepgramClient(
+            api_key="YOUR_API_KEY",
+        )
+        client.manage.v1.projects.delete(
+            project_id="123456-7890-1234-5678-901234",
+        )
+        """
+        _response = self._raw_client.delete(project_id, request_options=request_options)
+        return _response.data
+
+    def update(
+        self,
+        project_id: str,
+        *,
+        name: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> UpdateProjectV1Response:
+        """
+        Updates the name or other properties of an existing project
+
+        Parameters
+        ----------
+        project_id : str
+            The unique identifier of the project
+
+        name : typing.Optional[str]
+            The name of the project
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        UpdateProjectV1Response
+            A project
+
+        Examples
+        --------
+        from deepgram import DeepgramClient
+
+        client = DeepgramClient(
+            api_key="YOUR_API_KEY",
+        )
+        client.manage.v1.projects.update(
+            project_id="123456-7890-1234-5678-901234",
+        )
+        """
+        _response = self._raw_client.update(project_id, name=name, request_options=request_options)
+        return _response.data
+
     def leave(
-        self, project_id: typing.Optional[str], *, request_options: typing.Optional[RequestOptions] = None
+        self, project_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> LeaveProjectV1Response:
         """
         Removes the authenticated account from the specific project
 
         Parameters
         ----------
-        project_id : typing.Optional[str]
+        project_id : str
             The unique identifier of the project
 
         request_options : typing.Optional[RequestOptions]
@@ -265,7 +340,7 @@ class AsyncProjectsClient:
 
     async def get(
         self,
-        project_id: typing.Optional[str],
+        project_id: str,
         *,
         limit: typing.Optional[int] = None,
         page: typing.Optional[int] = None,
@@ -276,7 +351,7 @@ class AsyncProjectsClient:
 
         Parameters
         ----------
-        project_id : typing.Optional[str]
+        project_id : str
             The unique identifier of the project
 
         limit : typing.Optional[int]
@@ -307,8 +382,6 @@ class AsyncProjectsClient:
         async def main() -> None:
             await client.manage.v1.projects.get(
                 project_id="123456-7890-1234-5678-901234",
-                limit=1,
-                page=1,
             )
 
 
@@ -317,15 +390,104 @@ class AsyncProjectsClient:
         _response = await self._raw_client.get(project_id, limit=limit, page=page, request_options=request_options)
         return _response.data
 
+    async def delete(
+        self, project_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> DeleteProjectV1Response:
+        """
+        Deletes the specified project
+
+        Parameters
+        ----------
+        project_id : str
+            The unique identifier of the project
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        DeleteProjectV1Response
+            A project
+
+        Examples
+        --------
+        import asyncio
+
+        from deepgram import AsyncDeepgramClient
+
+        client = AsyncDeepgramClient(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.manage.v1.projects.delete(
+                project_id="123456-7890-1234-5678-901234",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.delete(project_id, request_options=request_options)
+        return _response.data
+
+    async def update(
+        self,
+        project_id: str,
+        *,
+        name: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> UpdateProjectV1Response:
+        """
+        Updates the name or other properties of an existing project
+
+        Parameters
+        ----------
+        project_id : str
+            The unique identifier of the project
+
+        name : typing.Optional[str]
+            The name of the project
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        UpdateProjectV1Response
+            A project
+
+        Examples
+        --------
+        import asyncio
+
+        from deepgram import AsyncDeepgramClient
+
+        client = AsyncDeepgramClient(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.manage.v1.projects.update(
+                project_id="123456-7890-1234-5678-901234",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.update(project_id, name=name, request_options=request_options)
+        return _response.data
+
     async def leave(
-        self, project_id: typing.Optional[str], *, request_options: typing.Optional[RequestOptions] = None
+        self, project_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> LeaveProjectV1Response:
         """
         Removes the authenticated account from the specific project
 
         Parameters
         ----------
-        project_id : typing.Optional[str]
+        project_id : str
             The unique identifier of the project
 
         request_options : typing.Optional[RequestOptions]

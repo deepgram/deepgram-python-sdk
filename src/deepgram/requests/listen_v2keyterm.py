@@ -2,4 +2,4 @@
 
 import typing
 
-ListenV2Keyterm = typing.Union[str, typing.List[str]]
+ListenV2KeytermParams = typing.Union[str, typing.Sequence[str]]

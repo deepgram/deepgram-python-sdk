@@ -12,6 +12,10 @@ from ......core.request_options import RequestOptions
 from ......errors.bad_request_error import BadRequestError
 from ......types.error_response import ErrorResponse
 from ......types.list_project_member_scopes_v1response import ListProjectMemberScopesV1Response
+from ......types.update_project_member_scopes_v1response import UpdateProjectMemberScopesV1Response
+
+# this is used as the default value for optional parameters
+OMIT = typing.cast(typing.Any, ...)
 
 
 class RawScopesClient:
@@ -19,21 +23,17 @@ class RawScopesClient:
         self._client_wrapper = client_wrapper
 
     def list(
-        self,
-        project_id: typing.Optional[str],
-        member_id: typing.Optional[str],
-        *,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, project_id: str, member_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[ListProjectMemberScopesV1Response]:
         """
         Retrieves a list of scopes for a specific member
 
         Parameters
         ----------
-        project_id : typing.Optional[str]
+        project_id : str
             The unique identifier of the project
 
-        member_id : typing.Optional[str]
+        member_id : str
             The unique identifier of the Member
 
         request_options : typing.Optional[RequestOptions]
@@ -76,27 +76,87 @@ class RawScopesClient:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
+    def update(
+        self, project_id: str, member_id: str, *, scope: str, request_options: typing.Optional[RequestOptions] = None
+    ) -> HttpResponse[UpdateProjectMemberScopesV1Response]:
+        """
+        Updates the scopes for a specific member
+
+        Parameters
+        ----------
+        project_id : str
+            The unique identifier of the project
+
+        member_id : str
+            The unique identifier of the Member
+
+        scope : str
+            A scope to update
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[UpdateProjectMemberScopesV1Response]
+            Updated the scopes for a specific member
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"v1/projects/{jsonable_encoder(project_id)}/members/{jsonable_encoder(member_id)}/scopes",
+            base_url=self._client_wrapper.get_environment().base,
+            method="PUT",
+            json={
+                "scope": scope,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    UpdateProjectMemberScopesV1Response,
+                    parse_obj_as(
+                        type_=UpdateProjectMemberScopesV1Response,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 400:
+                raise BadRequestError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        parse_obj_as(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
 
 class AsyncRawScopesClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
     async def list(
-        self,
-        project_id: typing.Optional[str],
-        member_id: typing.Optional[str],
-        *,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, project_id: str, member_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[ListProjectMemberScopesV1Response]:
         """
         Retrieves a list of scopes for a specific member
 
         Parameters
         ----------
-        project_id : typing.Optional[str]
+        project_id : str
             The unique identifier of the project
 
-        member_id : typing.Optional[str]
+        member_id : str
             The unique identifier of the Member
 
         request_options : typing.Optional[RequestOptions]
@@ -119,6 +179,70 @@ class AsyncRawScopesClient:
                     ListProjectMemberScopesV1Response,
                     parse_obj_as(
                         type_=ListProjectMemberScopesV1Response,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 400:
+                raise BadRequestError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        parse_obj_as(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def update(
+        self, project_id: str, member_id: str, *, scope: str, request_options: typing.Optional[RequestOptions] = None
+    ) -> AsyncHttpResponse[UpdateProjectMemberScopesV1Response]:
+        """
+        Updates the scopes for a specific member
+
+        Parameters
+        ----------
+        project_id : str
+            The unique identifier of the project
+
+        member_id : str
+            The unique identifier of the Member
+
+        scope : str
+            A scope to update
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[UpdateProjectMemberScopesV1Response]
+            Updated the scopes for a specific member
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"v1/projects/{jsonable_encoder(project_id)}/members/{jsonable_encoder(member_id)}/scopes",
+            base_url=self._client_wrapper.get_environment().base,
+            method="PUT",
+            json={
+                "scope": scope,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    UpdateProjectMemberScopesV1Response,
+                    parse_obj_as(
+                        type_=UpdateProjectMemberScopesV1Response,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
