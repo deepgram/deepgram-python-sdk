@@ -258,9 +258,12 @@ with client.listen.v1.connect(model="nova-3") as connection:
 
     connection.start_listening()
 
-    # Send audio data
-    from deepgram.extensions.types.sockets import ListenV1MediaMessage
-    connection.send_media(ListenV1MediaMessage(data=audio_bytes))
+    # Read and send audio data
+    with open("path/to/your/audio.wav", "rb") as audio_file:
+        audio_bytes = audio_file.read()
+        from deepgram.extensions.types.sockets import ListenV1MediaMessage
+        connection.send_media(ListenV1MediaMessage(audio_bytes))
+
 ```
 
 #### WebSocket Streaming (Listen V2 - New in v5.0.0)
