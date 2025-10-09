@@ -85,13 +85,29 @@ class BaseClient:
             else httpx.Client(timeout=_defaulted_timeout),
             timeout=_defaulted_timeout,
         )
+        self._speak: typing.Optional[SpeakClient] = None
+        self._listen: typing.Optional[ListenClient] = None
         self._agent: typing.Optional[AgentClient] = None
         self._auth: typing.Optional[AuthClient] = None
-        self._listen: typing.Optional[ListenClient] = None
         self._manage: typing.Optional[ManageClient] = None
         self._read: typing.Optional[ReadClient] = None
         self._self_hosted: typing.Optional[SelfHostedClient] = None
-        self._speak: typing.Optional[SpeakClient] = None
+
+    @property
+    def speak(self):
+        if self._speak is None:
+            from .speak.client import SpeakClient  # noqa: E402
+
+            self._speak = SpeakClient(client_wrapper=self._client_wrapper)
+        return self._speak
+
+    @property
+    def listen(self):
+        if self._listen is None:
+            from .listen.client import ListenClient  # noqa: E402
+
+            self._listen = ListenClient(client_wrapper=self._client_wrapper)
+        return self._listen
 
     @property
     def agent(self):
@@ -108,14 +124,6 @@ class BaseClient:
 
             self._auth = AuthClient(client_wrapper=self._client_wrapper)
         return self._auth
-
-    @property
-    def listen(self):
-        if self._listen is None:
-            from .listen.client import ListenClient  # noqa: E402
-
-            self._listen = ListenClient(client_wrapper=self._client_wrapper)
-        return self._listen
 
     @property
     def manage(self):
@@ -140,14 +148,6 @@ class BaseClient:
 
             self._self_hosted = SelfHostedClient(client_wrapper=self._client_wrapper)
         return self._self_hosted
-
-    @property
-    def speak(self):
-        if self._speak is None:
-            from .speak.client import SpeakClient  # noqa: E402
-
-            self._speak = SpeakClient(client_wrapper=self._client_wrapper)
-        return self._speak
 
 
 class AsyncBaseClient:
@@ -215,13 +215,29 @@ class AsyncBaseClient:
             else httpx.AsyncClient(timeout=_defaulted_timeout),
             timeout=_defaulted_timeout,
         )
+        self._speak: typing.Optional[AsyncSpeakClient] = None
+        self._listen: typing.Optional[AsyncListenClient] = None
         self._agent: typing.Optional[AsyncAgentClient] = None
         self._auth: typing.Optional[AsyncAuthClient] = None
-        self._listen: typing.Optional[AsyncListenClient] = None
         self._manage: typing.Optional[AsyncManageClient] = None
         self._read: typing.Optional[AsyncReadClient] = None
         self._self_hosted: typing.Optional[AsyncSelfHostedClient] = None
-        self._speak: typing.Optional[AsyncSpeakClient] = None
+
+    @property
+    def speak(self):
+        if self._speak is None:
+            from .speak.client import AsyncSpeakClient  # noqa: E402
+
+            self._speak = AsyncSpeakClient(client_wrapper=self._client_wrapper)
+        return self._speak
+
+    @property
+    def listen(self):
+        if self._listen is None:
+            from .listen.client import AsyncListenClient  # noqa: E402
+
+            self._listen = AsyncListenClient(client_wrapper=self._client_wrapper)
+        return self._listen
 
     @property
     def agent(self):
@@ -238,14 +254,6 @@ class AsyncBaseClient:
 
             self._auth = AsyncAuthClient(client_wrapper=self._client_wrapper)
         return self._auth
-
-    @property
-    def listen(self):
-        if self._listen is None:
-            from .listen.client import AsyncListenClient  # noqa: E402
-
-            self._listen = AsyncListenClient(client_wrapper=self._client_wrapper)
-        return self._listen
 
     @property
     def manage(self):
@@ -270,11 +278,3 @@ class AsyncBaseClient:
 
             self._self_hosted = AsyncSelfHostedClient(client_wrapper=self._client_wrapper)
         return self._self_hosted
-
-    @property
-    def speak(self):
-        if self._speak is None:
-            from .speak.client import AsyncSpeakClient  # noqa: E402
-
-            self._speak = AsyncSpeakClient(client_wrapper=self._client_wrapper)
-        return self._speak
