@@ -34,14 +34,14 @@ class MembersClient:
         return self._raw_client
 
     def list(
-        self, project_id: typing.Optional[str], *, request_options: typing.Optional[RequestOptions] = None
+        self, project_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> ListProjectMembersV1Response:
         """
         Retrieves a list of members for a given project
 
         Parameters
         ----------
-        project_id : typing.Optional[str]
+        project_id : str
             The unique identifier of the project
 
         request_options : typing.Optional[RequestOptions]
@@ -67,21 +67,17 @@ class MembersClient:
         return _response.data
 
     def delete(
-        self,
-        project_id: typing.Optional[str],
-        member_id: typing.Optional[str],
-        *,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, project_id: str, member_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> DeleteProjectMemberV1Response:
         """
         Removes a member from the project using their unique member ID
 
         Parameters
         ----------
-        project_id : typing.Optional[str]
+        project_id : str
             The unique identifier of the project
 
-        member_id : typing.Optional[str]
+        member_id : str
             The unique identifier of the Member
 
         request_options : typing.Optional[RequestOptions]
@@ -143,14 +139,14 @@ class AsyncMembersClient:
         return self._raw_client
 
     async def list(
-        self, project_id: typing.Optional[str], *, request_options: typing.Optional[RequestOptions] = None
+        self, project_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> ListProjectMembersV1Response:
         """
         Retrieves a list of members for a given project
 
         Parameters
         ----------
-        project_id : typing.Optional[str]
+        project_id : str
             The unique identifier of the project
 
         request_options : typing.Optional[RequestOptions]
@@ -184,21 +180,17 @@ class AsyncMembersClient:
         return _response.data
 
     async def delete(
-        self,
-        project_id: typing.Optional[str],
-        member_id: typing.Optional[str],
-        *,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, project_id: str, member_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> DeleteProjectMemberV1Response:
         """
         Removes a member from the project using their unique member ID
 
         Parameters
         ----------
-        project_id : typing.Optional[str]
+        project_id : str
             The unique identifier of the project
 
-        member_id : typing.Optional[str]
+        member_id : str
             The unique identifier of the Member
 
         request_options : typing.Optional[RequestOptions]

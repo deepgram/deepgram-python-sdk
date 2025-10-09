@@ -7,7 +7,22 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from . import v1, v2
-_dynamic_imports: typing.Dict[str, str] = {"v1": ".v1", "v2": ".v2"}
+    from .v2 import (
+        ListenV2TurnInfo,
+        ListenV2TurnInfoEvent,
+        ListenV2TurnInfoParams,
+        ListenV2TurnInfoWordsItem,
+        ListenV2TurnInfoWordsItemParams,
+    )
+_dynamic_imports: typing.Dict[str, str] = {
+    "ListenV2TurnInfo": ".v2",
+    "ListenV2TurnInfoEvent": ".v2",
+    "ListenV2TurnInfoParams": ".v2",
+    "ListenV2TurnInfoWordsItem": ".v2",
+    "ListenV2TurnInfoWordsItemParams": ".v2",
+    "v1": ".v1",
+    "v2": ".v2",
+}
 
 
 def __getattr__(attr_name: str) -> typing.Any:
@@ -31,4 +46,12 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["v1", "v2"]
+__all__ = [
+    "ListenV2TurnInfo",
+    "ListenV2TurnInfoEvent",
+    "ListenV2TurnInfoParams",
+    "ListenV2TurnInfoWordsItem",
+    "ListenV2TurnInfoWordsItemParams",
+    "v1",
+    "v2",
+]
