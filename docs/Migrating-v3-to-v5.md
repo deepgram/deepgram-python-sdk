@@ -16,6 +16,7 @@ This guide helps you migrate from Deepgram Python SDK v3+ (versions 3.0.0 to 4.8
   - [Models V1](#models-v1)
   - [Manage V1](#manage-v1)
   - [Self-Hosted V1](#self-hosted-v1)
+- [Keep Alive Functionality](#websocket-keep-alive-functionality)
 - [Breaking Changes Summary](#breaking-changes-summary)
 
 ## Installation
@@ -860,6 +861,35 @@ response = client.self_hosted.v1.distribution_credentials.delete(
 )
 ```
 
+## WebSocket Keep Alive Functionality
+
+**v3+ (3.0.0 - 4.8.1)**
+
+```python
+# Keep alive was passed as a config option
+config = DeepgramClientOptions(
+    options={"keepalive": "true"}
+)
+deepgram = DeepgramClient(API_KEY, config)
+```
+
+**v5.0.0**
+
+```python
+# Keep alive is now manually managed via control messages.
+from deepgram.extensions.types.sockets import ListenV1ControlMessage, AgentV1ControlMessage
+
+# For Listen V1 connections
+with client.listen.v1.connect(model="nova-3") as connection:
+    # Send keep alive message
+    connection.send_control(ListenV1ControlMessage(type="KeepAlive"))
+
+# For Agent V1 connections  
+with client.agent.v1.connect() as agent:
+    # Send keep alive message
+    agent.send_control(AgentV1ControlMessage(type="KeepAlive"))
+```
+
 ## Breaking Changes Summary
 
 ### Major Changes
@@ -867,8 +897,9 @@ response = client.self_hosted.v1.distribution_credentials.delete(
 1. **Authentication**: New access token support with environment variable `DEEPGRAM_TOKEN`
 2. **API structure**: Flattened method names and cleaner parameter passing
 3. **WebSocket API**: Complete redesign with context managers and typed message objects
-4. **Type safety**: Enhanced type annotations and response objects
-5. **Error handling**: Improved error types and handling
+4. **WebSocket Keep Alive**: Managed via control messages, no longer an automatic thing via config
+5. **Type safety**: Enhanced type annotations and response objects
+6. **Error handling**: Improved error types and handling
 
 ### Removed Features
 
@@ -893,5 +924,6 @@ response = client.self_hosted.v1.distribution_credentials.delete(
 - [ ] Replace API key configuration with new authentication methods
 - [ ] Update all API method calls to new structure
 - [ ] Migrate WebSocket connections to new context manager pattern
+- [ ] Update WebSocket keep alive implementation
 - [ ] Update error handling for new exception types
 - [ ] Test all functionality with new API structure
