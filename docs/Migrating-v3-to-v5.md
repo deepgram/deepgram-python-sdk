@@ -887,18 +887,6 @@ with client.agent.v1.connect() as agent:
     agent.send_control(AgentV1ControlMessage(type="KeepAlive"))
 ```
 
-**Key Changes:**
-
-1. **WebSocket Library Upgrade**: The SDK upgraded to `websockets>=12.0`, which introduced some internal changes to connection handling.
-
-2. **Parameter Name Changes**: 
-   - **Sync connections**: Continue to use `additional_headers` parameter
-   - **Async connections**: Now use `extra_headers` parameter (changed from `additional_headers`)
-
-3. **Keep Alive Control Messages**: The keep alive functionality itself remains unchanged - you still send `KeepAlive` control messages using the `send_control()` method.
-
-4. **Connection Management**: The underlying WebSocket connection management has been updated to use the newer websockets library API, but the public interface for keep alive remains the same.
-
 ## Breaking Changes Summary
 
 ### Major Changes
