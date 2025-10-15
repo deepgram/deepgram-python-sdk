@@ -16,6 +16,10 @@ if typing.TYPE_CHECKING:
     from .agent_think_models_v1response_models_item_two_id import AgentThinkModelsV1ResponseModelsItemTwoId
     from .agent_think_models_v1response_models_item_zero import AgentThinkModelsV1ResponseModelsItemZero
     from .agent_think_models_v1response_models_item_zero_id import AgentThinkModelsV1ResponseModelsItemZeroId
+    from .billing_breakdown_v1response import BillingBreakdownV1Response
+    from .billing_breakdown_v1response_resolution import BillingBreakdownV1ResponseResolution
+    from .billing_breakdown_v1response_results_item import BillingBreakdownV1ResponseResultsItem
+    from .billing_breakdown_v1response_results_item_grouping import BillingBreakdownV1ResponseResultsItemGrouping
     from .create_key_v1request_one import CreateKeyV1RequestOne
     from .create_key_v1response import CreateKeyV1Response
     from .create_project_distribution_credentials_v1response import CreateProjectDistributionCredentialsV1Response
@@ -217,6 +221,10 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AgentThinkModelsV1ResponseModelsItemTwoId": ".agent_think_models_v1response_models_item_two_id",
     "AgentThinkModelsV1ResponseModelsItemZero": ".agent_think_models_v1response_models_item_zero",
     "AgentThinkModelsV1ResponseModelsItemZeroId": ".agent_think_models_v1response_models_item_zero_id",
+    "BillingBreakdownV1Response": ".billing_breakdown_v1response",
+    "BillingBreakdownV1ResponseResolution": ".billing_breakdown_v1response_resolution",
+    "BillingBreakdownV1ResponseResultsItem": ".billing_breakdown_v1response_results_item",
+    "BillingBreakdownV1ResponseResultsItemGrouping": ".billing_breakdown_v1response_results_item_grouping",
     "CreateKeyV1RequestOne": ".create_key_v1request_one",
     "CreateKeyV1Response": ".create_key_v1response",
     "CreateProjectDistributionCredentialsV1Response": ".create_project_distribution_credentials_v1response",
@@ -410,6 +418,10 @@ __all__ = [
     "AgentThinkModelsV1ResponseModelsItemTwoId",
     "AgentThinkModelsV1ResponseModelsItemZero",
     "AgentThinkModelsV1ResponseModelsItemZeroId",
+    "BillingBreakdownV1Response",
+    "BillingBreakdownV1ResponseResolution",
+    "BillingBreakdownV1ResponseResultsItem",
+    "BillingBreakdownV1ResponseResultsItemGrouping",
     "CreateKeyV1RequestOne",
     "CreateKeyV1Response",
     "CreateProjectDistributionCredentialsV1Response",

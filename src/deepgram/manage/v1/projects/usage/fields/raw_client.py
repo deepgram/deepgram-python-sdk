@@ -10,7 +10,6 @@ from ......core.jsonable_encoder import jsonable_encoder
 from ......core.pydantic_utilities import parse_obj_as
 from ......core.request_options import RequestOptions
 from ......errors.bad_request_error import BadRequestError
-from ......types.error_response import ErrorResponse
 from ......types.usage_fields_v1response import UsageFieldsV1Response
 
 
@@ -20,7 +19,7 @@ class RawFieldsClient:
 
     def list(
         self,
-        project_id: typing.Optional[str],
+        project_id: str,
         *,
         start: typing.Optional[str] = None,
         end: typing.Optional[str] = None,
@@ -31,7 +30,7 @@ class RawFieldsClient:
 
         Parameters
         ----------
-        project_id : typing.Optional[str]
+        project_id : str
             The unique identifier of the project
 
         start : typing.Optional[str]
@@ -72,9 +71,9 @@ class RawFieldsClient:
                 raise BadRequestError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        ErrorResponse,
+                        typing.Optional[typing.Any],
                         parse_obj_as(
-                            type_=ErrorResponse,  # type: ignore
+                            type_=typing.Optional[typing.Any],  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -91,7 +90,7 @@ class AsyncRawFieldsClient:
 
     async def list(
         self,
-        project_id: typing.Optional[str],
+        project_id: str,
         *,
         start: typing.Optional[str] = None,
         end: typing.Optional[str] = None,
@@ -102,7 +101,7 @@ class AsyncRawFieldsClient:
 
         Parameters
         ----------
-        project_id : typing.Optional[str]
+        project_id : str
             The unique identifier of the project
 
         start : typing.Optional[str]
@@ -143,9 +142,9 @@ class AsyncRawFieldsClient:
                 raise BadRequestError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        ErrorResponse,
+                        typing.Optional[typing.Any],
                         parse_obj_as(
-                            type_=ErrorResponse,  # type: ignore
+                            type_=typing.Optional[typing.Any],  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
