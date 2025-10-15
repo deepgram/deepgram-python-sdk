@@ -10,6 +10,7 @@ from .raw_client import AsyncRawTextClient, RawTextClient
 from .types.text_analyze_request_callback_method import TextAnalyzeRequestCallbackMethod
 from .types.text_analyze_request_custom_intent_mode import TextAnalyzeRequestCustomIntentMode
 from .types.text_analyze_request_custom_topic_mode import TextAnalyzeRequestCustomTopicMode
+from .types.text_analyze_request_language import TextAnalyzeRequestLanguage
 from .types.text_analyze_request_summarize import TextAnalyzeRequestSummarize
 
 # this is used as the default value for optional parameters
@@ -45,11 +46,11 @@ class TextClient:
         intents: typing.Optional[bool] = None,
         custom_intent: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         custom_intent_mode: typing.Optional[TextAnalyzeRequestCustomIntentMode] = None,
-        language: typing.Optional[str] = None,
+        language: typing.Optional[TextAnalyzeRequestLanguage] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ReadV1Response:
         """
-        Analyze text content using Deepgram's text analysis API
+        Analyze text content using Deepgrams text analysis API
 
         Parameters
         ----------
@@ -85,7 +86,7 @@ class TextClient:
         custom_intent_mode : typing.Optional[TextAnalyzeRequestCustomIntentMode]
             Sets how the model will interpret intents submitted to the `custom_intent` param. When `strict`, the model will only return intents submitted using the `custom_intent` param. When `extended`, the model will return its own detected intents in the `custom_intent` param.
 
-        language : typing.Optional[str]
+        language : typing.Optional[TextAnalyzeRequestLanguage]
             The [BCP-47 language tag](https://tools.ietf.org/html/bcp47) that hints at the primary spoken language. Depending on the Model and API endpoint you choose only certain languages are available
 
         request_options : typing.Optional[RequestOptions]
@@ -104,17 +105,6 @@ class TextClient:
             api_key="YOUR_API_KEY",
         )
         client.read.v1.text.analyze(
-            callback="callback",
-            callback_method="POST",
-            sentiment=True,
-            summarize="v2",
-            topics=True,
-            custom_topic="custom_topic",
-            custom_topic_mode="extended",
-            intents=True,
-            custom_intent="custom_intent",
-            custom_intent_mode="extended",
-            language="language",
             request={"url": "url"},
         )
         """
@@ -165,11 +155,11 @@ class AsyncTextClient:
         intents: typing.Optional[bool] = None,
         custom_intent: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         custom_intent_mode: typing.Optional[TextAnalyzeRequestCustomIntentMode] = None,
-        language: typing.Optional[str] = None,
+        language: typing.Optional[TextAnalyzeRequestLanguage] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ReadV1Response:
         """
-        Analyze text content using Deepgram's text analysis API
+        Analyze text content using Deepgrams text analysis API
 
         Parameters
         ----------
@@ -205,7 +195,7 @@ class AsyncTextClient:
         custom_intent_mode : typing.Optional[TextAnalyzeRequestCustomIntentMode]
             Sets how the model will interpret intents submitted to the `custom_intent` param. When `strict`, the model will only return intents submitted using the `custom_intent` param. When `extended`, the model will return its own detected intents in the `custom_intent` param.
 
-        language : typing.Optional[str]
+        language : typing.Optional[TextAnalyzeRequestLanguage]
             The [BCP-47 language tag](https://tools.ietf.org/html/bcp47) that hints at the primary spoken language. Depending on the Model and API endpoint you choose only certain languages are available
 
         request_options : typing.Optional[RequestOptions]
@@ -229,17 +219,6 @@ class AsyncTextClient:
 
         async def main() -> None:
             await client.read.v1.text.analyze(
-                callback="callback",
-                callback_method="POST",
-                sentiment=True,
-                summarize="v2",
-                topics=True,
-                custom_topic="custom_topic",
-                custom_topic_mode="extended",
-                intents=True,
-                custom_intent="custom_intent",
-                custom_intent_mode="extended",
-                language="language",
                 request={"url": "url"},
             )
 

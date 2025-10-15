@@ -3,68 +3,52 @@
 import typing
 from json.decoder import JSONDecodeError
 
-from ....core.api_error import ApiError
-from ....core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
-from ....core.http_response import AsyncHttpResponse, HttpResponse
-from ....core.jsonable_encoder import jsonable_encoder
-from ....core.pydantic_utilities import parse_obj_as
-from ....core.request_options import RequestOptions
-from ....errors.bad_request_error import BadRequestError
-from ....types.create_key_v1request_one import CreateKeyV1RequestOne
-from ....types.create_key_v1response import CreateKeyV1Response
-from ....types.delete_project_key_v1response import DeleteProjectKeyV1Response
-from ....types.error_response import ErrorResponse
-
-# this is used as the default value for optional parameters
-OMIT = typing.cast(typing.Any, ...)
+from ......core.api_error import ApiError
+from ......core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
+from ......core.http_response import AsyncHttpResponse, HttpResponse
+from ......core.jsonable_encoder import jsonable_encoder
+from ......core.pydantic_utilities import parse_obj_as
+from ......core.request_options import RequestOptions
+from ......errors.bad_request_error import BadRequestError
+from ......types.get_project_balance_v1response import GetProjectBalanceV1Response
+from ......types.list_project_balances_v1response import ListProjectBalancesV1Response
 
 
-class RawKeysClient:
+class RawBalancesClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def create(
-        self,
-        project_id: typing.Optional[str],
-        *,
-        request: CreateKeyV1RequestOne,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> HttpResponse[CreateKeyV1Response]:
+    def list(
+        self, project_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> HttpResponse[ListProjectBalancesV1Response]:
         """
-        Creates a new API key with specified settings for the project
+        Generates a list of outstanding balances for the specified project
 
         Parameters
         ----------
-        project_id : typing.Optional[str]
+        project_id : str
             The unique identifier of the project
-
-        request : CreateKeyV1RequestOne
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        HttpResponse[CreateKeyV1Response]
-            API key created successfully
+        HttpResponse[ListProjectBalancesV1Response]
+            A list of outstanding balances
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"v1/projects/{jsonable_encoder(project_id)}/keys",
+            f"v1/projects/{jsonable_encoder(project_id)}/balances",
             base_url=self._client_wrapper.get_environment().base,
-            method="POST",
-            json=request,
-            headers={
-                "content-type": "application/json",
-            },
+            method="GET",
             request_options=request_options,
-            omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    CreateKeyV1Response,
+                    ListProjectBalancesV1Response,
                     parse_obj_as(
-                        type_=CreateKeyV1Response,  # type: ignore
+                        type_=ListProjectBalancesV1Response,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -73,9 +57,9 @@ class RawKeysClient:
                 raise BadRequestError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        ErrorResponse,
+                        typing.Optional[typing.Any],
                         parse_obj_as(
-                            type_=ErrorResponse,  # type: ignore
+                            type_=typing.Optional[typing.Any],  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -85,44 +69,40 @@ class RawKeysClient:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    def delete(
-        self,
-        project_id: typing.Optional[str],
-        key_id: typing.Optional[str],
-        *,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> HttpResponse[DeleteProjectKeyV1Response]:
+    def get(
+        self, project_id: str, balance_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> HttpResponse[GetProjectBalanceV1Response]:
         """
-        Deletes an API key for a specific project
+        Retrieves details about the specified balance
 
         Parameters
         ----------
-        project_id : typing.Optional[str]
+        project_id : str
             The unique identifier of the project
 
-        key_id : typing.Optional[str]
-            The unique identifier of the API key
+        balance_id : str
+            The unique identifier of the balance
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        HttpResponse[DeleteProjectKeyV1Response]
-            API key deleted
+        HttpResponse[GetProjectBalanceV1Response]
+            A specific balance
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"v1/projects/{jsonable_encoder(project_id)}/keys/{jsonable_encoder(key_id)}",
+            f"v1/projects/{jsonable_encoder(project_id)}/balances/{jsonable_encoder(balance_id)}",
             base_url=self._client_wrapper.get_environment().base,
-            method="DELETE",
+            method="GET",
             request_options=request_options,
         )
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    DeleteProjectKeyV1Response,
+                    GetProjectBalanceV1Response,
                     parse_obj_as(
-                        type_=DeleteProjectKeyV1Response,  # type: ignore
+                        type_=GetProjectBalanceV1Response,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -131,9 +111,9 @@ class RawKeysClient:
                 raise BadRequestError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        ErrorResponse,
+                        typing.Optional[typing.Any],
                         parse_obj_as(
-                            type_=ErrorResponse,  # type: ignore
+                            type_=typing.Optional[typing.Any],  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -144,52 +124,41 @@ class RawKeysClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
 
-class AsyncRawKeysClient:
+class AsyncRawBalancesClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def create(
-        self,
-        project_id: typing.Optional[str],
-        *,
-        request: CreateKeyV1RequestOne,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncHttpResponse[CreateKeyV1Response]:
+    async def list(
+        self, project_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> AsyncHttpResponse[ListProjectBalancesV1Response]:
         """
-        Creates a new API key with specified settings for the project
+        Generates a list of outstanding balances for the specified project
 
         Parameters
         ----------
-        project_id : typing.Optional[str]
+        project_id : str
             The unique identifier of the project
-
-        request : CreateKeyV1RequestOne
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        AsyncHttpResponse[CreateKeyV1Response]
-            API key created successfully
+        AsyncHttpResponse[ListProjectBalancesV1Response]
+            A list of outstanding balances
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"v1/projects/{jsonable_encoder(project_id)}/keys",
+            f"v1/projects/{jsonable_encoder(project_id)}/balances",
             base_url=self._client_wrapper.get_environment().base,
-            method="POST",
-            json=request,
-            headers={
-                "content-type": "application/json",
-            },
+            method="GET",
             request_options=request_options,
-            omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    CreateKeyV1Response,
+                    ListProjectBalancesV1Response,
                     parse_obj_as(
-                        type_=CreateKeyV1Response,  # type: ignore
+                        type_=ListProjectBalancesV1Response,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -198,9 +167,9 @@ class AsyncRawKeysClient:
                 raise BadRequestError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        ErrorResponse,
+                        typing.Optional[typing.Any],
                         parse_obj_as(
-                            type_=ErrorResponse,  # type: ignore
+                            type_=typing.Optional[typing.Any],  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -210,44 +179,40 @@ class AsyncRawKeysClient:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    async def delete(
-        self,
-        project_id: typing.Optional[str],
-        key_id: typing.Optional[str],
-        *,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncHttpResponse[DeleteProjectKeyV1Response]:
+    async def get(
+        self, project_id: str, balance_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> AsyncHttpResponse[GetProjectBalanceV1Response]:
         """
-        Deletes an API key for a specific project
+        Retrieves details about the specified balance
 
         Parameters
         ----------
-        project_id : typing.Optional[str]
+        project_id : str
             The unique identifier of the project
 
-        key_id : typing.Optional[str]
-            The unique identifier of the API key
+        balance_id : str
+            The unique identifier of the balance
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        AsyncHttpResponse[DeleteProjectKeyV1Response]
-            API key deleted
+        AsyncHttpResponse[GetProjectBalanceV1Response]
+            A specific balance
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"v1/projects/{jsonable_encoder(project_id)}/keys/{jsonable_encoder(key_id)}",
+            f"v1/projects/{jsonable_encoder(project_id)}/balances/{jsonable_encoder(balance_id)}",
             base_url=self._client_wrapper.get_environment().base,
-            method="DELETE",
+            method="GET",
             request_options=request_options,
         )
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    DeleteProjectKeyV1Response,
+                    GetProjectBalanceV1Response,
                     parse_obj_as(
-                        type_=DeleteProjectKeyV1Response,  # type: ignore
+                        type_=GetProjectBalanceV1Response,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -256,9 +221,9 @@ class AsyncRawKeysClient:
                 raise BadRequestError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        ErrorResponse,
+                        typing.Optional[typing.Any],
                         parse_obj_as(
-                            type_=ErrorResponse,  # type: ignore
+                            type_=typing.Optional[typing.Any],  # type: ignore
                             object_=_response.json(),
                         ),
                     ),

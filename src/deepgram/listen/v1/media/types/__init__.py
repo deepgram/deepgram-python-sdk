@@ -10,6 +10,7 @@ if typing.TYPE_CHECKING:
     from .media_transcribe_request_custom_intent_mode import MediaTranscribeRequestCustomIntentMode
     from .media_transcribe_request_custom_topic_mode import MediaTranscribeRequestCustomTopicMode
     from .media_transcribe_request_encoding import MediaTranscribeRequestEncoding
+    from .media_transcribe_request_language import MediaTranscribeRequestLanguage
     from .media_transcribe_request_model import MediaTranscribeRequestModel
     from .media_transcribe_request_summarize import MediaTranscribeRequestSummarize
     from .media_transcribe_request_version import MediaTranscribeRequestVersion
@@ -19,6 +20,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "MediaTranscribeRequestCustomIntentMode": ".media_transcribe_request_custom_intent_mode",
     "MediaTranscribeRequestCustomTopicMode": ".media_transcribe_request_custom_topic_mode",
     "MediaTranscribeRequestEncoding": ".media_transcribe_request_encoding",
+    "MediaTranscribeRequestLanguage": ".media_transcribe_request_language",
     "MediaTranscribeRequestModel": ".media_transcribe_request_model",
     "MediaTranscribeRequestSummarize": ".media_transcribe_request_summarize",
     "MediaTranscribeRequestVersion": ".media_transcribe_request_version",
@@ -52,6 +54,7 @@ __all__ = [
     "MediaTranscribeRequestCustomIntentMode",
     "MediaTranscribeRequestCustomTopicMode",
     "MediaTranscribeRequestEncoding",
+    "MediaTranscribeRequestLanguage",
     "MediaTranscribeRequestModel",
     "MediaTranscribeRequestSummarize",
     "MediaTranscribeRequestVersion",

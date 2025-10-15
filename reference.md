@@ -163,40 +163,6 @@ client = DeepgramClient(
     api_key="YOUR_API_KEY",
 )
 client.listen.v1.media.transcribe_url(
-    callback="callback",
-    callback_method="POST",
-    extra="extra",
-    sentiment=True,
-    summarize="v2",
-    tag="tag",
-    topics=True,
-    custom_topic="custom_topic",
-    custom_topic_mode="extended",
-    intents=True,
-    custom_intent="custom_intent",
-    custom_intent_mode="extended",
-    detect_entities=True,
-    detect_language=True,
-    diarize=True,
-    dictation=True,
-    encoding="linear16",
-    filler_words=True,
-    keywords="keywords",
-    language="language",
-    measurements=True,
-    model="nova-3",
-    multichannel=True,
-    numerals=True,
-    paragraphs=True,
-    profanity_filter=True,
-    punctuate=True,
-    redact="redact",
-    replace="replace",
-    search="search",
-    smart_format=True,
-    utterances=True,
-    utt_split=1.1,
-    version="latest",
     url="https://dpgr.am/spacewalk.wav",
 )
 
@@ -382,7 +348,7 @@ client.listen.v1.media.transcribe_url(
 <dl>
 <dd>
 
-**language:** `typing.Optional[str]` — The [BCP-47 language tag](https://tools.ietf.org/html/bcp47) that hints at the primary spoken language. Depending on the Model and API endpoint you choose only certain languages are available
+**language:** `typing.Optional[MediaTranscribeRequestLanguage]` — The [BCP-47 language tag](https://tools.ietf.org/html/bcp47) that hints at the primary spoken language. Depending on the Model and API endpoint you choose only certain languages are available
     
 </dd>
 </dl>
@@ -730,7 +696,7 @@ client.listen.v1.media.transcribe_file()
 <dl>
 <dd>
 
-**language:** `typing.Optional[str]` — The [BCP-47 language tag](https://tools.ietf.org/html/bcp47) that hints at the primary spoken language. Depending on the Model and API endpoint you choose only certain languages are available
+**language:** `typing.Optional[MediaTranscribeRequestLanguage]` — The [BCP-47 language tag](https://tools.ietf.org/html/bcp47) that hints at the primary spoken language. Depending on the Model and API endpoint you choose only certain languages are available
     
 </dd>
 </dl>
@@ -862,8 +828,8 @@ client.listen.v1.media.transcribe_file()
 </dl>
 </details>
 
-## Manage Projects
-<details><summary><code>client.manage.projects.<a href="src/deepgram/manage/projects/client.py">delete</a>(...)</code></summary>
+## Manage V1 Models
+<details><summary><code>client.manage.v1.models.<a href="src/deepgram/manage/v1/models/client.py">list</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -875,7 +841,7 @@ client.listen.v1.media.transcribe_file()
 <dl>
 <dd>
 
-Deletes the specified project
+Returns metadata on all the latest public models. To retrieve custom models, use Get Project Models.
 </dd>
 </dl>
 </dd>
@@ -895,9 +861,7 @@ from deepgram import DeepgramClient
 client = DeepgramClient(
     api_key="YOUR_API_KEY",
 )
-client.manage.projects.delete(
-    project_id="123456-7890-1234-5678-901234",
-)
+client.manage.v1.models.list()
 
 ```
 </dd>
@@ -913,7 +877,7 @@ client.manage.projects.delete(
 <dl>
 <dd>
 
-**project_id:** `typing.Optional[str]` — The unique identifier of the project
+**include_outdated:** `typing.Optional[bool]` — returns non-latest versions of models
     
 </dd>
 </dl>
@@ -933,7 +897,7 @@ client.manage.projects.delete(
 </dl>
 </details>
 
-<details><summary><code>client.manage.projects.<a href="src/deepgram/manage/projects/client.py">update</a>(...)</code></summary>
+<details><summary><code>client.manage.v1.models.<a href="src/deepgram/manage/v1/models/client.py">get</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -945,7 +909,7 @@ client.manage.projects.delete(
 <dl>
 <dd>
 
-Updates the name or other properties of an existing project
+Returns metadata for a specific public model
 </dd>
 </dl>
 </dd>
@@ -965,8 +929,8 @@ from deepgram import DeepgramClient
 client = DeepgramClient(
     api_key="YOUR_API_KEY",
 )
-client.manage.projects.update(
-    project_id="123456-7890-1234-5678-901234",
+client.manage.v1.models.get(
+    model_id="af6e9977-99f6-4d8f-b6f5-dfdf6fb6e291",
 )
 
 ```
@@ -983,263 +947,7 @@ client.manage.projects.update(
 <dl>
 <dd>
 
-**project_id:** `typing.Optional[str]` — The unique identifier of the project
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**name:** `typing.Optional[str]` — The name of the project
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## Manage Projects Keys
-<details><summary><code>client.manage.projects.keys.<a href="src/deepgram/manage/projects/keys/client.py">create</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Creates a new API key with specified settings for the project
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from deepgram import DeepgramClient
-
-client = DeepgramClient(
-    api_key="YOUR_API_KEY",
-)
-client.manage.projects.keys.create(
-    project_id=None,
-    request={"key": "value"},
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**project_id:** `typing.Optional[str]` — The unique identifier of the project
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request:** `CreateKeyV1RequestOne` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.manage.projects.keys.<a href="src/deepgram/manage/projects/keys/client.py">delete</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Deletes an API key for a specific project
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from deepgram import DeepgramClient
-
-client = DeepgramClient(
-    api_key="YOUR_API_KEY",
-)
-client.manage.projects.keys.delete(
-    project_id="123456-7890-1234-5678-901234",
-    key_id="123456789012345678901234",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**project_id:** `typing.Optional[str]` — The unique identifier of the project
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**key_id:** `typing.Optional[str]` — The unique identifier of the API key
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## Manage Projects Members Scopes
-<details><summary><code>client.manage.projects.members.scopes.<a href="src/deepgram/manage/projects/members/scopes/client.py">update</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Updates the scopes for a specific member
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from deepgram import DeepgramClient
-
-client = DeepgramClient(
-    api_key="YOUR_API_KEY",
-)
-client.manage.projects.members.scopes.update(
-    project_id="123456-7890-1234-5678-901234",
-    member_id="123456789012345678901234",
-    scope="admin",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**project_id:** `typing.Optional[str]` — The unique identifier of the project
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**member_id:** `typing.Optional[str]` — The unique identifier of the Member
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**scope:** `str` — A scope to update
+**model_id:** `str` — The specific UUID of the model
     
 </dd>
 </dl>
@@ -1354,8 +1062,6 @@ client = DeepgramClient(
 )
 client.manage.v1.projects.get(
     project_id="123456-7890-1234-5678-901234",
-    limit=1,
-    page=1,
 )
 
 ```
@@ -1372,7 +1078,7 @@ client.manage.v1.projects.get(
 <dl>
 <dd>
 
-**project_id:** `typing.Optional[str]` — The unique identifier of the project
+**project_id:** `str` — The unique identifier of the project
     
 </dd>
 </dl>
@@ -1389,6 +1095,154 @@ client.manage.v1.projects.get(
 <dd>
 
 **page:** `typing.Optional[int]` — Navigate and return the results to retrieve specific portions of information of the response
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.manage.v1.projects.<a href="src/deepgram/manage/v1/projects/client.py">delete</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Deletes the specified project
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from deepgram import DeepgramClient
+
+client = DeepgramClient(
+    api_key="YOUR_API_KEY",
+)
+client.manage.v1.projects.delete(
+    project_id="123456-7890-1234-5678-901234",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**project_id:** `str` — The unique identifier of the project
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.manage.v1.projects.<a href="src/deepgram/manage/v1/projects/client.py">update</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Updates the name or other properties of an existing project
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from deepgram import DeepgramClient
+
+client = DeepgramClient(
+    api_key="YOUR_API_KEY",
+)
+client.manage.v1.projects.update(
+    project_id="123456-7890-1234-5678-901234",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**project_id:** `str` — The unique identifier of the project
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**name:** `typing.Optional[str]` — The name of the project
     
 </dd>
 </dl>
@@ -1458,7 +1312,7 @@ client.manage.v1.projects.leave(
 <dl>
 <dd>
 
-**project_id:** `typing.Optional[str]` — The unique identifier of the project
+**project_id:** `str` — The unique identifier of the project
     
 </dd>
 </dl>
@@ -1478,8 +1332,8 @@ client.manage.v1.projects.leave(
 </dl>
 </details>
 
-## Manage V1 Models
-<details><summary><code>client.manage.v1.models.<a href="src/deepgram/manage/v1/models/client.py">list</a>(...)</code></summary>
+## Manage V1 Projects Keys
+<details><summary><code>client.manage.v1.projects.keys.<a href="src/deepgram/manage/v1/projects/keys/client.py">list</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -1491,7 +1345,7 @@ client.manage.v1.projects.leave(
 <dl>
 <dd>
 
-Returns metadata on all the latest public models. To retrieve custom models, use Get Project Models.
+Retrieves all API keys associated with the specified project
 </dd>
 </dl>
 </dd>
@@ -1511,148 +1365,7 @@ from deepgram import DeepgramClient
 client = DeepgramClient(
     api_key="YOUR_API_KEY",
 )
-client.manage.v1.models.list(
-    include_outdated=True,
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**include_outdated:** `typing.Optional[bool]` — returns non-latest versions of models
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.manage.v1.models.<a href="src/deepgram/manage/v1/models/client.py">get</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Returns metadata for a specific public model
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from deepgram import DeepgramClient
-
-client = DeepgramClient(
-    api_key="YOUR_API_KEY",
-)
-client.manage.v1.models.get(
-    model_id="af6e9977-99f6-4d8f-b6f5-dfdf6fb6e291",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**model_id:** `typing.Optional[str]` — The specific UUID of the model
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## Manage V1 Projects Balances
-<details><summary><code>client.manage.v1.projects.balances.<a href="src/deepgram/manage/v1/projects/balances/client.py">list</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Generates a list of outstanding balances for the specified project
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from deepgram import DeepgramClient
-
-client = DeepgramClient(
-    api_key="YOUR_API_KEY",
-)
-client.manage.v1.projects.balances.list(
+client.manage.v1.projects.keys.list(
     project_id="123456-7890-1234-5678-901234",
 )
 
@@ -1670,7 +1383,15 @@ client.manage.v1.projects.balances.list(
 <dl>
 <dd>
 
-**project_id:** `typing.Optional[str]` — The unique identifier of the project
+**project_id:** `str` — The unique identifier of the project
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**status:** `typing.Optional[KeysListRequestStatus]` — Only return keys with a specific status
     
 </dd>
 </dl>
@@ -1690,7 +1411,7 @@ client.manage.v1.projects.balances.list(
 </dl>
 </details>
 
-<details><summary><code>client.manage.v1.projects.balances.<a href="src/deepgram/manage/v1/projects/balances/client.py">get</a>(...)</code></summary>
+<details><summary><code>client.manage.v1.projects.keys.<a href="src/deepgram/manage/v1/projects/keys/client.py">create</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -1702,7 +1423,7 @@ client.manage.v1.projects.balances.list(
 <dl>
 <dd>
 
-Retrieves details about the specified balance
+Creates a new API key with specified settings for the project
 </dd>
 </dl>
 </dd>
@@ -1722,9 +1443,9 @@ from deepgram import DeepgramClient
 client = DeepgramClient(
     api_key="YOUR_API_KEY",
 )
-client.manage.v1.projects.balances.get(
-    project_id="123456-7890-1234-5678-901234",
-    balance_id="123456-7890-1234-5678-901234",
+client.manage.v1.projects.keys.create(
+    project_id="project_id",
+    request={"key": "value"},
 )
 
 ```
@@ -1741,7 +1462,7 @@ client.manage.v1.projects.balances.get(
 <dl>
 <dd>
 
-**project_id:** `typing.Optional[str]` — The unique identifier of the project
+**project_id:** `str` — The unique identifier of the project
     
 </dd>
 </dl>
@@ -1749,7 +1470,315 @@ client.manage.v1.projects.balances.get(
 <dl>
 <dd>
 
-**balance_id:** `typing.Optional[str]` — The unique identifier of the balance
+**request:** `CreateKeyV1RequestOne` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.manage.v1.projects.keys.<a href="src/deepgram/manage/v1/projects/keys/client.py">get</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieves information about a specified API key
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from deepgram import DeepgramClient
+
+client = DeepgramClient(
+    api_key="YOUR_API_KEY",
+)
+client.manage.v1.projects.keys.get(
+    project_id="123456-7890-1234-5678-901234",
+    key_id="123456789012345678901234",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**project_id:** `str` — The unique identifier of the project
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**key_id:** `str` — The unique identifier of the API key
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.manage.v1.projects.keys.<a href="src/deepgram/manage/v1/projects/keys/client.py">delete</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Deletes an API key for a specific project
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from deepgram import DeepgramClient
+
+client = DeepgramClient(
+    api_key="YOUR_API_KEY",
+)
+client.manage.v1.projects.keys.delete(
+    project_id="123456-7890-1234-5678-901234",
+    key_id="123456789012345678901234",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**project_id:** `str` — The unique identifier of the project
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**key_id:** `str` — The unique identifier of the API key
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Manage V1 Projects Members
+<details><summary><code>client.manage.v1.projects.members.<a href="src/deepgram/manage/v1/projects/members/client.py">list</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieves a list of members for a given project
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from deepgram import DeepgramClient
+
+client = DeepgramClient(
+    api_key="YOUR_API_KEY",
+)
+client.manage.v1.projects.members.list(
+    project_id="123456-7890-1234-5678-901234",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**project_id:** `str` — The unique identifier of the project
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.manage.v1.projects.members.<a href="src/deepgram/manage/v1/projects/members/client.py">delete</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Removes a member from the project using their unique member ID
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from deepgram import DeepgramClient
+
+client = DeepgramClient(
+    api_key="YOUR_API_KEY",
+)
+client.manage.v1.projects.members.delete(
+    project_id="123456-7890-1234-5678-901234",
+    member_id="123456789012345678901234",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**project_id:** `str` — The unique identifier of the project
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**member_id:** `str` — The unique identifier of the Member
     
 </dd>
 </dl>
@@ -1804,7 +1833,6 @@ client = DeepgramClient(
 )
 client.manage.v1.projects.models.list(
     project_id="123456-7890-1234-5678-901234",
-    include_outdated=True,
 )
 
 ```
@@ -1821,7 +1849,7 @@ client.manage.v1.projects.models.list(
 <dl>
 <dd>
 
-**project_id:** `typing.Optional[str]` — The unique identifier of the project
+**project_id:** `str` — The unique identifier of the project
     
 </dd>
 </dl>
@@ -1900,7 +1928,7 @@ client.manage.v1.projects.models.get(
 <dl>
 <dd>
 
-**project_id:** `typing.Optional[str]` — The unique identifier of the project
+**project_id:** `str` — The unique identifier of the project
     
 </dd>
 </dl>
@@ -1908,316 +1936,7 @@ client.manage.v1.projects.models.get(
 <dl>
 <dd>
 
-**model_id:** `typing.Optional[str]` — The specific UUID of the model
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## Manage V1 Projects Keys
-<details><summary><code>client.manage.v1.projects.keys.<a href="src/deepgram/manage/v1/projects/keys/client.py">list</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Retrieves all API keys associated with the specified project
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from deepgram import DeepgramClient
-
-client = DeepgramClient(
-    api_key="YOUR_API_KEY",
-)
-client.manage.v1.projects.keys.list(
-    project_id="123456-7890-1234-5678-901234",
-    status="active",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**project_id:** `typing.Optional[str]` — The unique identifier of the project
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**status:** `typing.Optional[KeysListRequestStatus]` — Only return keys with a specific status
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.manage.v1.projects.keys.<a href="src/deepgram/manage/v1/projects/keys/client.py">get</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Retrieves information about a specified API key
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from deepgram import DeepgramClient
-
-client = DeepgramClient(
-    api_key="YOUR_API_KEY",
-)
-client.manage.v1.projects.keys.get(
-    project_id="123456-7890-1234-5678-901234",
-    key_id="123456789012345678901234",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**project_id:** `typing.Optional[str]` — The unique identifier of the project
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**key_id:** `typing.Optional[str]` — The unique identifier of the API key
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## Manage V1 Projects Members
-<details><summary><code>client.manage.v1.projects.members.<a href="src/deepgram/manage/v1/projects/members/client.py">list</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Retrieves a list of members for a given project
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from deepgram import DeepgramClient
-
-client = DeepgramClient(
-    api_key="YOUR_API_KEY",
-)
-client.manage.v1.projects.members.list(
-    project_id="123456-7890-1234-5678-901234",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**project_id:** `typing.Optional[str]` — The unique identifier of the project
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.manage.v1.projects.members.<a href="src/deepgram/manage/v1/projects/members/client.py">delete</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Removes a member from the project using their unique member ID
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from deepgram import DeepgramClient
-
-client = DeepgramClient(
-    api_key="YOUR_API_KEY",
-)
-client.manage.v1.projects.members.delete(
-    project_id="123456-7890-1234-5678-901234",
-    member_id="123456789012345678901234",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**project_id:** `typing.Optional[str]` — The unique identifier of the project
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**member_id:** `typing.Optional[str]` — The unique identifier of the Member
+**model_id:** `str` — The specific UUID of the model
     
 </dd>
 </dl>
@@ -2265,8 +1984,6 @@ Generates a list of requests for a specific project
 <dd>
 
 ```python
-import datetime
-
 from deepgram import DeepgramClient
 
 client = DeepgramClient(
@@ -2274,20 +1991,8 @@ client = DeepgramClient(
 )
 client.manage.v1.projects.requests.list(
     project_id="123456-7890-1234-5678-901234",
-    start=datetime.datetime.fromisoformat(
-        "2024-01-15 09:30:00+00:00",
-    ),
-    end=datetime.datetime.fromisoformat(
-        "2024-01-15 09:30:00+00:00",
-    ),
-    limit=1,
-    page=1,
     accessor="12345678-1234-1234-1234-123456789012",
     request_id="12345678-1234-1234-1234-123456789012",
-    deployment="hosted",
-    endpoint="listen",
-    method="sync",
-    status="succeeded",
 )
 
 ```
@@ -2304,7 +2009,7 @@ client.manage.v1.projects.requests.list(
 <dl>
 <dd>
 
-**project_id:** `typing.Optional[str]` — The unique identifier of the project
+**project_id:** `str` — The unique identifier of the project
     
 </dd>
 </dl>
@@ -2455,7 +2160,7 @@ client.manage.v1.projects.requests.get(
 <dl>
 <dd>
 
-**project_id:** `typing.Optional[str]` — The unique identifier of the project
+**project_id:** `str` — The unique identifier of the project
     
 </dd>
 </dl>
@@ -2463,7 +2168,7 @@ client.manage.v1.projects.requests.get(
 <dl>
 <dd>
 
-**request_id:** `typing.Optional[str]` — The unique identifier of the request
+**request_id:** `str` — The unique identifier of the request
     
 </dd>
 </dl>
@@ -2518,50 +2223,10 @@ client = DeepgramClient(
 )
 client.manage.v1.projects.usage.get(
     project_id="123456-7890-1234-5678-901234",
-    start="start",
-    end="end",
     accessor="12345678-1234-1234-1234-123456789012",
-    alternatives=True,
-    callback_method=True,
-    callback=True,
-    channels=True,
-    custom_intent_mode=True,
-    custom_intent=True,
-    custom_topic_mode=True,
-    custom_topic=True,
-    deployment="hosted",
-    detect_entities=True,
-    detect_language=True,
-    diarize=True,
-    dictation=True,
-    encoding=True,
-    endpoint="listen",
-    extra=True,
-    filler_words=True,
-    intents=True,
-    keyterm=True,
-    keywords=True,
-    language=True,
-    measurements=True,
-    method="sync",
     model="6f548761-c9c0-429a-9315-11a1d28499c8",
-    multichannel=True,
-    numerals=True,
-    paragraphs=True,
-    profanity_filter=True,
-    punctuate=True,
-    redact=True,
-    replace=True,
     sample_rate=True,
-    search=True,
-    sentiment=True,
-    smart_format=True,
-    summarize=True,
     tag="tag1",
-    topics=True,
-    utt_split=True,
-    utterances=True,
-    version=True,
 )
 
 ```
@@ -2578,7 +2243,7 @@ client.manage.v1.projects.usage.get(
 <dl>
 <dd>
 
-**project_id:** `typing.Optional[str]` — The unique identifier of the project
+**project_id:** `str` — The unique identifier of the project
     
 </dd>
 </dl>
@@ -2950,8 +2615,293 @@ client.manage.v1.projects.usage.get(
 </dl>
 </details>
 
-## Manage V1 Projects Purchases
-<details><summary><code>client.manage.v1.projects.purchases.<a href="src/deepgram/manage/v1/projects/purchases/client.py">list</a>(...)</code></summary>
+## Manage V1 Projects Billing Balances
+<details><summary><code>client.manage.v1.projects.billing.balances.<a href="src/deepgram/manage/v1/projects/billing/balances/client.py">list</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Generates a list of outstanding balances for the specified project
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from deepgram import DeepgramClient
+
+client = DeepgramClient(
+    api_key="YOUR_API_KEY",
+)
+client.manage.v1.projects.billing.balances.list(
+    project_id="123456-7890-1234-5678-901234",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**project_id:** `str` — The unique identifier of the project
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.manage.v1.projects.billing.balances.<a href="src/deepgram/manage/v1/projects/billing/balances/client.py">get</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieves details about the specified balance
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from deepgram import DeepgramClient
+
+client = DeepgramClient(
+    api_key="YOUR_API_KEY",
+)
+client.manage.v1.projects.billing.balances.get(
+    project_id="123456-7890-1234-5678-901234",
+    balance_id="123456-7890-1234-5678-901234",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**project_id:** `str` — The unique identifier of the project
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**balance_id:** `str` — The unique identifier of the balance
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Manage V1 Projects Billing Breakdown
+<details><summary><code>client.manage.v1.projects.billing.breakdown.<a href="src/deepgram/manage/v1/projects/billing/breakdown/client.py">list</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieves the billing summary for a specific project, with various filter options or by grouping options.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from deepgram import DeepgramClient
+
+client = DeepgramClient(
+    api_key="YOUR_API_KEY",
+)
+client.manage.v1.projects.billing.breakdown.list(
+    project_id="123456-7890-1234-5678-901234",
+    accessor="12345678-1234-1234-1234-123456789012",
+    tag="tag1",
+    line_item="streaming::nova-3",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**project_id:** `str` — The unique identifier of the project
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**start:** `typing.Optional[str]` — Start date of the requested date range. Format accepted is YYYY-MM-DD
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**end:** `typing.Optional[str]` — End date of the requested date range. Format accepted is YYYY-MM-DD
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**accessor:** `typing.Optional[str]` — Filter for requests where a specific accessor was used
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**deployment:** `typing.Optional[BreakdownListRequestDeployment]` — Filter for requests where a specific deployment was used
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**tag:** `typing.Optional[str]` — Filter for requests where a specific tag was used
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**line_item:** `typing.Optional[str]` — Filter requests by line item (e.g. streaming::nova-3)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**grouping:** `typing.Optional[
+    typing.Union[
+        BreakdownListRequestGroupingItem,
+        typing.Sequence[BreakdownListRequestGroupingItem],
+    ]
+]` — Group billing breakdown by one or more dimensions (accessor, deployment, line_item, tags)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Manage V1 Projects Billing Purchases
+<details><summary><code>client.manage.v1.projects.billing.purchases.<a href="src/deepgram/manage/v1/projects/billing/purchases/client.py">list</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -2983,9 +2933,8 @@ from deepgram import DeepgramClient
 client = DeepgramClient(
     api_key="YOUR_API_KEY",
 )
-client.manage.v1.projects.purchases.list(
+client.manage.v1.projects.billing.purchases.list(
     project_id="123456-7890-1234-5678-901234",
-    limit=1,
 )
 
 ```
@@ -3002,7 +2951,7 @@ client.manage.v1.projects.purchases.list(
 <dl>
 <dd>
 
-**project_id:** `typing.Optional[str]` — The unique identifier of the project
+**project_id:** `str` — The unique identifier of the project
     
 </dd>
 </dl>
@@ -3011,86 +2960,6 @@ client.manage.v1.projects.purchases.list(
 <dd>
 
 **limit:** `typing.Optional[int]` — Number of results to return per page. Default 10. Range [1,1000]
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## Manage V1 Projects Members Scopes
-<details><summary><code>client.manage.v1.projects.members.scopes.<a href="src/deepgram/manage/v1/projects/members/scopes/client.py">list</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Retrieves a list of scopes for a specific member
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from deepgram import DeepgramClient
-
-client = DeepgramClient(
-    api_key="YOUR_API_KEY",
-)
-client.manage.v1.projects.members.scopes.list(
-    project_id="123456-7890-1234-5678-901234",
-    member_id="123456789012345678901234",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**project_id:** `typing.Optional[str]` — The unique identifier of the project
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**member_id:** `typing.Optional[str]` — The unique identifier of the Member
     
 </dd>
 </dl>
@@ -3161,7 +3030,7 @@ client.manage.v1.projects.members.invites.list(
 <dl>
 <dd>
 
-**project_id:** `typing.Optional[str]` — The unique identifier of the project
+**project_id:** `str` — The unique identifier of the project
     
 </dd>
 </dl>
@@ -3233,7 +3102,7 @@ client.manage.v1.projects.members.invites.create(
 <dl>
 <dd>
 
-**project_id:** `typing.Optional[str]` — The unique identifier of the project
+**project_id:** `str` — The unique identifier of the project
     
 </dd>
 </dl>
@@ -3320,7 +3189,7 @@ client.manage.v1.projects.members.invites.delete(
 <dl>
 <dd>
 
-**project_id:** `typing.Optional[str]` — The unique identifier of the project
+**project_id:** `str` — The unique identifier of the project
     
 </dd>
 </dl>
@@ -3328,7 +3197,7 @@ client.manage.v1.projects.members.invites.delete(
 <dl>
 <dd>
 
-**email:** `typing.Optional[str]` — The email address of the member
+**email:** `str` — The email address of the member
     
 </dd>
 </dl>
@@ -3348,8 +3217,8 @@ client.manage.v1.projects.members.invites.delete(
 </dl>
 </details>
 
-## Manage V1 Projects Usage Fields
-<details><summary><code>client.manage.v1.projects.usage.fields.<a href="src/deepgram/manage/v1/projects/usage/fields/client.py">list</a>(...)</code></summary>
+## Manage V1 Projects Members Scopes
+<details><summary><code>client.manage.v1.projects.members.scopes.<a href="src/deepgram/manage/v1/projects/members/scopes/client.py">list</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -3361,7 +3230,7 @@ client.manage.v1.projects.members.invites.delete(
 <dl>
 <dd>
 
-Lists the features, models, tags, languages, and processing method used for requests in the specified project
+Retrieves a list of scopes for a specific member
 </dd>
 </dl>
 </dd>
@@ -3381,10 +3250,9 @@ from deepgram import DeepgramClient
 client = DeepgramClient(
     api_key="YOUR_API_KEY",
 )
-client.manage.v1.projects.usage.fields.list(
+client.manage.v1.projects.members.scopes.list(
     project_id="123456-7890-1234-5678-901234",
-    start="start",
-    end="end",
+    member_id="123456789012345678901234",
 )
 
 ```
@@ -3401,7 +3269,7 @@ client.manage.v1.projects.usage.fields.list(
 <dl>
 <dd>
 
-**project_id:** `typing.Optional[str]` — The unique identifier of the project
+**project_id:** `str` — The unique identifier of the project
     
 </dd>
 </dl>
@@ -3409,7 +3277,7 @@ client.manage.v1.projects.usage.fields.list(
 <dl>
 <dd>
 
-**start:** `typing.Optional[str]` — Start date of the requested date range. Format accepted is YYYY-MM-DD
+**member_id:** `str` — The unique identifier of the Member
     
 </dd>
 </dl>
@@ -3417,7 +3285,87 @@ client.manage.v1.projects.usage.fields.list(
 <dl>
 <dd>
 
-**end:** `typing.Optional[str]` — End date of the requested date range. Format accepted is YYYY-MM-DD
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.manage.v1.projects.members.scopes.<a href="src/deepgram/manage/v1/projects/members/scopes/client.py">update</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Updates the scopes for a specific member
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from deepgram import DeepgramClient
+
+client = DeepgramClient(
+    api_key="YOUR_API_KEY",
+)
+client.manage.v1.projects.members.scopes.update(
+    project_id="123456-7890-1234-5678-901234",
+    member_id="123456789012345678901234",
+    scope="admin",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**project_id:** `str` — The unique identifier of the project
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**member_id:** `str` — The unique identifier of the Member
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**scope:** `str` — A scope to update
     
 </dd>
 </dl>
@@ -3472,51 +3420,10 @@ client = DeepgramClient(
 )
 client.manage.v1.projects.usage.breakdown.get(
     project_id="123456-7890-1234-5678-901234",
-    start="start",
-    end="end",
-    grouping="accessor",
     accessor="12345678-1234-1234-1234-123456789012",
-    alternatives=True,
-    callback_method=True,
-    callback=True,
-    channels=True,
-    custom_intent_mode=True,
-    custom_intent=True,
-    custom_topic_mode=True,
-    custom_topic=True,
-    deployment="hosted",
-    detect_entities=True,
-    detect_language=True,
-    diarize=True,
-    dictation=True,
-    encoding=True,
-    endpoint="listen",
-    extra=True,
-    filler_words=True,
-    intents=True,
-    keyterm=True,
-    keywords=True,
-    language=True,
-    measurements=True,
-    method="sync",
     model="6f548761-c9c0-429a-9315-11a1d28499c8",
-    multichannel=True,
-    numerals=True,
-    paragraphs=True,
-    profanity_filter=True,
-    punctuate=True,
-    redact=True,
-    replace=True,
     sample_rate=True,
-    search=True,
-    sentiment=True,
-    smart_format=True,
-    summarize=True,
     tag="tag1",
-    topics=True,
-    utt_split=True,
-    utterances=True,
-    version=True,
 )
 
 ```
@@ -3533,7 +3440,7 @@ client.manage.v1.projects.usage.breakdown.get(
 <dl>
 <dd>
 
-**project_id:** `typing.Optional[str]` — The unique identifier of the project
+**project_id:** `str` — The unique identifier of the project
     
 </dd>
 </dl>
@@ -3913,6 +3820,93 @@ client.manage.v1.projects.usage.breakdown.get(
 </dl>
 </details>
 
+## Manage V1 Projects Usage Fields
+<details><summary><code>client.manage.v1.projects.usage.fields.<a href="src/deepgram/manage/v1/projects/usage/fields/client.py">list</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Lists the features, models, tags, languages, and processing method used for requests in the specified project
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from deepgram import DeepgramClient
+
+client = DeepgramClient(
+    api_key="YOUR_API_KEY",
+)
+client.manage.v1.projects.usage.fields.list(
+    project_id="123456-7890-1234-5678-901234",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**project_id:** `str` — The unique identifier of the project
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**start:** `typing.Optional[str]` — Start date of the requested date range. Format accepted is YYYY-MM-DD
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**end:** `typing.Optional[str]` — End date of the requested date range. Format accepted is YYYY-MM-DD
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Read V1 Text
 <details><summary><code>client.read.v1.text.<a href="src/deepgram/read/v1/text/client.py">analyze</a>(...)</code></summary>
 <dl>
@@ -3926,7 +3920,7 @@ client.manage.v1.projects.usage.breakdown.get(
 <dl>
 <dd>
 
-Analyze text content using Deepgram's text analysis API
+Analyze text content using Deepgrams text analysis API
 </dd>
 </dl>
 </dd>
@@ -3947,17 +3941,6 @@ client = DeepgramClient(
     api_key="YOUR_API_KEY",
 )
 client.read.v1.text.analyze(
-    callback="callback",
-    callback_method="POST",
-    sentiment=True,
-    summarize="v2",
-    topics=True,
-    custom_topic="custom_topic",
-    custom_topic_mode="extended",
-    intents=True,
-    custom_intent="custom_intent",
-    custom_intent_mode="extended",
-    language="language",
     request={"url": "url"},
 )
 
@@ -4063,7 +4046,7 @@ client.read.v1.text.analyze(
 <dl>
 <dd>
 
-**language:** `typing.Optional[str]` — The [BCP-47 language tag](https://tools.ietf.org/html/bcp47) that hints at the primary spoken language. Depending on the Model and API endpoint you choose only certain languages are available
+**language:** `typing.Optional[TextAnalyzeRequestLanguage]` — The [BCP-47 language tag](https://tools.ietf.org/html/bcp47) that hints at the primary spoken language. Depending on the Model and API endpoint you choose only certain languages are available
     
 </dd>
 </dl>
@@ -4134,7 +4117,7 @@ client.self_hosted.v1.distribution_credentials.list(
 <dl>
 <dd>
 
-**project_id:** `typing.Optional[str]` — The unique identifier of the project
+**project_id:** `str` — The unique identifier of the project
     
 </dd>
 </dl>
@@ -4204,7 +4187,7 @@ client.self_hosted.v1.distribution_credentials.create(
 <dl>
 <dd>
 
-**project_id:** `typing.Optional[str]` — The unique identifier of the project
+**project_id:** `str` — The unique identifier of the project
     
 </dd>
 </dl>
@@ -4304,7 +4287,7 @@ client.self_hosted.v1.distribution_credentials.get(
 <dl>
 <dd>
 
-**project_id:** `typing.Optional[str]` — The unique identifier of the project
+**project_id:** `str` — The unique identifier of the project
     
 </dd>
 </dl>
@@ -4383,7 +4366,7 @@ client.self_hosted.v1.distribution_credentials.delete(
 <dl>
 <dd>
 
-**project_id:** `typing.Optional[str]` — The unique identifier of the project
+**project_id:** `str` — The unique identifier of the project
     
 </dd>
 </dl>

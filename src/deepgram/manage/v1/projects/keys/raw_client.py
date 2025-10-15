@@ -10,10 +10,15 @@ from .....core.jsonable_encoder import jsonable_encoder
 from .....core.pydantic_utilities import parse_obj_as
 from .....core.request_options import RequestOptions
 from .....errors.bad_request_error import BadRequestError
-from .....types.error_response import ErrorResponse
+from .....types.create_key_v1request_one import CreateKeyV1RequestOne
+from .....types.create_key_v1response import CreateKeyV1Response
+from .....types.delete_project_key_v1response import DeleteProjectKeyV1Response
 from .....types.get_project_key_v1response import GetProjectKeyV1Response
 from .....types.list_project_keys_v1response import ListProjectKeysV1Response
 from .types.keys_list_request_status import KeysListRequestStatus
+
+# this is used as the default value for optional parameters
+OMIT = typing.cast(typing.Any, ...)
 
 
 class RawKeysClient:
@@ -22,7 +27,7 @@ class RawKeysClient:
 
     def list(
         self,
-        project_id: typing.Optional[str],
+        project_id: str,
         *,
         status: typing.Optional[KeysListRequestStatus] = None,
         request_options: typing.Optional[RequestOptions] = None,
@@ -32,7 +37,7 @@ class RawKeysClient:
 
         Parameters
         ----------
-        project_id : typing.Optional[str]
+        project_id : str
             The unique identifier of the project
 
         status : typing.Optional[KeysListRequestStatus]
@@ -69,9 +74,71 @@ class RawKeysClient:
                 raise BadRequestError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        ErrorResponse,
+                        typing.Optional[typing.Any],
                         parse_obj_as(
-                            type_=ErrorResponse,  # type: ignore
+                            type_=typing.Optional[typing.Any],  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def create(
+        self,
+        project_id: str,
+        *,
+        request: CreateKeyV1RequestOne,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[CreateKeyV1Response]:
+        """
+        Creates a new API key with specified settings for the project
+
+        Parameters
+        ----------
+        project_id : str
+            The unique identifier of the project
+
+        request : CreateKeyV1RequestOne
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[CreateKeyV1Response]
+            API key created successfully
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"v1/projects/{jsonable_encoder(project_id)}/keys",
+            base_url=self._client_wrapper.get_environment().base,
+            method="POST",
+            json=request,
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    CreateKeyV1Response,
+                    parse_obj_as(
+                        type_=CreateKeyV1Response,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 400:
+                raise BadRequestError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Optional[typing.Any],
+                        parse_obj_as(
+                            type_=typing.Optional[typing.Any],  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -82,21 +149,17 @@ class RawKeysClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def get(
-        self,
-        project_id: typing.Optional[str],
-        key_id: typing.Optional[str],
-        *,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, project_id: str, key_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[GetProjectKeyV1Response]:
         """
         Retrieves information about a specified API key
 
         Parameters
         ----------
-        project_id : typing.Optional[str]
+        project_id : str
             The unique identifier of the project
 
-        key_id : typing.Optional[str]
+        key_id : str
             The unique identifier of the API key
 
         request_options : typing.Optional[RequestOptions]
@@ -127,9 +190,63 @@ class RawKeysClient:
                 raise BadRequestError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        ErrorResponse,
+                        typing.Optional[typing.Any],
                         parse_obj_as(
-                            type_=ErrorResponse,  # type: ignore
+                            type_=typing.Optional[typing.Any],  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def delete(
+        self, project_id: str, key_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> HttpResponse[DeleteProjectKeyV1Response]:
+        """
+        Deletes an API key for a specific project
+
+        Parameters
+        ----------
+        project_id : str
+            The unique identifier of the project
+
+        key_id : str
+            The unique identifier of the API key
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[DeleteProjectKeyV1Response]
+            API key deleted
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"v1/projects/{jsonable_encoder(project_id)}/keys/{jsonable_encoder(key_id)}",
+            base_url=self._client_wrapper.get_environment().base,
+            method="DELETE",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    DeleteProjectKeyV1Response,
+                    parse_obj_as(
+                        type_=DeleteProjectKeyV1Response,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 400:
+                raise BadRequestError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Optional[typing.Any],
+                        parse_obj_as(
+                            type_=typing.Optional[typing.Any],  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -146,7 +263,7 @@ class AsyncRawKeysClient:
 
     async def list(
         self,
-        project_id: typing.Optional[str],
+        project_id: str,
         *,
         status: typing.Optional[KeysListRequestStatus] = None,
         request_options: typing.Optional[RequestOptions] = None,
@@ -156,7 +273,7 @@ class AsyncRawKeysClient:
 
         Parameters
         ----------
-        project_id : typing.Optional[str]
+        project_id : str
             The unique identifier of the project
 
         status : typing.Optional[KeysListRequestStatus]
@@ -193,9 +310,71 @@ class AsyncRawKeysClient:
                 raise BadRequestError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        ErrorResponse,
+                        typing.Optional[typing.Any],
                         parse_obj_as(
-                            type_=ErrorResponse,  # type: ignore
+                            type_=typing.Optional[typing.Any],  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def create(
+        self,
+        project_id: str,
+        *,
+        request: CreateKeyV1RequestOne,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[CreateKeyV1Response]:
+        """
+        Creates a new API key with specified settings for the project
+
+        Parameters
+        ----------
+        project_id : str
+            The unique identifier of the project
+
+        request : CreateKeyV1RequestOne
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[CreateKeyV1Response]
+            API key created successfully
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"v1/projects/{jsonable_encoder(project_id)}/keys",
+            base_url=self._client_wrapper.get_environment().base,
+            method="POST",
+            json=request,
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    CreateKeyV1Response,
+                    parse_obj_as(
+                        type_=CreateKeyV1Response,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 400:
+                raise BadRequestError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Optional[typing.Any],
+                        parse_obj_as(
+                            type_=typing.Optional[typing.Any],  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -206,21 +385,17 @@ class AsyncRawKeysClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def get(
-        self,
-        project_id: typing.Optional[str],
-        key_id: typing.Optional[str],
-        *,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, project_id: str, key_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[GetProjectKeyV1Response]:
         """
         Retrieves information about a specified API key
 
         Parameters
         ----------
-        project_id : typing.Optional[str]
+        project_id : str
             The unique identifier of the project
 
-        key_id : typing.Optional[str]
+        key_id : str
             The unique identifier of the API key
 
         request_options : typing.Optional[RequestOptions]
@@ -251,9 +426,63 @@ class AsyncRawKeysClient:
                 raise BadRequestError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        ErrorResponse,
+                        typing.Optional[typing.Any],
                         parse_obj_as(
-                            type_=ErrorResponse,  # type: ignore
+                            type_=typing.Optional[typing.Any],  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def delete(
+        self, project_id: str, key_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> AsyncHttpResponse[DeleteProjectKeyV1Response]:
+        """
+        Deletes an API key for a specific project
+
+        Parameters
+        ----------
+        project_id : str
+            The unique identifier of the project
+
+        key_id : str
+            The unique identifier of the API key
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[DeleteProjectKeyV1Response]
+            API key deleted
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"v1/projects/{jsonable_encoder(project_id)}/keys/{jsonable_encoder(key_id)}",
+            base_url=self._client_wrapper.get_environment().base,
+            method="DELETE",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    DeleteProjectKeyV1Response,
+                    parse_obj_as(
+                        type_=DeleteProjectKeyV1Response,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 400:
+                raise BadRequestError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Optional[typing.Any],
+                        parse_obj_as(
+                            type_=typing.Optional[typing.Any],  # type: ignore
                             object_=_response.json(),
                         ),
                     ),

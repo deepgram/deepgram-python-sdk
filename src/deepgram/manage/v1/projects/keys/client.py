@@ -4,10 +4,16 @@ import typing
 
 from .....core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from .....core.request_options import RequestOptions
+from .....types.create_key_v1request_one import CreateKeyV1RequestOne
+from .....types.create_key_v1response import CreateKeyV1Response
+from .....types.delete_project_key_v1response import DeleteProjectKeyV1Response
 from .....types.get_project_key_v1response import GetProjectKeyV1Response
 from .....types.list_project_keys_v1response import ListProjectKeysV1Response
 from .raw_client import AsyncRawKeysClient, RawKeysClient
 from .types.keys_list_request_status import KeysListRequestStatus
+
+# this is used as the default value for optional parameters
+OMIT = typing.cast(typing.Any, ...)
 
 
 class KeysClient:
@@ -27,7 +33,7 @@ class KeysClient:
 
     def list(
         self,
-        project_id: typing.Optional[str],
+        project_id: str,
         *,
         status: typing.Optional[KeysListRequestStatus] = None,
         request_options: typing.Optional[RequestOptions] = None,
@@ -37,7 +43,7 @@ class KeysClient:
 
         Parameters
         ----------
-        project_id : typing.Optional[str]
+        project_id : str
             The unique identifier of the project
 
         status : typing.Optional[KeysListRequestStatus]
@@ -60,28 +66,63 @@ class KeysClient:
         )
         client.manage.v1.projects.keys.list(
             project_id="123456-7890-1234-5678-901234",
-            status="active",
         )
         """
         _response = self._raw_client.list(project_id, status=status, request_options=request_options)
         return _response.data
 
-    def get(
+    def create(
         self,
-        project_id: typing.Optional[str],
-        key_id: typing.Optional[str],
+        project_id: str,
         *,
+        request: CreateKeyV1RequestOne,
         request_options: typing.Optional[RequestOptions] = None,
+    ) -> CreateKeyV1Response:
+        """
+        Creates a new API key with specified settings for the project
+
+        Parameters
+        ----------
+        project_id : str
+            The unique identifier of the project
+
+        request : CreateKeyV1RequestOne
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        CreateKeyV1Response
+            API key created successfully
+
+        Examples
+        --------
+        from deepgram import DeepgramClient
+
+        client = DeepgramClient(
+            api_key="YOUR_API_KEY",
+        )
+        client.manage.v1.projects.keys.create(
+            project_id="project_id",
+            request={"key": "value"},
+        )
+        """
+        _response = self._raw_client.create(project_id, request=request, request_options=request_options)
+        return _response.data
+
+    def get(
+        self, project_id: str, key_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> GetProjectKeyV1Response:
         """
         Retrieves information about a specified API key
 
         Parameters
         ----------
-        project_id : typing.Optional[str]
+        project_id : str
             The unique identifier of the project
 
-        key_id : typing.Optional[str]
+        key_id : str
             The unique identifier of the API key
 
         request_options : typing.Optional[RequestOptions]
@@ -107,6 +148,43 @@ class KeysClient:
         _response = self._raw_client.get(project_id, key_id, request_options=request_options)
         return _response.data
 
+    def delete(
+        self, project_id: str, key_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> DeleteProjectKeyV1Response:
+        """
+        Deletes an API key for a specific project
+
+        Parameters
+        ----------
+        project_id : str
+            The unique identifier of the project
+
+        key_id : str
+            The unique identifier of the API key
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        DeleteProjectKeyV1Response
+            API key deleted
+
+        Examples
+        --------
+        from deepgram import DeepgramClient
+
+        client = DeepgramClient(
+            api_key="YOUR_API_KEY",
+        )
+        client.manage.v1.projects.keys.delete(
+            project_id="123456-7890-1234-5678-901234",
+            key_id="123456789012345678901234",
+        )
+        """
+        _response = self._raw_client.delete(project_id, key_id, request_options=request_options)
+        return _response.data
+
 
 class AsyncKeysClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -125,7 +203,7 @@ class AsyncKeysClient:
 
     async def list(
         self,
-        project_id: typing.Optional[str],
+        project_id: str,
         *,
         status: typing.Optional[KeysListRequestStatus] = None,
         request_options: typing.Optional[RequestOptions] = None,
@@ -135,7 +213,7 @@ class AsyncKeysClient:
 
         Parameters
         ----------
-        project_id : typing.Optional[str]
+        project_id : str
             The unique identifier of the project
 
         status : typing.Optional[KeysListRequestStatus]
@@ -163,7 +241,6 @@ class AsyncKeysClient:
         async def main() -> None:
             await client.manage.v1.projects.keys.list(
                 project_id="123456-7890-1234-5678-901234",
-                status="active",
             )
 
 
@@ -172,22 +249,66 @@ class AsyncKeysClient:
         _response = await self._raw_client.list(project_id, status=status, request_options=request_options)
         return _response.data
 
-    async def get(
+    async def create(
         self,
-        project_id: typing.Optional[str],
-        key_id: typing.Optional[str],
+        project_id: str,
         *,
+        request: CreateKeyV1RequestOne,
         request_options: typing.Optional[RequestOptions] = None,
+    ) -> CreateKeyV1Response:
+        """
+        Creates a new API key with specified settings for the project
+
+        Parameters
+        ----------
+        project_id : str
+            The unique identifier of the project
+
+        request : CreateKeyV1RequestOne
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        CreateKeyV1Response
+            API key created successfully
+
+        Examples
+        --------
+        import asyncio
+
+        from deepgram import AsyncDeepgramClient
+
+        client = AsyncDeepgramClient(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.manage.v1.projects.keys.create(
+                project_id="project_id",
+                request={"key": "value"},
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.create(project_id, request=request, request_options=request_options)
+        return _response.data
+
+    async def get(
+        self, project_id: str, key_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> GetProjectKeyV1Response:
         """
         Retrieves information about a specified API key
 
         Parameters
         ----------
-        project_id : typing.Optional[str]
+        project_id : str
             The unique identifier of the project
 
-        key_id : typing.Optional[str]
+        key_id : str
             The unique identifier of the API key
 
         request_options : typing.Optional[RequestOptions]
@@ -219,4 +340,49 @@ class AsyncKeysClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.get(project_id, key_id, request_options=request_options)
+        return _response.data
+
+    async def delete(
+        self, project_id: str, key_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> DeleteProjectKeyV1Response:
+        """
+        Deletes an API key for a specific project
+
+        Parameters
+        ----------
+        project_id : str
+            The unique identifier of the project
+
+        key_id : str
+            The unique identifier of the API key
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        DeleteProjectKeyV1Response
+            API key deleted
+
+        Examples
+        --------
+        import asyncio
+
+        from deepgram import AsyncDeepgramClient
+
+        client = AsyncDeepgramClient(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.manage.v1.projects.keys.delete(
+                project_id="123456-7890-1234-5678-901234",
+                key_id="123456789012345678901234",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.delete(project_id, key_id, request_options=request_options)
         return _response.data

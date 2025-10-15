@@ -6,8 +6,15 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from . import keys, members
-_dynamic_imports: typing.Dict[str, str] = {"keys": ".keys", "members": ".members"}
+    from . import balances, breakdown, purchases
+    from .breakdown import BreakdownListRequestDeployment, BreakdownListRequestGroupingItem
+_dynamic_imports: typing.Dict[str, str] = {
+    "BreakdownListRequestDeployment": ".breakdown",
+    "BreakdownListRequestGroupingItem": ".breakdown",
+    "balances": ".balances",
+    "breakdown": ".breakdown",
+    "purchases": ".purchases",
+}
 
 
 def __getattr__(attr_name: str) -> typing.Any:
@@ -31,4 +38,4 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["keys", "members"]
+__all__ = ["BreakdownListRequestDeployment", "BreakdownListRequestGroupingItem", "balances", "breakdown", "purchases"]
