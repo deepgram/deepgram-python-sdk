@@ -3,23 +3,12 @@
 from __future__ import annotations
 
 import typing
-from contextlib import asynccontextmanager, contextmanager
 
-import websockets.exceptions
-import websockets.sync.client as websockets_sync_client
-from ...core.api_error import ApiError
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
-from ...core.request_options import RequestOptions
 from .raw_client import AsyncRawV1Client, RawV1Client
-from .socket_client import AsyncV1SocketClient, V1SocketClient
 
 if typing.TYPE_CHECKING:
     from .settings.client import AsyncSettingsClient, SettingsClient
-
-try:
-    from websockets.legacy.client import connect as websockets_client_connect  # type: ignore
-except ImportError:
-    from websockets import connect as websockets_client_connect  # type: ignore
 
 
 class V1Client:
@@ -38,50 +27,6 @@ class V1Client:
         RawV1Client
         """
         return self._raw_client
-
-    @contextmanager
-    def connect(
-        self, *, authorization: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.Iterator[V1SocketClient]:
-        """
-        Build a conversational voice agent using Deepgram's Voice Agent WebSocket
-
-        Parameters
-        ----------
-        authorization : typing.Optional[str]
-            Use your API key for authentication, or alternatively generate a [temporary token](/guides/fundamentals/token-based-authentication) and pass it via the `token` query parameter.
-
-            **Example:** `token %DEEPGRAM_API_KEY%` or `bearer %DEEPGRAM_TOKEN%`
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        V1SocketClient
-        """
-        ws_url = self._raw_client._client_wrapper.get_environment().agent + "/v1/agent/converse"
-        headers = self._raw_client._client_wrapper.get_headers()
-        if authorization is not None:
-            headers["Authorization"] = str(authorization)
-        if request_options and "additional_headers" in request_options:
-            headers.update(request_options["additional_headers"])
-        try:
-            with websockets_sync_client.connect(ws_url, additional_headers=headers) as protocol:
-                yield V1SocketClient(websocket=protocol)
-        except websockets.exceptions.InvalidStatusCode as exc:
-            status_code: int = exc.status_code
-            if status_code == 401:
-                raise ApiError(
-                    status_code=status_code,
-                    headers=dict(headers),
-                    body="Websocket initialized with invalid credentials.",
-                )
-            raise ApiError(
-                status_code=status_code,
-                headers=dict(headers),
-                body="Unexpected error when initializing websocket connection.",
-            )
 
     @property
     def settings(self):
@@ -108,50 +53,6 @@ class AsyncV1Client:
         AsyncRawV1Client
         """
         return self._raw_client
-
-    @asynccontextmanager
-    async def connect(
-        self, *, authorization: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.AsyncIterator[AsyncV1SocketClient]:
-        """
-        Build a conversational voice agent using Deepgram's Voice Agent WebSocket
-
-        Parameters
-        ----------
-        authorization : typing.Optional[str]
-            Use your API key for authentication, or alternatively generate a [temporary token](/guides/fundamentals/token-based-authentication) and pass it via the `token` query parameter.
-
-            **Example:** `token %DEEPGRAM_API_KEY%` or `bearer %DEEPGRAM_TOKEN%`
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        AsyncV1SocketClient
-        """
-        ws_url = self._raw_client._client_wrapper.get_environment().agent + "/v1/agent/converse"
-        headers = self._raw_client._client_wrapper.get_headers()
-        if authorization is not None:
-            headers["Authorization"] = str(authorization)
-        if request_options and "additional_headers" in request_options:
-            headers.update(request_options["additional_headers"])
-        try:
-            async with websockets_client_connect(ws_url, extra_headers=headers) as protocol:
-                yield AsyncV1SocketClient(websocket=protocol)
-        except websockets.exceptions.InvalidStatusCode as exc:
-            status_code: int = exc.status_code
-            if status_code == 401:
-                raise ApiError(
-                    status_code=status_code,
-                    headers=dict(headers),
-                    body="Websocket initialized with invalid credentials.",
-                )
-            raise ApiError(
-                status_code=status_code,
-                headers=dict(headers),
-                body="Unexpected error when initializing websocket connection.",
-            )
 
     @property
     def settings(self):

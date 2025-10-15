@@ -5,7 +5,11 @@ import typing
 from ......core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ......core.request_options import RequestOptions
 from ......types.list_project_member_scopes_v1response import ListProjectMemberScopesV1Response
+from ......types.update_project_member_scopes_v1response import UpdateProjectMemberScopesV1Response
 from .raw_client import AsyncRawScopesClient, RawScopesClient
+
+# this is used as the default value for optional parameters
+OMIT = typing.cast(typing.Any, ...)
 
 
 class ScopesClient:
@@ -24,21 +28,17 @@ class ScopesClient:
         return self._raw_client
 
     def list(
-        self,
-        project_id: typing.Optional[str],
-        member_id: typing.Optional[str],
-        *,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, project_id: str, member_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> ListProjectMemberScopesV1Response:
         """
         Retrieves a list of scopes for a specific member
 
         Parameters
         ----------
-        project_id : typing.Optional[str]
+        project_id : str
             The unique identifier of the project
 
-        member_id : typing.Optional[str]
+        member_id : str
             The unique identifier of the Member
 
         request_options : typing.Optional[RequestOptions]
@@ -64,6 +64,47 @@ class ScopesClient:
         _response = self._raw_client.list(project_id, member_id, request_options=request_options)
         return _response.data
 
+    def update(
+        self, project_id: str, member_id: str, *, scope: str, request_options: typing.Optional[RequestOptions] = None
+    ) -> UpdateProjectMemberScopesV1Response:
+        """
+        Updates the scopes for a specific member
+
+        Parameters
+        ----------
+        project_id : str
+            The unique identifier of the project
+
+        member_id : str
+            The unique identifier of the Member
+
+        scope : str
+            A scope to update
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        UpdateProjectMemberScopesV1Response
+            Updated the scopes for a specific member
+
+        Examples
+        --------
+        from deepgram import DeepgramClient
+
+        client = DeepgramClient(
+            api_key="YOUR_API_KEY",
+        )
+        client.manage.v1.projects.members.scopes.update(
+            project_id="123456-7890-1234-5678-901234",
+            member_id="123456789012345678901234",
+            scope="admin",
+        )
+        """
+        _response = self._raw_client.update(project_id, member_id, scope=scope, request_options=request_options)
+        return _response.data
+
 
 class AsyncScopesClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -81,21 +122,17 @@ class AsyncScopesClient:
         return self._raw_client
 
     async def list(
-        self,
-        project_id: typing.Optional[str],
-        member_id: typing.Optional[str],
-        *,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, project_id: str, member_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> ListProjectMemberScopesV1Response:
         """
         Retrieves a list of scopes for a specific member
 
         Parameters
         ----------
-        project_id : typing.Optional[str]
+        project_id : str
             The unique identifier of the project
 
-        member_id : typing.Optional[str]
+        member_id : str
             The unique identifier of the Member
 
         request_options : typing.Optional[RequestOptions]
@@ -127,4 +164,53 @@ class AsyncScopesClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.list(project_id, member_id, request_options=request_options)
+        return _response.data
+
+    async def update(
+        self, project_id: str, member_id: str, *, scope: str, request_options: typing.Optional[RequestOptions] = None
+    ) -> UpdateProjectMemberScopesV1Response:
+        """
+        Updates the scopes for a specific member
+
+        Parameters
+        ----------
+        project_id : str
+            The unique identifier of the project
+
+        member_id : str
+            The unique identifier of the Member
+
+        scope : str
+            A scope to update
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        UpdateProjectMemberScopesV1Response
+            Updated the scopes for a specific member
+
+        Examples
+        --------
+        import asyncio
+
+        from deepgram import AsyncDeepgramClient
+
+        client = AsyncDeepgramClient(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.manage.v1.projects.members.scopes.update(
+                project_id="123456-7890-1234-5678-901234",
+                member_id="123456789012345678901234",
+                scope="admin",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.update(project_id, member_id, scope=scope, request_options=request_options)
         return _response.data

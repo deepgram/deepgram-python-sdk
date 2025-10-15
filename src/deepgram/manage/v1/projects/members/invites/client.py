@@ -29,14 +29,14 @@ class InvitesClient:
         return self._raw_client
 
     def list(
-        self, project_id: typing.Optional[str], *, request_options: typing.Optional[RequestOptions] = None
+        self, project_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> ListProjectInvitesV1Response:
         """
         Generates a list of invites for a specific project
 
         Parameters
         ----------
-        project_id : typing.Optional[str]
+        project_id : str
             The unique identifier of the project
 
         request_options : typing.Optional[RequestOptions]
@@ -62,19 +62,14 @@ class InvitesClient:
         return _response.data
 
     def create(
-        self,
-        project_id: typing.Optional[str],
-        *,
-        email: str,
-        scope: str,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, project_id: str, *, email: str, scope: str, request_options: typing.Optional[RequestOptions] = None
     ) -> CreateProjectInviteV1Response:
         """
         Generates an invite for a specific project
 
         Parameters
         ----------
-        project_id : typing.Optional[str]
+        project_id : str
             The unique identifier of the project
 
         email : str
@@ -108,21 +103,17 @@ class InvitesClient:
         return _response.data
 
     def delete(
-        self,
-        project_id: typing.Optional[str],
-        email: typing.Optional[str],
-        *,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, project_id: str, email: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> DeleteProjectInviteV1Response:
         """
         Deletes an invite for a specific project
 
         Parameters
         ----------
-        project_id : typing.Optional[str]
+        project_id : str
             The unique identifier of the project
 
-        email : typing.Optional[str]
+        email : str
             The email address of the member
 
         request_options : typing.Optional[RequestOptions]
@@ -165,14 +156,14 @@ class AsyncInvitesClient:
         return self._raw_client
 
     async def list(
-        self, project_id: typing.Optional[str], *, request_options: typing.Optional[RequestOptions] = None
+        self, project_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> ListProjectInvitesV1Response:
         """
         Generates a list of invites for a specific project
 
         Parameters
         ----------
-        project_id : typing.Optional[str]
+        project_id : str
             The unique identifier of the project
 
         request_options : typing.Optional[RequestOptions]
@@ -206,19 +197,14 @@ class AsyncInvitesClient:
         return _response.data
 
     async def create(
-        self,
-        project_id: typing.Optional[str],
-        *,
-        email: str,
-        scope: str,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, project_id: str, *, email: str, scope: str, request_options: typing.Optional[RequestOptions] = None
     ) -> CreateProjectInviteV1Response:
         """
         Generates an invite for a specific project
 
         Parameters
         ----------
-        project_id : typing.Optional[str]
+        project_id : str
             The unique identifier of the project
 
         email : str
@@ -260,21 +246,17 @@ class AsyncInvitesClient:
         return _response.data
 
     async def delete(
-        self,
-        project_id: typing.Optional[str],
-        email: typing.Optional[str],
-        *,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, project_id: str, email: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> DeleteProjectInviteV1Response:
         """
         Deletes an invite for a specific project
 
         Parameters
         ----------
-        project_id : typing.Optional[str]
+        project_id : str
             The unique identifier of the project
 
-        email : typing.Optional[str]
+        email : str
             The email address of the member
 
         request_options : typing.Optional[RequestOptions]

@@ -9,11 +9,11 @@ from ....core.http_response import AsyncHttpResponse, HttpResponse
 from ....core.pydantic_utilities import parse_obj_as
 from ....core.request_options import RequestOptions
 from ....errors.bad_request_error import BadRequestError
-from ....types.error_response import ErrorResponse
 from .types.media_transcribe_request_callback_method import MediaTranscribeRequestCallbackMethod
 from .types.media_transcribe_request_custom_intent_mode import MediaTranscribeRequestCustomIntentMode
 from .types.media_transcribe_request_custom_topic_mode import MediaTranscribeRequestCustomTopicMode
 from .types.media_transcribe_request_encoding import MediaTranscribeRequestEncoding
+from .types.media_transcribe_request_language import MediaTranscribeRequestLanguage
 from .types.media_transcribe_request_model import MediaTranscribeRequestModel
 from .types.media_transcribe_request_summarize import MediaTranscribeRequestSummarize
 from .types.media_transcribe_request_version import MediaTranscribeRequestVersion
@@ -51,7 +51,7 @@ class RawMediaClient:
         filler_words: typing.Optional[bool] = None,
         keyterm: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         keywords: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
-        language: typing.Optional[str] = None,
+        language: typing.Optional[MediaTranscribeRequestLanguage] = None,
         measurements: typing.Optional[bool] = None,
         model: typing.Optional[MediaTranscribeRequestModel] = None,
         multichannel: typing.Optional[bool] = None,
@@ -135,7 +135,7 @@ class RawMediaClient:
         keywords : typing.Optional[typing.Union[str, typing.Sequence[str]]]
             Keywords can boost or suppress specialized terminology and brands
 
-        language : typing.Optional[str]
+        language : typing.Optional[MediaTranscribeRequestLanguage]
             The [BCP-47 language tag](https://tools.ietf.org/html/bcp47) that hints at the primary spoken language. Depending on the Model and API endpoint you choose only certain languages are available
 
         measurements : typing.Optional[bool]
@@ -252,9 +252,9 @@ class RawMediaClient:
                 raise BadRequestError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        ErrorResponse,
+                        typing.Optional[typing.Any],
                         parse_obj_as(
-                            type_=ErrorResponse,  # type: ignore
+                            type_=typing.Optional[typing.Any],  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -288,7 +288,7 @@ class RawMediaClient:
         filler_words: typing.Optional[bool] = None,
         keyterm: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         keywords: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
-        language: typing.Optional[str] = None,
+        language: typing.Optional[MediaTranscribeRequestLanguage] = None,
         measurements: typing.Optional[bool] = None,
         model: typing.Optional[MediaTranscribeRequestModel] = None,
         multichannel: typing.Optional[bool] = None,
@@ -372,7 +372,7 @@ class RawMediaClient:
         keywords : typing.Optional[typing.Union[str, typing.Sequence[str]]]
             Keywords can boost or suppress specialized terminology and brands
 
-        language : typing.Optional[str]
+        language : typing.Optional[MediaTranscribeRequestLanguage]
             The [BCP-47 language tag](https://tools.ietf.org/html/bcp47) that hints at the primary spoken language. Depending on the Model and API endpoint you choose only certain languages are available
 
         measurements : typing.Optional[bool]
@@ -487,9 +487,9 @@ class RawMediaClient:
                 raise BadRequestError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        ErrorResponse,
+                        typing.Optional[typing.Any],
                         parse_obj_as(
-                            type_=ErrorResponse,  # type: ignore
+                            type_=typing.Optional[typing.Any],  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -528,7 +528,7 @@ class AsyncRawMediaClient:
         filler_words: typing.Optional[bool] = None,
         keyterm: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         keywords: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
-        language: typing.Optional[str] = None,
+        language: typing.Optional[MediaTranscribeRequestLanguage] = None,
         measurements: typing.Optional[bool] = None,
         model: typing.Optional[MediaTranscribeRequestModel] = None,
         multichannel: typing.Optional[bool] = None,
@@ -612,7 +612,7 @@ class AsyncRawMediaClient:
         keywords : typing.Optional[typing.Union[str, typing.Sequence[str]]]
             Keywords can boost or suppress specialized terminology and brands
 
-        language : typing.Optional[str]
+        language : typing.Optional[MediaTranscribeRequestLanguage]
             The [BCP-47 language tag](https://tools.ietf.org/html/bcp47) that hints at the primary spoken language. Depending on the Model and API endpoint you choose only certain languages are available
 
         measurements : typing.Optional[bool]
@@ -729,9 +729,9 @@ class AsyncRawMediaClient:
                 raise BadRequestError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        ErrorResponse,
+                        typing.Optional[typing.Any],
                         parse_obj_as(
-                            type_=ErrorResponse,  # type: ignore
+                            type_=typing.Optional[typing.Any],  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -765,7 +765,7 @@ class AsyncRawMediaClient:
         filler_words: typing.Optional[bool] = None,
         keyterm: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         keywords: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
-        language: typing.Optional[str] = None,
+        language: typing.Optional[MediaTranscribeRequestLanguage] = None,
         measurements: typing.Optional[bool] = None,
         model: typing.Optional[MediaTranscribeRequestModel] = None,
         multichannel: typing.Optional[bool] = None,
@@ -849,7 +849,7 @@ class AsyncRawMediaClient:
         keywords : typing.Optional[typing.Union[str, typing.Sequence[str]]]
             Keywords can boost or suppress specialized terminology and brands
 
-        language : typing.Optional[str]
+        language : typing.Optional[MediaTranscribeRequestLanguage]
             The [BCP-47 language tag](https://tools.ietf.org/html/bcp47) that hints at the primary spoken language. Depending on the Model and API endpoint you choose only certain languages are available
 
         measurements : typing.Optional[bool]
@@ -964,9 +964,9 @@ class AsyncRawMediaClient:
                 raise BadRequestError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        ErrorResponse,
+                        typing.Optional[typing.Any],
                         parse_obj_as(
-                            type_=ErrorResponse,  # type: ignore
+                            type_=typing.Optional[typing.Any],  # type: ignore
                             object_=_response.json(),
                         ),
                     ),

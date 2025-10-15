@@ -2,4 +2,4 @@
 
 import typing
 
-ListenV2Keyterm = typing.Optional[typing.Any]
+ListenV2Keyterm = typing.Union[str, typing.List[str]]

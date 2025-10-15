@@ -10,7 +10,6 @@ from ......core.jsonable_encoder import jsonable_encoder
 from ......core.pydantic_utilities import parse_obj_as
 from ......core.request_options import RequestOptions
 from ......errors.bad_request_error import BadRequestError
-from ......types.error_response import ErrorResponse
 from ......types.usage_breakdown_v1response import UsageBreakdownV1Response
 from .types.breakdown_get_request_deployment import BreakdownGetRequestDeployment
 from .types.breakdown_get_request_endpoint import BreakdownGetRequestEndpoint
@@ -24,7 +23,7 @@ class RawBreakdownClient:
 
     def get(
         self,
-        project_id: typing.Optional[str],
+        project_id: str,
         *,
         start: typing.Optional[str] = None,
         end: typing.Optional[str] = None,
@@ -78,7 +77,7 @@ class RawBreakdownClient:
 
         Parameters
         ----------
-        project_id : typing.Optional[str]
+        project_id : str
             The unique identifier of the project
 
         start : typing.Optional[str]
@@ -291,9 +290,9 @@ class RawBreakdownClient:
                 raise BadRequestError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        ErrorResponse,
+                        typing.Optional[typing.Any],
                         parse_obj_as(
-                            type_=ErrorResponse,  # type: ignore
+                            type_=typing.Optional[typing.Any],  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -310,7 +309,7 @@ class AsyncRawBreakdownClient:
 
     async def get(
         self,
-        project_id: typing.Optional[str],
+        project_id: str,
         *,
         start: typing.Optional[str] = None,
         end: typing.Optional[str] = None,
@@ -364,7 +363,7 @@ class AsyncRawBreakdownClient:
 
         Parameters
         ----------
-        project_id : typing.Optional[str]
+        project_id : str
             The unique identifier of the project
 
         start : typing.Optional[str]
@@ -577,9 +576,9 @@ class AsyncRawBreakdownClient:
                 raise BadRequestError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        ErrorResponse,
+                        typing.Optional[typing.Any],
                         parse_obj_as(
-                            type_=ErrorResponse,  # type: ignore
+                            type_=typing.Optional[typing.Any],  # type: ignore
                             object_=_response.json(),
                         ),
                     ),

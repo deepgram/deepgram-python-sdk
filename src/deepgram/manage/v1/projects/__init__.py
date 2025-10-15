@@ -6,7 +6,7 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from . import balances, keys, members, models, purchases, requests, usage
+    from . import billing, keys, members, models, requests, usage
     from .keys import KeysListRequestStatus
     from .requests import (
         RequestsListRequestDeployment,
@@ -24,11 +24,10 @@ _dynamic_imports: typing.Dict[str, str] = {
     "UsageGetRequestDeployment": ".usage",
     "UsageGetRequestEndpoint": ".usage",
     "UsageGetRequestMethod": ".usage",
-    "balances": ".balances",
+    "billing": ".billing",
     "keys": ".keys",
     "members": ".members",
     "models": ".models",
-    "purchases": ".purchases",
     "requests": ".requests",
     "usage": ".usage",
 }
@@ -64,11 +63,10 @@ __all__ = [
     "UsageGetRequestDeployment",
     "UsageGetRequestEndpoint",
     "UsageGetRequestMethod",
-    "balances",
+    "billing",
     "keys",
     "members",
     "models",
-    "purchases",
     "requests",
     "usage",
 ]
