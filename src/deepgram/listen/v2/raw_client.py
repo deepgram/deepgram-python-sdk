@@ -73,7 +73,7 @@ class RawV2Client:
         -------
         V2SocketClient
         """
-        ws_url = self._client_wrapper.get_environment().preview + "/v2/listen"
+        ws_url = self._client_wrapper.get_environment().production + "/v2/listen"
         query_params = httpx.QueryParams()
         if model is not None:
             query_params = query_params.add("model", model)
@@ -173,7 +173,7 @@ class AsyncRawV2Client:
         -------
         AsyncV2SocketClient
         """
-        ws_url = self._client_wrapper.get_environment().preview + "/v2/listen"
+        ws_url = self._client_wrapper.get_environment().production + "/v2/listen"
         query_params = httpx.QueryParams()
         if model is not None:
             query_params = query_params.add("model", model)

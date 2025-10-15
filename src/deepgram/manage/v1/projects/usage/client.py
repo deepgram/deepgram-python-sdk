@@ -21,8 +21,8 @@ class UsageClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._raw_client = RawUsageClient(client_wrapper=client_wrapper)
         self._client_wrapper = client_wrapper
-        self._fields: typing.Optional[FieldsClient] = None
         self._breakdown: typing.Optional[BreakdownClient] = None
+        self._fields: typing.Optional[FieldsClient] = None
 
     @property
     def with_raw_response(self) -> RawUsageClient:
@@ -37,7 +37,7 @@ class UsageClient:
 
     def get(
         self,
-        project_id: typing.Optional[str],
+        project_id: str,
         *,
         start: typing.Optional[str] = None,
         end: typing.Optional[str] = None,
@@ -90,7 +90,7 @@ class UsageClient:
 
         Parameters
         ----------
-        project_id : typing.Optional[str]
+        project_id : str
             The unique identifier of the project
 
         start : typing.Optional[str]
@@ -242,50 +242,10 @@ class UsageClient:
         )
         client.manage.v1.projects.usage.get(
             project_id="123456-7890-1234-5678-901234",
-            start="start",
-            end="end",
             accessor="12345678-1234-1234-1234-123456789012",
-            alternatives=True,
-            callback_method=True,
-            callback=True,
-            channels=True,
-            custom_intent_mode=True,
-            custom_intent=True,
-            custom_topic_mode=True,
-            custom_topic=True,
-            deployment="hosted",
-            detect_entities=True,
-            detect_language=True,
-            diarize=True,
-            dictation=True,
-            encoding=True,
-            endpoint="listen",
-            extra=True,
-            filler_words=True,
-            intents=True,
-            keyterm=True,
-            keywords=True,
-            language=True,
-            measurements=True,
-            method="sync",
             model="6f548761-c9c0-429a-9315-11a1d28499c8",
-            multichannel=True,
-            numerals=True,
-            paragraphs=True,
-            profanity_filter=True,
-            punctuate=True,
-            redact=True,
-            replace=True,
             sample_rate=True,
-            search=True,
-            sentiment=True,
-            smart_format=True,
-            summarize=True,
             tag="tag1",
-            topics=True,
-            utt_split=True,
-            utterances=True,
-            version=True,
         )
         """
         _response = self._raw_client.get(
@@ -339,14 +299,6 @@ class UsageClient:
         return _response.data
 
     @property
-    def fields(self):
-        if self._fields is None:
-            from .fields.client import FieldsClient  # noqa: E402
-
-            self._fields = FieldsClient(client_wrapper=self._client_wrapper)
-        return self._fields
-
-    @property
     def breakdown(self):
         if self._breakdown is None:
             from .breakdown.client import BreakdownClient  # noqa: E402
@@ -354,13 +306,21 @@ class UsageClient:
             self._breakdown = BreakdownClient(client_wrapper=self._client_wrapper)
         return self._breakdown
 
+    @property
+    def fields(self):
+        if self._fields is None:
+            from .fields.client import FieldsClient  # noqa: E402
+
+            self._fields = FieldsClient(client_wrapper=self._client_wrapper)
+        return self._fields
+
 
 class AsyncUsageClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._raw_client = AsyncRawUsageClient(client_wrapper=client_wrapper)
         self._client_wrapper = client_wrapper
-        self._fields: typing.Optional[AsyncFieldsClient] = None
         self._breakdown: typing.Optional[AsyncBreakdownClient] = None
+        self._fields: typing.Optional[AsyncFieldsClient] = None
 
     @property
     def with_raw_response(self) -> AsyncRawUsageClient:
@@ -375,7 +335,7 @@ class AsyncUsageClient:
 
     async def get(
         self,
-        project_id: typing.Optional[str],
+        project_id: str,
         *,
         start: typing.Optional[str] = None,
         end: typing.Optional[str] = None,
@@ -428,7 +388,7 @@ class AsyncUsageClient:
 
         Parameters
         ----------
-        project_id : typing.Optional[str]
+        project_id : str
             The unique identifier of the project
 
         start : typing.Optional[str]
@@ -585,50 +545,10 @@ class AsyncUsageClient:
         async def main() -> None:
             await client.manage.v1.projects.usage.get(
                 project_id="123456-7890-1234-5678-901234",
-                start="start",
-                end="end",
                 accessor="12345678-1234-1234-1234-123456789012",
-                alternatives=True,
-                callback_method=True,
-                callback=True,
-                channels=True,
-                custom_intent_mode=True,
-                custom_intent=True,
-                custom_topic_mode=True,
-                custom_topic=True,
-                deployment="hosted",
-                detect_entities=True,
-                detect_language=True,
-                diarize=True,
-                dictation=True,
-                encoding=True,
-                endpoint="listen",
-                extra=True,
-                filler_words=True,
-                intents=True,
-                keyterm=True,
-                keywords=True,
-                language=True,
-                measurements=True,
-                method="sync",
                 model="6f548761-c9c0-429a-9315-11a1d28499c8",
-                multichannel=True,
-                numerals=True,
-                paragraphs=True,
-                profanity_filter=True,
-                punctuate=True,
-                redact=True,
-                replace=True,
                 sample_rate=True,
-                search=True,
-                sentiment=True,
-                smart_format=True,
-                summarize=True,
                 tag="tag1",
-                topics=True,
-                utt_split=True,
-                utterances=True,
-                version=True,
             )
 
 
@@ -685,17 +605,17 @@ class AsyncUsageClient:
         return _response.data
 
     @property
-    def fields(self):
-        if self._fields is None:
-            from .fields.client import AsyncFieldsClient  # noqa: E402
-
-            self._fields = AsyncFieldsClient(client_wrapper=self._client_wrapper)
-        return self._fields
-
-    @property
     def breakdown(self):
         if self._breakdown is None:
             from .breakdown.client import AsyncBreakdownClient  # noqa: E402
 
             self._breakdown = AsyncBreakdownClient(client_wrapper=self._client_wrapper)
         return self._breakdown
+
+    @property
+    def fields(self):
+        if self._fields is None:
+            from .fields.client import AsyncFieldsClient  # noqa: E402
+
+            self._fields = AsyncFieldsClient(client_wrapper=self._client_wrapper)
+        return self._fields

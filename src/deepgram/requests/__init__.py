@@ -13,6 +13,10 @@ if typing.TYPE_CHECKING:
     from .agent_think_models_v1response_models_item_three import AgentThinkModelsV1ResponseModelsItemThreeParams
     from .agent_think_models_v1response_models_item_two import AgentThinkModelsV1ResponseModelsItemTwoParams
     from .agent_think_models_v1response_models_item_zero import AgentThinkModelsV1ResponseModelsItemZeroParams
+    from .billing_breakdown_v1response import BillingBreakdownV1ResponseParams
+    from .billing_breakdown_v1response_resolution import BillingBreakdownV1ResponseResolutionParams
+    from .billing_breakdown_v1response_results_item import BillingBreakdownV1ResponseResultsItemParams
+    from .billing_breakdown_v1response_results_item_grouping import BillingBreakdownV1ResponseResultsItemGroupingParams
     from .create_key_v1response import CreateKeyV1ResponseParams
     from .create_project_distribution_credentials_v1response import CreateProjectDistributionCredentialsV1ResponseParams
     from .create_project_distribution_credentials_v1response_distribution_credentials import (
@@ -120,6 +124,7 @@ if typing.TYPE_CHECKING:
     from .listen_v1response_results_utterances_item_words_item import (
         ListenV1ResponseResultsUtterancesItemWordsItemParams,
     )
+    from .listen_v2keyterm import ListenV2KeytermParams
     from .project_request_response import ProjectRequestResponseParams
     from .read_v1request import ReadV1RequestParams
     from .read_v1request_text import ReadV1RequestTextParams
@@ -170,6 +175,10 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AgentThinkModelsV1ResponseModelsItemTwoParams": ".agent_think_models_v1response_models_item_two",
     "AgentThinkModelsV1ResponseModelsItemZeroParams": ".agent_think_models_v1response_models_item_zero",
     "AgentThinkModelsV1ResponseParams": ".agent_think_models_v1response",
+    "BillingBreakdownV1ResponseParams": ".billing_breakdown_v1response",
+    "BillingBreakdownV1ResponseResolutionParams": ".billing_breakdown_v1response_resolution",
+    "BillingBreakdownV1ResponseResultsItemGroupingParams": ".billing_breakdown_v1response_results_item_grouping",
+    "BillingBreakdownV1ResponseResultsItemParams": ".billing_breakdown_v1response_results_item",
     "CreateKeyV1ResponseParams": ".create_key_v1response",
     "CreateProjectDistributionCredentialsV1ResponseDistributionCredentialsParams": ".create_project_distribution_credentials_v1response_distribution_credentials",
     "CreateProjectDistributionCredentialsV1ResponseMemberParams": ".create_project_distribution_credentials_v1response_member",
@@ -245,6 +254,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ListenV1ResponseResultsUtterancesItemParams": ".listen_v1response_results_utterances_item",
     "ListenV1ResponseResultsUtterancesItemWordsItemParams": ".listen_v1response_results_utterances_item_words_item",
     "ListenV1ResponseResultsUtterancesParams": ".listen_v1response_results_utterances",
+    "ListenV2KeytermParams": ".listen_v2keyterm",
     "ProjectRequestResponseParams": ".project_request_response",
     "ReadV1RequestParams": ".read_v1request",
     "ReadV1RequestTextParams": ".read_v1request_text",
@@ -315,6 +325,10 @@ __all__ = [
     "AgentThinkModelsV1ResponseModelsItemTwoParams",
     "AgentThinkModelsV1ResponseModelsItemZeroParams",
     "AgentThinkModelsV1ResponseParams",
+    "BillingBreakdownV1ResponseParams",
+    "BillingBreakdownV1ResponseResolutionParams",
+    "BillingBreakdownV1ResponseResultsItemGroupingParams",
+    "BillingBreakdownV1ResponseResultsItemParams",
     "CreateKeyV1ResponseParams",
     "CreateProjectDistributionCredentialsV1ResponseDistributionCredentialsParams",
     "CreateProjectDistributionCredentialsV1ResponseMemberParams",
@@ -390,6 +404,7 @@ __all__ = [
     "ListenV1ResponseResultsUtterancesItemParams",
     "ListenV1ResponseResultsUtterancesItemWordsItemParams",
     "ListenV1ResponseResultsUtterancesParams",
+    "ListenV2KeytermParams",
     "ProjectRequestResponseParams",
     "ReadV1RequestParams",
     "ReadV1RequestTextParams",

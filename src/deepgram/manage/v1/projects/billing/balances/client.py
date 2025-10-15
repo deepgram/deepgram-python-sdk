@@ -2,10 +2,10 @@
 
 import typing
 
-from .....core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
-from .....core.request_options import RequestOptions
-from .....types.get_project_balance_v1response import GetProjectBalanceV1Response
-from .....types.list_project_balances_v1response import ListProjectBalancesV1Response
+from ......core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
+from ......core.request_options import RequestOptions
+from ......types.get_project_balance_v1response import GetProjectBalanceV1Response
+from ......types.list_project_balances_v1response import ListProjectBalancesV1Response
 from .raw_client import AsyncRawBalancesClient, RawBalancesClient
 
 
@@ -25,14 +25,14 @@ class BalancesClient:
         return self._raw_client
 
     def list(
-        self, project_id: typing.Optional[str], *, request_options: typing.Optional[RequestOptions] = None
+        self, project_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> ListProjectBalancesV1Response:
         """
         Generates a list of outstanding balances for the specified project
 
         Parameters
         ----------
-        project_id : typing.Optional[str]
+        project_id : str
             The unique identifier of the project
 
         request_options : typing.Optional[RequestOptions]
@@ -50,7 +50,7 @@ class BalancesClient:
         client = DeepgramClient(
             api_key="YOUR_API_KEY",
         )
-        client.manage.v1.projects.balances.list(
+        client.manage.v1.projects.billing.balances.list(
             project_id="123456-7890-1234-5678-901234",
         )
         """
@@ -58,21 +58,17 @@ class BalancesClient:
         return _response.data
 
     def get(
-        self,
-        project_id: typing.Optional[str],
-        balance_id: typing.Optional[str],
-        *,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, project_id: str, balance_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> GetProjectBalanceV1Response:
         """
         Retrieves details about the specified balance
 
         Parameters
         ----------
-        project_id : typing.Optional[str]
+        project_id : str
             The unique identifier of the project
 
-        balance_id : typing.Optional[str]
+        balance_id : str
             The unique identifier of the balance
 
         request_options : typing.Optional[RequestOptions]
@@ -90,7 +86,7 @@ class BalancesClient:
         client = DeepgramClient(
             api_key="YOUR_API_KEY",
         )
-        client.manage.v1.projects.balances.get(
+        client.manage.v1.projects.billing.balances.get(
             project_id="123456-7890-1234-5678-901234",
             balance_id="123456-7890-1234-5678-901234",
         )
@@ -115,14 +111,14 @@ class AsyncBalancesClient:
         return self._raw_client
 
     async def list(
-        self, project_id: typing.Optional[str], *, request_options: typing.Optional[RequestOptions] = None
+        self, project_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> ListProjectBalancesV1Response:
         """
         Generates a list of outstanding balances for the specified project
 
         Parameters
         ----------
-        project_id : typing.Optional[str]
+        project_id : str
             The unique identifier of the project
 
         request_options : typing.Optional[RequestOptions]
@@ -145,7 +141,7 @@ class AsyncBalancesClient:
 
 
         async def main() -> None:
-            await client.manage.v1.projects.balances.list(
+            await client.manage.v1.projects.billing.balances.list(
                 project_id="123456-7890-1234-5678-901234",
             )
 
@@ -156,21 +152,17 @@ class AsyncBalancesClient:
         return _response.data
 
     async def get(
-        self,
-        project_id: typing.Optional[str],
-        balance_id: typing.Optional[str],
-        *,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, project_id: str, balance_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> GetProjectBalanceV1Response:
         """
         Retrieves details about the specified balance
 
         Parameters
         ----------
-        project_id : typing.Optional[str]
+        project_id : str
             The unique identifier of the project
 
-        balance_id : typing.Optional[str]
+        balance_id : str
             The unique identifier of the balance
 
         request_options : typing.Optional[RequestOptions]
@@ -193,7 +185,7 @@ class AsyncBalancesClient:
 
 
         async def main() -> None:
-            await client.manage.v1.projects.balances.get(
+            await client.manage.v1.projects.billing.balances.get(
                 project_id="123456-7890-1234-5678-901234",
                 balance_id="123456-7890-1234-5678-901234",
             )

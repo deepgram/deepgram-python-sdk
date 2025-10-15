@@ -19,8 +19,8 @@ class MembersClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._raw_client = RawMembersClient(client_wrapper=client_wrapper)
         self._client_wrapper = client_wrapper
-        self._scopes: typing.Optional[ScopesClient] = None
         self._invites: typing.Optional[InvitesClient] = None
+        self._scopes: typing.Optional[ScopesClient] = None
 
     @property
     def with_raw_response(self) -> RawMembersClient:
@@ -34,14 +34,14 @@ class MembersClient:
         return self._raw_client
 
     def list(
-        self, project_id: typing.Optional[str], *, request_options: typing.Optional[RequestOptions] = None
+        self, project_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> ListProjectMembersV1Response:
         """
         Retrieves a list of members for a given project
 
         Parameters
         ----------
-        project_id : typing.Optional[str]
+        project_id : str
             The unique identifier of the project
 
         request_options : typing.Optional[RequestOptions]
@@ -67,21 +67,17 @@ class MembersClient:
         return _response.data
 
     def delete(
-        self,
-        project_id: typing.Optional[str],
-        member_id: typing.Optional[str],
-        *,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, project_id: str, member_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> DeleteProjectMemberV1Response:
         """
         Removes a member from the project using their unique member ID
 
         Parameters
         ----------
-        project_id : typing.Optional[str]
+        project_id : str
             The unique identifier of the project
 
-        member_id : typing.Optional[str]
+        member_id : str
             The unique identifier of the Member
 
         request_options : typing.Optional[RequestOptions]
@@ -108,14 +104,6 @@ class MembersClient:
         return _response.data
 
     @property
-    def scopes(self):
-        if self._scopes is None:
-            from .scopes.client import ScopesClient  # noqa: E402
-
-            self._scopes = ScopesClient(client_wrapper=self._client_wrapper)
-        return self._scopes
-
-    @property
     def invites(self):
         if self._invites is None:
             from .invites.client import InvitesClient  # noqa: E402
@@ -123,13 +111,21 @@ class MembersClient:
             self._invites = InvitesClient(client_wrapper=self._client_wrapper)
         return self._invites
 
+    @property
+    def scopes(self):
+        if self._scopes is None:
+            from .scopes.client import ScopesClient  # noqa: E402
+
+            self._scopes = ScopesClient(client_wrapper=self._client_wrapper)
+        return self._scopes
+
 
 class AsyncMembersClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._raw_client = AsyncRawMembersClient(client_wrapper=client_wrapper)
         self._client_wrapper = client_wrapper
-        self._scopes: typing.Optional[AsyncScopesClient] = None
         self._invites: typing.Optional[AsyncInvitesClient] = None
+        self._scopes: typing.Optional[AsyncScopesClient] = None
 
     @property
     def with_raw_response(self) -> AsyncRawMembersClient:
@@ -143,14 +139,14 @@ class AsyncMembersClient:
         return self._raw_client
 
     async def list(
-        self, project_id: typing.Optional[str], *, request_options: typing.Optional[RequestOptions] = None
+        self, project_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> ListProjectMembersV1Response:
         """
         Retrieves a list of members for a given project
 
         Parameters
         ----------
-        project_id : typing.Optional[str]
+        project_id : str
             The unique identifier of the project
 
         request_options : typing.Optional[RequestOptions]
@@ -184,21 +180,17 @@ class AsyncMembersClient:
         return _response.data
 
     async def delete(
-        self,
-        project_id: typing.Optional[str],
-        member_id: typing.Optional[str],
-        *,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, project_id: str, member_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> DeleteProjectMemberV1Response:
         """
         Removes a member from the project using their unique member ID
 
         Parameters
         ----------
-        project_id : typing.Optional[str]
+        project_id : str
             The unique identifier of the project
 
-        member_id : typing.Optional[str]
+        member_id : str
             The unique identifier of the Member
 
         request_options : typing.Optional[RequestOptions]
@@ -233,17 +225,17 @@ class AsyncMembersClient:
         return _response.data
 
     @property
-    def scopes(self):
-        if self._scopes is None:
-            from .scopes.client import AsyncScopesClient  # noqa: E402
-
-            self._scopes = AsyncScopesClient(client_wrapper=self._client_wrapper)
-        return self._scopes
-
-    @property
     def invites(self):
         if self._invites is None:
             from .invites.client import AsyncInvitesClient  # noqa: E402
 
             self._invites = AsyncInvitesClient(client_wrapper=self._client_wrapper)
         return self._invites
+
+    @property
+    def scopes(self):
+        if self._scopes is None:
+            from .scopes.client import AsyncScopesClient  # noqa: E402
+
+            self._scopes = AsyncScopesClient(client_wrapper=self._client_wrapper)
+        return self._scopes
