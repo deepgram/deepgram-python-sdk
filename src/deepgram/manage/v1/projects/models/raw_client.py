@@ -10,7 +10,6 @@ from .....core.jsonable_encoder import jsonable_encoder
 from .....core.pydantic_utilities import parse_obj_as
 from .....core.request_options import RequestOptions
 from .....errors.bad_request_error import BadRequestError
-from .....types.error_response import ErrorResponse
 from .....types.get_model_v1response import GetModelV1Response
 from .....types.list_models_v1response import ListModelsV1Response
 
@@ -21,7 +20,7 @@ class RawModelsClient:
 
     def list(
         self,
-        project_id: typing.Optional[str],
+        project_id: str,
         *,
         include_outdated: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
@@ -31,7 +30,7 @@ class RawModelsClient:
 
         Parameters
         ----------
-        project_id : typing.Optional[str]
+        project_id : str
             The unique identifier of the project
 
         include_outdated : typing.Optional[bool]
@@ -68,9 +67,9 @@ class RawModelsClient:
                 raise BadRequestError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        ErrorResponse,
+                        typing.Optional[typing.Any],
                         parse_obj_as(
-                            type_=ErrorResponse,  # type: ignore
+                            type_=typing.Optional[typing.Any],  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -81,21 +80,17 @@ class RawModelsClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def get(
-        self,
-        project_id: typing.Optional[str],
-        model_id: typing.Optional[str],
-        *,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, project_id: str, model_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[GetModelV1Response]:
         """
         Returns metadata for a specific model
 
         Parameters
         ----------
-        project_id : typing.Optional[str]
+        project_id : str
             The unique identifier of the project
 
-        model_id : typing.Optional[str]
+        model_id : str
             The specific UUID of the model
 
         request_options : typing.Optional[RequestOptions]
@@ -126,9 +121,9 @@ class RawModelsClient:
                 raise BadRequestError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        ErrorResponse,
+                        typing.Optional[typing.Any],
                         parse_obj_as(
-                            type_=ErrorResponse,  # type: ignore
+                            type_=typing.Optional[typing.Any],  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -145,7 +140,7 @@ class AsyncRawModelsClient:
 
     async def list(
         self,
-        project_id: typing.Optional[str],
+        project_id: str,
         *,
         include_outdated: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
@@ -155,7 +150,7 @@ class AsyncRawModelsClient:
 
         Parameters
         ----------
-        project_id : typing.Optional[str]
+        project_id : str
             The unique identifier of the project
 
         include_outdated : typing.Optional[bool]
@@ -192,9 +187,9 @@ class AsyncRawModelsClient:
                 raise BadRequestError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        ErrorResponse,
+                        typing.Optional[typing.Any],
                         parse_obj_as(
-                            type_=ErrorResponse,  # type: ignore
+                            type_=typing.Optional[typing.Any],  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -205,21 +200,17 @@ class AsyncRawModelsClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def get(
-        self,
-        project_id: typing.Optional[str],
-        model_id: typing.Optional[str],
-        *,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, project_id: str, model_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[GetModelV1Response]:
         """
         Returns metadata for a specific model
 
         Parameters
         ----------
-        project_id : typing.Optional[str]
+        project_id : str
             The unique identifier of the project
 
-        model_id : typing.Optional[str]
+        model_id : str
             The specific UUID of the model
 
         request_options : typing.Optional[RequestOptions]
@@ -250,9 +241,9 @@ class AsyncRawModelsClient:
                 raise BadRequestError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        ErrorResponse,
+                        typing.Optional[typing.Any],
                         parse_obj_as(
-                            type_=ErrorResponse,  # type: ignore
+                            type_=typing.Optional[typing.Any],  # type: ignore
                             object_=_response.json(),
                         ),
                     ),

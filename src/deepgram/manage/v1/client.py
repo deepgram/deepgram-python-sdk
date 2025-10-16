@@ -16,8 +16,8 @@ class V1Client:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._raw_client = RawV1Client(client_wrapper=client_wrapper)
         self._client_wrapper = client_wrapper
-        self._projects: typing.Optional[ProjectsClient] = None
         self._models: typing.Optional[ModelsClient] = None
+        self._projects: typing.Optional[ProjectsClient] = None
 
     @property
     def with_raw_response(self) -> RawV1Client:
@@ -31,14 +31,6 @@ class V1Client:
         return self._raw_client
 
     @property
-    def projects(self):
-        if self._projects is None:
-            from .projects.client import ProjectsClient  # noqa: E402
-
-            self._projects = ProjectsClient(client_wrapper=self._client_wrapper)
-        return self._projects
-
-    @property
     def models(self):
         if self._models is None:
             from .models.client import ModelsClient  # noqa: E402
@@ -46,13 +38,21 @@ class V1Client:
             self._models = ModelsClient(client_wrapper=self._client_wrapper)
         return self._models
 
+    @property
+    def projects(self):
+        if self._projects is None:
+            from .projects.client import ProjectsClient  # noqa: E402
+
+            self._projects = ProjectsClient(client_wrapper=self._client_wrapper)
+        return self._projects
+
 
 class AsyncV1Client:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._raw_client = AsyncRawV1Client(client_wrapper=client_wrapper)
         self._client_wrapper = client_wrapper
-        self._projects: typing.Optional[AsyncProjectsClient] = None
         self._models: typing.Optional[AsyncModelsClient] = None
+        self._projects: typing.Optional[AsyncProjectsClient] = None
 
     @property
     def with_raw_response(self) -> AsyncRawV1Client:
@@ -66,17 +66,17 @@ class AsyncV1Client:
         return self._raw_client
 
     @property
-    def projects(self):
-        if self._projects is None:
-            from .projects.client import AsyncProjectsClient  # noqa: E402
-
-            self._projects = AsyncProjectsClient(client_wrapper=self._client_wrapper)
-        return self._projects
-
-    @property
     def models(self):
         if self._models is None:
             from .models.client import AsyncModelsClient  # noqa: E402
 
             self._models = AsyncModelsClient(client_wrapper=self._client_wrapper)
         return self._models
+
+    @property
+    def projects(self):
+        if self._projects is None:
+            from .projects.client import AsyncProjectsClient  # noqa: E402
+
+            self._projects = AsyncProjectsClient(client_wrapper=self._client_wrapper)
+        return self._projects
