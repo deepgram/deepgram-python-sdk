@@ -9,6 +9,7 @@ websockets-reference.md
 scripts/run_examples.sh
 docs/
 pyproject.toml
+CHANGELOG.md
 
 # Examples
 examples/
