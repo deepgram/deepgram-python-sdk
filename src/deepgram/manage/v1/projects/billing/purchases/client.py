@@ -2,9 +2,9 @@
 
 import typing
 
-from .....core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
-from .....core.request_options import RequestOptions
-from .....types.list_project_purchases_v1response import ListProjectPurchasesV1Response
+from ......core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
+from ......core.request_options import RequestOptions
+from ......types.list_project_purchases_v1response import ListProjectPurchasesV1Response
 from .raw_client import AsyncRawPurchasesClient, RawPurchasesClient
 
 
@@ -25,7 +25,7 @@ class PurchasesClient:
 
     def list(
         self,
-        project_id: typing.Optional[str],
+        project_id: str,
         *,
         limit: typing.Optional[int] = None,
         request_options: typing.Optional[RequestOptions] = None,
@@ -35,7 +35,7 @@ class PurchasesClient:
 
         Parameters
         ----------
-        project_id : typing.Optional[str]
+        project_id : str
             The unique identifier of the project
 
         limit : typing.Optional[int]
@@ -56,9 +56,8 @@ class PurchasesClient:
         client = DeepgramClient(
             api_key="YOUR_API_KEY",
         )
-        client.manage.v1.projects.purchases.list(
+        client.manage.v1.projects.billing.purchases.list(
             project_id="123456-7890-1234-5678-901234",
-            limit=1,
         )
         """
         _response = self._raw_client.list(project_id, limit=limit, request_options=request_options)
@@ -82,7 +81,7 @@ class AsyncPurchasesClient:
 
     async def list(
         self,
-        project_id: typing.Optional[str],
+        project_id: str,
         *,
         limit: typing.Optional[int] = None,
         request_options: typing.Optional[RequestOptions] = None,
@@ -92,7 +91,7 @@ class AsyncPurchasesClient:
 
         Parameters
         ----------
-        project_id : typing.Optional[str]
+        project_id : str
             The unique identifier of the project
 
         limit : typing.Optional[int]
@@ -118,9 +117,8 @@ class AsyncPurchasesClient:
 
 
         async def main() -> None:
-            await client.manage.v1.projects.purchases.list(
+            await client.manage.v1.projects.billing.purchases.list(
                 project_id="123456-7890-1234-5678-901234",
-                limit=1,
             )
 
 

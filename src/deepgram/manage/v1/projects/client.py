@@ -6,32 +6,34 @@ import typing
 
 from ....core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ....core.request_options import RequestOptions
+from ....types.delete_project_v1response import DeleteProjectV1Response
 from ....types.get_project_v1response import GetProjectV1Response
 from ....types.leave_project_v1response import LeaveProjectV1Response
 from ....types.list_projects_v1response import ListProjectsV1Response
+from ....types.update_project_v1response import UpdateProjectV1Response
 from .raw_client import AsyncRawProjectsClient, RawProjectsClient
 
 if typing.TYPE_CHECKING:
-    from .balances.client import AsyncBalancesClient, BalancesClient
+    from .billing.client import AsyncBillingClient, BillingClient
     from .keys.client import AsyncKeysClient, KeysClient
     from .members.client import AsyncMembersClient, MembersClient
     from .models.client import AsyncModelsClient, ModelsClient
-    from .purchases.client import AsyncPurchasesClient, PurchasesClient
     from .requests.client import AsyncRequestsClient, RequestsClient
     from .usage.client import AsyncUsageClient, UsageClient
+# this is used as the default value for optional parameters
+OMIT = typing.cast(typing.Any, ...)
 
 
 class ProjectsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._raw_client = RawProjectsClient(client_wrapper=client_wrapper)
         self._client_wrapper = client_wrapper
-        self._balances: typing.Optional[BalancesClient] = None
-        self._models: typing.Optional[ModelsClient] = None
         self._keys: typing.Optional[KeysClient] = None
         self._members: typing.Optional[MembersClient] = None
+        self._models: typing.Optional[ModelsClient] = None
         self._requests: typing.Optional[RequestsClient] = None
         self._usage: typing.Optional[UsageClient] = None
-        self._purchases: typing.Optional[PurchasesClient] = None
+        self._billing: typing.Optional[BillingClient] = None
 
     @property
     def with_raw_response(self) -> RawProjectsClient:
@@ -72,7 +74,7 @@ class ProjectsClient:
 
     def get(
         self,
-        project_id: typing.Optional[str],
+        project_id: str,
         *,
         limit: typing.Optional[int] = None,
         page: typing.Optional[int] = None,
@@ -83,7 +85,7 @@ class ProjectsClient:
 
         Parameters
         ----------
-        project_id : typing.Optional[str]
+        project_id : str
             The unique identifier of the project
 
         limit : typing.Optional[int]
@@ -109,22 +111,93 @@ class ProjectsClient:
         )
         client.manage.v1.projects.get(
             project_id="123456-7890-1234-5678-901234",
-            limit=1,
-            page=1,
         )
         """
         _response = self._raw_client.get(project_id, limit=limit, page=page, request_options=request_options)
         return _response.data
 
+    def delete(
+        self, project_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> DeleteProjectV1Response:
+        """
+        Deletes the specified project
+
+        Parameters
+        ----------
+        project_id : str
+            The unique identifier of the project
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        DeleteProjectV1Response
+            A project
+
+        Examples
+        --------
+        from deepgram import DeepgramClient
+
+        client = DeepgramClient(
+            api_key="YOUR_API_KEY",
+        )
+        client.manage.v1.projects.delete(
+            project_id="123456-7890-1234-5678-901234",
+        )
+        """
+        _response = self._raw_client.delete(project_id, request_options=request_options)
+        return _response.data
+
+    def update(
+        self,
+        project_id: str,
+        *,
+        name: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> UpdateProjectV1Response:
+        """
+        Updates the name or other properties of an existing project
+
+        Parameters
+        ----------
+        project_id : str
+            The unique identifier of the project
+
+        name : typing.Optional[str]
+            The name of the project
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        UpdateProjectV1Response
+            A project
+
+        Examples
+        --------
+        from deepgram import DeepgramClient
+
+        client = DeepgramClient(
+            api_key="YOUR_API_KEY",
+        )
+        client.manage.v1.projects.update(
+            project_id="123456-7890-1234-5678-901234",
+        )
+        """
+        _response = self._raw_client.update(project_id, name=name, request_options=request_options)
+        return _response.data
+
     def leave(
-        self, project_id: typing.Optional[str], *, request_options: typing.Optional[RequestOptions] = None
+        self, project_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> LeaveProjectV1Response:
         """
         Removes the authenticated account from the specific project
 
         Parameters
         ----------
-        project_id : typing.Optional[str]
+        project_id : str
             The unique identifier of the project
 
         request_options : typing.Optional[RequestOptions]
@@ -150,22 +223,6 @@ class ProjectsClient:
         return _response.data
 
     @property
-    def balances(self):
-        if self._balances is None:
-            from .balances.client import BalancesClient  # noqa: E402
-
-            self._balances = BalancesClient(client_wrapper=self._client_wrapper)
-        return self._balances
-
-    @property
-    def models(self):
-        if self._models is None:
-            from .models.client import ModelsClient  # noqa: E402
-
-            self._models = ModelsClient(client_wrapper=self._client_wrapper)
-        return self._models
-
-    @property
     def keys(self):
         if self._keys is None:
             from .keys.client import KeysClient  # noqa: E402
@@ -180,6 +237,14 @@ class ProjectsClient:
 
             self._members = MembersClient(client_wrapper=self._client_wrapper)
         return self._members
+
+    @property
+    def models(self):
+        if self._models is None:
+            from .models.client import ModelsClient  # noqa: E402
+
+            self._models = ModelsClient(client_wrapper=self._client_wrapper)
+        return self._models
 
     @property
     def requests(self):
@@ -198,25 +263,24 @@ class ProjectsClient:
         return self._usage
 
     @property
-    def purchases(self):
-        if self._purchases is None:
-            from .purchases.client import PurchasesClient  # noqa: E402
+    def billing(self):
+        if self._billing is None:
+            from .billing.client import BillingClient  # noqa: E402
 
-            self._purchases = PurchasesClient(client_wrapper=self._client_wrapper)
-        return self._purchases
+            self._billing = BillingClient(client_wrapper=self._client_wrapper)
+        return self._billing
 
 
 class AsyncProjectsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._raw_client = AsyncRawProjectsClient(client_wrapper=client_wrapper)
         self._client_wrapper = client_wrapper
-        self._balances: typing.Optional[AsyncBalancesClient] = None
-        self._models: typing.Optional[AsyncModelsClient] = None
         self._keys: typing.Optional[AsyncKeysClient] = None
         self._members: typing.Optional[AsyncMembersClient] = None
+        self._models: typing.Optional[AsyncModelsClient] = None
         self._requests: typing.Optional[AsyncRequestsClient] = None
         self._usage: typing.Optional[AsyncUsageClient] = None
-        self._purchases: typing.Optional[AsyncPurchasesClient] = None
+        self._billing: typing.Optional[AsyncBillingClient] = None
 
     @property
     def with_raw_response(self) -> AsyncRawProjectsClient:
@@ -265,7 +329,7 @@ class AsyncProjectsClient:
 
     async def get(
         self,
-        project_id: typing.Optional[str],
+        project_id: str,
         *,
         limit: typing.Optional[int] = None,
         page: typing.Optional[int] = None,
@@ -276,7 +340,7 @@ class AsyncProjectsClient:
 
         Parameters
         ----------
-        project_id : typing.Optional[str]
+        project_id : str
             The unique identifier of the project
 
         limit : typing.Optional[int]
@@ -307,8 +371,6 @@ class AsyncProjectsClient:
         async def main() -> None:
             await client.manage.v1.projects.get(
                 project_id="123456-7890-1234-5678-901234",
-                limit=1,
-                page=1,
             )
 
 
@@ -317,15 +379,104 @@ class AsyncProjectsClient:
         _response = await self._raw_client.get(project_id, limit=limit, page=page, request_options=request_options)
         return _response.data
 
+    async def delete(
+        self, project_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> DeleteProjectV1Response:
+        """
+        Deletes the specified project
+
+        Parameters
+        ----------
+        project_id : str
+            The unique identifier of the project
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        DeleteProjectV1Response
+            A project
+
+        Examples
+        --------
+        import asyncio
+
+        from deepgram import AsyncDeepgramClient
+
+        client = AsyncDeepgramClient(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.manage.v1.projects.delete(
+                project_id="123456-7890-1234-5678-901234",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.delete(project_id, request_options=request_options)
+        return _response.data
+
+    async def update(
+        self,
+        project_id: str,
+        *,
+        name: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> UpdateProjectV1Response:
+        """
+        Updates the name or other properties of an existing project
+
+        Parameters
+        ----------
+        project_id : str
+            The unique identifier of the project
+
+        name : typing.Optional[str]
+            The name of the project
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        UpdateProjectV1Response
+            A project
+
+        Examples
+        --------
+        import asyncio
+
+        from deepgram import AsyncDeepgramClient
+
+        client = AsyncDeepgramClient(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.manage.v1.projects.update(
+                project_id="123456-7890-1234-5678-901234",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.update(project_id, name=name, request_options=request_options)
+        return _response.data
+
     async def leave(
-        self, project_id: typing.Optional[str], *, request_options: typing.Optional[RequestOptions] = None
+        self, project_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> LeaveProjectV1Response:
         """
         Removes the authenticated account from the specific project
 
         Parameters
         ----------
-        project_id : typing.Optional[str]
+        project_id : str
             The unique identifier of the project
 
         request_options : typing.Optional[RequestOptions]
@@ -359,22 +510,6 @@ class AsyncProjectsClient:
         return _response.data
 
     @property
-    def balances(self):
-        if self._balances is None:
-            from .balances.client import AsyncBalancesClient  # noqa: E402
-
-            self._balances = AsyncBalancesClient(client_wrapper=self._client_wrapper)
-        return self._balances
-
-    @property
-    def models(self):
-        if self._models is None:
-            from .models.client import AsyncModelsClient  # noqa: E402
-
-            self._models = AsyncModelsClient(client_wrapper=self._client_wrapper)
-        return self._models
-
-    @property
     def keys(self):
         if self._keys is None:
             from .keys.client import AsyncKeysClient  # noqa: E402
@@ -389,6 +524,14 @@ class AsyncProjectsClient:
 
             self._members = AsyncMembersClient(client_wrapper=self._client_wrapper)
         return self._members
+
+    @property
+    def models(self):
+        if self._models is None:
+            from .models.client import AsyncModelsClient  # noqa: E402
+
+            self._models = AsyncModelsClient(client_wrapper=self._client_wrapper)
+        return self._models
 
     @property
     def requests(self):
@@ -407,9 +550,9 @@ class AsyncProjectsClient:
         return self._usage
 
     @property
-    def purchases(self):
-        if self._purchases is None:
-            from .purchases.client import AsyncPurchasesClient  # noqa: E402
+    def billing(self):
+        if self._billing is None:
+            from .billing.client import AsyncBillingClient  # noqa: E402
 
-            self._purchases = AsyncPurchasesClient(client_wrapper=self._client_wrapper)
-        return self._purchases
+            self._billing = AsyncBillingClient(client_wrapper=self._client_wrapper)
+        return self._billing

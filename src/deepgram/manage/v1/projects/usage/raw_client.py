@@ -10,7 +10,6 @@ from .....core.jsonable_encoder import jsonable_encoder
 from .....core.pydantic_utilities import parse_obj_as
 from .....core.request_options import RequestOptions
 from .....errors.bad_request_error import BadRequestError
-from .....types.error_response import ErrorResponse
 from .....types.usage_v1response import UsageV1Response
 from .types.usage_get_request_deployment import UsageGetRequestDeployment
 from .types.usage_get_request_endpoint import UsageGetRequestEndpoint
@@ -23,7 +22,7 @@ class RawUsageClient:
 
     def get(
         self,
-        project_id: typing.Optional[str],
+        project_id: str,
         *,
         start: typing.Optional[str] = None,
         end: typing.Optional[str] = None,
@@ -76,7 +75,7 @@ class RawUsageClient:
 
         Parameters
         ----------
-        project_id : typing.Optional[str]
+        project_id : str
             The unique identifier of the project
 
         start : typing.Optional[str]
@@ -285,9 +284,9 @@ class RawUsageClient:
                 raise BadRequestError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        ErrorResponse,
+                        typing.Optional[typing.Any],
                         parse_obj_as(
-                            type_=ErrorResponse,  # type: ignore
+                            type_=typing.Optional[typing.Any],  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -304,7 +303,7 @@ class AsyncRawUsageClient:
 
     async def get(
         self,
-        project_id: typing.Optional[str],
+        project_id: str,
         *,
         start: typing.Optional[str] = None,
         end: typing.Optional[str] = None,
@@ -357,7 +356,7 @@ class AsyncRawUsageClient:
 
         Parameters
         ----------
-        project_id : typing.Optional[str]
+        project_id : str
             The unique identifier of the project
 
         start : typing.Optional[str]
@@ -566,9 +565,9 @@ class AsyncRawUsageClient:
                 raise BadRequestError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        ErrorResponse,
+                        typing.Optional[typing.Any],
                         parse_obj_as(
-                            type_=ErrorResponse,  # type: ignore
+                            type_=typing.Optional[typing.Any],  # type: ignore
                             object_=_response.json(),
                         ),
                     ),

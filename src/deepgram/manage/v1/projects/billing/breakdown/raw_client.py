@@ -10,10 +10,12 @@ from ......core.jsonable_encoder import jsonable_encoder
 from ......core.pydantic_utilities import parse_obj_as
 from ......core.request_options import RequestOptions
 from ......errors.bad_request_error import BadRequestError
-from ......types.usage_fields_v1response import UsageFieldsV1Response
+from ......types.billing_breakdown_v1response import BillingBreakdownV1Response
+from .types.breakdown_list_request_deployment import BreakdownListRequestDeployment
+from .types.breakdown_list_request_grouping_item import BreakdownListRequestGroupingItem
 
 
-class RawFieldsClient:
+class RawBreakdownClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
@@ -23,10 +25,17 @@ class RawFieldsClient:
         *,
         start: typing.Optional[str] = None,
         end: typing.Optional[str] = None,
+        accessor: typing.Optional[str] = None,
+        deployment: typing.Optional[BreakdownListRequestDeployment] = None,
+        tag: typing.Optional[str] = None,
+        line_item: typing.Optional[str] = None,
+        grouping: typing.Optional[
+            typing.Union[BreakdownListRequestGroupingItem, typing.Sequence[BreakdownListRequestGroupingItem]]
+        ] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> HttpResponse[UsageFieldsV1Response]:
+    ) -> HttpResponse[BillingBreakdownV1Response]:
         """
-        Lists the features, models, tags, languages, and processing method used for requests in the specified project
+        Retrieves the billing summary for a specific project, with various filter options or by grouping options.
 
         Parameters
         ----------
@@ -39,30 +48,50 @@ class RawFieldsClient:
         end : typing.Optional[str]
             End date of the requested date range. Format accepted is YYYY-MM-DD
 
+        accessor : typing.Optional[str]
+            Filter for requests where a specific accessor was used
+
+        deployment : typing.Optional[BreakdownListRequestDeployment]
+            Filter for requests where a specific deployment was used
+
+        tag : typing.Optional[str]
+            Filter for requests where a specific tag was used
+
+        line_item : typing.Optional[str]
+            Filter requests by line item (e.g. streaming::nova-3)
+
+        grouping : typing.Optional[typing.Union[BreakdownListRequestGroupingItem, typing.Sequence[BreakdownListRequestGroupingItem]]]
+            Group billing breakdown by one or more dimensions (accessor, deployment, line_item, tags)
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        HttpResponse[UsageFieldsV1Response]
-            A list of fields for a specific project
+        HttpResponse[BillingBreakdownV1Response]
+            Billing breakdown response
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"v1/projects/{jsonable_encoder(project_id)}/usage/fields",
+            f"v1/projects/{jsonable_encoder(project_id)}/billing/breakdown",
             base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
                 "start": start,
                 "end": end,
+                "accessor": accessor,
+                "deployment": deployment,
+                "tag": tag,
+                "line_item": line_item,
+                "grouping": grouping,
             },
             request_options=request_options,
         )
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    UsageFieldsV1Response,
+                    BillingBreakdownV1Response,
                     parse_obj_as(
-                        type_=UsageFieldsV1Response,  # type: ignore
+                        type_=BillingBreakdownV1Response,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -84,7 +113,7 @@ class RawFieldsClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
 
-class AsyncRawFieldsClient:
+class AsyncRawBreakdownClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
@@ -94,10 +123,17 @@ class AsyncRawFieldsClient:
         *,
         start: typing.Optional[str] = None,
         end: typing.Optional[str] = None,
+        accessor: typing.Optional[str] = None,
+        deployment: typing.Optional[BreakdownListRequestDeployment] = None,
+        tag: typing.Optional[str] = None,
+        line_item: typing.Optional[str] = None,
+        grouping: typing.Optional[
+            typing.Union[BreakdownListRequestGroupingItem, typing.Sequence[BreakdownListRequestGroupingItem]]
+        ] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncHttpResponse[UsageFieldsV1Response]:
+    ) -> AsyncHttpResponse[BillingBreakdownV1Response]:
         """
-        Lists the features, models, tags, languages, and processing method used for requests in the specified project
+        Retrieves the billing summary for a specific project, with various filter options or by grouping options.
 
         Parameters
         ----------
@@ -110,30 +146,50 @@ class AsyncRawFieldsClient:
         end : typing.Optional[str]
             End date of the requested date range. Format accepted is YYYY-MM-DD
 
+        accessor : typing.Optional[str]
+            Filter for requests where a specific accessor was used
+
+        deployment : typing.Optional[BreakdownListRequestDeployment]
+            Filter for requests where a specific deployment was used
+
+        tag : typing.Optional[str]
+            Filter for requests where a specific tag was used
+
+        line_item : typing.Optional[str]
+            Filter requests by line item (e.g. streaming::nova-3)
+
+        grouping : typing.Optional[typing.Union[BreakdownListRequestGroupingItem, typing.Sequence[BreakdownListRequestGroupingItem]]]
+            Group billing breakdown by one or more dimensions (accessor, deployment, line_item, tags)
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        AsyncHttpResponse[UsageFieldsV1Response]
-            A list of fields for a specific project
+        AsyncHttpResponse[BillingBreakdownV1Response]
+            Billing breakdown response
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"v1/projects/{jsonable_encoder(project_id)}/usage/fields",
+            f"v1/projects/{jsonable_encoder(project_id)}/billing/breakdown",
             base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
                 "start": start,
                 "end": end,
+                "accessor": accessor,
+                "deployment": deployment,
+                "tag": tag,
+                "line_item": line_item,
+                "grouping": grouping,
             },
             request_options=request_options,
         )
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    UsageFieldsV1Response,
+                    BillingBreakdownV1Response,
                     parse_obj_as(
-                        type_=UsageFieldsV1Response,  # type: ignore
+                        type_=BillingBreakdownV1Response,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

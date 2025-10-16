@@ -50,22 +50,18 @@ class ModelsClient:
         client = DeepgramClient(
             api_key="YOUR_API_KEY",
         )
-        client.manage.v1.models.list(
-            include_outdated=True,
-        )
+        client.manage.v1.models.list()
         """
         _response = self._raw_client.list(include_outdated=include_outdated, request_options=request_options)
         return _response.data
 
-    def get(
-        self, model_id: typing.Optional[str], *, request_options: typing.Optional[RequestOptions] = None
-    ) -> GetModelV1Response:
+    def get(self, model_id: str, *, request_options: typing.Optional[RequestOptions] = None) -> GetModelV1Response:
         """
         Returns metadata for a specific public model
 
         Parameters
         ----------
-        model_id : typing.Optional[str]
+        model_id : str
             The specific UUID of the model
 
         request_options : typing.Optional[RequestOptions]
@@ -137,9 +133,7 @@ class AsyncModelsClient:
 
 
         async def main() -> None:
-            await client.manage.v1.models.list(
-                include_outdated=True,
-            )
+            await client.manage.v1.models.list()
 
 
         asyncio.run(main())
@@ -148,14 +142,14 @@ class AsyncModelsClient:
         return _response.data
 
     async def get(
-        self, model_id: typing.Optional[str], *, request_options: typing.Optional[RequestOptions] = None
+        self, model_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> GetModelV1Response:
         """
         Returns metadata for a specific public model
 
         Parameters
         ----------
-        model_id : typing.Optional[str]
+        model_id : str
             The specific UUID of the model
 
         request_options : typing.Optional[RequestOptions]
