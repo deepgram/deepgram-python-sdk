@@ -13,8 +13,7 @@ from deepgram.environment import DeepgramClientEnvironment
 
 from deepgram.manage.client import ManageClient, AsyncManageClient
 from deepgram.manage.v1.client import V1Client as ManageV1Client, AsyncV1Client as ManageAsyncV1Client
-from deepgram.manage.projects.client import ProjectsClient, AsyncProjectsClient
-from deepgram.manage.v1.projects.client import ProjectsClient as V1ProjectsClient, AsyncProjectsClient as AsyncV1ProjectsClient
+from deepgram.manage.v1.projects.client import ProjectsClient, AsyncProjectsClient
 from deepgram.manage.v1.models.client import ModelsClient, AsyncModelsClient
 
 # Import response types for mocking
@@ -57,7 +56,6 @@ class TestManageClient:
         
         assert client is not None
         assert client._client_wrapper is sync_client_wrapper
-        assert client._projects is None  # Lazy loaded
         assert client._v1 is None  # Lazy loaded
 
     def test_async_manage_client_initialization(self, async_client_wrapper):
@@ -66,38 +64,7 @@ class TestManageClient:
         
         assert client is not None
         assert client._client_wrapper is async_client_wrapper
-        assert client._projects is None  # Lazy loaded
         assert client._v1 is None  # Lazy loaded
-
-    def test_manage_client_projects_property_lazy_loading(self, sync_client_wrapper):
-        """Test ManageClient projects property lazy loading."""
-        client = ManageClient(client_wrapper=sync_client_wrapper)
-        
-        # Initially None
-        assert client._projects is None
-        
-        # Access triggers lazy loading
-        projects_client = client.projects
-        assert client._projects is not None
-        assert isinstance(projects_client, ProjectsClient)
-        
-        # Subsequent access returns same instance
-        assert client.projects is projects_client
-
-    def test_async_manage_client_projects_property_lazy_loading(self, async_client_wrapper):
-        """Test AsyncManageClient projects property lazy loading."""
-        client = AsyncManageClient(client_wrapper=async_client_wrapper)
-        
-        # Initially None
-        assert client._projects is None
-        
-        # Access triggers lazy loading
-        projects_client = client.projects
-        assert client._projects is not None
-        assert isinstance(projects_client, AsyncProjectsClient)
-        
-        # Subsequent access returns same instance
-        assert client.projects is projects_client
 
     def test_manage_client_v1_property_lazy_loading(self, sync_client_wrapper):
         """Test ManageClient v1 property lazy loading."""
@@ -215,7 +182,7 @@ class TestManageV1Client:
         # Access triggers lazy loading
         projects_client = client.projects
         assert client._projects is not None
-        assert isinstance(projects_client, V1ProjectsClient)
+        assert isinstance(projects_client, ProjectsClient)
         
         # Subsequent access returns same instance
         assert client.projects is projects_client
@@ -230,7 +197,7 @@ class TestManageV1Client:
         # Access triggers lazy loading
         projects_client = client.projects
         assert client._projects is not None
-        assert isinstance(projects_client, AsyncV1ProjectsClient)
+        assert isinstance(projects_client, AsyncProjectsClient)
         
         # Subsequent access returns same instance
         assert client.projects is projects_client
@@ -352,13 +319,13 @@ class TestProjectsClient:
 
     @patch('deepgram.manage.v1.projects.raw_client.RawProjectsClient.list')
     def test_projects_client_list(self, mock_list, sync_client_wrapper, mock_projects_list_response):
-        """Test V1ProjectsClient list method."""
+        """Test ProjectsClient list method."""
         # Mock the raw client response
         mock_response = Mock()
         mock_response.data = ListProjectsV1Response(**mock_projects_list_response)
         mock_list.return_value = mock_response
         
-        client = V1ProjectsClient(client_wrapper=sync_client_wrapper)
+        client = ProjectsClient(client_wrapper=sync_client_wrapper)
         
         result = client.list()
         
@@ -372,13 +339,13 @@ class TestProjectsClient:
 
     @patch('deepgram.manage.v1.projects.raw_client.RawProjectsClient.get')
     def test_projects_client_get(self, mock_get, sync_client_wrapper, mock_project_get_response):
-        """Test V1ProjectsClient get method."""
+        """Test ProjectsClient get method."""
         # Mock the raw client response
         mock_response = Mock()
         mock_response.data = GetProjectV1Response(**mock_project_get_response)
         mock_get.return_value = mock_response
         
-        client = V1ProjectsClient(client_wrapper=sync_client_wrapper)
+        client = ProjectsClient(client_wrapper=sync_client_wrapper)
         
         project_id = "project-123"
         result = client.get(project_id)
@@ -403,7 +370,7 @@ class TestProjectsClient:
         mock_response.data = ListProjectsV1Response(**mock_projects_list_response)
         mock_list.return_value = mock_response
         
-        client = V1ProjectsClient(client_wrapper=sync_client_wrapper)
+        client = ProjectsClient(client_wrapper=sync_client_wrapper)
         
         request_options = RequestOptions(
             additional_headers={"X-Custom-Header": "test-value"}
@@ -425,7 +392,7 @@ class TestProjectsClient:
         mock_response.data = ListProjectsV1Response(**mock_projects_list_response)
         mock_list.return_value = mock_response
         
-        client = AsyncV1ProjectsClient(client_wrapper=async_client_wrapper)
+        client = AsyncProjectsClient(client_wrapper=async_client_wrapper)
         
         result = await client.list()
         
@@ -446,7 +413,7 @@ class TestProjectsClient:
         mock_response.data = GetProjectV1Response(**mock_project_get_response)
         mock_get.return_value = mock_response
         
-        client = AsyncV1ProjectsClient(client_wrapper=async_client_wrapper)
+        client = AsyncProjectsClient(client_wrapper=async_client_wrapper)
         
         project_id = "project-456"
         result = await client.get(project_id, limit=10, page=1)
@@ -750,18 +717,17 @@ class TestManageIntegrationScenarios:
         """Test accessing deeply nested manage clients."""
         client = DeepgramClient(api_key=mock_api_key)
         
-        # Test multiple access paths
-        manage_projects = client.manage.projects
+        # Test access to v1 clients
         manage_v1_projects = client.manage.v1.projects
         manage_v1_models = client.manage.v1.models
         
         # Verify all are properly initialized
-        assert manage_projects is not None
         assert manage_v1_projects is not None
         assert manage_v1_models is not None
         
-        # Verify they are different instances (different paths)
-        assert manage_projects is not manage_v1_projects
+        # Verify they are different client types
+        assert type(manage_v1_projects).__name__ == 'ProjectsClient'
+        assert type(manage_v1_models).__name__ == 'ModelsClient'
 
 
 class TestManageErrorHandling:
@@ -801,7 +767,7 @@ class TestManageErrorHandling:
             body="Insufficient permissions"
         )
         
-        client = V1ProjectsClient(client_wrapper=sync_client_wrapper)
+        client = ProjectsClient(client_wrapper=sync_client_wrapper)
         
         with pytest.raises(ApiError) as exc_info:
             client.list()
@@ -834,7 +800,7 @@ class TestManageErrorHandling:
         # Mock a network error
         mock_get.side_effect = httpx.ConnectError("Connection failed")
         
-        client = V1ProjectsClient(client_wrapper=sync_client_wrapper)
+        client = ProjectsClient(client_wrapper=sync_client_wrapper)
         
         with pytest.raises(httpx.ConnectError):
             client.get("project-123")

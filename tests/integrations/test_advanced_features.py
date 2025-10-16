@@ -388,7 +388,7 @@ class TestAdvancedManagementFeatures:
         
         # Check that advanced operations are available
         advanced_operations = [
-            'keys', 'members', 'requests', 'usage', 'purchases', 'balances'
+            'keys', 'members', 'requests', 'usage', 'billing', 'models'
         ]
         
         for operation in advanced_operations:
@@ -401,6 +401,11 @@ class TestAdvancedManagementFeatures:
             except Exception:
                 # Some advanced features might not be fully implemented
                 pass
+        
+        # Check that billing has purchases and balances sub-clients
+        billing_client = projects_client.billing
+        assert hasattr(billing_client, 'purchases'), "Missing purchases under billing"
+        assert hasattr(billing_client, 'balances'), "Missing balances under billing"
 
     def test_async_project_advanced_operations_availability(self, mock_api_key):
         """Test availability of advanced project operations for async client."""
@@ -409,7 +414,7 @@ class TestAdvancedManagementFeatures:
         
         # Check that advanced operations are available
         advanced_operations = [
-            'keys', 'members', 'requests', 'usage', 'purchases', 'balances'
+            'keys', 'members', 'requests', 'usage', 'billing', 'models'
         ]
         
         for operation in advanced_operations:
@@ -422,6 +427,11 @@ class TestAdvancedManagementFeatures:
             except Exception:
                 # Some advanced features might not be fully implemented
                 pass
+        
+        # Check that billing has purchases and balances sub-clients
+        billing_client = projects_client.billing
+        assert hasattr(billing_client, 'purchases'), "Missing purchases under billing"
+        assert hasattr(billing_client, 'balances'), "Missing balances under billing"
 
 
 class TestAdvancedIntegrationScenarios:
