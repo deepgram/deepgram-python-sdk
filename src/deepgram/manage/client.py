@@ -8,7 +8,6 @@ from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from .raw_client import AsyncRawManageClient, RawManageClient
 
 if typing.TYPE_CHECKING:
-    from .projects.client import AsyncProjectsClient, ProjectsClient
     from .v1.client import AsyncV1Client, V1Client
 
 
@@ -16,7 +15,6 @@ class ManageClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._raw_client = RawManageClient(client_wrapper=client_wrapper)
         self._client_wrapper = client_wrapper
-        self._projects: typing.Optional[ProjectsClient] = None
         self._v1: typing.Optional[V1Client] = None
 
     @property
@@ -31,14 +29,6 @@ class ManageClient:
         return self._raw_client
 
     @property
-    def projects(self):
-        if self._projects is None:
-            from .projects.client import ProjectsClient  # noqa: E402
-
-            self._projects = ProjectsClient(client_wrapper=self._client_wrapper)
-        return self._projects
-
-    @property
     def v1(self):
         if self._v1 is None:
             from .v1.client import V1Client  # noqa: E402
@@ -51,7 +41,6 @@ class AsyncManageClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._raw_client = AsyncRawManageClient(client_wrapper=client_wrapper)
         self._client_wrapper = client_wrapper
-        self._projects: typing.Optional[AsyncProjectsClient] = None
         self._v1: typing.Optional[AsyncV1Client] = None
 
     @property
@@ -64,14 +53,6 @@ class AsyncManageClient:
         AsyncRawManageClient
         """
         return self._raw_client
-
-    @property
-    def projects(self):
-        if self._projects is None:
-            from .projects.client import AsyncProjectsClient  # noqa: E402
-
-            self._projects = AsyncProjectsClient(client_wrapper=self._client_wrapper)
-        return self._projects
 
     @property
     def v1(self):

@@ -3,15 +3,14 @@
 import typing
 from json.decoder import JSONDecodeError
 
-from .....core.api_error import ApiError
-from .....core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
-from .....core.http_response import AsyncHttpResponse, HttpResponse
-from .....core.jsonable_encoder import jsonable_encoder
-from .....core.pydantic_utilities import parse_obj_as
-from .....core.request_options import RequestOptions
-from .....errors.bad_request_error import BadRequestError
-from .....types.error_response import ErrorResponse
-from .....types.list_project_purchases_v1response import ListProjectPurchasesV1Response
+from ......core.api_error import ApiError
+from ......core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
+from ......core.http_response import AsyncHttpResponse, HttpResponse
+from ......core.jsonable_encoder import jsonable_encoder
+from ......core.pydantic_utilities import parse_obj_as
+from ......core.request_options import RequestOptions
+from ......errors.bad_request_error import BadRequestError
+from ......types.list_project_purchases_v1response import ListProjectPurchasesV1Response
 
 
 class RawPurchasesClient:
@@ -20,7 +19,7 @@ class RawPurchasesClient:
 
     def list(
         self,
-        project_id: typing.Optional[str],
+        project_id: str,
         *,
         limit: typing.Optional[int] = None,
         request_options: typing.Optional[RequestOptions] = None,
@@ -30,7 +29,7 @@ class RawPurchasesClient:
 
         Parameters
         ----------
-        project_id : typing.Optional[str]
+        project_id : str
             The unique identifier of the project
 
         limit : typing.Optional[int]
@@ -67,9 +66,9 @@ class RawPurchasesClient:
                 raise BadRequestError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        ErrorResponse,
+                        typing.Optional[typing.Any],
                         parse_obj_as(
-                            type_=ErrorResponse,  # type: ignore
+                            type_=typing.Optional[typing.Any],  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -86,7 +85,7 @@ class AsyncRawPurchasesClient:
 
     async def list(
         self,
-        project_id: typing.Optional[str],
+        project_id: str,
         *,
         limit: typing.Optional[int] = None,
         request_options: typing.Optional[RequestOptions] = None,
@@ -96,7 +95,7 @@ class AsyncRawPurchasesClient:
 
         Parameters
         ----------
-        project_id : typing.Optional[str]
+        project_id : str
             The unique identifier of the project
 
         limit : typing.Optional[int]
@@ -133,9 +132,9 @@ class AsyncRawPurchasesClient:
                 raise BadRequestError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        ErrorResponse,
+                        typing.Optional[typing.Any],
                         parse_obj_as(
-                            type_=ErrorResponse,  # type: ignore
+                            type_=typing.Optional[typing.Any],  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
