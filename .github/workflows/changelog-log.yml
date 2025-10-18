@@ -1,0 +1,38 @@
+name: Changelog Log
+
+on:
+    push:
+        branches: [main]
+        paths:
+            - "**/CHANGELOG*.md"
+            - "**/changelog*.md"
+
+jobs:
+    notify:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+              with:
+                  fetch-depth: 0
+
+            - name: Send changelog to webhook
+              uses: lukeocodes/changelog-log@changelog-log-v0.1.6
+              with:
+                  webhook_url: ${{ secrets.CHANGELOG_WEBHOOK_URL }}
+                  webhook_headers_json: '{"Content-Type":"application/json","X-DX-Logs-Key":"${{ secrets.CHANGELOG_SECRET }}"}'
+                  extra_body_json: '{"route":"changelog-python"}'
+                  # Project context is automatically inferred from GitHub context
+                  # You can override with:
+                  #   project_name: "my-custom-project-name"
+                  #   project_owner: "my-org"
+                  #   repository_url: "https://github.com/owner/repo"
+                  #   include_github_context: "true"  # includes ref, workflow, actor info
+                  #
+                  # Other optional overrides:
+                  #   file_globs: "CHANGELOG.md,**/CHANGELOG*.md"
+                  #   entry_separator_regex: "^##\\s+.*$"
+                  #   http_method: "POST"
+                  #   include_body_raw: "false"
+                  #   log_level: "warn" # trace, debug, info, warn, error, fatal
+                  #   extra_body_json: '{"custom":"field"}'  # merge custom fields into payload
