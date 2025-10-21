@@ -1,0 +1,32 @@
+name: Title Check
+
+on:
+    pull_request:
+        types:
+            - opened
+            - edited
+            - synchronize
+            - reopened
+
+jobs:
+    title-check:
+        name: Title Check
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout repo
+              uses: actions/checkout@v4
+
+            - name: Setup Node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version: "20"
+
+            - name: Install commitlint
+              run: |
+                  npm install --save-dev @commitlint/config-conventional @commitlint/cli
+
+            - name: Validate PR title
+              env:
+                  PR_TITLE: ${{ github.event.pull_request.title }}
+              run: |
+                  echo "$PR_TITLE" | npx commitlint -g .github/.commitlintrc.json
