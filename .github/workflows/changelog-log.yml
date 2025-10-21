@@ -17,7 +17,7 @@ jobs:
                   fetch-depth: 0
 
             - name: Send changelog to webhook
-              uses: lukeocodes/changelog-log@changelog-log-v0.1.6
+              uses: lukeocodes/changelog-log@changelog-log-v0.1.7
               with:
                   webhook_url: ${{ secrets.CHANGELOG_WEBHOOK_URL }}
                   webhook_headers_json: '{"Content-Type":"application/json","X-DX-Logs-Key":"${{ secrets.CHANGELOG_SECRET }}"}'
