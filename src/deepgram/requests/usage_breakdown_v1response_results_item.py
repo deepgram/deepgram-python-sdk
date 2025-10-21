@@ -20,22 +20,22 @@ class UsageBreakdownV1ResponseResultsItemParams(typing_extensions.TypedDict):
     Agent hours used
     """
 
-    tokens_in: int
+    tokens_in: float
     """
     Number of input tokens
     """
 
-    tokens_out: int
+    tokens_out: float
     """
     Number of output tokens
     """
 
-    tts_characters: int
+    tts_characters: float
     """
     Number of text-to-speech characters processed
     """
 
-    requests: int
+    requests: float
     """
     Number of requests
     """

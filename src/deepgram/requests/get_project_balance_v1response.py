@@ -9,7 +9,7 @@ class GetProjectBalanceV1ResponseParams(typing_extensions.TypedDict):
     The unique identifier of the balance
     """
 
-    amount: typing_extensions.NotRequired[int]
+    amount: typing_extensions.NotRequired[float]
     """
     The amount of the balance
     """

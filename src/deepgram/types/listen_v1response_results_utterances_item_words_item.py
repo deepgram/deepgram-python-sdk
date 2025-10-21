@@ -11,8 +11,8 @@ class ListenV1ResponseResultsUtterancesItemWordsItem(UniversalBaseModel):
     start: typing.Optional[float] = None
     end: typing.Optional[float] = None
     confidence: typing.Optional[float] = None
-    speaker: typing.Optional[int] = None
-    speaker_confidence: typing.Optional[int] = None
+    speaker: typing.Optional[float] = None
+    speaker_confidence: typing.Optional[float] = None
     punctuated_word: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:

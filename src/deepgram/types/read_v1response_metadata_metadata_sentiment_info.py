@@ -8,8 +8,8 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 class ReadV1ResponseMetadataMetadataSentimentInfo(UniversalBaseModel):
     model_uuid: typing.Optional[str] = None
-    input_tokens: typing.Optional[int] = None
-    output_tokens: typing.Optional[int] = None
+    input_tokens: typing.Optional[float] = None
+    output_tokens: typing.Optional[float] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

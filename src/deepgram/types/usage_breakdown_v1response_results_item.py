@@ -23,22 +23,22 @@ class UsageBreakdownV1ResponseResultsItem(UniversalBaseModel):
     Agent hours used
     """
 
-    tokens_in: int = pydantic.Field()
+    tokens_in: float = pydantic.Field()
     """
     Number of input tokens
     """
 
-    tokens_out: int = pydantic.Field()
+    tokens_out: float = pydantic.Field()
     """
     Number of output tokens
     """
 
-    tts_characters: int = pydantic.Field()
+    tts_characters: float = pydantic.Field()
     """
     Number of text-to-speech characters processed
     """
 
-    requests: int = pydantic.Field()
+    requests: float = pydantic.Field()
     """
     Number of requests
     """

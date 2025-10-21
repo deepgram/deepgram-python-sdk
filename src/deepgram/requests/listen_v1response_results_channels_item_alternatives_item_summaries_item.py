@@ -5,5 +5,5 @@ import typing_extensions
 
 class ListenV1ResponseResultsChannelsItemAlternativesItemSummariesItemParams(typing_extensions.TypedDict):
     summary: typing_extensions.NotRequired[str]
-    start_word: typing_extensions.NotRequired[int]
-    end_word: typing_extensions.NotRequired[int]
+    start_word: typing_extensions.NotRequired[float]
+    end_word: typing_extensions.NotRequired[float]

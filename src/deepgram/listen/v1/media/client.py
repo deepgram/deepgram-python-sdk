@@ -72,6 +72,7 @@ class MediaClient:
         utterances: typing.Optional[bool] = None,
         utt_split: typing.Optional[float] = None,
         version: typing.Optional[MediaTranscribeRequestVersion] = None,
+        mip_opt_out: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> MediaTranscribeResponse:
         """
@@ -186,6 +187,9 @@ class MediaClient:
         version : typing.Optional[MediaTranscribeRequestVersion]
             Version of an AI model to use
 
+        mip_opt_out : typing.Optional[bool]
+            Opts out requests from the Deepgram Model Improvement Program. Refer to our Docs for pricing impacts before setting this to true. https://dpgr.am/deepgram-mip
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -242,6 +246,7 @@ class MediaClient:
             utterances=utterances,
             utt_split=utt_split,
             version=version,
+            mip_opt_out=mip_opt_out,
             request_options=request_options,
         )
         return _response.data
@@ -285,6 +290,7 @@ class MediaClient:
         utterances: typing.Optional[bool] = None,
         utt_split: typing.Optional[float] = None,
         version: typing.Optional[MediaTranscribeRequestVersion] = None,
+        mip_opt_out: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> MediaTranscribeResponse:
         """
@@ -399,6 +405,9 @@ class MediaClient:
         version : typing.Optional[MediaTranscribeRequestVersion]
             Version of an AI model to use
 
+        mip_opt_out : typing.Optional[bool]
+            Opts out requests from the Deepgram Model Improvement Program. Refer to our Docs for pricing impacts before setting this to true. https://dpgr.am/deepgram-mip
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -453,6 +462,7 @@ class MediaClient:
             utterances=utterances,
             utt_split=utt_split,
             version=version,
+            mip_opt_out=mip_opt_out,
             request_options=request_options,
         )
         return _response.data
@@ -512,6 +522,7 @@ class AsyncMediaClient:
         utterances: typing.Optional[bool] = None,
         utt_split: typing.Optional[float] = None,
         version: typing.Optional[MediaTranscribeRequestVersion] = None,
+        mip_opt_out: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> MediaTranscribeResponse:
         """
@@ -625,6 +636,9 @@ class AsyncMediaClient:
 
         version : typing.Optional[MediaTranscribeRequestVersion]
             Version of an AI model to use
+
+        mip_opt_out : typing.Optional[bool]
+            Opts out requests from the Deepgram Model Improvement Program. Refer to our Docs for pricing impacts before setting this to true. https://dpgr.am/deepgram-mip
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -690,6 +704,7 @@ class AsyncMediaClient:
             utterances=utterances,
             utt_split=utt_split,
             version=version,
+            mip_opt_out=mip_opt_out,
             request_options=request_options,
         )
         return _response.data
@@ -733,6 +748,7 @@ class AsyncMediaClient:
         utterances: typing.Optional[bool] = None,
         utt_split: typing.Optional[float] = None,
         version: typing.Optional[MediaTranscribeRequestVersion] = None,
+        mip_opt_out: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> MediaTranscribeResponse:
         """
@@ -847,6 +863,9 @@ class AsyncMediaClient:
         version : typing.Optional[MediaTranscribeRequestVersion]
             Version of an AI model to use
 
+        mip_opt_out : typing.Optional[bool]
+            Opts out requests from the Deepgram Model Improvement Program. Refer to our Docs for pricing impacts before setting this to true. https://dpgr.am/deepgram-mip
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -909,6 +928,7 @@ class AsyncMediaClient:
             utterances=utterances,
             utt_split=utt_split,
             version=version,
+            mip_opt_out=mip_opt_out,
             request_options=request_options,
         )
         return _response.data

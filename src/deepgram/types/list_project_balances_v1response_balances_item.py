@@ -12,7 +12,7 @@ class ListProjectBalancesV1ResponseBalancesItem(UniversalBaseModel):
     The unique identifier of the balance
     """
 
-    amount: typing.Optional[int] = pydantic.Field(default=None)
+    amount: typing.Optional[float] = pydantic.Field(default=None)
     """
     The amount of the balance
     """

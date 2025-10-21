@@ -8,12 +8,12 @@ from .project_request_response import ProjectRequestResponse
 
 
 class ListProjectRequestsV1Response(UniversalBaseModel):
-    page: typing.Optional[int] = pydantic.Field(default=None)
+    page: typing.Optional[float] = pydantic.Field(default=None)
     """
     The page number of the paginated response
     """
 
-    limit: typing.Optional[int] = pydantic.Field(default=None)
+    limit: typing.Optional[float] = pydantic.Field(default=None)
     """
     The number of results per page
     """

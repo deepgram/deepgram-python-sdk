@@ -21,7 +21,7 @@ class RawPurchasesClient:
         self,
         project_id: str,
         *,
-        limit: typing.Optional[int] = None,
+        limit: typing.Optional[float] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[ListProjectPurchasesV1Response]:
         """
@@ -32,7 +32,7 @@ class RawPurchasesClient:
         project_id : str
             The unique identifier of the project
 
-        limit : typing.Optional[int]
+        limit : typing.Optional[float]
             Number of results to return per page. Default 10. Range [1,1000]
 
         request_options : typing.Optional[RequestOptions]
@@ -87,7 +87,7 @@ class AsyncRawPurchasesClient:
         self,
         project_id: str,
         *,
-        limit: typing.Optional[int] = None,
+        limit: typing.Optional[float] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[ListProjectPurchasesV1Response]:
         """
@@ -98,7 +98,7 @@ class AsyncRawPurchasesClient:
         project_id : str
             The unique identifier of the project
 
-        limit : typing.Optional[int]
+        limit : typing.Optional[float]
             Number of results to return per page. Default 10. Range [1,1000]
 
         request_options : typing.Optional[RequestOptions]

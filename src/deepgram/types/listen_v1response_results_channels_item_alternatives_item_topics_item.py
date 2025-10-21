@@ -8,8 +8,8 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 class ListenV1ResponseResultsChannelsItemAlternativesItemTopicsItem(UniversalBaseModel):
     text: typing.Optional[str] = None
-    start_word: typing.Optional[int] = None
-    end_word: typing.Optional[int] = None
+    start_word: typing.Optional[float] = None
+    end_word: typing.Optional[float] = None
     topics: typing.Optional[typing.List[str]] = None
 
     if IS_PYDANTIC_V2:

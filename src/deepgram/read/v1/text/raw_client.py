@@ -33,6 +33,7 @@ class RawTextClient:
         callback_method: typing.Optional[TextAnalyzeRequestCallbackMethod] = None,
         sentiment: typing.Optional[bool] = None,
         summarize: typing.Optional[TextAnalyzeRequestSummarize] = None,
+        tag: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         topics: typing.Optional[bool] = None,
         custom_topic: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         custom_topic_mode: typing.Optional[TextAnalyzeRequestCustomTopicMode] = None,
@@ -60,6 +61,9 @@ class RawTextClient:
 
         summarize : typing.Optional[TextAnalyzeRequestSummarize]
             Summarize content. For Listen API, supports string version option. For Read API, accepts boolean only.
+
+        tag : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Label your requests for the purpose of identification during usage reporting
 
         topics : typing.Optional[bool]
             Detect topics throughout a transcript or text
@@ -99,6 +103,7 @@ class RawTextClient:
                 "callback_method": callback_method,
                 "sentiment": sentiment,
                 "summarize": summarize,
+                "tag": tag,
                 "topics": topics,
                 "custom_topic": custom_topic,
                 "custom_topic_mode": custom_topic_mode,
@@ -155,6 +160,7 @@ class AsyncRawTextClient:
         callback_method: typing.Optional[TextAnalyzeRequestCallbackMethod] = None,
         sentiment: typing.Optional[bool] = None,
         summarize: typing.Optional[TextAnalyzeRequestSummarize] = None,
+        tag: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         topics: typing.Optional[bool] = None,
         custom_topic: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         custom_topic_mode: typing.Optional[TextAnalyzeRequestCustomTopicMode] = None,
@@ -182,6 +188,9 @@ class AsyncRawTextClient:
 
         summarize : typing.Optional[TextAnalyzeRequestSummarize]
             Summarize content. For Listen API, supports string version option. For Read API, accepts boolean only.
+
+        tag : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Label your requests for the purpose of identification during usage reporting
 
         topics : typing.Optional[bool]
             Detect topics throughout a transcript or text
@@ -221,6 +230,7 @@ class AsyncRawTextClient:
                 "callback_method": callback_method,
                 "sentiment": sentiment,
                 "summarize": summarize,
+                "tag": tag,
                 "topics": topics,
                 "custom_topic": custom_topic,
                 "custom_topic_mode": custom_topic_mode,

@@ -5,4 +5,4 @@ import typing_extensions
 
 class UsageV1ResponseResolutionParams(typing_extensions.TypedDict):
     units: typing_extensions.NotRequired[str]
-    amount: typing_extensions.NotRequired[int]
+    amount: typing_extensions.NotRequired[float]

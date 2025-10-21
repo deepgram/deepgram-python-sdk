@@ -42,7 +42,7 @@ class ProjectRequestResponse(UniversalBaseModel):
     The response of the request
     """
 
-    code: typing.Optional[int] = pydantic.Field(default=None)
+    code: typing.Optional[float] = pydantic.Field(default=None)
     """
     The response code of the request
     """

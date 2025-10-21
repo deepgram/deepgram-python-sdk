@@ -74,8 +74,8 @@ class RawProjectsClient:
         self,
         project_id: str,
         *,
-        limit: typing.Optional[int] = None,
-        page: typing.Optional[int] = None,
+        limit: typing.Optional[float] = None,
+        page: typing.Optional[float] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[GetProjectV1Response]:
         """
@@ -86,10 +86,10 @@ class RawProjectsClient:
         project_id : str
             The unique identifier of the project
 
-        limit : typing.Optional[int]
+        limit : typing.Optional[float]
             Number of results to return per page. Default 10. Range [1,1000]
 
-        page : typing.Optional[int]
+        page : typing.Optional[float]
             Navigate and return the results to retrieve specific portions of information of the response
 
         request_options : typing.Optional[RequestOptions]
@@ -360,8 +360,8 @@ class AsyncRawProjectsClient:
         self,
         project_id: str,
         *,
-        limit: typing.Optional[int] = None,
-        page: typing.Optional[int] = None,
+        limit: typing.Optional[float] = None,
+        page: typing.Optional[float] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[GetProjectV1Response]:
         """
@@ -372,10 +372,10 @@ class AsyncRawProjectsClient:
         project_id : str
             The unique identifier of the project
 
-        limit : typing.Optional[int]
+        limit : typing.Optional[float]
             Number of results to return per page. Default 10. Range [1,1000]
 
-        page : typing.Optional[int]
+        page : typing.Optional[float]
             Navigate and return the results to retrieve specific portions of information of the response
 
         request_options : typing.Optional[RequestOptions]

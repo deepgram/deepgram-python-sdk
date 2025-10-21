@@ -8,6 +8,6 @@ class ListenV1ResponseResultsUtterancesItemWordsItemParams(typing_extensions.Typ
     start: typing_extensions.NotRequired[float]
     end: typing_extensions.NotRequired[float]
     confidence: typing_extensions.NotRequired[float]
-    speaker: typing_extensions.NotRequired[int]
-    speaker_confidence: typing_extensions.NotRequired[int]
+    speaker: typing_extensions.NotRequired[float]
+    speaker_confidence: typing_extensions.NotRequired[float]
     punctuated_word: typing_extensions.NotRequired[str]

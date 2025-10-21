@@ -2,4 +2,4 @@
 
 import typing
 
-ListenV2Encoding = typing.Literal["linear16"]
+ListenV2Encoding = typing.Union[typing.Literal["linear16", "linear32", "mulaw", "alaw", "opus", "ogg-opus"], typing.Any]

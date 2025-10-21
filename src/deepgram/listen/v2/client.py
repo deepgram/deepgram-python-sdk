@@ -38,12 +38,12 @@ class V2Client:
         self,
         *,
         model: str,
-        encoding: str,
-        sample_rate: str,
+        encoding: typing.Optional[str] = None,
+        sample_rate: typing.Optional[str] = None,
         eager_eot_threshold: typing.Optional[str] = None,
         eot_threshold: typing.Optional[str] = None,
         eot_timeout_ms: typing.Optional[str] = None,
-        keyterm: typing.Optional[typing.Union[str, typing.List[str]]] = None,
+        keyterm: typing.Optional[str] = None,
         mip_opt_out: typing.Optional[str] = None,
         tag: typing.Optional[str] = None,
         authorization: typing.Optional[str] = None,
@@ -57,9 +57,9 @@ class V2Client:
         ----------
         model : str
 
-        encoding : str
+        encoding : typing.Optional[str]
 
-        sample_rate : str
+        sample_rate : typing.Optional[str]
 
         eager_eot_threshold : typing.Optional[str]
 
@@ -67,8 +67,7 @@ class V2Client:
 
         eot_timeout_ms : typing.Optional[str]
 
-        keyterm : typing.Optional[typing.Union[str, typing.List[str]]]
-            Single keyterm as string or list of keyterms. Each keyterm can be up to 100 characters.
+        keyterm : typing.Optional[str]
 
         mip_opt_out : typing.Optional[str]
 
@@ -101,11 +100,7 @@ class V2Client:
         if eot_timeout_ms is not None:
             query_params = query_params.add("eot_timeout_ms", eot_timeout_ms)
         if keyterm is not None:
-            if isinstance(keyterm, list):
-                for kt in keyterm:
-                    query_params = query_params.add("keyterm", kt)
-            else:
-                query_params = query_params.add("keyterm", keyterm)
+            query_params = query_params.add("keyterm", keyterm)
         if mip_opt_out is not None:
             query_params = query_params.add("mip_opt_out", mip_opt_out)
         if tag is not None:
@@ -154,12 +149,12 @@ class AsyncV2Client:
         self,
         *,
         model: str,
-        encoding: str,
-        sample_rate: str,
+        encoding: typing.Optional[str] = None,
+        sample_rate: typing.Optional[str] = None,
         eager_eot_threshold: typing.Optional[str] = None,
         eot_threshold: typing.Optional[str] = None,
         eot_timeout_ms: typing.Optional[str] = None,
-        keyterm: typing.Optional[typing.Union[str, typing.List[str]]] = None,
+        keyterm: typing.Optional[str] = None,
         mip_opt_out: typing.Optional[str] = None,
         tag: typing.Optional[str] = None,
         authorization: typing.Optional[str] = None,
@@ -173,9 +168,9 @@ class AsyncV2Client:
         ----------
         model : str
 
-        encoding : str
+        encoding : typing.Optional[str]
 
-        sample_rate : str
+        sample_rate : typing.Optional[str]
 
         eager_eot_threshold : typing.Optional[str]
 
@@ -183,8 +178,7 @@ class AsyncV2Client:
 
         eot_timeout_ms : typing.Optional[str]
 
-        keyterm : typing.Optional[typing.Union[str, typing.List[str]]]
-            Single keyterm as string or list of keyterms. Each keyterm can be up to 100 characters.
+        keyterm : typing.Optional[str]
 
         mip_opt_out : typing.Optional[str]
 
@@ -217,11 +211,7 @@ class AsyncV2Client:
         if eot_timeout_ms is not None:
             query_params = query_params.add("eot_timeout_ms", eot_timeout_ms)
         if keyterm is not None:
-            if isinstance(keyterm, list):
-                for kt in keyterm:
-                    query_params = query_params.add("keyterm", kt)
-            else:
-                query_params = query_params.add("keyterm", keyterm)
+            query_params = query_params.add("keyterm", keyterm)
         if mip_opt_out is not None:
             query_params = query_params.add("mip_opt_out", mip_opt_out)
         if tag is not None:

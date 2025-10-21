@@ -27,7 +27,7 @@ class PurchasesClient:
         self,
         project_id: str,
         *,
-        limit: typing.Optional[int] = None,
+        limit: typing.Optional[float] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ListProjectPurchasesV1Response:
         """
@@ -38,7 +38,7 @@ class PurchasesClient:
         project_id : str
             The unique identifier of the project
 
-        limit : typing.Optional[int]
+        limit : typing.Optional[float]
             Number of results to return per page. Default 10. Range [1,1000]
 
         request_options : typing.Optional[RequestOptions]
@@ -83,7 +83,7 @@ class AsyncPurchasesClient:
         self,
         project_id: str,
         *,
-        limit: typing.Optional[int] = None,
+        limit: typing.Optional[float] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ListProjectPurchasesV1Response:
         """
@@ -94,7 +94,7 @@ class AsyncPurchasesClient:
         project_id : str
             The unique identifier of the project
 
-        limit : typing.Optional[int]
+        limit : typing.Optional[float]
             Number of results to return per page. Default 10. Range [1,1000]
 
         request_options : typing.Optional[RequestOptions]

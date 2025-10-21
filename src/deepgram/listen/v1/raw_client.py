@@ -33,7 +33,6 @@ class RawV1Client:
         encoding: typing.Optional[str] = None,
         endpointing: typing.Optional[str] = None,
         extra: typing.Optional[str] = None,
-        filler_words: typing.Optional[str] = None,
         interim_results: typing.Optional[str] = None,
         keyterm: typing.Optional[str] = None,
         keywords: typing.Optional[str] = None,
@@ -76,8 +75,6 @@ class RawV1Client:
         endpointing : typing.Optional[str]
 
         extra : typing.Optional[str]
-
-        filler_words : typing.Optional[str]
 
         interim_results : typing.Optional[str]
 
@@ -148,8 +145,6 @@ class RawV1Client:
             query_params = query_params.add("endpointing", endpointing)
         if extra is not None:
             query_params = query_params.add("extra", extra)
-        if filler_words is not None:
-            query_params = query_params.add("filler_words", filler_words)
         if interim_results is not None:
             query_params = query_params.add("interim_results", interim_results)
         if keyterm is not None:
@@ -228,7 +223,6 @@ class AsyncRawV1Client:
         encoding: typing.Optional[str] = None,
         endpointing: typing.Optional[str] = None,
         extra: typing.Optional[str] = None,
-        filler_words: typing.Optional[str] = None,
         interim_results: typing.Optional[str] = None,
         keyterm: typing.Optional[str] = None,
         keywords: typing.Optional[str] = None,
@@ -271,8 +265,6 @@ class AsyncRawV1Client:
         endpointing : typing.Optional[str]
 
         extra : typing.Optional[str]
-
-        filler_words : typing.Optional[str]
 
         interim_results : typing.Optional[str]
 
@@ -343,8 +335,6 @@ class AsyncRawV1Client:
             query_params = query_params.add("endpointing", endpointing)
         if extra is not None:
             query_params = query_params.add("extra", extra)
-        if filler_words is not None:
-            query_params = query_params.add("filler_words", filler_words)
         if interim_results is not None:
             query_params = query_params.add("interim_results", interim_results)
         if keyterm is not None:

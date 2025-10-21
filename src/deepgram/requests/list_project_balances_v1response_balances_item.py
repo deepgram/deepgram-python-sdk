@@ -9,7 +9,7 @@ class ListProjectBalancesV1ResponseBalancesItemParams(typing_extensions.TypedDic
     The unique identifier of the balance
     """
 
-    amount: typing_extensions.NotRequired[int]
+    amount: typing_extensions.NotRequired[float]
     """
     The amount of the balance
     """

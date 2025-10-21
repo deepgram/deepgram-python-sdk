@@ -12,7 +12,7 @@ class BillingBreakdownV1ResponseResolution(UniversalBaseModel):
     Time unit for the resolution
     """
 
-    amount: int = pydantic.Field()
+    amount: float = pydantic.Field()
     """
     Amount of units
     """

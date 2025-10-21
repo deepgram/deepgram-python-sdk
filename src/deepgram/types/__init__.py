@@ -97,7 +97,6 @@ if typing.TYPE_CHECKING:
     from .listen_v1encoding import ListenV1Encoding
     from .listen_v1endpointing import ListenV1Endpointing
     from .listen_v1extra import ListenV1Extra
-    from .listen_v1filler_words import ListenV1FillerWords
     from .listen_v1interim_results import ListenV1InterimResults
     from .listen_v1keyterm import ListenV1Keyterm
     from .listen_v1keywords import ListenV1Keywords
@@ -288,7 +287,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ListenV1Encoding": ".listen_v1encoding",
     "ListenV1Endpointing": ".listen_v1endpointing",
     "ListenV1Extra": ".listen_v1extra",
-    "ListenV1FillerWords": ".listen_v1filler_words",
     "ListenV1InterimResults": ".listen_v1interim_results",
     "ListenV1Keyterm": ".listen_v1keyterm",
     "ListenV1Keywords": ".listen_v1keywords",
@@ -485,7 +483,6 @@ __all__ = [
     "ListenV1Encoding",
     "ListenV1Endpointing",
     "ListenV1Extra",
-    "ListenV1FillerWords",
     "ListenV1InterimResults",
     "ListenV1Keyterm",
     "ListenV1Keywords",

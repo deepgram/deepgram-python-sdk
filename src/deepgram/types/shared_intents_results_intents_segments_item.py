@@ -11,8 +11,8 @@ from .shared_intents_results_intents_segments_item_intents_item import (
 
 class SharedIntentsResultsIntentsSegmentsItem(UniversalBaseModel):
     text: typing.Optional[str] = None
-    start_word: typing.Optional[int] = None
-    end_word: typing.Optional[int] = None
+    start_word: typing.Optional[float] = None
+    end_word: typing.Optional[float] = None
     intents: typing.Optional[typing.List[SharedIntentsResultsIntentsSegmentsItemIntentsItem]] = None
 
     if IS_PYDANTIC_V2:

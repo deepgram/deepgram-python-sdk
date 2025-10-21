@@ -7,12 +7,12 @@ from .project_request_response import ProjectRequestResponseParams
 
 
 class ListProjectRequestsV1ResponseParams(typing_extensions.TypedDict):
-    page: typing_extensions.NotRequired[int]
+    page: typing_extensions.NotRequired[float]
     """
     The page number of the paginated response
     """
 
-    limit: typing_extensions.NotRequired[int]
+    limit: typing_extensions.NotRequired[float]
     """
     The number of results per page
     """
