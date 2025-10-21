@@ -1,5 +1,12 @@
 # Changelog
 
+## [5.2.0](https://github.com/deepgram/deepgram-python-sdk/compare/v5.1.0...v5.2.0) (2025-10-21)
+
+
+### Features
+
+* SDK regeneration (21 Oct 2025) ([#609](https://github.com/deepgram/deepgram-python-sdk/issues/609)) ([5b21460](https://github.com/deepgram/deepgram-python-sdk/commit/5b2146058842fe4dc6d6ef4bd9c0777b08f48fab))
+
 ## [5.1.0](https://github.com/deepgram/deepgram-python-sdk/compare/v5.0.0...v5.1.0) (2025-10-16)
 
 
