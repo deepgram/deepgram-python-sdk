@@ -41,7 +41,7 @@ class ProjectRequestResponseParams(typing_extensions.TypedDict):
     The response of the request
     """
 
-    code: typing_extensions.NotRequired[int]
+    code: typing_extensions.NotRequired[float]
     """
     The response code of the request
     """

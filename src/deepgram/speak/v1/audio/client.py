@@ -36,11 +36,12 @@ class AudioClient:
         callback: typing.Optional[str] = None,
         callback_method: typing.Optional[AudioGenerateRequestCallbackMethod] = None,
         mip_opt_out: typing.Optional[bool] = None,
-        bit_rate: typing.Optional[int] = None,
+        tag: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        bit_rate: typing.Optional[float] = None,
         container: typing.Optional[AudioGenerateRequestContainer] = None,
         encoding: typing.Optional[AudioGenerateRequestEncoding] = None,
         model: typing.Optional[AudioGenerateRequestModel] = None,
-        sample_rate: typing.Optional[int] = None,
+        sample_rate: typing.Optional[float] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Iterator[bytes]:
         """
@@ -60,7 +61,10 @@ class AudioClient:
         mip_opt_out : typing.Optional[bool]
             Opts out requests from the Deepgram Model Improvement Program. Refer to our Docs for pricing impacts before setting this to true. https://dpgr.am/deepgram-mip
 
-        bit_rate : typing.Optional[int]
+        tag : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Label your requests for the purpose of identification during usage reporting
+
+        bit_rate : typing.Optional[float]
             The bitrate of the audio in bits per second. Choose from predefined ranges or specific values based on the encoding type.
 
         container : typing.Optional[AudioGenerateRequestContainer]
@@ -72,7 +76,7 @@ class AudioClient:
         model : typing.Optional[AudioGenerateRequestModel]
             AI model used to process submitted text
 
-        sample_rate : typing.Optional[int]
+        sample_rate : typing.Optional[float]
             Sample Rate specifies the sample rate for the output audio. Based on the encoding, different sample rates are supported. For some encodings, the sample rate is not configurable
 
         request_options : typing.Optional[RequestOptions]
@@ -99,6 +103,7 @@ class AudioClient:
             callback=callback,
             callback_method=callback_method,
             mip_opt_out=mip_opt_out,
+            tag=tag,
             bit_rate=bit_rate,
             container=container,
             encoding=encoding,
@@ -131,11 +136,12 @@ class AsyncAudioClient:
         callback: typing.Optional[str] = None,
         callback_method: typing.Optional[AudioGenerateRequestCallbackMethod] = None,
         mip_opt_out: typing.Optional[bool] = None,
-        bit_rate: typing.Optional[int] = None,
+        tag: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        bit_rate: typing.Optional[float] = None,
         container: typing.Optional[AudioGenerateRequestContainer] = None,
         encoding: typing.Optional[AudioGenerateRequestEncoding] = None,
         model: typing.Optional[AudioGenerateRequestModel] = None,
-        sample_rate: typing.Optional[int] = None,
+        sample_rate: typing.Optional[float] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.AsyncIterator[bytes]:
         """
@@ -155,7 +161,10 @@ class AsyncAudioClient:
         mip_opt_out : typing.Optional[bool]
             Opts out requests from the Deepgram Model Improvement Program. Refer to our Docs for pricing impacts before setting this to true. https://dpgr.am/deepgram-mip
 
-        bit_rate : typing.Optional[int]
+        tag : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Label your requests for the purpose of identification during usage reporting
+
+        bit_rate : typing.Optional[float]
             The bitrate of the audio in bits per second. Choose from predefined ranges or specific values based on the encoding type.
 
         container : typing.Optional[AudioGenerateRequestContainer]
@@ -167,7 +176,7 @@ class AsyncAudioClient:
         model : typing.Optional[AudioGenerateRequestModel]
             AI model used to process submitted text
 
-        sample_rate : typing.Optional[int]
+        sample_rate : typing.Optional[float]
             Sample Rate specifies the sample rate for the output audio. Based on the encoding, different sample rates are supported. For some encodings, the sample rate is not configurable
 
         request_options : typing.Optional[RequestOptions]
@@ -202,6 +211,7 @@ class AsyncAudioClient:
             callback=callback,
             callback_method=callback_method,
             mip_opt_out=mip_opt_out,
+            tag=tag,
             bit_rate=bit_rate,
             container=container,
             encoding=encoding,

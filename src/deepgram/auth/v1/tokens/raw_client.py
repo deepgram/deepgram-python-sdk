@@ -20,14 +20,14 @@ class RawTokensClient:
         self._client_wrapper = client_wrapper
 
     def grant(
-        self, *, ttl_seconds: typing.Optional[int] = OMIT, request_options: typing.Optional[RequestOptions] = None
+        self, *, ttl_seconds: typing.Optional[float] = OMIT, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[GrantV1Response]:
         """
         Generates a temporary JSON Web Token (JWT) with a 30-second (by default) TTL and usage::write permission for core voice APIs, requiring an API key with Member or higher authorization. Tokens created with this endpoint will not work with the Manage APIs.
 
         Parameters
         ----------
-        ttl_seconds : typing.Optional[int]
+        ttl_seconds : typing.Optional[float]
             Time to live in seconds for the token. Defaults to 30 seconds.
 
         request_options : typing.Optional[RequestOptions]
@@ -83,14 +83,14 @@ class AsyncRawTokensClient:
         self._client_wrapper = client_wrapper
 
     async def grant(
-        self, *, ttl_seconds: typing.Optional[int] = OMIT, request_options: typing.Optional[RequestOptions] = None
+        self, *, ttl_seconds: typing.Optional[float] = OMIT, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[GrantV1Response]:
         """
         Generates a temporary JSON Web Token (JWT) with a 30-second (by default) TTL and usage::write permission for core voice APIs, requiring an API key with Member or higher authorization. Tokens created with this endpoint will not work with the Manage APIs.
 
         Parameters
         ----------
-        ttl_seconds : typing.Optional[int]
+        ttl_seconds : typing.Optional[float]
             Time to live in seconds for the token. Defaults to 30 seconds.
 
         request_options : typing.Optional[RequestOptions]

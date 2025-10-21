@@ -10,6 +10,6 @@ from .shared_intents_results_intents_segments_item_intents_item import (
 
 class SharedIntentsResultsIntentsSegmentsItemParams(typing_extensions.TypedDict):
     text: typing_extensions.NotRequired[str]
-    start_word: typing_extensions.NotRequired[int]
-    end_word: typing_extensions.NotRequired[int]
+    start_word: typing_extensions.NotRequired[float]
+    end_word: typing_extensions.NotRequired[float]
     intents: typing_extensions.NotRequired[typing.Sequence[SharedIntentsResultsIntentsSegmentsItemIntentsItemParams]]

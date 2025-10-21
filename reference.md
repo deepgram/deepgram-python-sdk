@@ -109,7 +109,7 @@ client.auth.v1.tokens.grant()
 <dl>
 <dd>
 
-**ttl_seconds:** `typing.Optional[int]` — Time to live in seconds for the token. Defaults to 30 seconds.
+**ttl_seconds:** `typing.Optional[float]` — Time to live in seconds for the token. Defaults to 30 seconds.
     
 </dd>
 </dl>
@@ -468,6 +468,14 @@ client.listen.v1.media.transcribe_url(
 <dl>
 <dd>
 
+**mip_opt_out:** `typing.Optional[bool]` — Opts out requests from the Deepgram Model Improvement Program. Refer to our Docs for pricing impacts before setting this to true. https://dpgr.am/deepgram-mip
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -816,6 +824,14 @@ client.listen.v1.media.transcribe_file()
 <dl>
 <dd>
 
+**mip_opt_out:** `typing.Optional[bool]` — Opts out requests from the Deepgram Model Improvement Program. Refer to our Docs for pricing impacts before setting this to true. https://dpgr.am/deepgram-mip
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -1086,7 +1102,7 @@ client.manage.v1.projects.get(
 <dl>
 <dd>
 
-**limit:** `typing.Optional[int]` — Number of results to return per page. Default 10. Range [1,1000]
+**limit:** `typing.Optional[float]` — Number of results to return per page. Default 10. Range [1,1000]
     
 </dd>
 </dl>
@@ -1094,7 +1110,7 @@ client.manage.v1.projects.get(
 <dl>
 <dd>
 
-**page:** `typing.Optional[int]` — Navigate and return the results to retrieve specific portions of information of the response
+**page:** `typing.Optional[float]` — Navigate and return the results to retrieve specific portions of information of the response
     
 </dd>
 </dl>
@@ -2033,7 +2049,7 @@ client.manage.v1.projects.requests.list(
 <dl>
 <dd>
 
-**limit:** `typing.Optional[int]` — Number of results to return per page. Default 10. Range [1,1000]
+**limit:** `typing.Optional[float]` — Number of results to return per page. Default 10. Range [1,1000]
     
 </dd>
 </dl>
@@ -2041,7 +2057,7 @@ client.manage.v1.projects.requests.list(
 <dl>
 <dd>
 
-**page:** `typing.Optional[int]` — Navigate and return the results to retrieve specific portions of information of the response
+**page:** `typing.Optional[float]` — Navigate and return the results to retrieve specific portions of information of the response
     
 </dd>
 </dl>
@@ -2959,7 +2975,7 @@ client.manage.v1.projects.billing.purchases.list(
 <dl>
 <dd>
 
-**limit:** `typing.Optional[int]` — Number of results to return per page. Default 10. Range [1,1000]
+**limit:** `typing.Optional[float]` — Number of results to return per page. Default 10. Range [1,1000]
     
 </dd>
 </dl>
@@ -3998,6 +4014,14 @@ client.read.v1.text.analyze(
 <dl>
 <dd>
 
+**tag:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Label your requests for the purpose of identification during usage reporting
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **topics:** `typing.Optional[bool]` — Detect topics throughout a transcript or text
     
 </dd>
@@ -4477,7 +4501,15 @@ client.speak.v1.audio.generate(
 <dl>
 <dd>
 
-**bit_rate:** `typing.Optional[int]` — The bitrate of the audio in bits per second. Choose from predefined ranges or specific values based on the encoding type.
+**tag:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Label your requests for the purpose of identification during usage reporting
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**bit_rate:** `typing.Optional[float]` — The bitrate of the audio in bits per second. Choose from predefined ranges or specific values based on the encoding type.
     
 </dd>
 </dl>
@@ -4509,7 +4541,7 @@ client.speak.v1.audio.generate(
 <dl>
 <dd>
 
-**sample_rate:** `typing.Optional[int]` — Sample Rate specifies the sample rate for the output audio. Based on the encoding, different sample rates are supported. For some encodings, the sample rate is not configurable
+**sample_rate:** `typing.Optional[float]` — Sample Rate specifies the sample rate for the output audio. Based on the encoding, different sample rates are supported. For some encodings, the sample rate is not configurable
     
 </dd>
 </dl>

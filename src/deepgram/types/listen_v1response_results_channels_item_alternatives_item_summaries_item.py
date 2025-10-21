@@ -8,8 +8,8 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 class ListenV1ResponseResultsChannelsItemAlternativesItemSummariesItem(UniversalBaseModel):
     summary: typing.Optional[str] = None
-    start_word: typing.Optional[int] = None
-    end_word: typing.Optional[int] = None
+    start_word: typing.Optional[float] = None
+    end_word: typing.Optional[float] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

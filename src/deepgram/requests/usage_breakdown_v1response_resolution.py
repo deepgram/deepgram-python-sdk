@@ -9,7 +9,7 @@ class UsageBreakdownV1ResponseResolutionParams(typing_extensions.TypedDict):
     Time unit for the resolution
     """
 
-    amount: int
+    amount: float
     """
     Amount of units
     """

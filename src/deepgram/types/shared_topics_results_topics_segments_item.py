@@ -9,8 +9,8 @@ from .shared_topics_results_topics_segments_item_topics_item import SharedTopics
 
 class SharedTopicsResultsTopicsSegmentsItem(UniversalBaseModel):
     text: typing.Optional[str] = None
-    start_word: typing.Optional[int] = None
-    end_word: typing.Optional[int] = None
+    start_word: typing.Optional[float] = None
+    end_word: typing.Optional[float] = None
     topics: typing.Optional[typing.List[SharedTopicsResultsTopicsSegmentsItemTopicsItem]] = None
 
     if IS_PYDANTIC_V2:

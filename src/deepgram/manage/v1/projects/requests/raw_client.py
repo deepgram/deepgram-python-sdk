@@ -30,8 +30,8 @@ class RawRequestsClient:
         *,
         start: typing.Optional[dt.datetime] = None,
         end: typing.Optional[dt.datetime] = None,
-        limit: typing.Optional[int] = None,
-        page: typing.Optional[int] = None,
+        limit: typing.Optional[float] = None,
+        page: typing.Optional[float] = None,
         accessor: typing.Optional[str] = None,
         request_id: typing.Optional[str] = None,
         deployment: typing.Optional[RequestsListRequestDeployment] = None,
@@ -54,10 +54,10 @@ class RawRequestsClient:
         end : typing.Optional[dt.datetime]
             End date of the requested date range. Formats accepted are YYYY-MM-DD, YYYY-MM-DDTHH:MM:SS, or YYYY-MM-DDTHH:MM:SS+HH:MM
 
-        limit : typing.Optional[int]
+        limit : typing.Optional[float]
             Number of results to return per page. Default 10. Range [1,1000]
 
-        page : typing.Optional[int]
+        page : typing.Optional[float]
             Navigate and return the results to retrieve specific portions of information of the response
 
         accessor : typing.Optional[str]
@@ -195,8 +195,8 @@ class AsyncRawRequestsClient:
         *,
         start: typing.Optional[dt.datetime] = None,
         end: typing.Optional[dt.datetime] = None,
-        limit: typing.Optional[int] = None,
-        page: typing.Optional[int] = None,
+        limit: typing.Optional[float] = None,
+        page: typing.Optional[float] = None,
         accessor: typing.Optional[str] = None,
         request_id: typing.Optional[str] = None,
         deployment: typing.Optional[RequestsListRequestDeployment] = None,
@@ -219,10 +219,10 @@ class AsyncRawRequestsClient:
         end : typing.Optional[dt.datetime]
             End date of the requested date range. Formats accepted are YYYY-MM-DD, YYYY-MM-DDTHH:MM:SS, or YYYY-MM-DDTHH:MM:SS+HH:MM
 
-        limit : typing.Optional[int]
+        limit : typing.Optional[float]
             Number of results to return per page. Default 10. Range [1,1000]
 
-        page : typing.Optional[int]
+        page : typing.Optional[float]
             Navigate and return the results to retrieve specific portions of information of the response
 
         accessor : typing.Optional[str]
