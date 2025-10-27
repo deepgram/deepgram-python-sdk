@@ -43,7 +43,7 @@ class V2Client:
         eager_eot_threshold: typing.Optional[str] = None,
         eot_threshold: typing.Optional[str] = None,
         eot_timeout_ms: typing.Optional[str] = None,
-        keyterm: typing.Optional[str] = None,
+        keyterm: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         mip_opt_out: typing.Optional[str] = None,
         tag: typing.Optional[str] = None,
         authorization: typing.Optional[str] = None,
