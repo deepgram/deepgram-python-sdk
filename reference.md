@@ -1,4 +1,91 @@
 # Reference
+## Manage
+<details><summary><code>client.manage.<a href="src/deepgram/manage/client.py">v1projects_billing_fields_list</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Lists the accessors, deployment types, tags, and line items used for billing data in the specified time period. Use this endpoint if you want to filter your results from the Billing Breakdown endpoint and want to know what filters are available.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from deepgram import DeepgramClient
+
+client = DeepgramClient(
+    api_key="YOUR_API_KEY",
+)
+client.manage.v1projects_billing_fields_list(
+    project_id="123456-7890-1234-5678-901234",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**project_id:** `str` — The unique identifier of the project
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**start:** `typing.Optional[str]` — Start date of the requested date range. Format accepted is YYYY-MM-DD
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**end:** `typing.Optional[str]` — End date of the requested date range. Format accepted is YYYY-MM-DD
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Agent V1 Settings Think Models
 <details><summary><code>client.agent.v1.settings.think.models.<a href="src/deepgram/agent/v1/settings/think/models/client.py">list</a>()</code></summary>
 <dl>
