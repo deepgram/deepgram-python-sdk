@@ -58,6 +58,8 @@ if typing.TYPE_CHECKING:
     from .get_project_v1response import GetProjectV1Response
     from .grant_v1response import GrantV1Response
     from .leave_project_v1response import LeaveProjectV1Response
+    from .list_billing_fields_v1response import ListBillingFieldsV1Response
+    from .list_billing_fields_v1response_deployments_item import ListBillingFieldsV1ResponseDeploymentsItem
     from .list_models_v1response import ListModelsV1Response
     from .list_models_v1response_stt_models import ListModelsV1ResponseSttModels
     from .list_models_v1response_tts_models import ListModelsV1ResponseTtsModels
@@ -254,6 +256,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "GetProjectV1Response": ".get_project_v1response",
     "GrantV1Response": ".grant_v1response",
     "LeaveProjectV1Response": ".leave_project_v1response",
+    "ListBillingFieldsV1Response": ".list_billing_fields_v1response",
+    "ListBillingFieldsV1ResponseDeploymentsItem": ".list_billing_fields_v1response_deployments_item",
     "ListModelsV1Response": ".list_models_v1response",
     "ListModelsV1ResponseSttModels": ".list_models_v1response_stt_models",
     "ListModelsV1ResponseTtsModels": ".list_models_v1response_tts_models",
@@ -450,6 +454,8 @@ __all__ = [
     "GetProjectV1Response",
     "GrantV1Response",
     "LeaveProjectV1Response",
+    "ListBillingFieldsV1Response",
+    "ListBillingFieldsV1ResponseDeploymentsItem",
     "ListModelsV1Response",
     "ListModelsV1ResponseSttModels",
     "ListModelsV1ResponseTtsModels",

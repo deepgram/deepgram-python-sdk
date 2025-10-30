@@ -85,13 +85,21 @@ class BaseClient:
             else httpx.Client(timeout=_defaulted_timeout),
             timeout=_defaulted_timeout,
         )
+        self._manage: typing.Optional[ManageClient] = None
         self._agent: typing.Optional[AgentClient] = None
         self._auth: typing.Optional[AuthClient] = None
         self._listen: typing.Optional[ListenClient] = None
-        self._manage: typing.Optional[ManageClient] = None
         self._read: typing.Optional[ReadClient] = None
         self._self_hosted: typing.Optional[SelfHostedClient] = None
         self._speak: typing.Optional[SpeakClient] = None
+
+    @property
+    def manage(self):
+        if self._manage is None:
+            from .manage.client import ManageClient  # noqa: E402
+
+            self._manage = ManageClient(client_wrapper=self._client_wrapper)
+        return self._manage
 
     @property
     def agent(self):
@@ -116,14 +124,6 @@ class BaseClient:
 
             self._listen = ListenClient(client_wrapper=self._client_wrapper)
         return self._listen
-
-    @property
-    def manage(self):
-        if self._manage is None:
-            from .manage.client import ManageClient  # noqa: E402
-
-            self._manage = ManageClient(client_wrapper=self._client_wrapper)
-        return self._manage
 
     @property
     def read(self):
@@ -215,13 +215,21 @@ class AsyncBaseClient:
             else httpx.AsyncClient(timeout=_defaulted_timeout),
             timeout=_defaulted_timeout,
         )
+        self._manage: typing.Optional[AsyncManageClient] = None
         self._agent: typing.Optional[AsyncAgentClient] = None
         self._auth: typing.Optional[AsyncAuthClient] = None
         self._listen: typing.Optional[AsyncListenClient] = None
-        self._manage: typing.Optional[AsyncManageClient] = None
         self._read: typing.Optional[AsyncReadClient] = None
         self._self_hosted: typing.Optional[AsyncSelfHostedClient] = None
         self._speak: typing.Optional[AsyncSpeakClient] = None
+
+    @property
+    def manage(self):
+        if self._manage is None:
+            from .manage.client import AsyncManageClient  # noqa: E402
+
+            self._manage = AsyncManageClient(client_wrapper=self._client_wrapper)
+        return self._manage
 
     @property
     def agent(self):
@@ -246,14 +254,6 @@ class AsyncBaseClient:
 
             self._listen = AsyncListenClient(client_wrapper=self._client_wrapper)
         return self._listen
-
-    @property
-    def manage(self):
-        if self._manage is None:
-            from .manage.client import AsyncManageClient  # noqa: E402
-
-            self._manage = AsyncManageClient(client_wrapper=self._client_wrapper)
-        return self._manage
 
     @property
     def read(self):

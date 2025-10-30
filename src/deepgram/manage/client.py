@@ -5,6 +5,8 @@ from __future__ import annotations
 import typing
 
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
+from ..core.request_options import RequestOptions
+from ..types.list_billing_fields_v1response import ListBillingFieldsV1Response
 from .raw_client import AsyncRawManageClient, RawManageClient
 
 if typing.TYPE_CHECKING:
@@ -27,6 +29,52 @@ class ManageClient:
         RawManageClient
         """
         return self._raw_client
+
+    def v1projects_billing_fields_list(
+        self,
+        project_id: str,
+        *,
+        start: typing.Optional[str] = None,
+        end: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> ListBillingFieldsV1Response:
+        """
+        Lists the accessors, deployment types, tags, and line items used for billing data in the specified time period. Use this endpoint if you want to filter your results from the Billing Breakdown endpoint and want to know what filters are available.
+
+        Parameters
+        ----------
+        project_id : str
+            The unique identifier of the project
+
+        start : typing.Optional[str]
+            Start date of the requested date range. Format accepted is YYYY-MM-DD
+
+        end : typing.Optional[str]
+            End date of the requested date range. Format accepted is YYYY-MM-DD
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ListBillingFieldsV1Response
+            A list of billing fields for a specific project
+
+        Examples
+        --------
+        from deepgram import DeepgramClient
+
+        client = DeepgramClient(
+            api_key="YOUR_API_KEY",
+        )
+        client.manage.v1projects_billing_fields_list(
+            project_id="123456-7890-1234-5678-901234",
+        )
+        """
+        _response = self._raw_client.v1projects_billing_fields_list(
+            project_id, start=start, end=end, request_options=request_options
+        )
+        return _response.data
 
     @property
     def v1(self):
@@ -53,6 +101,60 @@ class AsyncManageClient:
         AsyncRawManageClient
         """
         return self._raw_client
+
+    async def v1projects_billing_fields_list(
+        self,
+        project_id: str,
+        *,
+        start: typing.Optional[str] = None,
+        end: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> ListBillingFieldsV1Response:
+        """
+        Lists the accessors, deployment types, tags, and line items used for billing data in the specified time period. Use this endpoint if you want to filter your results from the Billing Breakdown endpoint and want to know what filters are available.
+
+        Parameters
+        ----------
+        project_id : str
+            The unique identifier of the project
+
+        start : typing.Optional[str]
+            Start date of the requested date range. Format accepted is YYYY-MM-DD
+
+        end : typing.Optional[str]
+            End date of the requested date range. Format accepted is YYYY-MM-DD
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ListBillingFieldsV1Response
+            A list of billing fields for a specific project
+
+        Examples
+        --------
+        import asyncio
+
+        from deepgram import AsyncDeepgramClient
+
+        client = AsyncDeepgramClient(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.manage.v1projects_billing_fields_list(
+                project_id="123456-7890-1234-5678-901234",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.v1projects_billing_fields_list(
+            project_id, start=start, end=end, request_options=request_options
+        )
+        return _response.data
 
     @property
     def v1(self):
