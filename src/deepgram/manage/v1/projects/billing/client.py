@@ -10,6 +10,7 @@ from .raw_client import AsyncRawBillingClient, RawBillingClient
 if typing.TYPE_CHECKING:
     from .balances.client import AsyncBalancesClient, BalancesClient
     from .breakdown.client import AsyncBreakdownClient, BreakdownClient
+    from .fields.client import AsyncFieldsClient, FieldsClient
     from .purchases.client import AsyncPurchasesClient, PurchasesClient
 
 
@@ -19,6 +20,7 @@ class BillingClient:
         self._client_wrapper = client_wrapper
         self._balances: typing.Optional[BalancesClient] = None
         self._breakdown: typing.Optional[BreakdownClient] = None
+        self._fields: typing.Optional[FieldsClient] = None
         self._purchases: typing.Optional[PurchasesClient] = None
 
     @property
@@ -49,6 +51,14 @@ class BillingClient:
         return self._breakdown
 
     @property
+    def fields(self):
+        if self._fields is None:
+            from .fields.client import FieldsClient  # noqa: E402
+
+            self._fields = FieldsClient(client_wrapper=self._client_wrapper)
+        return self._fields
+
+    @property
     def purchases(self):
         if self._purchases is None:
             from .purchases.client import PurchasesClient  # noqa: E402
@@ -63,6 +73,7 @@ class AsyncBillingClient:
         self._client_wrapper = client_wrapper
         self._balances: typing.Optional[AsyncBalancesClient] = None
         self._breakdown: typing.Optional[AsyncBreakdownClient] = None
+        self._fields: typing.Optional[AsyncFieldsClient] = None
         self._purchases: typing.Optional[AsyncPurchasesClient] = None
 
     @property
@@ -91,6 +102,14 @@ class AsyncBillingClient:
 
             self._breakdown = AsyncBreakdownClient(client_wrapper=self._client_wrapper)
         return self._breakdown
+
+    @property
+    def fields(self):
+        if self._fields is None:
+            from .fields.client import AsyncFieldsClient  # noqa: E402
+
+            self._fields = AsyncFieldsClient(client_wrapper=self._client_wrapper)
+        return self._fields
 
     @property
     def purchases(self):
