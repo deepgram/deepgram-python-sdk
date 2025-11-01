@@ -107,43 +107,65 @@ def _instrument_sync_connect(original_connect, events: Union[SocketEvents, None]
             connection_kwargs=kwargs,
         )
         
-        # Emit connect event
-        if events:
-            try:
-                events.on_ws_connect(
-                    url=str(uri),
-                    headers=additional_headers,
-                    request_details=request_details,
-                )
-            except Exception:
-                pass
-        
         try:
-            # Call original connect
+            # Call original connect first - don't block on telemetry
             connection = original_connect(uri, *args, additional_headers=additional_headers, **kwargs)
+            
+            # Emit connect event in background after connection is established
+            if events:
+                try:
+                    import threading
+                    
+                    def emit_connect():
+                        try:
+                            events.on_ws_connect(
+                                url=str(uri),
+                                headers=additional_headers,
+                                request_details=request_details,
+                            )
+                        except Exception:
+                            pass
+                    
+                    thread = threading.Thread(target=emit_connect, daemon=True, name="dg-ws-telemetry")
+                    thread.start()
+                except Exception:
+                    pass
             
             # Wrap the connection to capture close event
             if events:
                 original_close = connection.close
                 
                 def instrumented_close(*close_args, **close_kwargs):
-                    duration_ms = (time.perf_counter() - start_time) * 1000
-                    response_details = _capture_response_details(
-                        status_code=1000,  # Normal close
-                        duration_ms=duration_ms
-                    )
+                    # Close the connection first
+                    result = original_close(*close_args, **close_kwargs)
                     
+                    # Then emit telemetry in background
                     try:
-                        events.on_ws_close(
-                            url=str(uri),
-                            duration_ms=duration_ms,
-                            request_details=request_details,
-                            response_details=response_details,
-                        )
+                        import threading
+                        
+                        def emit_close():
+                            try:
+                                duration_ms = (time.perf_counter() - start_time) * 1000
+                                response_details = _capture_response_details(
+                                    status_code=1000,  # Normal close
+                                    duration_ms=duration_ms
+                                )
+                                
+                                events.on_ws_close(
+                                    url=str(uri),
+                                    duration_ms=duration_ms,
+                                    request_details=request_details,
+                                    response_details=response_details,
+                                )
+                            except Exception:
+                                pass
+                        
+                        thread = threading.Thread(target=emit_close, daemon=True, name="dg-ws-telemetry")
+                        thread.start()
                     except Exception:
                         pass
                     
-                    return original_close(*close_args, **close_kwargs)
+                    return result
                 
                 connection.close = instrumented_close
             
@@ -154,64 +176,75 @@ def _instrument_sync_connect(original_connect, events: Union[SocketEvents, None]
             
             duration_ms = (time.perf_counter() - start_time) * 1000
             
-            # Capture detailed error information
-            response_details = _capture_response_details(
-                error=error,
-                duration_ms=duration_ms,
-                error_type=type(error).__name__,
-                error_message=str(error),
-                stack_trace=traceback.format_exc(),
-                function_name="websockets.sync.client.connect",
-                timeout_occurred="timeout" in str(error).lower() or "timed out" in str(error).lower(),
-            )
-            
-            # Capture WebSocket handshake response headers if available
-            try:
-                # Handle InvalidStatusCode exceptions (handshake failures)
-                if error.__class__.__name__ == 'InvalidStatusCode':
-                    # Status code is directly available
-                    if hasattr(error, 'status_code'):
-                        response_details["handshake_status_code"] = error.status_code
-                    
-                    # Headers are directly available as e.headers
-                    if hasattr(error, 'headers') and error.headers:
-                        response_details["handshake_response_headers"] = dict(error.headers)
-                    
-                    # Some versions might have response_headers
-                    elif hasattr(error, 'response_headers') and error.response_headers:
-                        response_details["handshake_response_headers"] = dict(error.response_headers)
-                
-                # Handle InvalidHandshake exceptions (protocol-level failures)
-                elif error.__class__.__name__ == 'InvalidHandshake':
-                    response_details["handshake_error_type"] = "InvalidHandshake"
-                    if hasattr(error, 'headers') and error.headers:
-                        response_details["handshake_response_headers"] = dict(error.headers)
-                
-                # Generic fallback for any exception with headers
-                elif hasattr(error, 'headers') and error.headers:
-                    response_details["handshake_response_headers"] = dict(error.headers)
-                elif hasattr(error, 'response_headers') and error.response_headers:
-                    response_details["handshake_response_headers"] = dict(error.response_headers)
-                
-                # Capture status code if available (for any exception type)
-                if hasattr(error, 'status_code') and not response_details.get("handshake_status_code"):
-                    response_details["handshake_status_code"] = error.status_code
-                    
-            except Exception:
-                # Don't let header extraction fail the error handling
-                pass
-            
+            # Emit error telemetry in background, then re-raise immediately
             if events:
                 try:
-                    events.on_ws_error(
-                        url=str(uri),
-                        error=error,
-                        duration_ms=duration_ms,
-                        request_details=request_details,
-                        response_details=response_details,
-                    )
+                    import threading
+                    
+                    def emit_error():
+                        try:
+                            # Capture detailed error information
+                            response_details = _capture_response_details(
+                                error=error,
+                                duration_ms=duration_ms,
+                                error_type=type(error).__name__,
+                                error_message=str(error),
+                                stack_trace=traceback.format_exc(),
+                                function_name="websockets.sync.client.connect",
+                                timeout_occurred="timeout" in str(error).lower() or "timed out" in str(error).lower(),
+                            )
+                            
+                            # Capture WebSocket handshake response headers if available
+                            try:
+                                # Handle InvalidStatusCode exceptions (handshake failures)
+                                if error.__class__.__name__ == 'InvalidStatusCode':
+                                    # Status code is directly available
+                                    if hasattr(error, 'status_code'):
+                                        response_details["handshake_status_code"] = error.status_code
+                                    
+                                    # Headers are directly available as e.headers
+                                    if hasattr(error, 'headers') and error.headers:
+                                        response_details["handshake_response_headers"] = dict(error.headers)
+                                    
+                                    # Some versions might have response_headers
+                                    elif hasattr(error, 'response_headers') and error.response_headers:
+                                        response_details["handshake_response_headers"] = dict(error.response_headers)
+                                
+                                # Handle InvalidHandshake exceptions (protocol-level failures)
+                                elif error.__class__.__name__ == 'InvalidHandshake':
+                                    response_details["handshake_error_type"] = "InvalidHandshake"
+                                    if hasattr(error, 'headers') and error.headers:
+                                        response_details["handshake_response_headers"] = dict(error.headers)
+                                
+                                # Generic fallback for any exception with headers
+                                elif hasattr(error, 'headers') and error.headers:
+                                    response_details["handshake_response_headers"] = dict(error.headers)
+                                elif hasattr(error, 'response_headers') and error.response_headers:
+                                    response_details["handshake_response_headers"] = dict(error.response_headers)
+                                
+                                # Capture status code if available (for any exception type)
+                                if hasattr(error, 'status_code') and not response_details.get("handshake_status_code"):
+                                    response_details["handshake_status_code"] = error.status_code
+                                    
+                            except Exception:
+                                # Don't let header extraction fail the error handling
+                                pass
+                            
+                            events.on_ws_error(
+                                url=str(uri),
+                                error=error,
+                                duration_ms=duration_ms,
+                                request_details=request_details,
+                                response_details=response_details,
+                            )
+                        except Exception:
+                            pass
+                    
+                    thread = threading.Thread(target=emit_error, daemon=True, name="dg-ws-telemetry")
+                    thread.start()
                 except Exception:
                     pass
+            
             raise
     
     return instrumented_connect
@@ -234,45 +267,67 @@ def _instrument_async_connect(original_connect, events: Union[SocketEvents, None
             connection_kwargs=kwargs,
         )
         
-        # Emit connect event
-        if events:
-            try:
-                events.on_ws_connect(
-                    url=str(uri),
-                    headers=extra_headers,
-                    request_details=request_details,
-                )
-            except Exception:
-                pass
-        
         # Return an async context manager
         @asynccontextmanager
         async def instrumented_context():
             try:
-                # Call original connect
+                # Call original connect - don't block on telemetry
                 async with original_connect(uri, *args, extra_headers=extra_headers, **kwargs) as connection:
+                    # Emit connect event in background after connection is established
+                    if events:
+                        try:
+                            import threading
+                            
+                            def emit_connect():
+                                try:
+                                    events.on_ws_connect(
+                                        url=str(uri),
+                                        headers=extra_headers,
+                                        request_details=request_details,
+                                    )
+                                except Exception:
+                                    pass
+                            
+                            thread = threading.Thread(target=emit_connect, daemon=True, name="dg-ws-telemetry")
+                            thread.start()
+                        except Exception:
+                            pass
+                    
                     # Wrap the connection to capture close event
                     if events:
                         original_close = connection.close
                         
                         async def instrumented_close(*close_args, **close_kwargs):
-                            duration_ms = (time.perf_counter() - start_time) * 1000
-                            response_details = _capture_response_details(
-                                status_code=1000,  # Normal close
-                                duration_ms=duration_ms
-                            )
+                            # Close the connection first
+                            result = await original_close(*close_args, **close_kwargs)
                             
+                            # Then emit telemetry in background
                             try:
-                                events.on_ws_close(
-                                    url=str(uri),
-                                    duration_ms=duration_ms,
-                                    request_details=request_details,
-                                    response_details=response_details,
-                                )
+                                import threading
+                                
+                                def emit_close():
+                                    try:
+                                        duration_ms = (time.perf_counter() - start_time) * 1000
+                                        response_details = _capture_response_details(
+                                            status_code=1000,  # Normal close
+                                            duration_ms=duration_ms
+                                        )
+                                        
+                                        events.on_ws_close(
+                                            url=str(uri),
+                                            duration_ms=duration_ms,
+                                            request_details=request_details,
+                                            response_details=response_details,
+                                        )
+                                    except Exception:
+                                        pass
+                                
+                                thread = threading.Thread(target=emit_close, daemon=True, name="dg-ws-telemetry")
+                                thread.start()
                             except Exception:
                                 pass
                             
-                            return await original_close(*close_args, **close_kwargs)
+                            return result
                         
                         connection.close = instrumented_close
                     
@@ -281,17 +336,26 @@ def _instrument_async_connect(original_connect, events: Union[SocketEvents, None
                     # Also emit close event when context exits (if connection wasn't manually closed)
                     if events:
                         try:
-                            duration_ms = (time.perf_counter() - start_time) * 1000
-                            response_details = _capture_response_details(
-                                status_code=1000,  # Normal close
-                                duration_ms=duration_ms
-                            )
-                            events.on_ws_close(
-                                url=str(uri),
-                                duration_ms=duration_ms,
-                                request_details=request_details,
-                                response_details=response_details,
-                            )
+                            import threading
+                            
+                            def emit_close():
+                                try:
+                                    duration_ms = (time.perf_counter() - start_time) * 1000
+                                    response_details = _capture_response_details(
+                                        status_code=1000,  # Normal close
+                                        duration_ms=duration_ms
+                                    )
+                                    events.on_ws_close(
+                                        url=str(uri),
+                                        duration_ms=duration_ms,
+                                        request_details=request_details,
+                                        response_details=response_details,
+                                    )
+                                except Exception:
+                                    pass
+                            
+                            thread = threading.Thread(target=emit_close, daemon=True, name="dg-ws-telemetry")
+                            thread.start()
                         except Exception:
                             pass
                             
@@ -300,64 +364,75 @@ def _instrument_async_connect(original_connect, events: Union[SocketEvents, None
                 
                 duration_ms = (time.perf_counter() - start_time) * 1000
                 
-                # Capture detailed error information
-                response_details = _capture_response_details(
-                    error=error,
-                    duration_ms=duration_ms,
-                    error_type=type(error).__name__,
-                    error_message=str(error),
-                    stack_trace=traceback.format_exc(),
-                    function_name="websockets.client.connect",
-                    timeout_occurred="timeout" in str(error).lower() or "timed out" in str(error).lower(),
-                )
-                
-                # Capture WebSocket handshake response headers if available
-                try:
-                    # Handle InvalidStatusCode exceptions (handshake failures)
-                    if error.__class__.__name__ == 'InvalidStatusCode':
-                        # Status code is directly available
-                        if hasattr(error, 'status_code'):
-                            response_details["handshake_status_code"] = error.status_code
-                        
-                        # Headers are directly available as e.headers
-                        if hasattr(error, 'headers') and error.headers:
-                            response_details["handshake_response_headers"] = dict(error.headers)
-                        
-                        # Some versions might have response_headers
-                        elif hasattr(error, 'response_headers') and error.response_headers:
-                            response_details["handshake_response_headers"] = dict(error.response_headers)
-                    
-                    # Handle InvalidHandshake exceptions (protocol-level failures)
-                    elif error.__class__.__name__ == 'InvalidHandshake':
-                        response_details["handshake_error_type"] = "InvalidHandshake"
-                        if hasattr(error, 'headers') and error.headers:
-                            response_details["handshake_response_headers"] = dict(error.headers)
-                    
-                    # Generic fallback for any exception with headers
-                    elif hasattr(error, 'headers') and error.headers:
-                        response_details["handshake_response_headers"] = dict(error.headers)
-                    elif hasattr(error, 'response_headers') and error.response_headers:
-                        response_details["handshake_response_headers"] = dict(error.response_headers)
-                    
-                    # Capture status code if available (for any exception type)
-                    if hasattr(error, 'status_code') and not response_details.get("handshake_status_code"):
-                        response_details["handshake_status_code"] = error.status_code
-                        
-                except Exception:
-                    # Don't let header extraction fail the error handling
-                    pass
-                
+                # Emit error telemetry in background, then re-raise immediately
                 if events:
                     try:
-                        events.on_ws_error(
-                            url=str(uri),
-                            error=error,
-                            duration_ms=duration_ms,
-                            request_details=request_details,
-                            response_details=response_details,
-                        )
+                        import threading
+                        
+                        def emit_error():
+                            try:
+                                # Capture detailed error information
+                                response_details = _capture_response_details(
+                                    error=error,
+                                    duration_ms=duration_ms,
+                                    error_type=type(error).__name__,
+                                    error_message=str(error),
+                                    stack_trace=traceback.format_exc(),
+                                    function_name="websockets.client.connect",
+                                    timeout_occurred="timeout" in str(error).lower() or "timed out" in str(error).lower(),
+                                )
+                                
+                                # Capture WebSocket handshake response headers if available
+                                try:
+                                    # Handle InvalidStatusCode exceptions (handshake failures)
+                                    if error.__class__.__name__ == 'InvalidStatusCode':
+                                        # Status code is directly available
+                                        if hasattr(error, 'status_code'):
+                                            response_details["handshake_status_code"] = error.status_code
+                                        
+                                        # Headers are directly available as e.headers
+                                        if hasattr(error, 'headers') and error.headers:
+                                            response_details["handshake_response_headers"] = dict(error.headers)
+                                        
+                                        # Some versions might have response_headers
+                                        elif hasattr(error, 'response_headers') and error.response_headers:
+                                            response_details["handshake_response_headers"] = dict(error.response_headers)
+                                    
+                                    # Handle InvalidHandshake exceptions (protocol-level failures)
+                                    elif error.__class__.__name__ == 'InvalidHandshake':
+                                        response_details["handshake_error_type"] = "InvalidHandshake"
+                                        if hasattr(error, 'headers') and error.headers:
+                                            response_details["handshake_response_headers"] = dict(error.headers)
+                                    
+                                    # Generic fallback for any exception with headers
+                                    elif hasattr(error, 'headers') and error.headers:
+                                        response_details["handshake_response_headers"] = dict(error.headers)
+                                    elif hasattr(error, 'response_headers') and error.response_headers:
+                                        response_details["handshake_response_headers"] = dict(error.response_headers)
+                                    
+                                    # Capture status code if available (for any exception type)
+                                    if hasattr(error, 'status_code') and not response_details.get("handshake_status_code"):
+                                        response_details["handshake_status_code"] = error.status_code
+                                        
+                                except Exception:
+                                    # Don't let header extraction fail the error handling
+                                    pass
+                                
+                                events.on_ws_error(
+                                    url=str(uri),
+                                    error=error,
+                                    duration_ms=duration_ms,
+                                    request_details=request_details,
+                                    response_details=response_details,
+                                )
+                            except Exception:
+                                pass
+                        
+                        thread = threading.Thread(target=emit_error, daemon=True, name="dg-ws-telemetry")
+                        thread.start()
                     except Exception:
                         pass
+                
                 raise
         
         return instrumented_context()
