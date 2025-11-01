@@ -140,33 +140,47 @@ class InstrumentedHttpClient(GeneratedHttpClient):
                 force_multipart=force_multipart,
             )
             duration_ms = (time.perf_counter() - start) * 1000.0
-            try:
-                if self._events is not None:
-                    response_headers = typing.cast(typing.Union[typing.Mapping[str, str], None], getattr(resp, "headers", None))
-                    # Filter response headers for telemetry extras
-                    try:
-                        from .telemetry_events import (
-                            capture_response_details,
-                            # filter_sensitive_headers,  # No longer needed - using privacy-focused capture
-                        )
-                        # No longer filter response headers - use privacy-focused response_details instead
-                        extras = None
-                        response_details = capture_response_details(resp)
-                    except Exception:
-                        extras = None
-                        response_details = None
+            
+            # Capture response details in a background thread to avoid blocking
+            # We capture minimal sync data here and defer detailed processing
+            if self._events is not None:
+                try:
+                    import threading
                     
-                    self._events.on_http_response(
-                        method=method,
-                        url=url or "",
-                        status_code=resp.status_code,
-                        duration_ms=duration_ms,
-                        headers=response_headers,
-                        extras=extras,
-                        response_details=response_details,
-                    )
-            except Exception:
-                pass
+                    def capture_and_emit():
+                        try:
+                            response_headers = typing.cast(typing.Union[typing.Mapping[str, str], None], getattr(resp, "headers", None))
+                            # Filter response headers for telemetry extras
+                            try:
+                                from .telemetry_events import (
+                                    capture_response_details,
+                                    # filter_sensitive_headers,  # No longer needed - using privacy-focused capture
+                                )
+                                # No longer filter response headers - use privacy-focused response_details instead
+                                extras = None
+                                response_details = capture_response_details(resp)
+                            except Exception:
+                                extras = None
+                                response_details = None
+                            
+                            self._events.on_http_response(
+                                method=method,
+                                url=url or "",
+                                status_code=resp.status_code,
+                                duration_ms=duration_ms,
+                                headers=response_headers,
+                                extras=extras,
+                                response_details=response_details,
+                            )
+                        except Exception:
+                            pass
+                    
+                    # Emit telemetry in background thread so we don't block the response
+                    thread = threading.Thread(target=capture_and_emit, daemon=True, name="dg-telemetry-capture")
+                    thread.start()
+                except Exception:
+                    pass
+            
             return resp
         except Exception as exc:
             duration_ms = (time.perf_counter() - start) * 1000.0
@@ -311,33 +325,47 @@ class InstrumentedAsyncHttpClient(GeneratedAsyncHttpClient):
                 force_multipart=force_multipart,
             )
             duration_ms = (time.perf_counter() - start) * 1000.0
-            try:
-                if self._events is not None:
-                    response_headers = typing.cast(typing.Union[typing.Mapping[str, str], None], getattr(resp, "headers", None))
-                    # Filter response headers for telemetry extras
-                    try:
-                        from .telemetry_events import (
-                            capture_response_details,
-                            # filter_sensitive_headers,  # No longer needed - using privacy-focused capture
-                        )
-                        # No longer filter response headers - use privacy-focused response_details instead
-                        extras = None
-                        response_details = capture_response_details(resp)
-                    except Exception:
-                        extras = None
-                        response_details = None
+            
+            # Capture response details in a background thread to avoid blocking
+            # We capture minimal sync data here and defer detailed processing
+            if self._events is not None:
+                try:
+                    import threading
                     
-                    self._events.on_http_response(
-                        method=method,
-                        url=url or "",
-                        status_code=resp.status_code,
-                        duration_ms=duration_ms,
-                        headers=response_headers,
-                        extras=extras,
-                        response_details=response_details,
-                    )
-            except Exception:
-                pass
+                    def capture_and_emit():
+                        try:
+                            response_headers = typing.cast(typing.Union[typing.Mapping[str, str], None], getattr(resp, "headers", None))
+                            # Filter response headers for telemetry extras
+                            try:
+                                from .telemetry_events import (
+                                    capture_response_details,
+                                    # filter_sensitive_headers,  # No longer needed - using privacy-focused capture
+                                )
+                                # No longer filter response headers - use privacy-focused response_details instead
+                                extras = None
+                                response_details = capture_response_details(resp)
+                            except Exception:
+                                extras = None
+                                response_details = None
+                            
+                            self._events.on_http_response(
+                                method=method,
+                                url=url or "",
+                                status_code=resp.status_code,
+                                duration_ms=duration_ms,
+                                headers=response_headers,
+                                extras=extras,
+                                response_details=response_details,
+                            )
+                        except Exception:
+                            pass
+                    
+                    # Emit telemetry in background thread so we don't block the response
+                    thread = threading.Thread(target=capture_and_emit, daemon=True, name="dg-telemetry-capture")
+                    thread.start()
+                except Exception:
+                    pass
+            
             return resp
         except Exception as exc:
             duration_ms = (time.perf_counter() - start) * 1000.0
