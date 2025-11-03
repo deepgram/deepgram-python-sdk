@@ -1,5 +1,12 @@
 # Changelog
 
+## [5.3.0](https://github.com/deepgram/deepgram-python-sdk/compare/v5.2.0...v5.3.0) (2025-10-30)
+
+
+### Features
+
+* add projects billing fields list methods ([#621](https://github.com/deepgram/deepgram-python-sdk/issues/621)) ([10d67cd](https://github.com/deepgram/deepgram-python-sdk/commit/10d67cd91aef1436a9e85e3b607dc7b81eebba43))
+
 ## [5.2.0](https://github.com/deepgram/deepgram-python-sdk/compare/v5.1.0...v5.2.0) (2025-10-21)
 
 
