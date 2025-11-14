@@ -5,6 +5,7 @@ import typing
 import httpx
 from ..environment import DeepgramClientEnvironment
 from .http_client import AsyncHttpClient, HttpClient
+from .websocket_client import WebSocketFactory, get_default_factory
 
 
 class BaseClientWrapper:
@@ -15,18 +16,20 @@ class BaseClientWrapper:
         headers: typing.Optional[typing.Dict[str, str]] = None,
         environment: DeepgramClientEnvironment,
         timeout: typing.Optional[float] = None,
+        websocket_client: typing.Optional[WebSocketFactory] = None,
     ):
         self.api_key = api_key
         self._headers = headers
         self._environment = environment
         self._timeout = timeout
+        self.websocket_client = websocket_client or get_default_factory()
 
     def get_headers(self) -> typing.Dict[str, str]:
         headers: typing.Dict[str, str] = {
             "X-Fern-Language": "Python",
             "X-Fern-SDK-Name": "deepgram",
             # x-release-please-start-version
-            "X-Fern-SDK-Version": "5.3.0", 
+            "X-Fern-SDK-Version": "5.3.0",
             # x-release-please-end
             **(self.get_custom_headers() or {}),
         }
@@ -52,8 +55,15 @@ class SyncClientWrapper(BaseClientWrapper):
         environment: DeepgramClientEnvironment,
         timeout: typing.Optional[float] = None,
         httpx_client: httpx.Client,
+        websocket_client: typing.Optional[WebSocketFactory] = None,
     ):
-        super().__init__(api_key=api_key, headers=headers, environment=environment, timeout=timeout)
+        super().__init__(
+            api_key=api_key,
+            headers=headers,
+            environment=environment,
+            timeout=timeout,
+            websocket_client=websocket_client,
+        )
         self.httpx_client = HttpClient(
             httpx_client=httpx_client, base_headers=self.get_headers, base_timeout=self.get_timeout
         )
@@ -68,8 +78,15 @@ class AsyncClientWrapper(BaseClientWrapper):
         environment: DeepgramClientEnvironment,
         timeout: typing.Optional[float] = None,
         httpx_client: httpx.AsyncClient,
+        websocket_client: typing.Optional[WebSocketFactory] = None,
     ):
-        super().__init__(api_key=api_key, headers=headers, environment=environment, timeout=timeout)
+        super().__init__(
+            api_key=api_key,
+            headers=headers,
+            environment=environment,
+            timeout=timeout,
+            websocket_client=websocket_client,
+        )
         self.httpx_client = AsyncHttpClient(
             httpx_client=httpx_client, base_headers=self.get_headers, base_timeout=self.get_timeout
         )

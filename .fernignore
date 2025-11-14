@@ -19,15 +19,23 @@ tests/unit/
 tests/integrations/
 
 # Custom Extensions & Clients
+# - client.py: Custom DeepgramClient wrapper that adds access_token, telemetry, and websocket_client support
+# - websocket_client.py: WebSocket abstraction layer for custom clients (e.g., AWS SageMaker)
+# - extensions/: All custom extension modules (telemetry, instrumentation, socket types)
 src/deepgram/client.py
+src/deepgram/core/websocket_client.py
 src/deepgram/extensions/
 
 # Socket Client Implementations
+# Enhanced with binary message support, comprehensive socket types, and send methods
+# These wrap the raw WebSocket connections with Deepgram-specific message handling
 src/deepgram/agent/v1/socket_client.py
 src/deepgram/listen/v1/socket_client.py
 src/deepgram/listen/v2/socket_client.py
 src/deepgram/speak/v1/socket_client.py
 
-# Bug Fixes
+# Core Modifications
+# - client_wrapper.py: Enhanced to support custom websocket_client parameter
+# - listen/client.py: Bug fix for v2 client property access (pre-existing, not related to WebSocket work)
 src/deepgram/listen/client.py
 src/deepgram/core/client_wrapper.py

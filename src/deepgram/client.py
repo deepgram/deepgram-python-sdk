@@ -16,7 +16,8 @@ from typing import Any, Dict, Optional
 
 from .base_client import AsyncBaseClient, BaseClient
 
-from deepgram.core.client_wrapper import BaseClientWrapper
+from deepgram.core.client_wrapper import AsyncClientWrapper, BaseClientWrapper, SyncClientWrapper
+from deepgram.core.websocket_client import WebSocketFactory
 from deepgram.extensions.core.instrumented_http import InstrumentedAsyncHttpClient, InstrumentedHttpClient
 from deepgram.extensions.core.instrumented_socket import apply_websocket_instrumentation
 from deepgram.extensions.core.telemetry_events import TelemetryHttpEvents, TelemetrySocketEvents
@@ -31,10 +32,11 @@ def _create_telemetry_context(session_id: str) -> Dict[str, Any]:
         # Get package version
         try:
             from . import version
+
             package_version = version.__version__
         except ImportError:
             package_version = "unknown"
-        
+
         return {
             "package_name": "python-sdk",
             "package_version": package_version,
@@ -55,15 +57,15 @@ def _create_telemetry_context(session_id: str) -> Dict[str, Any]:
 
 
 def _setup_telemetry(
-    session_id: str, 
-    telemetry_opt_out: bool, 
+    session_id: str,
+    telemetry_opt_out: bool,
     telemetry_handler: Optional[TelemetryHandler],
     client_wrapper: BaseClientWrapper,
 ) -> Optional[TelemetryHandler]:
     """Setup telemetry for the client."""
     if telemetry_opt_out:
         return None
-    
+
     # Use provided handler or create default batching handler
     if telemetry_handler is None:
         try:
@@ -79,15 +81,15 @@ def _setup_telemetry(
         except Exception:
             # If we can't create the handler, disable telemetry
             return None
-    
+
     # Setup HTTP instrumentation
     try:
         http_events = TelemetryHttpEvents(telemetry_handler)
-        
+
         # Replace the HTTP client with instrumented version
-        if hasattr(client_wrapper, 'httpx_client'):
+        if hasattr(client_wrapper, "httpx_client"):
             original_client = client_wrapper.httpx_client
-            if hasattr(original_client, 'httpx_client'):  # It's already our HttpClient
+            if hasattr(original_client, "httpx_client"):  # It's already our HttpClient
                 instrumented_client = InstrumentedHttpClient(
                     delegate=original_client,
                     events=http_events,
@@ -96,7 +98,7 @@ def _setup_telemetry(
     except Exception:
         # If instrumentation fails, continue without it
         pass
-    
+
     # Setup WebSocket instrumentation
     try:
         socket_events = TelemetrySocketEvents(telemetry_handler)
@@ -105,20 +107,20 @@ def _setup_telemetry(
     except Exception:
         # If WebSocket instrumentation fails, continue without it
         pass
-    
+
     return telemetry_handler
 
 
 def _setup_async_telemetry(
-    session_id: str, 
-    telemetry_opt_out: bool, 
+    session_id: str,
+    telemetry_opt_out: bool,
     telemetry_handler: Optional[TelemetryHandler],
     client_wrapper: BaseClientWrapper,
 ) -> Optional[TelemetryHandler]:
     """Setup telemetry for the async client."""
     if telemetry_opt_out:
         return None
-    
+
     # Use provided handler or create default batching handler
     if telemetry_handler is None:
         try:
@@ -134,15 +136,15 @@ def _setup_async_telemetry(
         except Exception:
             # If we can't create the handler, disable telemetry
             return None
-    
+
     # Setup HTTP instrumentation
     try:
         http_events = TelemetryHttpEvents(telemetry_handler)
-        
+
         # Replace the HTTP client with instrumented version
-        if hasattr(client_wrapper, 'httpx_client'):
+        if hasattr(client_wrapper, "httpx_client"):
             original_client = client_wrapper.httpx_client
-            if hasattr(original_client, 'httpx_client'):  # It's already our AsyncHttpClient
+            if hasattr(original_client, "httpx_client"):  # It's already our AsyncHttpClient
                 instrumented_client = InstrumentedAsyncHttpClient(
                     delegate=original_client,
                     events=http_events,
@@ -151,7 +153,7 @@ def _setup_async_telemetry(
     except Exception:
         # If instrumentation fails, continue without it
         pass
-    
+
     # Setup WebSocket instrumentation
     try:
         socket_events = TelemetrySocketEvents(telemetry_handler)
@@ -160,7 +162,7 @@ def _setup_async_telemetry(
     except Exception:
         # If WebSocket instrumentation fails, continue without it
         pass
-    
+
     return telemetry_handler
 
 
@@ -185,11 +187,13 @@ def _apply_bearer_authorization_override(client_wrapper: BaseClientWrapper, bear
     if hasattr(client_wrapper, "httpx_client") and hasattr(client_wrapper.httpx_client, "base_headers"):
         client_wrapper.httpx_client.base_headers = client_wrapper.get_headers
 
+
 class DeepgramClient(BaseClient):
     def __init__(self, *args, **kwargs) -> None:
         access_token: Optional[str] = kwargs.pop("access_token", None)
         telemetry_opt_out: bool = bool(kwargs.pop("telemetry_opt_out", True))
         telemetry_handler: Optional[TelemetryHandler] = kwargs.pop("telemetry_handler", None)
+        websocket_client: Optional[WebSocketFactory] = kwargs.pop("websocket_client", None)
 
         # Generate a session id up-front so it can be placed into headers for all transports
         generated_session_id = str(uuid.uuid4())
@@ -210,9 +214,21 @@ class DeepgramClient(BaseClient):
         super().__init__(*args, **kwargs)
         self.session_id = generated_session_id
 
+        # If a custom websocket_client is provided, recreate the client wrapper with it
+        if websocket_client is not None:
+            original_wrapper = self._client_wrapper
+            self._client_wrapper = SyncClientWrapper(
+                api_key=original_wrapper.api_key,
+                headers=original_wrapper.get_custom_headers(),
+                environment=original_wrapper.get_environment(),
+                timeout=original_wrapper.get_timeout(),
+                httpx_client=original_wrapper.httpx_client.httpx_client,
+                websocket_client=websocket_client,
+            )
+
         if access_token is not None:
             _apply_bearer_authorization_override(self._client_wrapper, access_token)
-        
+
         # Setup telemetry
         self._telemetry_handler = _setup_telemetry(
             session_id=generated_session_id,
@@ -221,11 +237,13 @@ class DeepgramClient(BaseClient):
             client_wrapper=self._client_wrapper,
         )
 
+
 class AsyncDeepgramClient(AsyncBaseClient):
     def __init__(self, *args, **kwargs) -> None:
         access_token: Optional[str] = kwargs.pop("access_token", None)
         telemetry_opt_out: bool = bool(kwargs.pop("telemetry_opt_out", True))
         telemetry_handler: Optional[TelemetryHandler] = kwargs.pop("telemetry_handler", None)
+        websocket_client: Optional[WebSocketFactory] = kwargs.pop("websocket_client", None)
 
         # Generate a session id up-front so it can be placed into headers for all transports
         generated_session_id = str(uuid.uuid4())
@@ -246,9 +264,21 @@ class AsyncDeepgramClient(AsyncBaseClient):
         super().__init__(*args, **kwargs)
         self.session_id = generated_session_id
 
+        # If a custom websocket_client is provided, recreate the client wrapper with it
+        if websocket_client is not None:
+            original_wrapper = self._client_wrapper
+            self._client_wrapper = AsyncClientWrapper(
+                api_key=original_wrapper.api_key,
+                headers=original_wrapper.get_custom_headers(),
+                environment=original_wrapper.get_environment(),
+                timeout=original_wrapper.get_timeout(),
+                httpx_client=original_wrapper.httpx_client.httpx_client,
+                websocket_client=websocket_client,
+            )
+
         if access_token is not None:
             _apply_bearer_authorization_override(self._client_wrapper, access_token)
-        
+
         # Setup telemetry
         self._telemetry_handler = _setup_async_telemetry(
             session_id=generated_session_id,
