@@ -62,6 +62,8 @@ class FieldsClient:
         )
         client.manage.v1.projects.usage.fields.list(
             project_id="123456-7890-1234-5678-901234",
+            start="start",
+            end="end",
         )
         """
         _response = self._raw_client.list(project_id, start=start, end=end, request_options=request_options)
@@ -127,6 +129,8 @@ class AsyncFieldsClient:
         async def main() -> None:
             await client.manage.v1.projects.usage.fields.list(
                 project_id="123456-7890-1234-5678-901234",
+                start="start",
+                end="end",
             )
 
 
