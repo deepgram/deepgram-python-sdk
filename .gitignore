@@ -3,17 +3,3 @@
 __pycache__/
 dist/
 poetry.toml
-.env
-.pytest_cache/
-
-# ignore example output files
-examples/**/output.*
-
-# ignore venv
-venv/
-.DS_Store
-
-# ignore build artifacts and dependencies
-Pipfile
-Pipfile.lock
-deepgram_sdk.egg-info/

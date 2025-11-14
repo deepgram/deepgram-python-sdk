@@ -1,10 +1,9 @@
 [project]
 name = "deepgram-sdk"
-dynamic = ["version"]
 
 [tool.poetry]
 name = "deepgram-sdk"
-version = "5.3.0"
+version = "5.3.1"
 description = ""
 readme = "README.md"
 authors = []
@@ -26,11 +25,13 @@ classifiers = [
     "Operating System :: Microsoft :: Windows",
     "Topic :: Software Development :: Libraries :: Python Modules",
     "Typing :: Typed",
-    "License :: OSI Approved :: MIT License",
+    "License :: OSI Approved :: MIT License"
 ]
-packages = [{ include = "deepgram", from = "src" }]
+packages = [
+    { include = "deepgram", from = "src"}
+]
 
-[project.urls]
+[tool.poetry.urls]
 Repository = 'https://github.com/deepgram/deepgram-python-sdk'
 
 [tool.poetry.dependencies]
@@ -50,7 +51,7 @@ types-python-dateutil = "^2.9.0.20240316"
 ruff = "==0.11.5"
 
 [tool.pytest.ini_options]
-testpaths = ["tests"]
+testpaths = [ "tests" ]
 asyncio_mode = "auto"
 
 [tool.mypy]
@@ -61,20 +62,20 @@ line-length = 120
 
 [tool.ruff.lint]
 select = [
-    "E", # pycodestyle errors
-    "F", # pyflakes
-    "I", # isort
+    "E",  # pycodestyle errors
+    "F",  # pyflakes
+    "I",  # isort
 ]
 ignore = [
-    "E402", # Module level import not at top of file
-    "E501", # Line too long
-    "E711", # Comparison to `None` should be `cond is not None`
-    "E712", # Avoid equality comparisons to `True`; use `if ...:` checks
-    "E721", # Use `is` and `is not` for type comparisons, or `isinstance()` for insinstance checks
-    "E722", # Do not use bare `except`
-    "E731", # Do not assign a `lambda` expression, use a `def`
-    "F821", # Undefined name
-    "F841", # Local variable ... is assigned to but never used
+    "E402",  # Module level import not at top of file
+    "E501",  # Line too long
+    "E711",  # Comparison to `None` should be `cond is not None`
+    "E712",  # Avoid equality comparisons to `True`; use `if ...:` checks
+    "E721",  # Use `is` and `is not` for type comparisons, or `isinstance()` for insinstance checks
+    "E722",  # Do not use bare `except`
+    "E731",  # Do not assign a `lambda` expression, use a `def`
+    "F821",  # Undefined name
+    "F841"   # Local variable ... is assigned to but never used
 ]
 
 [tool.ruff.lint.isort]
