@@ -43,7 +43,7 @@ class V2Client:
         eager_eot_threshold: typing.Optional[str] = None,
         eot_threshold: typing.Optional[str] = None,
         eot_timeout_ms: typing.Optional[str] = None,
-        keyterm: typing.Optional[str] = None,
+        keyterm: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         mip_opt_out: typing.Optional[str] = None,
         tag: typing.Optional[str] = None,
         authorization: typing.Optional[str] = None,
@@ -100,7 +100,11 @@ class V2Client:
         if eot_timeout_ms is not None:
             query_params = query_params.add("eot_timeout_ms", eot_timeout_ms)
         if keyterm is not None:
-            query_params = query_params.add("keyterm", keyterm)
+            if isinstance(keyterm, str):
+                query_params = query_params.add("keyterm", keyterm)
+            else:
+                for term in keyterm:
+                    query_params = query_params.add("keyterm", term)
         if mip_opt_out is not None:
             query_params = query_params.add("mip_opt_out", mip_opt_out)
         if tag is not None:
@@ -154,7 +158,7 @@ class AsyncV2Client:
         eager_eot_threshold: typing.Optional[str] = None,
         eot_threshold: typing.Optional[str] = None,
         eot_timeout_ms: typing.Optional[str] = None,
-        keyterm: typing.Optional[str] = None,
+        keyterm: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         mip_opt_out: typing.Optional[str] = None,
         tag: typing.Optional[str] = None,
         authorization: typing.Optional[str] = None,
@@ -211,7 +215,11 @@ class AsyncV2Client:
         if eot_timeout_ms is not None:
             query_params = query_params.add("eot_timeout_ms", eot_timeout_ms)
         if keyterm is not None:
-            query_params = query_params.add("keyterm", keyterm)
+            if isinstance(keyterm, str):
+                query_params = query_params.add("keyterm", keyterm)
+            else:
+                for term in keyterm:
+                    query_params = query_params.add("keyterm", term)
         if mip_opt_out is not None:
             query_params = query_params.add("mip_opt_out", mip_opt_out)
         if tag is not None:
