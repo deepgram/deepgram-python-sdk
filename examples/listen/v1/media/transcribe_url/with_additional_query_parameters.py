@@ -1,8 +1,8 @@
 from dotenv import load_dotenv
+from deepgram import DeepgramClient
 
 load_dotenv()
 
-from deepgram import DeepgramClient
 
 client = DeepgramClient()
 
