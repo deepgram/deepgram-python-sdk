@@ -2,4 +2,4 @@
 
 import typing
 
-ListenV2SampleRate = typing.Optional[typing.Any]
+ListenV2SampleRate = typing.Any

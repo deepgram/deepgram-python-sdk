@@ -36,7 +36,7 @@ class ProjectRequestResponseParams(typing_extensions.TypedDict):
     The unique identifier of the API key
     """
 
-    response: typing_extensions.NotRequired[typing.Dict[str, typing.Optional[typing.Any]]]
+    response: typing_extensions.NotRequired[typing.Dict[str, typing.Any]]
     """
     The response of the request
     """

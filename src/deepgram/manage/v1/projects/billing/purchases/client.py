@@ -58,6 +58,7 @@ class PurchasesClient:
         )
         client.manage.v1.projects.billing.purchases.list(
             project_id="123456-7890-1234-5678-901234",
+            limit=1.1,
         )
         """
         _response = self._raw_client.list(project_id, limit=limit, request_options=request_options)
@@ -119,6 +120,7 @@ class AsyncPurchasesClient:
         async def main() -> None:
             await client.manage.v1.projects.billing.purchases.list(
                 project_id="123456-7890-1234-5678-901234",
+                limit=1.1,
             )
 
 

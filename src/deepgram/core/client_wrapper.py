@@ -23,11 +23,10 @@ class BaseClientWrapper:
 
     def get_headers(self) -> typing.Dict[str, str]:
         headers: typing.Dict[str, str] = {
+            "User-Agent": "deepgram-sdk/5.3.1",
             "X-Fern-Language": "Python",
-            "X-Fern-SDK-Name": "deepgram",
-            # x-release-please-start-version
-            "X-Fern-SDK-Version": "5.3.0", 
-            # x-release-please-end
+            "X-Fern-SDK-Name": "deepgram-sdk",
+            "X-Fern-SDK-Version": "5.3.1",
             **(self.get_custom_headers() or {}),
         }
         headers["Authorization"] = f"Token {self.api_key}"
@@ -67,9 +66,21 @@ class AsyncClientWrapper(BaseClientWrapper):
         headers: typing.Optional[typing.Dict[str, str]] = None,
         environment: DeepgramClientEnvironment,
         timeout: typing.Optional[float] = None,
+        async_token: typing.Optional[typing.Callable[[], typing.Awaitable[str]]] = None,
         httpx_client: httpx.AsyncClient,
     ):
         super().__init__(api_key=api_key, headers=headers, environment=environment, timeout=timeout)
+        self._async_token = async_token
         self.httpx_client = AsyncHttpClient(
-            httpx_client=httpx_client, base_headers=self.get_headers, base_timeout=self.get_timeout
+            httpx_client=httpx_client,
+            base_headers=self.get_headers,
+            base_timeout=self.get_timeout,
+            async_base_headers=self.async_get_headers,
         )
+
+    async def async_get_headers(self) -> typing.Dict[str, str]:
+        headers = self.get_headers()
+        if self._async_token is not None:
+            token = await self._async_token()
+            headers["Authorization"] = f"Bearer {token}"
+        return headers

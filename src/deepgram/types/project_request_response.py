@@ -37,7 +37,7 @@ class ProjectRequestResponse(UniversalBaseModel):
     The unique identifier of the API key
     """
 
-    response: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = pydantic.Field(default=None)
+    response: typing.Optional[typing.Dict[str, typing.Any]] = pydantic.Field(default=None)
     """
     The response of the request
     """
