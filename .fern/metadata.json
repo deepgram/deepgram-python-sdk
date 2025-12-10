@@ -10,6 +10,7 @@
       "exported_filename": "client.py"
     },
     "use_typeddict_requests": true,
-    "should_generate_websocket_clients": true
+    "should_generate_websocket_clients": true,
+    "enable_wire_tests": true
   }
 }
