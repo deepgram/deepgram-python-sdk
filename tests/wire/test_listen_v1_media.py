@@ -92,5 +92,6 @@ def test_listen_v1_media_transcribe_file() -> None:
     """Test transcribeFile endpoint with WireMock"""
     test_id = "listen.v1.media.transcribe_file.0"
     client = get_client(test_id)
-    client.listen.v1.media.transcribe_url()
+    # transcribe_file requires file content as bytes
+    client.listen.v1.media.transcribe_file(request=b"test audio content")
     verify_request_count(test_id, "POST", "/v1/listen", None, 1)
