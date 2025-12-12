@@ -14,7 +14,8 @@ from typing import Any, Dict, Optional
 import pytest
 import requests
 
-from deepgram.client import DeepgramApi
+from deepgram.base_client import BaseClient
+from deepgram.environment import DeepgramClientEnvironment
 
 
 def _compose_file() -> str:
@@ -87,7 +88,7 @@ def pytest_unconfigure(config: pytest.Config) -> None:
         _stop_wiremock()
 
 
-def get_client(test_id: str) -> DeepgramApi:
+def get_client(test_id: str) -> BaseClient:
     """
     Creates a configured client instance for wire tests.
 
@@ -97,8 +98,14 @@ def get_client(test_id: str) -> DeepgramApi:
     Returns:
         A configured client instance with all required auth parameters.
     """
-    return DeepgramApi(
-        base_url="http://localhost:8080",
+    # Create a custom environment pointing to WireMock
+    wiremock_environment = DeepgramClientEnvironment(
+        base="http://localhost:8080",
+        production="ws://localhost:8080",
+        agent="ws://localhost:8080",
+    )
+    return BaseClient(
+        environment=wiremock_environment,
         headers={"X-Test-Id": test_id},
         api_key="test_api_key",
     )
