@@ -1,2 +1,17 @@
-# manual fix wiremock/wiremock-mappings.json due to x-fern-sdk-method-name
+# WireMock mappings manually fixed to handle x-fern-sdk-method-name attribute
+# Generator doesn't properly handle this attribute, so mappings must be manually maintained
 wiremock/wiremock-mappings.json
+
+# Custom client implementation extending BaseClient with additional features:
+# - access_token parameter support (Bearer token authentication)
+# - Automatic session ID generation and header injection (x-deepgram-session-id)
+# This file is manually maintained and should not be regenerated
+src/deepgram/client.py
+
+# Wire test files with manual fixes to correct generator output:
+# - test_listen_v1_media.py: Fixed transcribe_file() call to pass required request parameter (bytes)
+# - test_speak_v1_audio.py: Fixed generate() call to consume iterator for request completion
+# - conftest.py: Changed from generated DeepgramApi to BaseClient for WireMock compatibility
+tests/wire/test_listen_v1_media.py
+tests/wire/test_speak_v1_audio.py
+tests/wire/conftest.py
