@@ -133,12 +133,12 @@ class AsyncV1SocketClient(EventEmitterMixin):
         """
         await self._send_model(message)
 
-    async def send_agent_v_1_media(self, message: str) -> None:
+    async def send_agent_v_1_media(self, message: bytes) -> None:
         """
-        Send a message to the websocket connection.
-        The message will be sent as a str.
+        Send binary audio data to the websocket connection.
+        The message will be sent as bytes.
         """
-        await self._send_model(message)
+        await self._send(message)
 
     async def recv(self) -> V1SocketClientResponse:
         """
@@ -242,12 +242,12 @@ class V1SocketClient(EventEmitterMixin):
         """
         self._send_model(message)
 
-    def send_agent_v_1_media(self, message: str) -> None:
+    def send_agent_v_1_media(self, message: bytes) -> None:
         """
-        Send a message to the websocket connection.
-        The message will be sent as a str.
+        Send binary audio data to the websocket connection.
+        The message will be sent as bytes.
         """
-        self._send_model(message)
+        self._send(message)
 
     def recv(self) -> V1SocketClientResponse:
         """
