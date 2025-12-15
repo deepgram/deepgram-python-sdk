@@ -18,3 +18,40 @@ tests/wire/conftest.py
 
 # Manual standalone tests
 tests/manual
+
+# WebSocket socket client files with manual fixes for binary audio data support:
+# The generator incorrectly types \*\_media methods as `str` and uses `_send_model()` which
+# calls `.dict()` on the input, causing runtime errors. These files are manually fixed to:
+# 1. Change parameter type from `str` to `bytes` for all `*_media` methods
+# 2. Change from `_send_model()` to `_send()` to properly handle binary data
+#
+# src/deepgram/listen/v1/socket_client.py:
+# - Line 57: Changed `async def send_listen_v_1_media(self, message: str)` to `message: bytes`
+# - Line 60: Updated docstring from "sent as a str" to "sent as bytes"
+# - Line 62: Changed `await self._send_model(message)` to `await self._send(message)`
+# - Line 138: Changed `def send_listen_v_1_media(self, message: str)` to `message: bytes`
+# - Line 141: Updated docstring from "sent as a str" to "sent as bytes"
+# - Line 143: Changed `self._send_model(message)` to `self._send(message)`
+#
+# src/deepgram/listen/v2/socket_client.py:
+# - Line 54: Changed `async def send_listen_v_2_media(self, message: str)` to `message: bytes`
+# - Line 57: Updated docstring from "sent as a str" to "sent as bytes"
+# - Line 59: Changed `await self._send_model(message)` to `await self._send(message)`
+# - Line 121: Changed `def send_listen_v_2_media(self, message: str)` to `message: bytes`
+# - Line 124: Updated docstring from "sent as a str" to "sent as bytes"
+# - Line 126: Changed `self._send_model(message)` to `self._send(message)`
+#
+# src/deepgram/agent/v1/socket_client.py:
+# - Line 136: Changed `async def send_agent_v_1_media(self, message: str)` to `message: bytes`
+# - Line 139: Updated docstring from "sent as a str" to "sent as bytes"
+# - Line 141: Changed `await self._send_model(message)` to `await self._send(message)`
+# - Line 245: Changed `def send_agent_v_1_media(self, message: str)` to `message: bytes`
+# - Line 248: Updated docstring from "sent as a str" to "sent as bytes"
+# - Line 250: Changed `self._send_model(message)` to `self._send(message)`
+#
+# Reason: Audio data must be sent as binary bytes, not strings. The `_send_model()` method
+# expects Pydantic models and calls `.dict()` which fails on bytes/str. The `_send()` method
+# properly handles bytes by passing them directly to the websocket connection.
+# src/deepgram/listen/v1/socket_client.py
+# src/deepgram/listen/v2/socket_client.py
+# src/deepgram/agent/v1/socket_client.py
