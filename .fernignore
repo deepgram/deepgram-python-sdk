@@ -15,3 +15,6 @@ src/deepgram/client.py
 tests/wire/test_listen_v1_media.py
 tests/wire/test_speak_v1_audio.py
 tests/wire/conftest.py
+
+# Manual standalone tests
+tests/manual
