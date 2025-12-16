@@ -18,7 +18,7 @@ class ListenV1ResultsChannelAlternativesItem(UniversalBaseModel):
     The confidence of the transcription
     """
 
-    languages: typing.List[str]
+    languages: typing.Optional[typing.List[str]] = None
     words: typing.List[ListenV1ResultsChannelAlternativesItemWordsItem]
 
     if IS_PYDANTIC_V2:

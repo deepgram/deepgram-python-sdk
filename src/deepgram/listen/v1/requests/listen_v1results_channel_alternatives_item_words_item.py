@@ -24,12 +24,12 @@ class ListenV1ResultsChannelAlternativesItemWordsItemParams(typing_extensions.Ty
     The confidence of the word
     """
 
-    language: str
+    language: typing_extensions.NotRequired[str]
     """
     The language of the word
     """
 
-    punctuated_word: str
+    punctuated_word: typing_extensions.NotRequired[str]
     """
     The punctuated word of the word
     """

@@ -17,5 +17,5 @@ class ListenV1ResultsChannelAlternativesItemParams(typing_extensions.TypedDict):
     The confidence of the transcription
     """
 
-    languages: typing.Sequence[str]
+    languages: typing_extensions.NotRequired[typing.Sequence[str]]
     words: typing.Sequence[ListenV1ResultsChannelAlternativesItemWordsItemParams]

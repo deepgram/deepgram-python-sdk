@@ -27,12 +27,12 @@ class ListenV1ResultsChannelAlternativesItemWordsItem(UniversalBaseModel):
     The confidence of the word
     """
 
-    language: str = pydantic.Field()
+    language: typing.Optional[str] = pydantic.Field(default=None)
     """
     The language of the word
     """
 
-    punctuated_word: str = pydantic.Field()
+    punctuated_word: typing.Optional[str] = pydantic.Field(default=None)
     """
     The punctuated word of the word
     """

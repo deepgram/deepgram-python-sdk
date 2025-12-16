@@ -51,12 +51,12 @@ class AsyncV2SocketClient(EventEmitterMixin):
         finally:
             await self._emit_async(EventType.CLOSE, None)
 
-    async def send_listen_v_2_media(self, message: bytes) -> None:
+    async def send_listen_v_2_media(self, message: str) -> None:
         """
-        Send binary audio data to the websocket connection.
-        The message will be sent as bytes.
+        Send a message to the websocket connection.
+        The message will be sent as a str.
         """
-        await self._send(message)
+        await self._send_model(message)
 
     async def send_listen_v_2_close_stream(self, message: ListenV2CloseStream) -> None:
         """
@@ -118,12 +118,12 @@ class V2SocketClient(EventEmitterMixin):
         finally:
             self._emit(EventType.CLOSE, None)
 
-    def send_listen_v_2_media(self, message: bytes) -> None:
+    def send_listen_v_2_media(self, message: str) -> None:
         """
-        Send binary audio data to the websocket connection.
-        The message will be sent as bytes.
+        Send a message to the websocket connection.
+        The message will be sent as a str.
         """
-        self._send(message)
+        self._send_model(message)
 
     def send_listen_v_2_close_stream(self, message: ListenV2CloseStream) -> None:
         """
