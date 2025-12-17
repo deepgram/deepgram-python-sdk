@@ -1,60 +1,76 @@
-name: ci
+name: CI
+
 on: [push]
+
 jobs:
   compile:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.8", "3.9", "3.10", "3.11", "3.12", "3.13"]
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
       - name: Set up python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v6
         with:
-          python-version: 3.9
+          python-version: ${{ matrix.python-version }}
       - name: Bootstrap poetry
         run: |
           curl -sSL https://install.python-poetry.org | python - -y --version 1.5.1
       - name: Install dependencies
         run: poetry install
       - name: Compile
-        run: poetry run mypy .
+        run: poetry run mypy src/
   test:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.8", "3.9", "3.10", "3.11", "3.12", "3.13"]
+    needs: compile
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
       - name: Set up python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v6
         with:
-          python-version: 3.9
+          python-version: ${{ matrix.python-version }}
       - name: Bootstrap poetry
         run: |
           curl -sSL https://install.python-poetry.org | python - -y --version 1.5.1
       - name: Install dependencies
         run: poetry install
 
+      - name: Verify Docker is available
+        run: |
+          docker --version
+          docker compose version
+
       - name: Test
-        run: poetry run pytest -rP -n auto .
+        run: poetry run pytest -rP .
 
   publish:
     needs: [compile, test]
     if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.8"]
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
       - name: Set up python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v6
         with:
-          python-version: 3.9
+          python-version: ${{ matrix.python-version }}
       - name: Bootstrap poetry
         run: |
           curl -sSL https://install.python-poetry.org | python - -y --version 1.5.1
       - name: Install dependencies
         run: poetry install
-      - name: Publish to pypi
-        run: |
-          poetry config repositories.remote https://upload.pypi.org/legacy/
-          poetry --no-interaction -v publish --build --repository remote --username "$PYPI_USERNAME" --password "$PYPI_PASSWORD"
+      - name: Build package
+        run: poetry build
+      - name: Publish to PyPI
         env:
-          PYPI_USERNAME: ${{ secrets.PYPI_USERNAME }}
-          PYPI_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
+          POETRY_PYPI_TOKEN_PYPI: ${{ secrets.PYPI_API_TOKEN }}
+        run: poetry publish
