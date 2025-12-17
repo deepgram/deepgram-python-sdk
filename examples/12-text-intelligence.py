@@ -22,7 +22,7 @@ try:
         topics=True,
         intents=True,
     )
-    
+
     print("Analysis received:")
     print(f"Sentiment: {response.sentiment}")
     if response.summary:
@@ -31,12 +31,11 @@ try:
         print(f"Topics: {response.topics}")
     if response.intents:
         print(f"Intents: {response.intents}")
-    
+
     # For async version:
     # from deepgram import AsyncDeepgramClient
     # client = AsyncDeepgramClient()
     # response = await client.read.v1.text.analyze(...)
-    
+
 except Exception as e:
     print(f"Error: {e}")
-

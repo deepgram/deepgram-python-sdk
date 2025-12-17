@@ -20,4 +20,3 @@ client = DeepgramClient()
 # client = DeepgramClient(api_key="your-api-key-here")
 
 print("Client initialized with API key")
-

@@ -11,7 +11,6 @@ from dotenv import load_dotenv
 load_dotenv()
 
 from deepgram import DeepgramClient
-from deepgram.core.events import EventType
 from deepgram.agent.v1.types import (
     AgentV1Agent,
     AgentV1AudioConfig,
@@ -24,6 +23,7 @@ from deepgram.agent.v1.types import (
     AgentV1SpeakProviderConfig,
     AgentV1Think,
 )
+from deepgram.core.events import EventType
 
 AgentV1SocketClientResponse = Union[str, bytes]
 
@@ -53,7 +53,7 @@ try:
                         model="gpt-4o-mini",
                         temperature=0.7,
                     ),
-                    prompt='You are a helpful AI assistant.',
+                    prompt="You are a helpful AI assistant.",
                 ),
                 speak=AgentV1SpeakProviderConfig(
                     provider=AgentV1DeepgramSpeakProvider(
@@ -74,7 +74,7 @@ try:
             else:
                 msg_type = getattr(message, "type", "Unknown")
                 print(f"Received {msg_type} event")
-        
+
         agent.on(EventType.OPEN, lambda _: print("Connection opened"))
         agent.on(EventType.MESSAGE, on_message)
         agent.on(EventType.CLOSE, lambda _: print("Connection closed"))
@@ -85,16 +85,15 @@ try:
         # with open("audio.wav", "rb") as audio_file:
         #     audio_data = audio_file.read()
         #     agent.send_agent_v_1_media(audio_data)
-        
+
         agent.start_listening()
-        
+
     # For async version:
     # from deepgram import AsyncDeepgramClient
     # async with client.agent.v1.connect() as agent:
     #     # ... same configuration ...
     #     await agent.send_agent_v_1_settings(settings)
     #     await agent.start_listening()
-    
+
 except Exception as e:
     print(f"Error: {e}")
-

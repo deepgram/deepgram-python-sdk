@@ -23,11 +23,11 @@ try:
             model="nova-3",
         )
     except ApiError as e:
-        print(f"API Error occurred:")
+        print("API Error occurred:")
         print(f"  Status code: {e.status_code}")
         print(f"  Body: {e.body}")
         print(f"  Headers: {e.headers}")
-    
+
     # Example 2: Handling specific error types
     print("\nExample 2: Handling BadRequestError")
     try:
@@ -37,12 +37,12 @@ try:
             model="nova-3",
         )
     except BadRequestError as e:
-        print(f"Bad Request Error:")
+        print("Bad Request Error:")
         print(f"  Status code: {e.status_code}")
         print(f"  Body: {e.body}")
     except ApiError as e:
         print(f"Other API Error: {e.status_code}")
-    
+
     # Example 3: Handling network errors
     print("\nExample 3: Handling network errors")
     try:
@@ -54,28 +54,28 @@ try:
     except Exception as e:
         # Catch-all for network errors, timeouts, etc.
         print(f"Error occurred: {type(e).__name__}: {e}")
-    
+
     # Example 4: Using try-except with WebSocket connections
     print("\nExample 4: Error handling with WebSocket")
     try:
         from deepgram.core.events import EventType
-        
+
         with client.listen.v1.connect(model="nova-3") as connection:
+
             def on_error(error):
                 print(f"WebSocket error: {error}")
-            
+
             connection.on(EventType.ERROR, on_error)
             # Connection will handle errors automatically
             connection.start_listening()
     except Exception as e:
         print(f"Connection error: {e}")
-    
+
     # Best practices:
     # 1. Always wrap API calls in try-except blocks
     # 2. Check for specific error types (ApiError, BadRequestError)
     # 3. Log error details for debugging
     # 4. Handle errors gracefully in production code
-    
+
 except Exception as e:
     print(f"Unexpected error: {e}")
-

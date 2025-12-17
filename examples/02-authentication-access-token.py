@@ -25,4 +25,3 @@ client = DeepgramClient(access_token=auth_response.access_token)
 # client = DeepgramClient()
 
 print("Client initialized with access token")
-
