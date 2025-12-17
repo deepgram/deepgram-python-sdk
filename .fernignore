@@ -16,6 +16,28 @@ tests/wire/test_listen_v1_media.py
 tests/wire/test_speak_v1_audio.py
 tests/wire/conftest.py
 
+# Wire tests __init__.py with Python 3.8-3.10 datetime.fromisoformat compatibility fix:
+# The Fern generator creates test files that use datetime.fromisoformat() with ISO 8601 strings
+# ending in 'Z' (e.g., '2024-01-15T09:30:00Z'). However, Python 3.10's datetime.fromisoformat()
+# doesn't support the 'Z' suffix (this was added in Python 3.11). Python 3.8 and 3.9 also lack
+# this support.
+#
+# Rather than modifying generated test files (which would be overwritten on regeneration), we
+# implement a monkey-patch in tests/wire/__init__.py that wraps the datetime.datetime class
+# and overrides fromisoformat() to automatically convert 'Z' to '+00:00' before calling the
+# original implementation.
+#
+# This ensures:
+# 1. Generated test files remain unchanged and can be regenerated without conflicts
+# 2. All wire tests pass on Python 3.8, 3.9, and 3.10 (as well as 3.11+)
+# 3. The fix is transparent to all code importing datetime.datetime in the wire tests module
+#
+# The implementation uses a wrapper class that inherits from the original datetime class,
+# ensuring all other datetime functionality remains unchanged. The wrapper is injected into
+# sys.modules['datetime'].datetime so that any 'from datetime import datetime' statements
+# in the wire tests will get the patched version.
+tests/wire/__init__.py
+
 # Manual standalone tests
 tests/manual
 
