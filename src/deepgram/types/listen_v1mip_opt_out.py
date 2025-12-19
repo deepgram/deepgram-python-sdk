@@ -2,4 +2,4 @@
 
 import typing
 
-ListenV1MipOptOut = typing.Optional[typing.Any]
+ListenV1MipOptOut = typing.Any

@@ -2,4 +2,4 @@
 
 import typing
 
-TextAnalyzeRequestSummarize = typing.Union[typing.Literal["v2", "v1"], typing.Any]
+TextAnalyzeRequestSummarize = typing.Union[typing.Literal["v2"], typing.Any]

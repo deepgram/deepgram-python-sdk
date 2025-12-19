@@ -2,4 +2,4 @@
 
 import typing
 
-ListenV2EagerEotThreshold = typing.Optional[typing.Any]
+ListenV2EagerEotThreshold = typing.Any

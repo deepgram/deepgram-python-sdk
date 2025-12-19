@@ -2,4 +2,4 @@
 
 import typing
 
-ListenV1Channels = typing.Optional[typing.Any]
+ListenV1Channels = typing.Any

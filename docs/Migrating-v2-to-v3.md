@@ -527,3 +527,4 @@ result = deepgram.manage.v("1").get_balance("550e8400-e29b-41d4-a716-44665544000
 
 - WebVTT and SRT captions are now available as a standalone package: [deepgram-python-captions](https://github.com/deepgram/deepgram-python-captions)
 - Self-hosted API functionality remains unchanged but may have breaking changes in v4
+

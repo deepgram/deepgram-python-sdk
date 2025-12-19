@@ -19,7 +19,7 @@ class ListenV1ResponseMetadata(UniversalBaseModel):
     duration: float
     channels: float
     models: typing.List[str]
-    model_info: typing.Dict[str, typing.Optional[typing.Any]]
+    model_info: typing.Dict[str, typing.Any]
     summary_info: typing.Optional[ListenV1ResponseMetadataSummaryInfo] = None
     sentiment_info: typing.Optional[ListenV1ResponseMetadataSentimentInfo] = None
     topics_info: typing.Optional[ListenV1ResponseMetadataTopicsInfo] = None

@@ -2,4 +2,4 @@
 
 import typing
 
-MediaTranscribeRequestSummarize = typing.Union[typing.Literal["v2", "v1"], typing.Any]
+MediaTranscribeRequestSummarize = typing.Union[typing.Literal["v2"], typing.Any]
