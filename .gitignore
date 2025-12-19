@@ -3,3 +3,6 @@
 __pycache__/
 dist/
 poetry.toml
+.venv/
+.pytest_cache/
+.vscode/
