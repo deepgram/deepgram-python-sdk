@@ -59,6 +59,8 @@ jobs:
     needs: [compile, test]
     if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -77,6 +79,4 @@ jobs:
       - name: Build package
         run: poetry build
       - name: Publish to PyPI
-        env:
-          POETRY_PYPI_TOKEN_PYPI: ${{ secrets.PYPI_API_TOKEN }}
-        run: poetry publish
+        uses: pypa/gh-action-pypi-publish@release/v1

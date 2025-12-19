@@ -9,6 +9,7 @@ permissions:
   contents: write
   issues: write
   pull-requests: write
+  id-token: write
 
 jobs:
   compile:
@@ -88,7 +89,5 @@ jobs:
       - name: Build package
         run: poetry build
       - name: Publish to PyPI
-        env:
-          POETRY_PYPI_TOKEN_PYPI: ${{ secrets.PYPI_API_TOKEN }}
-        run: poetry publish
+        uses: pypa/gh-action-pypi-publish@release/v1
 
