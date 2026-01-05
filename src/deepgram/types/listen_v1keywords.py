@@ -2,4 +2,4 @@
 
 import typing
 
-ListenV1Keywords = typing.Optional[typing.Any]
+ListenV1Keywords = typing.Any

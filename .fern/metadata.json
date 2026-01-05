@@ -1,0 +1,15 @@
+{
+  "cliVersion": "3.1.0",
+  "generatorName": "fernapi/fern-python-sdk",
+  "generatorVersion": "4.42.0",
+  "generatorConfig": {
+    "client": {
+      "class_name": "BaseClient",
+      "filename": "base_client.py",
+      "exported_class_name": "DeepgramClient",
+      "exported_filename": "client.py"
+    },
+    "use_typeddict_requests": true,
+    "should_generate_websocket_clients": true
+  }
+}

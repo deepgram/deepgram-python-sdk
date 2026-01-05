@@ -97,6 +97,9 @@ if typing.TYPE_CHECKING:
     from .listen_v1response_results_channels_item_alternatives_item import (
         ListenV1ResponseResultsChannelsItemAlternativesItemParams,
     )
+    from .listen_v1response_results_channels_item_alternatives_item_entities_item import (
+        ListenV1ResponseResultsChannelsItemAlternativesItemEntitiesItemParams,
+    )
     from .listen_v1response_results_channels_item_alternatives_item_paragraphs import (
         ListenV1ResponseResultsChannelsItemAlternativesItemParagraphsParams,
     )
@@ -240,6 +243,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ListenV1ResponseMetadataSummaryInfoParams": ".listen_v1response_metadata_summary_info",
     "ListenV1ResponseMetadataTopicsInfoParams": ".listen_v1response_metadata_topics_info",
     "ListenV1ResponseParams": ".listen_v1response",
+    "ListenV1ResponseResultsChannelsItemAlternativesItemEntitiesItemParams": ".listen_v1response_results_channels_item_alternatives_item_entities_item",
     "ListenV1ResponseResultsChannelsItemAlternativesItemParagraphsParagraphsItemParams": ".listen_v1response_results_channels_item_alternatives_item_paragraphs_paragraphs_item",
     "ListenV1ResponseResultsChannelsItemAlternativesItemParagraphsParagraphsItemSentencesItemParams": ".listen_v1response_results_channels_item_alternatives_item_paragraphs_paragraphs_item_sentences_item",
     "ListenV1ResponseResultsChannelsItemAlternativesItemParagraphsParams": ".listen_v1response_results_channels_item_alternatives_item_paragraphs",
@@ -391,6 +395,7 @@ __all__ = [
     "ListenV1ResponseMetadataSummaryInfoParams",
     "ListenV1ResponseMetadataTopicsInfoParams",
     "ListenV1ResponseParams",
+    "ListenV1ResponseResultsChannelsItemAlternativesItemEntitiesItemParams",
     "ListenV1ResponseResultsChannelsItemAlternativesItemParagraphsParagraphsItemParams",
     "ListenV1ResponseResultsChannelsItemAlternativesItemParagraphsParagraphsItemSentencesItemParams",
     "ListenV1ResponseResultsChannelsItemAlternativesItemParagraphsParams",
