@@ -47,6 +47,7 @@ class V1Client:
         callback: typing.Optional[str] = None,
         callback_method: typing.Optional[str] = None,
         channels: typing.Optional[str] = None,
+        detect_entities: typing.Optional[str] = None,
         diarize: typing.Optional[str] = None,
         dictation: typing.Optional[str] = None,
         encoding: typing.Optional[str] = None,
@@ -84,6 +85,8 @@ class V1Client:
         callback_method : typing.Optional[str]
 
         channels : typing.Optional[str]
+
+        detect_entities : typing.Optional[str]
 
         diarize : typing.Optional[str]
 
@@ -154,6 +157,8 @@ class V1Client:
             query_params = query_params.add("callback_method", callback_method)
         if channels is not None:
             query_params = query_params.add("channels", channels)
+        if detect_entities is not None:
+            query_params = query_params.add("detect_entities", detect_entities)
         if diarize is not None:
             query_params = query_params.add("diarize", diarize)
         if dictation is not None:
@@ -258,6 +263,7 @@ class AsyncV1Client:
         callback: typing.Optional[str] = None,
         callback_method: typing.Optional[str] = None,
         channels: typing.Optional[str] = None,
+        detect_entities: typing.Optional[str] = None,
         diarize: typing.Optional[str] = None,
         dictation: typing.Optional[str] = None,
         encoding: typing.Optional[str] = None,
@@ -295,6 +301,8 @@ class AsyncV1Client:
         callback_method : typing.Optional[str]
 
         channels : typing.Optional[str]
+
+        detect_entities : typing.Optional[str]
 
         diarize : typing.Optional[str]
 
@@ -365,6 +373,8 @@ class AsyncV1Client:
             query_params = query_params.add("callback_method", callback_method)
         if channels is not None:
             query_params = query_params.add("channels", channels)
+        if detect_entities is not None:
+            query_params = query_params.add("detect_entities", detect_entities)
         if diarize is not None:
             query_params = query_params.add("diarize", diarize)
         if dictation is not None:

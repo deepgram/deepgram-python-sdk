@@ -2,4 +2,4 @@
 
 import typing
 
-ListenV1Language = typing.Optional[typing.Any]
+ListenV1Language = typing.Any

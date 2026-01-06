@@ -2,4 +2,4 @@
 
 import typing
 
-CreateKeyV1RequestOne = typing.Optional[typing.Any]
+CreateKeyV1RequestOne = typing.Any
