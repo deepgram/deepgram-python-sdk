@@ -77,3 +77,8 @@ tests/manual
 # src/deepgram/listen/v1/socket_client.py
 # src/deepgram/listen/v2/socket_client.py
 # src/deepgram/agent/v1/socket_client.py
+
+# Folders to ignore
+.github
+docs
+examples
