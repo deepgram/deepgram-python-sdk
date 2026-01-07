@@ -36,7 +36,13 @@ if typing.TYPE_CHECKING:
         AgentV1SettingsAgentContextMessagesItemFunctionCallsFunctionCallsItem,
     )
     from .agent_v1settings_agent_listen import AgentV1SettingsAgentListen
-    from .agent_v1settings_agent_listen_provider import AgentV1SettingsAgentListenProvider
+    from .agent_v1settings_agent_listen_provider import (
+        AgentV1SettingsAgentListenProvider,
+        AgentV1SettingsAgentListenProvider_V1,
+        AgentV1SettingsAgentListenProvider_V2,
+    )
+    from .agent_v1settings_agent_listen_provider_v1 import AgentV1SettingsAgentListenProviderV1
+    from .agent_v1settings_agent_listen_provider_v2 import AgentV1SettingsAgentListenProviderV2
     from .agent_v1settings_agent_speak import AgentV1SettingsAgentSpeak
     from .agent_v1settings_agent_speak_endpoint import AgentV1SettingsAgentSpeakEndpoint
     from .agent_v1settings_agent_speak_endpoint_endpoint import AgentV1SettingsAgentSpeakEndpointEndpoint
@@ -63,28 +69,18 @@ if typing.TYPE_CHECKING:
     from .agent_v1settings_agent_speak_endpoint_provider_aws_polly_voice import (
         AgentV1SettingsAgentSpeakEndpointProviderAwsPollyVoice,
     )
-    from .agent_v1settings_agent_speak_endpoint_provider_cartesia import (
-        AgentV1SettingsAgentSpeakEndpointProviderCartesia,
-    )
     from .agent_v1settings_agent_speak_endpoint_provider_cartesia_model_id import (
         AgentV1SettingsAgentSpeakEndpointProviderCartesiaModelId,
     )
     from .agent_v1settings_agent_speak_endpoint_provider_cartesia_voice import (
         AgentV1SettingsAgentSpeakEndpointProviderCartesiaVoice,
     )
-    from .agent_v1settings_agent_speak_endpoint_provider_deepgram import (
-        AgentV1SettingsAgentSpeakEndpointProviderDeepgram,
-    )
     from .agent_v1settings_agent_speak_endpoint_provider_deepgram_model import (
         AgentV1SettingsAgentSpeakEndpointProviderDeepgramModel,
-    )
-    from .agent_v1settings_agent_speak_endpoint_provider_eleven_labs import (
-        AgentV1SettingsAgentSpeakEndpointProviderElevenLabs,
     )
     from .agent_v1settings_agent_speak_endpoint_provider_eleven_labs_model_id import (
         AgentV1SettingsAgentSpeakEndpointProviderElevenLabsModelId,
     )
-    from .agent_v1settings_agent_speak_endpoint_provider_open_ai import AgentV1SettingsAgentSpeakEndpointProviderOpenAi
     from .agent_v1settings_agent_speak_endpoint_provider_open_ai_model import (
         AgentV1SettingsAgentSpeakEndpointProviderOpenAiModel,
     )
@@ -116,28 +112,18 @@ if typing.TYPE_CHECKING:
     from .agent_v1settings_agent_speak_one_item_provider_aws_polly_voice import (
         AgentV1SettingsAgentSpeakOneItemProviderAwsPollyVoice,
     )
-    from .agent_v1settings_agent_speak_one_item_provider_cartesia import (
-        AgentV1SettingsAgentSpeakOneItemProviderCartesia,
-    )
     from .agent_v1settings_agent_speak_one_item_provider_cartesia_model_id import (
         AgentV1SettingsAgentSpeakOneItemProviderCartesiaModelId,
     )
     from .agent_v1settings_agent_speak_one_item_provider_cartesia_voice import (
         AgentV1SettingsAgentSpeakOneItemProviderCartesiaVoice,
     )
-    from .agent_v1settings_agent_speak_one_item_provider_deepgram import (
-        AgentV1SettingsAgentSpeakOneItemProviderDeepgram,
-    )
     from .agent_v1settings_agent_speak_one_item_provider_deepgram_model import (
         AgentV1SettingsAgentSpeakOneItemProviderDeepgramModel,
-    )
-    from .agent_v1settings_agent_speak_one_item_provider_eleven_labs import (
-        AgentV1SettingsAgentSpeakOneItemProviderElevenLabs,
     )
     from .agent_v1settings_agent_speak_one_item_provider_eleven_labs_model_id import (
         AgentV1SettingsAgentSpeakOneItemProviderElevenLabsModelId,
     )
-    from .agent_v1settings_agent_speak_one_item_provider_open_ai import AgentV1SettingsAgentSpeakOneItemProviderOpenAi
     from .agent_v1settings_agent_speak_one_item_provider_open_ai_model import (
         AgentV1SettingsAgentSpeakOneItemProviderOpenAiModel,
     )
@@ -149,24 +135,27 @@ if typing.TYPE_CHECKING:
     from .agent_v1settings_agent_think_endpoint import AgentV1SettingsAgentThinkEndpoint
     from .agent_v1settings_agent_think_functions_item import AgentV1SettingsAgentThinkFunctionsItem
     from .agent_v1settings_agent_think_functions_item_endpoint import AgentV1SettingsAgentThinkFunctionsItemEndpoint
-    from .agent_v1settings_agent_think_provider import AgentV1SettingsAgentThinkProvider
-    from .agent_v1settings_agent_think_provider_credentials import AgentV1SettingsAgentThinkProviderCredentials
-    from .agent_v1settings_agent_think_provider_credentials_credentials import (
-        AgentV1SettingsAgentThinkProviderCredentialsCredentials,
+    from .agent_v1settings_agent_think_provider import (
+        AgentV1SettingsAgentThinkProvider,
+        AgentV1SettingsAgentThinkProvider_Anthropic,
+        AgentV1SettingsAgentThinkProvider_AwsBedrock,
+        AgentV1SettingsAgentThinkProvider_Google,
+        AgentV1SettingsAgentThinkProvider_Groq,
+        AgentV1SettingsAgentThinkProvider_OpenAi,
     )
-    from .agent_v1settings_agent_think_provider_credentials_credentials_type import (
-        AgentV1SettingsAgentThinkProviderCredentialsCredentialsType,
+    from .agent_v1settings_agent_think_provider_anthropic_model import AgentV1SettingsAgentThinkProviderAnthropicModel
+    from .agent_v1settings_agent_think_provider_aws_bedrock import AgentV1SettingsAgentThinkProviderAwsBedrock
+    from .agent_v1settings_agent_think_provider_aws_bedrock_credentials import (
+        AgentV1SettingsAgentThinkProviderAwsBedrockCredentials,
     )
-    from .agent_v1settings_agent_think_provider_credentials_model import (
-        AgentV1SettingsAgentThinkProviderCredentialsModel,
+    from .agent_v1settings_agent_think_provider_aws_bedrock_credentials_type import (
+        AgentV1SettingsAgentThinkProviderAwsBedrockCredentialsType,
     )
-    from .agent_v1settings_agent_think_provider_model import AgentV1SettingsAgentThinkProviderModel
-    from .agent_v1settings_agent_think_provider_three import AgentV1SettingsAgentThinkProviderThree
-    from .agent_v1settings_agent_think_provider_three_model import AgentV1SettingsAgentThinkProviderThreeModel
-    from .agent_v1settings_agent_think_provider_two import AgentV1SettingsAgentThinkProviderTwo
-    from .agent_v1settings_agent_think_provider_two_model import AgentV1SettingsAgentThinkProviderTwoModel
-    from .agent_v1settings_agent_think_provider_zero import AgentV1SettingsAgentThinkProviderZero
-    from .agent_v1settings_agent_think_provider_zero_model import AgentV1SettingsAgentThinkProviderZeroModel
+    from .agent_v1settings_agent_think_provider_aws_bedrock_model import (
+        AgentV1SettingsAgentThinkProviderAwsBedrockModel,
+    )
+    from .agent_v1settings_agent_think_provider_google_model import AgentV1SettingsAgentThinkProviderGoogleModel
+    from .agent_v1settings_agent_think_provider_open_ai_model import AgentV1SettingsAgentThinkProviderOpenAiModel
     from .agent_v1settings_applied import AgentV1SettingsApplied
     from .agent_v1settings_audio import AgentV1SettingsAudio
     from .agent_v1settings_audio_input import AgentV1SettingsAudioInput
@@ -211,6 +200,13 @@ if typing.TYPE_CHECKING:
     from .agent_v1user_started_speaking import AgentV1UserStartedSpeaking
     from .agent_v1warning import AgentV1Warning
     from .agent_v1welcome import AgentV1Welcome
+    from .anthropic import Anthropic
+    from .cartesia import Cartesia
+    from .deepgram import Deepgram
+    from .eleven_labs import ElevenLabs
+    from .google import Google
+    from .groq import Groq
+    from .open_ai import OpenAi
 _dynamic_imports: typing.Dict[str, str] = {
     "AgentV1AgentAudioDone": ".agent_v1agent_audio_done",
     "AgentV1AgentStartedSpeaking": ".agent_v1agent_started_speaking",
@@ -237,6 +233,10 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AgentV1SettingsAgentContextMessagesItemFunctionCallsFunctionCallsItem": ".agent_v1settings_agent_context_messages_item_function_calls_function_calls_item",
     "AgentV1SettingsAgentListen": ".agent_v1settings_agent_listen",
     "AgentV1SettingsAgentListenProvider": ".agent_v1settings_agent_listen_provider",
+    "AgentV1SettingsAgentListenProviderV1": ".agent_v1settings_agent_listen_provider_v1",
+    "AgentV1SettingsAgentListenProviderV2": ".agent_v1settings_agent_listen_provider_v2",
+    "AgentV1SettingsAgentListenProvider_V1": ".agent_v1settings_agent_listen_provider",
+    "AgentV1SettingsAgentListenProvider_V2": ".agent_v1settings_agent_listen_provider",
     "AgentV1SettingsAgentSpeak": ".agent_v1settings_agent_speak",
     "AgentV1SettingsAgentSpeakEndpoint": ".agent_v1settings_agent_speak_endpoint",
     "AgentV1SettingsAgentSpeakEndpointEndpoint": ".agent_v1settings_agent_speak_endpoint_endpoint",
@@ -246,14 +246,10 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AgentV1SettingsAgentSpeakEndpointProviderAwsPollyCredentialsType": ".agent_v1settings_agent_speak_endpoint_provider_aws_polly_credentials_type",
     "AgentV1SettingsAgentSpeakEndpointProviderAwsPollyEngine": ".agent_v1settings_agent_speak_endpoint_provider_aws_polly_engine",
     "AgentV1SettingsAgentSpeakEndpointProviderAwsPollyVoice": ".agent_v1settings_agent_speak_endpoint_provider_aws_polly_voice",
-    "AgentV1SettingsAgentSpeakEndpointProviderCartesia": ".agent_v1settings_agent_speak_endpoint_provider_cartesia",
     "AgentV1SettingsAgentSpeakEndpointProviderCartesiaModelId": ".agent_v1settings_agent_speak_endpoint_provider_cartesia_model_id",
     "AgentV1SettingsAgentSpeakEndpointProviderCartesiaVoice": ".agent_v1settings_agent_speak_endpoint_provider_cartesia_voice",
-    "AgentV1SettingsAgentSpeakEndpointProviderDeepgram": ".agent_v1settings_agent_speak_endpoint_provider_deepgram",
     "AgentV1SettingsAgentSpeakEndpointProviderDeepgramModel": ".agent_v1settings_agent_speak_endpoint_provider_deepgram_model",
-    "AgentV1SettingsAgentSpeakEndpointProviderElevenLabs": ".agent_v1settings_agent_speak_endpoint_provider_eleven_labs",
     "AgentV1SettingsAgentSpeakEndpointProviderElevenLabsModelId": ".agent_v1settings_agent_speak_endpoint_provider_eleven_labs_model_id",
-    "AgentV1SettingsAgentSpeakEndpointProviderOpenAi": ".agent_v1settings_agent_speak_endpoint_provider_open_ai",
     "AgentV1SettingsAgentSpeakEndpointProviderOpenAiModel": ".agent_v1settings_agent_speak_endpoint_provider_open_ai_model",
     "AgentV1SettingsAgentSpeakEndpointProviderOpenAiVoice": ".agent_v1settings_agent_speak_endpoint_provider_open_ai_voice",
     "AgentV1SettingsAgentSpeakEndpointProvider_AwsPolly": ".agent_v1settings_agent_speak_endpoint_provider",
@@ -269,14 +265,10 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AgentV1SettingsAgentSpeakOneItemProviderAwsPollyCredentialsType": ".agent_v1settings_agent_speak_one_item_provider_aws_polly_credentials_type",
     "AgentV1SettingsAgentSpeakOneItemProviderAwsPollyEngine": ".agent_v1settings_agent_speak_one_item_provider_aws_polly_engine",
     "AgentV1SettingsAgentSpeakOneItemProviderAwsPollyVoice": ".agent_v1settings_agent_speak_one_item_provider_aws_polly_voice",
-    "AgentV1SettingsAgentSpeakOneItemProviderCartesia": ".agent_v1settings_agent_speak_one_item_provider_cartesia",
     "AgentV1SettingsAgentSpeakOneItemProviderCartesiaModelId": ".agent_v1settings_agent_speak_one_item_provider_cartesia_model_id",
     "AgentV1SettingsAgentSpeakOneItemProviderCartesiaVoice": ".agent_v1settings_agent_speak_one_item_provider_cartesia_voice",
-    "AgentV1SettingsAgentSpeakOneItemProviderDeepgram": ".agent_v1settings_agent_speak_one_item_provider_deepgram",
     "AgentV1SettingsAgentSpeakOneItemProviderDeepgramModel": ".agent_v1settings_agent_speak_one_item_provider_deepgram_model",
-    "AgentV1SettingsAgentSpeakOneItemProviderElevenLabs": ".agent_v1settings_agent_speak_one_item_provider_eleven_labs",
     "AgentV1SettingsAgentSpeakOneItemProviderElevenLabsModelId": ".agent_v1settings_agent_speak_one_item_provider_eleven_labs_model_id",
-    "AgentV1SettingsAgentSpeakOneItemProviderOpenAi": ".agent_v1settings_agent_speak_one_item_provider_open_ai",
     "AgentV1SettingsAgentSpeakOneItemProviderOpenAiModel": ".agent_v1settings_agent_speak_one_item_provider_open_ai_model",
     "AgentV1SettingsAgentSpeakOneItemProviderOpenAiVoice": ".agent_v1settings_agent_speak_one_item_provider_open_ai_voice",
     "AgentV1SettingsAgentSpeakOneItemProvider_AwsPolly": ".agent_v1settings_agent_speak_one_item_provider",
@@ -290,17 +282,18 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AgentV1SettingsAgentThinkFunctionsItem": ".agent_v1settings_agent_think_functions_item",
     "AgentV1SettingsAgentThinkFunctionsItemEndpoint": ".agent_v1settings_agent_think_functions_item_endpoint",
     "AgentV1SettingsAgentThinkProvider": ".agent_v1settings_agent_think_provider",
-    "AgentV1SettingsAgentThinkProviderCredentials": ".agent_v1settings_agent_think_provider_credentials",
-    "AgentV1SettingsAgentThinkProviderCredentialsCredentials": ".agent_v1settings_agent_think_provider_credentials_credentials",
-    "AgentV1SettingsAgentThinkProviderCredentialsCredentialsType": ".agent_v1settings_agent_think_provider_credentials_credentials_type",
-    "AgentV1SettingsAgentThinkProviderCredentialsModel": ".agent_v1settings_agent_think_provider_credentials_model",
-    "AgentV1SettingsAgentThinkProviderModel": ".agent_v1settings_agent_think_provider_model",
-    "AgentV1SettingsAgentThinkProviderThree": ".agent_v1settings_agent_think_provider_three",
-    "AgentV1SettingsAgentThinkProviderThreeModel": ".agent_v1settings_agent_think_provider_three_model",
-    "AgentV1SettingsAgentThinkProviderTwo": ".agent_v1settings_agent_think_provider_two",
-    "AgentV1SettingsAgentThinkProviderTwoModel": ".agent_v1settings_agent_think_provider_two_model",
-    "AgentV1SettingsAgentThinkProviderZero": ".agent_v1settings_agent_think_provider_zero",
-    "AgentV1SettingsAgentThinkProviderZeroModel": ".agent_v1settings_agent_think_provider_zero_model",
+    "AgentV1SettingsAgentThinkProviderAnthropicModel": ".agent_v1settings_agent_think_provider_anthropic_model",
+    "AgentV1SettingsAgentThinkProviderAwsBedrock": ".agent_v1settings_agent_think_provider_aws_bedrock",
+    "AgentV1SettingsAgentThinkProviderAwsBedrockCredentials": ".agent_v1settings_agent_think_provider_aws_bedrock_credentials",
+    "AgentV1SettingsAgentThinkProviderAwsBedrockCredentialsType": ".agent_v1settings_agent_think_provider_aws_bedrock_credentials_type",
+    "AgentV1SettingsAgentThinkProviderAwsBedrockModel": ".agent_v1settings_agent_think_provider_aws_bedrock_model",
+    "AgentV1SettingsAgentThinkProviderGoogleModel": ".agent_v1settings_agent_think_provider_google_model",
+    "AgentV1SettingsAgentThinkProviderOpenAiModel": ".agent_v1settings_agent_think_provider_open_ai_model",
+    "AgentV1SettingsAgentThinkProvider_Anthropic": ".agent_v1settings_agent_think_provider",
+    "AgentV1SettingsAgentThinkProvider_AwsBedrock": ".agent_v1settings_agent_think_provider",
+    "AgentV1SettingsAgentThinkProvider_Google": ".agent_v1settings_agent_think_provider",
+    "AgentV1SettingsAgentThinkProvider_Groq": ".agent_v1settings_agent_think_provider",
+    "AgentV1SettingsAgentThinkProvider_OpenAi": ".agent_v1settings_agent_think_provider",
     "AgentV1SettingsApplied": ".agent_v1settings_applied",
     "AgentV1SettingsAudio": ".agent_v1settings_audio",
     "AgentV1SettingsAudioInput": ".agent_v1settings_audio_input",
@@ -337,6 +330,13 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AgentV1UserStartedSpeaking": ".agent_v1user_started_speaking",
     "AgentV1Warning": ".agent_v1warning",
     "AgentV1Welcome": ".agent_v1welcome",
+    "Anthropic": ".anthropic",
+    "Cartesia": ".cartesia",
+    "Deepgram": ".deepgram",
+    "ElevenLabs": ".eleven_labs",
+    "Google": ".google",
+    "Groq": ".groq",
+    "OpenAi": ".open_ai",
 }
 
 
@@ -387,6 +387,10 @@ __all__ = [
     "AgentV1SettingsAgentContextMessagesItemFunctionCallsFunctionCallsItem",
     "AgentV1SettingsAgentListen",
     "AgentV1SettingsAgentListenProvider",
+    "AgentV1SettingsAgentListenProviderV1",
+    "AgentV1SettingsAgentListenProviderV2",
+    "AgentV1SettingsAgentListenProvider_V1",
+    "AgentV1SettingsAgentListenProvider_V2",
     "AgentV1SettingsAgentSpeak",
     "AgentV1SettingsAgentSpeakEndpoint",
     "AgentV1SettingsAgentSpeakEndpointEndpoint",
@@ -396,14 +400,10 @@ __all__ = [
     "AgentV1SettingsAgentSpeakEndpointProviderAwsPollyCredentialsType",
     "AgentV1SettingsAgentSpeakEndpointProviderAwsPollyEngine",
     "AgentV1SettingsAgentSpeakEndpointProviderAwsPollyVoice",
-    "AgentV1SettingsAgentSpeakEndpointProviderCartesia",
     "AgentV1SettingsAgentSpeakEndpointProviderCartesiaModelId",
     "AgentV1SettingsAgentSpeakEndpointProviderCartesiaVoice",
-    "AgentV1SettingsAgentSpeakEndpointProviderDeepgram",
     "AgentV1SettingsAgentSpeakEndpointProviderDeepgramModel",
-    "AgentV1SettingsAgentSpeakEndpointProviderElevenLabs",
     "AgentV1SettingsAgentSpeakEndpointProviderElevenLabsModelId",
-    "AgentV1SettingsAgentSpeakEndpointProviderOpenAi",
     "AgentV1SettingsAgentSpeakEndpointProviderOpenAiModel",
     "AgentV1SettingsAgentSpeakEndpointProviderOpenAiVoice",
     "AgentV1SettingsAgentSpeakEndpointProvider_AwsPolly",
@@ -419,14 +419,10 @@ __all__ = [
     "AgentV1SettingsAgentSpeakOneItemProviderAwsPollyCredentialsType",
     "AgentV1SettingsAgentSpeakOneItemProviderAwsPollyEngine",
     "AgentV1SettingsAgentSpeakOneItemProviderAwsPollyVoice",
-    "AgentV1SettingsAgentSpeakOneItemProviderCartesia",
     "AgentV1SettingsAgentSpeakOneItemProviderCartesiaModelId",
     "AgentV1SettingsAgentSpeakOneItemProviderCartesiaVoice",
-    "AgentV1SettingsAgentSpeakOneItemProviderDeepgram",
     "AgentV1SettingsAgentSpeakOneItemProviderDeepgramModel",
-    "AgentV1SettingsAgentSpeakOneItemProviderElevenLabs",
     "AgentV1SettingsAgentSpeakOneItemProviderElevenLabsModelId",
-    "AgentV1SettingsAgentSpeakOneItemProviderOpenAi",
     "AgentV1SettingsAgentSpeakOneItemProviderOpenAiModel",
     "AgentV1SettingsAgentSpeakOneItemProviderOpenAiVoice",
     "AgentV1SettingsAgentSpeakOneItemProvider_AwsPolly",
@@ -440,17 +436,18 @@ __all__ = [
     "AgentV1SettingsAgentThinkFunctionsItem",
     "AgentV1SettingsAgentThinkFunctionsItemEndpoint",
     "AgentV1SettingsAgentThinkProvider",
-    "AgentV1SettingsAgentThinkProviderCredentials",
-    "AgentV1SettingsAgentThinkProviderCredentialsCredentials",
-    "AgentV1SettingsAgentThinkProviderCredentialsCredentialsType",
-    "AgentV1SettingsAgentThinkProviderCredentialsModel",
-    "AgentV1SettingsAgentThinkProviderModel",
-    "AgentV1SettingsAgentThinkProviderThree",
-    "AgentV1SettingsAgentThinkProviderThreeModel",
-    "AgentV1SettingsAgentThinkProviderTwo",
-    "AgentV1SettingsAgentThinkProviderTwoModel",
-    "AgentV1SettingsAgentThinkProviderZero",
-    "AgentV1SettingsAgentThinkProviderZeroModel",
+    "AgentV1SettingsAgentThinkProviderAnthropicModel",
+    "AgentV1SettingsAgentThinkProviderAwsBedrock",
+    "AgentV1SettingsAgentThinkProviderAwsBedrockCredentials",
+    "AgentV1SettingsAgentThinkProviderAwsBedrockCredentialsType",
+    "AgentV1SettingsAgentThinkProviderAwsBedrockModel",
+    "AgentV1SettingsAgentThinkProviderGoogleModel",
+    "AgentV1SettingsAgentThinkProviderOpenAiModel",
+    "AgentV1SettingsAgentThinkProvider_Anthropic",
+    "AgentV1SettingsAgentThinkProvider_AwsBedrock",
+    "AgentV1SettingsAgentThinkProvider_Google",
+    "AgentV1SettingsAgentThinkProvider_Groq",
+    "AgentV1SettingsAgentThinkProvider_OpenAi",
     "AgentV1SettingsApplied",
     "AgentV1SettingsAudio",
     "AgentV1SettingsAudioInput",
@@ -487,4 +484,11 @@ __all__ = [
     "AgentV1UserStartedSpeaking",
     "AgentV1Warning",
     "AgentV1Welcome",
+    "Anthropic",
+    "Cartesia",
+    "Deepgram",
+    "ElevenLabs",
+    "Google",
+    "Groq",
+    "OpenAi",
 ]

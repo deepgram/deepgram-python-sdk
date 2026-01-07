@@ -84,56 +84,56 @@ class AsyncV1SocketClient(EventEmitterMixin):
         finally:
             await self._emit_async(EventType.CLOSE, None)
 
-    async def send_agent_v_1_settings(self, message: AgentV1Settings) -> None:
+    async def send_settings(self, message: AgentV1Settings) -> None:
         """
         Send a message to the websocket connection.
         The message will be sent as a AgentV1Settings.
         """
         await self._send_model(message)
 
-    async def send_agent_v_1_update_speak(self, message: AgentV1UpdateSpeak) -> None:
+    async def send_update_speak(self, message: AgentV1UpdateSpeak) -> None:
         """
         Send a message to the websocket connection.
         The message will be sent as a AgentV1UpdateSpeak.
         """
         await self._send_model(message)
 
-    async def send_agent_v_1_inject_user_message(self, message: AgentV1InjectUserMessage) -> None:
+    async def send_inject_user_message(self, message: AgentV1InjectUserMessage) -> None:
         """
         Send a message to the websocket connection.
         The message will be sent as a AgentV1InjectUserMessage.
         """
         await self._send_model(message)
 
-    async def send_agent_v_1_inject_agent_message(self, message: AgentV1InjectAgentMessage) -> None:
+    async def send_inject_agent_message(self, message: AgentV1InjectAgentMessage) -> None:
         """
         Send a message to the websocket connection.
         The message will be sent as a AgentV1InjectAgentMessage.
         """
         await self._send_model(message)
 
-    async def send_agent_v_1_send_function_call_response(self, message: AgentV1SendFunctionCallResponse) -> None:
+    async def send_function_call_response(self, message: AgentV1SendFunctionCallResponse) -> None:
         """
         Send a message to the websocket connection.
         The message will be sent as a AgentV1SendFunctionCallResponse.
         """
         await self._send_model(message)
 
-    async def send_agent_v_1_keep_alive(self, message: AgentV1KeepAlive) -> None:
+    async def on_function_call_response(self, message: AgentV1KeepAlive) -> None:
         """
         Send a message to the websocket connection.
         The message will be sent as a AgentV1KeepAlive.
         """
         await self._send_model(message)
 
-    async def send_agent_v_1_update_prompt(self, message: AgentV1UpdatePrompt) -> None:
+    async def send_keep_alive(self, message: AgentV1UpdatePrompt) -> None:
         """
         Send a message to the websocket connection.
         The message will be sent as a AgentV1UpdatePrompt.
         """
         await self._send_model(message)
 
-    async def send_agent_v_1_media(self, message: str) -> None:
+    async def send_update_prompt(self, message: str) -> None:
         """
         Send a message to the websocket connection.
         The message will be sent as a str.
@@ -193,56 +193,56 @@ class V1SocketClient(EventEmitterMixin):
         finally:
             self._emit(EventType.CLOSE, None)
 
-    def send_agent_v_1_settings(self, message: AgentV1Settings) -> None:
+    def send_settings(self, message: AgentV1Settings) -> None:
         """
         Send a message to the websocket connection.
         The message will be sent as a AgentV1Settings.
         """
         self._send_model(message)
 
-    def send_agent_v_1_update_speak(self, message: AgentV1UpdateSpeak) -> None:
+    def send_update_speak(self, message: AgentV1UpdateSpeak) -> None:
         """
         Send a message to the websocket connection.
         The message will be sent as a AgentV1UpdateSpeak.
         """
         self._send_model(message)
 
-    def send_agent_v_1_inject_user_message(self, message: AgentV1InjectUserMessage) -> None:
+    def send_inject_user_message(self, message: AgentV1InjectUserMessage) -> None:
         """
         Send a message to the websocket connection.
         The message will be sent as a AgentV1InjectUserMessage.
         """
         self._send_model(message)
 
-    def send_agent_v_1_inject_agent_message(self, message: AgentV1InjectAgentMessage) -> None:
+    def send_inject_agent_message(self, message: AgentV1InjectAgentMessage) -> None:
         """
         Send a message to the websocket connection.
         The message will be sent as a AgentV1InjectAgentMessage.
         """
         self._send_model(message)
 
-    def send_agent_v_1_send_function_call_response(self, message: AgentV1SendFunctionCallResponse) -> None:
+    def send_function_call_response(self, message: AgentV1SendFunctionCallResponse) -> None:
         """
         Send a message to the websocket connection.
         The message will be sent as a AgentV1SendFunctionCallResponse.
         """
         self._send_model(message)
 
-    def send_agent_v_1_keep_alive(self, message: AgentV1KeepAlive) -> None:
+    def on_function_call_response(self, message: AgentV1KeepAlive) -> None:
         """
         Send a message to the websocket connection.
         The message will be sent as a AgentV1KeepAlive.
         """
         self._send_model(message)
 
-    def send_agent_v_1_update_prompt(self, message: AgentV1UpdatePrompt) -> None:
+    def send_keep_alive(self, message: AgentV1UpdatePrompt) -> None:
         """
         Send a message to the websocket connection.
         The message will be sent as a AgentV1UpdatePrompt.
         """
         self._send_model(message)
 
-    def send_agent_v_1_media(self, message: str) -> None:
+    def send_update_prompt(self, message: str) -> None:
         """
         Send a message to the websocket connection.
         The message will be sent as a str.

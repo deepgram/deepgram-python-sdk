@@ -8,14 +8,24 @@ from .agent_v1update_speak_speak_provider_eleven_labs_model_id import AgentV1Upd
 
 
 class AgentV1UpdateSpeakSpeakProviderElevenLabs(UniversalBaseModel):
+    version: typing.Optional[typing.Literal["v1"]] = pydantic.Field(default=None)
+    """
+    The REST API version for the ElevenLabs text-to-speech API
+    """
+
     model_id: AgentV1UpdateSpeakSpeakProviderElevenLabsModelId = pydantic.Field()
     """
     Eleven Labs model ID
     """
 
+    language: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Language code to use, e.g. 'en-US'. Corresponds to the `language_code` parameter in the ElevenLabs API
+    """
+
     language_code: typing.Optional[str] = pydantic.Field(default=None)
     """
-    Eleven Labs optional language code
+    Use the `language` field instead.
     """
 
     if IS_PYDANTIC_V2:

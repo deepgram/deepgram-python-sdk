@@ -21,9 +21,14 @@ class AgentV1SettingsAgentSpeakEndpointProviderAwsPolly(UniversalBaseModel):
     AWS Polly voice name
     """
 
-    language_code: str = pydantic.Field()
+    language: str = pydantic.Field()
     """
-    Language code (e.g., "en-US")
+    Language to use, e.g. 'en-US'. Corresponds to the `language_code` parameter in the AWS Polly API
+    """
+
+    language_code: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Use the `language` field instead.
     """
 
     engine: AgentV1SettingsAgentSpeakEndpointProviderAwsPollyEngine

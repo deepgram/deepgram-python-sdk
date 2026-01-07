@@ -9,6 +9,11 @@ from .agent_v1update_speak_speak_provider_open_ai_voice import AgentV1UpdateSpea
 
 
 class AgentV1UpdateSpeakSpeakProviderOpenAi(UniversalBaseModel):
+    version: typing.Optional[typing.Literal["v1"]] = pydantic.Field(default=None)
+    """
+    The REST API version for the OpenAI text-to-speech API
+    """
+
     model: AgentV1UpdateSpeakSpeakProviderOpenAiModel = pydantic.Field()
     """
     OpenAI TTS model

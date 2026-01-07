@@ -10,7 +10,7 @@ from .agent_v1settings_agent_think import AgentV1SettingsAgentThinkParams
 class AgentV1SettingsAgentParams(typing_extensions.TypedDict):
     language: typing_extensions.NotRequired[str]
     """
-    Agent language
+    Deprecated. Use `listen.provider.language` and `speak.provider.language` fields instead.
     """
 
     context: typing_extensions.NotRequired[AgentV1SettingsAgentContextParams]

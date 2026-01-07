@@ -25,11 +25,11 @@ class AgentV1SendFunctionCallResponseParams(typing_extensions.TypedDict):
 
     id: typing_extensions.NotRequired[str]
     """
-    The unique identifier for the function call. 
+    The unique identifier for the function call.
     
-    • **Required for client responses**: Should match the id from 
+    • **Required for client responses**: Should match the id from
       the corresponding `FunctionCallRequest`
-    • **Optional for server responses**: Server may omit when responding 
+    • **Optional for server responses**: Server may omit when responding
       to internal function executions
     """
 

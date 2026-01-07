@@ -9,6 +9,11 @@ from .agent_v1update_speak_speak_provider_cartesia_voice import AgentV1UpdateSpe
 
 
 class AgentV1UpdateSpeakSpeakProviderCartesia(UniversalBaseModel):
+    version: typing.Optional[typing.Literal["2025-03-17"]] = pydantic.Field(default=None)
+    """
+    The API version header for the Cartesia text-to-speech API
+    """
+
     model_id: AgentV1UpdateSpeakSpeakProviderCartesiaModelId = pydantic.Field()
     """
     Cartesia model ID

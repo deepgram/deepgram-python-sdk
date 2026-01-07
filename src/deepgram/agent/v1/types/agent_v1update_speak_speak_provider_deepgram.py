@@ -8,6 +8,11 @@ from .agent_v1update_speak_speak_provider_deepgram_model import AgentV1UpdateSpe
 
 
 class AgentV1UpdateSpeakSpeakProviderDeepgram(UniversalBaseModel):
+    version: typing.Optional[typing.Literal["v1"]] = pydantic.Field(default=None)
+    """
+    The REST API version for the Deepgram text-to-speech API
+    """
+
     model: AgentV1UpdateSpeakSpeakProviderDeepgramModel = pydantic.Field()
     """
     Deepgram TTS model

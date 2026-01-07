@@ -38,6 +38,7 @@ from .agent_v1settings_agent_speak_one_item_provider_open_ai_voice import (
 
 class AgentV1SettingsAgentSpeakOneItemProvider_Deepgram(UniversalBaseModel):
     type: typing.Literal["deepgram"] = "deepgram"
+    version: typing.Optional[typing.Literal["v1"]] = None
     model: AgentV1SettingsAgentSpeakOneItemProviderDeepgramModel
 
     if IS_PYDANTIC_V2:
@@ -52,7 +53,9 @@ class AgentV1SettingsAgentSpeakOneItemProvider_Deepgram(UniversalBaseModel):
 
 class AgentV1SettingsAgentSpeakOneItemProvider_ElevenLabs(UniversalBaseModel):
     type: typing.Literal["eleven_labs"] = "eleven_labs"
+    version: typing.Optional[typing.Literal["v1"]] = None
     model_id: AgentV1SettingsAgentSpeakOneItemProviderElevenLabsModelId
+    language: typing.Optional[str] = None
     language_code: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:
@@ -67,6 +70,7 @@ class AgentV1SettingsAgentSpeakOneItemProvider_ElevenLabs(UniversalBaseModel):
 
 class AgentV1SettingsAgentSpeakOneItemProvider_Cartesia(UniversalBaseModel):
     type: typing.Literal["cartesia"] = "cartesia"
+    version: typing.Optional[typing.Literal["2025-03-17"]] = None
     model_id: AgentV1SettingsAgentSpeakOneItemProviderCartesiaModelId
     voice: AgentV1SettingsAgentSpeakOneItemProviderCartesiaVoice
     language: typing.Optional[str] = None
@@ -83,6 +87,7 @@ class AgentV1SettingsAgentSpeakOneItemProvider_Cartesia(UniversalBaseModel):
 
 class AgentV1SettingsAgentSpeakOneItemProvider_OpenAi(UniversalBaseModel):
     type: typing.Literal["open_ai"] = "open_ai"
+    version: typing.Optional[typing.Literal["v1"]] = None
     model: AgentV1SettingsAgentSpeakOneItemProviderOpenAiModel
     voice: AgentV1SettingsAgentSpeakOneItemProviderOpenAiVoice
 
@@ -99,7 +104,8 @@ class AgentV1SettingsAgentSpeakOneItemProvider_OpenAi(UniversalBaseModel):
 class AgentV1SettingsAgentSpeakOneItemProvider_AwsPolly(UniversalBaseModel):
     type: typing.Literal["aws_polly"] = "aws_polly"
     voice: AgentV1SettingsAgentSpeakOneItemProviderAwsPollyVoice
-    language_code: str
+    language: str
+    language_code: typing.Optional[str] = None
     engine: AgentV1SettingsAgentSpeakOneItemProviderAwsPollyEngine
     credentials: AgentV1SettingsAgentSpeakOneItemProviderAwsPollyCredentials
 

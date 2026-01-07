@@ -16,29 +16,30 @@ from .agent_v1settings_agent_speak_endpoint_provider_aws_polly_engine import (
 from .agent_v1settings_agent_speak_endpoint_provider_aws_polly_voice import (
     AgentV1SettingsAgentSpeakEndpointProviderAwsPollyVoice,
 )
-from .agent_v1settings_agent_speak_endpoint_provider_cartesia_model_id import (
-    AgentV1SettingsAgentSpeakEndpointProviderCartesiaModelId,
+from .agent_v1settings_agent_speak_one_item_provider_cartesia_model_id import (
+    AgentV1SettingsAgentSpeakOneItemProviderCartesiaModelId,
 )
-from .agent_v1settings_agent_speak_endpoint_provider_cartesia_voice import (
-    AgentV1SettingsAgentSpeakEndpointProviderCartesiaVoice,
+from .agent_v1settings_agent_speak_one_item_provider_cartesia_voice import (
+    AgentV1SettingsAgentSpeakOneItemProviderCartesiaVoice,
 )
-from .agent_v1settings_agent_speak_endpoint_provider_deepgram_model import (
-    AgentV1SettingsAgentSpeakEndpointProviderDeepgramModel,
+from .agent_v1settings_agent_speak_one_item_provider_deepgram_model import (
+    AgentV1SettingsAgentSpeakOneItemProviderDeepgramModel,
 )
-from .agent_v1settings_agent_speak_endpoint_provider_eleven_labs_model_id import (
-    AgentV1SettingsAgentSpeakEndpointProviderElevenLabsModelId,
+from .agent_v1settings_agent_speak_one_item_provider_eleven_labs_model_id import (
+    AgentV1SettingsAgentSpeakOneItemProviderElevenLabsModelId,
 )
-from .agent_v1settings_agent_speak_endpoint_provider_open_ai_model import (
-    AgentV1SettingsAgentSpeakEndpointProviderOpenAiModel,
+from .agent_v1settings_agent_speak_one_item_provider_open_ai_model import (
+    AgentV1SettingsAgentSpeakOneItemProviderOpenAiModel,
 )
-from .agent_v1settings_agent_speak_endpoint_provider_open_ai_voice import (
-    AgentV1SettingsAgentSpeakEndpointProviderOpenAiVoice,
+from .agent_v1settings_agent_speak_one_item_provider_open_ai_voice import (
+    AgentV1SettingsAgentSpeakOneItemProviderOpenAiVoice,
 )
 
 
 class AgentV1SettingsAgentSpeakEndpointProvider_Deepgram(UniversalBaseModel):
     type: typing.Literal["deepgram"] = "deepgram"
-    model: AgentV1SettingsAgentSpeakEndpointProviderDeepgramModel
+    version: typing.Optional[typing.Literal["v1"]] = None
+    model: AgentV1SettingsAgentSpeakOneItemProviderDeepgramModel
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
@@ -52,7 +53,9 @@ class AgentV1SettingsAgentSpeakEndpointProvider_Deepgram(UniversalBaseModel):
 
 class AgentV1SettingsAgentSpeakEndpointProvider_ElevenLabs(UniversalBaseModel):
     type: typing.Literal["eleven_labs"] = "eleven_labs"
-    model_id: AgentV1SettingsAgentSpeakEndpointProviderElevenLabsModelId
+    version: typing.Optional[typing.Literal["v1"]] = None
+    model_id: AgentV1SettingsAgentSpeakOneItemProviderElevenLabsModelId
+    language: typing.Optional[str] = None
     language_code: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:
@@ -67,8 +70,9 @@ class AgentV1SettingsAgentSpeakEndpointProvider_ElevenLabs(UniversalBaseModel):
 
 class AgentV1SettingsAgentSpeakEndpointProvider_Cartesia(UniversalBaseModel):
     type: typing.Literal["cartesia"] = "cartesia"
-    model_id: AgentV1SettingsAgentSpeakEndpointProviderCartesiaModelId
-    voice: AgentV1SettingsAgentSpeakEndpointProviderCartesiaVoice
+    version: typing.Optional[typing.Literal["2025-03-17"]] = None
+    model_id: AgentV1SettingsAgentSpeakOneItemProviderCartesiaModelId
+    voice: AgentV1SettingsAgentSpeakOneItemProviderCartesiaVoice
     language: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:
@@ -83,8 +87,9 @@ class AgentV1SettingsAgentSpeakEndpointProvider_Cartesia(UniversalBaseModel):
 
 class AgentV1SettingsAgentSpeakEndpointProvider_OpenAi(UniversalBaseModel):
     type: typing.Literal["open_ai"] = "open_ai"
-    model: AgentV1SettingsAgentSpeakEndpointProviderOpenAiModel
-    voice: AgentV1SettingsAgentSpeakEndpointProviderOpenAiVoice
+    version: typing.Optional[typing.Literal["v1"]] = None
+    model: AgentV1SettingsAgentSpeakOneItemProviderOpenAiModel
+    voice: AgentV1SettingsAgentSpeakOneItemProviderOpenAiVoice
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
@@ -99,7 +104,8 @@ class AgentV1SettingsAgentSpeakEndpointProvider_OpenAi(UniversalBaseModel):
 class AgentV1SettingsAgentSpeakEndpointProvider_AwsPolly(UniversalBaseModel):
     type: typing.Literal["aws_polly"] = "aws_polly"
     voice: AgentV1SettingsAgentSpeakEndpointProviderAwsPollyVoice
-    language_code: str
+    language: str
+    language_code: typing.Optional[str] = None
     engine: AgentV1SettingsAgentSpeakEndpointProviderAwsPollyEngine
     credentials: AgentV1SettingsAgentSpeakEndpointProviderAwsPollyCredentials
 

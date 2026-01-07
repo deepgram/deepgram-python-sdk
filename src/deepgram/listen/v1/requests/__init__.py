@@ -16,6 +16,7 @@ if typing.TYPE_CHECKING:
     from .listen_v1results_channel_alternatives_item_words_item import (
         ListenV1ResultsChannelAlternativesItemWordsItemParams,
     )
+    from .listen_v1results_entities_item import ListenV1ResultsEntitiesItemParams
     from .listen_v1results_metadata import ListenV1ResultsMetadataParams
     from .listen_v1results_metadata_model_info import ListenV1ResultsMetadataModelInfoParams
     from .listen_v1speech_started import ListenV1SpeechStartedParams
@@ -28,6 +29,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ListenV1ResultsChannelAlternativesItemParams": ".listen_v1results_channel_alternatives_item",
     "ListenV1ResultsChannelAlternativesItemWordsItemParams": ".listen_v1results_channel_alternatives_item_words_item",
     "ListenV1ResultsChannelParams": ".listen_v1results_channel",
+    "ListenV1ResultsEntitiesItemParams": ".listen_v1results_entities_item",
     "ListenV1ResultsMetadataModelInfoParams": ".listen_v1results_metadata_model_info",
     "ListenV1ResultsMetadataParams": ".listen_v1results_metadata",
     "ListenV1ResultsParams": ".listen_v1results",
@@ -65,6 +67,7 @@ __all__ = [
     "ListenV1ResultsChannelAlternativesItemParams",
     "ListenV1ResultsChannelAlternativesItemWordsItemParams",
     "ListenV1ResultsChannelParams",
+    "ListenV1ResultsEntitiesItemParams",
     "ListenV1ResultsMetadataModelInfoParams",
     "ListenV1ResultsMetadataParams",
     "ListenV1ResultsParams",

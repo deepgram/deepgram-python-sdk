@@ -18,9 +18,14 @@ class AgentV1SettingsAgentSpeakOneItemProviderAwsPollyParams(typing_extensions.T
     AWS Polly voice name
     """
 
-    language_code: str
+    language: str
     """
-    Language code (e.g., "en-US")
+    Language code to use, e.g. 'en-US'. Corresponds to the `language_code` parameter in the AWS Polly API
+    """
+
+    language_code: typing_extensions.NotRequired[str]
+    """
+    Use the `language` field instead.
     """
 
     engine: AgentV1SettingsAgentSpeakOneItemProviderAwsPollyEngine

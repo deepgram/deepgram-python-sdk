@@ -13,7 +13,7 @@ from .agent_v1settings_agent_think import AgentV1SettingsAgentThink
 class AgentV1SettingsAgent(UniversalBaseModel):
     language: typing.Optional[str] = pydantic.Field(default=None)
     """
-    Agent language
+    Deprecated. Use `listen.provider.language` and `speak.provider.language` fields instead.
     """
 
     context: typing.Optional[AgentV1SettingsAgentContext] = pydantic.Field(default=None)

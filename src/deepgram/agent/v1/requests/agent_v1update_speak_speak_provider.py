@@ -22,17 +22,21 @@ from .agent_v1update_speak_speak_provider_cartesia_voice import AgentV1UpdateSpe
 
 class AgentV1UpdateSpeakSpeakProvider_DeepgramParams(typing_extensions.TypedDict):
     type: typing.Literal["deepgram"]
+    version: typing_extensions.NotRequired[typing.Literal["v1"]]
     model: AgentV1UpdateSpeakSpeakProviderDeepgramModel
 
 
 class AgentV1UpdateSpeakSpeakProvider_ElevenLabsParams(typing_extensions.TypedDict):
     type: typing.Literal["eleven_labs"]
+    version: typing_extensions.NotRequired[typing.Literal["v1"]]
     model_id: AgentV1UpdateSpeakSpeakProviderElevenLabsModelId
+    language: typing_extensions.NotRequired[str]
     language_code: typing_extensions.NotRequired[str]
 
 
 class AgentV1UpdateSpeakSpeakProvider_CartesiaParams(typing_extensions.TypedDict):
     type: typing.Literal["cartesia"]
+    version: typing_extensions.NotRequired[typing.Literal["2025-03-17"]]
     model_id: AgentV1UpdateSpeakSpeakProviderCartesiaModelId
     voice: AgentV1UpdateSpeakSpeakProviderCartesiaVoiceParams
     language: typing_extensions.NotRequired[str]
@@ -40,6 +44,7 @@ class AgentV1UpdateSpeakSpeakProvider_CartesiaParams(typing_extensions.TypedDict
 
 class AgentV1UpdateSpeakSpeakProvider_OpenAiParams(typing_extensions.TypedDict):
     type: typing.Literal["open_ai"]
+    version: typing_extensions.NotRequired[typing.Literal["v1"]]
     model: AgentV1UpdateSpeakSpeakProviderOpenAiModel
     voice: AgentV1UpdateSpeakSpeakProviderOpenAiVoice
 
@@ -47,7 +52,8 @@ class AgentV1UpdateSpeakSpeakProvider_OpenAiParams(typing_extensions.TypedDict):
 class AgentV1UpdateSpeakSpeakProvider_AwsPollyParams(typing_extensions.TypedDict):
     type: typing.Literal["aws_polly"]
     voice: AgentV1UpdateSpeakSpeakProviderAwsPollyVoice
-    language_code: str
+    language: str
+    language_code: typing_extensions.NotRequired[str]
     engine: AgentV1UpdateSpeakSpeakProviderAwsPollyEngine
     credentials: AgentV1UpdateSpeakSpeakProviderAwsPollyCredentialsParams
 

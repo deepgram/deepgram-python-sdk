@@ -5,6 +5,7 @@ import typing
 import pydantic
 from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from .listen_v1results_channel import ListenV1ResultsChannel
+from .listen_v1results_entities_item import ListenV1ResultsEntitiesItem
 from .listen_v1results_metadata import ListenV1ResultsMetadata
 
 
@@ -44,6 +45,11 @@ class ListenV1Results(UniversalBaseModel):
     from_finalize: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Whether the transcription is from a finalize message
+    """
+
+    entities: typing.Optional[typing.List[ListenV1ResultsEntitiesItem]] = pydantic.Field(default=None)
+    """
+    Extracted entities from the audio when detect_entities is enabled. Only present in is_final messages. Returns an empty array if no entities are detected
     """
 
     if IS_PYDANTIC_V2:

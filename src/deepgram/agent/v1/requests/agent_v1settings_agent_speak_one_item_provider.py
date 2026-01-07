@@ -36,17 +36,21 @@ from .agent_v1settings_agent_speak_one_item_provider_cartesia_voice import (
 
 class AgentV1SettingsAgentSpeakOneItemProvider_DeepgramParams(typing_extensions.TypedDict):
     type: typing.Literal["deepgram"]
+    version: typing_extensions.NotRequired[typing.Literal["v1"]]
     model: AgentV1SettingsAgentSpeakOneItemProviderDeepgramModel
 
 
 class AgentV1SettingsAgentSpeakOneItemProvider_ElevenLabsParams(typing_extensions.TypedDict):
     type: typing.Literal["eleven_labs"]
+    version: typing_extensions.NotRequired[typing.Literal["v1"]]
     model_id: AgentV1SettingsAgentSpeakOneItemProviderElevenLabsModelId
+    language: typing_extensions.NotRequired[str]
     language_code: typing_extensions.NotRequired[str]
 
 
 class AgentV1SettingsAgentSpeakOneItemProvider_CartesiaParams(typing_extensions.TypedDict):
     type: typing.Literal["cartesia"]
+    version: typing_extensions.NotRequired[typing.Literal["2025-03-17"]]
     model_id: AgentV1SettingsAgentSpeakOneItemProviderCartesiaModelId
     voice: AgentV1SettingsAgentSpeakOneItemProviderCartesiaVoiceParams
     language: typing_extensions.NotRequired[str]
@@ -54,6 +58,7 @@ class AgentV1SettingsAgentSpeakOneItemProvider_CartesiaParams(typing_extensions.
 
 class AgentV1SettingsAgentSpeakOneItemProvider_OpenAiParams(typing_extensions.TypedDict):
     type: typing.Literal["open_ai"]
+    version: typing_extensions.NotRequired[typing.Literal["v1"]]
     model: AgentV1SettingsAgentSpeakOneItemProviderOpenAiModel
     voice: AgentV1SettingsAgentSpeakOneItemProviderOpenAiVoice
 
@@ -61,7 +66,8 @@ class AgentV1SettingsAgentSpeakOneItemProvider_OpenAiParams(typing_extensions.Ty
 class AgentV1SettingsAgentSpeakOneItemProvider_AwsPollyParams(typing_extensions.TypedDict):
     type: typing.Literal["aws_polly"]
     voice: AgentV1SettingsAgentSpeakOneItemProviderAwsPollyVoice
-    language_code: str
+    language: str
+    language_code: typing_extensions.NotRequired[str]
     engine: AgentV1SettingsAgentSpeakOneItemProviderAwsPollyEngine
     credentials: AgentV1SettingsAgentSpeakOneItemProviderAwsPollyCredentialsParams
 

@@ -4,6 +4,7 @@ import typing
 
 import typing_extensions
 from .listen_v1results_channel import ListenV1ResultsChannelParams
+from .listen_v1results_entities_item import ListenV1ResultsEntitiesItemParams
 from .listen_v1results_metadata import ListenV1ResultsMetadataParams
 
 
@@ -43,4 +44,9 @@ class ListenV1ResultsParams(typing_extensions.TypedDict):
     from_finalize: typing_extensions.NotRequired[bool]
     """
     Whether the transcription is from a finalize message
+    """
+
+    entities: typing_extensions.NotRequired[typing.Sequence[ListenV1ResultsEntitiesItemParams]]
+    """
+    Extracted entities from the audio when detect_entities is enabled. Only present in is_final messages. Returns an empty array if no entities are detected
     """

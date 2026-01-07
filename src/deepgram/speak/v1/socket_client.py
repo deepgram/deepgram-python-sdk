@@ -55,28 +55,28 @@ class AsyncV1SocketClient(EventEmitterMixin):
         finally:
             await self._emit_async(EventType.CLOSE, None)
 
-    async def send_speak_v_1_text(self, message: SpeakV1Text) -> None:
+    async def send_text(self, message: SpeakV1Text) -> None:
         """
         Send a message to the websocket connection.
         The message will be sent as a SpeakV1Text.
         """
         await self._send_model(message)
 
-    async def send_speak_v_1_flush(self, message: SpeakV1Flush) -> None:
+    async def send_flush(self, message: SpeakV1Flush) -> None:
         """
         Send a message to the websocket connection.
         The message will be sent as a SpeakV1Flush.
         """
         await self._send_model(message)
 
-    async def send_speak_v_1_clear(self, message: SpeakV1Clear) -> None:
+    async def send_clear(self, message: SpeakV1Clear) -> None:
         """
         Send a message to the websocket connection.
         The message will be sent as a SpeakV1Clear.
         """
         await self._send_model(message)
 
-    async def send_speak_v_1_close(self, message: SpeakV1Close) -> None:
+    async def send_close(self, message: SpeakV1Close) -> None:
         """
         Send a message to the websocket connection.
         The message will be sent as a SpeakV1Close.
@@ -136,28 +136,28 @@ class V1SocketClient(EventEmitterMixin):
         finally:
             self._emit(EventType.CLOSE, None)
 
-    def send_speak_v_1_text(self, message: SpeakV1Text) -> None:
+    def send_text(self, message: SpeakV1Text) -> None:
         """
         Send a message to the websocket connection.
         The message will be sent as a SpeakV1Text.
         """
         self._send_model(message)
 
-    def send_speak_v_1_flush(self, message: SpeakV1Flush) -> None:
+    def send_flush(self, message: SpeakV1Flush) -> None:
         """
         Send a message to the websocket connection.
         The message will be sent as a SpeakV1Flush.
         """
         self._send_model(message)
 
-    def send_speak_v_1_clear(self, message: SpeakV1Clear) -> None:
+    def send_clear(self, message: SpeakV1Clear) -> None:
         """
         Send a message to the websocket connection.
         The message will be sent as a SpeakV1Clear.
         """
         self._send_model(message)
 
-    def send_speak_v_1_close(self, message: SpeakV1Close) -> None:
+    def send_close(self, message: SpeakV1Close) -> None:
         """
         Send a message to the websocket connection.
         The message will be sent as a SpeakV1Close.
