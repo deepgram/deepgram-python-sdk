@@ -50,7 +50,7 @@ V1SocketClientResponse = typing.Union[
     AgentV1AgentAudioDone,
     AgentV1Error,
     AgentV1Warning,
-    str,
+    bytes,
 ]
 
 
@@ -61,7 +61,10 @@ class AsyncV1SocketClient(EventEmitterMixin):
 
     async def __aiter__(self):
         async for message in self._websocket:
-            yield parse_obj_as(V1SocketClientResponse, json.loads(message))  # type: ignore
+            if isinstance(message, bytes):
+                yield message
+            else:
+                yield parse_obj_as(V1SocketClientResponse, json.loads(message))  # type: ignore
 
     async def start_listening(self):
         """
@@ -76,9 +79,12 @@ class AsyncV1SocketClient(EventEmitterMixin):
         await self._emit_async(EventType.OPEN, None)
         try:
             async for raw_message in self._websocket:
-                json_data = json.loads(raw_message)
-                parsed = parse_obj_as(V1SocketClientResponse, json_data)  # type: ignore
-                await self._emit_async(EventType.MESSAGE, parsed)
+                if isinstance(raw_message, bytes):
+                    await self._emit_async(EventType.MESSAGE, raw_message)
+                else:
+                    json_data = json.loads(raw_message)
+                    parsed = parse_obj_as(V1SocketClientResponse, json_data)  # type: ignore
+                    await self._emit_async(EventType.MESSAGE, parsed)
         except (websockets.WebSocketException, JSONDecodeError) as exc:
             await self._emit_async(EventType.ERROR, exc)
         finally:
@@ -119,32 +125,34 @@ class AsyncV1SocketClient(EventEmitterMixin):
         """
         await self._send_model(message)
 
-    async def on_function_call_response(self, message: AgentV1KeepAlive) -> None:
+    async def send_keep_alive(self, message: AgentV1KeepAlive) -> None:
         """
         Send a message to the websocket connection.
         The message will be sent as a AgentV1KeepAlive.
         """
         await self._send_model(message)
 
-    async def send_keep_alive(self, message: AgentV1UpdatePrompt) -> None:
+    async def send_update_prompt(self, message: AgentV1UpdatePrompt) -> None:
         """
         Send a message to the websocket connection.
         The message will be sent as a AgentV1UpdatePrompt.
         """
         await self._send_model(message)
 
-    async def send_update_prompt(self, message: str) -> None:
+    async def send_media(self, message: bytes) -> None:
         """
         Send a message to the websocket connection.
-        The message will be sent as a str.
+        The message will be sent as bytes.
         """
-        await self._send_model(message)
+        await self._send(message)
 
     async def recv(self) -> V1SocketClientResponse:
         """
         Receive a message from the websocket connection.
         """
         data = await self._websocket.recv()
+        if isinstance(data, bytes):
+            return data  # Binary audio data
         json_data = json.loads(data)
         return parse_obj_as(V1SocketClientResponse, json_data)  # type: ignore
 
@@ -170,7 +178,10 @@ class V1SocketClient(EventEmitterMixin):
 
     def __iter__(self):
         for message in self._websocket:
-            yield parse_obj_as(V1SocketClientResponse, json.loads(message))  # type: ignore
+            if isinstance(message, bytes):
+                yield message
+            else:
+                yield parse_obj_as(V1SocketClientResponse, json.loads(message))  # type: ignore
 
     def start_listening(self):
         """
@@ -185,9 +196,12 @@ class V1SocketClient(EventEmitterMixin):
         self._emit(EventType.OPEN, None)
         try:
             for raw_message in self._websocket:
-                json_data = json.loads(raw_message)
-                parsed = parse_obj_as(V1SocketClientResponse, json_data)  # type: ignore
-                self._emit(EventType.MESSAGE, parsed)
+                if isinstance(raw_message, bytes):
+                    self._emit(EventType.MESSAGE, raw_message)
+                else:
+                    json_data = json.loads(raw_message)
+                    parsed = parse_obj_as(V1SocketClientResponse, json_data)  # type: ignore
+                    self._emit(EventType.MESSAGE, parsed)
         except (websockets.WebSocketException, JSONDecodeError) as exc:
             self._emit(EventType.ERROR, exc)
         finally:
@@ -228,32 +242,34 @@ class V1SocketClient(EventEmitterMixin):
         """
         self._send_model(message)
 
-    def on_function_call_response(self, message: AgentV1KeepAlive) -> None:
+    def send_keep_alive(self, message: AgentV1KeepAlive) -> None:
         """
         Send a message to the websocket connection.
         The message will be sent as a AgentV1KeepAlive.
         """
         self._send_model(message)
 
-    def send_keep_alive(self, message: AgentV1UpdatePrompt) -> None:
+    def send_update_prompt(self, message: AgentV1UpdatePrompt) -> None:
         """
         Send a message to the websocket connection.
         The message will be sent as a AgentV1UpdatePrompt.
         """
         self._send_model(message)
 
-    def send_update_prompt(self, message: str) -> None:
+    def send_media(self, message: bytes) -> None:
         """
         Send a message to the websocket connection.
-        The message will be sent as a str.
+        The message will be sent as bytes.
         """
-        self._send_model(message)
+        self._send(message)
 
     def recv(self) -> V1SocketClientResponse:
         """
         Receive a message from the websocket connection.
         """
         data = self._websocket.recv()
+        if isinstance(data, bytes):
+            return data  # Binary audio data
         json_data = json.loads(data)
         return parse_obj_as(V1SocketClientResponse, json_data)  # type: ignore
 
