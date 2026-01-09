@@ -202,7 +202,7 @@ class TestAddPronunciation:
     def test_whole_word_only(self):
         """Test that replacement only affects whole words"""
         text = "The therapist prescribed therapy."
-        result = add_pronunciation(text, "the", "ðiː")
+        result = add_pronunciation(text, "The", "ðiː")
         
         # Should only replace "The", not "the" in "therapist" or "therapy"
         assert result.count('"word"') == 1
