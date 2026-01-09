@@ -229,10 +229,6 @@ def ssml_to_deepgram(ssml_text: str) -> str:
     # Strip leading/trailing whitespace
     ssml_text = ssml_text.strip()
 
-    # Wrap in <root> tag if not already wrapped (for parsing)
-    if not ssml_text.startswith("<"):
-        return ssml_text
-
     # If wrapped in <speak> tags, extract content
     speak_pattern = r"<speak[^>]*>(.*?)</speak>"
     speak_match = re.search(speak_pattern, ssml_text, re.DOTALL)
@@ -321,6 +317,9 @@ def validate_pause(duration_ms: int) -> Tuple[bool, str]:
     Returns:
         Tuple of (is_valid, error_message)
     """
+    if not isinstance(duration_ms, int):
+        return False, "Pause duration must be an integer"
+
     if duration_ms < 500:
         return False, "Pause duration must be at least 500ms"
 
