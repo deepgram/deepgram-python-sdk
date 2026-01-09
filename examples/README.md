@@ -26,6 +26,8 @@ This directory contains comprehensive examples demonstrating how to use the Deep
 
 - **10-text-to-speech-single.py** - Single request TTS
 - **11-text-to-speech-streaming.py** - Streaming TTS via WebSocket
+- **25-text-builder-demo.py** - TextBuilder demo (no API key required)
+- **25-text-builder-helper.py** - TextBuilder with live TTS generation
 
 ### Text Intelligence
 
