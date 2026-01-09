@@ -104,3 +104,6 @@ src/deepgram/speak/v1/socket_client.py
 .github
 docs
 examples
+
+# Ignore the ignores
+.gitignore
