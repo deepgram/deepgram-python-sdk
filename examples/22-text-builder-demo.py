@@ -274,8 +274,8 @@ def main():
     print("\n" + "=" * 70)
     print("  Demo Complete!")
     print("=" * 70)
-    print("\n  For live TTS generation, see: examples/25-text-builder-helper.py")
-    print("  For documentation, see: docs/TextBuilder-Guide.md")
+    print("\n  REST API generation: examples/23-text-builder-helper.py")
+    print("  Streaming TTS: examples/24-text-builder-streaming.py")
     print("=" * 70 + "\n")
 
 

@@ -1,56 +1,57 @@
 # Deepgram Python SDK Examples
 
-This directory contains comprehensive examples demonstrating how to use the Deepgram Python SDK. These examples cover all major use cases and demonstrate production-ready patterns.
+This directory contains comprehensive examples demonstrating how to use the Deepgram Python SDK. Examples are organized by feature area, with each section starting at a multiple of 10.
 
 ## Examples Overview
 
-### Authentication
+### 01-09: Authentication
 
 - **01-authentication-api-key.py** - API key authentication
 - **02-authentication-access-token.py** - Access token authentication
 
-### Transcription
+### 10-19: Transcription (Listen)
 
-- **04-transcription-prerecorded-url.py** - Transcribe audio from URL
-- **05-transcription-prerecorded-file.py** - Transcribe audio from local file
-- **06-transcription-prerecorded-callback.py** - Async transcription with callbacks
-- **07-transcription-live-websocket.py** - Live transcription via WebSocket (Listen V1)
-- **22-transcription-advanced-options.py** - Advanced transcription options
-- **26-transcription-live-websocket-v2.py** - Live transcription via WebSocket (Listen V2)
+- **10-transcription-prerecorded-url.py** - Transcribe audio from URL
+- **11-transcription-prerecorded-file.py** - Transcribe audio from local file
+- **12-transcription-prerecorded-callback.py** - Async transcription with callbacks
+- **13-transcription-live-websocket.py** - Live transcription via WebSocket (Listen V1)
+- **14-transcription-live-websocket-v2.py** - Live transcription via WebSocket (Listen V2)
+- **15-transcription-advanced-options.py** - Advanced transcription options
 
-### Voice Agent
+### 20-29: Text-to-Speech (Speak)
 
-- **09-voice-agent.py** - Voice Agent configuration and usage
+- **20-text-to-speech-single.py** - Single request TTS (REST API)
+- **21-text-to-speech-streaming.py** - Streaming TTS via WebSocket
+- **22-text-builder-demo.py** - TextBuilder demo (no API key required)
+- **23-text-builder-helper.py** - TextBuilder with REST API generation
+- **24-text-builder-streaming.py** - TextBuilder with streaming TTS (WebSocket)
 
-### Text-to-Speech
+### 30-39: Voice Agent
 
-- **10-text-to-speech-single.py** - Single request TTS
-- **11-text-to-speech-streaming.py** - Streaming TTS via WebSocket
-- **25-text-builder-demo.py** - TextBuilder demo (no API key required)
-- **25-text-builder-helper.py** - TextBuilder with live TTS generation
+- **30-voice-agent.py** - Voice Agent configuration and usage
 
-### Text Intelligence
+### 40-49: Text Intelligence (Read)
 
-- **12-text-intelligence.py** - Text analysis using AI features
+- **40-text-intelligence.py** - Text analysis using AI features
 
-### Management API
+### 50-59: Management API
 
-- **13-management-projects.py** - Project management (list, get, update, delete)
-- **14-management-keys.py** - API key management (list, get, create, delete)
-- **15-management-members.py** - Member management (list, remove, scopes)
-- **16-management-invites.py** - Invitation management (list, send, delete, leave)
-- **17-management-usage.py** - Usage statistics and request information
-- **18-management-billing.py** - Billing and balance information
-- **19-management-models.py** - Model information
+- **50-management-projects.py** - Project management (list, get, update, delete)
+- **51-management-keys.py** - API key management (list, get, create, delete)
+- **52-management-members.py** - Member management (list, remove, scopes)
+- **53-management-invites.py** - Invitation management (list, send, delete, leave)
+- **54-management-usage.py** - Usage statistics and request information
+- **55-management-billing.py** - Billing and balance information
+- **56-management-models.py** - Model information
 
-### On-Premises
+### 60-69: On-Premises
 
-- **20-onprem-credentials.py** - On-premises credentials management
+- **60-onprem-credentials.py** - On-premises credentials management
 
-### Configuration & Advanced
+### 70-79: Configuration & Advanced
 
-- **23-request-options.py** - Request options including additional query parameters
-- **24-error-handling.py** - Error handling patterns
+- **70-request-options.py** - Request options including additional query parameters
+- **71-error-handling.py** - Error handling patterns
 
 ## Usage
 

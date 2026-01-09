@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """
-Example: Using TextBuilder Helper for TTS with Pronunciation and Pause Controls
+Example: TextBuilder with REST API TTS
 
-This example demonstrates how to use the TextBuilder helper class to construct
-TTS text with custom pronunciations and pauses for Deepgram's Text-to-Speech API.
+This example demonstrates using TextBuilder with the REST API to generate
+complete audio files with custom pronunciations and pauses.
 """
 
 import os
