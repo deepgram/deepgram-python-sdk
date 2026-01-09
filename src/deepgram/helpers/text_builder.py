@@ -240,8 +240,6 @@ def ssml_to_deepgram(ssml_text: str) -> str:
         ssml_text = speak_match.group(1)
 
     # Process the SSML text
-    result = []
-
     # Parse XML fragments manually to handle mixed content
     # Use regex to find and replace SSML elements
 
