@@ -57,7 +57,7 @@ class AsyncV1SocketClient(EventEmitterMixin):
     async def send_media(self, message: bytes) -> None:
         """
         Send a message to the websocket connection.
-        The message will be sent as bytes.
+        The message will be sent as a bytes.
         """
         await self._send(message)
 
@@ -138,7 +138,7 @@ class V1SocketClient(EventEmitterMixin):
     def send_media(self, message: bytes) -> None:
         """
         Send a message to the websocket connection.
-        The message will be sent as bytes.
+        The message will be sent as a bytes.
         """
         self._send(message)
 

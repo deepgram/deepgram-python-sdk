@@ -13,5 +13,5 @@
     "should_generate_websocket_clients": true,
     "enable_wire_tests": true
   },
-  "sdkVersion": "6.0.0-beta.3"
+  "sdkVersion": "6.0.0-beta.4"
 }

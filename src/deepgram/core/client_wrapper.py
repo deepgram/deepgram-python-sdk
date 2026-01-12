@@ -23,10 +23,10 @@ class BaseClientWrapper:
 
     def get_headers(self) -> typing.Dict[str, str]:
         headers: typing.Dict[str, str] = {
-            "User-Agent": "deepgram-sdk/6.0.0-beta.3",
+            "User-Agent": "deepgram-sdk/6.0.0-beta.4",
             "X-Fern-Language": "Python",
             "X-Fern-SDK-Name": "deepgram-sdk",
-            "X-Fern-SDK-Version": "6.0.0-beta.3",
+            "X-Fern-SDK-Version": "6.0.0-beta.4",
             **(self.get_custom_headers() or {}),
         }
         headers["Authorization"] = f"Token {self.api_key}"

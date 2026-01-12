@@ -61,10 +61,7 @@ class AsyncV1SocketClient(EventEmitterMixin):
 
     async def __aiter__(self):
         async for message in self._websocket:
-            if isinstance(message, bytes):
-                yield message
-            else:
-                yield parse_obj_as(V1SocketClientResponse, json.loads(message))  # type: ignore
+            yield parse_obj_as(V1SocketClientResponse, json.loads(message))  # type: ignore
 
     async def start_listening(self):
         """
@@ -79,12 +76,9 @@ class AsyncV1SocketClient(EventEmitterMixin):
         await self._emit_async(EventType.OPEN, None)
         try:
             async for raw_message in self._websocket:
-                if isinstance(raw_message, bytes):
-                    await self._emit_async(EventType.MESSAGE, raw_message)
-                else:
-                    json_data = json.loads(raw_message)
-                    parsed = parse_obj_as(V1SocketClientResponse, json_data)  # type: ignore
-                    await self._emit_async(EventType.MESSAGE, parsed)
+                json_data = json.loads(raw_message)
+                parsed = parse_obj_as(V1SocketClientResponse, json_data)  # type: ignore
+                await self._emit_async(EventType.MESSAGE, parsed)
         except (websockets.WebSocketException, JSONDecodeError) as exc:
             await self._emit_async(EventType.ERROR, exc)
         finally:
@@ -142,7 +136,7 @@ class AsyncV1SocketClient(EventEmitterMixin):
     async def send_media(self, message: bytes) -> None:
         """
         Send a message to the websocket connection.
-        The message will be sent as bytes.
+        The message will be sent as a bytes.
         """
         await self._send(message)
 
@@ -151,8 +145,6 @@ class AsyncV1SocketClient(EventEmitterMixin):
         Receive a message from the websocket connection.
         """
         data = await self._websocket.recv()
-        if isinstance(data, bytes):
-            return data  # Binary audio data
         json_data = json.loads(data)
         return parse_obj_as(V1SocketClientResponse, json_data)  # type: ignore
 
@@ -178,10 +170,7 @@ class V1SocketClient(EventEmitterMixin):
 
     def __iter__(self):
         for message in self._websocket:
-            if isinstance(message, bytes):
-                yield message
-            else:
-                yield parse_obj_as(V1SocketClientResponse, json.loads(message))  # type: ignore
+            yield parse_obj_as(V1SocketClientResponse, json.loads(message))  # type: ignore
 
     def start_listening(self):
         """
@@ -196,12 +185,9 @@ class V1SocketClient(EventEmitterMixin):
         self._emit(EventType.OPEN, None)
         try:
             for raw_message in self._websocket:
-                if isinstance(raw_message, bytes):
-                    self._emit(EventType.MESSAGE, raw_message)
-                else:
-                    json_data = json.loads(raw_message)
-                    parsed = parse_obj_as(V1SocketClientResponse, json_data)  # type: ignore
-                    self._emit(EventType.MESSAGE, parsed)
+                json_data = json.loads(raw_message)
+                parsed = parse_obj_as(V1SocketClientResponse, json_data)  # type: ignore
+                self._emit(EventType.MESSAGE, parsed)
         except (websockets.WebSocketException, JSONDecodeError) as exc:
             self._emit(EventType.ERROR, exc)
         finally:
@@ -259,7 +245,7 @@ class V1SocketClient(EventEmitterMixin):
     def send_media(self, message: bytes) -> None:
         """
         Send a message to the websocket connection.
-        The message will be sent as bytes.
+        The message will be sent as a bytes.
         """
         self._send(message)
 
@@ -268,8 +254,6 @@ class V1SocketClient(EventEmitterMixin):
         Receive a message from the websocket connection.
         """
         data = self._websocket.recv()
-        if isinstance(data, bytes):
-            return data  # Binary audio data
         json_data = json.loads(data)
         return parse_obj_as(V1SocketClientResponse, json_data)  # type: ignore
 
