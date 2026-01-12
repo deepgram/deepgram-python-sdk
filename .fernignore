@@ -41,65 +41,6 @@ tests/wire/__init__.py
 # Manual standalone tests
 tests/manual
 
-# WebSocket socket client files with manual fixes for binary audio data support:
-# The generator incorrectly types media methods as `str` and uses `_send_model()` which calls
-# `.dict()` on the input, causing runtime errors. Additionally, response types and recv/iterator
-# methods don't handle binary audio data properly. These files are manually fixed to:
-# 1. Change parameter type from `str` to `bytes` for `send_media()` methods
-# 2. Change from `_send_model()` to `_send()` to properly handle binary data
-# 3. Change response union types from `str` to `bytes` where binary audio is received
-# 4. Update recv(), __iter__(), __aiter__(), and start_listening() methods to handle both
-#    binary bytes and JSON text messages
-#
-# src/deepgram/listen/v1/socket_client.py:
-# - Line 57: Changed `async def send_media(self, message: str)` to `message: bytes`
-# - Line 60: Updated docstring from "sent as a str" to "sent as bytes"
-# - Line 62: Changed `await self._send_model(message)` to `await self._send(message)`
-# - Line 138: Changed `def send_media(self, message: str)` to `message: bytes`
-# - Line 141: Updated docstring from "sent as a str" to "sent as bytes"
-# - Line 143: Changed `self._send_model(message)` to `self._send(message)`
-# Note: Listen V1 only sends binary audio, receives JSON transcriptions (no binary response handling needed)
-#
-# src/deepgram/listen/v2/socket_client.py:
-# - Line 54: Changed `async def send_media(self, message: str)` to `message: bytes`
-# - Line 57: Updated docstring from "sent as a str" to "sent as bytes"
-# - Line 59: Changed `await self._send_model(message)` to `await self._send(message)`
-# - Line 121: Changed `def send_media(self, message: str)` to `message: bytes`
-# - Line 124: Updated docstring from "sent as a str" to "sent as bytes"
-# - Line 126: Changed `self._send_model(message)` to `self._send(message)`
-# Note: Listen V2 only sends binary audio, receives JSON transcriptions (no binary response handling needed)
-#
-# src/deepgram/agent/v1/socket_client.py:
-# - Line 53: Changed response union from `str` to `bytes` for binary audio responses
-# - Line 62-67: Updated `__aiter__()` to check `isinstance(message, bytes)` before JSON parsing
-# - Line 81-87: Updated `start_listening()` to handle binary messages in async loop
-# - Line 142-147: Added `async def send_media(self, message: bytes)` method (was missing from generator)
-# - Line 149-157: Updated `recv()` to check `isinstance(data, bytes)` before JSON parsing
-# - Line 179-184: Updated `__iter__()` to check `isinstance(message, bytes)` before JSON parsing
-# - Line 198-204: Updated `start_listening()` to handle binary messages in sync loop
-# - Line 259-264: Added `def send_media(self, message: bytes)` method (was missing from generator)
-# - Line 266-274: Updated `recv()` to check `isinstance(data, bytes)` before JSON parsing
-# Reason: Agent API sends binary audio input and receives binary audio output + JSON events
-#
-# src/deepgram/speak/v1/socket_client.py:
-# - Line 25: Changed response union from `str` to `bytes` for binary audio responses
-# - Line 33-38: Updated `__aiter__()` to check `isinstance(message, bytes)` before JSON parsing
-# - Line 52-57: Updated `start_listening()` to handle binary messages in async loop
-# - Line 90-94: Updated `recv()` to check `isinstance(data, bytes)` before JSON parsing
-# - Line 115-120: Updated `__iter__()` to check `isinstance(message, bytes)` before JSON parsing
-# - Line 135-141: Updated `start_listening()` to handle binary messages in sync loop
-# - Line 177-181: Updated `recv()` to check `isinstance(data, bytes)` before JSON parsing
-# Reason: Speak API sends JSON text commands and receives binary audio output + JSON metadata
-#
-# General reason: Audio data must be sent/received as binary bytes, not strings. The `_send_model()`
-# method expects Pydantic models and calls `.dict()` which fails on bytes. The `_send()` method
-# properly handles bytes by passing them directly to the websocket connection. Response handling
-# must distinguish between binary audio data and JSON text messages.
-src/deepgram/listen/v1/socket_client.py
-src/deepgram/listen/v2/socket_client.py
-src/deepgram/agent/v1/socket_client.py
-src/deepgram/speak/v1/socket_client.py
-
 # Folders to ignore
 .github
 docs
