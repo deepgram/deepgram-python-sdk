@@ -1,6 +1,6 @@
 # Reference
 ## Agent V1 Settings Think Models
-<details><summary><code>client.agent.v1.settings.think.models.<a href="src/deepgram/agent/v1/settings/think/models/client.py">list</a>()</code></summary>
+<details><summary><code>client.agent.v1.settings.think.models.<a href="src/deepgram/agent/v1/settings/think/models/client.py">list</a>() -> AsyncHttpResponse[AgentThinkModelsV1Response]</code></summary>
 <dl>
 <dd>
 
@@ -61,7 +61,7 @@ client.agent.v1.settings.think.models.list()
 </details>
 
 ## Auth V1 Tokens
-<details><summary><code>client.auth.v1.tokens.<a href="src/deepgram/auth/v1/tokens/client.py">grant</a>(...)</code></summary>
+<details><summary><code>client.auth.v1.tokens.<a href="src/deepgram/auth/v1/tokens/client.py">grant</a>(...) -> AsyncHttpResponse[GrantV1Response]</code></summary>
 <dl>
 <dd>
 
@@ -130,7 +130,7 @@ client.auth.v1.tokens.grant()
 </details>
 
 ## Listen V1 Media
-<details><summary><code>client.listen.v1.media.<a href="src/deepgram/listen/v1/media/client.py">transcribe_url</a>(...)</code></summary>
+<details><summary><code>client.listen.v1.media.<a href="src/deepgram/listen/v1/media/client.py">transcribe_url</a>(...) -> AsyncHttpResponse[MediaTranscribeResponse]</code></summary>
 <dl>
 <dd>
 
@@ -163,6 +163,41 @@ client = DeepgramClient(
     api_key="YOUR_API_KEY",
 )
 client.listen.v1.media.transcribe_url(
+    callback="callback",
+    callback_method="POST",
+    extra="extra",
+    sentiment=True,
+    summarize="v2",
+    tag="tag",
+    topics=True,
+    custom_topic="custom_topic",
+    custom_topic_mode="extended",
+    intents=True,
+    custom_intent="custom_intent",
+    custom_intent_mode="extended",
+    detect_entities=True,
+    detect_language=True,
+    diarize=True,
+    dictation=True,
+    encoding="linear16",
+    filler_words=True,
+    keywords="keywords",
+    language="language",
+    measurements=True,
+    model="nova-3",
+    multichannel=True,
+    numerals=True,
+    paragraphs=True,
+    profanity_filter=True,
+    punctuate=True,
+    redact="redact",
+    replace="replace",
+    search="search",
+    smart_format=True,
+    utterances=True,
+    utt_split=1.1,
+    version="latest",
+    mip_opt_out=True,
     url="https://dpgr.am/spacewalk.wav",
 )
 
@@ -488,7 +523,7 @@ client.listen.v1.media.transcribe_url(
 </dl>
 </details>
 
-<details><summary><code>client.listen.v1.media.<a href="src/deepgram/listen/v1/media/client.py">transcribe_file</a>(...)</code></summary>
+<details><summary><code>client.listen.v1.media.<a href="src/deepgram/listen/v1/media/client.py">transcribe_file</a>(...) -> AsyncHttpResponse[MediaTranscribeResponse]</code></summary>
 <dl>
 <dd>
 
@@ -845,7 +880,7 @@ client.listen.v1.media.transcribe_file()
 </details>
 
 ## Manage V1 Models
-<details><summary><code>client.manage.v1.models.<a href="src/deepgram/manage/v1/models/client.py">list</a>(...)</code></summary>
+<details><summary><code>client.manage.v1.models.<a href="src/deepgram/manage/v1/models/client.py">list</a>(...) -> AsyncHttpResponse[ListModelsV1Response]</code></summary>
 <dl>
 <dd>
 
@@ -877,7 +912,9 @@ from deepgram import DeepgramClient
 client = DeepgramClient(
     api_key="YOUR_API_KEY",
 )
-client.manage.v1.models.list()
+client.manage.v1.models.list(
+    include_outdated=True,
+)
 
 ```
 </dd>
@@ -913,7 +950,7 @@ client.manage.v1.models.list()
 </dl>
 </details>
 
-<details><summary><code>client.manage.v1.models.<a href="src/deepgram/manage/v1/models/client.py">get</a>(...)</code></summary>
+<details><summary><code>client.manage.v1.models.<a href="src/deepgram/manage/v1/models/client.py">get</a>(...) -> AsyncHttpResponse[GetModelV1Response]</code></summary>
 <dl>
 <dd>
 
@@ -984,7 +1021,7 @@ client.manage.v1.models.get(
 </details>
 
 ## Manage V1 Projects
-<details><summary><code>client.manage.v1.projects.<a href="src/deepgram/manage/v1/projects/client.py">list</a>()</code></summary>
+<details><summary><code>client.manage.v1.projects.<a href="src/deepgram/manage/v1/projects/client.py">list</a>() -> AsyncHttpResponse[ListProjectsV1Response]</code></summary>
 <dl>
 <dd>
 
@@ -1044,7 +1081,7 @@ client.manage.v1.projects.list()
 </dl>
 </details>
 
-<details><summary><code>client.manage.v1.projects.<a href="src/deepgram/manage/v1/projects/client.py">get</a>(...)</code></summary>
+<details><summary><code>client.manage.v1.projects.<a href="src/deepgram/manage/v1/projects/client.py">get</a>(...) -> AsyncHttpResponse[GetProjectV1Response]</code></summary>
 <dl>
 <dd>
 
@@ -1078,6 +1115,8 @@ client = DeepgramClient(
 )
 client.manage.v1.projects.get(
     project_id="123456-7890-1234-5678-901234",
+    limit=1.1,
+    page=1.1,
 )
 
 ```
@@ -1130,7 +1169,7 @@ client.manage.v1.projects.get(
 </dl>
 </details>
 
-<details><summary><code>client.manage.v1.projects.<a href="src/deepgram/manage/v1/projects/client.py">delete</a>(...)</code></summary>
+<details><summary><code>client.manage.v1.projects.<a href="src/deepgram/manage/v1/projects/client.py">delete</a>(...) -> AsyncHttpResponse[DeleteProjectV1Response]</code></summary>
 <dl>
 <dd>
 
@@ -1200,7 +1239,7 @@ client.manage.v1.projects.delete(
 </dl>
 </details>
 
-<details><summary><code>client.manage.v1.projects.<a href="src/deepgram/manage/v1/projects/client.py">update</a>(...)</code></summary>
+<details><summary><code>client.manage.v1.projects.<a href="src/deepgram/manage/v1/projects/client.py">update</a>(...) -> AsyncHttpResponse[UpdateProjectV1Response]</code></summary>
 <dl>
 <dd>
 
@@ -1278,7 +1317,7 @@ client.manage.v1.projects.update(
 </dl>
 </details>
 
-<details><summary><code>client.manage.v1.projects.<a href="src/deepgram/manage/v1/projects/client.py">leave</a>(...)</code></summary>
+<details><summary><code>client.manage.v1.projects.<a href="src/deepgram/manage/v1/projects/client.py">leave</a>(...) -> AsyncHttpResponse[LeaveProjectV1Response]</code></summary>
 <dl>
 <dd>
 
@@ -1349,7 +1388,7 @@ client.manage.v1.projects.leave(
 </details>
 
 ## Manage V1 Projects Keys
-<details><summary><code>client.manage.v1.projects.keys.<a href="src/deepgram/manage/v1/projects/keys/client.py">list</a>(...)</code></summary>
+<details><summary><code>client.manage.v1.projects.keys.<a href="src/deepgram/manage/v1/projects/keys/client.py">list</a>(...) -> AsyncHttpResponse[ListProjectKeysV1Response]</code></summary>
 <dl>
 <dd>
 
@@ -1383,6 +1422,7 @@ client = DeepgramClient(
 )
 client.manage.v1.projects.keys.list(
     project_id="123456-7890-1234-5678-901234",
+    status="active",
 )
 
 ```
@@ -1427,7 +1467,7 @@ client.manage.v1.projects.keys.list(
 </dl>
 </details>
 
-<details><summary><code>client.manage.v1.projects.keys.<a href="src/deepgram/manage/v1/projects/keys/client.py">create</a>(...)</code></summary>
+<details><summary><code>client.manage.v1.projects.keys.<a href="src/deepgram/manage/v1/projects/keys/client.py">create</a>(...) -> AsyncHttpResponse[CreateKeyV1Response]</code></summary>
 <dl>
 <dd>
 
@@ -1506,7 +1546,7 @@ client.manage.v1.projects.keys.create(
 </dl>
 </details>
 
-<details><summary><code>client.manage.v1.projects.keys.<a href="src/deepgram/manage/v1/projects/keys/client.py">get</a>(...)</code></summary>
+<details><summary><code>client.manage.v1.projects.keys.<a href="src/deepgram/manage/v1/projects/keys/client.py">get</a>(...) -> AsyncHttpResponse[GetProjectKeyV1Response]</code></summary>
 <dl>
 <dd>
 
@@ -1585,7 +1625,7 @@ client.manage.v1.projects.keys.get(
 </dl>
 </details>
 
-<details><summary><code>client.manage.v1.projects.keys.<a href="src/deepgram/manage/v1/projects/keys/client.py">delete</a>(...)</code></summary>
+<details><summary><code>client.manage.v1.projects.keys.<a href="src/deepgram/manage/v1/projects/keys/client.py">delete</a>(...) -> AsyncHttpResponse[DeleteProjectKeyV1Response]</code></summary>
 <dl>
 <dd>
 
@@ -1665,7 +1705,7 @@ client.manage.v1.projects.keys.delete(
 </details>
 
 ## Manage V1 Projects Members
-<details><summary><code>client.manage.v1.projects.members.<a href="src/deepgram/manage/v1/projects/members/client.py">list</a>(...)</code></summary>
+<details><summary><code>client.manage.v1.projects.members.<a href="src/deepgram/manage/v1/projects/members/client.py">list</a>(...) -> AsyncHttpResponse[ListProjectMembersV1Response]</code></summary>
 <dl>
 <dd>
 
@@ -1735,7 +1775,7 @@ client.manage.v1.projects.members.list(
 </dl>
 </details>
 
-<details><summary><code>client.manage.v1.projects.members.<a href="src/deepgram/manage/v1/projects/members/client.py">delete</a>(...)</code></summary>
+<details><summary><code>client.manage.v1.projects.members.<a href="src/deepgram/manage/v1/projects/members/client.py">delete</a>(...) -> AsyncHttpResponse[DeleteProjectMemberV1Response]</code></summary>
 <dl>
 <dd>
 
@@ -1815,7 +1855,7 @@ client.manage.v1.projects.members.delete(
 </details>
 
 ## Manage V1 Projects Models
-<details><summary><code>client.manage.v1.projects.models.<a href="src/deepgram/manage/v1/projects/models/client.py">list</a>(...)</code></summary>
+<details><summary><code>client.manage.v1.projects.models.<a href="src/deepgram/manage/v1/projects/models/client.py">list</a>(...) -> AsyncHttpResponse[ListModelsV1Response]</code></summary>
 <dl>
 <dd>
 
@@ -1849,6 +1889,7 @@ client = DeepgramClient(
 )
 client.manage.v1.projects.models.list(
     project_id="123456-7890-1234-5678-901234",
+    include_outdated=True,
 )
 
 ```
@@ -1893,7 +1934,7 @@ client.manage.v1.projects.models.list(
 </dl>
 </details>
 
-<details><summary><code>client.manage.v1.projects.models.<a href="src/deepgram/manage/v1/projects/models/client.py">get</a>(...)</code></summary>
+<details><summary><code>client.manage.v1.projects.models.<a href="src/deepgram/manage/v1/projects/models/client.py">get</a>(...) -> AsyncHttpResponse[GetModelV1Response]</code></summary>
 <dl>
 <dd>
 
@@ -1973,7 +2014,7 @@ client.manage.v1.projects.models.get(
 </details>
 
 ## Manage V1 Projects Requests
-<details><summary><code>client.manage.v1.projects.requests.<a href="src/deepgram/manage/v1/projects/requests/client.py">list</a>(...)</code></summary>
+<details><summary><code>client.manage.v1.projects.requests.<a href="src/deepgram/manage/v1/projects/requests/client.py">list</a>(...) -> AsyncHttpResponse[ListProjectRequestsV1Response]</code></summary>
 <dl>
 <dd>
 
@@ -2000,6 +2041,8 @@ Generates a list of requests for a specific project
 <dd>
 
 ```python
+import datetime
+
 from deepgram import DeepgramClient
 
 client = DeepgramClient(
@@ -2007,8 +2050,20 @@ client = DeepgramClient(
 )
 client.manage.v1.projects.requests.list(
     project_id="123456-7890-1234-5678-901234",
+    start=datetime.datetime.fromisoformat(
+        "2024-01-15 09:30:00+00:00",
+    ),
+    end=datetime.datetime.fromisoformat(
+        "2024-01-15 09:30:00+00:00",
+    ),
+    limit=1.1,
+    page=1.1,
     accessor="12345678-1234-1234-1234-123456789012",
     request_id="12345678-1234-1234-1234-123456789012",
+    deployment="hosted",
+    endpoint="listen",
+    method="sync",
+    status="succeeded",
 )
 
 ```
@@ -2125,7 +2180,7 @@ client.manage.v1.projects.requests.list(
 </dl>
 </details>
 
-<details><summary><code>client.manage.v1.projects.requests.<a href="src/deepgram/manage/v1/projects/requests/client.py">get</a>(...)</code></summary>
+<details><summary><code>client.manage.v1.projects.requests.<a href="src/deepgram/manage/v1/projects/requests/client.py">get</a>(...) -> AsyncHttpResponse[GetProjectRequestV1Response]</code></summary>
 <dl>
 <dd>
 
@@ -2205,7 +2260,7 @@ client.manage.v1.projects.requests.get(
 </details>
 
 ## Manage V1 Projects Usage
-<details><summary><code>client.manage.v1.projects.usage.<a href="src/deepgram/manage/v1/projects/usage/client.py">get</a>(...)</code></summary>
+<details><summary><code>client.manage.v1.projects.usage.<a href="src/deepgram/manage/v1/projects/usage/client.py">get</a>(...) -> AsyncHttpResponse[UsageV1Response]</code></summary>
 <dl>
 <dd>
 
@@ -2239,10 +2294,50 @@ client = DeepgramClient(
 )
 client.manage.v1.projects.usage.get(
     project_id="123456-7890-1234-5678-901234",
+    start="start",
+    end="end",
     accessor="12345678-1234-1234-1234-123456789012",
+    alternatives=True,
+    callback_method=True,
+    callback=True,
+    channels=True,
+    custom_intent_mode=True,
+    custom_intent=True,
+    custom_topic_mode=True,
+    custom_topic=True,
+    deployment="hosted",
+    detect_entities=True,
+    detect_language=True,
+    diarize=True,
+    dictation=True,
+    encoding=True,
+    endpoint="listen",
+    extra=True,
+    filler_words=True,
+    intents=True,
+    keyterm=True,
+    keywords=True,
+    language=True,
+    measurements=True,
+    method="sync",
     model="6f548761-c9c0-429a-9315-11a1d28499c8",
+    multichannel=True,
+    numerals=True,
+    paragraphs=True,
+    profanity_filter=True,
+    punctuate=True,
+    redact=True,
+    replace=True,
     sample_rate=True,
+    search=True,
+    sentiment=True,
+    smart_format=True,
+    summarize=True,
     tag="tag1",
+    topics=True,
+    utt_split=True,
+    utterances=True,
+    version=True,
 )
 
 ```
@@ -2632,7 +2727,7 @@ client.manage.v1.projects.usage.get(
 </details>
 
 ## Manage V1 Projects Billing Balances
-<details><summary><code>client.manage.v1.projects.billing.balances.<a href="src/deepgram/manage/v1/projects/billing/balances/client.py">list</a>(...)</code></summary>
+<details><summary><code>client.manage.v1.projects.billing.balances.<a href="src/deepgram/manage/v1/projects/billing/balances/client.py">list</a>(...) -> AsyncHttpResponse[ListProjectBalancesV1Response]</code></summary>
 <dl>
 <dd>
 
@@ -2702,7 +2797,7 @@ client.manage.v1.projects.billing.balances.list(
 </dl>
 </details>
 
-<details><summary><code>client.manage.v1.projects.billing.balances.<a href="src/deepgram/manage/v1/projects/billing/balances/client.py">get</a>(...)</code></summary>
+<details><summary><code>client.manage.v1.projects.billing.balances.<a href="src/deepgram/manage/v1/projects/billing/balances/client.py">get</a>(...) -> AsyncHttpResponse[GetProjectBalanceV1Response]</code></summary>
 <dl>
 <dd>
 
@@ -2782,7 +2877,7 @@ client.manage.v1.projects.billing.balances.get(
 </details>
 
 ## Manage V1 Projects Billing Breakdown
-<details><summary><code>client.manage.v1.projects.billing.breakdown.<a href="src/deepgram/manage/v1/projects/billing/breakdown/client.py">list</a>(...)</code></summary>
+<details><summary><code>client.manage.v1.projects.billing.breakdown.<a href="src/deepgram/manage/v1/projects/billing/breakdown/client.py">list</a>(...) -> AsyncHttpResponse[BillingBreakdownV1Response]</code></summary>
 <dl>
 <dd>
 
@@ -2816,7 +2911,10 @@ client = DeepgramClient(
 )
 client.manage.v1.projects.billing.breakdown.list(
     project_id="123456-7890-1234-5678-901234",
+    start="start",
+    end="end",
     accessor="12345678-1234-1234-1234-123456789012",
+    deployment="hosted",
     tag="tag1",
     line_item="streaming::nova-3",
 )
@@ -2917,7 +3015,7 @@ client.manage.v1.projects.billing.breakdown.list(
 </details>
 
 ## Manage V1 Projects Billing Fields
-<details><summary><code>client.manage.v1.projects.billing.fields.<a href="src/deepgram/manage/v1/projects/billing/fields/client.py">list</a>(...)</code></summary>
+<details><summary><code>client.manage.v1.projects.billing.fields.<a href="src/deepgram/manage/v1/projects/billing/fields/client.py">list</a>(...) -> AsyncHttpResponse[ListBillingFieldsV1Response]</code></summary>
 <dl>
 <dd>
 
@@ -2951,6 +3049,8 @@ client = DeepgramClient(
 )
 client.manage.v1.projects.billing.fields.list(
     project_id="123456-7890-1234-5678-901234",
+    start="start",
+    end="end",
 )
 
 ```
@@ -3004,7 +3104,7 @@ client.manage.v1.projects.billing.fields.list(
 </details>
 
 ## Manage V1 Projects Billing Purchases
-<details><summary><code>client.manage.v1.projects.billing.purchases.<a href="src/deepgram/manage/v1/projects/billing/purchases/client.py">list</a>(...)</code></summary>
+<details><summary><code>client.manage.v1.projects.billing.purchases.<a href="src/deepgram/manage/v1/projects/billing/purchases/client.py">list</a>(...) -> AsyncHttpResponse[ListProjectPurchasesV1Response]</code></summary>
 <dl>
 <dd>
 
@@ -3038,6 +3138,7 @@ client = DeepgramClient(
 )
 client.manage.v1.projects.billing.purchases.list(
     project_id="123456-7890-1234-5678-901234",
+    limit=1.1,
 )
 
 ```
@@ -3083,7 +3184,7 @@ client.manage.v1.projects.billing.purchases.list(
 </details>
 
 ## Manage V1 Projects Members Invites
-<details><summary><code>client.manage.v1.projects.members.invites.<a href="src/deepgram/manage/v1/projects/members/invites/client.py">list</a>(...)</code></summary>
+<details><summary><code>client.manage.v1.projects.members.invites.<a href="src/deepgram/manage/v1/projects/members/invites/client.py">list</a>(...) -> AsyncHttpResponse[ListProjectInvitesV1Response]</code></summary>
 <dl>
 <dd>
 
@@ -3153,7 +3254,7 @@ client.manage.v1.projects.members.invites.list(
 </dl>
 </details>
 
-<details><summary><code>client.manage.v1.projects.members.invites.<a href="src/deepgram/manage/v1/projects/members/invites/client.py">create</a>(...)</code></summary>
+<details><summary><code>client.manage.v1.projects.members.invites.<a href="src/deepgram/manage/v1/projects/members/invites/client.py">create</a>(...) -> AsyncHttpResponse[CreateProjectInviteV1Response]</code></summary>
 <dl>
 <dd>
 
@@ -3241,7 +3342,7 @@ client.manage.v1.projects.members.invites.create(
 </dl>
 </details>
 
-<details><summary><code>client.manage.v1.projects.members.invites.<a href="src/deepgram/manage/v1/projects/members/invites/client.py">delete</a>(...)</code></summary>
+<details><summary><code>client.manage.v1.projects.members.invites.<a href="src/deepgram/manage/v1/projects/members/invites/client.py">delete</a>(...) -> AsyncHttpResponse[DeleteProjectInviteV1Response]</code></summary>
 <dl>
 <dd>
 
@@ -3321,7 +3422,7 @@ client.manage.v1.projects.members.invites.delete(
 </details>
 
 ## Manage V1 Projects Members Scopes
-<details><summary><code>client.manage.v1.projects.members.scopes.<a href="src/deepgram/manage/v1/projects/members/scopes/client.py">list</a>(...)</code></summary>
+<details><summary><code>client.manage.v1.projects.members.scopes.<a href="src/deepgram/manage/v1/projects/members/scopes/client.py">list</a>(...) -> AsyncHttpResponse[ListProjectMemberScopesV1Response]</code></summary>
 <dl>
 <dd>
 
@@ -3400,7 +3501,7 @@ client.manage.v1.projects.members.scopes.list(
 </dl>
 </details>
 
-<details><summary><code>client.manage.v1.projects.members.scopes.<a href="src/deepgram/manage/v1/projects/members/scopes/client.py">update</a>(...)</code></summary>
+<details><summary><code>client.manage.v1.projects.members.scopes.<a href="src/deepgram/manage/v1/projects/members/scopes/client.py">update</a>(...) -> AsyncHttpResponse[UpdateProjectMemberScopesV1Response]</code></summary>
 <dl>
 <dd>
 
@@ -3489,7 +3590,7 @@ client.manage.v1.projects.members.scopes.update(
 </details>
 
 ## Manage V1 Projects Usage Breakdown
-<details><summary><code>client.manage.v1.projects.usage.breakdown.<a href="src/deepgram/manage/v1/projects/usage/breakdown/client.py">get</a>(...)</code></summary>
+<details><summary><code>client.manage.v1.projects.usage.breakdown.<a href="src/deepgram/manage/v1/projects/usage/breakdown/client.py">get</a>(...) -> AsyncHttpResponse[UsageBreakdownV1Response]</code></summary>
 <dl>
 <dd>
 
@@ -3523,10 +3624,51 @@ client = DeepgramClient(
 )
 client.manage.v1.projects.usage.breakdown.get(
     project_id="123456-7890-1234-5678-901234",
+    start="start",
+    end="end",
+    grouping="accessor",
     accessor="12345678-1234-1234-1234-123456789012",
+    alternatives=True,
+    callback_method=True,
+    callback=True,
+    channels=True,
+    custom_intent_mode=True,
+    custom_intent=True,
+    custom_topic_mode=True,
+    custom_topic=True,
+    deployment="hosted",
+    detect_entities=True,
+    detect_language=True,
+    diarize=True,
+    dictation=True,
+    encoding=True,
+    endpoint="listen",
+    extra=True,
+    filler_words=True,
+    intents=True,
+    keyterm=True,
+    keywords=True,
+    language=True,
+    measurements=True,
+    method="sync",
     model="6f548761-c9c0-429a-9315-11a1d28499c8",
+    multichannel=True,
+    numerals=True,
+    paragraphs=True,
+    profanity_filter=True,
+    punctuate=True,
+    redact=True,
+    replace=True,
     sample_rate=True,
+    search=True,
+    sentiment=True,
+    smart_format=True,
+    summarize=True,
     tag="tag1",
+    topics=True,
+    utt_split=True,
+    utterances=True,
+    version=True,
 )
 
 ```
@@ -3924,7 +4066,7 @@ client.manage.v1.projects.usage.breakdown.get(
 </details>
 
 ## Manage V1 Projects Usage Fields
-<details><summary><code>client.manage.v1.projects.usage.fields.<a href="src/deepgram/manage/v1/projects/usage/fields/client.py">list</a>(...)</code></summary>
+<details><summary><code>client.manage.v1.projects.usage.fields.<a href="src/deepgram/manage/v1/projects/usage/fields/client.py">list</a>(...) -> AsyncHttpResponse[UsageFieldsV1Response]</code></summary>
 <dl>
 <dd>
 
@@ -3958,6 +4100,8 @@ client = DeepgramClient(
 )
 client.manage.v1.projects.usage.fields.list(
     project_id="123456-7890-1234-5678-901234",
+    start="start",
+    end="end",
 )
 
 ```
@@ -4011,7 +4155,7 @@ client.manage.v1.projects.usage.fields.list(
 </details>
 
 ## Read V1 Text
-<details><summary><code>client.read.v1.text.<a href="src/deepgram/read/v1/text/client.py">analyze</a>(...)</code></summary>
+<details><summary><code>client.read.v1.text.<a href="src/deepgram/read/v1/text/client.py">analyze</a>(...) -> AsyncHttpResponse[ReadV1Response]</code></summary>
 <dl>
 <dd>
 
@@ -4044,6 +4188,18 @@ client = DeepgramClient(
     api_key="YOUR_API_KEY",
 )
 client.read.v1.text.analyze(
+    callback="callback",
+    callback_method="POST",
+    sentiment=True,
+    summarize="v2",
+    tag="tag",
+    topics=True,
+    custom_topic="custom_topic",
+    custom_topic_mode="extended",
+    intents=True,
+    custom_intent="custom_intent",
+    custom_intent_mode="extended",
+    language="language",
     request={"url": "url"},
 )
 
@@ -4178,7 +4334,7 @@ client.read.v1.text.analyze(
 </details>
 
 ## SelfHosted V1 DistributionCredentials
-<details><summary><code>client.self_hosted.v1.distribution_credentials.<a href="src/deepgram/self_hosted/v1/distribution_credentials/client.py">list</a>(...)</code></summary>
+<details><summary><code>client.self_hosted.v1.distribution_credentials.<a href="src/deepgram/self_hosted/v1/distribution_credentials/client.py">list</a>(...) -> AsyncHttpResponse[ListProjectDistributionCredentialsV1Response]</code></summary>
 <dl>
 <dd>
 
@@ -4248,7 +4404,7 @@ client.self_hosted.v1.distribution_credentials.list(
 </dl>
 </details>
 
-<details><summary><code>client.self_hosted.v1.distribution_credentials.<a href="src/deepgram/self_hosted/v1/distribution_credentials/client.py">create</a>(...)</code></summary>
+<details><summary><code>client.self_hosted.v1.distribution_credentials.<a href="src/deepgram/self_hosted/v1/distribution_credentials/client.py">create</a>(...) -> AsyncHttpResponse[CreateProjectDistributionCredentialsV1Response]</code></summary>
 <dl>
 <dd>
 
@@ -4347,7 +4503,7 @@ client.self_hosted.v1.distribution_credentials.create(
 </dl>
 </details>
 
-<details><summary><code>client.self_hosted.v1.distribution_credentials.<a href="src/deepgram/self_hosted/v1/distribution_credentials/client.py">get</a>(...)</code></summary>
+<details><summary><code>client.self_hosted.v1.distribution_credentials.<a href="src/deepgram/self_hosted/v1/distribution_credentials/client.py">get</a>(...) -> AsyncHttpResponse[GetProjectDistributionCredentialsV1Response]</code></summary>
 <dl>
 <dd>
 
@@ -4426,7 +4582,7 @@ client.self_hosted.v1.distribution_credentials.get(
 </dl>
 </details>
 
-<details><summary><code>client.self_hosted.v1.distribution_credentials.<a href="src/deepgram/self_hosted/v1/distribution_credentials/client.py">delete</a>(...)</code></summary>
+<details><summary><code>client.self_hosted.v1.distribution_credentials.<a href="src/deepgram/self_hosted/v1/distribution_credentials/client.py">delete</a>(...) -> AsyncHttpResponse[GetProjectDistributionCredentialsV1Response]</code></summary>
 <dl>
 <dd>
 
@@ -4506,7 +4662,7 @@ client.self_hosted.v1.distribution_credentials.delete(
 </details>
 
 ## Speak V1 Audio
-<details><summary><code>client.speak.v1.audio.<a href="src/deepgram/speak/v1/audio/client.py">generate</a>(...)</code></summary>
+<details><summary><code>client.speak.v1.audio.<a href="src/deepgram/speak/v1/audio/client.py">generate</a>(...) -> typing.AsyncIterator[AsyncHttpResponse[typing.AsyncIterator[bytes]]]</code></summary>
 <dl>
 <dd>
 

@@ -2,4 +2,4 @@
 
 import typing
 
-ListenV1Callback = typing.Optional[typing.Any]
+ListenV1Callback = typing.Any

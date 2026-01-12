@@ -2,4 +2,4 @@
 
 import typing
 
-ListenV1UtteranceEndMs = typing.Optional[typing.Any]
+ListenV1UtteranceEndMs = typing.Any

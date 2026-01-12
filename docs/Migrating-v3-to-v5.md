@@ -927,3 +927,4 @@ with client.agent.v1.connect() as agent:
 - [ ] Update WebSocket keep alive implementation
 - [ ] Update error handling for new exception types
 - [ ] Test all functionality with new API structure
+

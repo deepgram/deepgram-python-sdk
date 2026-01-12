@@ -11,6 +11,7 @@ if typing.TYPE_CHECKING:
     from .v1.client import AsyncV1Client, V1Client
     from .v2.client import AsyncV2Client, V2Client
 
+
 class ListenClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._raw_client = RawListenClient(client_wrapper=client_wrapper)
@@ -37,7 +38,6 @@ class ListenClient:
             self._v1 = V1Client(client_wrapper=self._client_wrapper)
         return self._v1
 
-    # TODO: Manual workaround due to fern generator bug
     @property
     def v2(self):
         if self._v2 is None:
@@ -73,7 +73,6 @@ class AsyncListenClient:
             self._v1 = AsyncV1Client(client_wrapper=self._client_wrapper)
         return self._v1
 
-    # TODO: Manual workaround due to fern generator bug
     @property
     def v2(self):
         if self._v2 is None:

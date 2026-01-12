@@ -18,6 +18,9 @@ jobs:
       - name: Bootstrap poetry
         run: |
           curl -sSL https://install.python-poetry.org | python - -y --version 1.5.1
+      - name: Add poetry to PATH
+        run: |
+          echo "$HOME/.local/bin" >> $GITHUB_PATH
       - name: Install dependencies
         run: poetry install
       - name: Compile
@@ -38,8 +41,42 @@ jobs:
       - name: Bootstrap poetry
         run: |
           curl -sSL https://install.python-poetry.org | python - -y --version 1.5.1
+      - name: Add poetry to PATH
+        run: |
+          echo "$HOME/.local/bin" >> $GITHUB_PATH
       - name: Install dependencies
         run: poetry install
 
+      - name: Verify Docker is available
+        run: |
+          docker --version
+          docker compose version
+
       - name: Test
         run: poetry run pytest -rP .
+
+  publish:
+    needs: [compile, test]
+    if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+      - name: Set up python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.8"
+      - name: Bootstrap poetry
+        run: |
+          curl -sSL https://install.python-poetry.org | python - -y --version 1.5.1
+      - name: Add poetry to PATH
+        run: |
+          echo "$HOME/.local/bin" >> $GITHUB_PATH
+      - name: Install dependencies
+        run: poetry install
+      - name: Build package
+        run: poetry build
+      - name: Publish to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1

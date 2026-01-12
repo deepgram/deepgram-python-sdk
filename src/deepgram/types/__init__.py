@@ -94,6 +94,7 @@ if typing.TYPE_CHECKING:
     from .listen_v1callback import ListenV1Callback
     from .listen_v1callback_method import ListenV1CallbackMethod
     from .listen_v1channels import ListenV1Channels
+    from .listen_v1detect_entities import ListenV1DetectEntities
     from .listen_v1diarize import ListenV1Diarize
     from .listen_v1dictation import ListenV1Dictation
     from .listen_v1encoding import ListenV1Encoding
@@ -123,6 +124,9 @@ if typing.TYPE_CHECKING:
     from .listen_v1response_results_channels_item import ListenV1ResponseResultsChannelsItem
     from .listen_v1response_results_channels_item_alternatives_item import (
         ListenV1ResponseResultsChannelsItemAlternativesItem,
+    )
+    from .listen_v1response_results_channels_item_alternatives_item_entities_item import (
+        ListenV1ResponseResultsChannelsItemAlternativesItemEntitiesItem,
     )
     from .listen_v1response_results_channels_item_alternatives_item_paragraphs import (
         ListenV1ResponseResultsChannelsItemAlternativesItemParagraphs,
@@ -286,6 +290,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ListenV1Callback": ".listen_v1callback",
     "ListenV1CallbackMethod": ".listen_v1callback_method",
     "ListenV1Channels": ".listen_v1channels",
+    "ListenV1DetectEntities": ".listen_v1detect_entities",
     "ListenV1Diarize": ".listen_v1diarize",
     "ListenV1Dictation": ".listen_v1dictation",
     "ListenV1Encoding": ".listen_v1encoding",
@@ -314,6 +319,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ListenV1ResponseResultsChannels": ".listen_v1response_results_channels",
     "ListenV1ResponseResultsChannelsItem": ".listen_v1response_results_channels_item",
     "ListenV1ResponseResultsChannelsItemAlternativesItem": ".listen_v1response_results_channels_item_alternatives_item",
+    "ListenV1ResponseResultsChannelsItemAlternativesItemEntitiesItem": ".listen_v1response_results_channels_item_alternatives_item_entities_item",
     "ListenV1ResponseResultsChannelsItemAlternativesItemParagraphs": ".listen_v1response_results_channels_item_alternatives_item_paragraphs",
     "ListenV1ResponseResultsChannelsItemAlternativesItemParagraphsParagraphsItem": ".listen_v1response_results_channels_item_alternatives_item_paragraphs_paragraphs_item",
     "ListenV1ResponseResultsChannelsItemAlternativesItemParagraphsParagraphsItemSentencesItem": ".listen_v1response_results_channels_item_alternatives_item_paragraphs_paragraphs_item_sentences_item",
@@ -484,6 +490,7 @@ __all__ = [
     "ListenV1Callback",
     "ListenV1CallbackMethod",
     "ListenV1Channels",
+    "ListenV1DetectEntities",
     "ListenV1Diarize",
     "ListenV1Dictation",
     "ListenV1Encoding",
@@ -512,6 +519,7 @@ __all__ = [
     "ListenV1ResponseResultsChannels",
     "ListenV1ResponseResultsChannelsItem",
     "ListenV1ResponseResultsChannelsItemAlternativesItem",
+    "ListenV1ResponseResultsChannelsItemAlternativesItemEntitiesItem",
     "ListenV1ResponseResultsChannelsItemAlternativesItemParagraphs",
     "ListenV1ResponseResultsChannelsItemAlternativesItemParagraphsParagraphsItem",
     "ListenV1ResponseResultsChannelsItemAlternativesItemParagraphsParagraphsItemSentencesItem",
