@@ -9,8 +9,8 @@ def test_manage_v1_projects_requests_list_() -> None:
     client = get_client(test_id)
     client.manage.v1.projects.requests.list(
         project_id="123456-7890-1234-5678-901234",
-        start=datetime.fromisoformat("2024-01-15T09:30:00Z"),
-        end=datetime.fromisoformat("2024-01-15T09:30:00Z"),
+        start=datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
+        end=datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
         limit=1.1,
         page=1.1,
         accessor="12345678-1234-1234-1234-123456789012",

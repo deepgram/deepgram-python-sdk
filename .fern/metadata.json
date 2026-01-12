@@ -1,7 +1,7 @@
 {
-  "cliVersion": "3.32.0",
+  "cliVersion": "3.37.5",
   "generatorName": "fernapi/fern-python-sdk",
-  "generatorVersion": "4.46.6",
+  "generatorVersion": "4.46.14",
   "generatorConfig": {
     "client": {
       "class_name": "BaseClient",
@@ -13,5 +13,5 @@
     "should_generate_websocket_clients": true,
     "enable_wire_tests": true
   },
-  "sdkVersion": "5.3.1"
+  "sdkVersion": "6.0.0-beta.3"
 }
