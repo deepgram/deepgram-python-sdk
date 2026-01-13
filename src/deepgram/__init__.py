@@ -187,6 +187,7 @@ if typing.TYPE_CHECKING:
     from . import agent, auth, listen, manage, read, self_hosted, speak
     from .client import AsyncDeepgramClient, DeepgramClient
     from .environment import DeepgramClientEnvironment
+    from .helpers import TextBuilder, add_pronunciation, ssml_to_deepgram, validate_ipa, validate_pause
     from .requests import (
         AgentThinkModelsV1ResponseModelsItemIdParams,
         AgentThinkModelsV1ResponseModelsItemOneParams,
@@ -604,7 +605,12 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SpeakV1Model": ".types",
     "SpeakV1Response": ".types",
     "SpeakV1SampleRate": ".types",
+    "TextBuilder": ".helpers",
     "UpdateProjectMemberScopesV1Response": ".types",
+    "add_pronunciation": ".helpers",
+    "ssml_to_deepgram": ".helpers",
+    "validate_ipa": ".helpers",
+    "validate_pause": ".helpers",
     "UpdateProjectMemberScopesV1ResponseParams": ".requests",
     "UpdateProjectV1Response": ".types",
     "UpdateProjectV1ResponseParams": ".requests",
@@ -943,7 +949,12 @@ __all__ = [
     "SpeakV1Model",
     "SpeakV1Response",
     "SpeakV1SampleRate",
+    "TextBuilder",
     "UpdateProjectMemberScopesV1Response",
+    "add_pronunciation",
+    "ssml_to_deepgram",
+    "validate_ipa",
+    "validate_pause",
     "UpdateProjectMemberScopesV1ResponseParams",
     "UpdateProjectV1Response",
     "UpdateProjectV1ResponseParams",
