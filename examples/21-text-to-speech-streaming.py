@@ -40,15 +40,15 @@ try:
         # Note: start_listening() blocks, so send all messages first
         # For better control with bidirectional communication, use the async version
         text_message = SpeakV1Text(text="Hello, this is a text to speech example.")
-        connection.send_speak_v_1_text(text_message)
+        connection.send_text(text_message)
 
         # Flush to ensure all text is processed
         flush_message = SpeakV1Flush()
-        connection.send_speak_v_1_flush(flush_message)
+        connection.send_flush(flush_message)
 
         # Close the connection when done
         close_message = SpeakV1Close()
-        connection.send_speak_v_1_close(close_message)
+        connection.send_close(close_message)
 
         # Start listening - this blocks until the connection closes
         # All messages should be sent before calling this in sync mode
@@ -58,9 +58,9 @@ try:
     # from deepgram import AsyncDeepgramClient
     # async with client.speak.v1.connect(...) as connection:
     #     listen_task = asyncio.create_task(connection.start_listening())
-    #     await connection.send_speak_v_1_text(SpeakV1Text(text="..."))
-    #     await connection.send_speak_v_1_flush(SpeakV1Flush())
-    #     await connection.send_speak_v_1_close(SpeakV1Close())
+    #     await connection.send_text(SpeakV1Text(text="..."))
+    #     await connection.send_flush(SpeakV1Flush())
+    #     await connection.send_close(SpeakV1Close())
     #     await listen_task
 
 except Exception as e:
