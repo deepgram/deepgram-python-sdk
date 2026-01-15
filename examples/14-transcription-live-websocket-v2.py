@@ -11,6 +11,7 @@ This example uses an audio file to demonstrate the streaming pattern.
 
 import os
 import threading
+import time
 from typing import Union
 
 from dotenv import load_dotenv
@@ -27,8 +28,16 @@ from deepgram.listen.v2.types import (
 
 ListenV2SocketClientResponse = Union[ListenV2Connected, ListenV2TurnInfo, ListenV2FatalError]
 
-# Chunk size in bytes (e.g., 8KB chunks for efficient streaming)
-CHUNK_SIZE = 8192
+# Audio streaming configuration
+# IMPORTANT: Listen V2 requires 16kHz linear16 PCM audio
+CHUNK_SIZE = 8192  # Bytes to send at a time
+SAMPLE_RATE = 16000  # Hz (required for Listen V2)
+SAMPLE_WIDTH = 2  # 16-bit audio = 2 bytes per sample
+CHANNELS = 1  # Mono audio
+
+# Calculate delay between chunks to simulate real-time streaming
+# This makes the audio stream at its natural playback rate
+CHUNK_DELAY = CHUNK_SIZE / (SAMPLE_RATE * SAMPLE_WIDTH * CHANNELS)
 
 client = DeepgramClient()
 
@@ -57,27 +66,35 @@ try:
         connection.on(EventType.CLOSE, on_close)
         connection.on(EventType.ERROR, on_error)
 
-        # Start listening in a background thread
-        threading.Thread(target=connection.start_listening, daemon=True).start()
+        # Define a function to send audio in a background thread
+        def send_audio():
+            # IMPORTANT: Audio must be 16kHz linear16 PCM for Listen V2
+            audio_path = os.path.join(os.path.dirname(__file__), "fixtures", "audio.wav")
+            
+            with open(audio_path, "rb") as audio_file:
+                print(f"Streaming audio from {audio_path}")
 
-        # Stream audio file
-        # In production, replace this with audio from microphone or other live source
-        # IMPORTANT: Audio must be 16kHz linear16 PCM for Listen V2
-        audio_path = os.path.join(os.path.dirname(__file__), "fixtures", "audio.wav")
+                while True:
+                    chunk = audio_file.read(CHUNK_SIZE)
+                    if not chunk:
+                        break
 
-        with open(audio_path, "rb") as audio_file:
-            print(f"Streaming audio from {audio_path}")
+                    connection.send_media(chunk)
 
-            while True:
-                chunk = audio_file.read(CHUNK_SIZE)
-                if not chunk:
-                    break
+                    # Simulate real-time streaming by adding delay between chunks
+                    time.sleep(CHUNK_DELAY)
 
-                connection.send_media(chunk)
+            print("Finished sending audio")
 
-        print("Finished sending audio")
+        # Start sending audio in a background thread
+        threading.Thread(target=send_audio, daemon=True).start()
+
+        # Start listening - this blocks until the connection closes or times out
+        # The connection will stay open until the server closes it or it times out
+        connection.start_listening()
 
     # For async version:
+    # import asyncio
     # from deepgram import AsyncDeepgramClient
     #
     # async with client.listen.v2.connect(
@@ -91,14 +108,24 @@ try:
     #
     #     connection.on(EventType.MESSAGE, on_message)
     #
-    #     # Start listening
+    #     # Define coroutine to send audio
+    #     async def send_audio():
+    #         audio_path = os.path.join(os.path.dirname(__file__), "fixtures", "audio.wav")
+    #         with open(audio_path, "rb") as audio_file:
+    #             while chunk := audio_file.read(CHUNK_SIZE):
+    #                 await connection.send_media(chunk)
+    #                 # Simulate real-time streaming
+    #                 await asyncio.sleep(CHUNK_DELAY)
+    #         print("Finished sending audio")
+    #
+    #     # Start both tasks
     #     listen_task = asyncio.create_task(connection.start_listening())
+    #     send_task = asyncio.create_task(send_audio())
     #
-    #     # Stream audio
-    #     with open(audio_path, "rb") as audio_file:
-    #         while chunk := audio_file.read(CHUNK_SIZE):
-    #             await connection.send_media(chunk)
+    #     # Wait for send to complete
+    #     await send_task
     #
+    #     # Continue listening until connection closes or times out
     #     await listen_task
 
 except Exception as e:
