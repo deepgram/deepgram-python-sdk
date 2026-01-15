@@ -73,7 +73,7 @@ try:
                 if not chunk:
                     break
 
-                connection.send_listen_v_2_media(chunk)
+                connection.send_media(chunk)
 
         print("Finished sending audio")
 
@@ -97,7 +97,7 @@ try:
     #     # Stream audio
     #     with open(audio_path, "rb") as audio_file:
     #         while chunk := audio_file.read(CHUNK_SIZE):
-    #             await connection.send_listen_v_2_media(chunk)
+    #             await connection.send_media(chunk)
     #
     #     await listen_task
 
