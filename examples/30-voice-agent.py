@@ -65,7 +65,7 @@ try:
         )
 
         print("Sending agent settings...")
-        agent.send_agent_v_1_settings(settings)
+        agent.send_settings(settings)
 
         def on_message(message: AgentV1SocketClientResponse) -> None:
             if isinstance(message, bytes):
@@ -84,7 +84,7 @@ try:
         # In production, you would send audio from your microphone or audio source:
         # with open("audio.wav", "rb") as audio_file:
         #     audio_data = audio_file.read()
-        #     agent.send_agent_v_1_media(audio_data)
+        #     agent.send_media(audio_data)
 
         agent.start_listening()
 
@@ -92,7 +92,7 @@ try:
     # from deepgram import AsyncDeepgramClient
     # async with client.agent.v1.connect() as agent:
     #     # ... same configuration ...
-    #     await agent.send_agent_v_1_settings(settings)
+    #     await agent.send_settings(settings)
     #     await agent.start_listening()
 
 except Exception as e:
