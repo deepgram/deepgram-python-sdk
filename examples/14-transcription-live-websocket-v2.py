@@ -34,11 +34,7 @@ client = DeepgramClient()
 
 try:
     # Listen V2 requires specific audio format: 16kHz linear16 PCM
-    with client.listen.v2.connect(
-        model="flux-general-en",
-        encoding="linear16",
-        sample_rate="16000"
-    ) as connection:
+    with client.listen.v2.connect(model="flux-general-en", encoding="linear16", sample_rate="16000") as connection:
 
         def on_message(message: ListenV2SocketClientResponse) -> None:
             # Handle TurnInfo events containing transcription and turn metadata
@@ -68,17 +64,17 @@ try:
         # In production, replace this with audio from microphone or other live source
         # IMPORTANT: Audio must be 16kHz linear16 PCM for Listen V2
         audio_path = os.path.join(os.path.dirname(__file__), "fixtures", "audio.wav")
-        
+
         with open(audio_path, "rb") as audio_file:
             print(f"Streaming audio from {audio_path}")
-            
+
             while True:
                 chunk = audio_file.read(CHUNK_SIZE)
                 if not chunk:
                     break
-                
+
                 connection.send_listen_v_2_media(chunk)
-        
+
         print("Finished sending audio")
 
     # For async version:
@@ -94,15 +90,15 @@ try:
     #             print(f"Turn {message.turn_index}: {message.transcript}")
     #
     #     connection.on(EventType.MESSAGE, on_message)
-    #     
+    #
     #     # Start listening
     #     listen_task = asyncio.create_task(connection.start_listening())
-    #     
+    #
     #     # Stream audio
     #     with open(audio_path, "rb") as audio_file:
     #         while chunk := audio_file.read(CHUNK_SIZE):
     #             await connection.send_listen_v_2_media(chunk)
-    #     
+    #
     #     await listen_task
 
 except Exception as e:
