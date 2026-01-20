@@ -6,6 +6,8 @@ The generate() method returns an Iterator[bytes] that streams audio chunks
 as they arrive from the API, allowing you to process audio incrementally.
 """
 
+from pathlib import Path
+
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -26,7 +28,7 @@ try:
     )
 
     # Process chunks as they arrive (streaming)
-    output_path = "output.mp3"
+    output_path = Path("output.mp3").resolve()
     chunk_count = 0
     with open(output_path, "wb") as audio_file:
         for chunk in audio_chunks:
@@ -39,9 +41,15 @@ try:
     # For async version:
     # from deepgram import AsyncDeepgramClient
     # client = AsyncDeepgramClient()
-    # async for chunk in await client.speak.v1.audio.generate(...):
+    # async for chunk in await client.speak.v1.audio.generate(
+    #     text="Hello, this is a sample text to speech conversion.",
+    #     model="aura-2-asteria-en",
+    # ):
     #     # Process chunks as they arrive
     #     audio_file.write(chunk)
+
+    # With access token:
+    # client = DeepgramClient(access_token="your-access-token")
 
 except Exception as e:
     print(f"Error: {e}")
