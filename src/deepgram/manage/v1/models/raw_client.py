@@ -7,8 +7,8 @@ from ....core.api_error import ApiError
 from ....core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ....core.http_response import AsyncHttpResponse, HttpResponse
 from ....core.jsonable_encoder import jsonable_encoder
-from ....core.pydantic_utilities import parse_obj_as
 from ....core.request_options import RequestOptions
+from ....core.unchecked_base_model import construct_type
 from ....errors.bad_request_error import BadRequestError
 from ....types.get_model_v1response import GetModelV1Response
 from ....types.list_models_v1response import ListModelsV1Response
@@ -39,7 +39,6 @@ class RawModelsClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/models",
-            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
                 "include_outdated": include_outdated,
@@ -50,7 +49,7 @@ class RawModelsClient:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
                     ListModelsV1Response,
-                    parse_obj_as(
+                    construct_type(
                         type_=ListModelsV1Response,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -61,7 +60,7 @@ class RawModelsClient:
                     headers=dict(_response.headers),
                     body=typing.cast(
                         typing.Any,
-                        parse_obj_as(
+                        construct_type(
                             type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
@@ -93,7 +92,6 @@ class RawModelsClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/models/{jsonable_encoder(model_id)}",
-            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -101,7 +99,7 @@ class RawModelsClient:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
                     GetModelV1Response,
-                    parse_obj_as(
+                    construct_type(
                         type_=GetModelV1Response,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -112,7 +110,7 @@ class RawModelsClient:
                     headers=dict(_response.headers),
                     body=typing.cast(
                         typing.Any,
-                        parse_obj_as(
+                        construct_type(
                             type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
@@ -149,7 +147,6 @@ class AsyncRawModelsClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/models",
-            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
                 "include_outdated": include_outdated,
@@ -160,7 +157,7 @@ class AsyncRawModelsClient:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
                     ListModelsV1Response,
-                    parse_obj_as(
+                    construct_type(
                         type_=ListModelsV1Response,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -171,7 +168,7 @@ class AsyncRawModelsClient:
                     headers=dict(_response.headers),
                     body=typing.cast(
                         typing.Any,
-                        parse_obj_as(
+                        construct_type(
                             type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
@@ -203,7 +200,6 @@ class AsyncRawModelsClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/models/{jsonable_encoder(model_id)}",
-            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -211,7 +207,7 @@ class AsyncRawModelsClient:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
                     GetModelV1Response,
-                    parse_obj_as(
+                    construct_type(
                         type_=GetModelV1Response,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -222,7 +218,7 @@ class AsyncRawModelsClient:
                     headers=dict(_response.headers),
                     body=typing.cast(
                         typing.Any,
-                        parse_obj_as(
+                        construct_type(
                             type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),

@@ -6,9 +6,9 @@ from json.decoder import JSONDecodeError
 from ....core.api_error import ApiError
 from ....core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ....core.http_response import AsyncHttpResponse, HttpResponse
-from ....core.pydantic_utilities import parse_obj_as
 from ....core.request_options import RequestOptions
 from ....core.serialization import convert_and_respect_annotation_metadata
+from ....core.unchecked_base_model import construct_type
 from ....errors.bad_request_error import BadRequestError
 from ....requests.read_v1request import ReadV1RequestParams
 from ....types.read_v1response import ReadV1Response
@@ -96,7 +96,6 @@ class RawTextClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/read",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             params={
                 "callback": callback,
@@ -125,7 +124,7 @@ class RawTextClient:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
                     ReadV1Response,
-                    parse_obj_as(
+                    construct_type(
                         type_=ReadV1Response,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -136,7 +135,7 @@ class RawTextClient:
                     headers=dict(_response.headers),
                     body=typing.cast(
                         typing.Any,
-                        parse_obj_as(
+                        construct_type(
                             type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
@@ -223,7 +222,6 @@ class AsyncRawTextClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/read",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             params={
                 "callback": callback,
@@ -252,7 +250,7 @@ class AsyncRawTextClient:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
                     ReadV1Response,
-                    parse_obj_as(
+                    construct_type(
                         type_=ReadV1Response,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -263,7 +261,7 @@ class AsyncRawTextClient:
                     headers=dict(_response.headers),
                     body=typing.cast(
                         typing.Any,
-                        parse_obj_as(
+                        construct_type(
                             type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),

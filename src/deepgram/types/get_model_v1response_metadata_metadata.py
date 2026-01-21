@@ -3,10 +3,11 @@
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ..core.pydantic_utilities import IS_PYDANTIC_V2
+from ..core.unchecked_base_model import UncheckedBaseModel
 
 
-class GetModelV1ResponseMetadataMetadata(UniversalBaseModel):
+class GetModelV1ResponseMetadataMetadata(UncheckedBaseModel):
     accent: typing.Optional[str] = None
     age: typing.Optional[str] = None
     color: typing.Optional[str] = None

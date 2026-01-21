@@ -7,8 +7,8 @@ from ......core.api_error import ApiError
 from ......core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ......core.http_response import AsyncHttpResponse, HttpResponse
 from ......core.jsonable_encoder import jsonable_encoder
-from ......core.pydantic_utilities import parse_obj_as
 from ......core.request_options import RequestOptions
+from ......core.unchecked_base_model import construct_type
 from ......errors.bad_request_error import BadRequestError
 from ......types.list_project_purchases_v1response import ListProjectPurchasesV1Response
 
@@ -45,7 +45,6 @@ class RawPurchasesClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/projects/{jsonable_encoder(project_id)}/purchases",
-            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
                 "limit": limit,
@@ -56,7 +55,7 @@ class RawPurchasesClient:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
                     ListProjectPurchasesV1Response,
-                    parse_obj_as(
+                    construct_type(
                         type_=ListProjectPurchasesV1Response,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -67,7 +66,7 @@ class RawPurchasesClient:
                     headers=dict(_response.headers),
                     body=typing.cast(
                         typing.Any,
-                        parse_obj_as(
+                        construct_type(
                             type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
@@ -111,7 +110,6 @@ class AsyncRawPurchasesClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/projects/{jsonable_encoder(project_id)}/purchases",
-            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
                 "limit": limit,
@@ -122,7 +120,7 @@ class AsyncRawPurchasesClient:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
                     ListProjectPurchasesV1Response,
-                    parse_obj_as(
+                    construct_type(
                         type_=ListProjectPurchasesV1Response,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -133,7 +131,7 @@ class AsyncRawPurchasesClient:
                     headers=dict(_response.headers),
                     body=typing.cast(
                         typing.Any,
-                        parse_obj_as(
+                        construct_type(
                             type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),

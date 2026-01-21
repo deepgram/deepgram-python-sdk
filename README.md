@@ -17,7 +17,6 @@ Power your apps with world-class speech and Language AI models
 - [Async Client](#async-client)
 - [Exception Handling](#exception-handling)
 - [Advanced Features](#advanced-features)
-- [Websockets](#websockets)
 - [Advanced](#advanced)
   - [Access Raw Response Data](#access-raw-response-data)
   - [Retries](#retries)
@@ -204,62 +203,6 @@ response = client.listen.v1.media.transcribe_file(
     model="nova-3",
     request_options={"max_retries": 3}
 )
-```
-
-## Websockets
-
-The SDK supports both sync and async websocket connections for real-time, low-latency communication. Sockets can be created using the `connect` method, which returns a context manager. 
-You can either iterate through the returned `SocketClient` to process messages as they arrive, or attach handlers to respond to specific events.
-
-```python
-
-# Connect to the websocket (Sync)
-import threading
-
-from deepgram import DeepgramClient
-
-client = DeepgramClient(...)
-
-with client.v1.connect() as socket:
-    # Iterate over the messages as they arrive
-    for message in socket
-        print(message)
-
-    # Or, attach handlers to specific events
-    socket.on(EventType.OPEN, lambda _: print("open"))
-    socket.on(EventType.MESSAGE, lambda message: print("received message", message))
-    socket.on(EventType.CLOSE, lambda _: print("close"))
-    socket.on(EventType.ERROR, lambda error: print("error", error))
-
-
-    # Start the listening loop in a background thread
-    listener_thread = threading.Thread(target=socket.start_listening, daemon=True)
-    listener_thread.start()
-```
-
-```python
-
-# Connect to the websocket (Async)
-import asyncio
-
-from deepgram import AsyncDeepgramClient
-
-client = AsyncDeepgramClient(...)
-
-async with client.v1.connect() as socket:
-    # Iterate over the messages as they arrive
-    async for message in socket
-        print(message)
-
-    # Or, attach handlers to specific events
-    socket.on(EventType.OPEN, lambda _: print("open"))
-    socket.on(EventType.MESSAGE, lambda message: print("received message", message))
-    socket.on(EventType.CLOSE, lambda _: print("close"))
-    socket.on(EventType.ERROR, lambda error: print("error", error))
-
-
-    # Start listening for events in an asyncio task
-    listen_task = asyncio.create_task(socket.start_listening())
 ```
 
 ## Advanced

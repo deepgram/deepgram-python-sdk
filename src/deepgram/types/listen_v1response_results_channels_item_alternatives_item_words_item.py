@@ -3,10 +3,11 @@
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ..core.pydantic_utilities import IS_PYDANTIC_V2
+from ..core.unchecked_base_model import UncheckedBaseModel
 
 
-class ListenV1ResponseResultsChannelsItemAlternativesItemWordsItem(UniversalBaseModel):
+class ListenV1ResponseResultsChannelsItemAlternativesItemWordsItem(UncheckedBaseModel):
     word: typing.Optional[str] = None
     start: typing.Optional[float] = None
     end: typing.Optional[float] = None

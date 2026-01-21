@@ -7,53 +7,7 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from . import v1
-    from .v1 import (
-        SpeakV1Clear,
-        SpeakV1ClearParams,
-        SpeakV1ClearType,
-        SpeakV1Cleared,
-        SpeakV1ClearedParams,
-        SpeakV1ClearedType,
-        SpeakV1Close,
-        SpeakV1CloseParams,
-        SpeakV1CloseType,
-        SpeakV1Flush,
-        SpeakV1FlushParams,
-        SpeakV1FlushType,
-        SpeakV1Flushed,
-        SpeakV1FlushedParams,
-        SpeakV1FlushedType,
-        SpeakV1Metadata,
-        SpeakV1MetadataParams,
-        SpeakV1Text,
-        SpeakV1TextParams,
-        SpeakV1Warning,
-        SpeakV1WarningParams,
-    )
-_dynamic_imports: typing.Dict[str, str] = {
-    "SpeakV1Clear": ".v1",
-    "SpeakV1ClearParams": ".v1",
-    "SpeakV1ClearType": ".v1",
-    "SpeakV1Cleared": ".v1",
-    "SpeakV1ClearedParams": ".v1",
-    "SpeakV1ClearedType": ".v1",
-    "SpeakV1Close": ".v1",
-    "SpeakV1CloseParams": ".v1",
-    "SpeakV1CloseType": ".v1",
-    "SpeakV1Flush": ".v1",
-    "SpeakV1FlushParams": ".v1",
-    "SpeakV1FlushType": ".v1",
-    "SpeakV1Flushed": ".v1",
-    "SpeakV1FlushedParams": ".v1",
-    "SpeakV1FlushedType": ".v1",
-    "SpeakV1Metadata": ".v1",
-    "SpeakV1MetadataParams": ".v1",
-    "SpeakV1Text": ".v1",
-    "SpeakV1TextParams": ".v1",
-    "SpeakV1Warning": ".v1",
-    "SpeakV1WarningParams": ".v1",
-    "v1": ".v1",
-}
+_dynamic_imports: typing.Dict[str, str] = {"v1": ".v1"}
 
 
 def __getattr__(attr_name: str) -> typing.Any:
@@ -77,27 +31,4 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = [
-    "SpeakV1Clear",
-    "SpeakV1ClearParams",
-    "SpeakV1ClearType",
-    "SpeakV1Cleared",
-    "SpeakV1ClearedParams",
-    "SpeakV1ClearedType",
-    "SpeakV1Close",
-    "SpeakV1CloseParams",
-    "SpeakV1CloseType",
-    "SpeakV1Flush",
-    "SpeakV1FlushParams",
-    "SpeakV1FlushType",
-    "SpeakV1Flushed",
-    "SpeakV1FlushedParams",
-    "SpeakV1FlushedType",
-    "SpeakV1Metadata",
-    "SpeakV1MetadataParams",
-    "SpeakV1Text",
-    "SpeakV1TextParams",
-    "SpeakV1Warning",
-    "SpeakV1WarningParams",
-    "v1",
-]
+__all__ = ["v1"]

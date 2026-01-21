@@ -3,11 +3,12 @@
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ..core.pydantic_utilities import IS_PYDANTIC_V2
+from ..core.unchecked_base_model import UncheckedBaseModel
 from .read_v1response_results_summary_results import ReadV1ResponseResultsSummaryResults
 
 
-class ReadV1ResponseResultsSummary(UniversalBaseModel):
+class ReadV1ResponseResultsSummary(UncheckedBaseModel):
     """
     Output whenever `summary=true` is used
     """

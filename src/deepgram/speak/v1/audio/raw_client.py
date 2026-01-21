@@ -7,8 +7,8 @@ from json.decoder import JSONDecodeError
 from ....core.api_error import ApiError
 from ....core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ....core.http_response import AsyncHttpResponse, HttpResponse
-from ....core.pydantic_utilities import parse_obj_as
 from ....core.request_options import RequestOptions
+from ....core.unchecked_base_model import construct_type
 from ....errors.bad_request_error import BadRequestError
 from .types.audio_generate_request_callback_method import AudioGenerateRequestCallbackMethod
 from .types.audio_generate_request_container import AudioGenerateRequestContainer
@@ -84,7 +84,6 @@ class RawAudioClient:
         """
         with self._client_wrapper.httpx_client.stream(
             "v1/speak",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             params={
                 "callback": callback,
@@ -120,7 +119,7 @@ class RawAudioClient:
                             headers=dict(_response.headers),
                             body=typing.cast(
                                 typing.Any,
-                                parse_obj_as(
+                                construct_type(
                                     type_=typing.Any,  # type: ignore
                                     object_=_response.json(),
                                 ),
@@ -201,7 +200,6 @@ class AsyncRawAudioClient:
         """
         async with self._client_wrapper.httpx_client.stream(
             "v1/speak",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             params={
                 "callback": callback,
@@ -238,7 +236,7 @@ class AsyncRawAudioClient:
                             headers=dict(_response.headers),
                             body=typing.cast(
                                 typing.Any,
-                                parse_obj_as(
+                                construct_type(
                                     type_=typing.Any,  # type: ignore
                                     object_=_response.json(),
                                 ),

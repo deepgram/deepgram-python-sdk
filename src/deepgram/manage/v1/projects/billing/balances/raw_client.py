@@ -7,8 +7,8 @@ from ......core.api_error import ApiError
 from ......core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ......core.http_response import AsyncHttpResponse, HttpResponse
 from ......core.jsonable_encoder import jsonable_encoder
-from ......core.pydantic_utilities import parse_obj_as
 from ......core.request_options import RequestOptions
+from ......core.unchecked_base_model import construct_type
 from ......errors.bad_request_error import BadRequestError
 from ......types.get_project_balance_v1response import GetProjectBalanceV1Response
 from ......types.list_project_balances_v1response import ListProjectBalancesV1Response
@@ -39,7 +39,6 @@ class RawBalancesClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/projects/{jsonable_encoder(project_id)}/balances",
-            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -47,7 +46,7 @@ class RawBalancesClient:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
                     ListProjectBalancesV1Response,
-                    parse_obj_as(
+                    construct_type(
                         type_=ListProjectBalancesV1Response,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -58,7 +57,7 @@ class RawBalancesClient:
                     headers=dict(_response.headers),
                     body=typing.cast(
                         typing.Any,
-                        parse_obj_as(
+                        construct_type(
                             type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
@@ -93,7 +92,6 @@ class RawBalancesClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/projects/{jsonable_encoder(project_id)}/balances/{jsonable_encoder(balance_id)}",
-            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -101,7 +99,7 @@ class RawBalancesClient:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
                     GetProjectBalanceV1Response,
-                    parse_obj_as(
+                    construct_type(
                         type_=GetProjectBalanceV1Response,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -112,7 +110,7 @@ class RawBalancesClient:
                     headers=dict(_response.headers),
                     body=typing.cast(
                         typing.Any,
-                        parse_obj_as(
+                        construct_type(
                             type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
@@ -149,7 +147,6 @@ class AsyncRawBalancesClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/projects/{jsonable_encoder(project_id)}/balances",
-            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -157,7 +154,7 @@ class AsyncRawBalancesClient:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
                     ListProjectBalancesV1Response,
-                    parse_obj_as(
+                    construct_type(
                         type_=ListProjectBalancesV1Response,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -168,7 +165,7 @@ class AsyncRawBalancesClient:
                     headers=dict(_response.headers),
                     body=typing.cast(
                         typing.Any,
-                        parse_obj_as(
+                        construct_type(
                             type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
@@ -203,7 +200,6 @@ class AsyncRawBalancesClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/projects/{jsonable_encoder(project_id)}/balances/{jsonable_encoder(balance_id)}",
-            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -211,7 +207,7 @@ class AsyncRawBalancesClient:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
                     GetProjectBalanceV1Response,
-                    parse_obj_as(
+                    construct_type(
                         type_=GetProjectBalanceV1Response,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -222,7 +218,7 @@ class AsyncRawBalancesClient:
                     headers=dict(_response.headers),
                     body=typing.cast(
                         typing.Any,
-                        parse_obj_as(
+                        construct_type(
                             type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),

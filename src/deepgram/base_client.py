@@ -26,6 +26,9 @@ class BaseClient:
 
     Parameters
     ----------
+    base_url : typing.Optional[str]
+        The base url to use for requests from the client.
+
     environment : DeepgramClientEnvironment
         The environment to use for requests from the client. from .environment import DeepgramClientEnvironment
 
@@ -60,6 +63,7 @@ class BaseClient:
     def __init__(
         self,
         *,
+        base_url: typing.Optional[str] = None,
         environment: DeepgramClientEnvironment = DeepgramClientEnvironment.PRODUCTION,
         api_key: typing.Optional[str] = os.getenv("DEEPGRAM_API_KEY"),
         headers: typing.Optional[typing.Dict[str, str]] = None,
@@ -75,7 +79,7 @@ class BaseClient:
                 body="The client must be instantiated be either passing in api_key or setting DEEPGRAM_API_KEY"
             )
         self._client_wrapper = SyncClientWrapper(
-            environment=environment,
+            base_url=_get_base_url(base_url=base_url, environment=environment),
             api_key=api_key,
             headers=headers,
             httpx_client=httpx_client
@@ -156,6 +160,9 @@ class AsyncBaseClient:
 
     Parameters
     ----------
+    base_url : typing.Optional[str]
+        The base url to use for requests from the client.
+
     environment : DeepgramClientEnvironment
         The environment to use for requests from the client. from .environment import DeepgramClientEnvironment
 
@@ -190,6 +197,7 @@ class AsyncBaseClient:
     def __init__(
         self,
         *,
+        base_url: typing.Optional[str] = None,
         environment: DeepgramClientEnvironment = DeepgramClientEnvironment.PRODUCTION,
         api_key: typing.Optional[str] = os.getenv("DEEPGRAM_API_KEY"),
         headers: typing.Optional[typing.Dict[str, str]] = None,
@@ -205,7 +213,7 @@ class AsyncBaseClient:
                 body="The client must be instantiated be either passing in api_key or setting DEEPGRAM_API_KEY"
             )
         self._client_wrapper = AsyncClientWrapper(
-            environment=environment,
+            base_url=_get_base_url(base_url=base_url, environment=environment),
             api_key=api_key,
             headers=headers,
             httpx_client=httpx_client
@@ -278,3 +286,12 @@ class AsyncBaseClient:
 
             self._speak = AsyncSpeakClient(client_wrapper=self._client_wrapper)
         return self._speak
+
+
+def _get_base_url(*, base_url: typing.Optional[str] = None, environment: DeepgramClientEnvironment) -> str:
+    if base_url is not None:
+        return base_url
+    elif environment is not None:
+        return environment.value
+    else:
+        raise Exception("Please pass in either base_url or environment to construct the client")

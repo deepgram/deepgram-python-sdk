@@ -3,11 +3,12 @@
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ..core.pydantic_utilities import IS_PYDANTIC_V2
+from ..core.unchecked_base_model import UncheckedBaseModel
 from .usage_breakdown_v1response_results_item_grouping import UsageBreakdownV1ResponseResultsItemGrouping
 
 
-class UsageBreakdownV1ResponseResultsItem(UniversalBaseModel):
+class UsageBreakdownV1ResponseResultsItem(UncheckedBaseModel):
     hours: float = pydantic.Field()
     """
     Audio hours processed

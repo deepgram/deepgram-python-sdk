@@ -7,8 +7,8 @@ from .....core.api_error import ApiError
 from .....core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from .....core.http_response import AsyncHttpResponse, HttpResponse
 from .....core.jsonable_encoder import jsonable_encoder
-from .....core.pydantic_utilities import parse_obj_as
 from .....core.request_options import RequestOptions
+from .....core.unchecked_base_model import construct_type
 from .....errors.bad_request_error import BadRequestError
 from .....types.create_key_v1request_one import CreateKeyV1RequestOne
 from .....types.create_key_v1response import CreateKeyV1Response
@@ -53,7 +53,6 @@ class RawKeysClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/projects/{jsonable_encoder(project_id)}/keys",
-            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
                 "status": status,
@@ -64,7 +63,7 @@ class RawKeysClient:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
                     ListProjectKeysV1Response,
-                    parse_obj_as(
+                    construct_type(
                         type_=ListProjectKeysV1Response,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -75,7 +74,7 @@ class RawKeysClient:
                     headers=dict(_response.headers),
                     body=typing.cast(
                         typing.Any,
-                        parse_obj_as(
+                        construct_type(
                             type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
@@ -113,7 +112,6 @@ class RawKeysClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/projects/{jsonable_encoder(project_id)}/keys",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json=request,
             headers={
@@ -126,7 +124,7 @@ class RawKeysClient:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
                     CreateKeyV1Response,
-                    parse_obj_as(
+                    construct_type(
                         type_=CreateKeyV1Response,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -137,7 +135,7 @@ class RawKeysClient:
                     headers=dict(_response.headers),
                     body=typing.cast(
                         typing.Any,
-                        parse_obj_as(
+                        construct_type(
                             type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
@@ -172,7 +170,6 @@ class RawKeysClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/projects/{jsonable_encoder(project_id)}/keys/{jsonable_encoder(key_id)}",
-            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -180,7 +177,7 @@ class RawKeysClient:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
                     GetProjectKeyV1Response,
-                    parse_obj_as(
+                    construct_type(
                         type_=GetProjectKeyV1Response,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -191,7 +188,7 @@ class RawKeysClient:
                     headers=dict(_response.headers),
                     body=typing.cast(
                         typing.Any,
-                        parse_obj_as(
+                        construct_type(
                             type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
@@ -226,7 +223,6 @@ class RawKeysClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/projects/{jsonable_encoder(project_id)}/keys/{jsonable_encoder(key_id)}",
-            base_url=self._client_wrapper.get_environment().base,
             method="DELETE",
             request_options=request_options,
         )
@@ -234,7 +230,7 @@ class RawKeysClient:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
                     DeleteProjectKeyV1Response,
-                    parse_obj_as(
+                    construct_type(
                         type_=DeleteProjectKeyV1Response,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -245,7 +241,7 @@ class RawKeysClient:
                     headers=dict(_response.headers),
                     body=typing.cast(
                         typing.Any,
-                        parse_obj_as(
+                        construct_type(
                             type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
@@ -289,7 +285,6 @@ class AsyncRawKeysClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/projects/{jsonable_encoder(project_id)}/keys",
-            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
                 "status": status,
@@ -300,7 +295,7 @@ class AsyncRawKeysClient:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
                     ListProjectKeysV1Response,
-                    parse_obj_as(
+                    construct_type(
                         type_=ListProjectKeysV1Response,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -311,7 +306,7 @@ class AsyncRawKeysClient:
                     headers=dict(_response.headers),
                     body=typing.cast(
                         typing.Any,
-                        parse_obj_as(
+                        construct_type(
                             type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
@@ -349,7 +344,6 @@ class AsyncRawKeysClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/projects/{jsonable_encoder(project_id)}/keys",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json=request,
             headers={
@@ -362,7 +356,7 @@ class AsyncRawKeysClient:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
                     CreateKeyV1Response,
-                    parse_obj_as(
+                    construct_type(
                         type_=CreateKeyV1Response,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -373,7 +367,7 @@ class AsyncRawKeysClient:
                     headers=dict(_response.headers),
                     body=typing.cast(
                         typing.Any,
-                        parse_obj_as(
+                        construct_type(
                             type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
@@ -408,7 +402,6 @@ class AsyncRawKeysClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/projects/{jsonable_encoder(project_id)}/keys/{jsonable_encoder(key_id)}",
-            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -416,7 +409,7 @@ class AsyncRawKeysClient:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
                     GetProjectKeyV1Response,
-                    parse_obj_as(
+                    construct_type(
                         type_=GetProjectKeyV1Response,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -427,7 +420,7 @@ class AsyncRawKeysClient:
                     headers=dict(_response.headers),
                     body=typing.cast(
                         typing.Any,
-                        parse_obj_as(
+                        construct_type(
                             type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
@@ -462,7 +455,6 @@ class AsyncRawKeysClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/projects/{jsonable_encoder(project_id)}/keys/{jsonable_encoder(key_id)}",
-            base_url=self._client_wrapper.get_environment().base,
             method="DELETE",
             request_options=request_options,
         )
@@ -470,7 +462,7 @@ class AsyncRawKeysClient:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
                     DeleteProjectKeyV1Response,
-                    parse_obj_as(
+                    construct_type(
                         type_=DeleteProjectKeyV1Response,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -481,7 +473,7 @@ class AsyncRawKeysClient:
                     headers=dict(_response.headers),
                     body=typing.cast(
                         typing.Any,
-                        parse_obj_as(
+                        construct_type(
                             type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),

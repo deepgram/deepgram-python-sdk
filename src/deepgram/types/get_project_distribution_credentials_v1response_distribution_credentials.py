@@ -4,10 +4,11 @@ import datetime as dt
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ..core.pydantic_utilities import IS_PYDANTIC_V2
+from ..core.unchecked_base_model import UncheckedBaseModel
 
 
-class GetProjectDistributionCredentialsV1ResponseDistributionCredentials(UniversalBaseModel):
+class GetProjectDistributionCredentialsV1ResponseDistributionCredentials(UncheckedBaseModel):
     distribution_credentials_id: str = pydantic.Field()
     """
     Unique identifier for the distribution credentials

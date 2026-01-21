@@ -7,8 +7,8 @@ from ....core.api_error import ApiError
 from ....core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ....core.http_response import AsyncHttpResponse, HttpResponse
 from ....core.jsonable_encoder import jsonable_encoder
-from ....core.pydantic_utilities import parse_obj_as
 from ....core.request_options import RequestOptions
+from ....core.unchecked_base_model import construct_type
 from ....errors.bad_request_error import BadRequestError
 from ....types.create_project_distribution_credentials_v1response import CreateProjectDistributionCredentialsV1Response
 from ....types.get_project_distribution_credentials_v1response import GetProjectDistributionCredentialsV1Response
@@ -44,7 +44,6 @@ class RawDistributionCredentialsClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/projects/{jsonable_encoder(project_id)}/self-hosted/distribution/credentials",
-            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -52,7 +51,7 @@ class RawDistributionCredentialsClient:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
                     ListProjectDistributionCredentialsV1Response,
-                    parse_obj_as(
+                    construct_type(
                         type_=ListProjectDistributionCredentialsV1Response,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -63,7 +62,7 @@ class RawDistributionCredentialsClient:
                     headers=dict(_response.headers),
                     body=typing.cast(
                         typing.Any,
-                        parse_obj_as(
+                        construct_type(
                             type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
@@ -115,7 +114,6 @@ class RawDistributionCredentialsClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/projects/{jsonable_encoder(project_id)}/self-hosted/distribution/credentials",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             params={
                 "scopes": scopes,
@@ -134,7 +132,7 @@ class RawDistributionCredentialsClient:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
                     CreateProjectDistributionCredentialsV1Response,
-                    parse_obj_as(
+                    construct_type(
                         type_=CreateProjectDistributionCredentialsV1Response,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -145,7 +143,7 @@ class RawDistributionCredentialsClient:
                     headers=dict(_response.headers),
                     body=typing.cast(
                         typing.Any,
-                        parse_obj_as(
+                        construct_type(
                             type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
@@ -184,7 +182,6 @@ class RawDistributionCredentialsClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/projects/{jsonable_encoder(project_id)}/self-hosted/distribution/credentials/{jsonable_encoder(distribution_credentials_id)}",
-            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -192,7 +189,7 @@ class RawDistributionCredentialsClient:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
                     GetProjectDistributionCredentialsV1Response,
-                    parse_obj_as(
+                    construct_type(
                         type_=GetProjectDistributionCredentialsV1Response,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -203,7 +200,7 @@ class RawDistributionCredentialsClient:
                     headers=dict(_response.headers),
                     body=typing.cast(
                         typing.Any,
-                        parse_obj_as(
+                        construct_type(
                             type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
@@ -242,7 +239,6 @@ class RawDistributionCredentialsClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/projects/{jsonable_encoder(project_id)}/self-hosted/distribution/credentials/{jsonable_encoder(distribution_credentials_id)}",
-            base_url=self._client_wrapper.get_environment().base,
             method="DELETE",
             request_options=request_options,
         )
@@ -250,7 +246,7 @@ class RawDistributionCredentialsClient:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
                     GetProjectDistributionCredentialsV1Response,
-                    parse_obj_as(
+                    construct_type(
                         type_=GetProjectDistributionCredentialsV1Response,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -261,7 +257,7 @@ class RawDistributionCredentialsClient:
                     headers=dict(_response.headers),
                     body=typing.cast(
                         typing.Any,
-                        parse_obj_as(
+                        construct_type(
                             type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
@@ -298,7 +294,6 @@ class AsyncRawDistributionCredentialsClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/projects/{jsonable_encoder(project_id)}/self-hosted/distribution/credentials",
-            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -306,7 +301,7 @@ class AsyncRawDistributionCredentialsClient:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
                     ListProjectDistributionCredentialsV1Response,
-                    parse_obj_as(
+                    construct_type(
                         type_=ListProjectDistributionCredentialsV1Response,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -317,7 +312,7 @@ class AsyncRawDistributionCredentialsClient:
                     headers=dict(_response.headers),
                     body=typing.cast(
                         typing.Any,
-                        parse_obj_as(
+                        construct_type(
                             type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
@@ -369,7 +364,6 @@ class AsyncRawDistributionCredentialsClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/projects/{jsonable_encoder(project_id)}/self-hosted/distribution/credentials",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             params={
                 "scopes": scopes,
@@ -388,7 +382,7 @@ class AsyncRawDistributionCredentialsClient:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
                     CreateProjectDistributionCredentialsV1Response,
-                    parse_obj_as(
+                    construct_type(
                         type_=CreateProjectDistributionCredentialsV1Response,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -399,7 +393,7 @@ class AsyncRawDistributionCredentialsClient:
                     headers=dict(_response.headers),
                     body=typing.cast(
                         typing.Any,
-                        parse_obj_as(
+                        construct_type(
                             type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
@@ -438,7 +432,6 @@ class AsyncRawDistributionCredentialsClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/projects/{jsonable_encoder(project_id)}/self-hosted/distribution/credentials/{jsonable_encoder(distribution_credentials_id)}",
-            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -446,7 +439,7 @@ class AsyncRawDistributionCredentialsClient:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
                     GetProjectDistributionCredentialsV1Response,
-                    parse_obj_as(
+                    construct_type(
                         type_=GetProjectDistributionCredentialsV1Response,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -457,7 +450,7 @@ class AsyncRawDistributionCredentialsClient:
                     headers=dict(_response.headers),
                     body=typing.cast(
                         typing.Any,
-                        parse_obj_as(
+                        construct_type(
                             type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
@@ -496,7 +489,6 @@ class AsyncRawDistributionCredentialsClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/projects/{jsonable_encoder(project_id)}/self-hosted/distribution/credentials/{jsonable_encoder(distribution_credentials_id)}",
-            base_url=self._client_wrapper.get_environment().base,
             method="DELETE",
             request_options=request_options,
         )
@@ -504,7 +496,7 @@ class AsyncRawDistributionCredentialsClient:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
                     GetProjectDistributionCredentialsV1Response,
-                    parse_obj_as(
+                    construct_type(
                         type_=GetProjectDistributionCredentialsV1Response,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -515,7 +507,7 @@ class AsyncRawDistributionCredentialsClient:
                     headers=dict(_response.headers),
                     body=typing.cast(
                         typing.Any,
-                        parse_obj_as(
+                        construct_type(
                             type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),

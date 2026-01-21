@@ -3,11 +3,12 @@
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ..core.pydantic_utilities import IS_PYDANTIC_V2
+from ..core.unchecked_base_model import UncheckedBaseModel
 from .project_request_response import ProjectRequestResponse
 
 
-class ListProjectRequestsV1Response(UniversalBaseModel):
+class ListProjectRequestsV1Response(UncheckedBaseModel):
     page: typing.Optional[float] = pydantic.Field(default=None)
     """
     The page number of the paginated response

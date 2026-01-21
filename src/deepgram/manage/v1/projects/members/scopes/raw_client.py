@@ -7,8 +7,8 @@ from ......core.api_error import ApiError
 from ......core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ......core.http_response import AsyncHttpResponse, HttpResponse
 from ......core.jsonable_encoder import jsonable_encoder
-from ......core.pydantic_utilities import parse_obj_as
 from ......core.request_options import RequestOptions
+from ......core.unchecked_base_model import construct_type
 from ......errors.bad_request_error import BadRequestError
 from ......types.list_project_member_scopes_v1response import ListProjectMemberScopesV1Response
 from ......types.update_project_member_scopes_v1response import UpdateProjectMemberScopesV1Response
@@ -45,7 +45,6 @@ class RawScopesClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/projects/{jsonable_encoder(project_id)}/members/{jsonable_encoder(member_id)}/scopes",
-            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -53,7 +52,7 @@ class RawScopesClient:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
                     ListProjectMemberScopesV1Response,
-                    parse_obj_as(
+                    construct_type(
                         type_=ListProjectMemberScopesV1Response,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -64,7 +63,7 @@ class RawScopesClient:
                     headers=dict(_response.headers),
                     body=typing.cast(
                         typing.Any,
-                        parse_obj_as(
+                        construct_type(
                             type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
@@ -102,7 +101,6 @@ class RawScopesClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/projects/{jsonable_encoder(project_id)}/members/{jsonable_encoder(member_id)}/scopes",
-            base_url=self._client_wrapper.get_environment().base,
             method="PUT",
             json={
                 "scope": scope,
@@ -117,7 +115,7 @@ class RawScopesClient:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
                     UpdateProjectMemberScopesV1Response,
-                    parse_obj_as(
+                    construct_type(
                         type_=UpdateProjectMemberScopesV1Response,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -128,7 +126,7 @@ class RawScopesClient:
                     headers=dict(_response.headers),
                     body=typing.cast(
                         typing.Any,
-                        parse_obj_as(
+                        construct_type(
                             type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
@@ -168,7 +166,6 @@ class AsyncRawScopesClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/projects/{jsonable_encoder(project_id)}/members/{jsonable_encoder(member_id)}/scopes",
-            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -176,7 +173,7 @@ class AsyncRawScopesClient:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
                     ListProjectMemberScopesV1Response,
-                    parse_obj_as(
+                    construct_type(
                         type_=ListProjectMemberScopesV1Response,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -187,7 +184,7 @@ class AsyncRawScopesClient:
                     headers=dict(_response.headers),
                     body=typing.cast(
                         typing.Any,
-                        parse_obj_as(
+                        construct_type(
                             type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
@@ -225,7 +222,6 @@ class AsyncRawScopesClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/projects/{jsonable_encoder(project_id)}/members/{jsonable_encoder(member_id)}/scopes",
-            base_url=self._client_wrapper.get_environment().base,
             method="PUT",
             json={
                 "scope": scope,
@@ -240,7 +236,7 @@ class AsyncRawScopesClient:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
                     UpdateProjectMemberScopesV1Response,
-                    parse_obj_as(
+                    construct_type(
                         type_=UpdateProjectMemberScopesV1Response,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -251,7 +247,7 @@ class AsyncRawScopesClient:
                     headers=dict(_response.headers),
                     body=typing.cast(
                         typing.Any,
-                        parse_obj_as(
+                        construct_type(
                             type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),

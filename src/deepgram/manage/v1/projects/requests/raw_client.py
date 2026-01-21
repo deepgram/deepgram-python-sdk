@@ -9,8 +9,8 @@ from .....core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from .....core.datetime_utils import serialize_datetime
 from .....core.http_response import AsyncHttpResponse, HttpResponse
 from .....core.jsonable_encoder import jsonable_encoder
-from .....core.pydantic_utilities import parse_obj_as
 from .....core.request_options import RequestOptions
+from .....core.unchecked_base_model import construct_type
 from .....errors.bad_request_error import BadRequestError
 from .....types.get_project_request_v1response import GetProjectRequestV1Response
 from .....types.list_project_requests_v1response import ListProjectRequestsV1Response
@@ -88,7 +88,6 @@ class RawRequestsClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/projects/{jsonable_encoder(project_id)}/requests",
-            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
                 "start": serialize_datetime(start) if start is not None else None,
@@ -108,7 +107,7 @@ class RawRequestsClient:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
                     ListProjectRequestsV1Response,
-                    parse_obj_as(
+                    construct_type(
                         type_=ListProjectRequestsV1Response,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -119,7 +118,7 @@ class RawRequestsClient:
                     headers=dict(_response.headers),
                     body=typing.cast(
                         typing.Any,
-                        parse_obj_as(
+                        construct_type(
                             type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
@@ -154,7 +153,6 @@ class RawRequestsClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/projects/{jsonable_encoder(project_id)}/requests/{jsonable_encoder(request_id)}",
-            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -162,7 +160,7 @@ class RawRequestsClient:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
                     GetProjectRequestV1Response,
-                    parse_obj_as(
+                    construct_type(
                         type_=GetProjectRequestV1Response,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -173,7 +171,7 @@ class RawRequestsClient:
                     headers=dict(_response.headers),
                     body=typing.cast(
                         typing.Any,
-                        parse_obj_as(
+                        construct_type(
                             type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
@@ -253,7 +251,6 @@ class AsyncRawRequestsClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/projects/{jsonable_encoder(project_id)}/requests",
-            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
                 "start": serialize_datetime(start) if start is not None else None,
@@ -273,7 +270,7 @@ class AsyncRawRequestsClient:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
                     ListProjectRequestsV1Response,
-                    parse_obj_as(
+                    construct_type(
                         type_=ListProjectRequestsV1Response,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -284,7 +281,7 @@ class AsyncRawRequestsClient:
                     headers=dict(_response.headers),
                     body=typing.cast(
                         typing.Any,
-                        parse_obj_as(
+                        construct_type(
                             type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
@@ -319,7 +316,6 @@ class AsyncRawRequestsClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/projects/{jsonable_encoder(project_id)}/requests/{jsonable_encoder(request_id)}",
-            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -327,7 +323,7 @@ class AsyncRawRequestsClient:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
                     GetProjectRequestV1Response,
-                    parse_obj_as(
+                    construct_type(
                         type_=GetProjectRequestV1Response,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -338,7 +334,7 @@ class AsyncRawRequestsClient:
                     headers=dict(_response.headers),
                     body=typing.cast(
                         typing.Any,
-                        parse_obj_as(
+                        construct_type(
                             type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),

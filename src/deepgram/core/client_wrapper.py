@@ -3,7 +3,6 @@
 import typing
 
 import httpx
-from ..environment import DeepgramClientEnvironment
 from .http_client import AsyncHttpClient, HttpClient
 
 
@@ -13,20 +12,20 @@ class BaseClientWrapper:
         *,
         api_key: str,
         headers: typing.Optional[typing.Dict[str, str]] = None,
-        environment: DeepgramClientEnvironment,
+        base_url: str,
         timeout: typing.Optional[float] = None,
     ):
         self.api_key = api_key
         self._headers = headers
-        self._environment = environment
+        self._base_url = base_url
         self._timeout = timeout
 
     def get_headers(self) -> typing.Dict[str, str]:
         headers: typing.Dict[str, str] = {
-            "User-Agent": "deepgram-sdk/6.0.0-beta.4",
+            "User-Agent": "deepgram-sdk/5.3.2",
             "X-Fern-Language": "Python",
             "X-Fern-SDK-Name": "deepgram-sdk",
-            "X-Fern-SDK-Version": "6.0.0-beta.4",
+            "X-Fern-SDK-Version": "5.3.2",
             **(self.get_custom_headers() or {}),
         }
         headers["Authorization"] = f"Token {self.api_key}"
@@ -35,8 +34,8 @@ class BaseClientWrapper:
     def get_custom_headers(self) -> typing.Optional[typing.Dict[str, str]]:
         return self._headers
 
-    def get_environment(self) -> DeepgramClientEnvironment:
-        return self._environment
+    def get_base_url(self) -> str:
+        return self._base_url
 
     def get_timeout(self) -> typing.Optional[float]:
         return self._timeout
@@ -48,13 +47,16 @@ class SyncClientWrapper(BaseClientWrapper):
         *,
         api_key: str,
         headers: typing.Optional[typing.Dict[str, str]] = None,
-        environment: DeepgramClientEnvironment,
+        base_url: str,
         timeout: typing.Optional[float] = None,
         httpx_client: httpx.Client,
     ):
-        super().__init__(api_key=api_key, headers=headers, environment=environment, timeout=timeout)
+        super().__init__(api_key=api_key, headers=headers, base_url=base_url, timeout=timeout)
         self.httpx_client = HttpClient(
-            httpx_client=httpx_client, base_headers=self.get_headers, base_timeout=self.get_timeout
+            httpx_client=httpx_client,
+            base_headers=self.get_headers,
+            base_timeout=self.get_timeout,
+            base_url=self.get_base_url,
         )
 
 
@@ -64,17 +66,18 @@ class AsyncClientWrapper(BaseClientWrapper):
         *,
         api_key: str,
         headers: typing.Optional[typing.Dict[str, str]] = None,
-        environment: DeepgramClientEnvironment,
+        base_url: str,
         timeout: typing.Optional[float] = None,
         async_token: typing.Optional[typing.Callable[[], typing.Awaitable[str]]] = None,
         httpx_client: httpx.AsyncClient,
     ):
-        super().__init__(api_key=api_key, headers=headers, environment=environment, timeout=timeout)
+        super().__init__(api_key=api_key, headers=headers, base_url=base_url, timeout=timeout)
         self._async_token = async_token
         self.httpx_client = AsyncHttpClient(
             httpx_client=httpx_client,
             base_headers=self.get_headers,
             base_timeout=self.get_timeout,
+            base_url=self.get_base_url,
             async_base_headers=self.async_get_headers,
         )
 

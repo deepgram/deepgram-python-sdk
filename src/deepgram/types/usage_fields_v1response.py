@@ -3,11 +3,12 @@
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ..core.pydantic_utilities import IS_PYDANTIC_V2
+from ..core.unchecked_base_model import UncheckedBaseModel
 from .usage_fields_v1response_models_item import UsageFieldsV1ResponseModelsItem
 
 
-class UsageFieldsV1Response(UniversalBaseModel):
+class UsageFieldsV1Response(UncheckedBaseModel):
     tags: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
     """
     List of tags associated with the project

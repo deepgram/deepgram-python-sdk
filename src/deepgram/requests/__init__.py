@@ -128,7 +128,6 @@ if typing.TYPE_CHECKING:
     from .listen_v1response_results_utterances_item_words_item import (
         ListenV1ResponseResultsUtterancesItemWordsItemParams,
     )
-    from .listen_v2keyterm import ListenV2KeytermParams
     from .project_request_response import ProjectRequestResponseParams
     from .read_v1request import ReadV1RequestParams
     from .read_v1request_text import ReadV1RequestTextParams
@@ -260,7 +259,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ListenV1ResponseResultsUtterancesItemParams": ".listen_v1response_results_utterances_item",
     "ListenV1ResponseResultsUtterancesItemWordsItemParams": ".listen_v1response_results_utterances_item_words_item",
     "ListenV1ResponseResultsUtterancesParams": ".listen_v1response_results_utterances",
-    "ListenV2KeytermParams": ".listen_v2keyterm",
     "ProjectRequestResponseParams": ".project_request_response",
     "ReadV1RequestParams": ".read_v1request",
     "ReadV1RequestTextParams": ".read_v1request_text",
@@ -412,7 +410,6 @@ __all__ = [
     "ListenV1ResponseResultsUtterancesItemParams",
     "ListenV1ResponseResultsUtterancesItemWordsItemParams",
     "ListenV1ResponseResultsUtterancesParams",
-    "ListenV2KeytermParams",
     "ProjectRequestResponseParams",
     "ReadV1RequestParams",
     "ReadV1RequestTextParams",

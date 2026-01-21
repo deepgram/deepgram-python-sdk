@@ -7,8 +7,8 @@ from ....core.api_error import ApiError
 from ....core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ....core.http_response import AsyncHttpResponse, HttpResponse
 from ....core.jsonable_encoder import jsonable_encoder
-from ....core.pydantic_utilities import parse_obj_as
 from ....core.request_options import RequestOptions
+from ....core.unchecked_base_model import construct_type
 from ....errors.bad_request_error import BadRequestError
 from ....types.delete_project_v1response import DeleteProjectV1Response
 from ....types.get_project_v1response import GetProjectV1Response
@@ -40,7 +40,6 @@ class RawProjectsClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/projects",
-            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -48,7 +47,7 @@ class RawProjectsClient:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
                     ListProjectsV1Response,
-                    parse_obj_as(
+                    construct_type(
                         type_=ListProjectsV1Response,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -59,7 +58,7 @@ class RawProjectsClient:
                     headers=dict(_response.headers),
                     body=typing.cast(
                         typing.Any,
-                        parse_obj_as(
+                        construct_type(
                             type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
@@ -102,7 +101,6 @@ class RawProjectsClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/projects/{jsonable_encoder(project_id)}",
-            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
                 "limit": limit,
@@ -114,7 +112,7 @@ class RawProjectsClient:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
                     GetProjectV1Response,
-                    parse_obj_as(
+                    construct_type(
                         type_=GetProjectV1Response,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -125,7 +123,7 @@ class RawProjectsClient:
                     headers=dict(_response.headers),
                     body=typing.cast(
                         typing.Any,
-                        parse_obj_as(
+                        construct_type(
                             type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
@@ -157,7 +155,6 @@ class RawProjectsClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/projects/{jsonable_encoder(project_id)}",
-            base_url=self._client_wrapper.get_environment().base,
             method="DELETE",
             request_options=request_options,
         )
@@ -165,7 +162,7 @@ class RawProjectsClient:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
                     DeleteProjectV1Response,
-                    parse_obj_as(
+                    construct_type(
                         type_=DeleteProjectV1Response,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -176,7 +173,7 @@ class RawProjectsClient:
                     headers=dict(_response.headers),
                     body=typing.cast(
                         typing.Any,
-                        parse_obj_as(
+                        construct_type(
                             type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
@@ -215,7 +212,6 @@ class RawProjectsClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/projects/{jsonable_encoder(project_id)}",
-            base_url=self._client_wrapper.get_environment().base,
             method="PATCH",
             json={
                 "name": name,
@@ -230,7 +226,7 @@ class RawProjectsClient:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
                     UpdateProjectV1Response,
-                    parse_obj_as(
+                    construct_type(
                         type_=UpdateProjectV1Response,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -241,7 +237,7 @@ class RawProjectsClient:
                     headers=dict(_response.headers),
                     body=typing.cast(
                         typing.Any,
-                        parse_obj_as(
+                        construct_type(
                             type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
@@ -273,7 +269,6 @@ class RawProjectsClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/projects/{jsonable_encoder(project_id)}/leave",
-            base_url=self._client_wrapper.get_environment().base,
             method="DELETE",
             request_options=request_options,
         )
@@ -281,7 +276,7 @@ class RawProjectsClient:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
                     LeaveProjectV1Response,
-                    parse_obj_as(
+                    construct_type(
                         type_=LeaveProjectV1Response,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -292,7 +287,7 @@ class RawProjectsClient:
                     headers=dict(_response.headers),
                     body=typing.cast(
                         typing.Any,
-                        parse_obj_as(
+                        construct_type(
                             type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
@@ -326,7 +321,6 @@ class AsyncRawProjectsClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/projects",
-            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -334,7 +328,7 @@ class AsyncRawProjectsClient:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
                     ListProjectsV1Response,
-                    parse_obj_as(
+                    construct_type(
                         type_=ListProjectsV1Response,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -345,7 +339,7 @@ class AsyncRawProjectsClient:
                     headers=dict(_response.headers),
                     body=typing.cast(
                         typing.Any,
-                        parse_obj_as(
+                        construct_type(
                             type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
@@ -388,7 +382,6 @@ class AsyncRawProjectsClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/projects/{jsonable_encoder(project_id)}",
-            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
                 "limit": limit,
@@ -400,7 +393,7 @@ class AsyncRawProjectsClient:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
                     GetProjectV1Response,
-                    parse_obj_as(
+                    construct_type(
                         type_=GetProjectV1Response,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -411,7 +404,7 @@ class AsyncRawProjectsClient:
                     headers=dict(_response.headers),
                     body=typing.cast(
                         typing.Any,
-                        parse_obj_as(
+                        construct_type(
                             type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
@@ -443,7 +436,6 @@ class AsyncRawProjectsClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/projects/{jsonable_encoder(project_id)}",
-            base_url=self._client_wrapper.get_environment().base,
             method="DELETE",
             request_options=request_options,
         )
@@ -451,7 +443,7 @@ class AsyncRawProjectsClient:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
                     DeleteProjectV1Response,
-                    parse_obj_as(
+                    construct_type(
                         type_=DeleteProjectV1Response,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -462,7 +454,7 @@ class AsyncRawProjectsClient:
                     headers=dict(_response.headers),
                     body=typing.cast(
                         typing.Any,
-                        parse_obj_as(
+                        construct_type(
                             type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
@@ -501,7 +493,6 @@ class AsyncRawProjectsClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/projects/{jsonable_encoder(project_id)}",
-            base_url=self._client_wrapper.get_environment().base,
             method="PATCH",
             json={
                 "name": name,
@@ -516,7 +507,7 @@ class AsyncRawProjectsClient:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
                     UpdateProjectV1Response,
-                    parse_obj_as(
+                    construct_type(
                         type_=UpdateProjectV1Response,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -527,7 +518,7 @@ class AsyncRawProjectsClient:
                     headers=dict(_response.headers),
                     body=typing.cast(
                         typing.Any,
-                        parse_obj_as(
+                        construct_type(
                             type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
@@ -559,7 +550,6 @@ class AsyncRawProjectsClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/projects/{jsonable_encoder(project_id)}/leave",
-            base_url=self._client_wrapper.get_environment().base,
             method="DELETE",
             request_options=request_options,
         )
@@ -567,7 +557,7 @@ class AsyncRawProjectsClient:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
                     LeaveProjectV1Response,
-                    parse_obj_as(
+                    construct_type(
                         type_=LeaveProjectV1Response,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -578,7 +568,7 @@ class AsyncRawProjectsClient:
                     headers=dict(_response.headers),
                     body=typing.cast(
                         typing.Any,
-                        parse_obj_as(
+                        construct_type(
                             type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
