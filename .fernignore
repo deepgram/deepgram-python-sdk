@@ -45,3 +45,6 @@ tests/manual
 .github
 docs
 examples
+
+# Ignore the ignores
+.gitignore
