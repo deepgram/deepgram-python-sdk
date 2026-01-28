@@ -3,11 +3,10 @@
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
-from ..core.unchecked_base_model import UncheckedBaseModel
+from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
-class SharedSentimentsAverage(UncheckedBaseModel):
+class SharedSentimentsAverage(UniversalBaseModel):
     sentiment: typing.Optional[str] = None
     sentiment_score: typing.Optional[float] = None
 

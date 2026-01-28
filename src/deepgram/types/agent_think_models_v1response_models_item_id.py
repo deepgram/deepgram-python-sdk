@@ -3,11 +3,10 @@
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
-from ..core.unchecked_base_model import UncheckedBaseModel
+from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
-class AgentThinkModelsV1ResponseModelsItemId(UncheckedBaseModel):
+class AgentThinkModelsV1ResponseModelsItemId(UniversalBaseModel):
     """
     AWS Bedrock models (custom models accepted)
     """

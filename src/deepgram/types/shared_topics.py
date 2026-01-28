@@ -3,12 +3,11 @@
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
-from ..core.unchecked_base_model import UncheckedBaseModel
+from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from .shared_topics_results import SharedTopicsResults
 
 
-class SharedTopics(UncheckedBaseModel):
+class SharedTopics(UniversalBaseModel):
     """
     Output whenever `topics=true` is used
     """

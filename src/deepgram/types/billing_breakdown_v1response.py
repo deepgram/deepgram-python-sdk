@@ -3,13 +3,12 @@
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
-from ..core.unchecked_base_model import UncheckedBaseModel
+from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from .billing_breakdown_v1response_resolution import BillingBreakdownV1ResponseResolution
 from .billing_breakdown_v1response_results_item import BillingBreakdownV1ResponseResultsItem
 
 
-class BillingBreakdownV1Response(UncheckedBaseModel):
+class BillingBreakdownV1Response(UniversalBaseModel):
     start: str = pydantic.Field()
     """
     Start date of the billing summmary period

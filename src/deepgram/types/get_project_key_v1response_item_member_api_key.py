@@ -4,11 +4,10 @@ import datetime as dt
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
-from ..core.unchecked_base_model import UncheckedBaseModel
+from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
-class GetProjectKeyV1ResponseItemMemberApiKey(UncheckedBaseModel):
+class GetProjectKeyV1ResponseItemMemberApiKey(UniversalBaseModel):
     api_key_id: typing.Optional[str] = None
     comment: typing.Optional[str] = None
     scopes: typing.Optional[typing.List[str]] = None

@@ -3,12 +3,11 @@
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
-from ..core.unchecked_base_model import UncheckedBaseModel
+from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from .list_billing_fields_v1response_deployments_item import ListBillingFieldsV1ResponseDeploymentsItem
 
 
-class ListBillingFieldsV1Response(UncheckedBaseModel):
+class ListBillingFieldsV1Response(UniversalBaseModel):
     accessors: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
     """
     List of accessor UUIDs for the time period

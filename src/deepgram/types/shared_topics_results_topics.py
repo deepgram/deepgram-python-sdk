@@ -3,12 +3,11 @@
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
-from ..core.unchecked_base_model import UncheckedBaseModel
+from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from .shared_topics_results_topics_segments_item import SharedTopicsResultsTopicsSegmentsItem
 
 
-class SharedTopicsResultsTopics(UncheckedBaseModel):
+class SharedTopicsResultsTopics(UniversalBaseModel):
     segments: typing.Optional[typing.List[SharedTopicsResultsTopicsSegmentsItem]] = None
 
     if IS_PYDANTIC_V2:

@@ -3,12 +3,11 @@
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
-from ..core.unchecked_base_model import UncheckedBaseModel
+from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from .usage_v1response_resolution import UsageV1ResponseResolution
 
 
-class UsageV1Response(UncheckedBaseModel):
+class UsageV1Response(UniversalBaseModel):
     start: typing.Optional[str] = None
     end: typing.Optional[str] = None
     resolution: typing.Optional[UsageV1ResponseResolution] = None

@@ -3,12 +3,11 @@
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
-from ..core.unchecked_base_model import UncheckedBaseModel
+from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from .shared_topics_results_topics_segments_item_topics_item import SharedTopicsResultsTopicsSegmentsItemTopicsItem
 
 
-class SharedTopicsResultsTopicsSegmentsItem(UncheckedBaseModel):
+class SharedTopicsResultsTopicsSegmentsItem(UniversalBaseModel):
     text: typing.Optional[str] = None
     start_word: typing.Optional[float] = None
     end_word: typing.Optional[float] = None

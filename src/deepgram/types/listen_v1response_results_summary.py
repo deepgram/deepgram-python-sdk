@@ -3,11 +3,10 @@
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
-from ..core.unchecked_base_model import UncheckedBaseModel
+from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
-class ListenV1ResponseResultsSummary(UncheckedBaseModel):
+class ListenV1ResponseResultsSummary(UniversalBaseModel):
     result: typing.Optional[str] = None
     short: typing.Optional[str] = None
 

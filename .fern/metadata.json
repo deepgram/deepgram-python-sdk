@@ -11,10 +11,7 @@
     },
     "use_typeddict_requests": true,
     "should_generate_websocket_clients": true,
-    "enable_wire_tests": true,
-    "pydantic_config": {
-      "skip_validation": true
-    }
+    "enable_wire_tests": true
   },
   "sdkVersion": "5.3.2"
 }

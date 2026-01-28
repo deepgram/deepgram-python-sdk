@@ -3,12 +3,11 @@
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
-from ..core.unchecked_base_model import UncheckedBaseModel
+from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from .agent_think_models_v1response_models_item_zero_id import AgentThinkModelsV1ResponseModelsItemZeroId
 
 
-class AgentThinkModelsV1ResponseModelsItemZero(UncheckedBaseModel):
+class AgentThinkModelsV1ResponseModelsItemZero(UniversalBaseModel):
     """
     OpenAI models
     """

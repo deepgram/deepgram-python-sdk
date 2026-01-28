@@ -3,11 +3,10 @@
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
-from ..core.unchecked_base_model import UncheckedBaseModel
+from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
-class GrantV1Response(UncheckedBaseModel):
+class GrantV1Response(UniversalBaseModel):
     access_token: str = pydantic.Field()
     """
     JSON Web Token (JWT)

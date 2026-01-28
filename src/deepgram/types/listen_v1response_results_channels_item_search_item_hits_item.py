@@ -3,11 +3,10 @@
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
-from ..core.unchecked_base_model import UncheckedBaseModel
+from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
-class ListenV1ResponseResultsChannelsItemSearchItemHitsItem(UncheckedBaseModel):
+class ListenV1ResponseResultsChannelsItemSearchItemHitsItem(UniversalBaseModel):
     confidence: typing.Optional[float] = None
     start: typing.Optional[float] = None
     end: typing.Optional[float] = None

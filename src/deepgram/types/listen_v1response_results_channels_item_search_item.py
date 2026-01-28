@@ -3,14 +3,13 @@
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
-from ..core.unchecked_base_model import UncheckedBaseModel
+from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from .listen_v1response_results_channels_item_search_item_hits_item import (
     ListenV1ResponseResultsChannelsItemSearchItemHitsItem,
 )
 
 
-class ListenV1ResponseResultsChannelsItemSearchItem(UncheckedBaseModel):
+class ListenV1ResponseResultsChannelsItemSearchItem(UniversalBaseModel):
     query: typing.Optional[str] = None
     hits: typing.Optional[typing.List[ListenV1ResponseResultsChannelsItemSearchItemHitsItem]] = None
 

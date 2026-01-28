@@ -3,14 +3,13 @@
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
-from ..core.unchecked_base_model import UncheckedBaseModel
+from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from .listen_v1response_results_channels_item_alternatives_item_paragraphs_paragraphs_item import (
     ListenV1ResponseResultsChannelsItemAlternativesItemParagraphsParagraphsItem,
 )
 
 
-class ListenV1ResponseResultsChannelsItemAlternativesItemParagraphs(UncheckedBaseModel):
+class ListenV1ResponseResultsChannelsItemAlternativesItemParagraphs(UniversalBaseModel):
     transcript: typing.Optional[str] = None
     paragraphs: typing.Optional[
         typing.List[ListenV1ResponseResultsChannelsItemAlternativesItemParagraphsParagraphsItem]

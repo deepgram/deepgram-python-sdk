@@ -3,12 +3,11 @@
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
-from ..core.unchecked_base_model import UncheckedBaseModel
+from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from .shared_intents_results import SharedIntentsResults
 
 
-class SharedIntents(UncheckedBaseModel):
+class SharedIntents(UniversalBaseModel):
     """
     Output whenever `intents=true` is used
     """

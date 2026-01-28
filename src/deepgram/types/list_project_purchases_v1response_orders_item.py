@@ -4,11 +4,10 @@ import datetime as dt
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
-from ..core.unchecked_base_model import UncheckedBaseModel
+from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
-class ListProjectPurchasesV1ResponseOrdersItem(UncheckedBaseModel):
+class ListProjectPurchasesV1ResponseOrdersItem(UniversalBaseModel):
     order_id: typing.Optional[str] = None
     expiration: typing.Optional[dt.datetime] = None
     created: typing.Optional[dt.datetime] = None

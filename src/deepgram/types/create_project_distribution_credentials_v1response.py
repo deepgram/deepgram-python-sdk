@@ -3,8 +3,7 @@
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
-from ..core.unchecked_base_model import UncheckedBaseModel
+from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from .create_project_distribution_credentials_v1response_distribution_credentials import (
     CreateProjectDistributionCredentialsV1ResponseDistributionCredentials,
 )
@@ -13,7 +12,7 @@ from .create_project_distribution_credentials_v1response_member import (
 )
 
 
-class CreateProjectDistributionCredentialsV1Response(UncheckedBaseModel):
+class CreateProjectDistributionCredentialsV1Response(UniversalBaseModel):
     member: CreateProjectDistributionCredentialsV1ResponseMember
     distribution_credentials: CreateProjectDistributionCredentialsV1ResponseDistributionCredentials
 

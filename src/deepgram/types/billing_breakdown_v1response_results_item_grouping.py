@@ -3,11 +3,10 @@
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
-from ..core.unchecked_base_model import UncheckedBaseModel
+from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
-class BillingBreakdownV1ResponseResultsItemGrouping(UncheckedBaseModel):
+class BillingBreakdownV1ResponseResultsItemGrouping(UniversalBaseModel):
     start: typing.Optional[str] = pydantic.Field(default=None)
     """
     Start date for this group

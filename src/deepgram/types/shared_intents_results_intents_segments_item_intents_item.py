@@ -3,11 +3,10 @@
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
-from ..core.unchecked_base_model import UncheckedBaseModel
+from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
-class SharedIntentsResultsIntentsSegmentsItemIntentsItem(UncheckedBaseModel):
+class SharedIntentsResultsIntentsSegmentsItemIntentsItem(UniversalBaseModel):
     intent: typing.Optional[str] = None
     confidence_score: typing.Optional[float] = None
 

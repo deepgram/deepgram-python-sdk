@@ -3,12 +3,11 @@
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
-from ..core.unchecked_base_model import UncheckedBaseModel
+from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from .list_project_purchases_v1response_orders_item import ListProjectPurchasesV1ResponseOrdersItem
 
 
-class ListProjectPurchasesV1Response(UncheckedBaseModel):
+class ListProjectPurchasesV1Response(UniversalBaseModel):
     orders: typing.Optional[typing.List[ListProjectPurchasesV1ResponseOrdersItem]] = None
 
     if IS_PYDANTIC_V2:

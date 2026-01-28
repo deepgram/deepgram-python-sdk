@@ -3,11 +3,10 @@
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
-from ..core.unchecked_base_model import UncheckedBaseModel
+from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
-class ReadV1RequestUrl(UncheckedBaseModel):
+class ReadV1RequestUrl(UniversalBaseModel):
     url: str = pydantic.Field()
     """
     A URL pointing to the text source

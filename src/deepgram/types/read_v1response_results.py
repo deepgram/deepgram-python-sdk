@@ -3,15 +3,14 @@
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
-from ..core.unchecked_base_model import UncheckedBaseModel
+from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from .read_v1response_results_summary import ReadV1ResponseResultsSummary
 from .shared_intents import SharedIntents
 from .shared_sentiments import SharedSentiments
 from .shared_topics import SharedTopics
 
 
-class ReadV1ResponseResults(UncheckedBaseModel):
+class ReadV1ResponseResults(UniversalBaseModel):
     summary: typing.Optional[ReadV1ResponseResultsSummary] = None
     topics: typing.Optional[SharedTopics] = None
     intents: typing.Optional[SharedIntents] = None

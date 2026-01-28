@@ -6,8 +6,8 @@ from json.decoder import JSONDecodeError
 from ....core.api_error import ApiError
 from ....core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ....core.http_response import AsyncHttpResponse, HttpResponse
+from ....core.pydantic_utilities import parse_obj_as
 from ....core.request_options import RequestOptions
-from ....core.unchecked_base_model import construct_type
 from ....errors.bad_request_error import BadRequestError
 from ....types.grant_v1response import GrantV1Response
 
@@ -54,7 +54,7 @@ class RawTokensClient:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
                     GrantV1Response,
-                    construct_type(
+                    parse_obj_as(
                         type_=GrantV1Response,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -65,7 +65,7 @@ class RawTokensClient:
                     headers=dict(_response.headers),
                     body=typing.cast(
                         typing.Any,
-                        construct_type(
+                        parse_obj_as(
                             type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
@@ -116,7 +116,7 @@ class AsyncRawTokensClient:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
                     GrantV1Response,
-                    construct_type(
+                    parse_obj_as(
                         type_=GrantV1Response,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -127,7 +127,7 @@ class AsyncRawTokensClient:
                     headers=dict(_response.headers),
                     body=typing.cast(
                         typing.Any,
-                        construct_type(
+                        parse_obj_as(
                             type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),

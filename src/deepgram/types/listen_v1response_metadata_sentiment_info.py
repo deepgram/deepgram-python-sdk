@@ -3,11 +3,10 @@
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
-from ..core.unchecked_base_model import UncheckedBaseModel
+from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
-class ListenV1ResponseMetadataSentimentInfo(UncheckedBaseModel):
+class ListenV1ResponseMetadataSentimentInfo(UniversalBaseModel):
     model_uuid: typing.Optional[str] = None
     input_tokens: typing.Optional[float] = None
     output_tokens: typing.Optional[float] = None

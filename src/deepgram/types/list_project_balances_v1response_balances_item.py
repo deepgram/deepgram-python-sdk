@@ -3,11 +3,10 @@
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
-from ..core.unchecked_base_model import UncheckedBaseModel
+from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
-class ListProjectBalancesV1ResponseBalancesItem(UncheckedBaseModel):
+class ListProjectBalancesV1ResponseBalancesItem(UniversalBaseModel):
     balance_id: typing.Optional[str] = pydantic.Field(default=None)
     """
     The unique identifier of the balance

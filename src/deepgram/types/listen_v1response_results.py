@@ -3,8 +3,7 @@
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
-from ..core.unchecked_base_model import UncheckedBaseModel
+from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from .listen_v1response_results_channels import ListenV1ResponseResultsChannels
 from .listen_v1response_results_summary import ListenV1ResponseResultsSummary
 from .listen_v1response_results_utterances import ListenV1ResponseResultsUtterances
@@ -13,7 +12,7 @@ from .shared_sentiments import SharedSentiments
 from .shared_topics import SharedTopics
 
 
-class ListenV1ResponseResults(UncheckedBaseModel):
+class ListenV1ResponseResults(UniversalBaseModel):
     channels: ListenV1ResponseResultsChannels
     utterances: typing.Optional[ListenV1ResponseResultsUtterances] = None
     summary: typing.Optional[ListenV1ResponseResultsSummary] = None

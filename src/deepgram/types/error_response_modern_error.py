@@ -3,11 +3,10 @@
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
-from ..core.unchecked_base_model import UncheckedBaseModel
+from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
-class ErrorResponseModernError(UncheckedBaseModel):
+class ErrorResponseModernError(UniversalBaseModel):
     category: typing.Optional[str] = pydantic.Field(default=None)
     """
     The category of the error

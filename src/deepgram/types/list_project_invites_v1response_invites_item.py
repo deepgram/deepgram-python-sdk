@@ -3,11 +3,10 @@
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
-from ..core.unchecked_base_model import UncheckedBaseModel
+from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
-class ListProjectInvitesV1ResponseInvitesItem(UncheckedBaseModel):
+class ListProjectInvitesV1ResponseInvitesItem(UniversalBaseModel):
     email: typing.Optional[str] = pydantic.Field(default=None)
     """
     The email address of the invitee

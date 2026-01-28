@@ -3,12 +3,11 @@
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
-from ..core.unchecked_base_model import UncheckedBaseModel
+from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from .read_v1response_metadata_metadata import ReadV1ResponseMetadataMetadata
 
 
-class ReadV1ResponseMetadata(UncheckedBaseModel):
+class ReadV1ResponseMetadata(UniversalBaseModel):
     metadata: typing.Optional[ReadV1ResponseMetadataMetadata] = None
 
     if IS_PYDANTIC_V2:

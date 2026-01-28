@@ -4,12 +4,11 @@ import typing
 
 import pydantic
 import typing_extensions
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
+from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from ..core.serialization import FieldMetadata
-from ..core.unchecked_base_model import UncheckedBaseModel
 
 
-class ListModelsV1ResponseSttModels(UncheckedBaseModel):
+class ListModelsV1ResponseSttModels(UniversalBaseModel):
     name: typing.Optional[str] = None
     canonical_name: typing.Optional[str] = None
     architecture: typing.Optional[str] = None

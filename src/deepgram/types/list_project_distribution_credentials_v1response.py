@@ -3,14 +3,13 @@
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
-from ..core.unchecked_base_model import UncheckedBaseModel
+from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from .list_project_distribution_credentials_v1response_distribution_credentials_item import (
     ListProjectDistributionCredentialsV1ResponseDistributionCredentialsItem,
 )
 
 
-class ListProjectDistributionCredentialsV1Response(UncheckedBaseModel):
+class ListProjectDistributionCredentialsV1Response(UniversalBaseModel):
     distribution_credentials: typing.Optional[
         typing.List[ListProjectDistributionCredentialsV1ResponseDistributionCredentialsItem]
     ] = pydantic.Field(default=None)

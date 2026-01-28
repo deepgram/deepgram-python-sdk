@@ -3,12 +3,11 @@
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
-from ..core.unchecked_base_model import UncheckedBaseModel
+from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from .billing_breakdown_v1response_results_item_grouping import BillingBreakdownV1ResponseResultsItemGrouping
 
 
-class BillingBreakdownV1ResponseResultsItem(UncheckedBaseModel):
+class BillingBreakdownV1ResponseResultsItem(UniversalBaseModel):
     dollars: float = pydantic.Field()
     """
     USD cost of the billing for this grouping

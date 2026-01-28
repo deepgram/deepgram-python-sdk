@@ -3,13 +3,12 @@
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
-from ..core.unchecked_base_model import UncheckedBaseModel
+from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from .usage_breakdown_v1response_resolution import UsageBreakdownV1ResponseResolution
 from .usage_breakdown_v1response_results_item import UsageBreakdownV1ResponseResultsItem
 
 
-class UsageBreakdownV1Response(UncheckedBaseModel):
+class UsageBreakdownV1Response(UniversalBaseModel):
     start: str = pydantic.Field()
     """
     Start date of the usage period

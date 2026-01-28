@@ -3,13 +3,12 @@
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
-from ..core.unchecked_base_model import UncheckedBaseModel
+from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from .list_models_v1response_stt_models import ListModelsV1ResponseSttModels
 from .list_models_v1response_tts_models import ListModelsV1ResponseTtsModels
 
 
-class ListModelsV1Response(UncheckedBaseModel):
+class ListModelsV1Response(UniversalBaseModel):
     stt: typing.Optional[typing.List[ListModelsV1ResponseSttModels]] = None
     tts: typing.Optional[typing.List[ListModelsV1ResponseTtsModels]] = None
 
