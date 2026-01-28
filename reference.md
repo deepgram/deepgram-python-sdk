@@ -1,6 +1,6 @@
 # Reference
 ## Agent V1 Settings Think Models
-<details><summary><code>client.agent.v1.settings.think.models.<a href="src/deepgram/agent/v1/settings/think/models/client.py">list</a>() -> AsyncHttpResponse[AgentThinkModelsV1Response]</code></summary>
+<details><summary><code>client.agent.v1.settings.think.models.<a href="src/deepgram/agent/v1/settings/think/models/client.py">list</a>() -&gt; AsyncHttpResponse[AgentThinkModelsV1Response]</code></summary>
 <dl>
 <dd>
 
@@ -61,7 +61,7 @@ client.agent.v1.settings.think.models.list()
 </details>
 
 ## Auth V1 Tokens
-<details><summary><code>client.auth.v1.tokens.<a href="src/deepgram/auth/v1/tokens/client.py">grant</a>(...) -> AsyncHttpResponse[GrantV1Response]</code></summary>
+<details><summary><code>client.auth.v1.tokens.<a href="src/deepgram/auth/v1/tokens/client.py">grant</a>(...) -&gt; AsyncHttpResponse[GrantV1Response]</code></summary>
 <dl>
 <dd>
 
@@ -130,7 +130,7 @@ client.auth.v1.tokens.grant()
 </details>
 
 ## Listen V1 Media
-<details><summary><code>client.listen.v1.media.<a href="src/deepgram/listen/v1/media/client.py">transcribe_url</a>(...) -> AsyncHttpResponse[MediaTranscribeResponse]</code></summary>
+<details><summary><code>client.listen.v1.media.<a href="src/deepgram/listen/v1/media/client.py">transcribe_url</a>(...) -&gt; AsyncHttpResponse[MediaTranscribeResponse]</code></summary>
 <dl>
 <dd>
 
@@ -523,7 +523,7 @@ client.listen.v1.media.transcribe_url(
 </dl>
 </details>
 
-<details><summary><code>client.listen.v1.media.<a href="src/deepgram/listen/v1/media/client.py">transcribe_file</a>(...) -> AsyncHttpResponse[MediaTranscribeResponse]</code></summary>
+<details><summary><code>client.listen.v1.media.<a href="src/deepgram/listen/v1/media/client.py">transcribe_file</a>(...) -&gt; AsyncHttpResponse[MediaTranscribeResponse]</code></summary>
 <dl>
 <dd>
 
@@ -880,7 +880,7 @@ client.listen.v1.media.transcribe_file()
 </details>
 
 ## Manage V1 Models
-<details><summary><code>client.manage.v1.models.<a href="src/deepgram/manage/v1/models/client.py">list</a>(...) -> AsyncHttpResponse[ListModelsV1Response]</code></summary>
+<details><summary><code>client.manage.v1.models.<a href="src/deepgram/manage/v1/models/client.py">list</a>(...) -&gt; AsyncHttpResponse[ListModelsV1Response]</code></summary>
 <dl>
 <dd>
 
@@ -950,7 +950,7 @@ client.manage.v1.models.list(
 </dl>
 </details>
 
-<details><summary><code>client.manage.v1.models.<a href="src/deepgram/manage/v1/models/client.py">get</a>(...) -> AsyncHttpResponse[GetModelV1Response]</code></summary>
+<details><summary><code>client.manage.v1.models.<a href="src/deepgram/manage/v1/models/client.py">get</a>(...) -&gt; AsyncHttpResponse[GetModelV1Response]</code></summary>
 <dl>
 <dd>
 
@@ -1021,7 +1021,7 @@ client.manage.v1.models.get(
 </details>
 
 ## Manage V1 Projects
-<details><summary><code>client.manage.v1.projects.<a href="src/deepgram/manage/v1/projects/client.py">list</a>() -> AsyncHttpResponse[ListProjectsV1Response]</code></summary>
+<details><summary><code>client.manage.v1.projects.<a href="src/deepgram/manage/v1/projects/client.py">list</a>() -&gt; AsyncHttpResponse[ListProjectsV1Response]</code></summary>
 <dl>
 <dd>
 
@@ -1081,7 +1081,7 @@ client.manage.v1.projects.list()
 </dl>
 </details>
 
-<details><summary><code>client.manage.v1.projects.<a href="src/deepgram/manage/v1/projects/client.py">get</a>(...) -> AsyncHttpResponse[GetProjectV1Response]</code></summary>
+<details><summary><code>client.manage.v1.projects.<a href="src/deepgram/manage/v1/projects/client.py">get</a>(...) -&gt; AsyncHttpResponse[GetProjectV1Response]</code></summary>
 <dl>
 <dd>
 
@@ -1169,7 +1169,7 @@ client.manage.v1.projects.get(
 </dl>
 </details>
 
-<details><summary><code>client.manage.v1.projects.<a href="src/deepgram/manage/v1/projects/client.py">delete</a>(...) -> AsyncHttpResponse[DeleteProjectV1Response]</code></summary>
+<details><summary><code>client.manage.v1.projects.<a href="src/deepgram/manage/v1/projects/client.py">delete</a>(...) -&gt; AsyncHttpResponse[DeleteProjectV1Response]</code></summary>
 <dl>
 <dd>
 
@@ -1239,7 +1239,7 @@ client.manage.v1.projects.delete(
 </dl>
 </details>
 
-<details><summary><code>client.manage.v1.projects.<a href="src/deepgram/manage/v1/projects/client.py">update</a>(...) -> AsyncHttpResponse[UpdateProjectV1Response]</code></summary>
+<details><summary><code>client.manage.v1.projects.<a href="src/deepgram/manage/v1/projects/client.py">update</a>(...) -&gt; AsyncHttpResponse[UpdateProjectV1Response]</code></summary>
 <dl>
 <dd>
 
@@ -1317,7 +1317,7 @@ client.manage.v1.projects.update(
 </dl>
 </details>
 
-<details><summary><code>client.manage.v1.projects.<a href="src/deepgram/manage/v1/projects/client.py">leave</a>(...) -> AsyncHttpResponse[LeaveProjectV1Response]</code></summary>
+<details><summary><code>client.manage.v1.projects.<a href="src/deepgram/manage/v1/projects/client.py">leave</a>(...) -&gt; AsyncHttpResponse[LeaveProjectV1Response]</code></summary>
 <dl>
 <dd>
 
@@ -1388,7 +1388,7 @@ client.manage.v1.projects.leave(
 </details>
 
 ## Manage V1 Projects Keys
-<details><summary><code>client.manage.v1.projects.keys.<a href="src/deepgram/manage/v1/projects/keys/client.py">list</a>(...) -> AsyncHttpResponse[ListProjectKeysV1Response]</code></summary>
+<details><summary><code>client.manage.v1.projects.keys.<a href="src/deepgram/manage/v1/projects/keys/client.py">list</a>(...) -&gt; AsyncHttpResponse[ListProjectKeysV1Response]</code></summary>
 <dl>
 <dd>
 
@@ -1467,7 +1467,7 @@ client.manage.v1.projects.keys.list(
 </dl>
 </details>
 
-<details><summary><code>client.manage.v1.projects.keys.<a href="src/deepgram/manage/v1/projects/keys/client.py">create</a>(...) -> AsyncHttpResponse[CreateKeyV1Response]</code></summary>
+<details><summary><code>client.manage.v1.projects.keys.<a href="src/deepgram/manage/v1/projects/keys/client.py">create</a>(...) -&gt; AsyncHttpResponse[CreateKeyV1Response]</code></summary>
 <dl>
 <dd>
 
@@ -1546,7 +1546,7 @@ client.manage.v1.projects.keys.create(
 </dl>
 </details>
 
-<details><summary><code>client.manage.v1.projects.keys.<a href="src/deepgram/manage/v1/projects/keys/client.py">get</a>(...) -> AsyncHttpResponse[GetProjectKeyV1Response]</code></summary>
+<details><summary><code>client.manage.v1.projects.keys.<a href="src/deepgram/manage/v1/projects/keys/client.py">get</a>(...) -&gt; AsyncHttpResponse[GetProjectKeyV1Response]</code></summary>
 <dl>
 <dd>
 
@@ -1625,7 +1625,7 @@ client.manage.v1.projects.keys.get(
 </dl>
 </details>
 
-<details><summary><code>client.manage.v1.projects.keys.<a href="src/deepgram/manage/v1/projects/keys/client.py">delete</a>(...) -> AsyncHttpResponse[DeleteProjectKeyV1Response]</code></summary>
+<details><summary><code>client.manage.v1.projects.keys.<a href="src/deepgram/manage/v1/projects/keys/client.py">delete</a>(...) -&gt; AsyncHttpResponse[DeleteProjectKeyV1Response]</code></summary>
 <dl>
 <dd>
 
@@ -1705,7 +1705,7 @@ client.manage.v1.projects.keys.delete(
 </details>
 
 ## Manage V1 Projects Members
-<details><summary><code>client.manage.v1.projects.members.<a href="src/deepgram/manage/v1/projects/members/client.py">list</a>(...) -> AsyncHttpResponse[ListProjectMembersV1Response]</code></summary>
+<details><summary><code>client.manage.v1.projects.members.<a href="src/deepgram/manage/v1/projects/members/client.py">list</a>(...) -&gt; AsyncHttpResponse[ListProjectMembersV1Response]</code></summary>
 <dl>
 <dd>
 
@@ -1775,7 +1775,7 @@ client.manage.v1.projects.members.list(
 </dl>
 </details>
 
-<details><summary><code>client.manage.v1.projects.members.<a href="src/deepgram/manage/v1/projects/members/client.py">delete</a>(...) -> AsyncHttpResponse[DeleteProjectMemberV1Response]</code></summary>
+<details><summary><code>client.manage.v1.projects.members.<a href="src/deepgram/manage/v1/projects/members/client.py">delete</a>(...) -&gt; AsyncHttpResponse[DeleteProjectMemberV1Response]</code></summary>
 <dl>
 <dd>
 
@@ -1855,7 +1855,7 @@ client.manage.v1.projects.members.delete(
 </details>
 
 ## Manage V1 Projects Models
-<details><summary><code>client.manage.v1.projects.models.<a href="src/deepgram/manage/v1/projects/models/client.py">list</a>(...) -> AsyncHttpResponse[ListModelsV1Response]</code></summary>
+<details><summary><code>client.manage.v1.projects.models.<a href="src/deepgram/manage/v1/projects/models/client.py">list</a>(...) -&gt; AsyncHttpResponse[ListModelsV1Response]</code></summary>
 <dl>
 <dd>
 
@@ -1934,7 +1934,7 @@ client.manage.v1.projects.models.list(
 </dl>
 </details>
 
-<details><summary><code>client.manage.v1.projects.models.<a href="src/deepgram/manage/v1/projects/models/client.py">get</a>(...) -> AsyncHttpResponse[GetModelV1Response]</code></summary>
+<details><summary><code>client.manage.v1.projects.models.<a href="src/deepgram/manage/v1/projects/models/client.py">get</a>(...) -&gt; AsyncHttpResponse[GetModelV1Response]</code></summary>
 <dl>
 <dd>
 
@@ -2014,7 +2014,7 @@ client.manage.v1.projects.models.get(
 </details>
 
 ## Manage V1 Projects Requests
-<details><summary><code>client.manage.v1.projects.requests.<a href="src/deepgram/manage/v1/projects/requests/client.py">list</a>(...) -> AsyncHttpResponse[ListProjectRequestsV1Response]</code></summary>
+<details><summary><code>client.manage.v1.projects.requests.<a href="src/deepgram/manage/v1/projects/requests/client.py">list</a>(...) -&gt; AsyncHttpResponse[ListProjectRequestsV1Response]</code></summary>
 <dl>
 <dd>
 
@@ -2180,7 +2180,7 @@ client.manage.v1.projects.requests.list(
 </dl>
 </details>
 
-<details><summary><code>client.manage.v1.projects.requests.<a href="src/deepgram/manage/v1/projects/requests/client.py">get</a>(...) -> AsyncHttpResponse[GetProjectRequestV1Response]</code></summary>
+<details><summary><code>client.manage.v1.projects.requests.<a href="src/deepgram/manage/v1/projects/requests/client.py">get</a>(...) -&gt; AsyncHttpResponse[GetProjectRequestV1Response]</code></summary>
 <dl>
 <dd>
 
@@ -2260,7 +2260,7 @@ client.manage.v1.projects.requests.get(
 </details>
 
 ## Manage V1 Projects Usage
-<details><summary><code>client.manage.v1.projects.usage.<a href="src/deepgram/manage/v1/projects/usage/client.py">get</a>(...) -> AsyncHttpResponse[UsageV1Response]</code></summary>
+<details><summary><code>client.manage.v1.projects.usage.<a href="src/deepgram/manage/v1/projects/usage/client.py">get</a>(...) -&gt; AsyncHttpResponse[UsageV1Response]</code></summary>
 <dl>
 <dd>
 
@@ -2727,7 +2727,7 @@ client.manage.v1.projects.usage.get(
 </details>
 
 ## Manage V1 Projects Billing Balances
-<details><summary><code>client.manage.v1.projects.billing.balances.<a href="src/deepgram/manage/v1/projects/billing/balances/client.py">list</a>(...) -> AsyncHttpResponse[ListProjectBalancesV1Response]</code></summary>
+<details><summary><code>client.manage.v1.projects.billing.balances.<a href="src/deepgram/manage/v1/projects/billing/balances/client.py">list</a>(...) -&gt; AsyncHttpResponse[ListProjectBalancesV1Response]</code></summary>
 <dl>
 <dd>
 
@@ -2797,7 +2797,7 @@ client.manage.v1.projects.billing.balances.list(
 </dl>
 </details>
 
-<details><summary><code>client.manage.v1.projects.billing.balances.<a href="src/deepgram/manage/v1/projects/billing/balances/client.py">get</a>(...) -> AsyncHttpResponse[GetProjectBalanceV1Response]</code></summary>
+<details><summary><code>client.manage.v1.projects.billing.balances.<a href="src/deepgram/manage/v1/projects/billing/balances/client.py">get</a>(...) -&gt; AsyncHttpResponse[GetProjectBalanceV1Response]</code></summary>
 <dl>
 <dd>
 
@@ -2877,7 +2877,7 @@ client.manage.v1.projects.billing.balances.get(
 </details>
 
 ## Manage V1 Projects Billing Breakdown
-<details><summary><code>client.manage.v1.projects.billing.breakdown.<a href="src/deepgram/manage/v1/projects/billing/breakdown/client.py">list</a>(...) -> AsyncHttpResponse[BillingBreakdownV1Response]</code></summary>
+<details><summary><code>client.manage.v1.projects.billing.breakdown.<a href="src/deepgram/manage/v1/projects/billing/breakdown/client.py">list</a>(...) -&gt; AsyncHttpResponse[BillingBreakdownV1Response]</code></summary>
 <dl>
 <dd>
 
@@ -3015,7 +3015,7 @@ client.manage.v1.projects.billing.breakdown.list(
 </details>
 
 ## Manage V1 Projects Billing Fields
-<details><summary><code>client.manage.v1.projects.billing.fields.<a href="src/deepgram/manage/v1/projects/billing/fields/client.py">list</a>(...) -> AsyncHttpResponse[ListBillingFieldsV1Response]</code></summary>
+<details><summary><code>client.manage.v1.projects.billing.fields.<a href="src/deepgram/manage/v1/projects/billing/fields/client.py">list</a>(...) -&gt; AsyncHttpResponse[ListBillingFieldsV1Response]</code></summary>
 <dl>
 <dd>
 
@@ -3104,7 +3104,7 @@ client.manage.v1.projects.billing.fields.list(
 </details>
 
 ## Manage V1 Projects Billing Purchases
-<details><summary><code>client.manage.v1.projects.billing.purchases.<a href="src/deepgram/manage/v1/projects/billing/purchases/client.py">list</a>(...) -> AsyncHttpResponse[ListProjectPurchasesV1Response]</code></summary>
+<details><summary><code>client.manage.v1.projects.billing.purchases.<a href="src/deepgram/manage/v1/projects/billing/purchases/client.py">list</a>(...) -&gt; AsyncHttpResponse[ListProjectPurchasesV1Response]</code></summary>
 <dl>
 <dd>
 
@@ -3184,7 +3184,7 @@ client.manage.v1.projects.billing.purchases.list(
 </details>
 
 ## Manage V1 Projects Members Invites
-<details><summary><code>client.manage.v1.projects.members.invites.<a href="src/deepgram/manage/v1/projects/members/invites/client.py">list</a>(...) -> AsyncHttpResponse[ListProjectInvitesV1Response]</code></summary>
+<details><summary><code>client.manage.v1.projects.members.invites.<a href="src/deepgram/manage/v1/projects/members/invites/client.py">list</a>(...) -&gt; AsyncHttpResponse[ListProjectInvitesV1Response]</code></summary>
 <dl>
 <dd>
 
@@ -3254,7 +3254,7 @@ client.manage.v1.projects.members.invites.list(
 </dl>
 </details>
 
-<details><summary><code>client.manage.v1.projects.members.invites.<a href="src/deepgram/manage/v1/projects/members/invites/client.py">create</a>(...) -> AsyncHttpResponse[CreateProjectInviteV1Response]</code></summary>
+<details><summary><code>client.manage.v1.projects.members.invites.<a href="src/deepgram/manage/v1/projects/members/invites/client.py">create</a>(...) -&gt; AsyncHttpResponse[CreateProjectInviteV1Response]</code></summary>
 <dl>
 <dd>
 
@@ -3342,7 +3342,7 @@ client.manage.v1.projects.members.invites.create(
 </dl>
 </details>
 
-<details><summary><code>client.manage.v1.projects.members.invites.<a href="src/deepgram/manage/v1/projects/members/invites/client.py">delete</a>(...) -> AsyncHttpResponse[DeleteProjectInviteV1Response]</code></summary>
+<details><summary><code>client.manage.v1.projects.members.invites.<a href="src/deepgram/manage/v1/projects/members/invites/client.py">delete</a>(...) -&gt; AsyncHttpResponse[DeleteProjectInviteV1Response]</code></summary>
 <dl>
 <dd>
 
@@ -3422,7 +3422,7 @@ client.manage.v1.projects.members.invites.delete(
 </details>
 
 ## Manage V1 Projects Members Scopes
-<details><summary><code>client.manage.v1.projects.members.scopes.<a href="src/deepgram/manage/v1/projects/members/scopes/client.py">list</a>(...) -> AsyncHttpResponse[ListProjectMemberScopesV1Response]</code></summary>
+<details><summary><code>client.manage.v1.projects.members.scopes.<a href="src/deepgram/manage/v1/projects/members/scopes/client.py">list</a>(...) -&gt; AsyncHttpResponse[ListProjectMemberScopesV1Response]</code></summary>
 <dl>
 <dd>
 
@@ -3501,7 +3501,7 @@ client.manage.v1.projects.members.scopes.list(
 </dl>
 </details>
 
-<details><summary><code>client.manage.v1.projects.members.scopes.<a href="src/deepgram/manage/v1/projects/members/scopes/client.py">update</a>(...) -> AsyncHttpResponse[UpdateProjectMemberScopesV1Response]</code></summary>
+<details><summary><code>client.manage.v1.projects.members.scopes.<a href="src/deepgram/manage/v1/projects/members/scopes/client.py">update</a>(...) -&gt; AsyncHttpResponse[UpdateProjectMemberScopesV1Response]</code></summary>
 <dl>
 <dd>
 
@@ -3590,7 +3590,7 @@ client.manage.v1.projects.members.scopes.update(
 </details>
 
 ## Manage V1 Projects Usage Breakdown
-<details><summary><code>client.manage.v1.projects.usage.breakdown.<a href="src/deepgram/manage/v1/projects/usage/breakdown/client.py">get</a>(...) -> AsyncHttpResponse[UsageBreakdownV1Response]</code></summary>
+<details><summary><code>client.manage.v1.projects.usage.breakdown.<a href="src/deepgram/manage/v1/projects/usage/breakdown/client.py">get</a>(...) -&gt; AsyncHttpResponse[UsageBreakdownV1Response]</code></summary>
 <dl>
 <dd>
 
@@ -4066,7 +4066,7 @@ client.manage.v1.projects.usage.breakdown.get(
 </details>
 
 ## Manage V1 Projects Usage Fields
-<details><summary><code>client.manage.v1.projects.usage.fields.<a href="src/deepgram/manage/v1/projects/usage/fields/client.py">list</a>(...) -> AsyncHttpResponse[UsageFieldsV1Response]</code></summary>
+<details><summary><code>client.manage.v1.projects.usage.fields.<a href="src/deepgram/manage/v1/projects/usage/fields/client.py">list</a>(...) -&gt; AsyncHttpResponse[UsageFieldsV1Response]</code></summary>
 <dl>
 <dd>
 
@@ -4155,7 +4155,7 @@ client.manage.v1.projects.usage.fields.list(
 </details>
 
 ## Read V1 Text
-<details><summary><code>client.read.v1.text.<a href="src/deepgram/read/v1/text/client.py">analyze</a>(...) -> AsyncHttpResponse[ReadV1Response]</code></summary>
+<details><summary><code>client.read.v1.text.<a href="src/deepgram/read/v1/text/client.py">analyze</a>(...) -&gt; AsyncHttpResponse[ReadV1Response]</code></summary>
 <dl>
 <dd>
 
@@ -4334,7 +4334,7 @@ client.read.v1.text.analyze(
 </details>
 
 ## SelfHosted V1 DistributionCredentials
-<details><summary><code>client.self_hosted.v1.distribution_credentials.<a href="src/deepgram/self_hosted/v1/distribution_credentials/client.py">list</a>(...) -> AsyncHttpResponse[ListProjectDistributionCredentialsV1Response]</code></summary>
+<details><summary><code>client.self_hosted.v1.distribution_credentials.<a href="src/deepgram/self_hosted/v1/distribution_credentials/client.py">list</a>(...) -&gt; AsyncHttpResponse[ListProjectDistributionCredentialsV1Response]</code></summary>
 <dl>
 <dd>
 
@@ -4404,7 +4404,7 @@ client.self_hosted.v1.distribution_credentials.list(
 </dl>
 </details>
 
-<details><summary><code>client.self_hosted.v1.distribution_credentials.<a href="src/deepgram/self_hosted/v1/distribution_credentials/client.py">create</a>(...) -> AsyncHttpResponse[CreateProjectDistributionCredentialsV1Response]</code></summary>
+<details><summary><code>client.self_hosted.v1.distribution_credentials.<a href="src/deepgram/self_hosted/v1/distribution_credentials/client.py">create</a>(...) -&gt; AsyncHttpResponse[CreateProjectDistributionCredentialsV1Response]</code></summary>
 <dl>
 <dd>
 
@@ -4503,7 +4503,7 @@ client.self_hosted.v1.distribution_credentials.create(
 </dl>
 </details>
 
-<details><summary><code>client.self_hosted.v1.distribution_credentials.<a href="src/deepgram/self_hosted/v1/distribution_credentials/client.py">get</a>(...) -> AsyncHttpResponse[GetProjectDistributionCredentialsV1Response]</code></summary>
+<details><summary><code>client.self_hosted.v1.distribution_credentials.<a href="src/deepgram/self_hosted/v1/distribution_credentials/client.py">get</a>(...) -&gt; AsyncHttpResponse[GetProjectDistributionCredentialsV1Response]</code></summary>
 <dl>
 <dd>
 
@@ -4582,7 +4582,7 @@ client.self_hosted.v1.distribution_credentials.get(
 </dl>
 </details>
 
-<details><summary><code>client.self_hosted.v1.distribution_credentials.<a href="src/deepgram/self_hosted/v1/distribution_credentials/client.py">delete</a>(...) -> AsyncHttpResponse[GetProjectDistributionCredentialsV1Response]</code></summary>
+<details><summary><code>client.self_hosted.v1.distribution_credentials.<a href="src/deepgram/self_hosted/v1/distribution_credentials/client.py">delete</a>(...) -&gt; AsyncHttpResponse[GetProjectDistributionCredentialsV1Response]</code></summary>
 <dl>
 <dd>
 
@@ -4662,7 +4662,7 @@ client.self_hosted.v1.distribution_credentials.delete(
 </details>
 
 ## Speak V1 Audio
-<details><summary><code>client.speak.v1.audio.<a href="src/deepgram/speak/v1/audio/client.py">generate</a>(...) -> typing.AsyncIterator[AsyncHttpResponse[typing.AsyncIterator[bytes]]]</code></summary>
+<details><summary><code>client.speak.v1.audio.<a href="src/deepgram/speak/v1/audio/client.py">generate</a>(...) -&gt; typing.AsyncIterator[AsyncHttpResponse[typing.AsyncIterator[bytes]]]</code></summary>
 <dl>
 <dd>
 

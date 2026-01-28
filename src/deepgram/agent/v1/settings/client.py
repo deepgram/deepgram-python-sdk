@@ -5,7 +5,6 @@ from __future__ import annotations
 import typing
 
 from ....core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
-from .raw_client import AsyncRawSettingsClient, RawSettingsClient
 
 if typing.TYPE_CHECKING:
     from .think.client import AsyncThinkClient, ThinkClient
@@ -13,20 +12,8 @@ if typing.TYPE_CHECKING:
 
 class SettingsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
-        self._raw_client = RawSettingsClient(client_wrapper=client_wrapper)
         self._client_wrapper = client_wrapper
         self._think: typing.Optional[ThinkClient] = None
-
-    @property
-    def with_raw_response(self) -> RawSettingsClient:
-        """
-        Retrieves a raw implementation of this client that returns raw responses.
-
-        Returns
-        -------
-        RawSettingsClient
-        """
-        return self._raw_client
 
     @property
     def think(self):
@@ -39,20 +26,8 @@ class SettingsClient:
 
 class AsyncSettingsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
-        self._raw_client = AsyncRawSettingsClient(client_wrapper=client_wrapper)
         self._client_wrapper = client_wrapper
         self._think: typing.Optional[AsyncThinkClient] = None
-
-    @property
-    def with_raw_response(self) -> AsyncRawSettingsClient:
-        """
-        Retrieves a raw implementation of this client that returns raw responses.
-
-        Returns
-        -------
-        AsyncRawSettingsClient
-        """
-        return self._raw_client
 
     @property
     def think(self):

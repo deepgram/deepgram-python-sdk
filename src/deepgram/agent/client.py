@@ -5,7 +5,6 @@ from __future__ import annotations
 import typing
 
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
-from .raw_client import AsyncRawAgentClient, RawAgentClient
 
 if typing.TYPE_CHECKING:
     from .v1.client import AsyncV1Client, V1Client
@@ -13,20 +12,8 @@ if typing.TYPE_CHECKING:
 
 class AgentClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
-        self._raw_client = RawAgentClient(client_wrapper=client_wrapper)
         self._client_wrapper = client_wrapper
         self._v1: typing.Optional[V1Client] = None
-
-    @property
-    def with_raw_response(self) -> RawAgentClient:
-        """
-        Retrieves a raw implementation of this client that returns raw responses.
-
-        Returns
-        -------
-        RawAgentClient
-        """
-        return self._raw_client
 
     @property
     def v1(self):
@@ -39,20 +26,8 @@ class AgentClient:
 
 class AsyncAgentClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
-        self._raw_client = AsyncRawAgentClient(client_wrapper=client_wrapper)
         self._client_wrapper = client_wrapper
         self._v1: typing.Optional[AsyncV1Client] = None
-
-    @property
-    def with_raw_response(self) -> AsyncRawAgentClient:
-        """
-        Retrieves a raw implementation of this client that returns raw responses.
-
-        Returns
-        -------
-        AsyncRawAgentClient
-        """
-        return self._raw_client
 
     @property
     def v1(self):
