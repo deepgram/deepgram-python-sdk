@@ -44,5 +44,10 @@ jobs:
       - name: Install dependencies
         run: poetry install
 
+      - name: Verify Docker is available
+        run: |
+          docker --version
+          docker compose version
+
       - name: Test
         run: poetry run pytest -rP .

@@ -193,7 +193,6 @@ class RawMediaClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/listen",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             params={
                 "callback": callback,
@@ -256,9 +255,9 @@ class RawMediaClient:
                 raise BadRequestError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        typing.Optional[typing.Any],
+                        typing.Any,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -435,7 +434,6 @@ class RawMediaClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/listen",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             params={
                 "callback": callback,
@@ -496,9 +494,9 @@ class RawMediaClient:
                 raise BadRequestError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        typing.Optional[typing.Any],
+                        typing.Any,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -680,7 +678,6 @@ class AsyncRawMediaClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/listen",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             params={
                 "callback": callback,
@@ -743,9 +740,9 @@ class AsyncRawMediaClient:
                 raise BadRequestError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        typing.Optional[typing.Any],
+                        typing.Any,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -922,7 +919,6 @@ class AsyncRawMediaClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/listen",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             params={
                 "callback": callback,
@@ -983,9 +979,9 @@ class AsyncRawMediaClient:
                 raise BadRequestError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        typing.Optional[typing.Any],
+                        typing.Any,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),

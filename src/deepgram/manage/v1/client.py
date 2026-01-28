@@ -5,7 +5,6 @@ from __future__ import annotations
 import typing
 
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
-from .raw_client import AsyncRawV1Client, RawV1Client
 
 if typing.TYPE_CHECKING:
     from .models.client import AsyncModelsClient, ModelsClient
@@ -14,21 +13,9 @@ if typing.TYPE_CHECKING:
 
 class V1Client:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
-        self._raw_client = RawV1Client(client_wrapper=client_wrapper)
         self._client_wrapper = client_wrapper
         self._models: typing.Optional[ModelsClient] = None
         self._projects: typing.Optional[ProjectsClient] = None
-
-    @property
-    def with_raw_response(self) -> RawV1Client:
-        """
-        Retrieves a raw implementation of this client that returns raw responses.
-
-        Returns
-        -------
-        RawV1Client
-        """
-        return self._raw_client
 
     @property
     def models(self):
@@ -49,21 +36,9 @@ class V1Client:
 
 class AsyncV1Client:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
-        self._raw_client = AsyncRawV1Client(client_wrapper=client_wrapper)
         self._client_wrapper = client_wrapper
         self._models: typing.Optional[AsyncModelsClient] = None
         self._projects: typing.Optional[AsyncProjectsClient] = None
-
-    @property
-    def with_raw_response(self) -> AsyncRawV1Client:
-        """
-        Retrieves a raw implementation of this client that returns raw responses.
-
-        Returns
-        -------
-        AsyncRawV1Client
-        """
-        return self._raw_client
 
     @property
     def models(self):

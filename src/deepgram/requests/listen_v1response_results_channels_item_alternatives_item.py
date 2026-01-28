@@ -3,6 +3,9 @@
 import typing
 
 import typing_extensions
+from .listen_v1response_results_channels_item_alternatives_item_entities_item import (
+    ListenV1ResponseResultsChannelsItemAlternativesItemEntitiesItemParams,
+)
 from .listen_v1response_results_channels_item_alternatives_item_paragraphs import (
     ListenV1ResponseResultsChannelsItemAlternativesItemParagraphsParams,
 )
@@ -24,6 +27,9 @@ class ListenV1ResponseResultsChannelsItemAlternativesItemParams(typing_extension
         typing.Sequence[ListenV1ResponseResultsChannelsItemAlternativesItemWordsItemParams]
     ]
     paragraphs: typing_extensions.NotRequired[ListenV1ResponseResultsChannelsItemAlternativesItemParagraphsParams]
+    entities: typing_extensions.NotRequired[
+        typing.Sequence[ListenV1ResponseResultsChannelsItemAlternativesItemEntitiesItemParams]
+    ]
     summaries: typing_extensions.NotRequired[
         typing.Sequence[ListenV1ResponseResultsChannelsItemAlternativesItemSummariesItemParams]
     ]

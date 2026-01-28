@@ -18,7 +18,7 @@ class ListenV1ResponseMetadataParams(typing_extensions.TypedDict):
     duration: float
     channels: float
     models: typing.Sequence[str]
-    model_info: typing.Dict[str, typing.Optional[typing.Any]]
+    model_info: typing.Dict[str, typing.Any]
     summary_info: typing_extensions.NotRequired[ListenV1ResponseMetadataSummaryInfoParams]
     sentiment_info: typing_extensions.NotRequired[ListenV1ResponseMetadataSentimentInfoParams]
     topics_info: typing_extensions.NotRequired[ListenV1ResponseMetadataTopicsInfoParams]

@@ -97,6 +97,9 @@ if typing.TYPE_CHECKING:
     from .listen_v1response_results_channels_item_alternatives_item import (
         ListenV1ResponseResultsChannelsItemAlternativesItemParams,
     )
+    from .listen_v1response_results_channels_item_alternatives_item_entities_item import (
+        ListenV1ResponseResultsChannelsItemAlternativesItemEntitiesItemParams,
+    )
     from .listen_v1response_results_channels_item_alternatives_item_paragraphs import (
         ListenV1ResponseResultsChannelsItemAlternativesItemParagraphsParams,
     )
@@ -125,7 +128,6 @@ if typing.TYPE_CHECKING:
     from .listen_v1response_results_utterances_item_words_item import (
         ListenV1ResponseResultsUtterancesItemWordsItemParams,
     )
-    from .listen_v2keyterm import ListenV2KeytermParams
     from .project_request_response import ProjectRequestResponseParams
     from .read_v1request import ReadV1RequestParams
     from .read_v1request_text import ReadV1RequestTextParams
@@ -240,6 +242,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ListenV1ResponseMetadataSummaryInfoParams": ".listen_v1response_metadata_summary_info",
     "ListenV1ResponseMetadataTopicsInfoParams": ".listen_v1response_metadata_topics_info",
     "ListenV1ResponseParams": ".listen_v1response",
+    "ListenV1ResponseResultsChannelsItemAlternativesItemEntitiesItemParams": ".listen_v1response_results_channels_item_alternatives_item_entities_item",
     "ListenV1ResponseResultsChannelsItemAlternativesItemParagraphsParagraphsItemParams": ".listen_v1response_results_channels_item_alternatives_item_paragraphs_paragraphs_item",
     "ListenV1ResponseResultsChannelsItemAlternativesItemParagraphsParagraphsItemSentencesItemParams": ".listen_v1response_results_channels_item_alternatives_item_paragraphs_paragraphs_item_sentences_item",
     "ListenV1ResponseResultsChannelsItemAlternativesItemParagraphsParams": ".listen_v1response_results_channels_item_alternatives_item_paragraphs",
@@ -256,7 +259,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ListenV1ResponseResultsUtterancesItemParams": ".listen_v1response_results_utterances_item",
     "ListenV1ResponseResultsUtterancesItemWordsItemParams": ".listen_v1response_results_utterances_item_words_item",
     "ListenV1ResponseResultsUtterancesParams": ".listen_v1response_results_utterances",
-    "ListenV2KeytermParams": ".listen_v2keyterm",
     "ProjectRequestResponseParams": ".project_request_response",
     "ReadV1RequestParams": ".read_v1request",
     "ReadV1RequestTextParams": ".read_v1request_text",
@@ -391,6 +393,7 @@ __all__ = [
     "ListenV1ResponseMetadataSummaryInfoParams",
     "ListenV1ResponseMetadataTopicsInfoParams",
     "ListenV1ResponseParams",
+    "ListenV1ResponseResultsChannelsItemAlternativesItemEntitiesItemParams",
     "ListenV1ResponseResultsChannelsItemAlternativesItemParagraphsParagraphsItemParams",
     "ListenV1ResponseResultsChannelsItemAlternativesItemParagraphsParagraphsItemSentencesItemParams",
     "ListenV1ResponseResultsChannelsItemAlternativesItemParagraphsParams",
@@ -407,7 +410,6 @@ __all__ = [
     "ListenV1ResponseResultsUtterancesItemParams",
     "ListenV1ResponseResultsUtterancesItemWordsItemParams",
     "ListenV1ResponseResultsUtterancesParams",
-    "ListenV2KeytermParams",
     "ProjectRequestResponseParams",
     "ReadV1RequestParams",
     "ReadV1RequestTextParams",

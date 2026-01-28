@@ -39,7 +39,6 @@ class RawModelsClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/models",
-            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
                 "include_outdated": include_outdated,
@@ -60,9 +59,9 @@ class RawModelsClient:
                 raise BadRequestError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        typing.Optional[typing.Any],
+                        typing.Any,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -93,7 +92,6 @@ class RawModelsClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/models/{jsonable_encoder(model_id)}",
-            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -111,9 +109,9 @@ class RawModelsClient:
                 raise BadRequestError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        typing.Optional[typing.Any],
+                        typing.Any,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -149,7 +147,6 @@ class AsyncRawModelsClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/models",
-            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
                 "include_outdated": include_outdated,
@@ -170,9 +167,9 @@ class AsyncRawModelsClient:
                 raise BadRequestError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        typing.Optional[typing.Any],
+                        typing.Any,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -203,7 +200,6 @@ class AsyncRawModelsClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/models/{jsonable_encoder(model_id)}",
-            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -221,9 +217,9 @@ class AsyncRawModelsClient:
                 raise BadRequestError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        typing.Optional[typing.Any],
+                        typing.Any,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),

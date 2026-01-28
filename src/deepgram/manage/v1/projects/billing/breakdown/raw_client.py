@@ -73,7 +73,6 @@ class RawBreakdownClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/projects/{jsonable_encoder(project_id)}/billing/breakdown",
-            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
                 "start": start,
@@ -100,9 +99,9 @@ class RawBreakdownClient:
                 raise BadRequestError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        typing.Optional[typing.Any],
+                        typing.Any,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -171,7 +170,6 @@ class AsyncRawBreakdownClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/projects/{jsonable_encoder(project_id)}/billing/breakdown",
-            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
                 "start": start,
@@ -198,9 +196,9 @@ class AsyncRawBreakdownClient:
                 raise BadRequestError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        typing.Optional[typing.Any],
+                        typing.Any,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
