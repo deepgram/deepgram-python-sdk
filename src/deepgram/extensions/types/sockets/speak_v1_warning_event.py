@@ -13,11 +13,11 @@ class SpeakV1WarningEvent(UniversalBaseModel):
     
     type: typing.Literal["Warning"]
     """Message type identifier"""
-    
-    description: str
+
+    warn_msg: str
     """A description of what went wrong"""
-    
-    code: str
+
+    warn_code: str
     """Error code identifying the type of error"""
 
     if IS_PYDANTIC_V2:
