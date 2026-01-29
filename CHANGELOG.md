@@ -1,5 +1,19 @@
 # Changelog
 
+## [5.3.2](https://github.com/deepgram/deepgram-python-sdk/compare/v5.3.0...v5.3.2) (2026-01-29)
+
+
+### Bug Fixes
+
+* **speak:** correct TTS warning event field names to match API response ([#653](https://github.com/deepgram/deepgram-python-sdk/issues/653)) ([f7ab1da](https://github.com/deepgram/deepgram-python-sdk/commit/f7ab1daac4f6777b806fb1cdaaf1d1084b280506))
+* **types:** change speaker and related fields from float to int ([#652](https://github.com/deepgram/deepgram-python-sdk/issues/652)) ([00ee485](https://github.com/deepgram/deepgram-python-sdk/commit/00ee485252dc7fb3a37914f261a0752469c33553)), closes [#641](https://github.com/deepgram/deepgram-python-sdk/issues/641)
+* **websockets:** support array parameters in Listen v1 and v2 clients ([#650](https://github.com/deepgram/deepgram-python-sdk/issues/650)) ([38cc1e5](https://github.com/deepgram/deepgram-python-sdk/commit/38cc1e5903df1eb7bcf8729361be8c25042216af))
+
+
+### Miscellaneous Chores
+
+* release 5.3.2 ([d61ce8c](https://github.com/deepgram/deepgram-python-sdk/commit/d61ce8c504030e7b6ea7ee3b7be8a642d5f0ee53))
+
 ## [5.3.0](https://github.com/deepgram/deepgram-python-sdk/compare/v5.2.0...v5.3.0) (2025-10-30)
 
 
