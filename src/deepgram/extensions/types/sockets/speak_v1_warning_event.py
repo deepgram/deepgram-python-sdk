@@ -18,7 +18,7 @@ class SpeakV1WarningEvent(UniversalBaseModel):
     """A description of what went wrong"""
 
     warn_code: str
-    """Error code identifying the type of error"""
+    """Warning code identifying the type of warning"""
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

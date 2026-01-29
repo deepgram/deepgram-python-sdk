@@ -435,12 +435,12 @@ class TestSpeakV1ModelIntegration:
         # Test common warning scenarios
         warning_scenarios = [
             {
-                "description": "Audio quality may be degraded due to low bitrate",
-                "code": "AUDIO_QUALITY_WARNING"
+                "warn_msg": "Audio quality may be degraded due to low bitrate",
+                "warn_code": "AUDIO_QUALITY_WARNING"
             },
             {
-                "description": "Rate limit approaching",
-                "code": "RATE_LIMIT_WARNING"
+                "warn_msg": "Rate limit approaching",
+                "warn_code": "RATE_LIMIT_WARNING"
             },
             {
                 "warn_msg": "Model switching to fallback version",
