@@ -2,4 +2,4 @@
 
 import typing
 
-ListenV1Replace = typing.Optional[typing.Any]
+ListenV1Replace = typing.Optional[typing.Union[str, typing.Sequence[str]]]

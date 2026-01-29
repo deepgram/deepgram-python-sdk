@@ -53,9 +53,9 @@ class TestSimpleTypeAliases:
         assert isinstance(callback2, str)
         assert isinstance(callback3, dict)
         
-    def test_listen_v1tag_is_optional_any(self):
-        """Test that ListenV1Tag is Optional[Any]."""
-        assert ListenV1Tag == typing.Optional[typing.Any]
+    def test_listen_v1tag_is_optional_union(self):
+        """Test that ListenV1Tag is Optional[Union[str, Sequence[str]]]."""
+        assert ListenV1Tag == typing.Optional[typing.Union[str, typing.Sequence[str]]]
         
     def test_listen_v1tag_usage(self):
         """Test that ListenV1Tag can accept None or any value."""

@@ -2,4 +2,4 @@
 
 import typing
 
-ListenV1Extra = typing.Optional[typing.Any]
+ListenV1Extra = typing.Optional[typing.Union[str, typing.Sequence[str]]]
