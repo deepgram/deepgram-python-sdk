@@ -157,58 +157,58 @@ class TestSpeakV1WarningEvent:
         """Test creating a valid warning event."""
         event = SpeakV1WarningEvent(
             type="Warning",
-            description="Audio quality may be degraded",
-            code="AUDIO_QUALITY_WARNING"
+            warn_msg="Audio quality may be degraded",
+            warn_code="AUDIO_QUALITY_WARNING"
         )
-        
+
         assert event.type == "Warning"
-        assert event.description == "Audio quality may be degraded"
-        assert event.code == "AUDIO_QUALITY_WARNING"
+        assert event.warn_msg == "Audio quality may be degraded"
+        assert event.warn_code == "AUDIO_QUALITY_WARNING"
     
     def test_warning_event_serialization(self):
         """Test warning event serialization."""
         event = SpeakV1WarningEvent(
             type="Warning",
-            description="Audio quality may be degraded",
-            code="AUDIO_QUALITY_WARNING"
+            warn_msg="Audio quality may be degraded",
+            warn_code="AUDIO_QUALITY_WARNING"
         )
-        
+
         # Test dict conversion
         event_dict = event.model_dump()
         assert event_dict["type"] == "Warning"
-        assert event_dict["description"] == "Audio quality may be degraded"
-        assert event_dict["code"] == "AUDIO_QUALITY_WARNING"
-        
+        assert event_dict["warn_msg"] == "Audio quality may be degraded"
+        assert event_dict["warn_code"] == "AUDIO_QUALITY_WARNING"
+
         # Test JSON serialization
         json_str = event.model_dump_json()
         assert '"type":"Warning"' in json_str
-        assert '"description":"Audio quality may be degraded"' in json_str
+        assert '"warn_msg":"Audio quality may be degraded"' in json_str
     
     def test_warning_event_missing_required_fields(self):
         """Test warning event with missing required fields."""
-        # Missing description
+        # Missing warn_msg
         with pytest.raises(ValidationError) as exc_info:
             SpeakV1WarningEvent(
                 type="Warning",
-                code="AUDIO_QUALITY_WARNING"
+                warn_code="AUDIO_QUALITY_WARNING"
             )
-        assert "description" in str(exc_info.value)
-        
-        # Missing code
+        assert "warn_msg" in str(exc_info.value)
+
+        # Missing warn_code
         with pytest.raises(ValidationError) as exc_info:
             SpeakV1WarningEvent(
                 type="Warning",
-                description="Audio quality may be degraded"
+                warn_msg="Audio quality may be degraded"
             )
-        assert "code" in str(exc_info.value)
+        assert "warn_code" in str(exc_info.value)
     
     def test_warning_event_wrong_type(self):
         """Test warning event with wrong type field."""
         with pytest.raises(ValidationError) as exc_info:
             SpeakV1WarningEvent(
                 type="Error",  # Wrong type
-                description="Audio quality may be degraded",
-                code="AUDIO_QUALITY_WARNING"
+                warn_msg="Audio quality may be degraded",
+                warn_code="AUDIO_QUALITY_WARNING"
             )
         assert "Input should be 'Warning'" in str(exc_info.value)
 
@@ -435,28 +435,28 @@ class TestSpeakV1ModelIntegration:
         # Test common warning scenarios
         warning_scenarios = [
             {
-                "description": "Audio quality may be degraded due to low bitrate",
-                "code": "AUDIO_QUALITY_WARNING"
+                "warn_msg": "Audio quality may be degraded due to low bitrate",
+                "warn_code": "AUDIO_QUALITY_WARNING"
             },
             {
-                "description": "Rate limit approaching",
-                "code": "RATE_LIMIT_WARNING"
+                "warn_msg": "Rate limit approaching",
+                "warn_code": "RATE_LIMIT_WARNING"
             },
             {
-                "description": "Model switching to fallback version",
-                "code": "MODEL_FALLBACK_WARNING"
+                "warn_msg": "Model switching to fallback version",
+                "warn_code": "MODEL_FALLBACK_WARNING"
             },
             {
-                "description": "Connection quality poor",
-                "code": "CONNECTION_WARNING"
+                "warn_msg": "Connection quality poor",
+                "warn_code": "CONNECTION_WARNING"
             }
         ]
-        
+
         for scenario in warning_scenarios:
             event = SpeakV1WarningEvent(
                 type="Warning",
-                description=scenario["description"],
-                code=scenario["code"]
+                warn_msg=scenario["warn_msg"],
+                warn_code=scenario["warn_code"]
             )
-            assert event.description == scenario["description"]
-            assert event.code == scenario["code"]
+            assert event.warn_msg == scenario["warn_msg"]
+            assert event.warn_code == scenario["warn_code"]
