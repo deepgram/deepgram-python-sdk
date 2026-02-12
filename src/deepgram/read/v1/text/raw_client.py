@@ -96,7 +96,6 @@ class RawTextClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/read",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             params={
                 "callback": callback,
@@ -135,9 +134,9 @@ class RawTextClient:
                 raise BadRequestError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        typing.Optional[typing.Any],
+                        typing.Any,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -223,7 +222,6 @@ class AsyncRawTextClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/read",
-            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             params={
                 "callback": callback,
@@ -262,9 +260,9 @@ class AsyncRawTextClient:
                 raise BadRequestError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        typing.Optional[typing.Any],
+                        typing.Any,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),

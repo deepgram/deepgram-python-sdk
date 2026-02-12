@@ -6,14 +6,13 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
-class ListenV1ResponseResultsUtterancesItemWordsItem(UniversalBaseModel):
-    word: typing.Optional[str] = None
-    start: typing.Optional[float] = None
-    end: typing.Optional[float] = None
+class ListenV1ResponseResultsChannelsItemAlternativesItemEntitiesItem(UniversalBaseModel):
+    label: typing.Optional[str] = None
+    value: typing.Optional[str] = None
+    raw_value: typing.Optional[str] = None
     confidence: typing.Optional[float] = None
-    speaker: typing.Optional[float] = None
-    speaker_confidence: typing.Optional[float] = None
-    punctuated_word: typing.Optional[str] = None
+    start_word: typing.Optional[float] = None
+    end_word: typing.Optional[float] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
