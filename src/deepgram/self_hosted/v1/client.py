@@ -5,6 +5,7 @@ from __future__ import annotations
 import typing
 
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
+from .raw_client import AsyncRawV1Client, RawV1Client
 
 if typing.TYPE_CHECKING:
     from .distribution_credentials.client import AsyncDistributionCredentialsClient, DistributionCredentialsClient
@@ -12,8 +13,20 @@ if typing.TYPE_CHECKING:
 
 class V1Client:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
+        self._raw_client = RawV1Client(client_wrapper=client_wrapper)
         self._client_wrapper = client_wrapper
         self._distribution_credentials: typing.Optional[DistributionCredentialsClient] = None
+
+    @property
+    def with_raw_response(self) -> RawV1Client:
+        """
+        Retrieves a raw implementation of this client that returns raw responses.
+
+        Returns
+        -------
+        RawV1Client
+        """
+        return self._raw_client
 
     @property
     def distribution_credentials(self):
@@ -26,8 +39,20 @@ class V1Client:
 
 class AsyncV1Client:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
+        self._raw_client = AsyncRawV1Client(client_wrapper=client_wrapper)
         self._client_wrapper = client_wrapper
         self._distribution_credentials: typing.Optional[AsyncDistributionCredentialsClient] = None
+
+    @property
+    def with_raw_response(self) -> AsyncRawV1Client:
+        """
+        Retrieves a raw implementation of this client that returns raw responses.
+
+        Returns
+        -------
+        AsyncRawV1Client
+        """
+        return self._raw_client
 
     @property
     def distribution_credentials(self):

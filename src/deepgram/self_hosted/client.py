@@ -5,6 +5,7 @@ from __future__ import annotations
 import typing
 
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
+from .raw_client import AsyncRawSelfHostedClient, RawSelfHostedClient
 
 if typing.TYPE_CHECKING:
     from .v1.client import AsyncV1Client, V1Client
@@ -12,8 +13,20 @@ if typing.TYPE_CHECKING:
 
 class SelfHostedClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
+        self._raw_client = RawSelfHostedClient(client_wrapper=client_wrapper)
         self._client_wrapper = client_wrapper
         self._v1: typing.Optional[V1Client] = None
+
+    @property
+    def with_raw_response(self) -> RawSelfHostedClient:
+        """
+        Retrieves a raw implementation of this client that returns raw responses.
+
+        Returns
+        -------
+        RawSelfHostedClient
+        """
+        return self._raw_client
 
     @property
     def v1(self):
@@ -26,8 +39,20 @@ class SelfHostedClient:
 
 class AsyncSelfHostedClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
+        self._raw_client = AsyncRawSelfHostedClient(client_wrapper=client_wrapper)
         self._client_wrapper = client_wrapper
         self._v1: typing.Optional[AsyncV1Client] = None
+
+    @property
+    def with_raw_response(self) -> AsyncRawSelfHostedClient:
+        """
+        Retrieves a raw implementation of this client that returns raw responses.
+
+        Returns
+        -------
+        AsyncRawSelfHostedClient
+        """
+        return self._raw_client
 
     @property
     def v1(self):

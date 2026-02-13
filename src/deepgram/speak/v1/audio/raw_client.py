@@ -84,6 +84,7 @@ class RawAudioClient:
         """
         with self._client_wrapper.httpx_client.stream(
             "v1/speak",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             params={
                 "callback": callback,
@@ -200,6 +201,7 @@ class AsyncRawAudioClient:
         """
         async with self._client_wrapper.httpx_client.stream(
             "v1/speak",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             params={
                 "callback": callback,

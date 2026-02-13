@@ -88,6 +88,7 @@ class RawRequestsClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/projects/{jsonable_encoder(project_id)}/requests",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
                 "start": serialize_datetime(start) if start is not None else None,
@@ -153,6 +154,7 @@ class RawRequestsClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/projects/{jsonable_encoder(project_id)}/requests/{jsonable_encoder(request_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -251,6 +253,7 @@ class AsyncRawRequestsClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/projects/{jsonable_encoder(project_id)}/requests",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
                 "start": serialize_datetime(start) if start is not None else None,
@@ -316,6 +319,7 @@ class AsyncRawRequestsClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/projects/{jsonable_encoder(project_id)}/requests/{jsonable_encoder(request_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )

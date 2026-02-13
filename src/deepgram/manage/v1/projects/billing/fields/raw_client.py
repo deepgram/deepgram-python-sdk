@@ -49,6 +49,7 @@ class RawFieldsClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/projects/{jsonable_encoder(project_id)}/billing/fields",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
                 "start": start,
@@ -119,6 +120,7 @@ class AsyncRawFieldsClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/projects/{jsonable_encoder(project_id)}/billing/fields",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
                 "start": start,

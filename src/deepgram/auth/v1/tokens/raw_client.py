@@ -40,6 +40,7 @@ class RawTokensClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/auth/grant",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "ttl_seconds": ttl_seconds,
@@ -102,6 +103,7 @@ class AsyncRawTokensClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/auth/grant",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
                 "ttl_seconds": ttl_seconds,

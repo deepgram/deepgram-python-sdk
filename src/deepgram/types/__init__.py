@@ -16,10 +16,24 @@ if typing.TYPE_CHECKING:
     from .agent_think_models_v1response_models_item_two_id import AgentThinkModelsV1ResponseModelsItemTwoId
     from .agent_think_models_v1response_models_item_zero import AgentThinkModelsV1ResponseModelsItemZero
     from .agent_think_models_v1response_models_item_zero_id import AgentThinkModelsV1ResponseModelsItemZeroId
+    from .anthropic import Anthropic
+    from .anthropic_think_provider_model import AnthropicThinkProviderModel
+    from .aws_bedrock_think_provider import AwsBedrockThinkProvider
+    from .aws_bedrock_think_provider_credentials import AwsBedrockThinkProviderCredentials
+    from .aws_bedrock_think_provider_credentials_type import AwsBedrockThinkProviderCredentialsType
+    from .aws_bedrock_think_provider_model import AwsBedrockThinkProviderModel
+    from .aws_polly_speak_provider import AwsPollySpeakProvider
+    from .aws_polly_speak_provider_credentials import AwsPollySpeakProviderCredentials
+    from .aws_polly_speak_provider_credentials_type import AwsPollySpeakProviderCredentialsType
+    from .aws_polly_speak_provider_engine import AwsPollySpeakProviderEngine
+    from .aws_polly_speak_provider_voice import AwsPollySpeakProviderVoice
     from .billing_breakdown_v1response import BillingBreakdownV1Response
     from .billing_breakdown_v1response_resolution import BillingBreakdownV1ResponseResolution
     from .billing_breakdown_v1response_results_item import BillingBreakdownV1ResponseResultsItem
     from .billing_breakdown_v1response_results_item_grouping import BillingBreakdownV1ResponseResultsItemGrouping
+    from .cartesia import Cartesia
+    from .cartesia_speak_provider_model_id import CartesiaSpeakProviderModelId
+    from .cartesia_speak_provider_voice import CartesiaSpeakProviderVoice
     from .create_key_v1request_one import CreateKeyV1RequestOne
     from .create_key_v1response import CreateKeyV1Response
     from .create_project_distribution_credentials_v1response import CreateProjectDistributionCredentialsV1Response
@@ -30,10 +44,14 @@ if typing.TYPE_CHECKING:
         CreateProjectDistributionCredentialsV1ResponseMember,
     )
     from .create_project_invite_v1response import CreateProjectInviteV1Response
+    from .deepgram import Deepgram
+    from .deepgram_speak_provider_model import DeepgramSpeakProviderModel
     from .delete_project_invite_v1response import DeleteProjectInviteV1Response
     from .delete_project_key_v1response import DeleteProjectKeyV1Response
     from .delete_project_member_v1response import DeleteProjectMemberV1Response
     from .delete_project_v1response import DeleteProjectV1Response
+    from .eleven_labs_speak_provider import ElevenLabsSpeakProvider
+    from .eleven_labs_speak_provider_model_id import ElevenLabsSpeakProviderModelId
     from .error_response import ErrorResponse
     from .error_response_legacy_error import ErrorResponseLegacyError
     from .error_response_modern_error import ErrorResponseModernError
@@ -56,7 +74,10 @@ if typing.TYPE_CHECKING:
     from .get_project_key_v1response_item_member_api_key import GetProjectKeyV1ResponseItemMemberApiKey
     from .get_project_request_v1response import GetProjectRequestV1Response
     from .get_project_v1response import GetProjectV1Response
+    from .google import Google
+    from .google_think_provider_model import GoogleThinkProviderModel
     from .grant_v1response import GrantV1Response
+    from .groq import Groq
     from .leave_project_v1response import LeaveProjectV1Response
     from .list_billing_fields_v1response import ListBillingFieldsV1Response
     from .list_billing_fields_v1response_deployments_item import ListBillingFieldsV1ResponseDeploymentsItem
@@ -91,6 +112,27 @@ if typing.TYPE_CHECKING:
     from .list_projects_v1response import ListProjectsV1Response
     from .list_projects_v1response_projects_item import ListProjectsV1ResponseProjectsItem
     from .listen_v1accepted_response import ListenV1AcceptedResponse
+    from .listen_v1callback import ListenV1Callback
+    from .listen_v1callback_method import ListenV1CallbackMethod
+    from .listen_v1channels import ListenV1Channels
+    from .listen_v1detect_entities import ListenV1DetectEntities
+    from .listen_v1diarize import ListenV1Diarize
+    from .listen_v1dictation import ListenV1Dictation
+    from .listen_v1encoding import ListenV1Encoding
+    from .listen_v1endpointing import ListenV1Endpointing
+    from .listen_v1extra import ListenV1Extra
+    from .listen_v1interim_results import ListenV1InterimResults
+    from .listen_v1keyterm import ListenV1Keyterm
+    from .listen_v1keywords import ListenV1Keywords
+    from .listen_v1language import ListenV1Language
+    from .listen_v1mip_opt_out import ListenV1MipOptOut
+    from .listen_v1model import ListenV1Model
+    from .listen_v1multichannel import ListenV1Multichannel
+    from .listen_v1numerals import ListenV1Numerals
+    from .listen_v1profanity_filter import ListenV1ProfanityFilter
+    from .listen_v1punctuate import ListenV1Punctuate
+    from .listen_v1redact import ListenV1Redact
+    from .listen_v1replace import ListenV1Replace
     from .listen_v1request_file import ListenV1RequestFile
     from .listen_v1response import ListenV1Response
     from .listen_v1response_metadata import ListenV1ResponseMetadata
@@ -133,6 +175,27 @@ if typing.TYPE_CHECKING:
     from .listen_v1response_results_utterances import ListenV1ResponseResultsUtterances
     from .listen_v1response_results_utterances_item import ListenV1ResponseResultsUtterancesItem
     from .listen_v1response_results_utterances_item_words_item import ListenV1ResponseResultsUtterancesItemWordsItem
+    from .listen_v1sample_rate import ListenV1SampleRate
+    from .listen_v1search import ListenV1Search
+    from .listen_v1smart_format import ListenV1SmartFormat
+    from .listen_v1tag import ListenV1Tag
+    from .listen_v1utterance_end_ms import ListenV1UtteranceEndMs
+    from .listen_v1vad_events import ListenV1VadEvents
+    from .listen_v1version import ListenV1Version
+    from .listen_v2eager_eot_threshold import ListenV2EagerEotThreshold
+    from .listen_v2encoding import ListenV2Encoding
+    from .listen_v2eot_threshold import ListenV2EotThreshold
+    from .listen_v2eot_timeout_ms import ListenV2EotTimeoutMs
+    from .listen_v2keyterm import ListenV2Keyterm
+    from .listen_v2mip_opt_out import ListenV2MipOptOut
+    from .listen_v2model import ListenV2Model
+    from .listen_v2sample_rate import ListenV2SampleRate
+    from .listen_v2tag import ListenV2Tag
+    from .open_ai_speak_provider import OpenAiSpeakProvider
+    from .open_ai_speak_provider_model import OpenAiSpeakProviderModel
+    from .open_ai_speak_provider_voice import OpenAiSpeakProviderVoice
+    from .open_ai_think_provider import OpenAiThinkProvider
+    from .open_ai_think_provider_model import OpenAiThinkProviderModel
     from .project_request_response import ProjectRequestResponse
     from .read_v1request import ReadV1Request
     from .read_v1request_text import ReadV1RequestText
@@ -163,7 +226,34 @@ if typing.TYPE_CHECKING:
     from .shared_topics_results_topics import SharedTopicsResultsTopics
     from .shared_topics_results_topics_segments_item import SharedTopicsResultsTopicsSegmentsItem
     from .shared_topics_results_topics_segments_item_topics_item import SharedTopicsResultsTopicsSegmentsItemTopicsItem
+    from .speak_settings_v1 import SpeakSettingsV1
+    from .speak_settings_v1endpoint import SpeakSettingsV1Endpoint
+    from .speak_settings_v1provider import (
+        SpeakSettingsV1Provider,
+        SpeakSettingsV1Provider_AwsPolly,
+        SpeakSettingsV1Provider_Cartesia,
+        SpeakSettingsV1Provider_Deepgram,
+        SpeakSettingsV1Provider_ElevenLabs,
+        SpeakSettingsV1Provider_OpenAi,
+    )
+    from .speak_v1encoding import SpeakV1Encoding
+    from .speak_v1mip_opt_out import SpeakV1MipOptOut
+    from .speak_v1model import SpeakV1Model
     from .speak_v1response import SpeakV1Response
+    from .speak_v1sample_rate import SpeakV1SampleRate
+    from .think_settings_v1 import ThinkSettingsV1
+    from .think_settings_v1context_length import ThinkSettingsV1ContextLength
+    from .think_settings_v1endpoint import ThinkSettingsV1Endpoint
+    from .think_settings_v1functions_item import ThinkSettingsV1FunctionsItem
+    from .think_settings_v1functions_item_endpoint import ThinkSettingsV1FunctionsItemEndpoint
+    from .think_settings_v1provider import (
+        ThinkSettingsV1Provider,
+        ThinkSettingsV1Provider_Anthropic,
+        ThinkSettingsV1Provider_AwsBedrock,
+        ThinkSettingsV1Provider_Google,
+        ThinkSettingsV1Provider_Groq,
+        ThinkSettingsV1Provider_OpenAi,
+    )
     from .update_project_member_scopes_v1response import UpdateProjectMemberScopesV1Response
     from .update_project_v1response import UpdateProjectV1Response
     from .usage_breakdown_v1response import UsageBreakdownV1Response
@@ -185,20 +275,38 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AgentThinkModelsV1ResponseModelsItemTwoId": ".agent_think_models_v1response_models_item_two_id",
     "AgentThinkModelsV1ResponseModelsItemZero": ".agent_think_models_v1response_models_item_zero",
     "AgentThinkModelsV1ResponseModelsItemZeroId": ".agent_think_models_v1response_models_item_zero_id",
+    "Anthropic": ".anthropic",
+    "AnthropicThinkProviderModel": ".anthropic_think_provider_model",
+    "AwsBedrockThinkProvider": ".aws_bedrock_think_provider",
+    "AwsBedrockThinkProviderCredentials": ".aws_bedrock_think_provider_credentials",
+    "AwsBedrockThinkProviderCredentialsType": ".aws_bedrock_think_provider_credentials_type",
+    "AwsBedrockThinkProviderModel": ".aws_bedrock_think_provider_model",
+    "AwsPollySpeakProvider": ".aws_polly_speak_provider",
+    "AwsPollySpeakProviderCredentials": ".aws_polly_speak_provider_credentials",
+    "AwsPollySpeakProviderCredentialsType": ".aws_polly_speak_provider_credentials_type",
+    "AwsPollySpeakProviderEngine": ".aws_polly_speak_provider_engine",
+    "AwsPollySpeakProviderVoice": ".aws_polly_speak_provider_voice",
     "BillingBreakdownV1Response": ".billing_breakdown_v1response",
     "BillingBreakdownV1ResponseResolution": ".billing_breakdown_v1response_resolution",
     "BillingBreakdownV1ResponseResultsItem": ".billing_breakdown_v1response_results_item",
     "BillingBreakdownV1ResponseResultsItemGrouping": ".billing_breakdown_v1response_results_item_grouping",
+    "Cartesia": ".cartesia",
+    "CartesiaSpeakProviderModelId": ".cartesia_speak_provider_model_id",
+    "CartesiaSpeakProviderVoice": ".cartesia_speak_provider_voice",
     "CreateKeyV1RequestOne": ".create_key_v1request_one",
     "CreateKeyV1Response": ".create_key_v1response",
     "CreateProjectDistributionCredentialsV1Response": ".create_project_distribution_credentials_v1response",
     "CreateProjectDistributionCredentialsV1ResponseDistributionCredentials": ".create_project_distribution_credentials_v1response_distribution_credentials",
     "CreateProjectDistributionCredentialsV1ResponseMember": ".create_project_distribution_credentials_v1response_member",
     "CreateProjectInviteV1Response": ".create_project_invite_v1response",
+    "Deepgram": ".deepgram",
+    "DeepgramSpeakProviderModel": ".deepgram_speak_provider_model",
     "DeleteProjectInviteV1Response": ".delete_project_invite_v1response",
     "DeleteProjectKeyV1Response": ".delete_project_key_v1response",
     "DeleteProjectMemberV1Response": ".delete_project_member_v1response",
     "DeleteProjectV1Response": ".delete_project_v1response",
+    "ElevenLabsSpeakProvider": ".eleven_labs_speak_provider",
+    "ElevenLabsSpeakProviderModelId": ".eleven_labs_speak_provider_model_id",
     "ErrorResponse": ".error_response",
     "ErrorResponseLegacyError": ".error_response_legacy_error",
     "ErrorResponseModernError": ".error_response_modern_error",
@@ -217,7 +325,10 @@ _dynamic_imports: typing.Dict[str, str] = {
     "GetProjectKeyV1ResponseItemMemberApiKey": ".get_project_key_v1response_item_member_api_key",
     "GetProjectRequestV1Response": ".get_project_request_v1response",
     "GetProjectV1Response": ".get_project_v1response",
+    "Google": ".google",
+    "GoogleThinkProviderModel": ".google_think_provider_model",
     "GrantV1Response": ".grant_v1response",
+    "Groq": ".groq",
     "LeaveProjectV1Response": ".leave_project_v1response",
     "ListBillingFieldsV1Response": ".list_billing_fields_v1response",
     "ListBillingFieldsV1ResponseDeploymentsItem": ".list_billing_fields_v1response_deployments_item",
@@ -246,6 +357,27 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ListProjectsV1Response": ".list_projects_v1response",
     "ListProjectsV1ResponseProjectsItem": ".list_projects_v1response_projects_item",
     "ListenV1AcceptedResponse": ".listen_v1accepted_response",
+    "ListenV1Callback": ".listen_v1callback",
+    "ListenV1CallbackMethod": ".listen_v1callback_method",
+    "ListenV1Channels": ".listen_v1channels",
+    "ListenV1DetectEntities": ".listen_v1detect_entities",
+    "ListenV1Diarize": ".listen_v1diarize",
+    "ListenV1Dictation": ".listen_v1dictation",
+    "ListenV1Encoding": ".listen_v1encoding",
+    "ListenV1Endpointing": ".listen_v1endpointing",
+    "ListenV1Extra": ".listen_v1extra",
+    "ListenV1InterimResults": ".listen_v1interim_results",
+    "ListenV1Keyterm": ".listen_v1keyterm",
+    "ListenV1Keywords": ".listen_v1keywords",
+    "ListenV1Language": ".listen_v1language",
+    "ListenV1MipOptOut": ".listen_v1mip_opt_out",
+    "ListenV1Model": ".listen_v1model",
+    "ListenV1Multichannel": ".listen_v1multichannel",
+    "ListenV1Numerals": ".listen_v1numerals",
+    "ListenV1ProfanityFilter": ".listen_v1profanity_filter",
+    "ListenV1Punctuate": ".listen_v1punctuate",
+    "ListenV1Redact": ".listen_v1redact",
+    "ListenV1Replace": ".listen_v1replace",
     "ListenV1RequestFile": ".listen_v1request_file",
     "ListenV1Response": ".listen_v1response",
     "ListenV1ResponseMetadata": ".listen_v1response_metadata",
@@ -270,6 +402,27 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ListenV1ResponseResultsUtterances": ".listen_v1response_results_utterances",
     "ListenV1ResponseResultsUtterancesItem": ".listen_v1response_results_utterances_item",
     "ListenV1ResponseResultsUtterancesItemWordsItem": ".listen_v1response_results_utterances_item_words_item",
+    "ListenV1SampleRate": ".listen_v1sample_rate",
+    "ListenV1Search": ".listen_v1search",
+    "ListenV1SmartFormat": ".listen_v1smart_format",
+    "ListenV1Tag": ".listen_v1tag",
+    "ListenV1UtteranceEndMs": ".listen_v1utterance_end_ms",
+    "ListenV1VadEvents": ".listen_v1vad_events",
+    "ListenV1Version": ".listen_v1version",
+    "ListenV2EagerEotThreshold": ".listen_v2eager_eot_threshold",
+    "ListenV2Encoding": ".listen_v2encoding",
+    "ListenV2EotThreshold": ".listen_v2eot_threshold",
+    "ListenV2EotTimeoutMs": ".listen_v2eot_timeout_ms",
+    "ListenV2Keyterm": ".listen_v2keyterm",
+    "ListenV2MipOptOut": ".listen_v2mip_opt_out",
+    "ListenV2Model": ".listen_v2model",
+    "ListenV2SampleRate": ".listen_v2sample_rate",
+    "ListenV2Tag": ".listen_v2tag",
+    "OpenAiSpeakProvider": ".open_ai_speak_provider",
+    "OpenAiSpeakProviderModel": ".open_ai_speak_provider_model",
+    "OpenAiSpeakProviderVoice": ".open_ai_speak_provider_voice",
+    "OpenAiThinkProvider": ".open_ai_think_provider",
+    "OpenAiThinkProviderModel": ".open_ai_think_provider_model",
     "ProjectRequestResponse": ".project_request_response",
     "ReadV1Request": ".read_v1request",
     "ReadV1RequestText": ".read_v1request_text",
@@ -298,7 +451,30 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SharedTopicsResultsTopics": ".shared_topics_results_topics",
     "SharedTopicsResultsTopicsSegmentsItem": ".shared_topics_results_topics_segments_item",
     "SharedTopicsResultsTopicsSegmentsItemTopicsItem": ".shared_topics_results_topics_segments_item_topics_item",
+    "SpeakSettingsV1": ".speak_settings_v1",
+    "SpeakSettingsV1Endpoint": ".speak_settings_v1endpoint",
+    "SpeakSettingsV1Provider": ".speak_settings_v1provider",
+    "SpeakSettingsV1Provider_AwsPolly": ".speak_settings_v1provider",
+    "SpeakSettingsV1Provider_Cartesia": ".speak_settings_v1provider",
+    "SpeakSettingsV1Provider_Deepgram": ".speak_settings_v1provider",
+    "SpeakSettingsV1Provider_ElevenLabs": ".speak_settings_v1provider",
+    "SpeakSettingsV1Provider_OpenAi": ".speak_settings_v1provider",
+    "SpeakV1Encoding": ".speak_v1encoding",
+    "SpeakV1MipOptOut": ".speak_v1mip_opt_out",
+    "SpeakV1Model": ".speak_v1model",
     "SpeakV1Response": ".speak_v1response",
+    "SpeakV1SampleRate": ".speak_v1sample_rate",
+    "ThinkSettingsV1": ".think_settings_v1",
+    "ThinkSettingsV1ContextLength": ".think_settings_v1context_length",
+    "ThinkSettingsV1Endpoint": ".think_settings_v1endpoint",
+    "ThinkSettingsV1FunctionsItem": ".think_settings_v1functions_item",
+    "ThinkSettingsV1FunctionsItemEndpoint": ".think_settings_v1functions_item_endpoint",
+    "ThinkSettingsV1Provider": ".think_settings_v1provider",
+    "ThinkSettingsV1Provider_Anthropic": ".think_settings_v1provider",
+    "ThinkSettingsV1Provider_AwsBedrock": ".think_settings_v1provider",
+    "ThinkSettingsV1Provider_Google": ".think_settings_v1provider",
+    "ThinkSettingsV1Provider_Groq": ".think_settings_v1provider",
+    "ThinkSettingsV1Provider_OpenAi": ".think_settings_v1provider",
     "UpdateProjectMemberScopesV1Response": ".update_project_member_scopes_v1response",
     "UpdateProjectV1Response": ".update_project_v1response",
     "UsageBreakdownV1Response": ".usage_breakdown_v1response",
@@ -344,20 +520,38 @@ __all__ = [
     "AgentThinkModelsV1ResponseModelsItemTwoId",
     "AgentThinkModelsV1ResponseModelsItemZero",
     "AgentThinkModelsV1ResponseModelsItemZeroId",
+    "Anthropic",
+    "AnthropicThinkProviderModel",
+    "AwsBedrockThinkProvider",
+    "AwsBedrockThinkProviderCredentials",
+    "AwsBedrockThinkProviderCredentialsType",
+    "AwsBedrockThinkProviderModel",
+    "AwsPollySpeakProvider",
+    "AwsPollySpeakProviderCredentials",
+    "AwsPollySpeakProviderCredentialsType",
+    "AwsPollySpeakProviderEngine",
+    "AwsPollySpeakProviderVoice",
     "BillingBreakdownV1Response",
     "BillingBreakdownV1ResponseResolution",
     "BillingBreakdownV1ResponseResultsItem",
     "BillingBreakdownV1ResponseResultsItemGrouping",
+    "Cartesia",
+    "CartesiaSpeakProviderModelId",
+    "CartesiaSpeakProviderVoice",
     "CreateKeyV1RequestOne",
     "CreateKeyV1Response",
     "CreateProjectDistributionCredentialsV1Response",
     "CreateProjectDistributionCredentialsV1ResponseDistributionCredentials",
     "CreateProjectDistributionCredentialsV1ResponseMember",
     "CreateProjectInviteV1Response",
+    "Deepgram",
+    "DeepgramSpeakProviderModel",
     "DeleteProjectInviteV1Response",
     "DeleteProjectKeyV1Response",
     "DeleteProjectMemberV1Response",
     "DeleteProjectV1Response",
+    "ElevenLabsSpeakProvider",
+    "ElevenLabsSpeakProviderModelId",
     "ErrorResponse",
     "ErrorResponseLegacyError",
     "ErrorResponseModernError",
@@ -376,7 +570,10 @@ __all__ = [
     "GetProjectKeyV1ResponseItemMemberApiKey",
     "GetProjectRequestV1Response",
     "GetProjectV1Response",
+    "Google",
+    "GoogleThinkProviderModel",
     "GrantV1Response",
+    "Groq",
     "LeaveProjectV1Response",
     "ListBillingFieldsV1Response",
     "ListBillingFieldsV1ResponseDeploymentsItem",
@@ -405,6 +602,27 @@ __all__ = [
     "ListProjectsV1Response",
     "ListProjectsV1ResponseProjectsItem",
     "ListenV1AcceptedResponse",
+    "ListenV1Callback",
+    "ListenV1CallbackMethod",
+    "ListenV1Channels",
+    "ListenV1DetectEntities",
+    "ListenV1Diarize",
+    "ListenV1Dictation",
+    "ListenV1Encoding",
+    "ListenV1Endpointing",
+    "ListenV1Extra",
+    "ListenV1InterimResults",
+    "ListenV1Keyterm",
+    "ListenV1Keywords",
+    "ListenV1Language",
+    "ListenV1MipOptOut",
+    "ListenV1Model",
+    "ListenV1Multichannel",
+    "ListenV1Numerals",
+    "ListenV1ProfanityFilter",
+    "ListenV1Punctuate",
+    "ListenV1Redact",
+    "ListenV1Replace",
     "ListenV1RequestFile",
     "ListenV1Response",
     "ListenV1ResponseMetadata",
@@ -429,6 +647,27 @@ __all__ = [
     "ListenV1ResponseResultsUtterances",
     "ListenV1ResponseResultsUtterancesItem",
     "ListenV1ResponseResultsUtterancesItemWordsItem",
+    "ListenV1SampleRate",
+    "ListenV1Search",
+    "ListenV1SmartFormat",
+    "ListenV1Tag",
+    "ListenV1UtteranceEndMs",
+    "ListenV1VadEvents",
+    "ListenV1Version",
+    "ListenV2EagerEotThreshold",
+    "ListenV2Encoding",
+    "ListenV2EotThreshold",
+    "ListenV2EotTimeoutMs",
+    "ListenV2Keyterm",
+    "ListenV2MipOptOut",
+    "ListenV2Model",
+    "ListenV2SampleRate",
+    "ListenV2Tag",
+    "OpenAiSpeakProvider",
+    "OpenAiSpeakProviderModel",
+    "OpenAiSpeakProviderVoice",
+    "OpenAiThinkProvider",
+    "OpenAiThinkProviderModel",
     "ProjectRequestResponse",
     "ReadV1Request",
     "ReadV1RequestText",
@@ -457,7 +696,30 @@ __all__ = [
     "SharedTopicsResultsTopics",
     "SharedTopicsResultsTopicsSegmentsItem",
     "SharedTopicsResultsTopicsSegmentsItemTopicsItem",
+    "SpeakSettingsV1",
+    "SpeakSettingsV1Endpoint",
+    "SpeakSettingsV1Provider",
+    "SpeakSettingsV1Provider_AwsPolly",
+    "SpeakSettingsV1Provider_Cartesia",
+    "SpeakSettingsV1Provider_Deepgram",
+    "SpeakSettingsV1Provider_ElevenLabs",
+    "SpeakSettingsV1Provider_OpenAi",
+    "SpeakV1Encoding",
+    "SpeakV1MipOptOut",
+    "SpeakV1Model",
     "SpeakV1Response",
+    "SpeakV1SampleRate",
+    "ThinkSettingsV1",
+    "ThinkSettingsV1ContextLength",
+    "ThinkSettingsV1Endpoint",
+    "ThinkSettingsV1FunctionsItem",
+    "ThinkSettingsV1FunctionsItemEndpoint",
+    "ThinkSettingsV1Provider",
+    "ThinkSettingsV1Provider_Anthropic",
+    "ThinkSettingsV1Provider_AwsBedrock",
+    "ThinkSettingsV1Provider_Google",
+    "ThinkSettingsV1Provider_Groq",
+    "ThinkSettingsV1Provider_OpenAi",
     "UpdateProjectMemberScopesV1Response",
     "UpdateProjectV1Response",
     "UsageBreakdownV1Response",

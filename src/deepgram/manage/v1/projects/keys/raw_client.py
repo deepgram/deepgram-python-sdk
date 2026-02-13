@@ -53,6 +53,7 @@ class RawKeysClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/projects/{jsonable_encoder(project_id)}/keys",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
                 "status": status,
@@ -112,6 +113,7 @@ class RawKeysClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/projects/{jsonable_encoder(project_id)}/keys",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json=request,
             headers={
@@ -170,6 +172,7 @@ class RawKeysClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/projects/{jsonable_encoder(project_id)}/keys/{jsonable_encoder(key_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -223,6 +226,7 @@ class RawKeysClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/projects/{jsonable_encoder(project_id)}/keys/{jsonable_encoder(key_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="DELETE",
             request_options=request_options,
         )
@@ -285,6 +289,7 @@ class AsyncRawKeysClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/projects/{jsonable_encoder(project_id)}/keys",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
                 "status": status,
@@ -344,6 +349,7 @@ class AsyncRawKeysClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/projects/{jsonable_encoder(project_id)}/keys",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json=request,
             headers={
@@ -402,6 +408,7 @@ class AsyncRawKeysClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/projects/{jsonable_encoder(project_id)}/keys/{jsonable_encoder(key_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -455,6 +462,7 @@ class AsyncRawKeysClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/projects/{jsonable_encoder(project_id)}/keys/{jsonable_encoder(key_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="DELETE",
             request_options=request_options,
         )

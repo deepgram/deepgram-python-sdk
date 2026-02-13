@@ -44,6 +44,7 @@ class RawDistributionCredentialsClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/projects/{jsonable_encoder(project_id)}/self-hosted/distribution/credentials",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -114,6 +115,7 @@ class RawDistributionCredentialsClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/projects/{jsonable_encoder(project_id)}/self-hosted/distribution/credentials",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             params={
                 "scopes": scopes,
@@ -182,6 +184,7 @@ class RawDistributionCredentialsClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/projects/{jsonable_encoder(project_id)}/self-hosted/distribution/credentials/{jsonable_encoder(distribution_credentials_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -239,6 +242,7 @@ class RawDistributionCredentialsClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/projects/{jsonable_encoder(project_id)}/self-hosted/distribution/credentials/{jsonable_encoder(distribution_credentials_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="DELETE",
             request_options=request_options,
         )
@@ -294,6 +298,7 @@ class AsyncRawDistributionCredentialsClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/projects/{jsonable_encoder(project_id)}/self-hosted/distribution/credentials",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -364,6 +369,7 @@ class AsyncRawDistributionCredentialsClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/projects/{jsonable_encoder(project_id)}/self-hosted/distribution/credentials",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             params={
                 "scopes": scopes,
@@ -432,6 +438,7 @@ class AsyncRawDistributionCredentialsClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/projects/{jsonable_encoder(project_id)}/self-hosted/distribution/credentials/{jsonable_encoder(distribution_credentials_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -489,6 +496,7 @@ class AsyncRawDistributionCredentialsClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/projects/{jsonable_encoder(project_id)}/self-hosted/distribution/credentials/{jsonable_encoder(distribution_credentials_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="DELETE",
             request_options=request_options,
         )

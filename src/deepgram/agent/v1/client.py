@@ -3,17 +3,104 @@
 from __future__ import annotations
 
 import typing
+import urllib.parse
+from contextlib import asynccontextmanager, contextmanager
 
+import websockets.sync.client as websockets_sync_client
+from ...core.api_error import ApiError
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
+from ...core.jsonable_encoder import jsonable_encoder
+from ...core.query_encoder import encode_query
+from ...core.remove_none_from_dict import remove_none_from_dict
+from ...core.request_options import RequestOptions
+from ...core.websocket_compat import InvalidWebSocketStatus, get_status_code
+from .raw_client import AsyncRawV1Client, RawV1Client
+from .socket_client import AsyncV1SocketClient, V1SocketClient
 
 if typing.TYPE_CHECKING:
     from .settings.client import AsyncSettingsClient, SettingsClient
 
+try:
+    from websockets.legacy.client import connect as websockets_client_connect  # type: ignore
+except ImportError:
+    from websockets import connect as websockets_client_connect  # type: ignore
+
 
 class V1Client:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
+        self._raw_client = RawV1Client(client_wrapper=client_wrapper)
         self._client_wrapper = client_wrapper
         self._settings: typing.Optional[SettingsClient] = None
+
+    @property
+    def with_raw_response(self) -> RawV1Client:
+        """
+        Retrieves a raw implementation of this client that returns raw responses.
+
+        Returns
+        -------
+        RawV1Client
+        """
+        return self._raw_client
+
+    @contextmanager
+    def connect(
+        self, *, authorization: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.Iterator[V1SocketClient]:
+        """
+        Build a conversational voice agent using Deepgram's Voice Agent WebSocket
+
+        Parameters
+        ----------
+        authorization : typing.Optional[str]
+            Use your API key for authentication, or alternatively generate a [temporary token](/guides/fundamentals/token-based-authentication) and pass it via the `token` query parameter.
+
+            **Example:** `token %DEEPGRAM_API_KEY%` or `bearer %DEEPGRAM_TOKEN%`
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        V1SocketClient
+        """
+        ws_url = self._raw_client._client_wrapper.get_environment().agent + "/v1/agent/converse"
+        _encoded_query_params = encode_query(
+            jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        **(
+                            request_options.get("additional_query_parameters", {}) or {}
+                            if request_options is not None
+                            else {}
+                        ),
+                    }
+                )
+            )
+        )
+        if _encoded_query_params:
+            ws_url = ws_url + "?" + urllib.parse.urlencode(_encoded_query_params)
+        headers = self._raw_client._client_wrapper.get_headers()
+        if authorization is not None:
+            headers["Authorization"] = str(authorization)
+        if request_options and "additional_headers" in request_options:
+            headers.update(request_options["additional_headers"])
+        try:
+            with websockets_sync_client.connect(ws_url, additional_headers=headers) as protocol:
+                yield V1SocketClient(websocket=protocol)
+        except InvalidWebSocketStatus as exc:
+            status_code: int = get_status_code(exc)
+            if status_code == 401:
+                raise ApiError(
+                    status_code=status_code,
+                    headers=dict(headers),
+                    body="Websocket initialized with invalid credentials.",
+                )
+            raise ApiError(
+                status_code=status_code,
+                headers=dict(headers),
+                body="Unexpected error when initializing websocket connection.",
+            )
 
     @property
     def settings(self):
@@ -26,8 +113,79 @@ class V1Client:
 
 class AsyncV1Client:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
+        self._raw_client = AsyncRawV1Client(client_wrapper=client_wrapper)
         self._client_wrapper = client_wrapper
         self._settings: typing.Optional[AsyncSettingsClient] = None
+
+    @property
+    def with_raw_response(self) -> AsyncRawV1Client:
+        """
+        Retrieves a raw implementation of this client that returns raw responses.
+
+        Returns
+        -------
+        AsyncRawV1Client
+        """
+        return self._raw_client
+
+    @asynccontextmanager
+    async def connect(
+        self, *, authorization: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.AsyncIterator[AsyncV1SocketClient]:
+        """
+        Build a conversational voice agent using Deepgram's Voice Agent WebSocket
+
+        Parameters
+        ----------
+        authorization : typing.Optional[str]
+            Use your API key for authentication, or alternatively generate a [temporary token](/guides/fundamentals/token-based-authentication) and pass it via the `token` query parameter.
+
+            **Example:** `token %DEEPGRAM_API_KEY%` or `bearer %DEEPGRAM_TOKEN%`
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncV1SocketClient
+        """
+        ws_url = self._raw_client._client_wrapper.get_environment().agent + "/v1/agent/converse"
+        _encoded_query_params = encode_query(
+            jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        **(
+                            request_options.get("additional_query_parameters", {}) or {}
+                            if request_options is not None
+                            else {}
+                        ),
+                    }
+                )
+            )
+        )
+        if _encoded_query_params:
+            ws_url = ws_url + "?" + urllib.parse.urlencode(_encoded_query_params)
+        headers = self._raw_client._client_wrapper.get_headers()
+        if authorization is not None:
+            headers["Authorization"] = str(authorization)
+        if request_options and "additional_headers" in request_options:
+            headers.update(request_options["additional_headers"])
+        try:
+            async with websockets_client_connect(ws_url, extra_headers=headers) as protocol:
+                yield AsyncV1SocketClient(websocket=protocol)
+        except InvalidWebSocketStatus as exc:
+            status_code: int = get_status_code(exc)
+            if status_code == 401:
+                raise ApiError(
+                    status_code=status_code,
+                    headers=dict(headers),
+                    body="Websocket initialized with invalid credentials.",
+                )
+            raise ApiError(
+                status_code=status_code,
+                headers=dict(headers),
+                body="Unexpected error when initializing websocket connection.",
+            )
 
     @property
     def settings(self):

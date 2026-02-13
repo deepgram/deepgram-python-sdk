@@ -96,6 +96,7 @@ class RawTextClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/read",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             params={
                 "callback": callback,
@@ -222,6 +223,7 @@ class AsyncRawTextClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/read",
+            base_url=self._client_wrapper.get_environment().base,
             method="POST",
             params={
                 "callback": callback,

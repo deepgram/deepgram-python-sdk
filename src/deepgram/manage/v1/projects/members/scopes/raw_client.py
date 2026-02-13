@@ -45,6 +45,7 @@ class RawScopesClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/projects/{jsonable_encoder(project_id)}/members/{jsonable_encoder(member_id)}/scopes",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -101,6 +102,7 @@ class RawScopesClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/projects/{jsonable_encoder(project_id)}/members/{jsonable_encoder(member_id)}/scopes",
+            base_url=self._client_wrapper.get_environment().base,
             method="PUT",
             json={
                 "scope": scope,
@@ -166,6 +168,7 @@ class AsyncRawScopesClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/projects/{jsonable_encoder(project_id)}/members/{jsonable_encoder(member_id)}/scopes",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -222,6 +225,7 @@ class AsyncRawScopesClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/projects/{jsonable_encoder(project_id)}/members/{jsonable_encoder(member_id)}/scopes",
+            base_url=self._client_wrapper.get_environment().base,
             method="PUT",
             json={
                 "scope": scope,

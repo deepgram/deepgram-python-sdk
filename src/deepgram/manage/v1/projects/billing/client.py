@@ -5,6 +5,7 @@ from __future__ import annotations
 import typing
 
 from .....core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
+from .raw_client import AsyncRawBillingClient, RawBillingClient
 
 if typing.TYPE_CHECKING:
     from .balances.client import AsyncBalancesClient, BalancesClient
@@ -15,11 +16,23 @@ if typing.TYPE_CHECKING:
 
 class BillingClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
+        self._raw_client = RawBillingClient(client_wrapper=client_wrapper)
         self._client_wrapper = client_wrapper
         self._balances: typing.Optional[BalancesClient] = None
         self._breakdown: typing.Optional[BreakdownClient] = None
         self._fields: typing.Optional[FieldsClient] = None
         self._purchases: typing.Optional[PurchasesClient] = None
+
+    @property
+    def with_raw_response(self) -> RawBillingClient:
+        """
+        Retrieves a raw implementation of this client that returns raw responses.
+
+        Returns
+        -------
+        RawBillingClient
+        """
+        return self._raw_client
 
     @property
     def balances(self):
@@ -56,11 +69,23 @@ class BillingClient:
 
 class AsyncBillingClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
+        self._raw_client = AsyncRawBillingClient(client_wrapper=client_wrapper)
         self._client_wrapper = client_wrapper
         self._balances: typing.Optional[AsyncBalancesClient] = None
         self._breakdown: typing.Optional[AsyncBreakdownClient] = None
         self._fields: typing.Optional[AsyncFieldsClient] = None
         self._purchases: typing.Optional[AsyncPurchasesClient] = None
+
+    @property
+    def with_raw_response(self) -> AsyncRawBillingClient:
+        """
+        Retrieves a raw implementation of this client that returns raw responses.
+
+        Returns
+        -------
+        AsyncRawBillingClient
+        """
+        return self._raw_client
 
     @property
     def balances(self):

@@ -3,17 +3,123 @@
 from __future__ import annotations
 
 import typing
+import urllib.parse
+from contextlib import asynccontextmanager, contextmanager
 
+import websockets.sync.client as websockets_sync_client
+from ...core.api_error import ApiError
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
+from ...core.jsonable_encoder import jsonable_encoder
+from ...core.query_encoder import encode_query
+from ...core.remove_none_from_dict import remove_none_from_dict
+from ...core.request_options import RequestOptions
+from ...core.websocket_compat import InvalidWebSocketStatus, get_status_code
+from .raw_client import AsyncRawV1Client, RawV1Client
+from .socket_client import AsyncV1SocketClient, V1SocketClient
 
 if typing.TYPE_CHECKING:
     from .audio.client import AsyncAudioClient, AudioClient
 
+try:
+    from websockets.legacy.client import connect as websockets_client_connect  # type: ignore
+except ImportError:
+    from websockets import connect as websockets_client_connect  # type: ignore
+
 
 class V1Client:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
+        self._raw_client = RawV1Client(client_wrapper=client_wrapper)
         self._client_wrapper = client_wrapper
         self._audio: typing.Optional[AudioClient] = None
+
+    @property
+    def with_raw_response(self) -> RawV1Client:
+        """
+        Retrieves a raw implementation of this client that returns raw responses.
+
+        Returns
+        -------
+        RawV1Client
+        """
+        return self._raw_client
+
+    @contextmanager
+    def connect(
+        self,
+        *,
+        encoding: typing.Optional[str] = None,
+        mip_opt_out: typing.Optional[str] = None,
+        model: typing.Optional[str] = None,
+        sample_rate: typing.Optional[str] = None,
+        authorization: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.Iterator[V1SocketClient]:
+        """
+        Convert text into natural-sounding speech using Deepgram's TTS WebSocket
+
+        Parameters
+        ----------
+        encoding : typing.Optional[str]
+
+        mip_opt_out : typing.Optional[str]
+
+        model : typing.Optional[str]
+
+        sample_rate : typing.Optional[str]
+
+        authorization : typing.Optional[str]
+            Use your API key for authentication, or alternatively generate a [temporary token](/guides/fundamentals/token-based-authentication) and pass it via the `token` query parameter.
+
+            **Example:** `token %DEEPGRAM_API_KEY%` or `bearer %DEEPGRAM_TOKEN%`
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        V1SocketClient
+        """
+        ws_url = self._raw_client._client_wrapper.get_environment().production + "/v1/speak"
+        _encoded_query_params = encode_query(
+            jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        "encoding": encoding,
+                        "mip_opt_out": mip_opt_out,
+                        "model": model,
+                        "sample_rate": sample_rate,
+                        **(
+                            request_options.get("additional_query_parameters", {}) or {}
+                            if request_options is not None
+                            else {}
+                        ),
+                    }
+                )
+            )
+        )
+        if _encoded_query_params:
+            ws_url = ws_url + "?" + urllib.parse.urlencode(_encoded_query_params)
+        headers = self._raw_client._client_wrapper.get_headers()
+        if authorization is not None:
+            headers["Authorization"] = str(authorization)
+        if request_options and "additional_headers" in request_options:
+            headers.update(request_options["additional_headers"])
+        try:
+            with websockets_sync_client.connect(ws_url, additional_headers=headers) as protocol:
+                yield V1SocketClient(websocket=protocol)
+        except InvalidWebSocketStatus as exc:
+            status_code: int = get_status_code(exc)
+            if status_code == 401:
+                raise ApiError(
+                    status_code=status_code,
+                    headers=dict(headers),
+                    body="Websocket initialized with invalid credentials.",
+                )
+            raise ApiError(
+                status_code=status_code,
+                headers=dict(headers),
+                body="Unexpected error when initializing websocket connection.",
+            )
 
     @property
     def audio(self):
@@ -26,8 +132,98 @@ class V1Client:
 
 class AsyncV1Client:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
+        self._raw_client = AsyncRawV1Client(client_wrapper=client_wrapper)
         self._client_wrapper = client_wrapper
         self._audio: typing.Optional[AsyncAudioClient] = None
+
+    @property
+    def with_raw_response(self) -> AsyncRawV1Client:
+        """
+        Retrieves a raw implementation of this client that returns raw responses.
+
+        Returns
+        -------
+        AsyncRawV1Client
+        """
+        return self._raw_client
+
+    @asynccontextmanager
+    async def connect(
+        self,
+        *,
+        encoding: typing.Optional[str] = None,
+        mip_opt_out: typing.Optional[str] = None,
+        model: typing.Optional[str] = None,
+        sample_rate: typing.Optional[str] = None,
+        authorization: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.AsyncIterator[AsyncV1SocketClient]:
+        """
+        Convert text into natural-sounding speech using Deepgram's TTS WebSocket
+
+        Parameters
+        ----------
+        encoding : typing.Optional[str]
+
+        mip_opt_out : typing.Optional[str]
+
+        model : typing.Optional[str]
+
+        sample_rate : typing.Optional[str]
+
+        authorization : typing.Optional[str]
+            Use your API key for authentication, or alternatively generate a [temporary token](/guides/fundamentals/token-based-authentication) and pass it via the `token` query parameter.
+
+            **Example:** `token %DEEPGRAM_API_KEY%` or `bearer %DEEPGRAM_TOKEN%`
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncV1SocketClient
+        """
+        ws_url = self._raw_client._client_wrapper.get_environment().production + "/v1/speak"
+        _encoded_query_params = encode_query(
+            jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        "encoding": encoding,
+                        "mip_opt_out": mip_opt_out,
+                        "model": model,
+                        "sample_rate": sample_rate,
+                        **(
+                            request_options.get("additional_query_parameters", {}) or {}
+                            if request_options is not None
+                            else {}
+                        ),
+                    }
+                )
+            )
+        )
+        if _encoded_query_params:
+            ws_url = ws_url + "?" + urllib.parse.urlencode(_encoded_query_params)
+        headers = self._raw_client._client_wrapper.get_headers()
+        if authorization is not None:
+            headers["Authorization"] = str(authorization)
+        if request_options and "additional_headers" in request_options:
+            headers.update(request_options["additional_headers"])
+        try:
+            async with websockets_client_connect(ws_url, extra_headers=headers) as protocol:
+                yield AsyncV1SocketClient(websocket=protocol)
+        except InvalidWebSocketStatus as exc:
+            status_code: int = get_status_code(exc)
+            if status_code == 401:
+                raise ApiError(
+                    status_code=status_code,
+                    headers=dict(headers),
+                    body="Websocket initialized with invalid credentials.",
+                )
+            raise ApiError(
+                status_code=status_code,
+                headers=dict(headers),
+                body="Unexpected error when initializing websocket connection.",
+            )
 
     @property
     def audio(self):

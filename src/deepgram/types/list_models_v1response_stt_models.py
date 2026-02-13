@@ -14,9 +14,9 @@ class ListModelsV1ResponseSttModels(UniversalBaseModel):
     architecture: typing.Optional[str] = None
     languages: typing.Optional[typing.List[str]] = None
     version: typing.Optional[str] = None
-    uuid_: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="uuid")] = pydantic.Field(
-        alias="uuid", default=None
-    )
+    uuid_: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="uuid"), pydantic.Field(alias="uuid")
+    ] = None
     batch: typing.Optional[bool] = None
     streaming: typing.Optional[bool] = None
     formatted_output: typing.Optional[bool] = None

@@ -46,6 +46,7 @@ class RawModelsClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/projects/{jsonable_encoder(project_id)}/models",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
                 "include_outdated": include_outdated,
@@ -102,6 +103,7 @@ class RawModelsClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/projects/{jsonable_encoder(project_id)}/models/{jsonable_encoder(model_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -164,6 +166,7 @@ class AsyncRawModelsClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/projects/{jsonable_encoder(project_id)}/models",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
                 "include_outdated": include_outdated,
@@ -220,6 +223,7 @@ class AsyncRawModelsClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/projects/{jsonable_encoder(project_id)}/models/{jsonable_encoder(model_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )

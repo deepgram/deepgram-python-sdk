@@ -40,6 +40,7 @@ class RawProjectsClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "v1/projects",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -101,6 +102,7 @@ class RawProjectsClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/projects/{jsonable_encoder(project_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
                 "limit": limit,
@@ -155,6 +157,7 @@ class RawProjectsClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/projects/{jsonable_encoder(project_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="DELETE",
             request_options=request_options,
         )
@@ -212,6 +215,7 @@ class RawProjectsClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/projects/{jsonable_encoder(project_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="PATCH",
             json={
                 "name": name,
@@ -269,6 +273,7 @@ class RawProjectsClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v1/projects/{jsonable_encoder(project_id)}/leave",
+            base_url=self._client_wrapper.get_environment().base,
             method="DELETE",
             request_options=request_options,
         )
@@ -321,6 +326,7 @@ class AsyncRawProjectsClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v1/projects",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
         )
@@ -382,6 +388,7 @@ class AsyncRawProjectsClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/projects/{jsonable_encoder(project_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
                 "limit": limit,
@@ -436,6 +443,7 @@ class AsyncRawProjectsClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/projects/{jsonable_encoder(project_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="DELETE",
             request_options=request_options,
         )
@@ -493,6 +501,7 @@ class AsyncRawProjectsClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/projects/{jsonable_encoder(project_id)}",
+            base_url=self._client_wrapper.get_environment().base,
             method="PATCH",
             json={
                 "name": name,
@@ -550,6 +559,7 @@ class AsyncRawProjectsClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v1/projects/{jsonable_encoder(project_id)}/leave",
+            base_url=self._client_wrapper.get_environment().base,
             method="DELETE",
             request_options=request_options,
         )

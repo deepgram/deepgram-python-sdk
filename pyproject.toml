@@ -4,7 +4,7 @@ dynamic = ["version"]
 
 [tool.poetry]
 name = "deepgram-sdk"
-version = "5.3.2"
+version = "5.3.3"
 description = ""
 readme = "README.md"
 authors = []
@@ -19,6 +19,9 @@ classifiers = [
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Programming Language :: Python :: 3.15",
     "Operating System :: OS Independent",
     "Operating System :: POSIX",
     "Operating System :: MacOS",
@@ -41,6 +44,7 @@ httpx = ">=0.21.2"
 pydantic = ">= 1.9.2"
 pydantic-core = ">=2.18.2"
 typing_extensions = ">= 4.0.0"
+websockets = ">=12.0"
 
 [tool.poetry.group.dev.dependencies]
 mypy = "==1.13.0"
