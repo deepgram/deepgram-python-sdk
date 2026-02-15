@@ -9,7 +9,6 @@ permissions:
   contents: write
   issues: write
   pull-requests: write
-  id-token: write
 
 jobs:
   compile:
@@ -49,10 +48,6 @@ jobs:
           curl -sSL https://install.python-poetry.org | python - -y --version 1.5.1
       - name: Install dependencies
         run: poetry install
-      - name: Verify Docker is available
-        run: |
-          docker --version
-          docker compose version
       - name: Test
         run: poetry run pytest -rP .
   release-please:
@@ -89,5 +84,6 @@ jobs:
       - name: Build package
         run: poetry build
       - name: Publish to PyPI
-        uses: pypa/gh-action-pypi-publish@release/v1
-
+        env:
+          POETRY_PYPI_TOKEN_PYPI: ${{ secrets.PYPI_API_TOKEN }}
+        run: poetry publish

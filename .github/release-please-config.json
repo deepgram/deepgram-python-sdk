@@ -1,27 +1,27 @@
 {
-    "packages": {
-        ".": {
-            "release-type": "python",
-            "package-name": "deepgram-sdk",
-            "tag-separator": "",
-            "include-component-in-tag": false,
-            "include-v-in-tag": true,
-            "changelog-path": "CHANGELOG.md",
-            "bump-minor-pre-major": false,
-            "bump-patch-for-minor-pre-major": false,
-            "draft": false,
-            "extra-files": [
-                {
-                    "type": "toml",
-                    "path": "pyproject.toml",
-                    "jsonpath": "$.tool.poetry.version"
-                },
-                {
-                    "type": "generic",
-                    "path": "src/deepgram/core/client_wrapper.py"
-                }
-            ]
+  "packages": {
+    ".": {
+      "release-type": "python",
+      "package-name": "deepgram-sdk",
+      "tag-separator": "",
+      "include-component-in-tag": false,
+      "include-v-in-tag": true,
+      "changelog-path": "CHANGELOG.md",
+      "bump-minor-pre-major": false,
+      "bump-patch-for-minor-pre-major": false,
+      "draft": false,
+      "extra-files": [
+        {
+          "type": "toml",
+          "path": "pyproject.toml",
+          "jsonpath": "$.tool.poetry.version"
+        },
+        {
+          "type": "generic",
+          "path": "src/deepgram/core/client_wrapper.py"
         }
-    },
-    "$schema": "https://raw.githubusercontent.com/googleapis/release-please/main/schemas/config.json"
+      ]
+    }
+  },
+  "$schema": "https://raw.githubusercontent.com/googleapis/release-please/main/schemas/config.json"
 }
