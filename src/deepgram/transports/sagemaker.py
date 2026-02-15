@@ -11,7 +11,7 @@ async, so this transport implements ``AsyncTransport`` and must be used with
 
 Requirements::
 
-    pip install aws-sdk-sagemaker-runtime-http2 boto3
+    pip install deepgram-sdk[sagemaker]
 
 Usage::
 
@@ -75,7 +75,7 @@ def _import_sagemaker_deps() -> tuple:
     except ImportError:
         raise ImportError(
             "SageMaker transport requires additional dependencies. "
-            "Install them with: pip install aws-sdk-sagemaker-runtime-http2 boto3"
+            "Install them with: pip install deepgram-sdk[sagemaker]"
         ) from None
 
     return (

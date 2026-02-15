@@ -13,7 +13,7 @@ It cannot be used with the sync ``DeepgramClient``.
 
 Requirements::
 
-    pip install aws-sdk-sagemaker-runtime-http2 boto3
+    pip install deepgram-sdk[sagemaker]
 
 Environment:
     AWS credentials must be configured (via environment variables,
