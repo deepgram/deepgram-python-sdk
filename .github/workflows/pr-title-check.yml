@@ -30,3 +30,4 @@ jobs:
                   PR_TITLE: ${{ github.event.pull_request.title }}
               run: |
                   echo "$PR_TITLE" | npx commitlint -g .github/.commitlintrc.json
+

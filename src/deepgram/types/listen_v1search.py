@@ -2,4 +2,4 @@
 
 import typing
 
-ListenV1Search = typing.Optional[typing.Union[str, typing.Sequence[str]]]
+ListenV1Search = typing.Any

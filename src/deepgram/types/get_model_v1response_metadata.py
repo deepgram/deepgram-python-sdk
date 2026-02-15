@@ -15,7 +15,9 @@ class GetModelV1ResponseMetadata(UniversalBaseModel):
     architecture: typing.Optional[str] = None
     languages: typing.Optional[typing.List[str]] = None
     version: typing.Optional[str] = None
-    uuid_: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="uuid")] = None
+    uuid_: typing_extensions.Annotated[
+        typing.Optional[str], FieldMetadata(alias="uuid"), pydantic.Field(alias="uuid")
+    ] = None
     metadata: typing.Optional[GetModelV1ResponseMetadataMetadata] = None
 
     if IS_PYDANTIC_V2:

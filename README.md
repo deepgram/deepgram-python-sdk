@@ -13,8 +13,9 @@ Comprehensive API documentation and guides are available at [developers.deepgram
 
 ### Migrating From Earlier Versions
 
+- [v5 to v6](./docs/Migrating-v5-to-v6.md) (current)
+- [v3+ to v5](./docs/Migrating-v3-to-v5.md)
 - [v2 to v3+](./docs/Migrating-v2-to-v3.md)
-- [v3+ to v5](./docs/Migrating-v3-to-v5.md) (current)
 
 ## Installation
 
@@ -26,8 +27,7 @@ pip install deepgram-sdk
 
 ## Reference
 
-- **[API Reference](./reference.md)** - Complete reference for all SDK methods and parameters
-- **[WebSocket Reference](./websockets-reference.md)** - Detailed documentation for real-time WebSocket connections
+- **[API Reference](./reference.md)** - Complete reference for all SDK methods, parameters, and WebSocket connections
 
 ## Usage
 
@@ -37,7 +37,7 @@ The Deepgram SDK provides both synchronous and asynchronous clients for all majo
 
 #### Real-time Speech Recognition (Listen v2)
 
-Our newest and most advanced speech recognition model with contextual turn detection ([WebSocket Reference](./websockets-reference.md#listen-v2-connect)):
+Our newest and most advanced speech recognition model with contextual turn detection ([Reference](./reference.md#listen-v2-connect)):
 
 ```python
 from deepgram import DeepgramClient
@@ -48,7 +48,7 @@ client = DeepgramClient()
 with client.listen.v2.connect(
     model="flux-general-en",
     encoding="linear16",
-    sample_rate="16000"
+    sample_rate=16000
 ) as connection:
     def on_message(message):
         print(f"Received {message.type} event")
@@ -118,39 +118,45 @@ response = client.read.v1.text.analyze(
 
 #### Voice Agent (Conversational AI)
 
-Build interactive voice agents ([WebSocket Reference](./websockets-reference.md#agent-v1-connect)):
+Build interactive voice agents ([Reference](./reference.md#agent-v1-connect)):
 
 ```python
 from deepgram import DeepgramClient
-from deepgram.extensions.types.sockets import (
-    AgentV1SettingsMessage, AgentV1Agent, AgentV1AudioConfig,
-    AgentV1AudioInput, AgentV1Listen, AgentV1ListenProvider,
-    AgentV1Think, AgentV1OpenAiThinkProvider, AgentV1SpeakProviderConfig,
-    AgentV1DeepgramSpeakProvider
+from deepgram.agent.v1.types import (
+    AgentV1Settings, AgentV1SettingsAgent,
+    AgentV1SettingsAgentListen, AgentV1SettingsAgentListenProvider_V1,
+    AgentV1SettingsAudio, AgentV1SettingsAudioInput,
 )
+from deepgram.types.think_settings_v1 import ThinkSettingsV1
+from deepgram.types.think_settings_v1provider import ThinkSettingsV1Provider_OpenAi
+from deepgram.types.speak_settings_v1 import SpeakSettingsV1
+from deepgram.types.speak_settings_v1provider import SpeakSettingsV1Provider_Deepgram
 
 client = DeepgramClient()
 
 with client.agent.v1.connect() as agent:
-    settings = AgentV1SettingsMessage(
-        audio=AgentV1AudioConfig(
-            input=AgentV1AudioInput(encoding="linear16", sample_rate=44100)
+    settings = AgentV1Settings(
+        audio=AgentV1SettingsAudio(
+            input=AgentV1SettingsAudioInput(encoding="linear16", sample_rate=24000)
         ),
-        agent=AgentV1Agent(
-            listen=AgentV1Listen(
-                provider=AgentV1ListenProvider(type="deepgram", model="nova-3")
-            ),
-            think=AgentV1Think(
-                provider=AgentV1OpenAiThinkProvider(
-                    type="open_ai", model="gpt-4o-mini"
+        agent=AgentV1SettingsAgent(
+            listen=AgentV1SettingsAgentListen(
+                provider=AgentV1SettingsAgentListenProvider_V1(
+                    type="deepgram", model="nova-3"
                 )
             ),
-            speak=AgentV1SpeakProviderConfig(
-                provider=AgentV1DeepgramSpeakProvider(
+            think=ThinkSettingsV1(
+                provider=ThinkSettingsV1Provider_OpenAi(
+                    type="open_ai", model="gpt-4o-mini"
+                ),
+                prompt="You are a helpful AI assistant.",
+            ),
+            speak=SpeakSettingsV1(
+                provider=SpeakSettingsV1Provider_Deepgram(
                     type="deepgram", model="aura-2-asteria-en"
                 )
-            )
-        )
+            ),
+        ),
     )
 
     agent.send_settings(settings)
@@ -161,18 +167,14 @@ with client.agent.v1.connect() as agent:
 
 For comprehensive documentation of all available methods, parameters, and options:
 
-- **[API Reference](./reference.md)** - Complete reference for REST API methods including:
+- **[API Reference](./reference.md)** - Complete reference for all SDK methods including:
 
   - Listen (Speech-to-Text): File transcription, URL transcription, and media processing
   - Speak (Text-to-Speech): Audio generation and voice synthesis
   - Read (Text Intelligence): Text analysis, sentiment, summarization, and topic detection
   - Manage: Project management, API keys, and usage analytics
   - Auth: Token generation and authentication management
-
-- **[WebSocket Reference](./websockets-reference.md)** - Detailed documentation for real-time connections:
-  - Listen v1/v2: Real-time speech recognition with different model capabilities
-  - Speak v1: Real-time text-to-speech streaming
-  - Agent v1: Conversational voice agents with integrated STT, LLM, and TTS
+  - WebSocket connections: Listen v1/v2, Speak v1, and Agent v1 real-time streaming
 
 ## Authentication
 
@@ -242,7 +244,7 @@ async def main():
     async with client.listen.v2.connect(
         model="flux-general-en",
         encoding="linear16",
-        sample_rate="16000"
+        sample_rate=16000
     ) as connection:
         async def on_message(message):
             print(f"Received {message.type} event")
@@ -378,7 +380,7 @@ We welcome contributions to improve this SDK! However, please note that this lib
 
 5. **Run examples**:
    ```bash
-   python -u examples/listen/v2/connect/main.py
+   python -u examples/07-transcription-live-websocket.py
    ```
 
 ### Contribution Guidelines

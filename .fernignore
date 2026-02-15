@@ -1,33 +1,39 @@
-# Development, Configuration Files & Documentation
-README.md
-CONTRIBUTING.md
-.vscode/
-.gitignore
-mypy.ini
-websockets-reference.md
-.github/
-scripts/run_examples.sh
-docs/
-pyproject.toml
-CHANGELOG.md
-
-# Examples
-examples/
-
-# Test Files
-tests/unit/
-tests/integrations/
-
-# Custom Extensions & Clients
+# Custom client implementation extending BaseClient with additional features:
+# - access_token parameter support (Bearer token authentication)
+# - Automatic session ID generation and header injection (x-deepgram-session-id)
+# This file is manually maintained and should not be regenerated
 src/deepgram/client.py
-src/deepgram/extensions/
 
-# Socket Client Implementations
-src/deepgram/agent/v1/socket_client.py
+# WireMock mappings: removed duplicate empty-body /v1/listen stub that causes
+# non-deterministic matching failures
+wiremock/wiremock-mappings.json
+
+# Wire test with manual fix: transcribe_file() requires request=bytes parameter
+tests/wire/test_listen_v1_media.py
+
+# WebSocket socket clients: optional message parameter defaults for send_flush,
+# send_close, send_clear, send_finalize, send_close_stream, send_keep_alive
+src/deepgram/speak/v1/socket_client.py
 src/deepgram/listen/v1/socket_client.py
 src/deepgram/listen/v2/socket_client.py
-src/deepgram/speak/v1/socket_client.py
+src/deepgram/agent/v1/socket_client.py
 
-# Bug Fixes
-src/deepgram/listen/client.py
-src/deepgram/core/client_wrapper.py
+# Manual standalone tests
+tests/manual
+
+# README with custom examples, migration guide links, and contributing section
+README.md
+
+# Changelog managed by release-please
+CHANGELOG.md
+
+# Contributing guide
+CONTRIBUTING.md
+
+# Reference with Fern-generated REST API docs plus manually maintained WebSocket sections
+reference.md
+
+# Folders to ignore
+.github
+docs
+examples

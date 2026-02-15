@@ -3,14 +3,17 @@
 from __future__ import annotations
 
 import typing
+import urllib.parse
 from contextlib import asynccontextmanager, contextmanager
 
-import httpx
-import websockets.exceptions
 import websockets.sync.client as websockets_sync_client
 from ...core.api_error import ApiError
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
+from ...core.jsonable_encoder import jsonable_encoder
+from ...core.query_encoder import encode_query
+from ...core.remove_none_from_dict import remove_none_from_dict
 from ...core.request_options import RequestOptions
+from ...core.websocket_compat import InvalidWebSocketStatus, get_status_code
 from .raw_client import AsyncRawV1Client, RawV1Client
 from .socket_client import AsyncV1SocketClient, V1SocketClient
 
@@ -47,6 +50,7 @@ class V1Client:
         callback: typing.Optional[str] = None,
         callback_method: typing.Optional[str] = None,
         channels: typing.Optional[str] = None,
+        detect_entities: typing.Optional[str] = None,
         diarize: typing.Optional[str] = None,
         dictation: typing.Optional[str] = None,
         encoding: typing.Optional[str] = None,
@@ -84,6 +88,8 @@ class V1Client:
         callback_method : typing.Optional[str]
 
         channels : typing.Optional[str]
+
+        detect_entities : typing.Optional[str]
 
         diarize : typing.Optional[str]
 
@@ -147,90 +153,49 @@ class V1Client:
         V1SocketClient
         """
         ws_url = self._raw_client._client_wrapper.get_environment().production + "/v1/listen"
-        query_params = httpx.QueryParams()
-        if callback is not None:
-            query_params = query_params.add("callback", callback)
-        if callback_method is not None:
-            query_params = query_params.add("callback_method", callback_method)
-        if channels is not None:
-            query_params = query_params.add("channels", channels)
-        if diarize is not None:
-            query_params = query_params.add("diarize", diarize)
-        if dictation is not None:
-            query_params = query_params.add("dictation", dictation)
-        if encoding is not None:
-            query_params = query_params.add("encoding", encoding)
-        if endpointing is not None:
-            query_params = query_params.add("endpointing", endpointing)
-        if extra is not None:
-            if isinstance(extra, (list, tuple)):
-                for item in extra:
-                    query_params = query_params.add("extra", str(item))
-            else:
-                query_params = query_params.add("extra", extra)
-        if interim_results is not None:
-            query_params = query_params.add("interim_results", interim_results)
-        if keyterm is not None:
-            if isinstance(keyterm, (list, tuple)):
-                for term in keyterm:
-                    query_params = query_params.add("keyterm", str(term))
-            else:
-                query_params = query_params.add("keyterm", keyterm)
-        if keywords is not None:
-            if isinstance(keywords, (list, tuple)):
-                for keyword in keywords:
-                    query_params = query_params.add("keywords", str(keyword))
-            else:
-                query_params = query_params.add("keywords", keywords)
-        if language is not None:
-            query_params = query_params.add("language", language)
-        if mip_opt_out is not None:
-            query_params = query_params.add("mip_opt_out", mip_opt_out)
-        if model is not None:
-            query_params = query_params.add("model", model)
-        if multichannel is not None:
-            query_params = query_params.add("multichannel", multichannel)
-        if numerals is not None:
-            query_params = query_params.add("numerals", numerals)
-        if profanity_filter is not None:
-            query_params = query_params.add("profanity_filter", profanity_filter)
-        if punctuate is not None:
-            query_params = query_params.add("punctuate", punctuate)
-        if redact is not None:
-            if isinstance(redact, (list, tuple)):
-                for item in redact:
-                    query_params = query_params.add("redact", str(item))
-            else:
-                query_params = query_params.add("redact", redact)
-        if replace is not None:
-            if isinstance(replace, (list, tuple)):
-                for item in replace:
-                    query_params = query_params.add("replace", str(item))
-            else:
-                query_params = query_params.add("replace", replace)
-        if sample_rate is not None:
-            query_params = query_params.add("sample_rate", sample_rate)
-        if search is not None:
-            if isinstance(search, (list, tuple)):
-                for item in search:
-                    query_params = query_params.add("search", str(item))
-            else:
-                query_params = query_params.add("search", search)
-        if smart_format is not None:
-            query_params = query_params.add("smart_format", smart_format)
-        if tag is not None:
-            if isinstance(tag, (list, tuple)):
-                for item in tag:
-                    query_params = query_params.add("tag", str(item))
-            else:
-                query_params = query_params.add("tag", tag)
-        if utterance_end_ms is not None:
-            query_params = query_params.add("utterance_end_ms", utterance_end_ms)
-        if vad_events is not None:
-            query_params = query_params.add("vad_events", vad_events)
-        if version is not None:
-            query_params = query_params.add("version", version)
-        ws_url = ws_url + f"?{query_params}"
+        _encoded_query_params = encode_query(
+            jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        "callback": callback,
+                        "callback_method": callback_method,
+                        "channels": channels,
+                        "detect_entities": detect_entities,
+                        "diarize": diarize,
+                        "dictation": dictation,
+                        "encoding": encoding,
+                        "endpointing": endpointing,
+                        "extra": extra,
+                        "interim_results": interim_results,
+                        "keyterm": keyterm,
+                        "keywords": keywords,
+                        "language": language,
+                        "mip_opt_out": mip_opt_out,
+                        "model": model,
+                        "multichannel": multichannel,
+                        "numerals": numerals,
+                        "profanity_filter": profanity_filter,
+                        "punctuate": punctuate,
+                        "redact": redact,
+                        "replace": replace,
+                        "sample_rate": sample_rate,
+                        "search": search,
+                        "smart_format": smart_format,
+                        "tag": tag,
+                        "utterance_end_ms": utterance_end_ms,
+                        "vad_events": vad_events,
+                        "version": version,
+                        **(
+                            request_options.get("additional_query_parameters", {}) or {}
+                            if request_options is not None
+                            else {}
+                        ),
+                    }
+                )
+            )
+        )
+        if _encoded_query_params:
+            ws_url = ws_url + "?" + urllib.parse.urlencode(_encoded_query_params)
         headers = self._raw_client._client_wrapper.get_headers()
         if authorization is not None:
             headers["Authorization"] = str(authorization)
@@ -239,8 +204,8 @@ class V1Client:
         try:
             with websockets_sync_client.connect(ws_url, additional_headers=headers) as protocol:
                 yield V1SocketClient(websocket=protocol)
-        except websockets.exceptions.InvalidStatusCode as exc:
-            status_code: int = exc.status_code
+        except InvalidWebSocketStatus as exc:
+            status_code: int = get_status_code(exc)
             if status_code == 401:
                 raise ApiError(
                     status_code=status_code,
@@ -286,6 +251,7 @@ class AsyncV1Client:
         callback: typing.Optional[str] = None,
         callback_method: typing.Optional[str] = None,
         channels: typing.Optional[str] = None,
+        detect_entities: typing.Optional[str] = None,
         diarize: typing.Optional[str] = None,
         dictation: typing.Optional[str] = None,
         encoding: typing.Optional[str] = None,
@@ -323,6 +289,8 @@ class AsyncV1Client:
         callback_method : typing.Optional[str]
 
         channels : typing.Optional[str]
+
+        detect_entities : typing.Optional[str]
 
         diarize : typing.Optional[str]
 
@@ -386,90 +354,49 @@ class AsyncV1Client:
         AsyncV1SocketClient
         """
         ws_url = self._raw_client._client_wrapper.get_environment().production + "/v1/listen"
-        query_params = httpx.QueryParams()
-        if callback is not None:
-            query_params = query_params.add("callback", callback)
-        if callback_method is not None:
-            query_params = query_params.add("callback_method", callback_method)
-        if channels is not None:
-            query_params = query_params.add("channels", channels)
-        if diarize is not None:
-            query_params = query_params.add("diarize", diarize)
-        if dictation is not None:
-            query_params = query_params.add("dictation", dictation)
-        if encoding is not None:
-            query_params = query_params.add("encoding", encoding)
-        if endpointing is not None:
-            query_params = query_params.add("endpointing", endpointing)
-        if extra is not None:
-            if isinstance(extra, (list, tuple)):
-                for item in extra:
-                    query_params = query_params.add("extra", str(item))
-            else:
-                query_params = query_params.add("extra", extra)
-        if interim_results is not None:
-            query_params = query_params.add("interim_results", interim_results)
-        if keyterm is not None:
-            if isinstance(keyterm, (list, tuple)):
-                for term in keyterm:
-                    query_params = query_params.add("keyterm", str(term))
-            else:
-                query_params = query_params.add("keyterm", keyterm)
-        if keywords is not None:
-            if isinstance(keywords, (list, tuple)):
-                for keyword in keywords:
-                    query_params = query_params.add("keywords", str(keyword))
-            else:
-                query_params = query_params.add("keywords", keywords)
-        if language is not None:
-            query_params = query_params.add("language", language)
-        if mip_opt_out is not None:
-            query_params = query_params.add("mip_opt_out", mip_opt_out)
-        if model is not None:
-            query_params = query_params.add("model", model)
-        if multichannel is not None:
-            query_params = query_params.add("multichannel", multichannel)
-        if numerals is not None:
-            query_params = query_params.add("numerals", numerals)
-        if profanity_filter is not None:
-            query_params = query_params.add("profanity_filter", profanity_filter)
-        if punctuate is not None:
-            query_params = query_params.add("punctuate", punctuate)
-        if redact is not None:
-            if isinstance(redact, (list, tuple)):
-                for item in redact:
-                    query_params = query_params.add("redact", str(item))
-            else:
-                query_params = query_params.add("redact", redact)
-        if replace is not None:
-            if isinstance(replace, (list, tuple)):
-                for item in replace:
-                    query_params = query_params.add("replace", str(item))
-            else:
-                query_params = query_params.add("replace", replace)
-        if sample_rate is not None:
-            query_params = query_params.add("sample_rate", sample_rate)
-        if search is not None:
-            if isinstance(search, (list, tuple)):
-                for item in search:
-                    query_params = query_params.add("search", str(item))
-            else:
-                query_params = query_params.add("search", search)
-        if smart_format is not None:
-            query_params = query_params.add("smart_format", smart_format)
-        if tag is not None:
-            if isinstance(tag, (list, tuple)):
-                for item in tag:
-                    query_params = query_params.add("tag", str(item))
-            else:
-                query_params = query_params.add("tag", tag)
-        if utterance_end_ms is not None:
-            query_params = query_params.add("utterance_end_ms", utterance_end_ms)
-        if vad_events is not None:
-            query_params = query_params.add("vad_events", vad_events)
-        if version is not None:
-            query_params = query_params.add("version", version)
-        ws_url = ws_url + f"?{query_params}"
+        _encoded_query_params = encode_query(
+            jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        "callback": callback,
+                        "callback_method": callback_method,
+                        "channels": channels,
+                        "detect_entities": detect_entities,
+                        "diarize": diarize,
+                        "dictation": dictation,
+                        "encoding": encoding,
+                        "endpointing": endpointing,
+                        "extra": extra,
+                        "interim_results": interim_results,
+                        "keyterm": keyterm,
+                        "keywords": keywords,
+                        "language": language,
+                        "mip_opt_out": mip_opt_out,
+                        "model": model,
+                        "multichannel": multichannel,
+                        "numerals": numerals,
+                        "profanity_filter": profanity_filter,
+                        "punctuate": punctuate,
+                        "redact": redact,
+                        "replace": replace,
+                        "sample_rate": sample_rate,
+                        "search": search,
+                        "smart_format": smart_format,
+                        "tag": tag,
+                        "utterance_end_ms": utterance_end_ms,
+                        "vad_events": vad_events,
+                        "version": version,
+                        **(
+                            request_options.get("additional_query_parameters", {}) or {}
+                            if request_options is not None
+                            else {}
+                        ),
+                    }
+                )
+            )
+        )
+        if _encoded_query_params:
+            ws_url = ws_url + "?" + urllib.parse.urlencode(_encoded_query_params)
         headers = self._raw_client._client_wrapper.get_headers()
         if authorization is not None:
             headers["Authorization"] = str(authorization)
@@ -478,8 +405,8 @@ class AsyncV1Client:
         try:
             async with websockets_client_connect(ws_url, extra_headers=headers) as protocol:
                 yield AsyncV1SocketClient(websocket=protocol)
-        except websockets.exceptions.InvalidStatusCode as exc:
-            status_code: int = exc.status_code
+        except InvalidWebSocketStatus as exc:
+            status_code: int = get_status_code(exc)
             if status_code == 401:
                 raise ApiError(
                     status_code=status_code,

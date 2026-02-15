@@ -4,6 +4,9 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from .listen_v1response_results_channels_item_alternatives_item_entities_item import (
+    ListenV1ResponseResultsChannelsItemAlternativesItemEntitiesItem,
+)
 from .listen_v1response_results_channels_item_alternatives_item_paragraphs import (
     ListenV1ResponseResultsChannelsItemAlternativesItemParagraphs,
 )
@@ -23,6 +26,7 @@ class ListenV1ResponseResultsChannelsItemAlternativesItem(UniversalBaseModel):
     confidence: typing.Optional[float] = None
     words: typing.Optional[typing.List[ListenV1ResponseResultsChannelsItemAlternativesItemWordsItem]] = None
     paragraphs: typing.Optional[ListenV1ResponseResultsChannelsItemAlternativesItemParagraphs] = None
+    entities: typing.Optional[typing.List[ListenV1ResponseResultsChannelsItemAlternativesItemEntitiesItem]] = None
     summaries: typing.Optional[typing.List[ListenV1ResponseResultsChannelsItemAlternativesItemSummariesItem]] = None
     topics: typing.Optional[typing.List[ListenV1ResponseResultsChannelsItemAlternativesItemTopicsItem]] = None
 

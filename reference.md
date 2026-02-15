@@ -1,6 +1,6 @@
 # Reference
 ## Agent V1 Settings Think Models
-<details><summary><code>client.agent.v1.settings.think.models.<a href="src/deepgram/agent/v1/settings/think/models/client.py">list</a>()</code></summary>
+<details><summary><code>client.agent.v1.settings.think.models.<a href="src/deepgram/agent/v1/settings/think/models/client.py">list</a>() -&gt; AsyncHttpResponse[AgentThinkModelsV1Response]</code></summary>
 <dl>
 <dd>
 
@@ -61,7 +61,7 @@ client.agent.v1.settings.think.models.list()
 </details>
 
 ## Auth V1 Tokens
-<details><summary><code>client.auth.v1.tokens.<a href="src/deepgram/auth/v1/tokens/client.py">grant</a>(...)</code></summary>
+<details><summary><code>client.auth.v1.tokens.<a href="src/deepgram/auth/v1/tokens/client.py">grant</a>(...) -&gt; AsyncHttpResponse[GrantV1Response]</code></summary>
 <dl>
 <dd>
 
@@ -130,7 +130,7 @@ client.auth.v1.tokens.grant()
 </details>
 
 ## Listen V1 Media
-<details><summary><code>client.listen.v1.media.<a href="src/deepgram/listen/v1/media/client.py">transcribe_url</a>(...)</code></summary>
+<details><summary><code>client.listen.v1.media.<a href="src/deepgram/listen/v1/media/client.py">transcribe_url</a>(...) -&gt; AsyncHttpResponse[MediaTranscribeResponse]</code></summary>
 <dl>
 <dd>
 
@@ -163,6 +163,41 @@ client = DeepgramClient(
     api_key="YOUR_API_KEY",
 )
 client.listen.v1.media.transcribe_url(
+    callback="callback",
+    callback_method="POST",
+    extra="extra",
+    sentiment=True,
+    summarize="v2",
+    tag="tag",
+    topics=True,
+    custom_topic="custom_topic",
+    custom_topic_mode="extended",
+    intents=True,
+    custom_intent="custom_intent",
+    custom_intent_mode="extended",
+    detect_entities=True,
+    detect_language=True,
+    diarize=True,
+    dictation=True,
+    encoding="linear16",
+    filler_words=True,
+    keywords="keywords",
+    language="language",
+    measurements=True,
+    model="nova-3",
+    multichannel=True,
+    numerals=True,
+    paragraphs=True,
+    profanity_filter=True,
+    punctuate=True,
+    redact="redact",
+    replace="replace",
+    search="search",
+    smart_format=True,
+    utterances=True,
+    utt_split=1.1,
+    version="latest",
+    mip_opt_out=True,
     url="https://dpgr.am/spacewalk.wav",
 )
 
@@ -488,7 +523,7 @@ client.listen.v1.media.transcribe_url(
 </dl>
 </details>
 
-<details><summary><code>client.listen.v1.media.<a href="src/deepgram/listen/v1/media/client.py">transcribe_file</a>(...)</code></summary>
+<details><summary><code>client.listen.v1.media.<a href="src/deepgram/listen/v1/media/client.py">transcribe_file</a>(...) -&gt; AsyncHttpResponse[MediaTranscribeResponse]</code></summary>
 <dl>
 <dd>
 
@@ -520,7 +555,9 @@ from deepgram import DeepgramClient
 client = DeepgramClient(
     api_key="YOUR_API_KEY",
 )
-client.listen.v1.media.transcribe_file()
+
+with open("audio.wav", "rb") as f:
+    response = client.listen.v1.media.transcribe_file(request=f)
 
 ```
 </dd>
@@ -845,7 +882,7 @@ client.listen.v1.media.transcribe_file()
 </details>
 
 ## Manage V1 Models
-<details><summary><code>client.manage.v1.models.<a href="src/deepgram/manage/v1/models/client.py">list</a>(...)</code></summary>
+<details><summary><code>client.manage.v1.models.<a href="src/deepgram/manage/v1/models/client.py">list</a>(...) -&gt; AsyncHttpResponse[ListModelsV1Response]</code></summary>
 <dl>
 <dd>
 
@@ -877,7 +914,9 @@ from deepgram import DeepgramClient
 client = DeepgramClient(
     api_key="YOUR_API_KEY",
 )
-client.manage.v1.models.list()
+client.manage.v1.models.list(
+    include_outdated=True,
+)
 
 ```
 </dd>
@@ -913,7 +952,7 @@ client.manage.v1.models.list()
 </dl>
 </details>
 
-<details><summary><code>client.manage.v1.models.<a href="src/deepgram/manage/v1/models/client.py">get</a>(...)</code></summary>
+<details><summary><code>client.manage.v1.models.<a href="src/deepgram/manage/v1/models/client.py">get</a>(...) -&gt; AsyncHttpResponse[GetModelV1Response]</code></summary>
 <dl>
 <dd>
 
@@ -984,7 +1023,7 @@ client.manage.v1.models.get(
 </details>
 
 ## Manage V1 Projects
-<details><summary><code>client.manage.v1.projects.<a href="src/deepgram/manage/v1/projects/client.py">list</a>()</code></summary>
+<details><summary><code>client.manage.v1.projects.<a href="src/deepgram/manage/v1/projects/client.py">list</a>() -&gt; AsyncHttpResponse[ListProjectsV1Response]</code></summary>
 <dl>
 <dd>
 
@@ -1044,7 +1083,7 @@ client.manage.v1.projects.list()
 </dl>
 </details>
 
-<details><summary><code>client.manage.v1.projects.<a href="src/deepgram/manage/v1/projects/client.py">get</a>(...)</code></summary>
+<details><summary><code>client.manage.v1.projects.<a href="src/deepgram/manage/v1/projects/client.py">get</a>(...) -&gt; AsyncHttpResponse[GetProjectV1Response]</code></summary>
 <dl>
 <dd>
 
@@ -1078,6 +1117,8 @@ client = DeepgramClient(
 )
 client.manage.v1.projects.get(
     project_id="123456-7890-1234-5678-901234",
+    limit=1.1,
+    page=1.1,
 )
 
 ```
@@ -1130,7 +1171,7 @@ client.manage.v1.projects.get(
 </dl>
 </details>
 
-<details><summary><code>client.manage.v1.projects.<a href="src/deepgram/manage/v1/projects/client.py">delete</a>(...)</code></summary>
+<details><summary><code>client.manage.v1.projects.<a href="src/deepgram/manage/v1/projects/client.py">delete</a>(...) -&gt; AsyncHttpResponse[DeleteProjectV1Response]</code></summary>
 <dl>
 <dd>
 
@@ -1200,7 +1241,7 @@ client.manage.v1.projects.delete(
 </dl>
 </details>
 
-<details><summary><code>client.manage.v1.projects.<a href="src/deepgram/manage/v1/projects/client.py">update</a>(...)</code></summary>
+<details><summary><code>client.manage.v1.projects.<a href="src/deepgram/manage/v1/projects/client.py">update</a>(...) -&gt; AsyncHttpResponse[UpdateProjectV1Response]</code></summary>
 <dl>
 <dd>
 
@@ -1278,7 +1319,7 @@ client.manage.v1.projects.update(
 </dl>
 </details>
 
-<details><summary><code>client.manage.v1.projects.<a href="src/deepgram/manage/v1/projects/client.py">leave</a>(...)</code></summary>
+<details><summary><code>client.manage.v1.projects.<a href="src/deepgram/manage/v1/projects/client.py">leave</a>(...) -&gt; AsyncHttpResponse[LeaveProjectV1Response]</code></summary>
 <dl>
 <dd>
 
@@ -1349,7 +1390,7 @@ client.manage.v1.projects.leave(
 </details>
 
 ## Manage V1 Projects Keys
-<details><summary><code>client.manage.v1.projects.keys.<a href="src/deepgram/manage/v1/projects/keys/client.py">list</a>(...)</code></summary>
+<details><summary><code>client.manage.v1.projects.keys.<a href="src/deepgram/manage/v1/projects/keys/client.py">list</a>(...) -&gt; AsyncHttpResponse[ListProjectKeysV1Response]</code></summary>
 <dl>
 <dd>
 
@@ -1383,6 +1424,7 @@ client = DeepgramClient(
 )
 client.manage.v1.projects.keys.list(
     project_id="123456-7890-1234-5678-901234",
+    status="active",
 )
 
 ```
@@ -1427,7 +1469,7 @@ client.manage.v1.projects.keys.list(
 </dl>
 </details>
 
-<details><summary><code>client.manage.v1.projects.keys.<a href="src/deepgram/manage/v1/projects/keys/client.py">create</a>(...)</code></summary>
+<details><summary><code>client.manage.v1.projects.keys.<a href="src/deepgram/manage/v1/projects/keys/client.py">create</a>(...) -&gt; AsyncHttpResponse[CreateKeyV1Response]</code></summary>
 <dl>
 <dd>
 
@@ -1506,7 +1548,7 @@ client.manage.v1.projects.keys.create(
 </dl>
 </details>
 
-<details><summary><code>client.manage.v1.projects.keys.<a href="src/deepgram/manage/v1/projects/keys/client.py">get</a>(...)</code></summary>
+<details><summary><code>client.manage.v1.projects.keys.<a href="src/deepgram/manage/v1/projects/keys/client.py">get</a>(...) -&gt; AsyncHttpResponse[GetProjectKeyV1Response]</code></summary>
 <dl>
 <dd>
 
@@ -1585,7 +1627,7 @@ client.manage.v1.projects.keys.get(
 </dl>
 </details>
 
-<details><summary><code>client.manage.v1.projects.keys.<a href="src/deepgram/manage/v1/projects/keys/client.py">delete</a>(...)</code></summary>
+<details><summary><code>client.manage.v1.projects.keys.<a href="src/deepgram/manage/v1/projects/keys/client.py">delete</a>(...) -&gt; AsyncHttpResponse[DeleteProjectKeyV1Response]</code></summary>
 <dl>
 <dd>
 
@@ -1665,7 +1707,7 @@ client.manage.v1.projects.keys.delete(
 </details>
 
 ## Manage V1 Projects Members
-<details><summary><code>client.manage.v1.projects.members.<a href="src/deepgram/manage/v1/projects/members/client.py">list</a>(...)</code></summary>
+<details><summary><code>client.manage.v1.projects.members.<a href="src/deepgram/manage/v1/projects/members/client.py">list</a>(...) -&gt; AsyncHttpResponse[ListProjectMembersV1Response]</code></summary>
 <dl>
 <dd>
 
@@ -1735,7 +1777,7 @@ client.manage.v1.projects.members.list(
 </dl>
 </details>
 
-<details><summary><code>client.manage.v1.projects.members.<a href="src/deepgram/manage/v1/projects/members/client.py">delete</a>(...)</code></summary>
+<details><summary><code>client.manage.v1.projects.members.<a href="src/deepgram/manage/v1/projects/members/client.py">delete</a>(...) -&gt; AsyncHttpResponse[DeleteProjectMemberV1Response]</code></summary>
 <dl>
 <dd>
 
@@ -1815,7 +1857,7 @@ client.manage.v1.projects.members.delete(
 </details>
 
 ## Manage V1 Projects Models
-<details><summary><code>client.manage.v1.projects.models.<a href="src/deepgram/manage/v1/projects/models/client.py">list</a>(...)</code></summary>
+<details><summary><code>client.manage.v1.projects.models.<a href="src/deepgram/manage/v1/projects/models/client.py">list</a>(...) -&gt; AsyncHttpResponse[ListModelsV1Response]</code></summary>
 <dl>
 <dd>
 
@@ -1849,6 +1891,7 @@ client = DeepgramClient(
 )
 client.manage.v1.projects.models.list(
     project_id="123456-7890-1234-5678-901234",
+    include_outdated=True,
 )
 
 ```
@@ -1893,7 +1936,7 @@ client.manage.v1.projects.models.list(
 </dl>
 </details>
 
-<details><summary><code>client.manage.v1.projects.models.<a href="src/deepgram/manage/v1/projects/models/client.py">get</a>(...)</code></summary>
+<details><summary><code>client.manage.v1.projects.models.<a href="src/deepgram/manage/v1/projects/models/client.py">get</a>(...) -&gt; AsyncHttpResponse[GetModelV1Response]</code></summary>
 <dl>
 <dd>
 
@@ -1973,7 +2016,7 @@ client.manage.v1.projects.models.get(
 </details>
 
 ## Manage V1 Projects Requests
-<details><summary><code>client.manage.v1.projects.requests.<a href="src/deepgram/manage/v1/projects/requests/client.py">list</a>(...)</code></summary>
+<details><summary><code>client.manage.v1.projects.requests.<a href="src/deepgram/manage/v1/projects/requests/client.py">list</a>(...) -&gt; AsyncHttpResponse[ListProjectRequestsV1Response]</code></summary>
 <dl>
 <dd>
 
@@ -2000,6 +2043,8 @@ Generates a list of requests for a specific project
 <dd>
 
 ```python
+import datetime
+
 from deepgram import DeepgramClient
 
 client = DeepgramClient(
@@ -2007,8 +2052,20 @@ client = DeepgramClient(
 )
 client.manage.v1.projects.requests.list(
     project_id="123456-7890-1234-5678-901234",
+    start=datetime.datetime.fromisoformat(
+        "2024-01-15 09:30:00+00:00",
+    ),
+    end=datetime.datetime.fromisoformat(
+        "2024-01-15 09:30:00+00:00",
+    ),
+    limit=1.1,
+    page=1.1,
     accessor="12345678-1234-1234-1234-123456789012",
     request_id="12345678-1234-1234-1234-123456789012",
+    deployment="hosted",
+    endpoint="listen",
+    method="sync",
+    status="succeeded",
 )
 
 ```
@@ -2125,7 +2182,7 @@ client.manage.v1.projects.requests.list(
 </dl>
 </details>
 
-<details><summary><code>client.manage.v1.projects.requests.<a href="src/deepgram/manage/v1/projects/requests/client.py">get</a>(...)</code></summary>
+<details><summary><code>client.manage.v1.projects.requests.<a href="src/deepgram/manage/v1/projects/requests/client.py">get</a>(...) -&gt; AsyncHttpResponse[GetProjectRequestV1Response]</code></summary>
 <dl>
 <dd>
 
@@ -2205,7 +2262,7 @@ client.manage.v1.projects.requests.get(
 </details>
 
 ## Manage V1 Projects Usage
-<details><summary><code>client.manage.v1.projects.usage.<a href="src/deepgram/manage/v1/projects/usage/client.py">get</a>(...)</code></summary>
+<details><summary><code>client.manage.v1.projects.usage.<a href="src/deepgram/manage/v1/projects/usage/client.py">get</a>(...) -&gt; AsyncHttpResponse[UsageV1Response]</code></summary>
 <dl>
 <dd>
 
@@ -2239,10 +2296,50 @@ client = DeepgramClient(
 )
 client.manage.v1.projects.usage.get(
     project_id="123456-7890-1234-5678-901234",
+    start="start",
+    end="end",
     accessor="12345678-1234-1234-1234-123456789012",
+    alternatives=True,
+    callback_method=True,
+    callback=True,
+    channels=True,
+    custom_intent_mode=True,
+    custom_intent=True,
+    custom_topic_mode=True,
+    custom_topic=True,
+    deployment="hosted",
+    detect_entities=True,
+    detect_language=True,
+    diarize=True,
+    dictation=True,
+    encoding=True,
+    endpoint="listen",
+    extra=True,
+    filler_words=True,
+    intents=True,
+    keyterm=True,
+    keywords=True,
+    language=True,
+    measurements=True,
+    method="sync",
     model="6f548761-c9c0-429a-9315-11a1d28499c8",
+    multichannel=True,
+    numerals=True,
+    paragraphs=True,
+    profanity_filter=True,
+    punctuate=True,
+    redact=True,
+    replace=True,
     sample_rate=True,
+    search=True,
+    sentiment=True,
+    smart_format=True,
+    summarize=True,
     tag="tag1",
+    topics=True,
+    utt_split=True,
+    utterances=True,
+    version=True,
 )
 
 ```
@@ -2632,7 +2729,7 @@ client.manage.v1.projects.usage.get(
 </details>
 
 ## Manage V1 Projects Billing Balances
-<details><summary><code>client.manage.v1.projects.billing.balances.<a href="src/deepgram/manage/v1/projects/billing/balances/client.py">list</a>(...)</code></summary>
+<details><summary><code>client.manage.v1.projects.billing.balances.<a href="src/deepgram/manage/v1/projects/billing/balances/client.py">list</a>(...) -&gt; AsyncHttpResponse[ListProjectBalancesV1Response]</code></summary>
 <dl>
 <dd>
 
@@ -2702,7 +2799,7 @@ client.manage.v1.projects.billing.balances.list(
 </dl>
 </details>
 
-<details><summary><code>client.manage.v1.projects.billing.balances.<a href="src/deepgram/manage/v1/projects/billing/balances/client.py">get</a>(...)</code></summary>
+<details><summary><code>client.manage.v1.projects.billing.balances.<a href="src/deepgram/manage/v1/projects/billing/balances/client.py">get</a>(...) -&gt; AsyncHttpResponse[GetProjectBalanceV1Response]</code></summary>
 <dl>
 <dd>
 
@@ -2782,7 +2879,7 @@ client.manage.v1.projects.billing.balances.get(
 </details>
 
 ## Manage V1 Projects Billing Breakdown
-<details><summary><code>client.manage.v1.projects.billing.breakdown.<a href="src/deepgram/manage/v1/projects/billing/breakdown/client.py">list</a>(...)</code></summary>
+<details><summary><code>client.manage.v1.projects.billing.breakdown.<a href="src/deepgram/manage/v1/projects/billing/breakdown/client.py">list</a>(...) -&gt; AsyncHttpResponse[BillingBreakdownV1Response]</code></summary>
 <dl>
 <dd>
 
@@ -2816,7 +2913,10 @@ client = DeepgramClient(
 )
 client.manage.v1.projects.billing.breakdown.list(
     project_id="123456-7890-1234-5678-901234",
+    start="start",
+    end="end",
     accessor="12345678-1234-1234-1234-123456789012",
+    deployment="hosted",
     tag="tag1",
     line_item="streaming::nova-3",
 )
@@ -2917,7 +3017,7 @@ client.manage.v1.projects.billing.breakdown.list(
 </details>
 
 ## Manage V1 Projects Billing Fields
-<details><summary><code>client.manage.v1.projects.billing.fields.<a href="src/deepgram/manage/v1/projects/billing/fields/client.py">list</a>(...)</code></summary>
+<details><summary><code>client.manage.v1.projects.billing.fields.<a href="src/deepgram/manage/v1/projects/billing/fields/client.py">list</a>(...) -&gt; AsyncHttpResponse[ListBillingFieldsV1Response]</code></summary>
 <dl>
 <dd>
 
@@ -2951,6 +3051,8 @@ client = DeepgramClient(
 )
 client.manage.v1.projects.billing.fields.list(
     project_id="123456-7890-1234-5678-901234",
+    start="start",
+    end="end",
 )
 
 ```
@@ -3004,7 +3106,7 @@ client.manage.v1.projects.billing.fields.list(
 </details>
 
 ## Manage V1 Projects Billing Purchases
-<details><summary><code>client.manage.v1.projects.billing.purchases.<a href="src/deepgram/manage/v1/projects/billing/purchases/client.py">list</a>(...)</code></summary>
+<details><summary><code>client.manage.v1.projects.billing.purchases.<a href="src/deepgram/manage/v1/projects/billing/purchases/client.py">list</a>(...) -&gt; AsyncHttpResponse[ListProjectPurchasesV1Response]</code></summary>
 <dl>
 <dd>
 
@@ -3038,6 +3140,7 @@ client = DeepgramClient(
 )
 client.manage.v1.projects.billing.purchases.list(
     project_id="123456-7890-1234-5678-901234",
+    limit=1.1,
 )
 
 ```
@@ -3083,7 +3186,7 @@ client.manage.v1.projects.billing.purchases.list(
 </details>
 
 ## Manage V1 Projects Members Invites
-<details><summary><code>client.manage.v1.projects.members.invites.<a href="src/deepgram/manage/v1/projects/members/invites/client.py">list</a>(...)</code></summary>
+<details><summary><code>client.manage.v1.projects.members.invites.<a href="src/deepgram/manage/v1/projects/members/invites/client.py">list</a>(...) -&gt; AsyncHttpResponse[ListProjectInvitesV1Response]</code></summary>
 <dl>
 <dd>
 
@@ -3153,7 +3256,7 @@ client.manage.v1.projects.members.invites.list(
 </dl>
 </details>
 
-<details><summary><code>client.manage.v1.projects.members.invites.<a href="src/deepgram/manage/v1/projects/members/invites/client.py">create</a>(...)</code></summary>
+<details><summary><code>client.manage.v1.projects.members.invites.<a href="src/deepgram/manage/v1/projects/members/invites/client.py">create</a>(...) -&gt; AsyncHttpResponse[CreateProjectInviteV1Response]</code></summary>
 <dl>
 <dd>
 
@@ -3241,7 +3344,7 @@ client.manage.v1.projects.members.invites.create(
 </dl>
 </details>
 
-<details><summary><code>client.manage.v1.projects.members.invites.<a href="src/deepgram/manage/v1/projects/members/invites/client.py">delete</a>(...)</code></summary>
+<details><summary><code>client.manage.v1.projects.members.invites.<a href="src/deepgram/manage/v1/projects/members/invites/client.py">delete</a>(...) -&gt; AsyncHttpResponse[DeleteProjectInviteV1Response]</code></summary>
 <dl>
 <dd>
 
@@ -3321,7 +3424,7 @@ client.manage.v1.projects.members.invites.delete(
 </details>
 
 ## Manage V1 Projects Members Scopes
-<details><summary><code>client.manage.v1.projects.members.scopes.<a href="src/deepgram/manage/v1/projects/members/scopes/client.py">list</a>(...)</code></summary>
+<details><summary><code>client.manage.v1.projects.members.scopes.<a href="src/deepgram/manage/v1/projects/members/scopes/client.py">list</a>(...) -&gt; AsyncHttpResponse[ListProjectMemberScopesV1Response]</code></summary>
 <dl>
 <dd>
 
@@ -3400,7 +3503,7 @@ client.manage.v1.projects.members.scopes.list(
 </dl>
 </details>
 
-<details><summary><code>client.manage.v1.projects.members.scopes.<a href="src/deepgram/manage/v1/projects/members/scopes/client.py">update</a>(...)</code></summary>
+<details><summary><code>client.manage.v1.projects.members.scopes.<a href="src/deepgram/manage/v1/projects/members/scopes/client.py">update</a>(...) -&gt; AsyncHttpResponse[UpdateProjectMemberScopesV1Response]</code></summary>
 <dl>
 <dd>
 
@@ -3489,7 +3592,7 @@ client.manage.v1.projects.members.scopes.update(
 </details>
 
 ## Manage V1 Projects Usage Breakdown
-<details><summary><code>client.manage.v1.projects.usage.breakdown.<a href="src/deepgram/manage/v1/projects/usage/breakdown/client.py">get</a>(...)</code></summary>
+<details><summary><code>client.manage.v1.projects.usage.breakdown.<a href="src/deepgram/manage/v1/projects/usage/breakdown/client.py">get</a>(...) -&gt; AsyncHttpResponse[UsageBreakdownV1Response]</code></summary>
 <dl>
 <dd>
 
@@ -3523,10 +3626,51 @@ client = DeepgramClient(
 )
 client.manage.v1.projects.usage.breakdown.get(
     project_id="123456-7890-1234-5678-901234",
+    start="start",
+    end="end",
+    grouping="accessor",
     accessor="12345678-1234-1234-1234-123456789012",
+    alternatives=True,
+    callback_method=True,
+    callback=True,
+    channels=True,
+    custom_intent_mode=True,
+    custom_intent=True,
+    custom_topic_mode=True,
+    custom_topic=True,
+    deployment="hosted",
+    detect_entities=True,
+    detect_language=True,
+    diarize=True,
+    dictation=True,
+    encoding=True,
+    endpoint="listen",
+    extra=True,
+    filler_words=True,
+    intents=True,
+    keyterm=True,
+    keywords=True,
+    language=True,
+    measurements=True,
+    method="sync",
     model="6f548761-c9c0-429a-9315-11a1d28499c8",
+    multichannel=True,
+    numerals=True,
+    paragraphs=True,
+    profanity_filter=True,
+    punctuate=True,
+    redact=True,
+    replace=True,
     sample_rate=True,
+    search=True,
+    sentiment=True,
+    smart_format=True,
+    summarize=True,
     tag="tag1",
+    topics=True,
+    utt_split=True,
+    utterances=True,
+    version=True,
 )
 
 ```
@@ -3924,7 +4068,7 @@ client.manage.v1.projects.usage.breakdown.get(
 </details>
 
 ## Manage V1 Projects Usage Fields
-<details><summary><code>client.manage.v1.projects.usage.fields.<a href="src/deepgram/manage/v1/projects/usage/fields/client.py">list</a>(...)</code></summary>
+<details><summary><code>client.manage.v1.projects.usage.fields.<a href="src/deepgram/manage/v1/projects/usage/fields/client.py">list</a>(...) -&gt; AsyncHttpResponse[UsageFieldsV1Response]</code></summary>
 <dl>
 <dd>
 
@@ -3958,6 +4102,8 @@ client = DeepgramClient(
 )
 client.manage.v1.projects.usage.fields.list(
     project_id="123456-7890-1234-5678-901234",
+    start="start",
+    end="end",
 )
 
 ```
@@ -4011,7 +4157,7 @@ client.manage.v1.projects.usage.fields.list(
 </details>
 
 ## Read V1 Text
-<details><summary><code>client.read.v1.text.<a href="src/deepgram/read/v1/text/client.py">analyze</a>(...)</code></summary>
+<details><summary><code>client.read.v1.text.<a href="src/deepgram/read/v1/text/client.py">analyze</a>(...) -&gt; AsyncHttpResponse[ReadV1Response]</code></summary>
 <dl>
 <dd>
 
@@ -4044,6 +4190,18 @@ client = DeepgramClient(
     api_key="YOUR_API_KEY",
 )
 client.read.v1.text.analyze(
+    callback="callback",
+    callback_method="POST",
+    sentiment=True,
+    summarize="v2",
+    tag="tag",
+    topics=True,
+    custom_topic="custom_topic",
+    custom_topic_mode="extended",
+    intents=True,
+    custom_intent="custom_intent",
+    custom_intent_mode="extended",
+    language="language",
     request={"url": "url"},
 )
 
@@ -4178,7 +4336,7 @@ client.read.v1.text.analyze(
 </details>
 
 ## SelfHosted V1 DistributionCredentials
-<details><summary><code>client.self_hosted.v1.distribution_credentials.<a href="src/deepgram/self_hosted/v1/distribution_credentials/client.py">list</a>(...)</code></summary>
+<details><summary><code>client.self_hosted.v1.distribution_credentials.<a href="src/deepgram/self_hosted/v1/distribution_credentials/client.py">list</a>(...) -&gt; AsyncHttpResponse[ListProjectDistributionCredentialsV1Response]</code></summary>
 <dl>
 <dd>
 
@@ -4248,7 +4406,7 @@ client.self_hosted.v1.distribution_credentials.list(
 </dl>
 </details>
 
-<details><summary><code>client.self_hosted.v1.distribution_credentials.<a href="src/deepgram/self_hosted/v1/distribution_credentials/client.py">create</a>(...)</code></summary>
+<details><summary><code>client.self_hosted.v1.distribution_credentials.<a href="src/deepgram/self_hosted/v1/distribution_credentials/client.py">create</a>(...) -&gt; AsyncHttpResponse[CreateProjectDistributionCredentialsV1Response]</code></summary>
 <dl>
 <dd>
 
@@ -4347,7 +4505,7 @@ client.self_hosted.v1.distribution_credentials.create(
 </dl>
 </details>
 
-<details><summary><code>client.self_hosted.v1.distribution_credentials.<a href="src/deepgram/self_hosted/v1/distribution_credentials/client.py">get</a>(...)</code></summary>
+<details><summary><code>client.self_hosted.v1.distribution_credentials.<a href="src/deepgram/self_hosted/v1/distribution_credentials/client.py">get</a>(...) -&gt; AsyncHttpResponse[GetProjectDistributionCredentialsV1Response]</code></summary>
 <dl>
 <dd>
 
@@ -4426,7 +4584,7 @@ client.self_hosted.v1.distribution_credentials.get(
 </dl>
 </details>
 
-<details><summary><code>client.self_hosted.v1.distribution_credentials.<a href="src/deepgram/self_hosted/v1/distribution_credentials/client.py">delete</a>(...)</code></summary>
+<details><summary><code>client.self_hosted.v1.distribution_credentials.<a href="src/deepgram/self_hosted/v1/distribution_credentials/client.py">delete</a>(...) -&gt; AsyncHttpResponse[GetProjectDistributionCredentialsV1Response]</code></summary>
 <dl>
 <dd>
 
@@ -4506,7 +4664,7 @@ client.self_hosted.v1.distribution_credentials.delete(
 </details>
 
 ## Speak V1 Audio
-<details><summary><code>client.speak.v1.audio.<a href="src/deepgram/speak/v1/audio/client.py">generate</a>(...)</code></summary>
+<details><summary><code>client.speak.v1.audio.<a href="src/deepgram/speak/v1/audio/client.py">generate</a>(...) -&gt; typing.AsyncIterator[AsyncHttpResponse[typing.AsyncIterator[bytes]]]</code></summary>
 <dl>
 <dd>
 
@@ -4637,12 +4795,1312 @@ client.speak.v1.audio.generate(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
-    
+
 </dd>
 </dl>
 </dd>
 </dl>
 
+
+</dd>
+</dl>
+</details>
+
+## Listen V1 Connect
+
+<details><summary><code>client.listen.v1.<a href="src/deepgram/listen/v1/client.py">connect</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Transcribe audio and video using Deepgram's speech-to-text WebSocket
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from typing import Union
+
+from deepgram import DeepgramClient
+from deepgram.core.events import EventType
+from deepgram.listen.v1.types import (
+    ListenV1Results,
+    ListenV1Metadata,
+    ListenV1UtteranceEnd,
+    ListenV1SpeechStarted,
+)
+
+ListenV1Response = Union[ListenV1Results, ListenV1Metadata, ListenV1UtteranceEnd, ListenV1SpeechStarted]
+
+client = DeepgramClient(
+    api_key="YOUR_API_KEY",
+)
+
+with client.listen.v1.connect(model="nova-3") as connection:
+    def on_message(message: ListenV1Response) -> None:
+        msg_type = getattr(message, "type", "Unknown")
+        print(f"Received {msg_type} event")
+
+    connection.on(EventType.OPEN, lambda _: print("Connection opened"))
+    connection.on(EventType.MESSAGE, on_message)
+    connection.on(EventType.CLOSE, lambda _: print("Connection closed"))
+    connection.on(EventType.ERROR, lambda error: print(f"Caught: {error}"))
+
+    # Start listening
+    connection.start_listening()
+
+    # Send audio data (raw bytes)
+    connection.send_media(audio_bytes)
+
+    # Send control messages
+    connection.send_keep_alive()
+    connection.send_finalize()
+    connection.send_close_stream()
+
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Async Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+import asyncio
+from typing import Union
+
+from deepgram import AsyncDeepgramClient
+from deepgram.core.events import EventType
+from deepgram.listen.v1.types import (
+    ListenV1Results,
+    ListenV1Metadata,
+    ListenV1UtteranceEnd,
+    ListenV1SpeechStarted,
+)
+
+ListenV1Response = Union[ListenV1Results, ListenV1Metadata, ListenV1UtteranceEnd, ListenV1SpeechStarted]
+
+client = AsyncDeepgramClient(
+    api_key="YOUR_API_KEY",
+)
+
+async def main():
+    async with client.listen.v1.connect(model="nova-3") as connection:
+        def on_message(message: ListenV1Response) -> None:
+            msg_type = getattr(message, "type", "Unknown")
+            print(f"Received {msg_type} event")
+
+        connection.on(EventType.OPEN, lambda _: print("Connection opened"))
+        connection.on(EventType.MESSAGE, on_message)
+        connection.on(EventType.CLOSE, lambda _: print("Connection closed"))
+        connection.on(EventType.ERROR, lambda error: print(f"Caught: {error}"))
+
+        # Start listening
+        await connection.start_listening()
+
+        # Send audio data (raw bytes)
+        await connection.send_media(audio_bytes)
+
+        # Send control messages
+        await connection.send_keep_alive()
+        await connection.send_finalize()
+        await connection.send_close_stream()
+
+asyncio.run(main())
+
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 📤 Send Methods
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**`send_media(message: bytes)`** — Send binary audio data for transcription
+
+- `connection.send_media(audio_bytes)` — Send raw audio bytes directly
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**`send_keep_alive()`** — Keep the connection alive
+
+- `connection.send_keep_alive()`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**`send_finalize()`** — Finalize the transcription
+
+- `connection.send_finalize()`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**`send_close_stream()`** — Close the audio stream
+
+- `connection.send_close_stream()`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**model:** `str` — AI model to use for the transcription
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**callback:** `typing.Optional[str]` — URL to which we'll make the callback request
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**callback_method:** `typing.Optional[str]` — HTTP method by which the callback request will be made
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**channels:** `typing.Optional[str]` — Number of independent audio channels contained in submitted audio
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**diarize:** `typing.Optional[str]` — Recognize speaker changes. Each word in the transcript will be assigned a speaker number starting at 0
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**dictation:** `typing.Optional[str]` — Dictation mode for controlling formatting with dictated speech
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**encoding:** `typing.Optional[str]` — Specify the expected encoding of your submitted audio
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**endpointing:** `typing.Optional[str]` — Control when speech recognition ends
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**extra:** `typing.Optional[str]` — Arbitrary key-value pairs that are attached to the API response
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**filler_words:** `typing.Optional[str]` — Include filler words like "uh" and "um" in transcripts
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**interim_results:** `typing.Optional[str]` — Return partial transcripts as audio is being processed
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**keyterm:** `typing.Optional[str]` — Key term prompting can boost or suppress specialized terminology and brands
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**keywords:** `typing.Optional[str]` — Keywords can boost or suppress specialized terminology and brands
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**language:** `typing.Optional[str]` — BCP-47 language tag that hints at the primary spoken language
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**mip_opt_out:** `typing.Optional[str]` — Opts out requests from the Deepgram Model Improvement Program
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**multichannel:** `typing.Optional[str]` — Transcribe each audio channel independently
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**numerals:** `typing.Optional[str]` — Convert numbers from written format to numerical format
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**profanity_filter:** `typing.Optional[str]` — Remove profanity from transcripts
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**punctuate:** `typing.Optional[str]` — Add punctuation and capitalization to the transcript
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**redact:** `typing.Optional[str]` — Redaction removes sensitive information from your transcripts
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**replace:** `typing.Optional[str]` — Search for terms or phrases in submitted audio and replaces them
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sample_rate:** `typing.Optional[str]` — Sample rate of the submitted audio
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**search:** `typing.Optional[str]` — Search for terms or phrases in submitted audio
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**smart_format:** `typing.Optional[str]` — Apply formatting to transcript output for improved readability
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**tag:** `typing.Optional[str]` — Label your requests for the purpose of identification during usage reporting
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**utterance_end_ms:** `typing.Optional[str]` — Length of time in milliseconds of silence to wait for before finalizing speech
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**vad_events:** `typing.Optional[str]` — Return Voice Activity Detection events via the websocket
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**version:** `typing.Optional[str]` — Version of the model to use
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**authorization:** `typing.Optional[str]` — Use your API key for authentication, or alternatively generate a temporary token and pass it via the token query parameter.
+
+**Example:** `token %DEEPGRAM_API_KEY%` or `bearer %DEEPGRAM_TOKEN%`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+## Listen V2 Connect
+
+<details><summary><code>client.listen.v2.<a href="src/deepgram/listen/v2/client.py">connect</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Real-time conversational speech recognition with contextual turn detection for natural voice conversations
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from typing import Union
+
+from deepgram import DeepgramClient
+from deepgram.core.events import EventType
+from deepgram.listen.v2.types import (
+    ListenV2Connected,
+    ListenV2TurnInfo,
+    ListenV2FatalError,
+)
+
+ListenV2Response = Union[ListenV2Connected, ListenV2TurnInfo, ListenV2FatalError]
+
+client = DeepgramClient(
+    api_key="YOUR_API_KEY",
+)
+
+with client.listen.v2.connect(
+    model="flux-general-en",
+    encoding="linear16",
+    sample_rate=16000
+) as connection:
+    def on_message(message: ListenV2Response) -> None:
+        msg_type = getattr(message, "type", "Unknown")
+        print(f"Received {msg_type} event")
+
+    connection.on(EventType.OPEN, lambda _: print("Connection opened"))
+    connection.on(EventType.MESSAGE, on_message)
+    connection.on(EventType.CLOSE, lambda _: print("Connection closed"))
+    connection.on(EventType.ERROR, lambda error: print(f"Caught: {error}"))
+
+    # Start listening
+    connection.start_listening()
+
+    # Send audio data (raw bytes)
+    connection.send_media(audio_bytes)
+
+    # Close the audio stream
+    connection.send_close_stream()
+
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Async Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+import asyncio
+from typing import Union
+
+from deepgram import AsyncDeepgramClient
+from deepgram.core.events import EventType
+from deepgram.listen.v2.types import (
+    ListenV2Connected,
+    ListenV2TurnInfo,
+    ListenV2FatalError,
+)
+
+ListenV2Response = Union[ListenV2Connected, ListenV2TurnInfo, ListenV2FatalError]
+
+client = AsyncDeepgramClient(
+    api_key="YOUR_API_KEY",
+)
+
+async def main():
+    async with client.listen.v2.connect(
+        model="flux-general-en",
+        encoding="linear16",
+        sample_rate=16000
+    ) as connection:
+        def on_message(message: ListenV2Response) -> None:
+            msg_type = getattr(message, "type", "Unknown")
+            print(f"Received {msg_type} event")
+
+        connection.on(EventType.OPEN, lambda _: print("Connection opened"))
+        connection.on(EventType.MESSAGE, on_message)
+        connection.on(EventType.CLOSE, lambda _: print("Connection closed"))
+        connection.on(EventType.ERROR, lambda error: print(f"Caught: {error}"))
+
+        # Start listening
+        await connection.start_listening()
+
+        # Send audio data (raw bytes)
+        await connection.send_media(audio_bytes)
+
+        # Close the audio stream
+        await connection.send_close_stream()
+
+asyncio.run(main())
+
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 📤 Send Methods
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**`send_media(message: bytes)`** — Send binary audio data for transcription
+
+- `connection.send_media(audio_bytes)` — Send raw audio bytes directly
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**`send_close_stream()`** — Close the audio stream
+
+- `connection.send_close_stream()`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**model:** `str` — AI model used to process submitted audio
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**encoding:** `str` — Specify the expected encoding of your submitted audio
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sample_rate:** `int` — Sample rate of the submitted audio
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**eager_eot_threshold:** `typing.Optional[str]` — Threshold for eager end-of-turn detection
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**eot_threshold:** `typing.Optional[str]` — Threshold for end-of-turn detection
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**eot_timeout_ms:** `typing.Optional[str]` — Timeout in milliseconds for end-of-turn detection
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**keyterm:** `typing.Optional[str]` — Key term prompting can boost or suppress specialized terminology and brands
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**mip_opt_out:** `typing.Optional[str]` — Opts out requests from the Deepgram Model Improvement Program
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**tag:** `typing.Optional[str]` — Label your requests for the purpose of identification during usage reporting
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**authorization:** `typing.Optional[str]` — Use your API key for authentication, or alternatively generate a temporary token and pass it via the token query parameter.
+
+**Example:** `token %DEEPGRAM_API_KEY%` or `bearer %DEEPGRAM_TOKEN%`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+## Speak V1 Connect
+
+<details><summary><code>client.speak.v1.<a href="src/deepgram/speak/v1/client.py">connect</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Convert text into natural-sounding speech using Deepgram's TTS WebSocket
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from typing import Union
+
+from deepgram import DeepgramClient
+from deepgram.core.events import EventType
+from deepgram.speak.v1.types import (
+    SpeakV1Text,
+    SpeakV1Metadata,
+    SpeakV1Flushed,
+    SpeakV1Cleared,
+    SpeakV1Warning,
+)
+
+SpeakV1Response = Union[bytes, SpeakV1Metadata, SpeakV1Flushed, SpeakV1Cleared, SpeakV1Warning]
+
+client = DeepgramClient(
+    api_key="YOUR_API_KEY",
+)
+
+with client.speak.v1.connect(
+    model="aura-2-asteria-en",
+    encoding="linear16",
+    sample_rate=24000
+) as connection:
+    def on_message(message: SpeakV1Response) -> None:
+        if isinstance(message, bytes):
+            print("Received audio event")
+        else:
+            msg_type = getattr(message, "type", "Unknown")
+            print(f"Received {msg_type} event")
+
+    connection.on(EventType.OPEN, lambda _: print("Connection opened"))
+    connection.on(EventType.MESSAGE, on_message)
+    connection.on(EventType.CLOSE, lambda _: print("Connection closed"))
+    connection.on(EventType.ERROR, lambda error: print(f"Caught: {error}"))
+
+    # Start listening
+    connection.start_listening()
+
+    # Send text to be converted to speech
+    connection.send_text(SpeakV1Text(text="Hello, world!"))
+
+    # Send control messages
+    connection.send_flush()
+    connection.send_close()
+
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Async Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+import asyncio
+from typing import Union
+
+from deepgram import AsyncDeepgramClient
+from deepgram.core.events import EventType
+from deepgram.speak.v1.types import (
+    SpeakV1Text,
+    SpeakV1Metadata,
+    SpeakV1Flushed,
+    SpeakV1Cleared,
+    SpeakV1Warning,
+)
+
+SpeakV1Response = Union[bytes, SpeakV1Metadata, SpeakV1Flushed, SpeakV1Cleared, SpeakV1Warning]
+
+client = AsyncDeepgramClient(
+    api_key="YOUR_API_KEY",
+)
+
+async def main():
+    async with client.speak.v1.connect(
+        model="aura-2-asteria-en",
+        encoding="linear16",
+        sample_rate=24000
+    ) as connection:
+        def on_message(message: SpeakV1Response) -> None:
+            if isinstance(message, bytes):
+                print("Received audio event")
+            else:
+                msg_type = getattr(message, "type", "Unknown")
+                print(f"Received {msg_type} event")
+
+        connection.on(EventType.OPEN, lambda _: print("Connection opened"))
+        connection.on(EventType.MESSAGE, on_message)
+        connection.on(EventType.CLOSE, lambda _: print("Connection closed"))
+        connection.on(EventType.ERROR, lambda error: print(f"Caught: {error}"))
+
+        # Start listening
+        await connection.start_listening()
+
+        # Send text to be converted to speech
+        await connection.send_text(SpeakV1Text(text="Hello, world!"))
+
+        # Send control messages
+        await connection.send_flush()
+        await connection.send_close()
+
+asyncio.run(main())
+
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 📤 Send Methods
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**`send_text(message: SpeakV1Text)`** — Send text to be converted to speech
+
+- `connection.send_text(SpeakV1Text(text="Hello, world!"))`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**`send_flush()`** — Process all queued text immediately
+
+- `connection.send_flush()`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**`send_clear()`** — Clear the text queue
+
+- `connection.send_clear()`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**`send_close()`** — Close the connection
+
+- `connection.send_close()`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**encoding:** `typing.Optional[str]` — Specify the expected encoding of your output audio
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**mip_opt_out:** `typing.Optional[str]` — Opts out requests from the Deepgram Model Improvement Program
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**model:** `typing.Optional[str]` — AI model used to process submitted text
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sample_rate:** `typing.Optional[str]` — Sample rate for the output audio
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**authorization:** `typing.Optional[str]` — Use your API key for authentication, or alternatively generate a temporary token and pass it via the token query parameter.
+
+**Example:** `token %DEEPGRAM_API_KEY%` or `bearer %DEEPGRAM_TOKEN%`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+## Agent V1 Connect
+
+<details><summary><code>client.agent.v1.<a href="src/deepgram/agent/v1/client.py">connect</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Build a conversational voice agent using Deepgram's Voice Agent WebSocket
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from deepgram import DeepgramClient
+from deepgram.core.events import EventType
+from deepgram.agent.v1.types import (
+    AgentV1Settings,
+    AgentV1SettingsAgent,
+    AgentV1SettingsAudio,
+    AgentV1SettingsAudioInput,
+    AgentV1SettingsAgentListen,
+    AgentV1SettingsAgentListenProvider_V1,
+    AgentV1Welcome,
+    AgentV1SettingsApplied,
+    AgentV1ConversationText,
+    AgentV1UserStartedSpeaking,
+    AgentV1AgentThinking,
+    AgentV1FunctionCallRequest,
+    AgentV1AgentStartedSpeaking,
+    AgentV1AgentAudioDone,
+    AgentV1Error,
+    AgentV1Warning,
+)
+from deepgram.types import (
+    ThinkSettingsV1,
+    ThinkSettingsV1Provider_OpenAi,
+    SpeakSettingsV1,
+    SpeakSettingsV1Provider_Deepgram,
+)
+
+client = DeepgramClient(
+    api_key="YOUR_API_KEY",
+)
+
+with client.agent.v1.connect() as agent:
+    # Configure the agent
+    settings = AgentV1Settings(
+        audio=AgentV1SettingsAudio(
+            input=AgentV1SettingsAudioInput(
+                encoding="linear16",
+                sample_rate=44100,
+            )
+        ),
+        agent=AgentV1SettingsAgent(
+            listen=AgentV1SettingsAgentListen(
+                provider=AgentV1SettingsAgentListenProvider_V1(
+                    type="deepgram",
+                    model="nova-3",
+                    smart_format=True,
+                )
+            ),
+            think=ThinkSettingsV1(
+                provider=ThinkSettingsV1Provider_OpenAi(
+                    type="open_ai",
+                    model="gpt-4o-mini",
+                    temperature=0.7,
+                ),
+                prompt='Reply only and explicitly with "OK".',
+            ),
+            speak=[SpeakSettingsV1(
+                provider=SpeakSettingsV1Provider_Deepgram(
+                    type="deepgram",
+                    model="aura-2-asteria-en",
+                )
+            )],
+        ),
+    )
+
+    agent.send_settings(settings)
+
+    def on_message(message) -> None:
+        if isinstance(message, bytes):
+            print("Received audio event")
+        else:
+            msg_type = getattr(message, "type", "Unknown")
+            print(f"Received {msg_type} event")
+
+    agent.on(EventType.OPEN, lambda _: print("Connection opened"))
+    agent.on(EventType.MESSAGE, on_message)
+    agent.on(EventType.CLOSE, lambda _: print("Connection closed"))
+    agent.on(EventType.ERROR, lambda error: print(f"Caught: {error}"))
+
+    # Start listening
+    agent.start_listening()
+
+    # Send audio data (raw bytes)
+    agent.send_media(audio_bytes)
+
+    # Send keep-alive
+    agent.send_keep_alive()
+
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Async Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+import asyncio
+
+from deepgram import AsyncDeepgramClient
+from deepgram.core.events import EventType
+from deepgram.agent.v1.types import (
+    AgentV1Settings,
+    AgentV1SettingsAgent,
+    AgentV1SettingsAudio,
+    AgentV1SettingsAudioInput,
+    AgentV1SettingsAgentListen,
+    AgentV1SettingsAgentListenProvider_V1,
+    AgentV1Welcome,
+    AgentV1SettingsApplied,
+    AgentV1ConversationText,
+    AgentV1UserStartedSpeaking,
+    AgentV1AgentThinking,
+    AgentV1FunctionCallRequest,
+    AgentV1AgentStartedSpeaking,
+    AgentV1AgentAudioDone,
+    AgentV1Error,
+    AgentV1Warning,
+)
+from deepgram.types import (
+    ThinkSettingsV1,
+    ThinkSettingsV1Provider_OpenAi,
+    SpeakSettingsV1,
+    SpeakSettingsV1Provider_Deepgram,
+)
+
+client = AsyncDeepgramClient(
+    api_key="YOUR_API_KEY",
+)
+
+async def main():
+    async with client.agent.v1.connect() as agent:
+        # Configure the agent
+        settings = AgentV1Settings(
+            audio=AgentV1SettingsAudio(
+                input=AgentV1SettingsAudioInput(
+                    encoding="linear16",
+                    sample_rate=16000,
+                )
+            ),
+            agent=AgentV1SettingsAgent(
+                listen=AgentV1SettingsAgentListen(
+                    provider=AgentV1SettingsAgentListenProvider_V1(
+                        type="deepgram",
+                        model="nova-3",
+                        smart_format=True,
+                    )
+                ),
+                think=ThinkSettingsV1(
+                    provider=ThinkSettingsV1Provider_OpenAi(
+                        type="open_ai",
+                        model="gpt-4o-mini",
+                        temperature=0.7,
+                    ),
+                ),
+                speak=[SpeakSettingsV1(
+                    provider=SpeakSettingsV1Provider_Deepgram(
+                        type="deepgram",
+                        model="aura-2-asteria-en",
+                    )
+                )],
+            ),
+        )
+
+        await agent.send_settings(settings)
+
+        def on_message(message) -> None:
+            if isinstance(message, bytes):
+                print("Received audio event")
+            else:
+                msg_type = getattr(message, "type", "Unknown")
+                print(f"Received {msg_type} event")
+
+        agent.on(EventType.OPEN, lambda _: print("Connection opened"))
+        agent.on(EventType.MESSAGE, on_message)
+        agent.on(EventType.CLOSE, lambda _: print("Connection closed"))
+        agent.on(EventType.ERROR, lambda error: print(f"Caught: {error}"))
+
+        # Start listening
+        await agent.start_listening()
+
+        # Send audio data (raw bytes)
+        await agent.send_media(audio_bytes)
+
+        # Send keep-alive
+        await agent.send_keep_alive()
+
+asyncio.run(main())
+
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**authorization:** `typing.Optional[str]` — Use your API key for authentication, or alternatively generate a temporary token and pass it via the token query parameter.
+
+**Example:** `token %DEEPGRAM_API_KEY%` or `bearer %DEEPGRAM_TOKEN%`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 📤 Send Methods
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**`send_settings(message: AgentV1Settings)`** — Send initial agent configuration settings
+
+- `AgentV1Settings(...)` — Configure audio, listen, think, and speak providers
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**`send_media(message: bytes)`** — Send binary audio data to the agent
+
+- `agent.send_media(audio_bytes)` — Send raw audio bytes directly
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**`send_keep_alive()`** — Keep the connection alive
+
+- `agent.send_keep_alive()`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**`send_update_speak(message: AgentV1UpdateSpeak)`** — Update the agent's speech synthesis settings
+
+- `AgentV1UpdateSpeak(speak=SpeakSettingsV1(...))` — Modify TTS configuration during conversation
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**`send_update_prompt(message: AgentV1UpdatePrompt)`** — Update the agent's system prompt
+
+- `AgentV1UpdatePrompt(prompt="...")` — Change the agent's behavior instructions
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**`send_inject_user_message(message: AgentV1InjectUserMessage)`** — Inject a user message into the conversation
+
+- `AgentV1InjectUserMessage(content="...")` — Add a simulated user input
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**`send_inject_agent_message(message: AgentV1InjectAgentMessage)`** — Inject an agent message into the conversation
+
+- `AgentV1InjectAgentMessage(message="...")` — Add a simulated agent response
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**`send_function_call_response(message: AgentV1SendFunctionCallResponse)`** — Send the result of a function call back to the agent
+
+- `AgentV1SendFunctionCallResponse(name="...", content="...")` — Provide function execution results
+
+</dd>
+</dl>
+</dd>
+</dl>
 
 </dd>
 </dl>

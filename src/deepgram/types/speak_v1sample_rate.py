@@ -2,4 +2,4 @@
 
 import typing
 
-SpeakV1SampleRate = typing.Union[typing.Literal["8000", "16000", "24000", "44100", "48000"], typing.Any]
+SpeakV1SampleRate = typing.Union[typing.Literal["8000", "16000", "24000", "32000", "48000"], typing.Any]

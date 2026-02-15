@@ -2,4 +2,4 @@
 
 import typing
 
-ListenV2Tag = typing.Optional[typing.Union[str, typing.Sequence[str]]]
+ListenV2Tag = typing.Any
