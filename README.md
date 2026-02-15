@@ -398,9 +398,9 @@ async with client.listen.v1.connect(model="nova-3") as connection:
 
 > **Note:** The SageMaker transport is async-only and requires `AsyncDeepgramClient`.
 
-Install the optional SageMaker dependencies:
+Install the SageMaker transport dependencies (requires Python 3.12+):
 ```bash
-pip install deepgram-sdk[sagemaker]
+pip install aws-sdk-sagemaker-runtime-http2 boto3
 ```
 
 See [`examples/27-transcription-live-sagemaker.py`](./examples/27-transcription-live-sagemaker.py) for a complete working example.
