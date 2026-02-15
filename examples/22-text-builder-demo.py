@@ -6,7 +6,7 @@ This demo script showcases all TextBuilder capabilities without requiring
 an API key. It generates the formatted text that would be sent to the API.
 """
 
-from deepgram import (
+from deepgram.helpers import (
     TextBuilder,
     add_pronunciation,
     ssml_to_deepgram,

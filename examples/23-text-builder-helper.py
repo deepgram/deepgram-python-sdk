@@ -8,7 +8,8 @@ complete audio files with custom pronunciations and pauses.
 
 import os
 
-from deepgram import DeepgramClient, TextBuilder, add_pronunciation, ssml_to_deepgram
+from deepgram import DeepgramClient
+from deepgram.helpers import TextBuilder, add_pronunciation, ssml_to_deepgram
 from deepgram.speak.v1.audio.types import (
     AudioGenerateRequestEncoding,
     AudioGenerateRequestModel,

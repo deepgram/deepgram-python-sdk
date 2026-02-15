@@ -9,7 +9,8 @@ over WebSocket for real-time audio generation.
 import os
 from typing import Union
 
-from deepgram import DeepgramClient, TextBuilder
+from deepgram import DeepgramClient
+from deepgram.helpers import TextBuilder
 from deepgram.core.events import EventType
 from deepgram.speak.v1.types import SpeakV1Close, SpeakV1Flush, SpeakV1Text
 

@@ -232,7 +232,6 @@ if typing.TYPE_CHECKING:
     from . import agent, auth, listen, manage, read, self_hosted, speak
     from .client import AsyncDeepgramClient, DeepgramClient
     from .environment import DeepgramClientEnvironment
-    from .helpers import TextBuilder, add_pronunciation, ssml_to_deepgram, validate_ipa, validate_pause
     from .requests import (
         AgentThinkModelsV1ResponseModelsItemIdParams,
         AgentThinkModelsV1ResponseModelsItemOneParams,
@@ -737,7 +736,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SpeakV1Model": ".types",
     "SpeakV1Response": ".types",
     "SpeakV1SampleRate": ".types",
-    "TextBuilder": ".helpers",
     "ThinkSettingsV1": ".types",
     "ThinkSettingsV1ContextLength": ".types",
     "ThinkSettingsV1ContextLengthParams": ".requests",
@@ -781,7 +779,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "UsageV1ResponseResolution": ".types",
     "UsageV1ResponseResolutionParams": ".requests",
     "__version__": ".version",
-    "add_pronunciation": ".helpers",
     "agent": ".agent",
     "auth": ".auth",
     "listen": ".listen",
@@ -789,9 +786,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "read": ".read",
     "self_hosted": ".self_hosted",
     "speak": ".speak",
-    "ssml_to_deepgram": ".helpers",
-    "validate_ipa": ".helpers",
-    "validate_pause": ".helpers",
 }
 
 
@@ -1158,7 +1152,6 @@ __all__ = [
     "SpeakV1Model",
     "SpeakV1Response",
     "SpeakV1SampleRate",
-    "TextBuilder",
     "ThinkSettingsV1",
     "ThinkSettingsV1ContextLength",
     "ThinkSettingsV1ContextLengthParams",
@@ -1202,7 +1195,6 @@ __all__ = [
     "UsageV1ResponseResolution",
     "UsageV1ResponseResolutionParams",
     "__version__",
-    "add_pronunciation",
     "agent",
     "auth",
     "listen",
@@ -1210,7 +1202,4 @@ __all__ = [
     "read",
     "self_hosted",
     "speak",
-    "ssml_to_deepgram",
-    "validate_ipa",
-    "validate_pause",
 ]

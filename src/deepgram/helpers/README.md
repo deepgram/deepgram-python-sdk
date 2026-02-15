@@ -9,7 +9,8 @@ The `TextBuilder` class provides a fluent interface for constructing Text-to-Spe
 ### Quick Example
 
 ```python
-from deepgram import DeepgramClient, TextBuilder
+from deepgram import DeepgramClient
+from deepgram.helpers import TextBuilder
 
 # Build text with pronunciations and pauses
 text = (
