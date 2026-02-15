@@ -55,12 +55,10 @@ async def main() -> None:
             listen_task = asyncio.create_task(connection.start_listening())
 
             # Send control messages
-            from deepgram.speak.v1.types import SpeakV1Flush, SpeakV1Close
-
             print("Sending Flush control message")
-            await connection.send_speak_v_1_flush(SpeakV1Flush(type="Flush"))
+            await connection.send_flush()
             print("Sending Close control message")
-            await connection.send_speak_v_1_close(SpeakV1Close(type="Close"))
+            await connection.send_close()
 
             print("Waiting 3 seconds for events...")
             await asyncio.sleep(3)  # EXAMPLE ONLY: Wait briefly to see some events before exiting

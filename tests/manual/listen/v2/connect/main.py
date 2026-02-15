@@ -94,7 +94,7 @@ try:
         for i in range(0, len(audio_data), chunk_size):
             chunk = audio_data[i : i + chunk_size]
             if chunk:
-                connection.send_listen_v_2_media(chunk)
+                connection.send_media(chunk)
                 chunk_count += 1
                 print(f"Sent chunk {chunk_count} ({len(chunk)} bytes)")
                 time.sleep(chunk_delay)

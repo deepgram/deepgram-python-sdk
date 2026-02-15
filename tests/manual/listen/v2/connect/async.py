@@ -95,7 +95,7 @@ async def main() -> None:
             for i in range(0, len(audio_data), chunk_size):
                 chunk = audio_data[i : i + chunk_size]
                 if chunk:
-                    await connection.send_listen_v_2_media(chunk)
+                    await connection.send_media(chunk)
                     chunk_count += 1
                     print(f"Sent chunk {chunk_count} ({len(chunk)} bytes)")
                     await asyncio.sleep(chunk_delay)

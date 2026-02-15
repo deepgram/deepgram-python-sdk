@@ -11,6 +11,13 @@ wiremock/wiremock-mappings.json
 # Wire test with manual fix: transcribe_file() requires request=bytes parameter
 tests/wire/test_listen_v1_media.py
 
+# WebSocket socket clients: optional message parameter defaults for send_flush,
+# send_close, send_clear, send_finalize, send_close_stream, send_keep_alive
+src/deepgram/speak/v1/socket_client.py
+src/deepgram/listen/v1/socket_client.py
+src/deepgram/listen/v2/socket_client.py
+src/deepgram/agent/v1/socket_client.py
+
 # Manual standalone tests
 tests/manual
 

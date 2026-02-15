@@ -64,12 +64,10 @@ try:
         threading.Thread(target=connection.start_listening, daemon=True).start()
 
         # Send control messages
-        from deepgram.speak.v1.types import SpeakV1Flush, SpeakV1Close
-
         print("Sending Flush control message")
-        connection.send_speak_v_1_flush(SpeakV1Flush(type="Flush"))
+        connection.send_flush()
         print("Sending Close control message")
-        connection.send_speak_v_1_close(SpeakV1Close(type="Close"))
+        connection.send_close()
 
         print("Waiting 3 seconds for events...")
         time.sleep(3)  # EXAMPLE ONLY: Wait briefly to see some events before exiting

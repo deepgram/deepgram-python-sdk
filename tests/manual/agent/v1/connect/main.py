@@ -22,12 +22,7 @@ from deepgram.agent.v1.types import (
     AgentV1Settings,
     AgentV1SettingsAgent,
     AgentV1SettingsAgentListen,
-    AgentV1SettingsAgentListenProvider,
-    AgentV1SettingsAgentSpeak,
-    AgentV1SettingsAgentSpeakOneItem,
-    AgentV1SettingsAgentSpeakOneItemProvider_Deepgram,
-    AgentV1SettingsAgentThink,
-    AgentV1SettingsAgentThinkProviderZero,
+    AgentV1SettingsAgentListenProvider_V1,
     AgentV1SettingsAudio,
     AgentV1SettingsAudioInput,
     AgentV1SettingsApplied,
@@ -36,6 +31,10 @@ from deepgram.agent.v1.types import (
     AgentV1Warning,
     AgentV1Welcome,
 )
+from deepgram.types.think_settings_v1 import ThinkSettingsV1
+from deepgram.types.speak_settings_v1 import SpeakSettingsV1
+from deepgram.types.speak_settings_v1provider import SpeakSettingsV1Provider_Deepgram
+from deepgram.types.think_settings_v1provider import ThinkSettingsV1Provider_OpenAi
 from typing import Union
 
 AgentV1SocketClientResponse = Union[
@@ -76,14 +75,14 @@ try:
             ),
             agent=AgentV1SettingsAgent(
                 listen=AgentV1SettingsAgentListen(
-                    provider=AgentV1SettingsAgentListenProvider(
+                    provider=AgentV1SettingsAgentListenProvider_V1(
                         type="deepgram",
                         model="nova-3",
                         smart_format=True,
                     )
                 ),
-                think=AgentV1SettingsAgentThink(
-                    provider=AgentV1SettingsAgentThinkProviderZero(
+                think=ThinkSettingsV1(
+                    provider=ThinkSettingsV1Provider_OpenAi(
                         type="open_ai",
                         model="gpt-4o-mini",
                         temperature=0.7,
@@ -91,8 +90,8 @@ try:
                     prompt='Reply only and explicitly with "OK".',
                 ),
                 speak=[
-                    AgentV1SettingsAgentSpeakOneItem(
-                        provider=AgentV1SettingsAgentSpeakOneItemProvider_Deepgram(
+                    SpeakSettingsV1(
+                        provider=SpeakSettingsV1Provider_Deepgram(
                             type="deepgram",
                             model="aura-2-asteria-en",
                         )
@@ -107,7 +106,7 @@ try:
         print(f"  - Speak: type=deepgram, model=aura-2-asteria-en")
 
         print("Sending SettingsConfiguration message")
-        agent.send_agent_v_1_settings(settings)
+        agent.send_settings(settings)
         print("Settings sent successfully")
 
         def on_message(message: AgentV1SocketClientResponse) -> None:
