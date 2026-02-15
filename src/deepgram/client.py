@@ -9,13 +9,17 @@ Adds support for:
 - `session_id` as a header sent with every request and websocket connection:
   - If `session_id` is provided, it will be used; otherwise, a UUID is auto-generated
   - The session_id is sent as the `x-deepgram-session-id` header
+- `transport_factory` to replace the default `websockets` transport with a custom one:
+  - A callable: ``factory(url, headers) -> transport`` returning an object with
+    ``send()``, ``recv()``, iteration, and ``close()`` support.
 """
 
 import types
 import uuid
-from typing import Any, Dict, Optional
+from typing import Any, Callable, Dict, Optional
 
 from .base_client import AsyncBaseClient, BaseClient
+from .transport import install_transport
 
 from deepgram.core.client_wrapper import BaseClientWrapper
 
@@ -50,6 +54,9 @@ class DeepgramClient(BaseClient):
     - `session_id`: Optional session identifier. If not provided, a UUID is auto-generated.
                      Sent as `x-deepgram-session-id` header in all requests and websocket connections.
     - `access_token`: Alternative to `api_key`. If provided, uses Bearer token authentication.
+    - `transport_factory`: Custom sync WebSocket transport factory. A callable
+                           ``factory(url, headers) -> transport`` whose return value must support
+                           ``send()``, ``recv()``, iteration, and ``close()``.
     - `telemetry_opt_out`: Telemetry opt-out flag (maintained for backwards compatibility, no-op).
     - `telemetry_handler`: Telemetry handler (maintained for backwards compatibility, no-op).
     """
@@ -57,6 +64,7 @@ class DeepgramClient(BaseClient):
     def __init__(self, *args, **kwargs) -> None:
         access_token: Optional[str] = kwargs.pop("access_token", None)
         session_id: Optional[str] = kwargs.pop("session_id", None)
+        transport_factory: Optional[Callable] = kwargs.pop("transport_factory", None)
         telemetry_opt_out: bool = bool(kwargs.pop("telemetry_opt_out", True))
         telemetry_handler: Optional[Any] = kwargs.pop("telemetry_handler", None)
 
@@ -86,6 +94,10 @@ class DeepgramClient(BaseClient):
         # Override Authorization header to use Bearer token if access_token was provided
         if access_token is not None:
             _apply_bearer_authorization_override(self._client_wrapper, access_token)
+
+        # Install custom WebSocket transport if provided
+        if transport_factory is not None:
+            install_transport(sync_factory=transport_factory)
 
         # Store telemetry handler for backwards compatibility (no-op, telemetry not implemented)
         self._telemetry_handler = None
@@ -99,6 +111,9 @@ class AsyncDeepgramClient(AsyncBaseClient):
     - `session_id`: Optional session identifier. If not provided, a UUID is auto-generated.
                      Sent as `x-deepgram-session-id` header in all requests and websocket connections.
     - `access_token`: Alternative to `api_key`. If provided, uses Bearer token authentication.
+    - `transport_factory`: Custom async WebSocket transport factory. A callable
+                           ``factory(url, headers) -> transport`` whose return value must support
+                           ``send()``, ``recv()``, async iteration, and ``close()``.
     - `telemetry_opt_out`: Telemetry opt-out flag (maintained for backwards compatibility, no-op).
     - `telemetry_handler`: Telemetry handler (maintained for backwards compatibility, no-op).
     """
@@ -106,6 +121,7 @@ class AsyncDeepgramClient(AsyncBaseClient):
     def __init__(self, *args, **kwargs) -> None:
         access_token: Optional[str] = kwargs.pop("access_token", None)
         session_id: Optional[str] = kwargs.pop("session_id", None)
+        transport_factory: Optional[Callable] = kwargs.pop("transport_factory", None)
         telemetry_opt_out: bool = bool(kwargs.pop("telemetry_opt_out", True))
         telemetry_handler: Optional[Any] = kwargs.pop("telemetry_handler", None)
 
@@ -135,6 +151,10 @@ class AsyncDeepgramClient(AsyncBaseClient):
         # Override Authorization header to use Bearer token if access_token was provided
         if access_token is not None:
             _apply_bearer_authorization_override(self._client_wrapper, access_token)
+
+        # Install custom WebSocket transport if provided
+        if transport_factory is not None:
+            install_transport(async_factory=transport_factory)
 
         # Store telemetry handler for backwards compatibility (no-op, telemetry not implemented)
         self._telemetry_handler = None
