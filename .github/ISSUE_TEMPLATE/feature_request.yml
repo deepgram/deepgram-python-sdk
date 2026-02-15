@@ -1,0 +1,100 @@
+name: "✨ Feature request"
+description: Suggest a new capability or API
+title: "[Feature]: "
+labels: ["enhancement", "needs-triage"]
+body:
+  - type: input
+    id: summary
+    attributes:
+      label: Summary
+      placeholder: "Add async streaming helper for /v1/listen"
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem to solve
+      description: What user problem does this address?
+      placeholder: "Today I need to write a lot of boilerplate to stream audio…"
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed solution
+      description: API shape, flags, defaults. Keep it simple.
+      render: python
+      placeholder: |
+        # Example
+        async with client.listen.stream(model="nova-2") as s:
+            await s.send_file("file.wav")
+            async for msg in s:
+                ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      placeholder: "Manual websockets; third-party lib; do nothing"
+    validations:
+      required: false
+
+  - type: dropdown
+    id: scope
+    attributes:
+      label: Scope
+      options:
+        - Python only
+        - All SDKs (parity)
+        - Docs/sample only
+    validations:
+      required: true
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority
+      options:
+        - Nice to have
+        - Important
+        - High impact
+        - Blocker
+    validations:
+      required: false
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Extra context / links
+      placeholder: "Related issues, forum threads, benchmarks, etc."
+    validations:
+      required: false
+
+  - type: input
+    id: session_id
+    attributes:
+      label: Session ID (optional)
+      placeholder: "123e4567-e89b-12d3-a456-426614174000"
+    validations:
+      required: false
+
+  - type: input
+    id: project_id
+    attributes:
+      label: Project ID (optional)
+      placeholder: "proj_abc123"
+    validations:
+      required: false
+
+  - type: input
+    id: request_id
+    attributes:
+      label: Request ID (optional)
+      description: From API error messages or response headers (`dg-request-id`)
+      placeholder: "req_def456"
+    validations:
+      required: false

@@ -24,6 +24,12 @@ tests/manual
 # README with custom examples, migration guide links, and contributing section
 README.md
 
+# Changelog managed by release-please
+CHANGELOG.md
+
+# Contributing guide
+CONTRIBUTING.md
+
 # Reference with Fern-generated REST API docs plus manually maintained WebSocket sections
 reference.md
 

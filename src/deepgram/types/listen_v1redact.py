@@ -2,6 +2,10 @@
 
 import typing
 
-ListenV1Redact = typing.Union[
-    typing.Literal["true", "false", "pci", "numbers", "aggressive_numbers", "ssn"], typing.Any
+ListenV1Redact = typing.Optional[
+    typing.Union[
+        typing.Literal["true", "false", "pci", "numbers", "aggressive_numbers", "ssn"],
+        str,
+        typing.Sequence[str],
+    ]
 ]
