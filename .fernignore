@@ -37,9 +37,11 @@ reference.md
 # - transport_interface.py: Protocol definitions (SyncTransport, AsyncTransport) for
 #   users implementing custom transports. This is the public-facing interface file.
 # - transport.py: Internal shims, install/restore helpers, and conflict guard.
-# Both are manually maintained and should not be regenerated.
+# - transports/: Concrete transport implementations (e.g. SageMaker).
+# All are manually maintained and should not be regenerated.
 src/deepgram/transport_interface.py
 src/deepgram/transport.py
+src/deepgram/transports
 
 # Folders to ignore
 .github
