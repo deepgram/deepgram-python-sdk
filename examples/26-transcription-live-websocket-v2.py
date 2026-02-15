@@ -24,7 +24,7 @@ ListenV2SocketClientResponse = Union[ListenV2Connected, ListenV2TurnInfo, Listen
 client = DeepgramClient()
 
 try:
-    with client.listen.v2.connect(model="flux-general-en", encoding="linear16", sample_rate="16000") as connection:
+    with client.listen.v2.connect(model="flux-general-en", encoding="linear16", sample_rate=16000) as connection:
 
         def on_message(message: ListenV2SocketClientResponse) -> None:
             msg_type = getattr(message, "type", "Unknown")
@@ -42,7 +42,7 @@ try:
         connection.on(EventType.ERROR, lambda error: print(f"Error: {error}"))
 
         # Start listening - this blocks until the connection closes
-        # In production, you would send audio data here using connection.send_listen_v_2_media()
+        # In production, you would send audio data here using connection.send_media()
         connection.start_listening()
 
     # For async version:

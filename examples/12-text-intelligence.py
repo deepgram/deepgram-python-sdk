@@ -24,13 +24,14 @@ try:
     )
 
     print("Analysis received:")
-    print(f"Sentiment: {response.sentiment}")
-    if response.summary:
-        print(f"Summary: {response.summary}")
-    if response.topics:
-        print(f"Topics: {response.topics}")
-    if response.intents:
-        print(f"Intents: {response.intents}")
+    if response.results.sentiments:
+        print(f"Sentiment: {response.results.sentiments.average}")
+    if response.results.summary:
+        print(f"Summary: {response.results.summary.text}")
+    if response.results.topics:
+        print(f"Topics: {response.results.topics.segments}")
+    if response.results.intents:
+        print(f"Intents: {response.results.intents.segments}")
 
     # For async version:
     # from deepgram import AsyncDeepgramClient

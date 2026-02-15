@@ -12,18 +12,18 @@ load_dotenv()
 
 from deepgram import DeepgramClient
 from deepgram.agent.v1.types import (
-    AgentV1Agent,
-    AgentV1AudioConfig,
-    AgentV1AudioInput,
-    AgentV1DeepgramSpeakProvider,
-    AgentV1Listen,
-    AgentV1ListenProvider,
-    AgentV1OpenAiThinkProvider,
     AgentV1Settings,
-    AgentV1SpeakProviderConfig,
-    AgentV1Think,
+    AgentV1SettingsAgent,
+    AgentV1SettingsAgentListen,
+    AgentV1SettingsAgentListenProvider_V1,
+    AgentV1SettingsAudio,
+    AgentV1SettingsAudioInput,
 )
 from deepgram.core.events import EventType
+from deepgram.types.speak_settings_v1 import SpeakSettingsV1
+from deepgram.types.speak_settings_v1provider import SpeakSettingsV1Provider_Deepgram
+from deepgram.types.think_settings_v1 import ThinkSettingsV1
+from deepgram.types.think_settings_v1provider import ThinkSettingsV1Provider_OpenAi
 
 AgentV1SocketClientResponse = Union[str, bytes]
 
@@ -33,30 +33,29 @@ try:
     with client.agent.v1.connect() as agent:
         # Configure the agent settings
         settings = AgentV1Settings(
-            audio=AgentV1AudioConfig(
-                input=AgentV1AudioInput(
+            audio=AgentV1SettingsAudio(
+                input=AgentV1SettingsAudioInput(
                     encoding="linear16",
-                    sample_rate=44100,
+                    sample_rate=24000,
                 )
             ),
-            agent=AgentV1Agent(
-                listen=AgentV1Listen(
-                    provider=AgentV1ListenProvider(
+            agent=AgentV1SettingsAgent(
+                listen=AgentV1SettingsAgentListen(
+                    provider=AgentV1SettingsAgentListenProvider_V1(
                         type="deepgram",
                         model="nova-3",
-                        smart_format=True,
                     )
                 ),
-                think=AgentV1Think(
-                    provider=AgentV1OpenAiThinkProvider(
+                think=ThinkSettingsV1(
+                    provider=ThinkSettingsV1Provider_OpenAi(
                         type="open_ai",
                         model="gpt-4o-mini",
                         temperature=0.7,
                     ),
                     prompt="You are a helpful AI assistant.",
                 ),
-                speak=AgentV1SpeakProviderConfig(
-                    provider=AgentV1DeepgramSpeakProvider(
+                speak=SpeakSettingsV1(
+                    provider=SpeakSettingsV1Provider_Deepgram(
                         type="deepgram",
                         model="aura-2-asteria-en",
                     )
@@ -65,7 +64,7 @@ try:
         )
 
         print("Sending agent settings...")
-        agent.send_agent_v_1_settings(settings)
+        agent.send_settings(settings)
 
         def on_message(message: AgentV1SocketClientResponse) -> None:
             if isinstance(message, bytes):
@@ -84,7 +83,7 @@ try:
         # In production, you would send audio from your microphone or audio source:
         # with open("audio.wav", "rb") as audio_file:
         #     audio_data = audio_file.read()
-        #     agent.send_agent_v_1_media(audio_data)
+        #     agent.send_media(audio_data)
 
         agent.start_listening()
 
@@ -92,7 +91,7 @@ try:
     # from deepgram import AsyncDeepgramClient
     # async with client.agent.v1.connect() as agent:
     #     # ... same configuration ...
-    #     await agent.send_agent_v_1_settings(settings)
+    #     await agent.send_settings(settings)
     #     await agent.start_listening()
 
 except Exception as e:

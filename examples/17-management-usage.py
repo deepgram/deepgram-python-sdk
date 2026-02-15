@@ -25,18 +25,24 @@ try:
     # Get usage summary
     print("\nGetting usage summary...")
     usage = client.manage.v1.projects.usage.get(project_id=project_id)
-    print(f"Total requests: {usage.total_requests}")
-    print(f"Total hours: {usage.total_hours}")
+    print(f"Start: {usage.start}")
+    print(f"End: {usage.end}")
+    if usage.resolution:
+        print(f"Resolution: {usage.resolution.amount} {usage.resolution.units}")
 
     # Get usage breakdown
     print("\nGetting usage breakdown...")
     breakdown = client.manage.v1.projects.usage.breakdown.get(project_id=project_id)
-    print(f"Breakdown entries: {len(breakdown.entries) if breakdown.entries else 0}")
+    print(f"Breakdown results: {len(breakdown.results) if breakdown.results else 0}")
+    if breakdown.results:
+        for result in breakdown.results:
+            print(f"  Requests: {result.requests}, Hours: {result.hours}")
 
     # Get usage fields
     print("\nGetting usage fields...")
     fields = client.manage.v1.projects.usage.fields.list(project_id=project_id)
-    print(f"Available fields: {len(fields.fields) if fields.fields else 0}")
+    print(f"Available models: {len(fields.models) if fields.models else 0}")
+    print(f"Available features: {len(fields.features) if fields.features else 0}")
 
     # List usage requests
     print("\nListing usage requests...")
@@ -48,8 +54,9 @@ try:
         request_id = requests.requests[0].request_id
         print(f"\nGetting request details: {request_id}")
         request = client.manage.v1.projects.requests.get(project_id=project_id, request_id=request_id)
-        print(f"Request method: {request.method}")
-        print(f"Request endpoint: {request.endpoint}")
+        if request.request:
+            print(f"Request path: {request.request.path}")
+            print(f"Request code: {request.request.code}")
 
     # For async version:
     # from deepgram import AsyncDeepgramClient
