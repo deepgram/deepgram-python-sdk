@@ -33,6 +33,16 @@ CONTRIBUTING.md
 # Reference with Fern-generated REST API docs plus manually maintained WebSocket sections
 reference.md
 
+# Custom WebSocket transport support:
+# - transport_interface.py: Protocol definitions (SyncTransport, AsyncTransport) for
+#   users implementing custom transports. This is the public-facing interface file.
+# - transport.py: Internal shims, install/restore helpers, and conflict guard.
+# - transports/: Concrete transport implementations (e.g. SageMaker).
+# All are manually maintained and should not be regenerated.
+src/deepgram/transport_interface.py
+src/deepgram/transport.py
+src/deepgram/transports
+
 # Folders to ignore
 .github
 docs

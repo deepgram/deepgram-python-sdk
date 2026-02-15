@@ -52,7 +52,7 @@ class AsyncV2SocketClient(EventEmitterMixin):
                     json_data = json.loads(raw_message)
                     parsed = parse_obj_as(V2SocketClientResponse, json_data)  # type: ignore
                 await self._emit_async(EventType.MESSAGE, parsed)
-        except (websockets.WebSocketException, JSONDecodeError) as exc:
+        except Exception as exc:
             await self._emit_async(EventType.ERROR, exc)
         finally:
             await self._emit_async(EventType.CLOSE, None)
@@ -127,7 +127,7 @@ class V2SocketClient(EventEmitterMixin):
                     json_data = json.loads(raw_message)
                     parsed = parse_obj_as(V2SocketClientResponse, json_data)  # type: ignore
                 self._emit(EventType.MESSAGE, parsed)
-        except (websockets.WebSocketException, JSONDecodeError) as exc:
+        except Exception as exc:
             self._emit(EventType.ERROR, exc)
         finally:
             self._emit(EventType.CLOSE, None)
