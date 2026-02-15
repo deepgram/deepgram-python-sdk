@@ -23,7 +23,11 @@ Environment:
 
 import asyncio
 import os
+import sys
 from typing import Union
+
+# Ensure print output appears immediately (e.g. in Docker, piped output, IDE consoles)
+sys.stdout.reconfigure(line_buffering=True)
 
 from dotenv import load_dotenv
 
