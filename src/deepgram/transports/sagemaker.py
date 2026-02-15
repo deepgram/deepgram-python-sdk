@@ -11,7 +11,7 @@ async, so this transport implements ``AsyncTransport`` and must be used with
 
 Requirements::
 
-    pip install sagemaker-runtime-http2 boto3
+    pip install aws-sdk-sagemaker-runtime-http2 boto3
 
 Usage::
 
@@ -40,9 +40,9 @@ from typing import Any
 from urllib.parse import urlparse
 
 from ..transport_interface import AsyncTransport
-from sagemaker_runtime_http2.client import SageMakerRuntimeHTTP2Client
-from sagemaker_runtime_http2.config import Config, HTTPAuthSchemeResolver
-from sagemaker_runtime_http2.models import (
+from aws_sdk_sagemaker_runtime_http2.client import SageMakerRuntimeHTTP2Client
+from aws_sdk_sagemaker_runtime_http2.config import Config, HTTPAuthSchemeResolver
+from aws_sdk_sagemaker_runtime_http2.models import (
     InvokeEndpointWithBidirectionalStreamInput,
     RequestPayloadPart,
     RequestStreamEventPayloadPart,
@@ -95,6 +95,7 @@ class SageMakerTransport(AsyncTransport):
         self._output_stream: Any = None
         self._connected = False
         self._closed = False
+        self._connect_lock: Any = None  # created lazily (needs a running loop)
 
         self._setup_credentials()
 
@@ -127,6 +128,18 @@ class SageMakerTransport(AsyncTransport):
         """Lazily establish the SageMaker BiDi stream on first use."""
         if self._connected:
             return
+
+        # Guard against concurrent callers (start_listening + send_media race)
+        if self._connect_lock is None:
+            self._connect_lock = asyncio.Lock()
+
+        async with self._connect_lock:
+            if self._connected:
+                return
+            await self._do_connect()
+
+    async def _do_connect(self) -> None:
+        """Establish the SageMaker BiDi stream (called under lock)."""
 
         logger.info("Connecting to SageMaker endpoint: %s in %s", self.endpoint_name, self.region)
 

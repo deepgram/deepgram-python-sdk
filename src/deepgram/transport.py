@@ -15,6 +15,7 @@ Usage::
     client = DeepgramClient(api_key="...", transport_factory=MySyncTransport)
 """
 
+import importlib
 import sys
 from contextlib import asynccontextmanager, contextmanager
 from typing import Any, Callable, Dict, Optional
@@ -145,7 +146,10 @@ def install_transport(
     for mod_path in _TARGET_MODULES:
         mod = sys.modules.get(mod_path)
         if mod is None:
-            continue
+            try:
+                mod = importlib.import_module(mod_path)
+            except ImportError:
+                continue
 
         # Stash originals on first install (don't overwrite if already stashed).
         if mod_path not in _originals:
