@@ -1,58 +1,180 @@
-# Deepgram API Python Library
+# Deepgram Python SDK
 
-![](https://developers.deepgram.com)
+![Built with Fern](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)
+[![PyPI version](https://img.shields.io/pypi/v/deepgram-sdk)](https://pypi.python.org/pypi/deepgram-sdk)
+[![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
+[![MIT License](https://img.shields.io/badge/license-MIT-green.svg)](./LICENSE)
 
-[![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=https%3A%2F%2Fgithub.com%2Fdeepgram%2Fdeepgram-python-sdk)
-[![pypi](https://img.shields.io/pypi/v/deepgram-sdk)](https://pypi.python.org/pypi/deepgram-sdk)
-
-Power your apps with world-class speech and Language AI models
-
-## Table of Contents
-
-- [Documentation](#documentation)
-- [Installation](#installation)
-- [Reference](#reference)
-- [Usage](#usage)
-- [Authentication](#authentication)
-- [Async Client](#async-client)
-- [Exception Handling](#exception-handling)
-- [Advanced Features](#advanced-features)
-- [Websockets](#websockets)
-- [Advanced](#advanced)
-  - [Access Raw Response Data](#access-raw-response-data)
-  - [Retries](#retries)
-  - [Timeouts](#timeouts)
-  - [Custom Client](#custom-client)
-- [Contributing](#contributing)
-- [Community Code of Conduct](#community-code-of-conduct)
-- [License](#license)
+The official Python SDK for Deepgram's automated speech recognition, text-to-speech, and language understanding APIs. Power your applications with world-class speech and Language AI models.
 
 ## Documentation
 
-API reference documentation is available [here](https://developers.deepgram.com/reference/deepgram-api-overview).
+Comprehensive API documentation and guides are available at [developers.deepgram.com](https://developers.deepgram.com).
+
+### Migrating From Earlier Versions
+
+- [v5 to v6](./docs/Migrating-v5-to-v6.md) (current)
+- [v3+ to v5](./docs/Migrating-v3-to-v5.md)
+- [v2 to v3+](./docs/Migrating-v2-to-v3.md)
 
 ## Installation
 
-```sh
+Install the Deepgram Python SDK using pip:
+
+```bash
 pip install deepgram-sdk
 ```
 
 ## Reference
 
-A full reference for this library is available [here](https://github.com/deepgram/deepgram-python-sdk/blob/HEAD/./reference.md).
+- **[API Reference](./reference.md)** - Complete reference for all SDK methods, parameters, and WebSocket connections
 
 ## Usage
 
-Instantiate and use the client with the following:
+### Quick Start
+
+The Deepgram SDK provides both synchronous and asynchronous clients for all major use cases:
+
+#### Real-time Speech Recognition (Listen v2)
+
+Our newest and most advanced speech recognition model with contextual turn detection ([Reference](./reference.md#listen-v2-connect)):
+
+```python
+from deepgram import DeepgramClient
+from deepgram.core.events import EventType
+
+client = DeepgramClient()
+
+with client.listen.v2.connect(
+    model="flux-general-en",
+    encoding="linear16",
+    sample_rate=16000
+) as connection:
+    def on_message(message):
+        print(f"Received {message.type} event")
+
+    connection.on(EventType.OPEN, lambda _: print("Connection opened"))
+    connection.on(EventType.MESSAGE, on_message)
+    connection.on(EventType.CLOSE, lambda _: print("Connection closed"))
+    connection.on(EventType.ERROR, lambda error: print(f"Error: {error}"))
+
+    # Start listening and send audio data
+    connection.start_listening()
+```
+
+#### File Transcription
+
+Transcribe pre-recorded audio files ([API Reference](./reference.md#listen-v1-media-transcribe-file)):
 
 ```python
 from deepgram import DeepgramClient
 
-client = DeepgramClient(
-    api_key="YOUR_API_KEY",
-)
-client.listen.v1.media.transcribe_file()
+client = DeepgramClient()
+
+with open("audio.wav", "rb") as audio_file:
+    response = client.listen.v1.media.transcribe_file(
+        request=audio_file.read(),
+        model="nova-3"
+    )
+    print(response.results.channels[0].alternatives[0].transcript)
 ```
+
+#### Text-to-Speech
+
+Generate natural-sounding speech from text ([API Reference](./reference.md#speak-v1-audio-generate)):
+
+```python
+from deepgram import DeepgramClient
+
+client = DeepgramClient()
+
+response = client.speak.v1.audio.generate(
+    text="Hello, this is a sample text to speech conversion."
+)
+
+# Save the audio file
+with open("output.mp3", "wb") as audio_file:
+    audio_file.write(response.stream.getvalue())
+```
+
+#### Text Analysis
+
+Analyze text for sentiment, topics, and intents ([API Reference](./reference.md#read-v1-text-analyze)):
+
+```python
+from deepgram import DeepgramClient
+
+client = DeepgramClient()
+
+response = client.read.v1.text.analyze(
+    request={"text": "Hello, world!"},
+    language="en",
+    sentiment=True,
+    summarize=True,
+    topics=True,
+    intents=True
+)
+```
+
+#### Voice Agent (Conversational AI)
+
+Build interactive voice agents ([Reference](./reference.md#agent-v1-connect)):
+
+```python
+from deepgram import DeepgramClient
+from deepgram.agent.v1.types import (
+    AgentV1Settings, AgentV1SettingsAgent,
+    AgentV1SettingsAgentListen, AgentV1SettingsAgentListenProvider_V1,
+    AgentV1SettingsAudio, AgentV1SettingsAudioInput,
+)
+from deepgram.types.think_settings_v1 import ThinkSettingsV1
+from deepgram.types.think_settings_v1provider import ThinkSettingsV1Provider_OpenAi
+from deepgram.types.speak_settings_v1 import SpeakSettingsV1
+from deepgram.types.speak_settings_v1provider import SpeakSettingsV1Provider_Deepgram
+
+client = DeepgramClient()
+
+with client.agent.v1.connect() as agent:
+    settings = AgentV1Settings(
+        audio=AgentV1SettingsAudio(
+            input=AgentV1SettingsAudioInput(encoding="linear16", sample_rate=24000)
+        ),
+        agent=AgentV1SettingsAgent(
+            listen=AgentV1SettingsAgentListen(
+                provider=AgentV1SettingsAgentListenProvider_V1(
+                    type="deepgram", model="nova-3"
+                )
+            ),
+            think=ThinkSettingsV1(
+                provider=ThinkSettingsV1Provider_OpenAi(
+                    type="open_ai", model="gpt-4o-mini"
+                ),
+                prompt="You are a helpful AI assistant.",
+            ),
+            speak=SpeakSettingsV1(
+                provider=SpeakSettingsV1Provider_Deepgram(
+                    type="deepgram", model="aura-2-asteria-en"
+                )
+            ),
+        ),
+    )
+
+    agent.send_settings(settings)
+    agent.start_listening()
+```
+
+### Complete SDK Reference
+
+For comprehensive documentation of all available methods, parameters, and options:
+
+- **[API Reference](./reference.md)** - Complete reference for all SDK methods including:
+
+  - Listen (Speech-to-Text): File transcription, URL transcription, and media processing
+  - Speak (Text-to-Speech): Audio generation and voice synthesis
+  - Read (Text Intelligence): Text analysis, sentiment, summarization, and topic detection
+  - Manage: Project management, API keys, and usage analytics
+  - Auth: Token generation and authentication management
+  - WebSocket connections: Listen v1/v2, Speak v1, and Agent v1 real-time streaming
 
 ## Authentication
 
@@ -102,38 +224,58 @@ The SDK automatically discovers credentials from these environment variables:
 
 ## Async Client
 
-The SDK also exports an `async` client so that you can make non-blocking calls to our API. Note that if you are constructing an Async httpx client class to pass into this client, use `httpx.AsyncClient()` instead of `httpx.Client()` (e.g. for the `httpx_client` parameter of this client).
+The SDK provides full async/await support for non-blocking operations:
 
 ```python
 import asyncio
-
 from deepgram import AsyncDeepgramClient
 
-client = AsyncDeepgramClient(
-    api_key="YOUR_API_KEY",
-)
+async def main():
+    client = AsyncDeepgramClient()
 
+    # Async file transcription
+    with open("audio.wav", "rb") as audio_file:
+        response = await client.listen.v1.media.transcribe_file(
+            request=audio_file.read(),
+            model="nova-3"
+        )
 
-async def main() -> None:
-    await client.listen.v1.media.transcribe_file()
+    # Async WebSocket connection
+    async with client.listen.v2.connect(
+        model="flux-general-en",
+        encoding="linear16",
+        sample_rate=16000
+    ) as connection:
+        async def on_message(message):
+            print(f"Received {message.type} event")
 
+        connection.on(EventType.MESSAGE, on_message)
+        await connection.start_listening()
 
 asyncio.run(main())
 ```
 
 ## Exception Handling
 
-When the API returns a non-success status code (4xx or 5xx response), a subclass of the following error
-will be thrown.
+The SDK provides detailed error information for debugging and error handling:
 
 ```python
+from deepgram import DeepgramClient
 from deepgram.core.api_error import ApiError
 
+client = DeepgramClient()
+
 try:
-    client.listen.v1.media.transcribe_file(...)
+    response = client.listen.v1.media.transcribe_file(
+        request=audio_data,
+        model="nova-3"
+    )
 except ApiError as e:
-    print(e.status_code)
-    print(e.body)
+    print(f"Status Code: {e.status_code}")
+    print(f"Error Details: {e.body}")
+    print(f"Request ID: {e.headers.get('x-dg-request-id', 'N/A')}")
+except Exception as e:
+    print(f"Unexpected error: {e}")
 ```
 
 ## Advanced Features
@@ -206,148 +348,50 @@ response = client.listen.v1.media.transcribe_file(
 )
 ```
 
-## Websockets
-
-The SDK supports both sync and async websocket connections for real-time, low-latency communication. Sockets can be created using the `connect` method, which returns a context manager. 
-You can either iterate through the returned `SocketClient` to process messages as they arrive, or attach handlers to respond to specific events.
-
-```python
-
-# Connect to the websocket (Sync)
-import threading
-
-from deepgram import DeepgramClient
-
-client = DeepgramClient(...)
-
-with client.v1.connect() as socket:
-    # Iterate over the messages as they arrive
-    for message in socket
-        print(message)
-
-    # Or, attach handlers to specific events
-    socket.on(EventType.OPEN, lambda _: print("open"))
-    socket.on(EventType.MESSAGE, lambda message: print("received message", message))
-    socket.on(EventType.CLOSE, lambda _: print("close"))
-    socket.on(EventType.ERROR, lambda error: print("error", error))
-
-
-    # Start the listening loop in a background thread
-    listener_thread = threading.Thread(target=socket.start_listening, daemon=True)
-    listener_thread.start()
-```
-
-```python
-
-# Connect to the websocket (Async)
-import asyncio
-
-from deepgram import AsyncDeepgramClient
-
-client = AsyncDeepgramClient(...)
-
-async with client.v1.connect() as socket:
-    # Iterate over the messages as they arrive
-    async for message in socket
-        print(message)
-
-    # Or, attach handlers to specific events
-    socket.on(EventType.OPEN, lambda _: print("open"))
-    socket.on(EventType.MESSAGE, lambda message: print("received message", message))
-    socket.on(EventType.CLOSE, lambda _: print("close"))
-    socket.on(EventType.ERROR, lambda error: print("error", error))
-
-
-    # Start listening for events in an asyncio task
-    listen_task = asyncio.create_task(socket.start_listening())
-```
-
-## Advanced
-
-### Access Raw Response Data
-
-The SDK provides access to raw response data, including headers, through the `.with_raw_response` property.
-The `.with_raw_response` property returns a "raw" client that can be used to access the `.headers` and `.data` attributes.
-
-```python
-from deepgram import DeepgramClient
-
-client = DeepgramClient(
-    ...,
-)
-response = client.listen.v1.media.with_raw_response.transcribe_file(...)
-print(response.headers)  # access the response headers
-print(response.status_code)  # access the response status code
-print(response.data)  # access the underlying object
-```
-
-### Retries
-
-The SDK is instrumented with automatic retries with exponential backoff. A request will be retried as long
-as the request is deemed retryable and the number of retry attempts has not grown larger than the configured
-retry limit (default: 2).
-
-A request is deemed retryable when any of the following HTTP status codes is returned:
-
-- [408](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/408) (Timeout)
-- [429](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429) (Too Many Requests)
-- [5XX](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500) (Internal Server Errors)
-
-Use the `max_retries` request option to configure this behavior.
-
-```python
-client.listen.v1.media.transcribe_file(..., request_options={
-    "max_retries": 1
-})
-```
-
-### Timeouts
-
-The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
-
-```python
-
-from deepgram import DeepgramClient
-
-client = DeepgramClient(
-    ...,
-    timeout=20.0,
-)
-
-
-# Override timeout for a specific method
-client.listen.v1.media.transcribe_file(..., request_options={
-    "timeout_in_seconds": 1
-})
-```
-
-### Custom Client
-
-You can override the `httpx` client to customize it for your use-case. Some common use-cases include support for proxies
-and transports.
-
-```python
-import httpx
-from deepgram import DeepgramClient
-
-client = DeepgramClient(
-    ...,
-    httpx_client=httpx.Client(
-        proxy="http://my.test.proxy.example.com",
-        transport=httpx.HTTPTransport(local_address="0.0.0.0"),
-    ),
-)
-```
-
 ## Contributing
 
-While we value open-source contributions to this SDK, this library is generated programmatically.
-Additions made directly to this library would have to be moved over to our generation code,
-otherwise they would be overwritten upon the next generated release. Feel free to open a PR as
-a proof of concept, but know that we will not be able to merge it as-is. We suggest opening
-an issue first to discuss with us!
+We welcome contributions to improve this SDK! However, please note that this library is primarily generated from our API specifications.
 
-On the other hand, contributions to the README are always very welcome!
+### Development Setup
+
+1. **Install Poetry** (if not already installed):
+
+   ```bash
+   curl -sSL https://install.python-poetry.org | python - -y --version 1.5.1
+   ```
+
+2. **Install dependencies**:
+
+   ```bash
+   poetry install
+   ```
+
+3. **Install example dependencies**:
+
+   ```bash
+   poetry run pip install -r examples/requirements.txt
+   ```
+
+4. **Run tests**:
+
+   ```bash
+   poetry run pytest -rP .
+   ```
+
+5. **Run examples**:
+   ```bash
+   python -u examples/07-transcription-live-websocket.py
+   ```
+
+### Contribution Guidelines
+
+See our [CONTRIBUTING](./CONTRIBUTING.md) guide.
+
+### Requirements
+
+- Python 3.8+
+- See `pyproject.toml` for full dependency list
+
 ## Community Code of Conduct
 
 Please see our community [code of conduct](https://developers.deepgram.com/code-of-conduct) before contributing to this project.
@@ -355,4 +399,3 @@ Please see our community [code of conduct](https://developers.deepgram.com/code-
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](./LICENSE) file for details.
-

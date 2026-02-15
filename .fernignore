@@ -21,6 +21,12 @@ src/deepgram/agent/v1/socket_client.py
 # Manual standalone tests
 tests/manual
 
+# README with custom examples, migration guide links, and contributing section
+README.md
+
+# Reference with Fern-generated REST API docs plus manually maintained WebSocket sections
+reference.md
+
 # Folders to ignore
 .github
 docs
