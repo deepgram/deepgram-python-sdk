@@ -40,22 +40,54 @@ from typing import Any
 from urllib.parse import urlparse
 
 from ..transport_interface import AsyncTransport
-from aws_sdk_sagemaker_runtime_http2.client import SageMakerRuntimeHTTP2Client
-from aws_sdk_sagemaker_runtime_http2.config import Config, HTTPAuthSchemeResolver
-from aws_sdk_sagemaker_runtime_http2.models import (
-    InvokeEndpointWithBidirectionalStreamInput,
-    RequestPayloadPart,
-    RequestStreamEventPayloadPart,
-)
-from smithy_aws_core.auth.sigv4 import SigV4AuthScheme
-from smithy_aws_core.identity import EnvironmentCredentialsResolver
 
-try:
-    import boto3
 
-    _BOTO3_AVAILABLE = True
-except ImportError:
-    _BOTO3_AVAILABLE = False
+def _import_sagemaker_deps() -> tuple:
+    """Lazily import SageMaker dependencies.
+
+    These are optional — only needed when actually using the SageMaker
+    transport. Deferring them avoids mypy/import errors for users who
+    don't have ``aws-sdk-sagemaker-runtime-http2`` installed.
+
+    Returns
+    -------
+    tuple
+        (SageMakerRuntimeHTTP2Client, Config, HTTPAuthSchemeResolver,
+         InvokeEndpointWithBidirectionalStreamInput, RequestPayloadPart,
+         RequestStreamEventPayloadPart, SigV4AuthScheme,
+         EnvironmentCredentialsResolver)
+
+    Raises
+    ------
+    ImportError
+        If the required packages are not installed.
+    """
+    try:
+        from aws_sdk_sagemaker_runtime_http2.client import SageMakerRuntimeHTTP2Client
+        from aws_sdk_sagemaker_runtime_http2.config import Config, HTTPAuthSchemeResolver
+        from aws_sdk_sagemaker_runtime_http2.models import (
+            InvokeEndpointWithBidirectionalStreamInput,
+            RequestPayloadPart,
+            RequestStreamEventPayloadPart,
+        )
+        from smithy_aws_core.auth.sigv4 import SigV4AuthScheme
+        from smithy_aws_core.identity import EnvironmentCredentialsResolver
+    except ImportError:
+        raise ImportError(
+            "SageMaker transport requires additional dependencies. "
+            "Install them with: pip install aws-sdk-sagemaker-runtime-http2 boto3"
+        ) from None
+
+    return (
+        SageMakerRuntimeHTTP2Client,
+        Config,
+        HTTPAuthSchemeResolver,
+        InvokeEndpointWithBidirectionalStreamInput,
+        RequestPayloadPart,
+        RequestStreamEventPayloadPart,
+        SigV4AuthScheme,
+        EnvironmentCredentialsResolver,
+    )
 
 logger = logging.getLogger(__name__)
 
@@ -109,7 +141,9 @@ class SageMakerTransport(AsyncTransport):
         IAM role, etc.) and writes the resolved values back to the
         environment so the resolver can find them.
         """
-        if not _BOTO3_AVAILABLE:
+        try:
+            import boto3
+        except ImportError:
             return
         try:
             session = boto3.Session(region_name=self.region)
@@ -142,6 +176,17 @@ class SageMakerTransport(AsyncTransport):
         """Establish the SageMaker BiDi stream (called under lock)."""
 
         logger.info("Connecting to SageMaker endpoint: %s in %s", self.endpoint_name, self.region)
+
+        (
+            SageMakerRuntimeHTTP2Client,
+            Config,
+            HTTPAuthSchemeResolver,
+            InvokeEndpointWithBidirectionalStreamInput,
+            _RequestPayloadPart,
+            _RequestStreamEventPayloadPart,
+            SigV4AuthScheme,
+            EnvironmentCredentialsResolver,
+        ) = _import_sagemaker_deps()
 
         config = Config(
             endpoint_uri=f"https://runtime.sagemaker.{self.region}.amazonaws.com:8443",
@@ -184,6 +229,11 @@ class SageMakerTransport(AsyncTransport):
             raw = json.dumps(data).encode("utf-8")
         else:
             raw = str(data).encode("utf-8")
+
+        from aws_sdk_sagemaker_runtime_http2.models import (
+            RequestPayloadPart,
+            RequestStreamEventPayloadPart,
+        )
 
         payload = RequestPayloadPart(bytes_=raw)
         event = RequestStreamEventPayloadPart(value=payload)
