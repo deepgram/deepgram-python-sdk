@@ -15,33 +15,47 @@ import subprocess
 import pytest
 
 _STARTED: bool = False
+_WIREMOCK_PORT: str = "8080"  # Default, will be updated after container starts
+_PROJECT_NAME: str = "deepgram-api"
+
+# This file lives at tests/conftest.py, so the project root is one level up.
+_PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+_COMPOSE_FILE = os.path.join(_PROJECT_ROOT, "wiremock", "docker-compose.test.yml")
 
 
-def _compose_file() -> str:
-    """Returns the path to the docker-compose file for WireMock."""
-    # This file lives in tests/conftest.py, so the project root is the parent of tests.
-    tests_dir = os.path.dirname(__file__)
-    project_root = os.path.abspath(os.path.join(tests_dir, ".."))
-    wiremock_dir = os.path.join(project_root, "wiremock")
-    return os.path.join(wiremock_dir, "docker-compose.test.yml")
-
-
-def _start_wiremock() -> None:
-    """Starts the WireMock container using docker-compose."""
-    global _STARTED
-    if _STARTED:
-        return
-
-    compose_file = _compose_file()
-    print("\nStarting WireMock container...")
+def _get_wiremock_port() -> str:
+    """Gets the dynamically assigned port for the WireMock container."""
     try:
-        subprocess.run(
-            ["docker", "compose", "-f", compose_file, "up", "-d", "--wait"],
+        result = subprocess.run(
+            ["docker", "compose", "-f", _COMPOSE_FILE, "-p", _PROJECT_NAME, "port", "wiremock", "8080"],
             check=True,
             capture_output=True,
             text=True,
         )
-        print("WireMock container is ready")
+        # Output is like "0.0.0.0:32768" or "[::]:32768"
+        port = result.stdout.strip().split(":")[-1]
+        return port
+    except subprocess.CalledProcessError:
+        return "8080"  # Fallback to default
+
+
+def _start_wiremock() -> None:
+    """Starts the WireMock container using docker-compose."""
+    global _STARTED, _WIREMOCK_PORT
+    if _STARTED:
+        return
+
+    print(f"\nStarting WireMock container (project: {_PROJECT_NAME})...")
+    try:
+        subprocess.run(
+            ["docker", "compose", "-f", _COMPOSE_FILE, "-p", _PROJECT_NAME, "up", "-d", "--wait"],
+            check=True,
+            capture_output=True,
+            text=True,
+        )
+        _WIREMOCK_PORT = _get_wiremock_port()
+        os.environ["WIREMOCK_PORT"] = _WIREMOCK_PORT
+        print(f"WireMock container is ready on port {_WIREMOCK_PORT}")
         _STARTED = True
     except subprocess.CalledProcessError as e:
         print(f"Failed to start WireMock: {e.stderr}")
@@ -50,10 +64,9 @@ def _start_wiremock() -> None:
 
 def _stop_wiremock() -> None:
     """Stops and removes the WireMock container."""
-    compose_file = _compose_file()
     print("\nStopping WireMock container...")
     subprocess.run(
-        ["docker", "compose", "-f", compose_file, "down", "-v"],
+        ["docker", "compose", "-f", _COMPOSE_FILE, "-p", _PROJECT_NAME, "down", "-v"],
         check=False,
         capture_output=True,
     )

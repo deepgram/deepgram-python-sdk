@@ -2,23 +2,6 @@
 
 import typing
 
-import typing_extensions
-from .agent_v1settings_agent_think_context_length import AgentV1SettingsAgentThinkContextLengthParams
-from .agent_v1settings_agent_think_endpoint import AgentV1SettingsAgentThinkEndpointParams
-from .agent_v1settings_agent_think_functions_item import AgentV1SettingsAgentThinkFunctionsItemParams
-from .agent_v1settings_agent_think_provider import AgentV1SettingsAgentThinkProviderParams
+from ....requests.think_settings_v1 import ThinkSettingsV1Params
 
-
-class AgentV1SettingsAgentThinkParams(typing_extensions.TypedDict):
-    provider: AgentV1SettingsAgentThinkProviderParams
-    endpoint: typing_extensions.NotRequired[AgentV1SettingsAgentThinkEndpointParams]
-    """
-    Optional for non-Deepgram LLM providers. When present, must include url field and headers object
-    """
-
-    functions: typing_extensions.NotRequired[typing.Sequence[AgentV1SettingsAgentThinkFunctionsItemParams]]
-    prompt: typing_extensions.NotRequired[str]
-    context_length: typing_extensions.NotRequired[AgentV1SettingsAgentThinkContextLengthParams]
-    """
-    Specifies the number of characters retained in context between user messages, agent responses, and function calls. This setting is only configurable when a custom think endpoint is used
-    """
+AgentV1SettingsAgentThinkParams = typing.Union[ThinkSettingsV1Params, typing.Sequence[ThinkSettingsV1Params]]

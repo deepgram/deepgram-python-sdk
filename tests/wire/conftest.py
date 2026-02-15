@@ -1,94 +1,37 @@
 """
 Pytest configuration for wire tests.
 
-This module manages the WireMock container lifecycle for integration tests.
-It is compatible with pytest-xdist parallelization by ensuring only the
-controller process (or the single process in non-xdist runs) starts and
-stops the WireMock container.
+This module provides helpers for creating a configured client that talks to
+WireMock and for verifying requests in WireMock.
+
+The WireMock container lifecycle itself is managed by a top-level pytest
+plugin (tests/conftest.py) so that the container is started exactly once
+per test run, even when using pytest-xdist.
 """
 
+import inspect
 import os
-import subprocess
 from typing import Any, Dict, Optional
 
-import pytest
-import requests
+import httpx
 
-from deepgram.base_client import BaseClient
+from deepgram.client import DeepgramClient
 from deepgram.environment import DeepgramClientEnvironment
 
-
-def _compose_file() -> str:
-    """Returns the path to the docker-compose file for WireMock."""
-    test_dir = os.path.dirname(__file__)
-    project_root = os.path.abspath(os.path.join(test_dir, "..", ".."))
-    wiremock_dir = os.path.join(project_root, "wiremock")
-    return os.path.join(wiremock_dir, "docker-compose.test.yml")
+# Check once at import time whether the client constructor accepts a headers kwarg.
+try:
+    _CLIENT_SUPPORTS_HEADERS: bool = "headers" in inspect.signature(DeepgramClient).parameters
+except (TypeError, ValueError):
+    _CLIENT_SUPPORTS_HEADERS = False
 
 
-def _start_wiremock() -> None:
-    """Starts the WireMock container using docker-compose."""
-    compose_file = _compose_file()
-    print("\nStarting WireMock container...")
-    try:
-        subprocess.run(
-            ["docker", "compose", "-f", compose_file, "up", "-d", "--wait"],
-            check=True,
-            capture_output=True,
-            text=True,
-        )
-        print("WireMock container is ready")
-    except subprocess.CalledProcessError as e:
-        print(f"Failed to start WireMock: {e.stderr}")
-        raise
+def _get_wiremock_base_url() -> str:
+    """Returns the WireMock base URL using the dynamically assigned port."""
+    port = os.environ.get("WIREMOCK_PORT", "8080")
+    return f"http://localhost:{port}"
 
 
-def _stop_wiremock() -> None:
-    """Stops and removes the WireMock container."""
-    compose_file = _compose_file()
-    print("\nStopping WireMock container...")
-    subprocess.run(
-        ["docker", "compose", "-f", compose_file, "down", "-v"],
-        check=False,
-        capture_output=True,
-    )
-
-
-def _is_xdist_worker(config: pytest.Config) -> bool:
-    """
-    Determines if the current process is an xdist worker.
-
-    In pytest-xdist, worker processes have a 'workerinput' attribute
-    on the config object, while the controller process does not.
-    """
-    return hasattr(config, "workerinput")
-
-
-def pytest_configure(config: pytest.Config) -> None:
-    """
-    Pytest hook that runs during test session setup.
-
-    Starts WireMock container only from the controller process (xdist)
-    or the single process (non-xdist). This ensures only one container
-    is started regardless of the number of worker processes.
-    """
-    if not _is_xdist_worker(config):
-        _start_wiremock()
-
-
-def pytest_unconfigure(config: pytest.Config) -> None:
-    """
-    Pytest hook that runs during test session teardown.
-
-    Stops WireMock container only from the controller process (xdist)
-    or the single process (non-xdist). This ensures the container is
-    cleaned up after all workers have finished.
-    """
-    if not _is_xdist_worker(config):
-        _stop_wiremock()
-
-
-def get_client(test_id: str) -> BaseClient:
+def get_client(test_id: str) -> DeepgramClient:
     """
     Creates a configured client instance for wire tests.
 
@@ -98,15 +41,19 @@ def get_client(test_id: str) -> BaseClient:
     Returns:
         A configured client instance with all required auth parameters.
     """
-    # Create a custom environment pointing to WireMock
-    wiremock_environment = DeepgramClientEnvironment(
-        base="http://localhost:8080",
-        production="ws://localhost:8080",
-        agent="ws://localhost:8080",
-    )
-    return BaseClient(
-        environment=wiremock_environment,
-        headers={"X-Test-Id": test_id},
+    test_headers = {"X-Test-Id": test_id}
+    base_url = _get_wiremock_base_url()
+
+    if _CLIENT_SUPPORTS_HEADERS:
+        return DeepgramClient(
+            environment=DeepgramClientEnvironment(base=base_url, production=base_url, agent=base_url),
+            headers=test_headers,
+            api_key="test_api_key",
+        )
+
+    return DeepgramClient(
+        environment=DeepgramClientEnvironment(base=base_url, production=base_url, agent=base_url),
+        httpx_client=httpx.Client(headers=test_headers),
         api_key="test_api_key",
     )
 
@@ -118,8 +65,8 @@ def verify_request_count(
     query_params: Optional[Dict[str, str]],
     expected: int,
 ) -> None:
-    """Verifies the number of requests made to WireMock filtered by test ID for concurrency safety"""
-    wiremock_admin_url = "http://localhost:8080/__admin"
+    """Verifies the number of requests made to WireMock filtered by test ID for concurrency safety."""
+    wiremock_admin_url = f"{_get_wiremock_base_url()}/__admin"
     request_body: Dict[str, Any] = {
         "method": method,
         "urlPath": url_path,
@@ -128,7 +75,7 @@ def verify_request_count(
     if query_params:
         query_parameters = {k: {"equalTo": v} for k, v in query_params.items()}
         request_body["queryParameters"] = query_parameters
-    response = requests.post(f"{wiremock_admin_url}/requests/find", json=request_body)
+    response = httpx.post(f"{wiremock_admin_url}/requests/find", json=request_body)
     assert response.status_code == 200, "Failed to query WireMock requests"
     result = response.json()
     requests_found = len(result.get("requests", []))

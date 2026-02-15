@@ -13,10 +13,17 @@ if typing.TYPE_CHECKING:
     from .agent_think_models_v1response_models_item_three import AgentThinkModelsV1ResponseModelsItemThreeParams
     from .agent_think_models_v1response_models_item_two import AgentThinkModelsV1ResponseModelsItemTwoParams
     from .agent_think_models_v1response_models_item_zero import AgentThinkModelsV1ResponseModelsItemZeroParams
+    from .anthropic import AnthropicParams
+    from .aws_bedrock_think_provider import AwsBedrockThinkProviderParams
+    from .aws_bedrock_think_provider_credentials import AwsBedrockThinkProviderCredentialsParams
+    from .aws_polly_speak_provider import AwsPollySpeakProviderParams
+    from .aws_polly_speak_provider_credentials import AwsPollySpeakProviderCredentialsParams
     from .billing_breakdown_v1response import BillingBreakdownV1ResponseParams
     from .billing_breakdown_v1response_resolution import BillingBreakdownV1ResponseResolutionParams
     from .billing_breakdown_v1response_results_item import BillingBreakdownV1ResponseResultsItemParams
     from .billing_breakdown_v1response_results_item_grouping import BillingBreakdownV1ResponseResultsItemGroupingParams
+    from .cartesia import CartesiaParams
+    from .cartesia_speak_provider_voice import CartesiaSpeakProviderVoiceParams
     from .create_key_v1response import CreateKeyV1ResponseParams
     from .create_project_distribution_credentials_v1response import CreateProjectDistributionCredentialsV1ResponseParams
     from .create_project_distribution_credentials_v1response_distribution_credentials import (
@@ -26,10 +33,12 @@ if typing.TYPE_CHECKING:
         CreateProjectDistributionCredentialsV1ResponseMemberParams,
     )
     from .create_project_invite_v1response import CreateProjectInviteV1ResponseParams
+    from .deepgram import DeepgramParams
     from .delete_project_invite_v1response import DeleteProjectInviteV1ResponseParams
     from .delete_project_key_v1response import DeleteProjectKeyV1ResponseParams
     from .delete_project_member_v1response import DeleteProjectMemberV1ResponseParams
     from .delete_project_v1response import DeleteProjectV1ResponseParams
+    from .eleven_labs_speak_provider import ElevenLabsSpeakProviderParams
     from .error_response import ErrorResponseParams
     from .error_response_legacy_error import ErrorResponseLegacyErrorParams
     from .error_response_modern_error import ErrorResponseModernErrorParams
@@ -51,7 +60,9 @@ if typing.TYPE_CHECKING:
     from .get_project_key_v1response_item_member_api_key import GetProjectKeyV1ResponseItemMemberApiKeyParams
     from .get_project_request_v1response import GetProjectRequestV1ResponseParams
     from .get_project_v1response import GetProjectV1ResponseParams
+    from .google import GoogleParams
     from .grant_v1response import GrantV1ResponseParams
+    from .groq import GroqParams
     from .leave_project_v1response import LeaveProjectV1ResponseParams
     from .list_billing_fields_v1response import ListBillingFieldsV1ResponseParams
     from .list_models_v1response import ListModelsV1ResponseParams
@@ -129,6 +140,8 @@ if typing.TYPE_CHECKING:
         ListenV1ResponseResultsUtterancesItemWordsItemParams,
     )
     from .listen_v2keyterm import ListenV2KeytermParams
+    from .open_ai_speak_provider import OpenAiSpeakProviderParams
+    from .open_ai_think_provider import OpenAiThinkProviderParams
     from .project_request_response import ProjectRequestResponseParams
     from .read_v1request import ReadV1RequestParams
     from .read_v1request_text import ReadV1RequestTextParams
@@ -161,6 +174,29 @@ if typing.TYPE_CHECKING:
     from .shared_topics_results_topics_segments_item_topics_item import (
         SharedTopicsResultsTopicsSegmentsItemTopicsItemParams,
     )
+    from .speak_settings_v1 import SpeakSettingsV1Params
+    from .speak_settings_v1endpoint import SpeakSettingsV1EndpointParams
+    from .speak_settings_v1provider import (
+        SpeakSettingsV1ProviderParams,
+        SpeakSettingsV1Provider_AwsPollyParams,
+        SpeakSettingsV1Provider_CartesiaParams,
+        SpeakSettingsV1Provider_DeepgramParams,
+        SpeakSettingsV1Provider_ElevenLabsParams,
+        SpeakSettingsV1Provider_OpenAiParams,
+    )
+    from .think_settings_v1 import ThinkSettingsV1Params
+    from .think_settings_v1context_length import ThinkSettingsV1ContextLengthParams
+    from .think_settings_v1endpoint import ThinkSettingsV1EndpointParams
+    from .think_settings_v1functions_item import ThinkSettingsV1FunctionsItemParams
+    from .think_settings_v1functions_item_endpoint import ThinkSettingsV1FunctionsItemEndpointParams
+    from .think_settings_v1provider import (
+        ThinkSettingsV1ProviderParams,
+        ThinkSettingsV1Provider_AnthropicParams,
+        ThinkSettingsV1Provider_AwsBedrockParams,
+        ThinkSettingsV1Provider_GoogleParams,
+        ThinkSettingsV1Provider_GroqParams,
+        ThinkSettingsV1Provider_OpenAiParams,
+    )
     from .update_project_member_scopes_v1response import UpdateProjectMemberScopesV1ResponseParams
     from .update_project_v1response import UpdateProjectV1ResponseParams
     from .usage_breakdown_v1response import UsageBreakdownV1ResponseParams
@@ -179,19 +215,28 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AgentThinkModelsV1ResponseModelsItemTwoParams": ".agent_think_models_v1response_models_item_two",
     "AgentThinkModelsV1ResponseModelsItemZeroParams": ".agent_think_models_v1response_models_item_zero",
     "AgentThinkModelsV1ResponseParams": ".agent_think_models_v1response",
+    "AnthropicParams": ".anthropic",
+    "AwsBedrockThinkProviderCredentialsParams": ".aws_bedrock_think_provider_credentials",
+    "AwsBedrockThinkProviderParams": ".aws_bedrock_think_provider",
+    "AwsPollySpeakProviderCredentialsParams": ".aws_polly_speak_provider_credentials",
+    "AwsPollySpeakProviderParams": ".aws_polly_speak_provider",
     "BillingBreakdownV1ResponseParams": ".billing_breakdown_v1response",
     "BillingBreakdownV1ResponseResolutionParams": ".billing_breakdown_v1response_resolution",
     "BillingBreakdownV1ResponseResultsItemGroupingParams": ".billing_breakdown_v1response_results_item_grouping",
     "BillingBreakdownV1ResponseResultsItemParams": ".billing_breakdown_v1response_results_item",
+    "CartesiaParams": ".cartesia",
+    "CartesiaSpeakProviderVoiceParams": ".cartesia_speak_provider_voice",
     "CreateKeyV1ResponseParams": ".create_key_v1response",
     "CreateProjectDistributionCredentialsV1ResponseDistributionCredentialsParams": ".create_project_distribution_credentials_v1response_distribution_credentials",
     "CreateProjectDistributionCredentialsV1ResponseMemberParams": ".create_project_distribution_credentials_v1response_member",
     "CreateProjectDistributionCredentialsV1ResponseParams": ".create_project_distribution_credentials_v1response",
     "CreateProjectInviteV1ResponseParams": ".create_project_invite_v1response",
+    "DeepgramParams": ".deepgram",
     "DeleteProjectInviteV1ResponseParams": ".delete_project_invite_v1response",
     "DeleteProjectKeyV1ResponseParams": ".delete_project_key_v1response",
     "DeleteProjectMemberV1ResponseParams": ".delete_project_member_v1response",
     "DeleteProjectV1ResponseParams": ".delete_project_v1response",
+    "ElevenLabsSpeakProviderParams": ".eleven_labs_speak_provider",
     "ErrorResponseLegacyErrorParams": ".error_response_legacy_error",
     "ErrorResponseModernErrorParams": ".error_response_modern_error",
     "ErrorResponseParams": ".error_response",
@@ -209,7 +254,9 @@ _dynamic_imports: typing.Dict[str, str] = {
     "GetProjectKeyV1ResponseParams": ".get_project_key_v1response",
     "GetProjectRequestV1ResponseParams": ".get_project_request_v1response",
     "GetProjectV1ResponseParams": ".get_project_v1response",
+    "GoogleParams": ".google",
     "GrantV1ResponseParams": ".grant_v1response",
+    "GroqParams": ".groq",
     "LeaveProjectV1ResponseParams": ".leave_project_v1response",
     "ListBillingFieldsV1ResponseParams": ".list_billing_fields_v1response",
     "ListModelsV1ResponseParams": ".list_models_v1response",
@@ -261,6 +308,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ListenV1ResponseResultsUtterancesItemWordsItemParams": ".listen_v1response_results_utterances_item_words_item",
     "ListenV1ResponseResultsUtterancesParams": ".listen_v1response_results_utterances",
     "ListenV2KeytermParams": ".listen_v2keyterm",
+    "OpenAiSpeakProviderParams": ".open_ai_speak_provider",
+    "OpenAiThinkProviderParams": ".open_ai_think_provider",
     "ProjectRequestResponseParams": ".project_request_response",
     "ReadV1RequestParams": ".read_v1request",
     "ReadV1RequestTextParams": ".read_v1request_text",
@@ -289,6 +338,25 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SharedTopicsResultsTopicsParams": ".shared_topics_results_topics",
     "SharedTopicsResultsTopicsSegmentsItemParams": ".shared_topics_results_topics_segments_item",
     "SharedTopicsResultsTopicsSegmentsItemTopicsItemParams": ".shared_topics_results_topics_segments_item_topics_item",
+    "SpeakSettingsV1EndpointParams": ".speak_settings_v1endpoint",
+    "SpeakSettingsV1Params": ".speak_settings_v1",
+    "SpeakSettingsV1ProviderParams": ".speak_settings_v1provider",
+    "SpeakSettingsV1Provider_AwsPollyParams": ".speak_settings_v1provider",
+    "SpeakSettingsV1Provider_CartesiaParams": ".speak_settings_v1provider",
+    "SpeakSettingsV1Provider_DeepgramParams": ".speak_settings_v1provider",
+    "SpeakSettingsV1Provider_ElevenLabsParams": ".speak_settings_v1provider",
+    "SpeakSettingsV1Provider_OpenAiParams": ".speak_settings_v1provider",
+    "ThinkSettingsV1ContextLengthParams": ".think_settings_v1context_length",
+    "ThinkSettingsV1EndpointParams": ".think_settings_v1endpoint",
+    "ThinkSettingsV1FunctionsItemEndpointParams": ".think_settings_v1functions_item_endpoint",
+    "ThinkSettingsV1FunctionsItemParams": ".think_settings_v1functions_item",
+    "ThinkSettingsV1Params": ".think_settings_v1",
+    "ThinkSettingsV1ProviderParams": ".think_settings_v1provider",
+    "ThinkSettingsV1Provider_AnthropicParams": ".think_settings_v1provider",
+    "ThinkSettingsV1Provider_AwsBedrockParams": ".think_settings_v1provider",
+    "ThinkSettingsV1Provider_GoogleParams": ".think_settings_v1provider",
+    "ThinkSettingsV1Provider_GroqParams": ".think_settings_v1provider",
+    "ThinkSettingsV1Provider_OpenAiParams": ".think_settings_v1provider",
     "UpdateProjectMemberScopesV1ResponseParams": ".update_project_member_scopes_v1response",
     "UpdateProjectV1ResponseParams": ".update_project_v1response",
     "UsageBreakdownV1ResponseParams": ".usage_breakdown_v1response",
@@ -331,19 +399,28 @@ __all__ = [
     "AgentThinkModelsV1ResponseModelsItemTwoParams",
     "AgentThinkModelsV1ResponseModelsItemZeroParams",
     "AgentThinkModelsV1ResponseParams",
+    "AnthropicParams",
+    "AwsBedrockThinkProviderCredentialsParams",
+    "AwsBedrockThinkProviderParams",
+    "AwsPollySpeakProviderCredentialsParams",
+    "AwsPollySpeakProviderParams",
     "BillingBreakdownV1ResponseParams",
     "BillingBreakdownV1ResponseResolutionParams",
     "BillingBreakdownV1ResponseResultsItemGroupingParams",
     "BillingBreakdownV1ResponseResultsItemParams",
+    "CartesiaParams",
+    "CartesiaSpeakProviderVoiceParams",
     "CreateKeyV1ResponseParams",
     "CreateProjectDistributionCredentialsV1ResponseDistributionCredentialsParams",
     "CreateProjectDistributionCredentialsV1ResponseMemberParams",
     "CreateProjectDistributionCredentialsV1ResponseParams",
     "CreateProjectInviteV1ResponseParams",
+    "DeepgramParams",
     "DeleteProjectInviteV1ResponseParams",
     "DeleteProjectKeyV1ResponseParams",
     "DeleteProjectMemberV1ResponseParams",
     "DeleteProjectV1ResponseParams",
+    "ElevenLabsSpeakProviderParams",
     "ErrorResponseLegacyErrorParams",
     "ErrorResponseModernErrorParams",
     "ErrorResponseParams",
@@ -361,7 +438,9 @@ __all__ = [
     "GetProjectKeyV1ResponseParams",
     "GetProjectRequestV1ResponseParams",
     "GetProjectV1ResponseParams",
+    "GoogleParams",
     "GrantV1ResponseParams",
+    "GroqParams",
     "LeaveProjectV1ResponseParams",
     "ListBillingFieldsV1ResponseParams",
     "ListModelsV1ResponseParams",
@@ -413,6 +492,8 @@ __all__ = [
     "ListenV1ResponseResultsUtterancesItemWordsItemParams",
     "ListenV1ResponseResultsUtterancesParams",
     "ListenV2KeytermParams",
+    "OpenAiSpeakProviderParams",
+    "OpenAiThinkProviderParams",
     "ProjectRequestResponseParams",
     "ReadV1RequestParams",
     "ReadV1RequestTextParams",
@@ -441,6 +522,25 @@ __all__ = [
     "SharedTopicsResultsTopicsParams",
     "SharedTopicsResultsTopicsSegmentsItemParams",
     "SharedTopicsResultsTopicsSegmentsItemTopicsItemParams",
+    "SpeakSettingsV1EndpointParams",
+    "SpeakSettingsV1Params",
+    "SpeakSettingsV1ProviderParams",
+    "SpeakSettingsV1Provider_AwsPollyParams",
+    "SpeakSettingsV1Provider_CartesiaParams",
+    "SpeakSettingsV1Provider_DeepgramParams",
+    "SpeakSettingsV1Provider_ElevenLabsParams",
+    "SpeakSettingsV1Provider_OpenAiParams",
+    "ThinkSettingsV1ContextLengthParams",
+    "ThinkSettingsV1EndpointParams",
+    "ThinkSettingsV1FunctionsItemEndpointParams",
+    "ThinkSettingsV1FunctionsItemParams",
+    "ThinkSettingsV1Params",
+    "ThinkSettingsV1ProviderParams",
+    "ThinkSettingsV1Provider_AnthropicParams",
+    "ThinkSettingsV1Provider_AwsBedrockParams",
+    "ThinkSettingsV1Provider_GoogleParams",
+    "ThinkSettingsV1Provider_GroqParams",
+    "ThinkSettingsV1Provider_OpenAiParams",
     "UpdateProjectMemberScopesV1ResponseParams",
     "UpdateProjectV1ResponseParams",
     "UsageBreakdownV1ResponseParams",

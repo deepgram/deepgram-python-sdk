@@ -3,7 +3,7 @@
 import typing
 
 import typing_extensions
-from .agent_v1update_speak_speak import AgentV1UpdateSpeakSpeakParams
+from ....requests.speak_settings_v1 import SpeakSettingsV1Params
 
 
 class AgentV1UpdateSpeakParams(typing_extensions.TypedDict):
@@ -12,7 +12,4 @@ class AgentV1UpdateSpeakParams(typing_extensions.TypedDict):
     Message type identifier for updating the speak model
     """
 
-    speak: AgentV1UpdateSpeakSpeakParams
-    """
-    Configuration for the speak model. Optional, defaults to latest deepgram TTS model
-    """
+    speak: SpeakSettingsV1Params

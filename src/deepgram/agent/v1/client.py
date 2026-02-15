@@ -3,13 +3,17 @@
 from __future__ import annotations
 
 import typing
+import urllib.parse
 from contextlib import asynccontextmanager, contextmanager
 
-import websockets.exceptions
 import websockets.sync.client as websockets_sync_client
 from ...core.api_error import ApiError
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
+from ...core.jsonable_encoder import jsonable_encoder
+from ...core.query_encoder import encode_query
+from ...core.remove_none_from_dict import remove_none_from_dict
 from ...core.request_options import RequestOptions
+from ...core.websocket_compat import InvalidWebSocketStatus, get_status_code
 from .raw_client import AsyncRawV1Client, RawV1Client
 from .socket_client import AsyncV1SocketClient, V1SocketClient
 
@@ -61,6 +65,21 @@ class V1Client:
         V1SocketClient
         """
         ws_url = self._raw_client._client_wrapper.get_environment().agent + "/v1/agent/converse"
+        _encoded_query_params = encode_query(
+            jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        **(
+                            request_options.get("additional_query_parameters", {}) or {}
+                            if request_options is not None
+                            else {}
+                        ),
+                    }
+                )
+            )
+        )
+        if _encoded_query_params:
+            ws_url = ws_url + "?" + urllib.parse.urlencode(_encoded_query_params)
         headers = self._raw_client._client_wrapper.get_headers()
         if authorization is not None:
             headers["Authorization"] = str(authorization)
@@ -69,8 +88,8 @@ class V1Client:
         try:
             with websockets_sync_client.connect(ws_url, additional_headers=headers) as protocol:
                 yield V1SocketClient(websocket=protocol)
-        except websockets.exceptions.InvalidStatusCode as exc:
-            status_code: int = exc.status_code
+        except InvalidWebSocketStatus as exc:
+            status_code: int = get_status_code(exc)
             if status_code == 401:
                 raise ApiError(
                     status_code=status_code,
@@ -131,6 +150,21 @@ class AsyncV1Client:
         AsyncV1SocketClient
         """
         ws_url = self._raw_client._client_wrapper.get_environment().agent + "/v1/agent/converse"
+        _encoded_query_params = encode_query(
+            jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        **(
+                            request_options.get("additional_query_parameters", {}) or {}
+                            if request_options is not None
+                            else {}
+                        ),
+                    }
+                )
+            )
+        )
+        if _encoded_query_params:
+            ws_url = ws_url + "?" + urllib.parse.urlencode(_encoded_query_params)
         headers = self._raw_client._client_wrapper.get_headers()
         if authorization is not None:
             headers["Authorization"] = str(authorization)
@@ -139,8 +173,8 @@ class AsyncV1Client:
         try:
             async with websockets_client_connect(ws_url, extra_headers=headers) as protocol:
                 yield AsyncV1SocketClient(websocket=protocol)
-        except websockets.exceptions.InvalidStatusCode as exc:
-            status_code: int = exc.status_code
+        except InvalidWebSocketStatus as exc:
+            status_code: int = get_status_code(exc)
             if status_code == 401:
                 raise ApiError(
                     status_code=status_code,

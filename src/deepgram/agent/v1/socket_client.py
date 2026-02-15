@@ -80,11 +80,11 @@ class AsyncV1SocketClient(EventEmitterMixin):
         try:
             async for raw_message in self._websocket:
                 if isinstance(raw_message, bytes):
-                    await self._emit_async(EventType.MESSAGE, raw_message)
+                    parsed = raw_message
                 else:
                     json_data = json.loads(raw_message)
                     parsed = parse_obj_as(V1SocketClientResponse, json_data)  # type: ignore
-                    await self._emit_async(EventType.MESSAGE, parsed)
+                await self._emit_async(EventType.MESSAGE, parsed)
         except (websockets.WebSocketException, JSONDecodeError) as exc:
             await self._emit_async(EventType.ERROR, exc)
         finally:
@@ -142,7 +142,7 @@ class AsyncV1SocketClient(EventEmitterMixin):
     async def send_media(self, message: bytes) -> None:
         """
         Send a message to the websocket connection.
-        The message will be sent as bytes.
+        The message will be sent as a bytes.
         """
         await self._send(message)
 
@@ -152,7 +152,7 @@ class AsyncV1SocketClient(EventEmitterMixin):
         """
         data = await self._websocket.recv()
         if isinstance(data, bytes):
-            return data  # Binary audio data
+            return data  # type: ignore
         json_data = json.loads(data)
         return parse_obj_as(V1SocketClientResponse, json_data)  # type: ignore
 
@@ -197,11 +197,11 @@ class V1SocketClient(EventEmitterMixin):
         try:
             for raw_message in self._websocket:
                 if isinstance(raw_message, bytes):
-                    self._emit(EventType.MESSAGE, raw_message)
+                    parsed = raw_message
                 else:
                     json_data = json.loads(raw_message)
                     parsed = parse_obj_as(V1SocketClientResponse, json_data)  # type: ignore
-                    self._emit(EventType.MESSAGE, parsed)
+                self._emit(EventType.MESSAGE, parsed)
         except (websockets.WebSocketException, JSONDecodeError) as exc:
             self._emit(EventType.ERROR, exc)
         finally:
@@ -259,7 +259,7 @@ class V1SocketClient(EventEmitterMixin):
     def send_media(self, message: bytes) -> None:
         """
         Send a message to the websocket connection.
-        The message will be sent as bytes.
+        The message will be sent as a bytes.
         """
         self._send(message)
 
@@ -269,7 +269,7 @@ class V1SocketClient(EventEmitterMixin):
         """
         data = self._websocket.recv()
         if isinstance(data, bytes):
-            return data  # Binary audio data
+            return data  # type: ignore
         json_data = json.loads(data)
         return parse_obj_as(V1SocketClientResponse, json_data)  # type: ignore
 

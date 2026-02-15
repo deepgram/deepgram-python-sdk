@@ -277,6 +277,7 @@ client = DeepgramClient(
 )
 response = client.listen.v1.media.with_raw_response.transcribe_file(...)
 print(response.headers)  # access the response headers
+print(response.status_code)  # access the response status code
 print(response.data)  # access the underlying object
 ```
 

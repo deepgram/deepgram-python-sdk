@@ -2,33 +2,6 @@
 
 import typing
 
-import pydantic
-from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from .agent_v1settings_agent_think_context_length import AgentV1SettingsAgentThinkContextLength
-from .agent_v1settings_agent_think_endpoint import AgentV1SettingsAgentThinkEndpoint
-from .agent_v1settings_agent_think_functions_item import AgentV1SettingsAgentThinkFunctionsItem
-from .agent_v1settings_agent_think_provider import AgentV1SettingsAgentThinkProvider
+from ....types.think_settings_v1 import ThinkSettingsV1
 
-
-class AgentV1SettingsAgentThink(UniversalBaseModel):
-    provider: AgentV1SettingsAgentThinkProvider
-    endpoint: typing.Optional[AgentV1SettingsAgentThinkEndpoint] = pydantic.Field(default=None)
-    """
-    Optional for non-Deepgram LLM providers. When present, must include url field and headers object
-    """
-
-    functions: typing.Optional[typing.List[AgentV1SettingsAgentThinkFunctionsItem]] = None
-    prompt: typing.Optional[str] = None
-    context_length: typing.Optional[AgentV1SettingsAgentThinkContextLength] = pydantic.Field(default=None)
-    """
-    Specifies the number of characters retained in context between user messages, agent responses, and function calls. This setting is only configurable when a custom think endpoint is used
-    """
-
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+AgentV1SettingsAgentThink = typing.Union[ThinkSettingsV1, typing.List[ThinkSettingsV1]]
