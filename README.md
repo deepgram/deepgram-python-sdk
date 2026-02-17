@@ -383,7 +383,7 @@ See `src/deepgram/transport_interface.py` for the full protocol definitions (`Sy
 
 #### SageMaker transport
 
-The [`deepgram-sagemaker`](https://github.com/deepgram/deepgram-python-sdk-transport-sagemaker) package is a ready-made async transport for running Deepgram models on [AWS SageMaker](https://aws.amazon.com/sagemaker/) endpoints. It uses HTTP/2 bidirectional streaming under the hood, but exposes the same SDK interface — just install the package and swap in a `transport_factory`:
+The [`deepgram-sagemaker`](https://pypi.org/project/deepgram-sagemaker/) package ([source](https://github.com/deepgram/deepgram-python-sdk-transport-sagemaker)) is a ready-made async transport for running Deepgram models on [AWS SageMaker](https://aws.amazon.com/sagemaker/) endpoints. It uses HTTP/2 bidirectional streaming under the hood, but exposes the same SDK interface — just install the package and swap in a `transport_factory`:
 
 ```bash
 pip install deepgram-sagemaker  # requires Python 3.12+

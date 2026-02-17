@@ -10,7 +10,7 @@
 ### Features
 
 * **helpers:** add TextBuilder class for TTS pronunciation and pause controls ([#660](https://github.com/deepgram/deepgram-python-sdk/issues/660)) ([4324120](https://github.com/deepgram/deepgram-python-sdk/commit/43241200a7e025bdc4633bdb47f6708921c82ad1))
-* **sagemaker:** add SageMaker transport for running Deepgram on AWS SageMaker endpoints ([#659](https://github.com/deepgram/deepgram-python-sdk/issues/659)) ([2046175](https://github.com/deepgram/deepgram-python-sdk/commit/204617538339b1958e2fe562dc94c8887de94a5d))
+* **sagemaker:** add SageMaker transport support via the separate [`deepgram-sagemaker`](https://pypi.org/project/deepgram-sagemaker/) package (`pip install deepgram-sagemaker`) ([#659](https://github.com/deepgram/deepgram-python-sdk/issues/659))
 * v6 — fully generated SDK with latest APIs and WebSocket support ([#640](https://github.com/deepgram/deepgram-python-sdk/issues/640)) ([bc918fe](https://github.com/deepgram/deepgram-python-sdk/commit/bc918fe23e92eefb5e4c24cbfaad369d4e2818f3))
 * **websockets:** add custom WebSocket transport support ([#658](https://github.com/deepgram/deepgram-python-sdk/issues/658)) ([f6cf0fb](https://github.com/deepgram/deepgram-python-sdk/commit/f6cf0fbc9aaaa844e475e014560cc377819ec1f9))
 
