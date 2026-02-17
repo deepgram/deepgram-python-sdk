@@ -335,11 +335,15 @@ client = DeepgramClient(
 )
 ```
 
-### Custom WebSocket Transport
+### Custom Transports
 
 Replace the built-in `websockets` transport with your own implementation for WebSocket-based APIs (Listen, Speak, Agent). This enables alternative protocols (HTTP/2, SSE), test doubles, or proxied connections.
 
-Implement the `SyncTransport` or `AsyncTransport` protocol from `deepgram.transport_interface` and pass your class as `transport_factory`:
+Any class that implements the right methods can be used as a transport — no inheritance required. Pass your class (or a factory callable) as `transport_factory` when creating a client.
+
+#### Sync transports
+
+Implement `send()`, `recv()`, `__iter__()`, and `close()`, then pass the class to `DeepgramClient`:
 
 ```python
 from deepgram import DeepgramClient
@@ -361,7 +365,9 @@ with client.listen.v1.connect(model="nova-3") as connection:
     connection.start_listening()
 ```
 
-For async transports, implement `async def send()`, `async def recv()`, `async def __aiter__()`, and `async def close()`, then use `AsyncDeepgramClient`:
+#### Async transports
+
+Implement `async def send()`, `async def recv()`, `async def __aiter__()`, and `async def close()`, then use `AsyncDeepgramClient`:
 
 ```python
 from deepgram import AsyncDeepgramClient
@@ -373,15 +379,19 @@ async with client.listen.v1.connect(model="nova-3") as connection:
     await connection.start_listening()
 ```
 
-See `src/deepgram/transport_interface.py` for the full protocol definitions.
+See `src/deepgram/transport_interface.py` for the full protocol definitions (`SyncTransport` and `AsyncTransport`).
 
-### SageMaker Transport
+#### SageMaker transport
 
-The SDK includes a built-in transport for running Deepgram models on [AWS SageMaker](https://aws.amazon.com/sagemaker/) endpoints. It uses HTTP/2 bidirectional streaming under the hood, but exposes the same SDK interface — just swap in a `transport_factory`:
+The [`deepgram-sagemaker`](https://pypi.org/project/deepgram-sagemaker/) package ([source](https://github.com/deepgram/deepgram-python-sdk-transport-sagemaker)) is a ready-made async transport for running Deepgram models on [AWS SageMaker](https://aws.amazon.com/sagemaker/) endpoints. It uses HTTP/2 bidirectional streaming under the hood, but exposes the same SDK interface — just install the package and swap in a `transport_factory`:
+
+```bash
+pip install deepgram-sagemaker  # requires Python 3.12+
+```
 
 ```python
 from deepgram import AsyncDeepgramClient
-from deepgram.transports.sagemaker import SageMakerTransportFactory
+from deepgram_sagemaker import SageMakerTransportFactory
 
 factory = SageMakerTransportFactory(
     endpoint_name="my-deepgram-endpoint",
@@ -397,11 +407,6 @@ async with client.listen.v1.connect(model="nova-3") as connection:
 ```
 
 > **Note:** The SageMaker transport is async-only and requires `AsyncDeepgramClient`.
-
-Install the SageMaker transport dependencies (requires Python 3.12+):
-```bash
-pip install aws-sdk-sagemaker-runtime-http2 boto3
-```
 
 See [`examples/27-transcription-live-sagemaker.py`](./examples/27-transcription-live-sagemaker.py) for a complete working example.
 

@@ -64,14 +64,6 @@ asyncio_mode = "auto"
 [tool.mypy]
 plugins = ["pydantic.mypy"]
 
-[[tool.mypy.overrides]]
-module = [
-    "aws_sdk_sagemaker_runtime_http2.*",
-    "smithy_aws_core.*",
-    "boto3.*",
-]
-ignore_missing_imports = true
-
 [tool.ruff]
 line-length = 120
 

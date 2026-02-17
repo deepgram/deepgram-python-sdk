@@ -13,7 +13,7 @@ It cannot be used with the sync ``DeepgramClient``.
 
 Requirements::
 
-    pip install aws-sdk-sagemaker-runtime-http2 boto3
+    pip install deepgram-sagemaker
 
 Environment:
     AWS credentials must be configured (via environment variables,
@@ -41,7 +41,7 @@ from deepgram.listen.v1.types import (
     ListenV1SpeechStarted,
     ListenV1UtteranceEnd,
 )
-from deepgram.transports.sagemaker import SageMakerTransportFactory
+from deepgram_sagemaker import SageMakerTransportFactory
 
 ListenV1SocketClientResponse = Union[ListenV1Results, ListenV1Metadata, ListenV1UtteranceEnd, ListenV1SpeechStarted]
 

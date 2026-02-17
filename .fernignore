@@ -11,8 +11,10 @@ wiremock/wiremock-mappings.json
 # Wire test with manual fix: transcribe_file() requires request=bytes parameter
 tests/wire/test_listen_v1_media.py
 
-# WebSocket socket clients: optional message parameter defaults for send_flush,
-# send_close, send_clear, send_finalize, send_close_stream, send_keep_alive
+# WebSocket socket clients:
+# - Optional message parameter defaults for send_flush, send_close, send_clear,
+#   send_finalize, send_close_stream, send_keep_alive
+# - Removed unused imports (JSONDecodeError, websockets) flagged by ruff F401
 src/deepgram/speak/v1/socket_client.py
 src/deepgram/listen/v1/socket_client.py
 src/deepgram/listen/v2/socket_client.py
@@ -41,7 +43,7 @@ src/deepgram/helpers
 # - transport_interface.py: Protocol definitions (SyncTransport, AsyncTransport) for
 #   users implementing custom transports. This is the public-facing interface file.
 # - transport.py: Internal shims, install/restore helpers, and conflict guard.
-# - transports/: Concrete transport implementations (e.g. SageMaker).
+# - transports/: Module stub (SageMaker transport moved to separate deepgram-sagemaker package).
 # All are manually maintained and should not be regenerated.
 src/deepgram/transport_interface.py
 src/deepgram/transport.py
