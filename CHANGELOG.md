@@ -1,5 +1,12 @@
 # Changelog
 
+## [6.0.1-rc.1](https://github.com/deepgram/deepgram-python-sdk/compare/v6.0.0-rc.1...v6.0.1-rc.1) (2026-02-18)
+
+
+### Bug Fixes
+
+* **sagemaker:** extract SageMaker transport to separate deepgram-sagemaker package ([#665](https://github.com/deepgram/deepgram-python-sdk/issues/665)) ([e6317c5](https://github.com/deepgram/deepgram-python-sdk/commit/e6317c507c7b5536aa5a485abc54a50318baff2b))
+
 ## [6.0.0-rc.1](https://github.com/deepgram/deepgram-python-sdk/compare/v5.3.2...v6.0.0-rc.1) (2026-02-16)
 
 
