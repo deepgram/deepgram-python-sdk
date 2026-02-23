@@ -1,5 +1,16 @@
 # Changelog
 
+## [6.0.0](https://github.com/deepgram/deepgram-python-sdk/compare/v6.0.0-rc.2...v6.0.0) (2026-02-23)
+
+
+### ⚠ BREAKING CHANGES
+
+* promote v6.0.0-rc.2 to v6.0.0 stable
+
+### Features
+
+* promote v6.0.0-rc.2 to v6.0.0 stable ([34f543e](https://github.com/deepgram/deepgram-python-sdk/commit/34f543e2e2ca0f5f073ff87158ae1263445b4d48))
+
 ## [6.0.0-rc.2](https://github.com/deepgram/deepgram-python-sdk/compare/v6.0.0-rc.1...v6.0.0-rc.2) (2026-02-18)
 
 
