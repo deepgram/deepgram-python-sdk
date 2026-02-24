@@ -8,7 +8,7 @@ from json.decoder import JSONDecodeError
 import websockets
 import websockets.sync.connection as websockets_sync_connection
 from ...core.events import EventEmitterMixin, EventType
-from ...core.pydantic_utilities import parse_obj_as
+from ...core.unchecked_base_model import construct_type
 
 try:
     from websockets.legacy.client import WebSocketClientProtocol  # type: ignore
@@ -84,7 +84,7 @@ class AsyncV1SocketClient(EventEmitterMixin):
     def _handle_json_message(self, message: str) -> typing.Any:
         """Handle a JSON message by parsing it."""
         json_data = json.loads(message)
-        return parse_obj_as(V1SocketClientResponse, json_data)  # type: ignore
+        return construct_type(type_=V1SocketClientResponse, object_=json_data)  # type: ignore
 
     def _process_message(self, raw_message: typing.Any) -> typing.Tuple[typing.Any, bool]:
         """Process a raw message, detecting if it's binary or JSON."""
@@ -199,7 +199,7 @@ class V1SocketClient(EventEmitterMixin):
     def _handle_json_message(self, message: str) -> typing.Any:
         """Handle a JSON message by parsing it."""
         json_data = json.loads(message)
-        return parse_obj_as(V1SocketClientResponse, json_data)  # type: ignore
+        return construct_type(type_=V1SocketClientResponse, object_=json_data)  # type: ignore
 
     def _process_message(self, raw_message: typing.Any) -> typing.Tuple[typing.Any, bool]:
         """Process a raw message, detecting if it's binary or JSON."""
