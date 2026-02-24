@@ -2,9 +2,7 @@
 
 import json
 import typing
-from json.decoder import JSONDecodeError
 
-import websockets
 import websockets.sync.connection as websockets_sync_connection
 from ...core.events import EventEmitterMixin, EventType
 from ...core.pydantic_utilities import parse_obj_as
@@ -52,7 +50,7 @@ class AsyncV2SocketClient(EventEmitterMixin):
                     json_data = json.loads(raw_message)
                     parsed = parse_obj_as(V2SocketClientResponse, json_data)  # type: ignore
                 await self._emit_async(EventType.MESSAGE, parsed)
-        except (websockets.WebSocketException, JSONDecodeError) as exc:
+        except Exception as exc:
             await self._emit_async(EventType.ERROR, exc)
         finally:
             await self._emit_async(EventType.CLOSE, None)
@@ -64,12 +62,12 @@ class AsyncV2SocketClient(EventEmitterMixin):
         """
         await self._send(message)
 
-    async def send_close_stream(self, message: ListenV2CloseStream) -> None:
+    async def send_close_stream(self, message: typing.Optional[ListenV2CloseStream] = None) -> None:
         """
         Send a message to the websocket connection.
         The message will be sent as a ListenV2CloseStream.
         """
-        await self._send_model(message)
+        await self._send_model(message or ListenV2CloseStream(type="CloseStream"))
 
     async def recv(self) -> V2SocketClientResponse:
         """
@@ -127,7 +125,7 @@ class V2SocketClient(EventEmitterMixin):
                     json_data = json.loads(raw_message)
                     parsed = parse_obj_as(V2SocketClientResponse, json_data)  # type: ignore
                 self._emit(EventType.MESSAGE, parsed)
-        except (websockets.WebSocketException, JSONDecodeError) as exc:
+        except Exception as exc:
             self._emit(EventType.ERROR, exc)
         finally:
             self._emit(EventType.CLOSE, None)
@@ -139,12 +137,12 @@ class V2SocketClient(EventEmitterMixin):
         """
         self._send(message)
 
-    def send_close_stream(self, message: ListenV2CloseStream) -> None:
+    def send_close_stream(self, message: typing.Optional[ListenV2CloseStream] = None) -> None:
         """
         Send a message to the websocket connection.
         The message will be sent as a ListenV2CloseStream.
         """
-        self._send_model(message)
+        self._send_model(message or ListenV2CloseStream(type="CloseStream"))
 
     def recv(self) -> V2SocketClientResponse:
         """

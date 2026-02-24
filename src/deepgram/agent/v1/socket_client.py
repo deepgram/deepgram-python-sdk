@@ -2,9 +2,7 @@
 
 import json
 import typing
-from json.decoder import JSONDecodeError
 
-import websockets
 import websockets.sync.connection as websockets_sync_connection
 from ...core.events import EventEmitterMixin, EventType
 from ...core.pydantic_utilities import parse_obj_as
@@ -34,6 +32,26 @@ try:
     from websockets.legacy.client import WebSocketClientProtocol  # type: ignore
 except ImportError:
     from websockets import WebSocketClientProtocol  # type: ignore
+
+def _sanitize_numeric_types(obj: typing.Any) -> typing.Any:
+    """
+    Recursively convert float values that are whole numbers to int.
+
+    Workaround for Fern-generated models that type integer API fields
+    (like sample_rate) as float, causing JSON serialization to produce
+    values like 44100.0 instead of 44100. The Deepgram API rejects
+    float representations of integer fields.
+
+    See: https://github.com/deepgram/internal-api-specs/issues/205
+    """
+    if isinstance(obj, dict):
+        return {k: _sanitize_numeric_types(v) for k, v in obj.items()}
+    elif isinstance(obj, list):
+        return [_sanitize_numeric_types(item) for item in obj]
+    elif isinstance(obj, float) and obj.is_integer():
+        return int(obj)
+    return obj
+
 
 V1SocketClientResponse = typing.Union[
     AgentV1ReceiveFunctionCallResponse,
@@ -85,7 +103,7 @@ class AsyncV1SocketClient(EventEmitterMixin):
                     json_data = json.loads(raw_message)
                     parsed = parse_obj_as(V1SocketClientResponse, json_data)  # type: ignore
                 await self._emit_async(EventType.MESSAGE, parsed)
-        except (websockets.WebSocketException, JSONDecodeError) as exc:
+        except Exception as exc:
             await self._emit_async(EventType.ERROR, exc)
         finally:
             await self._emit_async(EventType.CLOSE, None)
@@ -125,12 +143,12 @@ class AsyncV1SocketClient(EventEmitterMixin):
         """
         await self._send_model(message)
 
-    async def send_keep_alive(self, message: AgentV1KeepAlive) -> None:
+    async def send_keep_alive(self, message: typing.Optional[AgentV1KeepAlive] = None) -> None:
         """
         Send a message to the websocket connection.
         The message will be sent as a AgentV1KeepAlive.
         """
-        await self._send_model(message)
+        await self._send_model(message or AgentV1KeepAlive())
 
     async def send_update_prompt(self, message: AgentV1UpdatePrompt) -> None:
         """
@@ -168,7 +186,7 @@ class AsyncV1SocketClient(EventEmitterMixin):
         """
         Send a Pydantic model to the websocket connection.
         """
-        await self._send(data.dict())
+        await self._send(_sanitize_numeric_types(data.dict()))
 
 
 class V1SocketClient(EventEmitterMixin):
@@ -202,7 +220,7 @@ class V1SocketClient(EventEmitterMixin):
                     json_data = json.loads(raw_message)
                     parsed = parse_obj_as(V1SocketClientResponse, json_data)  # type: ignore
                 self._emit(EventType.MESSAGE, parsed)
-        except (websockets.WebSocketException, JSONDecodeError) as exc:
+        except Exception as exc:
             self._emit(EventType.ERROR, exc)
         finally:
             self._emit(EventType.CLOSE, None)
@@ -242,12 +260,12 @@ class V1SocketClient(EventEmitterMixin):
         """
         self._send_model(message)
 
-    def send_keep_alive(self, message: AgentV1KeepAlive) -> None:
+    def send_keep_alive(self, message: typing.Optional[AgentV1KeepAlive] = None) -> None:
         """
         Send a message to the websocket connection.
         The message will be sent as a AgentV1KeepAlive.
         """
-        self._send_model(message)
+        self._send_model(message or AgentV1KeepAlive())
 
     def send_update_prompt(self, message: AgentV1UpdatePrompt) -> None:
         """
@@ -285,4 +303,4 @@ class V1SocketClient(EventEmitterMixin):
         """
         Send a Pydantic model to the websocket connection.
         """
-        self._send(data.dict())
+        self._send(_sanitize_numeric_types(data.dict()))
