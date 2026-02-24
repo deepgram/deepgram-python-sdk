@@ -20,6 +20,10 @@ tests/wire/test_listen_v1_media.py
 # src/deepgram/listen/v2/socket_client.py
 # src/deepgram/agent/v1/socket_client.py
 
+# Hand-written custom tests
+tests/custom/test_text_builder.py
+tests/custom/test_transport.py
+
 # Manual standalone tests
 tests/manual
 
