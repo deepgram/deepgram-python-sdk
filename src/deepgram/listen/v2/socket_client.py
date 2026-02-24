@@ -7,7 +7,7 @@ from json.decoder import JSONDecodeError
 import websockets
 import websockets.sync.connection as websockets_sync_connection
 from ...core.events import EventEmitterMixin, EventType
-from ...core.pydantic_utilities import parse_obj_as
+from ...core.unchecked_base_model import construct_type
 from .types.listen_v2close_stream import ListenV2CloseStream
 from .types.listen_v2connected import ListenV2Connected
 from .types.listen_v2fatal_error import ListenV2FatalError
@@ -31,7 +31,7 @@ class AsyncV2SocketClient(EventEmitterMixin):
             if isinstance(message, bytes):
                 yield message
             else:
-                yield parse_obj_as(V2SocketClientResponse, json.loads(message))  # type: ignore
+                yield construct_type(type_=V2SocketClientResponse, object_=json.loads(message))  # type: ignore
 
     async def start_listening(self):
         """
@@ -50,7 +50,7 @@ class AsyncV2SocketClient(EventEmitterMixin):
                     parsed = raw_message
                 else:
                     json_data = json.loads(raw_message)
-                    parsed = parse_obj_as(V2SocketClientResponse, json_data)  # type: ignore
+                    parsed = construct_type(type_=V2SocketClientResponse, object_=json_data)  # type: ignore
                 await self._emit_async(EventType.MESSAGE, parsed)
         except Exception as exc:
             await self._emit_async(EventType.ERROR, exc)
@@ -79,7 +79,7 @@ class AsyncV2SocketClient(EventEmitterMixin):
         if isinstance(data, bytes):
             return data  # type: ignore
         json_data = json.loads(data)
-        return parse_obj_as(V2SocketClientResponse, json_data)  # type: ignore
+        return construct_type(type_=V2SocketClientResponse, object_=json_data)  # type: ignore
 
     async def _send(self, data: typing.Any) -> None:
         """
@@ -106,7 +106,7 @@ class V2SocketClient(EventEmitterMixin):
             if isinstance(message, bytes):
                 yield message
             else:
-                yield parse_obj_as(V2SocketClientResponse, json.loads(message))  # type: ignore
+                yield construct_type(type_=V2SocketClientResponse, object_=json.loads(message))  # type: ignore
 
     def start_listening(self):
         """
@@ -125,7 +125,7 @@ class V2SocketClient(EventEmitterMixin):
                     parsed = raw_message
                 else:
                     json_data = json.loads(raw_message)
-                    parsed = parse_obj_as(V2SocketClientResponse, json_data)  # type: ignore
+                    parsed = construct_type(type_=V2SocketClientResponse, object_=json_data)  # type: ignore
                 self._emit(EventType.MESSAGE, parsed)
         except Exception as exc:
             self._emit(EventType.ERROR, exc)
@@ -154,7 +154,7 @@ class V2SocketClient(EventEmitterMixin):
         if isinstance(data, bytes):
             return data  # type: ignore
         json_data = json.loads(data)
-        return parse_obj_as(V2SocketClientResponse, json_data)  # type: ignore
+        return construct_type(type_=V2SocketClientResponse, object_=json_data)  # type: ignore
 
     def _send(self, data: typing.Any) -> None:
         """
