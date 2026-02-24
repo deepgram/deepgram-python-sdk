@@ -35,6 +35,26 @@ try:
 except ImportError:
     from websockets import WebSocketClientProtocol  # type: ignore
 
+def _sanitize_numeric_types(obj: typing.Any) -> typing.Any:
+    """
+    Recursively convert float values that are whole numbers to int.
+
+    Workaround for Fern-generated models that type integer API fields
+    (like sample_rate) as float, causing JSON serialization to produce
+    values like 44100.0 instead of 44100. The Deepgram API rejects
+    float representations of integer fields.
+
+    See: https://github.com/deepgram/internal-api-specs/issues/205
+    """
+    if isinstance(obj, dict):
+        return {k: _sanitize_numeric_types(v) for k, v in obj.items()}
+    elif isinstance(obj, list):
+        return [_sanitize_numeric_types(item) for item in obj]
+    elif isinstance(obj, float) and obj.is_integer():
+        return int(obj)
+    return obj
+
+
 V1SocketClientResponse = typing.Union[
     AgentV1ReceiveFunctionCallResponse,
     AgentV1PromptUpdated,
@@ -168,7 +188,7 @@ class AsyncV1SocketClient(EventEmitterMixin):
         """
         Send a Pydantic model to the websocket connection.
         """
-        await self._send(data.dict())
+        await self._send(_sanitize_numeric_types(data.dict()))
 
 
 class V1SocketClient(EventEmitterMixin):
@@ -285,4 +305,4 @@ class V1SocketClient(EventEmitterMixin):
         """
         Send a Pydantic model to the websocket connection.
         """
-        self._send(data.dict())
+        self._send(_sanitize_numeric_types(data.dict()))
