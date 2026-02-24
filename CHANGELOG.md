@@ -1,5 +1,12 @@
 # Changelog
 
+## [6.0.1](https://github.com/deepgram/deepgram-python-sdk/compare/v6.0.0...v6.0.1) (2026-02-24)
+
+
+### Bug Fixes
+
+* :herb: skip_validation:true to allow unknown messages back from the API ([#669](https://github.com/deepgram/deepgram-python-sdk/issues/669)) ([48354d2](https://github.com/deepgram/deepgram-python-sdk/commit/48354d2b6990684092ec7d6b78878ac8427d4c23))
+
 ## [6.0.0](https://github.com/deepgram/deepgram-python-sdk/compare/v6.0.0-rc.2...v6.0.0) (2026-02-23)
 
 
