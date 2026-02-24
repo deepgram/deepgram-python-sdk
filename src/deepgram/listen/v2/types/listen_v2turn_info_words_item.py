@@ -3,10 +3,11 @@
 import typing
 
 import pydantic
-from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ....core.pydantic_utilities import IS_PYDANTIC_V2
+from ....core.unchecked_base_model import UncheckedBaseModel
 
 
-class ListenV2TurnInfoWordsItem(UniversalBaseModel):
+class ListenV2TurnInfoWordsItem(UncheckedBaseModel):
     word: str = pydantic.Field()
     """
     The individual punctuated, properly-cased word from the transcript

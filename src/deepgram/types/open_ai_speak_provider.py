@@ -3,12 +3,13 @@
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ..core.pydantic_utilities import IS_PYDANTIC_V2
+from ..core.unchecked_base_model import UncheckedBaseModel
 from .open_ai_speak_provider_model import OpenAiSpeakProviderModel
 from .open_ai_speak_provider_voice import OpenAiSpeakProviderVoice
 
 
-class OpenAiSpeakProvider(UniversalBaseModel):
+class OpenAiSpeakProvider(UncheckedBaseModel):
     type: typing.Literal["open_ai"] = "open_ai"
     version: typing.Optional[typing.Literal["v1"]] = pydantic.Field(default=None)
     """

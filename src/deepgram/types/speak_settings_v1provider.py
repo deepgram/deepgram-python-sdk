@@ -6,7 +6,8 @@ import typing
 
 import pydantic
 import typing_extensions
-from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ..core.pydantic_utilities import IS_PYDANTIC_V2
+from ..core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
 from .aws_polly_speak_provider_credentials import AwsPollySpeakProviderCredentials
 from .aws_polly_speak_provider_engine import AwsPollySpeakProviderEngine
 from .aws_polly_speak_provider_voice import AwsPollySpeakProviderVoice
@@ -18,7 +19,7 @@ from .open_ai_speak_provider_model import OpenAiSpeakProviderModel
 from .open_ai_speak_provider_voice import OpenAiSpeakProviderVoice
 
 
-class SpeakSettingsV1Provider_Deepgram(UniversalBaseModel):
+class SpeakSettingsV1Provider_Deepgram(UncheckedBaseModel):
     type: typing.Literal["deepgram"] = "deepgram"
     version: typing.Optional[typing.Literal["v1"]] = None
     model: DeepgramSpeakProviderModel
@@ -33,7 +34,7 @@ class SpeakSettingsV1Provider_Deepgram(UniversalBaseModel):
             extra = pydantic.Extra.allow
 
 
-class SpeakSettingsV1Provider_ElevenLabs(UniversalBaseModel):
+class SpeakSettingsV1Provider_ElevenLabs(UncheckedBaseModel):
     type: typing.Literal["eleven_labs"] = "eleven_labs"
     version: typing.Optional[typing.Literal["v1"]] = None
     model_id: ElevenLabsSpeakProviderModelId
@@ -50,7 +51,7 @@ class SpeakSettingsV1Provider_ElevenLabs(UniversalBaseModel):
             extra = pydantic.Extra.allow
 
 
-class SpeakSettingsV1Provider_Cartesia(UniversalBaseModel):
+class SpeakSettingsV1Provider_Cartesia(UncheckedBaseModel):
     type: typing.Literal["cartesia"] = "cartesia"
     version: typing.Optional[typing.Literal["2025-03-17"]] = None
     model_id: CartesiaSpeakProviderModelId
@@ -67,7 +68,7 @@ class SpeakSettingsV1Provider_Cartesia(UniversalBaseModel):
             extra = pydantic.Extra.allow
 
 
-class SpeakSettingsV1Provider_OpenAi(UniversalBaseModel):
+class SpeakSettingsV1Provider_OpenAi(UncheckedBaseModel):
     type: typing.Literal["open_ai"] = "open_ai"
     version: typing.Optional[typing.Literal["v1"]] = None
     model: OpenAiSpeakProviderModel
@@ -83,7 +84,7 @@ class SpeakSettingsV1Provider_OpenAi(UniversalBaseModel):
             extra = pydantic.Extra.allow
 
 
-class SpeakSettingsV1Provider_AwsPolly(UniversalBaseModel):
+class SpeakSettingsV1Provider_AwsPolly(UncheckedBaseModel):
     type: typing.Literal["aws_polly"] = "aws_polly"
     voice: AwsPollySpeakProviderVoice
     language: str
@@ -109,5 +110,5 @@ SpeakSettingsV1Provider = typing_extensions.Annotated[
         SpeakSettingsV1Provider_OpenAi,
         SpeakSettingsV1Provider_AwsPolly,
     ],
-    pydantic.Field(discriminator="type"),
+    UnionMetadata(discriminant="type"),
 ]

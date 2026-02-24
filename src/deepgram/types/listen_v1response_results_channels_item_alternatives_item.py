@@ -3,7 +3,8 @@
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ..core.pydantic_utilities import IS_PYDANTIC_V2
+from ..core.unchecked_base_model import UncheckedBaseModel
 from .listen_v1response_results_channels_item_alternatives_item_entities_item import (
     ListenV1ResponseResultsChannelsItemAlternativesItemEntitiesItem,
 )
@@ -21,7 +22,7 @@ from .listen_v1response_results_channels_item_alternatives_item_words_item impor
 )
 
 
-class ListenV1ResponseResultsChannelsItemAlternativesItem(UniversalBaseModel):
+class ListenV1ResponseResultsChannelsItemAlternativesItem(UncheckedBaseModel):
     transcript: typing.Optional[str] = None
     confidence: typing.Optional[float] = None
     words: typing.Optional[typing.List[ListenV1ResponseResultsChannelsItemAlternativesItemWordsItem]] = None

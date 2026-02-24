@@ -4,14 +4,15 @@ import datetime as dt
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ..core.pydantic_utilities import IS_PYDANTIC_V2
+from ..core.unchecked_base_model import UncheckedBaseModel
 from .listen_v1response_metadata_intents_info import ListenV1ResponseMetadataIntentsInfo
 from .listen_v1response_metadata_sentiment_info import ListenV1ResponseMetadataSentimentInfo
 from .listen_v1response_metadata_summary_info import ListenV1ResponseMetadataSummaryInfo
 from .listen_v1response_metadata_topics_info import ListenV1ResponseMetadataTopicsInfo
 
 
-class ListenV1ResponseMetadata(UniversalBaseModel):
+class ListenV1ResponseMetadata(UncheckedBaseModel):
     transaction_key: typing.Optional[str] = None
     request_id: str
     sha256: str

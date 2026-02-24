@@ -3,14 +3,15 @@
 import typing
 
 import pydantic
-from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ....core.pydantic_utilities import IS_PYDANTIC_V2
+from ....core.unchecked_base_model import UncheckedBaseModel
 from .agent_v1settings_agent_context import AgentV1SettingsAgentContext
 from .agent_v1settings_agent_listen import AgentV1SettingsAgentListen
 from .agent_v1settings_agent_speak import AgentV1SettingsAgentSpeak
 from .agent_v1settings_agent_think import AgentV1SettingsAgentThink
 
 
-class AgentV1SettingsAgent(UniversalBaseModel):
+class AgentV1SettingsAgent(UncheckedBaseModel):
     language: typing.Optional[str] = pydantic.Field(default=None)
     """
     Deprecated. Use `listen.provider.language` and `speak.provider.language` fields instead.

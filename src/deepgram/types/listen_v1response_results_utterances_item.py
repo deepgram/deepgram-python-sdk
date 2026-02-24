@@ -3,18 +3,19 @@
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ..core.pydantic_utilities import IS_PYDANTIC_V2
+from ..core.unchecked_base_model import UncheckedBaseModel
 from .listen_v1response_results_utterances_item_words_item import ListenV1ResponseResultsUtterancesItemWordsItem
 
 
-class ListenV1ResponseResultsUtterancesItem(UniversalBaseModel):
+class ListenV1ResponseResultsUtterancesItem(UncheckedBaseModel):
     start: typing.Optional[float] = None
     end: typing.Optional[float] = None
     confidence: typing.Optional[float] = None
-    channel: typing.Optional[int] = None
+    channel: typing.Optional[float] = None
     transcript: typing.Optional[str] = None
     words: typing.Optional[typing.List[ListenV1ResponseResultsUtterancesItemWordsItem]] = None
-    speaker: typing.Optional[int] = None
+    speaker: typing.Optional[float] = None
     id: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:

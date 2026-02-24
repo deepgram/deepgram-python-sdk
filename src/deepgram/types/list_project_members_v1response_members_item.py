@@ -3,10 +3,11 @@
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ..core.pydantic_utilities import IS_PYDANTIC_V2
+from ..core.unchecked_base_model import UncheckedBaseModel
 
 
-class ListProjectMembersV1ResponseMembersItem(UniversalBaseModel):
+class ListProjectMembersV1ResponseMembersItem(UncheckedBaseModel):
     member_id: typing.Optional[str] = pydantic.Field(default=None)
     """
     The unique identifier of the member

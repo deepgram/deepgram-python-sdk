@@ -3,10 +3,11 @@
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ..core.pydantic_utilities import IS_PYDANTIC_V2
+from ..core.unchecked_base_model import UncheckedBaseModel
 
 
-class SharedSentimentsSegmentsItem(UniversalBaseModel):
+class SharedSentimentsSegmentsItem(UncheckedBaseModel):
     text: typing.Optional[str] = None
     start_word: typing.Optional[float] = None
     end_word: typing.Optional[float] = None

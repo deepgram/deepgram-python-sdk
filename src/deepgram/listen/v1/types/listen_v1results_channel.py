@@ -3,11 +3,12 @@
 import typing
 
 import pydantic
-from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ....core.pydantic_utilities import IS_PYDANTIC_V2
+from ....core.unchecked_base_model import UncheckedBaseModel
 from .listen_v1results_channel_alternatives_item import ListenV1ResultsChannelAlternativesItem
 
 
-class ListenV1ResultsChannel(UniversalBaseModel):
+class ListenV1ResultsChannel(UncheckedBaseModel):
     alternatives: typing.List[ListenV1ResultsChannelAlternativesItem]
 
     if IS_PYDANTIC_V2:

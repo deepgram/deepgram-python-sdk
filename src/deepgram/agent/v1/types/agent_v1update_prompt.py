@@ -3,10 +3,11 @@
 import typing
 
 import pydantic
-from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ....core.pydantic_utilities import IS_PYDANTIC_V2
+from ....core.unchecked_base_model import UncheckedBaseModel
 
 
-class AgentV1UpdatePrompt(UniversalBaseModel):
+class AgentV1UpdatePrompt(UncheckedBaseModel):
     type: typing.Literal["UpdatePrompt"] = pydantic.Field(default="UpdatePrompt")
     """
     Message type identifier for prompt update request

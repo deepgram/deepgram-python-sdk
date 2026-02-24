@@ -3,14 +3,15 @@
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ..core.pydantic_utilities import IS_PYDANTIC_V2
+from ..core.unchecked_base_model import UncheckedBaseModel
 from .listen_v1response_results_channels_item_alternatives_item import (
     ListenV1ResponseResultsChannelsItemAlternativesItem,
 )
 from .listen_v1response_results_channels_item_search_item import ListenV1ResponseResultsChannelsItemSearchItem
 
 
-class ListenV1ResponseResultsChannelsItem(UniversalBaseModel):
+class ListenV1ResponseResultsChannelsItem(UncheckedBaseModel):
     search: typing.Optional[typing.List[ListenV1ResponseResultsChannelsItemSearchItem]] = None
     alternatives: typing.Optional[typing.List[ListenV1ResponseResultsChannelsItemAlternativesItem]] = None
     detected_language: typing.Optional[str] = None

@@ -3,13 +3,14 @@
 import typing
 
 import pydantic
-from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ....core.pydantic_utilities import IS_PYDANTIC_V2
+from ....core.unchecked_base_model import UncheckedBaseModel
 from .agent_v1settings_agent import AgentV1SettingsAgent
 from .agent_v1settings_audio import AgentV1SettingsAudio
 from .agent_v1settings_flags import AgentV1SettingsFlags
 
 
-class AgentV1Settings(UniversalBaseModel):
+class AgentV1Settings(UncheckedBaseModel):
     type: typing.Literal["Settings"] = "Settings"
     tags: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
     """

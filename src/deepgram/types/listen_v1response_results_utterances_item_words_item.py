@@ -3,15 +3,16 @@
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ..core.pydantic_utilities import IS_PYDANTIC_V2
+from ..core.unchecked_base_model import UncheckedBaseModel
 
 
-class ListenV1ResponseResultsUtterancesItemWordsItem(UniversalBaseModel):
+class ListenV1ResponseResultsUtterancesItemWordsItem(UncheckedBaseModel):
     word: typing.Optional[str] = None
     start: typing.Optional[float] = None
     end: typing.Optional[float] = None
     confidence: typing.Optional[float] = None
-    speaker: typing.Optional[int] = None
+    speaker: typing.Optional[float] = None
     speaker_confidence: typing.Optional[float] = None
     punctuated_word: typing.Optional[str] = None
 

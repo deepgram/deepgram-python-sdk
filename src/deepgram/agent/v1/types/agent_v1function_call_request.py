@@ -3,11 +3,12 @@
 import typing
 
 import pydantic
-from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ....core.pydantic_utilities import IS_PYDANTIC_V2
+from ....core.unchecked_base_model import UncheckedBaseModel
 from .agent_v1function_call_request_functions_item import AgentV1FunctionCallRequestFunctionsItem
 
 
-class AgentV1FunctionCallRequest(UniversalBaseModel):
+class AgentV1FunctionCallRequest(UncheckedBaseModel):
     type: typing.Literal["FunctionCallRequest"] = pydantic.Field(default="FunctionCallRequest")
     """
     Message type identifier for function call requests

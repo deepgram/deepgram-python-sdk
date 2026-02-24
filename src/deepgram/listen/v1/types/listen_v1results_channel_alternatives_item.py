@@ -3,11 +3,12 @@
 import typing
 
 import pydantic
-from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ....core.pydantic_utilities import IS_PYDANTIC_V2
+from ....core.unchecked_base_model import UncheckedBaseModel
 from .listen_v1results_channel_alternatives_item_words_item import ListenV1ResultsChannelAlternativesItemWordsItem
 
 
-class ListenV1ResultsChannelAlternativesItem(UniversalBaseModel):
+class ListenV1ResultsChannelAlternativesItem(UncheckedBaseModel):
     transcript: str = pydantic.Field()
     """
     The transcript of the transcription

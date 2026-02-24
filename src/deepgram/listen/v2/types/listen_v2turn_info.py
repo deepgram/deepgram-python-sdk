@@ -3,12 +3,13 @@
 import typing
 
 import pydantic
-from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ....core.pydantic_utilities import IS_PYDANTIC_V2
+from ....core.unchecked_base_model import UncheckedBaseModel
 from .listen_v2turn_info_event import ListenV2TurnInfoEvent
 from .listen_v2turn_info_words_item import ListenV2TurnInfoWordsItem
 
 
-class ListenV2TurnInfo(UniversalBaseModel):
+class ListenV2TurnInfo(UncheckedBaseModel):
     """
     Describes the current turn and latest state of the turn
     """

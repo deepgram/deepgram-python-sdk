@@ -3,10 +3,11 @@
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ..core.pydantic_utilities import IS_PYDANTIC_V2
+from ..core.unchecked_base_model import UncheckedBaseModel
 
 
-class ListProjectKeysV1ResponseApiKeysItemMember(UniversalBaseModel):
+class ListProjectKeysV1ResponseApiKeysItemMember(UncheckedBaseModel):
     member_id: typing.Optional[str] = None
     email: typing.Optional[str] = None
 

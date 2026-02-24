@@ -3,10 +3,11 @@
 import typing
 
 import pydantic
-from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ....core.pydantic_utilities import IS_PYDANTIC_V2
+from ....core.unchecked_base_model import UncheckedBaseModel
 
 
-class AgentV1AgentThinking(UniversalBaseModel):
+class AgentV1AgentThinking(UncheckedBaseModel):
     type: typing.Literal["AgentThinking"] = pydantic.Field(default="AgentThinking")
     """
     Message type identifier for agent thinking

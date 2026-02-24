@@ -3,12 +3,13 @@
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ..core.pydantic_utilities import IS_PYDANTIC_V2
+from ..core.unchecked_base_model import UncheckedBaseModel
 from .speak_settings_v1endpoint import SpeakSettingsV1Endpoint
 from .speak_settings_v1provider import SpeakSettingsV1Provider
 
 
-class SpeakSettingsV1(UniversalBaseModel):
+class SpeakSettingsV1(UncheckedBaseModel):
     provider: SpeakSettingsV1Provider
     endpoint: typing.Optional[SpeakSettingsV1Endpoint] = pydantic.Field(default=None)
     """

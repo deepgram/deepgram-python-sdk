@@ -3,11 +3,12 @@
 import typing
 
 import pydantic
-from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ....core.pydantic_utilities import IS_PYDANTIC_V2
+from ....core.unchecked_base_model import UncheckedBaseModel
 from .speak_v1flushed_type import SpeakV1FlushedType
 
 
-class SpeakV1Flushed(UniversalBaseModel):
+class SpeakV1Flushed(UncheckedBaseModel):
     type: SpeakV1FlushedType = pydantic.Field()
     """
     Message type identifier

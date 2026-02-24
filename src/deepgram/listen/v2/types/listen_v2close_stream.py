@@ -3,11 +3,12 @@
 import typing
 
 import pydantic
-from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ....core.pydantic_utilities import IS_PYDANTIC_V2
+from ....core.unchecked_base_model import UncheckedBaseModel
 from .listen_v2close_stream_type import ListenV2CloseStreamType
 
 
-class ListenV2CloseStream(UniversalBaseModel):
+class ListenV2CloseStream(UncheckedBaseModel):
     type: ListenV2CloseStreamType = pydantic.Field()
     """
     Message type identifier

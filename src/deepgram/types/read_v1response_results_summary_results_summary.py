@@ -3,10 +3,11 @@
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ..core.pydantic_utilities import IS_PYDANTIC_V2
+from ..core.unchecked_base_model import UncheckedBaseModel
 
 
-class ReadV1ResponseResultsSummaryResultsSummary(UniversalBaseModel):
+class ReadV1ResponseResultsSummaryResultsSummary(UncheckedBaseModel):
     text: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:

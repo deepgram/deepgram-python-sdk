@@ -46,9 +46,9 @@ class V2Client:
         eager_eot_threshold: typing.Optional[str] = None,
         eot_threshold: typing.Optional[str] = None,
         eot_timeout_ms: typing.Optional[str] = None,
-        keyterm: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        keyterm: typing.Optional[str] = None,
         mip_opt_out: typing.Optional[str] = None,
-        tag: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        tag: typing.Optional[str] = None,
         authorization: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Iterator[V2SocketClient]:
@@ -70,13 +70,11 @@ class V2Client:
 
         eot_timeout_ms : typing.Optional[str]
 
-        keyterm : typing.Optional[typing.Union[str, typing.Sequence[str]]]
-            Keyterm prompting can improve recognition of specialized terminology. Pass a single string or a list of strings.
+        keyterm : typing.Optional[str]
 
         mip_opt_out : typing.Optional[str]
 
-        tag : typing.Optional[typing.Union[str, typing.Sequence[str]]]
-            Label your requests for the purpose of identification during usage reporting. Pass a single string or a list of strings.
+        tag : typing.Optional[str]
 
         authorization : typing.Optional[str]
             Use your API key for authentication, or alternatively generate a [temporary token](/guides/fundamentals/token-based-authentication) and pass it via the `token` query parameter.
@@ -163,9 +161,9 @@ class AsyncV2Client:
         eager_eot_threshold: typing.Optional[str] = None,
         eot_threshold: typing.Optional[str] = None,
         eot_timeout_ms: typing.Optional[str] = None,
-        keyterm: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        keyterm: typing.Optional[str] = None,
         mip_opt_out: typing.Optional[str] = None,
-        tag: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        tag: typing.Optional[str] = None,
         authorization: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.AsyncIterator[AsyncV2SocketClient]:
@@ -187,13 +185,11 @@ class AsyncV2Client:
 
         eot_timeout_ms : typing.Optional[str]
 
-        keyterm : typing.Optional[typing.Union[str, typing.Sequence[str]]]
-            Keyterm prompting can improve recognition of specialized terminology. Pass a single string or a list of strings.
+        keyterm : typing.Optional[str]
 
         mip_opt_out : typing.Optional[str]
 
-        tag : typing.Optional[typing.Union[str, typing.Sequence[str]]]
-            Label your requests for the purpose of identification during usage reporting. Pass a single string or a list of strings.
+        tag : typing.Optional[str]
 
         authorization : typing.Optional[str]
             Use your API key for authentication, or alternatively generate a [temporary token](/guides/fundamentals/token-based-authentication) and pass it via the `token` query parameter.

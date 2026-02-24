@@ -3,12 +3,13 @@
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ..core.pydantic_utilities import IS_PYDANTIC_V2
+from ..core.unchecked_base_model import UncheckedBaseModel
 from .listen_v1response_metadata import ListenV1ResponseMetadata
 from .listen_v1response_results import ListenV1ResponseResults
 
 
-class ListenV1Response(UniversalBaseModel):
+class ListenV1Response(UncheckedBaseModel):
     """
     The standard transcription response
     """

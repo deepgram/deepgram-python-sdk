@@ -3,11 +3,12 @@
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ..core.pydantic_utilities import IS_PYDANTIC_V2
+from ..core.unchecked_base_model import UncheckedBaseModel
 from .deepgram_speak_provider_model import DeepgramSpeakProviderModel
 
 
-class Deepgram(UniversalBaseModel):
+class Deepgram(UncheckedBaseModel):
     type: typing.Literal["deepgram"] = "deepgram"
     version: typing.Optional[typing.Literal["v1"]] = pydantic.Field(default=None)
     """

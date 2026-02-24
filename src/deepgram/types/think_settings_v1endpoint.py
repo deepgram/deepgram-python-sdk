@@ -3,10 +3,11 @@
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ..core.pydantic_utilities import IS_PYDANTIC_V2
+from ..core.unchecked_base_model import UncheckedBaseModel
 
 
-class ThinkSettingsV1Endpoint(UniversalBaseModel):
+class ThinkSettingsV1Endpoint(UncheckedBaseModel):
     """
     Optional for non-Deepgram LLM providers. When present, must include url field and headers object
     """

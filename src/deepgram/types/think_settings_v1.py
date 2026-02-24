@@ -3,14 +3,15 @@
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ..core.pydantic_utilities import IS_PYDANTIC_V2
+from ..core.unchecked_base_model import UncheckedBaseModel
 from .think_settings_v1context_length import ThinkSettingsV1ContextLength
 from .think_settings_v1endpoint import ThinkSettingsV1Endpoint
 from .think_settings_v1functions_item import ThinkSettingsV1FunctionsItem
 from .think_settings_v1provider import ThinkSettingsV1Provider
 
 
-class ThinkSettingsV1(UniversalBaseModel):
+class ThinkSettingsV1(UncheckedBaseModel):
     provider: ThinkSettingsV1Provider
     endpoint: typing.Optional[ThinkSettingsV1Endpoint] = pydantic.Field(default=None)
     """

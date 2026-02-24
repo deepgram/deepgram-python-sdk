@@ -6,10 +6,11 @@ import typing
 
 import pydantic
 import typing_extensions
-from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ....core.pydantic_utilities import IS_PYDANTIC_V2
+from ....core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
 
 
-class AgentV1SettingsAgentListenProvider_V1(UniversalBaseModel):
+class AgentV1SettingsAgentListenProvider_V1(UncheckedBaseModel):
     version: typing.Literal["v1"] = "v1"
     type: typing.Literal["deepgram"] = "deepgram"
     model: typing.Optional[str] = None
@@ -27,7 +28,7 @@ class AgentV1SettingsAgentListenProvider_V1(UniversalBaseModel):
             extra = pydantic.Extra.allow
 
 
-class AgentV1SettingsAgentListenProvider_V2(UniversalBaseModel):
+class AgentV1SettingsAgentListenProvider_V2(UncheckedBaseModel):
     version: typing.Literal["v2"] = "v2"
     type: typing.Literal["deepgram"] = "deepgram"
     model: str
@@ -45,5 +46,5 @@ class AgentV1SettingsAgentListenProvider_V2(UniversalBaseModel):
 
 AgentV1SettingsAgentListenProvider = typing_extensions.Annotated[
     typing.Union[AgentV1SettingsAgentListenProvider_V1, AgentV1SettingsAgentListenProvider_V2],
-    pydantic.Field(discriminator="version"),
+    UnionMetadata(discriminant="version"),
 ]

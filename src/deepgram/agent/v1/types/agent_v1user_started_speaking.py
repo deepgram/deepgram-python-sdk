@@ -3,10 +3,11 @@
 import typing
 
 import pydantic
-from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ....core.pydantic_utilities import IS_PYDANTIC_V2
+from ....core.unchecked_base_model import UncheckedBaseModel
 
 
-class AgentV1UserStartedSpeaking(UniversalBaseModel):
+class AgentV1UserStartedSpeaking(UncheckedBaseModel):
     type: typing.Literal["UserStartedSpeaking"] = pydantic.Field(default="UserStartedSpeaking")
     """
     Message type identifier indicating that the user has begun speaking

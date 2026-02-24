@@ -3,13 +3,14 @@
 import typing
 
 import pydantic
-from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ....core.pydantic_utilities import IS_PYDANTIC_V2
+from ....core.unchecked_base_model import UncheckedBaseModel
 from .agent_v1settings_agent_context_messages_item_content_role import (
     AgentV1SettingsAgentContextMessagesItemContentRole,
 )
 
 
-class AgentV1SettingsAgentContextMessagesItemContent(UniversalBaseModel):
+class AgentV1SettingsAgentContextMessagesItemContent(UncheckedBaseModel):
     """
     Conversation text as part of the conversation history
     """

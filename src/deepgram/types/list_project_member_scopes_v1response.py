@@ -3,10 +3,11 @@
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ..core.pydantic_utilities import IS_PYDANTIC_V2
+from ..core.unchecked_base_model import UncheckedBaseModel
 
 
-class ListProjectMemberScopesV1Response(UniversalBaseModel):
+class ListProjectMemberScopesV1Response(UncheckedBaseModel):
     scopes: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
     """
     The API scopes of the member
