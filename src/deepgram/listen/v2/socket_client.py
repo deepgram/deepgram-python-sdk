@@ -64,12 +64,12 @@ class AsyncV2SocketClient(EventEmitterMixin):
         """
         await self._send(message)
 
-    async def send_close_stream(self, message: ListenV2CloseStream) -> None:
+    async def send_close_stream(self, message: typing.Optional[ListenV2CloseStream] = None) -> None:
         """
         Send a message to the websocket connection.
         The message will be sent as a ListenV2CloseStream.
         """
-        await self._send_model(message)
+        await self._send_model(message or ListenV2CloseStream(type="CloseStream"))
 
     async def recv(self) -> V2SocketClientResponse:
         """
@@ -139,12 +139,12 @@ class V2SocketClient(EventEmitterMixin):
         """
         self._send(message)
 
-    def send_close_stream(self, message: ListenV2CloseStream) -> None:
+    def send_close_stream(self, message: typing.Optional[ListenV2CloseStream] = None) -> None:
         """
         Send a message to the websocket connection.
         The message will be sent as a ListenV2CloseStream.
         """
-        self._send_model(message)
+        self._send_model(message or ListenV2CloseStream(type="CloseStream"))
 
     def recv(self) -> V2SocketClientResponse:
         """

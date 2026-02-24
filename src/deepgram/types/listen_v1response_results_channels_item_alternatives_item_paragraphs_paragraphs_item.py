@@ -14,8 +14,8 @@ class ListenV1ResponseResultsChannelsItemAlternativesItemParagraphsParagraphsIte
     sentences: typing.Optional[
         typing.List[ListenV1ResponseResultsChannelsItemAlternativesItemParagraphsParagraphsItemSentencesItem]
     ] = None
-    speaker: typing.Optional[float] = None
-    num_words: typing.Optional[float] = None
+    speaker: typing.Optional[int] = None
+    num_words: typing.Optional[int] = None
     start: typing.Optional[float] = None
     end: typing.Optional[float] = None
 

@@ -14,11 +14,25 @@ tests/wire/test_listen_v1_media.py
 # WebSocket socket clients:
 # - Optional message parameter defaults for send_flush, send_close, send_clear,
 #   send_finalize, send_close_stream, send_keep_alive
-# - Removed unused imports (JSONDecodeError, websockets) flagged by ruff F401
+# - construct_type instead of parse_obj_as (skip_validation for unknown WS messages)
+# - except Exception (broad catch for custom transports)
+# - _sanitize_numeric_types in agent socket client (float→int for API)
 src/deepgram/speak/v1/socket_client.py
 src/deepgram/listen/v1/socket_client.py
 src/deepgram/listen/v2/socket_client.py
 src/deepgram/agent/v1/socket_client.py
+
+# Type files with manual int type corrections (Fern generates float for speaker/channel/num_words)
+src/deepgram/types/listen_v1response_results_utterances_item.py
+src/deepgram/types/listen_v1response_results_utterances_item_words_item.py
+src/deepgram/types/listen_v1response_results_channels_item_alternatives_item_paragraphs_paragraphs_item.py
+
+# Redact type with Union[str, Sequence[str]] support (Fern narrows to Union[Literal, Any])
+src/deepgram/types/listen_v1redact.py
+
+# Listen client files with Union[str, Sequence[str]] array param support
+src/deepgram/listen/v1/client.py
+src/deepgram/listen/v2/client.py
 
 # Hand-written custom tests
 tests/custom/test_text_builder.py

@@ -145,12 +145,12 @@ class AsyncV1SocketClient(EventEmitterMixin):
         """
         await self._send_model(message)
 
-    async def send_keep_alive(self, message: AgentV1KeepAlive) -> None:
+    async def send_keep_alive(self, message: typing.Optional[AgentV1KeepAlive] = None) -> None:
         """
         Send a message to the websocket connection.
         The message will be sent as a AgentV1KeepAlive.
         """
-        await self._send_model(message)
+        await self._send_model(message or AgentV1KeepAlive())
 
     async def send_update_prompt(self, message: AgentV1UpdatePrompt) -> None:
         """
@@ -262,12 +262,12 @@ class V1SocketClient(EventEmitterMixin):
         """
         self._send_model(message)
 
-    def send_keep_alive(self, message: AgentV1KeepAlive) -> None:
+    def send_keep_alive(self, message: typing.Optional[AgentV1KeepAlive] = None) -> None:
         """
         Send a message to the websocket connection.
         The message will be sent as a AgentV1KeepAlive.
         """
-        self._send_model(message)
+        self._send_model(message or AgentV1KeepAlive())
 
     def send_update_prompt(self, message: AgentV1UpdatePrompt) -> None:
         """

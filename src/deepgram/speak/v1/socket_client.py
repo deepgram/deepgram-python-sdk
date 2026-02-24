@@ -68,26 +68,26 @@ class AsyncV1SocketClient(EventEmitterMixin):
         """
         await self._send_model(message)
 
-    async def send_flush(self, message: SpeakV1Flush) -> None:
+    async def send_flush(self, message: typing.Optional[SpeakV1Flush] = None) -> None:
         """
         Send a message to the websocket connection.
         The message will be sent as a SpeakV1Flush.
         """
-        await self._send_model(message)
+        await self._send_model(message or SpeakV1Flush(type="Flush"))
 
-    async def send_clear(self, message: SpeakV1Clear) -> None:
+    async def send_clear(self, message: typing.Optional[SpeakV1Clear] = None) -> None:
         """
         Send a message to the websocket connection.
         The message will be sent as a SpeakV1Clear.
         """
-        await self._send_model(message)
+        await self._send_model(message or SpeakV1Clear(type="Clear"))
 
-    async def send_close(self, message: SpeakV1Close) -> None:
+    async def send_close(self, message: typing.Optional[SpeakV1Close] = None) -> None:
         """
         Send a message to the websocket connection.
         The message will be sent as a SpeakV1Close.
         """
-        await self._send_model(message)
+        await self._send_model(message or SpeakV1Close(type="Close"))
 
     async def recv(self) -> V1SocketClientResponse:
         """
@@ -157,26 +157,26 @@ class V1SocketClient(EventEmitterMixin):
         """
         self._send_model(message)
 
-    def send_flush(self, message: SpeakV1Flush) -> None:
+    def send_flush(self, message: typing.Optional[SpeakV1Flush] = None) -> None:
         """
         Send a message to the websocket connection.
         The message will be sent as a SpeakV1Flush.
         """
-        self._send_model(message)
+        self._send_model(message or SpeakV1Flush(type="Flush"))
 
-    def send_clear(self, message: SpeakV1Clear) -> None:
+    def send_clear(self, message: typing.Optional[SpeakV1Clear] = None) -> None:
         """
         Send a message to the websocket connection.
         The message will be sent as a SpeakV1Clear.
         """
-        self._send_model(message)
+        self._send_model(message or SpeakV1Clear(type="Clear"))
 
-    def send_close(self, message: SpeakV1Close) -> None:
+    def send_close(self, message: typing.Optional[SpeakV1Close] = None) -> None:
         """
         Send a message to the websocket connection.
         The message will be sent as a SpeakV1Close.
         """
-        self._send_model(message)
+        self._send_model(message or SpeakV1Close(type="Close"))
 
     def recv(self) -> V1SocketClientResponse:
         """
