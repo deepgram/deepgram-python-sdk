@@ -15,10 +15,10 @@ tests/wire/test_listen_v1_media.py
 # - Optional message parameter defaults for send_flush, send_close, send_clear,
 #   send_finalize, send_close_stream, send_keep_alive
 # - Removed unused imports (JSONDecodeError, websockets) flagged by ruff F401
-# src/deepgram/speak/v1/socket_client.py
-# src/deepgram/listen/v1/socket_client.py
-# src/deepgram/listen/v2/socket_client.py
-# src/deepgram/agent/v1/socket_client.py
+src/deepgram/speak/v1/socket_client.py
+src/deepgram/listen/v1/socket_client.py
+src/deepgram/listen/v2/socket_client.py
+src/deepgram/agent/v1/socket_client.py
 
 # Hand-written custom tests
 tests/custom/test_text_builder.py
