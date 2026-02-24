@@ -26,7 +26,7 @@ class BaseClientWrapper:
             "X-Fern-Language": "Python",
             "X-Fern-SDK-Name": "deepgram",
             # x-release-please-start-version
-            "X-Fern-SDK-Version": "5.3.2", 
+            "X-Fern-SDK-Version": "5.3.3",
             # x-release-please-end
             **(self.get_custom_headers() or {}),
         }

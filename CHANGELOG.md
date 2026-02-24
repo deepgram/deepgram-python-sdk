@@ -1,5 +1,12 @@
 # Changelog
 
+## [5.3.3](https://github.com/deepgram/deepgram-python-sdk/compare/v5.3.2...v5.3.3) (2026-02-24)
+
+
+### Bug Fixes
+
+* **websockets:** tolerate unknown message types from API ([#671](https://github.com/deepgram/deepgram-python-sdk/issues/671)) ([7deb302](https://github.com/deepgram/deepgram-python-sdk/commit/7deb302))
+
 ## [5.3.2](https://github.com/deepgram/deepgram-python-sdk/compare/v5.3.0...v5.3.2) (2026-01-29)
 
 
