@@ -3,11 +3,12 @@
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ..core.pydantic_utilities import IS_PYDANTIC_V2
+from ..core.unchecked_base_model import UncheckedBaseModel
 from .list_project_keys_v1response_api_keys_item import ListProjectKeysV1ResponseApiKeysItem
 
 
-class ListProjectKeysV1Response(UniversalBaseModel):
+class ListProjectKeysV1Response(UncheckedBaseModel):
     api_keys: typing.Optional[typing.List[ListProjectKeysV1ResponseApiKeysItem]] = None
 
     if IS_PYDANTIC_V2:

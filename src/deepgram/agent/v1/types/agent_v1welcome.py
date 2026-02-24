@@ -3,10 +3,11 @@
 import typing
 
 import pydantic
-from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ....core.pydantic_utilities import IS_PYDANTIC_V2
+from ....core.unchecked_base_model import UncheckedBaseModel
 
 
-class AgentV1Welcome(UniversalBaseModel):
+class AgentV1Welcome(UncheckedBaseModel):
     type: typing.Literal["Welcome"] = pydantic.Field(default="Welcome")
     """
     Message type identifier for welcome message

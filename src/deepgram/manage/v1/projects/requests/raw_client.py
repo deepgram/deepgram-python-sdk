@@ -9,8 +9,8 @@ from .....core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from .....core.datetime_utils import serialize_datetime
 from .....core.http_response import AsyncHttpResponse, HttpResponse
 from .....core.jsonable_encoder import jsonable_encoder
-from .....core.pydantic_utilities import parse_obj_as
 from .....core.request_options import RequestOptions
+from .....core.unchecked_base_model import construct_type
 from .....errors.bad_request_error import BadRequestError
 from .....types.get_project_request_v1response import GetProjectRequestV1Response
 from .....types.list_project_requests_v1response import ListProjectRequestsV1Response
@@ -108,7 +108,7 @@ class RawRequestsClient:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
                     ListProjectRequestsV1Response,
-                    parse_obj_as(
+                    construct_type(
                         type_=ListProjectRequestsV1Response,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -119,7 +119,7 @@ class RawRequestsClient:
                     headers=dict(_response.headers),
                     body=typing.cast(
                         typing.Any,
-                        parse_obj_as(
+                        construct_type(
                             type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
@@ -162,7 +162,7 @@ class RawRequestsClient:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
                     GetProjectRequestV1Response,
-                    parse_obj_as(
+                    construct_type(
                         type_=GetProjectRequestV1Response,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -173,7 +173,7 @@ class RawRequestsClient:
                     headers=dict(_response.headers),
                     body=typing.cast(
                         typing.Any,
-                        parse_obj_as(
+                        construct_type(
                             type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
@@ -273,7 +273,7 @@ class AsyncRawRequestsClient:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
                     ListProjectRequestsV1Response,
-                    parse_obj_as(
+                    construct_type(
                         type_=ListProjectRequestsV1Response,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -284,7 +284,7 @@ class AsyncRawRequestsClient:
                     headers=dict(_response.headers),
                     body=typing.cast(
                         typing.Any,
-                        parse_obj_as(
+                        construct_type(
                             type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
@@ -327,7 +327,7 @@ class AsyncRawRequestsClient:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
                     GetProjectRequestV1Response,
-                    parse_obj_as(
+                    construct_type(
                         type_=GetProjectRequestV1Response,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -338,7 +338,7 @@ class AsyncRawRequestsClient:
                     headers=dict(_response.headers),
                     body=typing.cast(
                         typing.Any,
-                        parse_obj_as(
+                        construct_type(
                             type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),

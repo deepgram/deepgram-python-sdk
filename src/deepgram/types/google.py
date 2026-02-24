@@ -3,11 +3,12 @@
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ..core.pydantic_utilities import IS_PYDANTIC_V2
+from ..core.unchecked_base_model import UncheckedBaseModel
 from .google_think_provider_model import GoogleThinkProviderModel
 
 
-class Google(UniversalBaseModel):
+class Google(UncheckedBaseModel):
     type: typing.Literal["google"] = "google"
     version: typing.Optional[typing.Literal["v1beta"]] = pydantic.Field(default=None)
     """

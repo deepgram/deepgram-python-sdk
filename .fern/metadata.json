@@ -11,7 +11,10 @@
     },
     "use_typeddict_requests": true,
     "should_generate_websocket_clients": true,
-    "enable_wire_tests": true
+    "enable_wire_tests": true,
+    "pydantic_config": {
+      "skip_validation": true
+    }
   },
-  "sdkVersion": "6.0.0-beta.4"
+  "sdkVersion": "6.0.1"
 }

@@ -3,10 +3,11 @@
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ..core.pydantic_utilities import IS_PYDANTIC_V2
+from ..core.unchecked_base_model import UncheckedBaseModel
 
 
-class ListProjectDistributionCredentialsV1ResponseDistributionCredentialsItemMember(UniversalBaseModel):
+class ListProjectDistributionCredentialsV1ResponseDistributionCredentialsItemMember(UncheckedBaseModel):
     member_id: str = pydantic.Field()
     """
     Unique identifier for the member

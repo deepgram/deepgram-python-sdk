@@ -3,11 +3,12 @@
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ..core.pydantic_utilities import IS_PYDANTIC_V2
+from ..core.unchecked_base_model import UncheckedBaseModel
 from .aws_polly_speak_provider_credentials_type import AwsPollySpeakProviderCredentialsType
 
 
-class AwsPollySpeakProviderCredentials(UniversalBaseModel):
+class AwsPollySpeakProviderCredentials(UncheckedBaseModel):
     type: AwsPollySpeakProviderCredentialsType
     region: str
     access_key_id: str

@@ -3,10 +3,11 @@
 import typing
 
 import pydantic
-from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ....core.pydantic_utilities import IS_PYDANTIC_V2
+from ....core.unchecked_base_model import UncheckedBaseModel
 
 
-class ListenV1ResultsEntitiesItem(UniversalBaseModel):
+class ListenV1ResultsEntitiesItem(UncheckedBaseModel):
     label: str = pydantic.Field()
     """
     The type/category of the entity (e.g., NAME, PHONE_NUMBER, EMAIL_ADDRESS, ORGANIZATION, CARDINAL)

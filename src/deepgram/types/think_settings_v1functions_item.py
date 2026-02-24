@@ -3,11 +3,12 @@
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ..core.pydantic_utilities import IS_PYDANTIC_V2
+from ..core.unchecked_base_model import UncheckedBaseModel
 from .think_settings_v1functions_item_endpoint import ThinkSettingsV1FunctionsItemEndpoint
 
 
-class ThinkSettingsV1FunctionsItem(UniversalBaseModel):
+class ThinkSettingsV1FunctionsItem(UncheckedBaseModel):
     name: typing.Optional[str] = pydantic.Field(default=None)
     """
     Function name

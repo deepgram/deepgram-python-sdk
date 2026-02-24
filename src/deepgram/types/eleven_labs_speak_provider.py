@@ -3,11 +3,12 @@
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ..core.pydantic_utilities import IS_PYDANTIC_V2
+from ..core.unchecked_base_model import UncheckedBaseModel
 from .eleven_labs_speak_provider_model_id import ElevenLabsSpeakProviderModelId
 
 
-class ElevenLabsSpeakProvider(UniversalBaseModel):
+class ElevenLabsSpeakProvider(UncheckedBaseModel):
     type: typing.Literal["eleven_labs"] = "eleven_labs"
     version: typing.Optional[typing.Literal["v1"]] = pydantic.Field(default=None)
     """

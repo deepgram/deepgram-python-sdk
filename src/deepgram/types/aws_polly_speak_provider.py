@@ -3,13 +3,14 @@
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ..core.pydantic_utilities import IS_PYDANTIC_V2
+from ..core.unchecked_base_model import UncheckedBaseModel
 from .aws_polly_speak_provider_credentials import AwsPollySpeakProviderCredentials
 from .aws_polly_speak_provider_engine import AwsPollySpeakProviderEngine
 from .aws_polly_speak_provider_voice import AwsPollySpeakProviderVoice
 
 
-class AwsPollySpeakProvider(UniversalBaseModel):
+class AwsPollySpeakProvider(UncheckedBaseModel):
     type: typing.Literal["aws_polly"] = "aws_polly"
     voice: AwsPollySpeakProviderVoice = pydantic.Field()
     """

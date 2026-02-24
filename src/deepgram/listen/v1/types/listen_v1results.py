@@ -3,13 +3,14 @@
 import typing
 
 import pydantic
-from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ....core.pydantic_utilities import IS_PYDANTIC_V2
+from ....core.unchecked_base_model import UncheckedBaseModel
 from .listen_v1results_channel import ListenV1ResultsChannel
 from .listen_v1results_entities_item import ListenV1ResultsEntitiesItem
 from .listen_v1results_metadata import ListenV1ResultsMetadata
 
 
-class ListenV1Results(UniversalBaseModel):
+class ListenV1Results(UncheckedBaseModel):
     type: typing.Literal["Results"] = pydantic.Field(default="Results")
     """
     Message type identifier

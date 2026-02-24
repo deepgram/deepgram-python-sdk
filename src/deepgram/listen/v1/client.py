@@ -99,13 +99,13 @@ class V1Client:
 
         endpointing : typing.Optional[str]
 
-        extra : typing.Optional[str]
+        extra : typing.Optional[typing.Union[str, typing.Sequence[str]]]
 
         interim_results : typing.Optional[str]
 
-        keyterm : typing.Optional[str]
+        keyterm : typing.Optional[typing.Union[str, typing.Sequence[str]]]
 
-        keywords : typing.Optional[str]
+        keywords : typing.Optional[typing.Union[str, typing.Sequence[str]]]
 
         language : typing.Optional[str]
 
@@ -122,17 +122,17 @@ class V1Client:
 
         punctuate : typing.Optional[str]
 
-        redact : typing.Optional[str]
+        redact : typing.Optional[typing.Union[str, typing.Sequence[str]]]
 
-        replace : typing.Optional[str]
+        replace : typing.Optional[typing.Union[str, typing.Sequence[str]]]
 
         sample_rate : typing.Optional[str]
 
-        search : typing.Optional[str]
+        search : typing.Optional[typing.Union[str, typing.Sequence[str]]]
 
         smart_format : typing.Optional[str]
 
-        tag : typing.Optional[str]
+        tag : typing.Optional[typing.Union[str, typing.Sequence[str]]]
 
         utterance_end_ms : typing.Optional[str]
 
@@ -300,13 +300,13 @@ class AsyncV1Client:
 
         endpointing : typing.Optional[str]
 
-        extra : typing.Optional[str]
+        extra : typing.Optional[typing.Union[str, typing.Sequence[str]]]
 
         interim_results : typing.Optional[str]
 
-        keyterm : typing.Optional[str]
+        keyterm : typing.Optional[typing.Union[str, typing.Sequence[str]]]
 
-        keywords : typing.Optional[str]
+        keywords : typing.Optional[typing.Union[str, typing.Sequence[str]]]
 
         language : typing.Optional[str]
 
@@ -323,17 +323,17 @@ class AsyncV1Client:
 
         punctuate : typing.Optional[str]
 
-        redact : typing.Optional[str]
+        redact : typing.Optional[typing.Union[str, typing.Sequence[str]]]
 
-        replace : typing.Optional[str]
+        replace : typing.Optional[typing.Union[str, typing.Sequence[str]]]
 
         sample_rate : typing.Optional[str]
 
-        search : typing.Optional[str]
+        search : typing.Optional[typing.Union[str, typing.Sequence[str]]]
 
         smart_format : typing.Optional[str]
 
-        tag : typing.Optional[str]
+        tag : typing.Optional[typing.Union[str, typing.Sequence[str]]]
 
         utterance_end_ms : typing.Optional[str]
 

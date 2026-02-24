@@ -6,7 +6,8 @@ import typing
 
 import pydantic
 import typing_extensions
-from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ..core.pydantic_utilities import IS_PYDANTIC_V2
+from ..core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
 from .anthropic_think_provider_model import AnthropicThinkProviderModel
 from .aws_bedrock_think_provider_credentials import AwsBedrockThinkProviderCredentials
 from .aws_bedrock_think_provider_model import AwsBedrockThinkProviderModel
@@ -14,7 +15,7 @@ from .google_think_provider_model import GoogleThinkProviderModel
 from .open_ai_think_provider_model import OpenAiThinkProviderModel
 
 
-class ThinkSettingsV1Provider_OpenAi(UniversalBaseModel):
+class ThinkSettingsV1Provider_OpenAi(UncheckedBaseModel):
     type: typing.Literal["open_ai"] = "open_ai"
     version: typing.Optional[typing.Literal["v1"]] = None
     model: OpenAiThinkProviderModel
@@ -30,7 +31,7 @@ class ThinkSettingsV1Provider_OpenAi(UniversalBaseModel):
             extra = pydantic.Extra.allow
 
 
-class ThinkSettingsV1Provider_AwsBedrock(UniversalBaseModel):
+class ThinkSettingsV1Provider_AwsBedrock(UncheckedBaseModel):
     type: typing.Literal["aws_bedrock"] = "aws_bedrock"
     model: AwsBedrockThinkProviderModel
     temperature: typing.Optional[float] = None
@@ -46,7 +47,7 @@ class ThinkSettingsV1Provider_AwsBedrock(UniversalBaseModel):
             extra = pydantic.Extra.allow
 
 
-class ThinkSettingsV1Provider_Anthropic(UniversalBaseModel):
+class ThinkSettingsV1Provider_Anthropic(UncheckedBaseModel):
     type: typing.Literal["anthropic"] = "anthropic"
     version: typing.Optional[typing.Literal["v1"]] = None
     model: AnthropicThinkProviderModel
@@ -62,7 +63,7 @@ class ThinkSettingsV1Provider_Anthropic(UniversalBaseModel):
             extra = pydantic.Extra.allow
 
 
-class ThinkSettingsV1Provider_Google(UniversalBaseModel):
+class ThinkSettingsV1Provider_Google(UncheckedBaseModel):
     type: typing.Literal["google"] = "google"
     version: typing.Optional[typing.Literal["v1beta"]] = None
     model: GoogleThinkProviderModel
@@ -78,7 +79,7 @@ class ThinkSettingsV1Provider_Google(UniversalBaseModel):
             extra = pydantic.Extra.allow
 
 
-class ThinkSettingsV1Provider_Groq(UniversalBaseModel):
+class ThinkSettingsV1Provider_Groq(UncheckedBaseModel):
     type: typing.Literal["groq"] = "groq"
     version: typing.Optional[typing.Literal["v1"]] = None
     model: typing.Literal["openai/gpt-oss-20b"] = "openai/gpt-oss-20b"
@@ -102,5 +103,5 @@ ThinkSettingsV1Provider = typing_extensions.Annotated[
         ThinkSettingsV1Provider_Google,
         ThinkSettingsV1Provider_Groq,
     ],
-    pydantic.Field(discriminator="type"),
+    UnionMetadata(discriminant="type"),
 ]

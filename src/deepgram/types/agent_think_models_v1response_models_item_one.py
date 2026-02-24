@@ -3,11 +3,12 @@
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ..core.pydantic_utilities import IS_PYDANTIC_V2
+from ..core.unchecked_base_model import UncheckedBaseModel
 from .agent_think_models_v1response_models_item_one_id import AgentThinkModelsV1ResponseModelsItemOneId
 
 
-class AgentThinkModelsV1ResponseModelsItemOne(UniversalBaseModel):
+class AgentThinkModelsV1ResponseModelsItemOne(UncheckedBaseModel):
     """
     Anthropic models
     """

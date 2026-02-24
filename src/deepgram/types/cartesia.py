@@ -3,12 +3,13 @@
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ..core.pydantic_utilities import IS_PYDANTIC_V2
+from ..core.unchecked_base_model import UncheckedBaseModel
 from .cartesia_speak_provider_model_id import CartesiaSpeakProviderModelId
 from .cartesia_speak_provider_voice import CartesiaSpeakProviderVoice
 
 
-class Cartesia(UniversalBaseModel):
+class Cartesia(UncheckedBaseModel):
     type: typing.Literal["cartesia"] = "cartesia"
     version: typing.Optional[typing.Literal["2025-03-17"]] = pydantic.Field(default=None)
     """

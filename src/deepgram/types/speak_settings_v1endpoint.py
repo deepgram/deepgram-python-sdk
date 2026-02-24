@@ -3,10 +3,11 @@
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ..core.pydantic_utilities import IS_PYDANTIC_V2
+from ..core.unchecked_base_model import UncheckedBaseModel
 
 
-class SpeakSettingsV1Endpoint(UniversalBaseModel):
+class SpeakSettingsV1Endpoint(UncheckedBaseModel):
     """
     Optional if provider is Deepgram. Required for non-Deepgram TTS providers.
     When present, must include url field and headers object. Valid schemes are https and wss with wss only supported for Eleven Labs.

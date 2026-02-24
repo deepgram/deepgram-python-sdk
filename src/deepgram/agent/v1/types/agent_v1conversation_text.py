@@ -3,11 +3,12 @@
 import typing
 
 import pydantic
-from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ....core.pydantic_utilities import IS_PYDANTIC_V2
+from ....core.unchecked_base_model import UncheckedBaseModel
 from .agent_v1conversation_text_role import AgentV1ConversationTextRole
 
 
-class AgentV1ConversationText(UniversalBaseModel):
+class AgentV1ConversationText(UncheckedBaseModel):
     type: typing.Literal["ConversationText"] = pydantic.Field(default="ConversationText")
     """
     Message type identifier for conversation text

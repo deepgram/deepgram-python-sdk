@@ -3,11 +3,12 @@
 import typing
 
 import pydantic
-from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ....core.pydantic_utilities import IS_PYDANTIC_V2
+from ....core.unchecked_base_model import UncheckedBaseModel
 from .agent_v1settings_audio_output_encoding import AgentV1SettingsAudioOutputEncoding
 
 
-class AgentV1SettingsAudioOutput(UniversalBaseModel):
+class AgentV1SettingsAudioOutput(UncheckedBaseModel):
     """
     Audio output configuration settings
     """

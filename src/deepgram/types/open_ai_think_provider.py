@@ -3,11 +3,12 @@
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ..core.pydantic_utilities import IS_PYDANTIC_V2
+from ..core.unchecked_base_model import UncheckedBaseModel
 from .open_ai_think_provider_model import OpenAiThinkProviderModel
 
 
-class OpenAiThinkProvider(UniversalBaseModel):
+class OpenAiThinkProvider(UncheckedBaseModel):
     type: typing.Literal["open_ai"] = "open_ai"
     version: typing.Optional[typing.Literal["v1"]] = pydantic.Field(default=None)
     """

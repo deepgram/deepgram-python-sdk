@@ -3,11 +3,12 @@
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ..core.pydantic_utilities import IS_PYDANTIC_V2
+from ..core.unchecked_base_model import UncheckedBaseModel
 from .anthropic_think_provider_model import AnthropicThinkProviderModel
 
 
-class Anthropic(UniversalBaseModel):
+class Anthropic(UncheckedBaseModel):
     type: typing.Literal["anthropic"] = "anthropic"
     version: typing.Optional[typing.Literal["v1"]] = pydantic.Field(default=None)
     """

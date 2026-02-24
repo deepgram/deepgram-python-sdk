@@ -3,10 +3,11 @@
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ..core.pydantic_utilities import IS_PYDANTIC_V2
+from ..core.unchecked_base_model import UncheckedBaseModel
 
 
-class Groq(UniversalBaseModel):
+class Groq(UncheckedBaseModel):
     type: typing.Literal["groq"] = "groq"
     version: typing.Optional[typing.Literal["v1"]] = pydantic.Field(default=None)
     """

@@ -3,12 +3,13 @@
 import typing
 
 import pydantic
-from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ....core.pydantic_utilities import IS_PYDANTIC_V2
+from ....core.unchecked_base_model import UncheckedBaseModel
 from .agent_v1settings_audio_input import AgentV1SettingsAudioInput
 from .agent_v1settings_audio_output import AgentV1SettingsAudioOutput
 
 
-class AgentV1SettingsAudio(UniversalBaseModel):
+class AgentV1SettingsAudio(UncheckedBaseModel):
     input: typing.Optional[AgentV1SettingsAudioInput] = pydantic.Field(default=None)
     """
     Audio input configuration settings. If omitted, defaults to encoding=linear16 and sample_rate=24000. Higher sample rates like 44100 Hz provide better audio quality.

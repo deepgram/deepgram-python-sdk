@@ -3,11 +3,12 @@
 import typing
 
 import pydantic
-from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ....core.pydantic_utilities import IS_PYDANTIC_V2
+from ....core.unchecked_base_model import UncheckedBaseModel
 from .listen_v1keep_alive_type import ListenV1KeepAliveType
 
 
-class ListenV1KeepAlive(UniversalBaseModel):
+class ListenV1KeepAlive(UncheckedBaseModel):
     type: ListenV1KeepAliveType = pydantic.Field()
     """
     Message type identifier
