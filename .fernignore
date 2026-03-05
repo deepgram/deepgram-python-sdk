@@ -67,6 +67,11 @@ src/deepgram/transport_interface.py
 src/deepgram/transport.py
 src/deepgram/transports
 
+# Claude Code agent files
+CLAUDE.md
+AGENTS.md
+.claude
+
 # Folders to ignore
 .github
 docs
