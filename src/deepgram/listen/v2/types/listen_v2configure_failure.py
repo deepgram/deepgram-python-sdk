@@ -5,16 +5,25 @@ import typing
 import pydantic
 from ....core.pydantic_utilities import IS_PYDANTIC_V2
 from ....core.unchecked_base_model import UncheckedBaseModel
-from .agent_v1update_speak_speak import AgentV1UpdateSpeakSpeak
 
 
-class AgentV1UpdateSpeak(UncheckedBaseModel):
-    type: typing.Literal["UpdateSpeak"] = pydantic.Field(default="UpdateSpeak")
+class ListenV2ConfigureFailure(UncheckedBaseModel):
+    type: typing.Literal["ConfigureFailure"] = pydantic.Field(default="ConfigureFailure")
     """
-    Message type identifier for updating the speak model
+    Message type identifier
     """
 
-    speak: AgentV1UpdateSpeakSpeak
+    request_id: str = pydantic.Field()
+    """
+    The unique identifier of the request
+    """
+
+    sequence_id: float = pydantic.Field()
+    """
+    Starts at `0` and increments for each message the server sends
+    to the client.  This includes messages of other types, like
+    `TurnInfo` messages.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

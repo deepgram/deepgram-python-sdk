@@ -5,16 +5,16 @@ import typing
 import pydantic
 from ....core.pydantic_utilities import IS_PYDANTIC_V2
 from ....core.unchecked_base_model import UncheckedBaseModel
-from .agent_v1update_speak_speak import AgentV1UpdateSpeakSpeak
+from .agent_v1update_think_think import AgentV1UpdateThinkThink
 
 
-class AgentV1UpdateSpeak(UncheckedBaseModel):
-    type: typing.Literal["UpdateSpeak"] = pydantic.Field(default="UpdateSpeak")
+class AgentV1UpdateThink(UncheckedBaseModel):
+    type: typing.Literal["UpdateThink"] = pydantic.Field(default="UpdateThink")
     """
-    Message type identifier for updating the speak model
+    Message type identifier for updating the think model
     """
 
-    speak: AgentV1UpdateSpeakSpeak
+    think: AgentV1UpdateThinkThink
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

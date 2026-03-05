@@ -12,6 +12,34 @@ from ...core.query_encoder import encode_query
 from ...core.remove_none_from_dict import remove_none_from_dict
 from ...core.request_options import RequestOptions
 from ...core.websocket_compat import InvalidWebSocketStatus, get_status_code
+from ...types.listen_v1callback import ListenV1Callback
+from ...types.listen_v1callback_method import ListenV1CallbackMethod
+from ...types.listen_v1channels import ListenV1Channels
+from ...types.listen_v1detect_entities import ListenV1DetectEntities
+from ...types.listen_v1diarize import ListenV1Diarize
+from ...types.listen_v1dictation import ListenV1Dictation
+from ...types.listen_v1encoding import ListenV1Encoding
+from ...types.listen_v1endpointing import ListenV1Endpointing
+from ...types.listen_v1extra import ListenV1Extra
+from ...types.listen_v1interim_results import ListenV1InterimResults
+from ...types.listen_v1keyterm import ListenV1Keyterm
+from ...types.listen_v1keywords import ListenV1Keywords
+from ...types.listen_v1language import ListenV1Language
+from ...types.listen_v1mip_opt_out import ListenV1MipOptOut
+from ...types.listen_v1model import ListenV1Model
+from ...types.listen_v1multichannel import ListenV1Multichannel
+from ...types.listen_v1numerals import ListenV1Numerals
+from ...types.listen_v1profanity_filter import ListenV1ProfanityFilter
+from ...types.listen_v1punctuate import ListenV1Punctuate
+from ...types.listen_v1redact import ListenV1Redact
+from ...types.listen_v1replace import ListenV1Replace
+from ...types.listen_v1sample_rate import ListenV1SampleRate
+from ...types.listen_v1search import ListenV1Search
+from ...types.listen_v1smart_format import ListenV1SmartFormat
+from ...types.listen_v1tag import ListenV1Tag
+from ...types.listen_v1utterance_end_ms import ListenV1UtteranceEndMs
+from ...types.listen_v1vad_events import ListenV1VadEvents
+from ...types.listen_v1version import ListenV1Version
 from .socket_client import AsyncV1SocketClient, V1SocketClient
 
 try:
@@ -28,34 +56,34 @@ class RawV1Client:
     def connect(
         self,
         *,
-        callback: typing.Optional[str] = None,
-        callback_method: typing.Optional[str] = None,
-        channels: typing.Optional[str] = None,
-        detect_entities: typing.Optional[str] = None,
-        diarize: typing.Optional[str] = None,
-        dictation: typing.Optional[str] = None,
-        encoding: typing.Optional[str] = None,
-        endpointing: typing.Optional[str] = None,
-        extra: typing.Optional[str] = None,
-        interim_results: typing.Optional[str] = None,
-        keyterm: typing.Optional[str] = None,
-        keywords: typing.Optional[str] = None,
-        language: typing.Optional[str] = None,
-        mip_opt_out: typing.Optional[str] = None,
-        model: str,
-        multichannel: typing.Optional[str] = None,
-        numerals: typing.Optional[str] = None,
-        profanity_filter: typing.Optional[str] = None,
-        punctuate: typing.Optional[str] = None,
-        redact: typing.Optional[str] = None,
-        replace: typing.Optional[str] = None,
-        sample_rate: typing.Optional[str] = None,
-        search: typing.Optional[str] = None,
-        smart_format: typing.Optional[str] = None,
-        tag: typing.Optional[str] = None,
-        utterance_end_ms: typing.Optional[str] = None,
-        vad_events: typing.Optional[str] = None,
-        version: typing.Optional[str] = None,
+        callback: typing.Optional[ListenV1Callback] = None,
+        callback_method: typing.Optional[ListenV1CallbackMethod] = None,
+        channels: typing.Optional[ListenV1Channels] = None,
+        detect_entities: typing.Optional[ListenV1DetectEntities] = None,
+        diarize: typing.Optional[ListenV1Diarize] = None,
+        dictation: typing.Optional[ListenV1Dictation] = None,
+        encoding: typing.Optional[ListenV1Encoding] = None,
+        endpointing: typing.Optional[ListenV1Endpointing] = None,
+        extra: typing.Optional[ListenV1Extra] = None,
+        interim_results: typing.Optional[ListenV1InterimResults] = None,
+        keyterm: typing.Optional[ListenV1Keyterm] = None,
+        keywords: typing.Optional[ListenV1Keywords] = None,
+        language: typing.Optional[ListenV1Language] = None,
+        mip_opt_out: typing.Optional[ListenV1MipOptOut] = None,
+        model: ListenV1Model,
+        multichannel: typing.Optional[ListenV1Multichannel] = None,
+        numerals: typing.Optional[ListenV1Numerals] = None,
+        profanity_filter: typing.Optional[ListenV1ProfanityFilter] = None,
+        punctuate: typing.Optional[ListenV1Punctuate] = None,
+        redact: typing.Optional[ListenV1Redact] = None,
+        replace: typing.Optional[ListenV1Replace] = None,
+        sample_rate: typing.Optional[ListenV1SampleRate] = None,
+        search: typing.Optional[ListenV1Search] = None,
+        smart_format: typing.Optional[ListenV1SmartFormat] = None,
+        tag: typing.Optional[ListenV1Tag] = None,
+        utterance_end_ms: typing.Optional[ListenV1UtteranceEndMs] = None,
+        vad_events: typing.Optional[ListenV1VadEvents] = None,
+        version: typing.Optional[ListenV1Version] = None,
         authorization: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Iterator[V1SocketClient]:
@@ -64,62 +92,62 @@ class RawV1Client:
 
         Parameters
         ----------
-        callback : typing.Optional[str]
+        callback : typing.Optional[ListenV1Callback]
 
-        callback_method : typing.Optional[str]
+        callback_method : typing.Optional[ListenV1CallbackMethod]
 
-        channels : typing.Optional[str]
+        channels : typing.Optional[ListenV1Channels]
 
-        detect_entities : typing.Optional[str]
+        detect_entities : typing.Optional[ListenV1DetectEntities]
 
-        diarize : typing.Optional[str]
+        diarize : typing.Optional[ListenV1Diarize]
 
-        dictation : typing.Optional[str]
+        dictation : typing.Optional[ListenV1Dictation]
 
-        encoding : typing.Optional[str]
+        encoding : typing.Optional[ListenV1Encoding]
 
-        endpointing : typing.Optional[str]
+        endpointing : typing.Optional[ListenV1Endpointing]
 
-        extra : typing.Optional[str]
+        extra : typing.Optional[ListenV1Extra]
 
-        interim_results : typing.Optional[str]
+        interim_results : typing.Optional[ListenV1InterimResults]
 
-        keyterm : typing.Optional[str]
+        keyterm : typing.Optional[ListenV1Keyterm]
 
-        keywords : typing.Optional[str]
+        keywords : typing.Optional[ListenV1Keywords]
 
-        language : typing.Optional[str]
+        language : typing.Optional[ListenV1Language]
 
-        mip_opt_out : typing.Optional[str]
+        mip_opt_out : typing.Optional[ListenV1MipOptOut]
 
-        model : str
+        model : ListenV1Model
             AI model to use for the transcription
 
-        multichannel : typing.Optional[str]
+        multichannel : typing.Optional[ListenV1Multichannel]
 
-        numerals : typing.Optional[str]
+        numerals : typing.Optional[ListenV1Numerals]
 
-        profanity_filter : typing.Optional[str]
+        profanity_filter : typing.Optional[ListenV1ProfanityFilter]
 
-        punctuate : typing.Optional[str]
+        punctuate : typing.Optional[ListenV1Punctuate]
 
-        redact : typing.Optional[str]
+        redact : typing.Optional[ListenV1Redact]
 
-        replace : typing.Optional[str]
+        replace : typing.Optional[ListenV1Replace]
 
-        sample_rate : typing.Optional[str]
+        sample_rate : typing.Optional[ListenV1SampleRate]
 
-        search : typing.Optional[str]
+        search : typing.Optional[ListenV1Search]
 
-        smart_format : typing.Optional[str]
+        smart_format : typing.Optional[ListenV1SmartFormat]
 
-        tag : typing.Optional[str]
+        tag : typing.Optional[ListenV1Tag]
 
-        utterance_end_ms : typing.Optional[str]
+        utterance_end_ms : typing.Optional[ListenV1UtteranceEndMs]
 
-        vad_events : typing.Optional[str]
+        vad_events : typing.Optional[ListenV1VadEvents]
 
-        version : typing.Optional[str]
+        version : typing.Optional[ListenV1Version]
 
         authorization : typing.Optional[str]
             Use your API key for authentication, or alternatively generate a [temporary token](/guides/fundamentals/token-based-authentication) and pass it via the `token` query parameter.
@@ -208,34 +236,34 @@ class AsyncRawV1Client:
     async def connect(
         self,
         *,
-        callback: typing.Optional[str] = None,
-        callback_method: typing.Optional[str] = None,
-        channels: typing.Optional[str] = None,
-        detect_entities: typing.Optional[str] = None,
-        diarize: typing.Optional[str] = None,
-        dictation: typing.Optional[str] = None,
-        encoding: typing.Optional[str] = None,
-        endpointing: typing.Optional[str] = None,
-        extra: typing.Optional[str] = None,
-        interim_results: typing.Optional[str] = None,
-        keyterm: typing.Optional[str] = None,
-        keywords: typing.Optional[str] = None,
-        language: typing.Optional[str] = None,
-        mip_opt_out: typing.Optional[str] = None,
-        model: str,
-        multichannel: typing.Optional[str] = None,
-        numerals: typing.Optional[str] = None,
-        profanity_filter: typing.Optional[str] = None,
-        punctuate: typing.Optional[str] = None,
-        redact: typing.Optional[str] = None,
-        replace: typing.Optional[str] = None,
-        sample_rate: typing.Optional[str] = None,
-        search: typing.Optional[str] = None,
-        smart_format: typing.Optional[str] = None,
-        tag: typing.Optional[str] = None,
-        utterance_end_ms: typing.Optional[str] = None,
-        vad_events: typing.Optional[str] = None,
-        version: typing.Optional[str] = None,
+        callback: typing.Optional[ListenV1Callback] = None,
+        callback_method: typing.Optional[ListenV1CallbackMethod] = None,
+        channels: typing.Optional[ListenV1Channels] = None,
+        detect_entities: typing.Optional[ListenV1DetectEntities] = None,
+        diarize: typing.Optional[ListenV1Diarize] = None,
+        dictation: typing.Optional[ListenV1Dictation] = None,
+        encoding: typing.Optional[ListenV1Encoding] = None,
+        endpointing: typing.Optional[ListenV1Endpointing] = None,
+        extra: typing.Optional[ListenV1Extra] = None,
+        interim_results: typing.Optional[ListenV1InterimResults] = None,
+        keyterm: typing.Optional[ListenV1Keyterm] = None,
+        keywords: typing.Optional[ListenV1Keywords] = None,
+        language: typing.Optional[ListenV1Language] = None,
+        mip_opt_out: typing.Optional[ListenV1MipOptOut] = None,
+        model: ListenV1Model,
+        multichannel: typing.Optional[ListenV1Multichannel] = None,
+        numerals: typing.Optional[ListenV1Numerals] = None,
+        profanity_filter: typing.Optional[ListenV1ProfanityFilter] = None,
+        punctuate: typing.Optional[ListenV1Punctuate] = None,
+        redact: typing.Optional[ListenV1Redact] = None,
+        replace: typing.Optional[ListenV1Replace] = None,
+        sample_rate: typing.Optional[ListenV1SampleRate] = None,
+        search: typing.Optional[ListenV1Search] = None,
+        smart_format: typing.Optional[ListenV1SmartFormat] = None,
+        tag: typing.Optional[ListenV1Tag] = None,
+        utterance_end_ms: typing.Optional[ListenV1UtteranceEndMs] = None,
+        vad_events: typing.Optional[ListenV1VadEvents] = None,
+        version: typing.Optional[ListenV1Version] = None,
         authorization: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.AsyncIterator[AsyncV1SocketClient]:
@@ -244,62 +272,62 @@ class AsyncRawV1Client:
 
         Parameters
         ----------
-        callback : typing.Optional[str]
+        callback : typing.Optional[ListenV1Callback]
 
-        callback_method : typing.Optional[str]
+        callback_method : typing.Optional[ListenV1CallbackMethod]
 
-        channels : typing.Optional[str]
+        channels : typing.Optional[ListenV1Channels]
 
-        detect_entities : typing.Optional[str]
+        detect_entities : typing.Optional[ListenV1DetectEntities]
 
-        diarize : typing.Optional[str]
+        diarize : typing.Optional[ListenV1Diarize]
 
-        dictation : typing.Optional[str]
+        dictation : typing.Optional[ListenV1Dictation]
 
-        encoding : typing.Optional[str]
+        encoding : typing.Optional[ListenV1Encoding]
 
-        endpointing : typing.Optional[str]
+        endpointing : typing.Optional[ListenV1Endpointing]
 
-        extra : typing.Optional[str]
+        extra : typing.Optional[ListenV1Extra]
 
-        interim_results : typing.Optional[str]
+        interim_results : typing.Optional[ListenV1InterimResults]
 
-        keyterm : typing.Optional[str]
+        keyterm : typing.Optional[ListenV1Keyterm]
 
-        keywords : typing.Optional[str]
+        keywords : typing.Optional[ListenV1Keywords]
 
-        language : typing.Optional[str]
+        language : typing.Optional[ListenV1Language]
 
-        mip_opt_out : typing.Optional[str]
+        mip_opt_out : typing.Optional[ListenV1MipOptOut]
 
-        model : str
+        model : ListenV1Model
             AI model to use for the transcription
 
-        multichannel : typing.Optional[str]
+        multichannel : typing.Optional[ListenV1Multichannel]
 
-        numerals : typing.Optional[str]
+        numerals : typing.Optional[ListenV1Numerals]
 
-        profanity_filter : typing.Optional[str]
+        profanity_filter : typing.Optional[ListenV1ProfanityFilter]
 
-        punctuate : typing.Optional[str]
+        punctuate : typing.Optional[ListenV1Punctuate]
 
-        redact : typing.Optional[str]
+        redact : typing.Optional[ListenV1Redact]
 
-        replace : typing.Optional[str]
+        replace : typing.Optional[ListenV1Replace]
 
-        sample_rate : typing.Optional[str]
+        sample_rate : typing.Optional[ListenV1SampleRate]
 
-        search : typing.Optional[str]
+        search : typing.Optional[ListenV1Search]
 
-        smart_format : typing.Optional[str]
+        smart_format : typing.Optional[ListenV1SmartFormat]
 
-        tag : typing.Optional[str]
+        tag : typing.Optional[ListenV1Tag]
 
-        utterance_end_ms : typing.Optional[str]
+        utterance_end_ms : typing.Optional[ListenV1UtteranceEndMs]
 
-        vad_events : typing.Optional[str]
+        vad_events : typing.Optional[ListenV1VadEvents]
 
-        version : typing.Optional[str]
+        version : typing.Optional[ListenV1Version]
 
         authorization : typing.Optional[str]
             Use your API key for authentication, or alternatively generate a [temporary token](/guides/fundamentals/token-based-authentication) and pass it via the `token` query parameter.

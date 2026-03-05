@@ -53,8 +53,12 @@ if typing.TYPE_CHECKING:
     from .agent_v1settings_audio_output_encoding import AgentV1SettingsAudioOutputEncoding
     from .agent_v1settings_flags import AgentV1SettingsFlags
     from .agent_v1speak_updated import AgentV1SpeakUpdated
+    from .agent_v1think_updated import AgentV1ThinkUpdated
     from .agent_v1update_prompt import AgentV1UpdatePrompt
     from .agent_v1update_speak import AgentV1UpdateSpeak
+    from .agent_v1update_speak_speak import AgentV1UpdateSpeakSpeak
+    from .agent_v1update_think import AgentV1UpdateThink
+    from .agent_v1update_think_think import AgentV1UpdateThinkThink
     from .agent_v1user_started_speaking import AgentV1UserStartedSpeaking
     from .agent_v1warning import AgentV1Warning
     from .agent_v1welcome import AgentV1Welcome
@@ -98,8 +102,12 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AgentV1SettingsAudioOutputEncoding": ".agent_v1settings_audio_output_encoding",
     "AgentV1SettingsFlags": ".agent_v1settings_flags",
     "AgentV1SpeakUpdated": ".agent_v1speak_updated",
+    "AgentV1ThinkUpdated": ".agent_v1think_updated",
     "AgentV1UpdatePrompt": ".agent_v1update_prompt",
     "AgentV1UpdateSpeak": ".agent_v1update_speak",
+    "AgentV1UpdateSpeakSpeak": ".agent_v1update_speak_speak",
+    "AgentV1UpdateThink": ".agent_v1update_think",
+    "AgentV1UpdateThinkThink": ".agent_v1update_think_think",
     "AgentV1UserStartedSpeaking": ".agent_v1user_started_speaking",
     "AgentV1Warning": ".agent_v1warning",
     "AgentV1Welcome": ".agent_v1welcome",
@@ -167,8 +175,12 @@ __all__ = [
     "AgentV1SettingsAudioOutputEncoding",
     "AgentV1SettingsFlags",
     "AgentV1SpeakUpdated",
+    "AgentV1ThinkUpdated",
     "AgentV1UpdatePrompt",
     "AgentV1UpdateSpeak",
+    "AgentV1UpdateSpeakSpeak",
+    "AgentV1UpdateThink",
+    "AgentV1UpdateThinkThink",
     "AgentV1UserStartedSpeaking",
     "AgentV1Warning",
     "AgentV1Welcome",

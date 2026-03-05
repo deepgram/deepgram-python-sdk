@@ -49,8 +49,12 @@ if typing.TYPE_CHECKING:
     from .agent_v1settings_audio_output import AgentV1SettingsAudioOutputParams
     from .agent_v1settings_flags import AgentV1SettingsFlagsParams
     from .agent_v1speak_updated import AgentV1SpeakUpdatedParams
+    from .agent_v1think_updated import AgentV1ThinkUpdatedParams
     from .agent_v1update_prompt import AgentV1UpdatePromptParams
     from .agent_v1update_speak import AgentV1UpdateSpeakParams
+    from .agent_v1update_speak_speak import AgentV1UpdateSpeakSpeakParams
+    from .agent_v1update_think import AgentV1UpdateThinkParams
+    from .agent_v1update_think_think import AgentV1UpdateThinkThinkParams
     from .agent_v1user_started_speaking import AgentV1UserStartedSpeakingParams
     from .agent_v1warning import AgentV1WarningParams
     from .agent_v1welcome import AgentV1WelcomeParams
@@ -90,8 +94,12 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AgentV1SettingsFlagsParams": ".agent_v1settings_flags",
     "AgentV1SettingsParams": ".agent_v1settings",
     "AgentV1SpeakUpdatedParams": ".agent_v1speak_updated",
+    "AgentV1ThinkUpdatedParams": ".agent_v1think_updated",
     "AgentV1UpdatePromptParams": ".agent_v1update_prompt",
     "AgentV1UpdateSpeakParams": ".agent_v1update_speak",
+    "AgentV1UpdateSpeakSpeakParams": ".agent_v1update_speak_speak",
+    "AgentV1UpdateThinkParams": ".agent_v1update_think",
+    "AgentV1UpdateThinkThinkParams": ".agent_v1update_think_think",
     "AgentV1UserStartedSpeakingParams": ".agent_v1user_started_speaking",
     "AgentV1WarningParams": ".agent_v1warning",
     "AgentV1WelcomeParams": ".agent_v1welcome",
@@ -155,8 +163,12 @@ __all__ = [
     "AgentV1SettingsFlagsParams",
     "AgentV1SettingsParams",
     "AgentV1SpeakUpdatedParams",
+    "AgentV1ThinkUpdatedParams",
     "AgentV1UpdatePromptParams",
     "AgentV1UpdateSpeakParams",
+    "AgentV1UpdateSpeakSpeakParams",
+    "AgentV1UpdateThinkParams",
+    "AgentV1UpdateThinkThinkParams",
     "AgentV1UserStartedSpeakingParams",
     "AgentV1WarningParams",
     "AgentV1WelcomeParams",
