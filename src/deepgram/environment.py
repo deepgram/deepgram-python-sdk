@@ -7,15 +7,15 @@ class DeepgramClientEnvironment:
     PRODUCTION: DeepgramClientEnvironment
     AGENT: DeepgramClientEnvironment
 
-    def __init__(self, *, base: str, production: str, agent: str):
+    def __init__(self, *, base: str, agent: str, production: str):
         self.base = base
-        self.production = production
         self.agent = agent
+        self.production = production
 
 
 DeepgramClientEnvironment.PRODUCTION = DeepgramClientEnvironment(
-    base="https://api.deepgram.com", production="wss://api.deepgram.com", agent="wss://agent.deepgram.com"
+    base="https://api.deepgram.com", agent="wss://agent.deepgram.com", production="wss://api.deepgram.com"
 )
 DeepgramClientEnvironment.AGENT = DeepgramClientEnvironment(
-    base="https://agent.deepgram.com", production="wss://api.deepgram.com", agent="wss://agent.deepgram.com"
+    base="https://agent.deepgram.com", agent="wss://agent.deepgram.com", production="wss://api.deepgram.com"
 )

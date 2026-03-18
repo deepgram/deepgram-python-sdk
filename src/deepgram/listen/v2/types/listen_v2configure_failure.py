@@ -7,30 +7,22 @@ from ....core.pydantic_utilities import IS_PYDANTIC_V2
 from ....core.unchecked_base_model import UncheckedBaseModel
 
 
-class AgentV1SettingsAgentContextMessagesItemFunctionCallsFunctionCallsItem(UncheckedBaseModel):
-    id: str = pydantic.Field()
+class ListenV2ConfigureFailure(UncheckedBaseModel):
+    type: typing.Literal["ConfigureFailure"] = pydantic.Field(default="ConfigureFailure")
     """
-    Unique identifier for the function call
-    """
-
-    name: str = pydantic.Field()
-    """
-    Name of the function called
+    Message type identifier
     """
 
-    client_side: bool = pydantic.Field()
+    request_id: str = pydantic.Field()
     """
-    Indicates if the call was client-side or server-side
-    """
-
-    arguments: str = pydantic.Field()
-    """
-    Arguments passed to the function
+    The unique identifier of the request
     """
 
-    response: str = pydantic.Field()
+    sequence_id: float = pydantic.Field()
     """
-    Response from the function call
+    Starts at `0` and increments for each message the server sends
+    to the client.  This includes messages of other types, like
+    `TurnInfo` messages.
     """
 
     if IS_PYDANTIC_V2:

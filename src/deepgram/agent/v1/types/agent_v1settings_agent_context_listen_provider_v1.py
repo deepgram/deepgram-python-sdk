@@ -7,7 +7,7 @@ from ....core.pydantic_utilities import IS_PYDANTIC_V2
 from ....core.unchecked_base_model import UncheckedBaseModel
 
 
-class AgentV1SettingsAgentListenProviderV1(UncheckedBaseModel):
+class AgentV1SettingsAgentContextListenProviderV1(UncheckedBaseModel):
     type: typing.Literal["deepgram"] = pydantic.Field(default="deepgram")
     """
     Provider type for speech-to-text
@@ -23,11 +23,7 @@ class AgentV1SettingsAgentListenProviderV1(UncheckedBaseModel):
     Language code to use for speech-to-text. Can be a BCP-47 language tag (e.g. `en`), or `multi` for code-switching transcription
     """
 
-    keyterms: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
-    """
-    Prompt keyterm recognition to improve Keyword Recall Rate
-    """
-
+    keyterms: typing.Optional[typing.List[str]] = None
     smart_format: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Applies smart formatting to improve transcript readability

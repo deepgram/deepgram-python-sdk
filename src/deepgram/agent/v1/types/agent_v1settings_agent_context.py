@@ -5,17 +5,29 @@ import typing
 import pydantic
 from ....core.pydantic_utilities import IS_PYDANTIC_V2
 from ....core.unchecked_base_model import UncheckedBaseModel
-from .agent_v1settings_agent_context_messages_item import AgentV1SettingsAgentContextMessagesItem
+from .agent_v1settings_agent_context_context import AgentV1SettingsAgentContextContext
+from .agent_v1settings_agent_context_listen import AgentV1SettingsAgentContextListen
+from .agent_v1settings_agent_context_speak import AgentV1SettingsAgentContextSpeak
+from .agent_v1settings_agent_context_think import AgentV1SettingsAgentContextThink
 
 
 class AgentV1SettingsAgentContext(UncheckedBaseModel):
+    language: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Deprecated. Use `listen.provider.language` and `speak.provider.language` fields instead.
+    """
+
+    context: typing.Optional[AgentV1SettingsAgentContextContext] = pydantic.Field(default=None)
     """
     Conversation context including the history of messages and function calls
     """
 
-    messages: typing.Optional[typing.List[AgentV1SettingsAgentContextMessagesItem]] = pydantic.Field(default=None)
+    listen: typing.Optional[AgentV1SettingsAgentContextListen] = None
+    think: typing.Optional[AgentV1SettingsAgentContextThink] = None
+    speak: typing.Optional[AgentV1SettingsAgentContextSpeak] = None
+    greeting: typing.Optional[str] = pydantic.Field(default=None)
     """
-    Conversation history as a list of messages and function calls
+    Optional message that agent will speak at the start
     """
 
     if IS_PYDANTIC_V2:

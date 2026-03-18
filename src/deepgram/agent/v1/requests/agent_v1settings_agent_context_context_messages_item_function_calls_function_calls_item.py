@@ -3,7 +3,7 @@
 import typing_extensions
 
 
-class AgentV1SettingsAgentContextMessagesItemFunctionCallsFunctionCallsItemParams(typing_extensions.TypedDict):
+class AgentV1SettingsAgentContextContextMessagesItemFunctionCallsFunctionCallsItemParams(typing_extensions.TypedDict):
     id: str
     """
     Unique identifier for the function call

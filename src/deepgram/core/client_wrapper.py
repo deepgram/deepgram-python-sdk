@@ -25,12 +25,12 @@ class BaseClientWrapper:
         import platform
 
         headers: typing.Dict[str, str] = {
-            "User-Agent": "deepgram-sdk/6.0.1",
+            "User-Agent": "deepgram-sdk/7.0.0",
             "X-Fern-Language": "Python",
             "X-Fern-Runtime": f"python/{platform.python_version()}",
             "X-Fern-Platform": f"{platform.system().lower()}/{platform.release()}",
             "X-Fern-SDK-Name": "deepgram-sdk",
-            "X-Fern-SDK-Version": "6.0.1",
+            "X-Fern-SDK-Version": "7.0.0",
             **(self.get_custom_headers() or {}),
         }
         headers["Authorization"] = f"Token {self.api_key}"

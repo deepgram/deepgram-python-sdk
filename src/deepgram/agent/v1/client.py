@@ -53,9 +53,9 @@ class V1Client:
         Parameters
         ----------
         authorization : typing.Optional[str]
-            Use your API key for authentication, or alternatively generate a [temporary token](/guides/fundamentals/token-based-authentication) and pass it via the `token` query parameter.
+            Use your API key or a [temporary token](/guides/fundamentals/token-based-authentication) for authentication via the `Authorization` header. In client-side environments where custom headers are not supported, use the [`Sec-WebSocket-Protocol`](/guides/deep-dives/using-the-sec-websocket-protocol) header instead.
 
-            **Example:** `token %DEEPGRAM_API_KEY%` or `bearer %DEEPGRAM_TOKEN%`
+            **Example:** `Authorization: Token %DEEPGRAM_API_KEY%` or `Authorization: Bearer %DEEPGRAM_TOKEN%`
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -138,9 +138,9 @@ class AsyncV1Client:
         Parameters
         ----------
         authorization : typing.Optional[str]
-            Use your API key for authentication, or alternatively generate a [temporary token](/guides/fundamentals/token-based-authentication) and pass it via the `token` query parameter.
+            Use your API key or a [temporary token](/guides/fundamentals/token-based-authentication) for authentication via the `Authorization` header. In client-side environments where custom headers are not supported, use the [`Sec-WebSocket-Protocol`](/guides/deep-dives/using-the-sec-websocket-protocol) header instead.
 
-            **Example:** `token %DEEPGRAM_API_KEY%` or `bearer %DEEPGRAM_TOKEN%`
+            **Example:** `Authorization: Token %DEEPGRAM_API_KEY%` or `Authorization: Bearer %DEEPGRAM_TOKEN%`
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.

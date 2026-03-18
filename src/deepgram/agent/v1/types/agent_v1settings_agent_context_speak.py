@@ -4,4 +4,4 @@ import typing
 
 from ....types.speak_settings_v1 import SpeakSettingsV1
 
-AgentV1SettingsAgentSpeak = typing.Union[SpeakSettingsV1, typing.List[SpeakSettingsV1]]
+AgentV1SettingsAgentContextSpeak = typing.Union[SpeakSettingsV1, typing.List[SpeakSettingsV1]]

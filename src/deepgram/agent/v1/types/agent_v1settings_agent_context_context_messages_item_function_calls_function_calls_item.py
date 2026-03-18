@@ -7,20 +7,30 @@ from ....core.pydantic_utilities import IS_PYDANTIC_V2
 from ....core.unchecked_base_model import UncheckedBaseModel
 
 
-class AgentV1SettingsAgentListenProviderV2(UncheckedBaseModel):
-    type: typing.Literal["deepgram"] = pydantic.Field(default="deepgram")
+class AgentV1SettingsAgentContextContextMessagesItemFunctionCallsFunctionCallsItem(UncheckedBaseModel):
+    id: str = pydantic.Field()
     """
-    Provider type for speech-to-text
-    """
-
-    model: str = pydantic.Field()
-    """
-    Model to use for speech to text using the V2 API (e.g. flux-general-en)
+    Unique identifier for the function call
     """
 
-    keyterms: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
+    name: str = pydantic.Field()
     """
-    Prompt keyterm recognition to improve Keyword Recall Rate
+    Name of the function called
+    """
+
+    client_side: bool = pydantic.Field()
+    """
+    Indicates if the call was client-side or server-side
+    """
+
+    arguments: str = pydantic.Field()
+    """
+    Arguments passed to the function
+    """
+
+    response: str = pydantic.Field()
+    """
+    Response from the function call
     """
 
     if IS_PYDANTIC_V2:

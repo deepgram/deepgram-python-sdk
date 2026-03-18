@@ -4,4 +4,4 @@ import typing
 
 from ....types.think_settings_v1 import ThinkSettingsV1
 
-AgentV1SettingsAgentThink = typing.Union[ThinkSettingsV1, typing.List[ThinkSettingsV1]]
+AgentV1SettingsAgentContextThink = typing.Union[ThinkSettingsV1, typing.List[ThinkSettingsV1]]

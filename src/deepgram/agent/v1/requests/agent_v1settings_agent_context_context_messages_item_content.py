@@ -3,12 +3,12 @@
 import typing
 
 import typing_extensions
-from ..types.agent_v1settings_agent_context_messages_item_content_role import (
-    AgentV1SettingsAgentContextMessagesItemContentRole,
+from ..types.agent_v1settings_agent_context_context_messages_item_content_role import (
+    AgentV1SettingsAgentContextContextMessagesItemContentRole,
 )
 
 
-class AgentV1SettingsAgentContextMessagesItemContentParams(typing_extensions.TypedDict):
+class AgentV1SettingsAgentContextContextMessagesItemContentParams(typing_extensions.TypedDict):
     """
     Conversation text as part of the conversation history
     """
@@ -18,7 +18,7 @@ class AgentV1SettingsAgentContextMessagesItemContentParams(typing_extensions.Typ
     Message type identifier for conversation text
     """
 
-    role: AgentV1SettingsAgentContextMessagesItemContentRole
+    role: AgentV1SettingsAgentContextContextMessagesItemContentRole
     """
     Identifies who spoke the statement
     """

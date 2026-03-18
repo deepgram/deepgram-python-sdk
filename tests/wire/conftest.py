@@ -46,13 +46,13 @@ def get_client(test_id: str) -> DeepgramClient:
 
     if _CLIENT_SUPPORTS_HEADERS:
         return DeepgramClient(
-            environment=DeepgramClientEnvironment(base=base_url, production=base_url, agent=base_url),
+            environment=DeepgramClientEnvironment(base=base_url, agent=base_url, production=base_url),
             headers=test_headers,
             api_key="test_api_key",
         )
 
     return DeepgramClient(
-        environment=DeepgramClientEnvironment(base=base_url, production=base_url, agent=base_url),
+        environment=DeepgramClientEnvironment(base=base_url, agent=base_url, production=base_url),
         httpx_client=httpx.Client(headers=test_headers),
         api_key="test_api_key",
     )

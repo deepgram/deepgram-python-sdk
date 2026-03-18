@@ -23,10 +23,15 @@ class SpeakV1MetadataParams(typing_extensions.TypedDict):
 
     model_version: str
     """
-    Version of the model being used
+    Version of the primary model being used
     """
 
     model_uuid: str
     """
-    Unique identifier for the model
+    Unique identifier for the primary model used
+    """
+
+    additional_model_uuids: typing_extensions.NotRequired[typing.Sequence[str]]
+    """
+    List of unique identifiers for any additional models used to serve the request
     """
