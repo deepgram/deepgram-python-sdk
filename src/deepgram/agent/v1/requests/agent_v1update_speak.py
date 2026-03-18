@@ -3,7 +3,7 @@
 import typing
 
 import typing_extensions
-from ....requests.speak_settings_v1 import SpeakSettingsV1Params
+from .agent_v1update_speak_speak import AgentV1UpdateSpeakSpeakParams
 
 
 class AgentV1UpdateSpeakParams(typing_extensions.TypedDict):
@@ -12,4 +12,4 @@ class AgentV1UpdateSpeakParams(typing_extensions.TypedDict):
     Message type identifier for updating the speak model
     """
 
-    speak: SpeakSettingsV1Params
+    speak: AgentV1UpdateSpeakSpeakParams

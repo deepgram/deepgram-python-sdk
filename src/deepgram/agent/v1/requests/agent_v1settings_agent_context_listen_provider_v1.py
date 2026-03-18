@@ -5,7 +5,7 @@ import typing
 import typing_extensions
 
 
-class AgentV1SettingsAgentListenProviderV1Params(typing_extensions.TypedDict):
+class AgentV1SettingsAgentContextListenProviderV1Params(typing_extensions.TypedDict):
     type: typing.Literal["deepgram"]
     """
     Provider type for speech-to-text
@@ -22,10 +22,6 @@ class AgentV1SettingsAgentListenProviderV1Params(typing_extensions.TypedDict):
     """
 
     keyterms: typing_extensions.NotRequired[typing.Sequence[str]]
-    """
-    Prompt keyterm recognition to improve Keyword Recall Rate
-    """
-
     smart_format: typing_extensions.NotRequired[bool]
     """
     Applies smart formatting to improve transcript readability

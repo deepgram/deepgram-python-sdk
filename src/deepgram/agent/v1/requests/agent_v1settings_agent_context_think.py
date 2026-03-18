@@ -4,4 +4,4 @@ import typing
 
 from ....requests.think_settings_v1 import ThinkSettingsV1Params
 
-AgentV1SettingsAgentThinkParams = typing.Union[ThinkSettingsV1Params, typing.Sequence[ThinkSettingsV1Params]]
+AgentV1SettingsAgentContextThinkParams = typing.Union[ThinkSettingsV1Params, typing.Sequence[ThinkSettingsV1Params]]

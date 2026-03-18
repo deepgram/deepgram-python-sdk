@@ -23,34 +23,41 @@ if typing.TYPE_CHECKING:
     from .agent_v1settings import AgentV1SettingsParams
     from .agent_v1settings_agent import AgentV1SettingsAgentParams
     from .agent_v1settings_agent_context import AgentV1SettingsAgentContextParams
-    from .agent_v1settings_agent_context_messages_item import AgentV1SettingsAgentContextMessagesItemParams
-    from .agent_v1settings_agent_context_messages_item_content import (
-        AgentV1SettingsAgentContextMessagesItemContentParams,
+    from .agent_v1settings_agent_context_context import AgentV1SettingsAgentContextContextParams
+    from .agent_v1settings_agent_context_context_messages_item import (
+        AgentV1SettingsAgentContextContextMessagesItemParams,
     )
-    from .agent_v1settings_agent_context_messages_item_function_calls import (
-        AgentV1SettingsAgentContextMessagesItemFunctionCallsParams,
+    from .agent_v1settings_agent_context_context_messages_item_content import (
+        AgentV1SettingsAgentContextContextMessagesItemContentParams,
     )
-    from .agent_v1settings_agent_context_messages_item_function_calls_function_calls_item import (
-        AgentV1SettingsAgentContextMessagesItemFunctionCallsFunctionCallsItemParams,
+    from .agent_v1settings_agent_context_context_messages_item_function_calls import (
+        AgentV1SettingsAgentContextContextMessagesItemFunctionCallsParams,
     )
-    from .agent_v1settings_agent_listen import AgentV1SettingsAgentListenParams
-    from .agent_v1settings_agent_listen_provider import (
-        AgentV1SettingsAgentListenProviderParams,
-        AgentV1SettingsAgentListenProvider_V1Params,
-        AgentV1SettingsAgentListenProvider_V2Params,
+    from .agent_v1settings_agent_context_context_messages_item_function_calls_function_calls_item import (
+        AgentV1SettingsAgentContextContextMessagesItemFunctionCallsFunctionCallsItemParams,
     )
-    from .agent_v1settings_agent_listen_provider_v1 import AgentV1SettingsAgentListenProviderV1Params
-    from .agent_v1settings_agent_listen_provider_v2 import AgentV1SettingsAgentListenProviderV2Params
-    from .agent_v1settings_agent_speak import AgentV1SettingsAgentSpeakParams
-    from .agent_v1settings_agent_think import AgentV1SettingsAgentThinkParams
+    from .agent_v1settings_agent_context_listen import AgentV1SettingsAgentContextListenParams
+    from .agent_v1settings_agent_context_listen_provider import (
+        AgentV1SettingsAgentContextListenProviderParams,
+        AgentV1SettingsAgentContextListenProvider_V1Params,
+        AgentV1SettingsAgentContextListenProvider_V2Params,
+    )
+    from .agent_v1settings_agent_context_listen_provider_v1 import AgentV1SettingsAgentContextListenProviderV1Params
+    from .agent_v1settings_agent_context_listen_provider_v2 import AgentV1SettingsAgentContextListenProviderV2Params
+    from .agent_v1settings_agent_context_speak import AgentV1SettingsAgentContextSpeakParams
+    from .agent_v1settings_agent_context_think import AgentV1SettingsAgentContextThinkParams
     from .agent_v1settings_applied import AgentV1SettingsAppliedParams
     from .agent_v1settings_audio import AgentV1SettingsAudioParams
     from .agent_v1settings_audio_input import AgentV1SettingsAudioInputParams
     from .agent_v1settings_audio_output import AgentV1SettingsAudioOutputParams
     from .agent_v1settings_flags import AgentV1SettingsFlagsParams
     from .agent_v1speak_updated import AgentV1SpeakUpdatedParams
+    from .agent_v1think_updated import AgentV1ThinkUpdatedParams
     from .agent_v1update_prompt import AgentV1UpdatePromptParams
     from .agent_v1update_speak import AgentV1UpdateSpeakParams
+    from .agent_v1update_speak_speak import AgentV1UpdateSpeakSpeakParams
+    from .agent_v1update_think import AgentV1UpdateThinkParams
+    from .agent_v1update_think_think import AgentV1UpdateThinkThinkParams
     from .agent_v1user_started_speaking import AgentV1UserStartedSpeakingParams
     from .agent_v1warning import AgentV1WarningParams
     from .agent_v1welcome import AgentV1WelcomeParams
@@ -69,20 +76,21 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AgentV1PromptUpdatedParams": ".agent_v1prompt_updated",
     "AgentV1ReceiveFunctionCallResponseParams": ".agent_v1receive_function_call_response",
     "AgentV1SendFunctionCallResponseParams": ".agent_v1send_function_call_response",
-    "AgentV1SettingsAgentContextMessagesItemContentParams": ".agent_v1settings_agent_context_messages_item_content",
-    "AgentV1SettingsAgentContextMessagesItemFunctionCallsFunctionCallsItemParams": ".agent_v1settings_agent_context_messages_item_function_calls_function_calls_item",
-    "AgentV1SettingsAgentContextMessagesItemFunctionCallsParams": ".agent_v1settings_agent_context_messages_item_function_calls",
-    "AgentV1SettingsAgentContextMessagesItemParams": ".agent_v1settings_agent_context_messages_item",
+    "AgentV1SettingsAgentContextContextMessagesItemContentParams": ".agent_v1settings_agent_context_context_messages_item_content",
+    "AgentV1SettingsAgentContextContextMessagesItemFunctionCallsFunctionCallsItemParams": ".agent_v1settings_agent_context_context_messages_item_function_calls_function_calls_item",
+    "AgentV1SettingsAgentContextContextMessagesItemFunctionCallsParams": ".agent_v1settings_agent_context_context_messages_item_function_calls",
+    "AgentV1SettingsAgentContextContextMessagesItemParams": ".agent_v1settings_agent_context_context_messages_item",
+    "AgentV1SettingsAgentContextContextParams": ".agent_v1settings_agent_context_context",
+    "AgentV1SettingsAgentContextListenParams": ".agent_v1settings_agent_context_listen",
+    "AgentV1SettingsAgentContextListenProviderParams": ".agent_v1settings_agent_context_listen_provider",
+    "AgentV1SettingsAgentContextListenProviderV1Params": ".agent_v1settings_agent_context_listen_provider_v1",
+    "AgentV1SettingsAgentContextListenProviderV2Params": ".agent_v1settings_agent_context_listen_provider_v2",
+    "AgentV1SettingsAgentContextListenProvider_V1Params": ".agent_v1settings_agent_context_listen_provider",
+    "AgentV1SettingsAgentContextListenProvider_V2Params": ".agent_v1settings_agent_context_listen_provider",
     "AgentV1SettingsAgentContextParams": ".agent_v1settings_agent_context",
-    "AgentV1SettingsAgentListenParams": ".agent_v1settings_agent_listen",
-    "AgentV1SettingsAgentListenProviderParams": ".agent_v1settings_agent_listen_provider",
-    "AgentV1SettingsAgentListenProviderV1Params": ".agent_v1settings_agent_listen_provider_v1",
-    "AgentV1SettingsAgentListenProviderV2Params": ".agent_v1settings_agent_listen_provider_v2",
-    "AgentV1SettingsAgentListenProvider_V1Params": ".agent_v1settings_agent_listen_provider",
-    "AgentV1SettingsAgentListenProvider_V2Params": ".agent_v1settings_agent_listen_provider",
+    "AgentV1SettingsAgentContextSpeakParams": ".agent_v1settings_agent_context_speak",
+    "AgentV1SettingsAgentContextThinkParams": ".agent_v1settings_agent_context_think",
     "AgentV1SettingsAgentParams": ".agent_v1settings_agent",
-    "AgentV1SettingsAgentSpeakParams": ".agent_v1settings_agent_speak",
-    "AgentV1SettingsAgentThinkParams": ".agent_v1settings_agent_think",
     "AgentV1SettingsAppliedParams": ".agent_v1settings_applied",
     "AgentV1SettingsAudioInputParams": ".agent_v1settings_audio_input",
     "AgentV1SettingsAudioOutputParams": ".agent_v1settings_audio_output",
@@ -90,8 +98,12 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AgentV1SettingsFlagsParams": ".agent_v1settings_flags",
     "AgentV1SettingsParams": ".agent_v1settings",
     "AgentV1SpeakUpdatedParams": ".agent_v1speak_updated",
+    "AgentV1ThinkUpdatedParams": ".agent_v1think_updated",
     "AgentV1UpdatePromptParams": ".agent_v1update_prompt",
     "AgentV1UpdateSpeakParams": ".agent_v1update_speak",
+    "AgentV1UpdateSpeakSpeakParams": ".agent_v1update_speak_speak",
+    "AgentV1UpdateThinkParams": ".agent_v1update_think",
+    "AgentV1UpdateThinkThinkParams": ".agent_v1update_think_think",
     "AgentV1UserStartedSpeakingParams": ".agent_v1user_started_speaking",
     "AgentV1WarningParams": ".agent_v1warning",
     "AgentV1WelcomeParams": ".agent_v1welcome",
@@ -134,20 +146,21 @@ __all__ = [
     "AgentV1PromptUpdatedParams",
     "AgentV1ReceiveFunctionCallResponseParams",
     "AgentV1SendFunctionCallResponseParams",
-    "AgentV1SettingsAgentContextMessagesItemContentParams",
-    "AgentV1SettingsAgentContextMessagesItemFunctionCallsFunctionCallsItemParams",
-    "AgentV1SettingsAgentContextMessagesItemFunctionCallsParams",
-    "AgentV1SettingsAgentContextMessagesItemParams",
+    "AgentV1SettingsAgentContextContextMessagesItemContentParams",
+    "AgentV1SettingsAgentContextContextMessagesItemFunctionCallsFunctionCallsItemParams",
+    "AgentV1SettingsAgentContextContextMessagesItemFunctionCallsParams",
+    "AgentV1SettingsAgentContextContextMessagesItemParams",
+    "AgentV1SettingsAgentContextContextParams",
+    "AgentV1SettingsAgentContextListenParams",
+    "AgentV1SettingsAgentContextListenProviderParams",
+    "AgentV1SettingsAgentContextListenProviderV1Params",
+    "AgentV1SettingsAgentContextListenProviderV2Params",
+    "AgentV1SettingsAgentContextListenProvider_V1Params",
+    "AgentV1SettingsAgentContextListenProvider_V2Params",
     "AgentV1SettingsAgentContextParams",
-    "AgentV1SettingsAgentListenParams",
-    "AgentV1SettingsAgentListenProviderParams",
-    "AgentV1SettingsAgentListenProviderV1Params",
-    "AgentV1SettingsAgentListenProviderV2Params",
-    "AgentV1SettingsAgentListenProvider_V1Params",
-    "AgentV1SettingsAgentListenProvider_V2Params",
+    "AgentV1SettingsAgentContextSpeakParams",
+    "AgentV1SettingsAgentContextThinkParams",
     "AgentV1SettingsAgentParams",
-    "AgentV1SettingsAgentSpeakParams",
-    "AgentV1SettingsAgentThinkParams",
     "AgentV1SettingsAppliedParams",
     "AgentV1SettingsAudioInputParams",
     "AgentV1SettingsAudioOutputParams",
@@ -155,8 +168,12 @@ __all__ = [
     "AgentV1SettingsFlagsParams",
     "AgentV1SettingsParams",
     "AgentV1SpeakUpdatedParams",
+    "AgentV1ThinkUpdatedParams",
     "AgentV1UpdatePromptParams",
     "AgentV1UpdateSpeakParams",
+    "AgentV1UpdateSpeakSpeakParams",
+    "AgentV1UpdateThinkParams",
+    "AgentV1UpdateThinkThinkParams",
     "AgentV1UserStartedSpeakingParams",
     "AgentV1WarningParams",
     "AgentV1WelcomeParams",

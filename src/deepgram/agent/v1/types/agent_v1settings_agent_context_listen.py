@@ -5,16 +5,11 @@ import typing
 import pydantic
 from ....core.pydantic_utilities import IS_PYDANTIC_V2
 from ....core.unchecked_base_model import UncheckedBaseModel
-from .agent_v1update_speak_speak import AgentV1UpdateSpeakSpeak
+from .agent_v1settings_agent_context_listen_provider import AgentV1SettingsAgentContextListenProvider
 
 
-class AgentV1UpdateSpeak(UncheckedBaseModel):
-    type: typing.Literal["UpdateSpeak"] = pydantic.Field(default="UpdateSpeak")
-    """
-    Message type identifier for updating the speak model
-    """
-
-    speak: AgentV1UpdateSpeakSpeak
+class AgentV1SettingsAgentContextListen(UncheckedBaseModel):
+    provider: typing.Optional[AgentV1SettingsAgentContextListenProvider] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

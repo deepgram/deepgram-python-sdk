@@ -8,9 +8,11 @@ import pydantic
 import typing_extensions
 from ....core.pydantic_utilities import IS_PYDANTIC_V2
 from ....core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
+from ....types.listen_v2eager_eot_threshold import ListenV2EagerEotThreshold
+from ....types.listen_v2eot_threshold import ListenV2EotThreshold
 
 
-class AgentV1SettingsAgentListenProvider_V1(UncheckedBaseModel):
+class AgentV1SettingsAgentContextListenProvider_V1(UncheckedBaseModel):
     version: typing.Literal["v1"] = "v1"
     type: typing.Literal["deepgram"] = "deepgram"
     model: typing.Optional[str] = None
@@ -28,11 +30,13 @@ class AgentV1SettingsAgentListenProvider_V1(UncheckedBaseModel):
             extra = pydantic.Extra.allow
 
 
-class AgentV1SettingsAgentListenProvider_V2(UncheckedBaseModel):
+class AgentV1SettingsAgentContextListenProvider_V2(UncheckedBaseModel):
     version: typing.Literal["v2"] = "v2"
     type: typing.Literal["deepgram"] = "deepgram"
     model: str
     keyterms: typing.Optional[typing.List[str]] = None
+    eot_threshold: typing.Optional[ListenV2EotThreshold] = None
+    eager_eot_threshold: typing.Optional[ListenV2EagerEotThreshold] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
@@ -44,7 +48,7 @@ class AgentV1SettingsAgentListenProvider_V2(UncheckedBaseModel):
             extra = pydantic.Extra.allow
 
 
-AgentV1SettingsAgentListenProvider = typing_extensions.Annotated[
-    typing.Union[AgentV1SettingsAgentListenProvider_V1, AgentV1SettingsAgentListenProvider_V2],
+AgentV1SettingsAgentContextListenProvider = typing_extensions.Annotated[
+    typing.Union[AgentV1SettingsAgentContextListenProvider_V1, AgentV1SettingsAgentContextListenProvider_V2],
     UnionMetadata(discriminant="version"),
 ]

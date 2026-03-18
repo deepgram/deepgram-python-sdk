@@ -25,12 +25,17 @@ class SpeakV1Metadata(UncheckedBaseModel):
 
     model_version: str = pydantic.Field()
     """
-    Version of the model being used
+    Version of the primary model being used
     """
 
     model_uuid: str = pydantic.Field()
     """
-    Unique identifier for the model
+    Unique identifier for the primary model used
+    """
+
+    additional_model_uuids: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
+    """
+    List of unique identifiers for any additional models used to serve the request
     """
 
     if IS_PYDANTIC_V2:

@@ -4,4 +4,4 @@ import typing
 
 from ....requests.speak_settings_v1 import SpeakSettingsV1Params
 
-AgentV1SettingsAgentSpeakParams = typing.Union[SpeakSettingsV1Params, typing.Sequence[SpeakSettingsV1Params]]
+AgentV1UpdateSpeakSpeakParams = typing.Union[SpeakSettingsV1Params, typing.Sequence[SpeakSettingsV1Params]]
