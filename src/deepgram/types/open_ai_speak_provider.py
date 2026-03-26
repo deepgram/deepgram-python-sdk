@@ -2,35 +2,4 @@
 
 import typing
 
-import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
-from ..core.unchecked_base_model import UncheckedBaseModel
-from .open_ai_speak_provider_model import OpenAiSpeakProviderModel
-from .open_ai_speak_provider_voice import OpenAiSpeakProviderVoice
-
-
-class OpenAiSpeakProvider(UncheckedBaseModel):
-    type: typing.Literal["open_ai"] = "open_ai"
-    version: typing.Optional[typing.Literal["v1"]] = pydantic.Field(default=None)
-    """
-    The REST API version for the OpenAI text-to-speech API
-    """
-
-    model: OpenAiSpeakProviderModel = pydantic.Field()
-    """
-    OpenAI TTS model
-    """
-
-    voice: OpenAiSpeakProviderVoice = pydantic.Field()
-    """
-    OpenAI voice
-    """
-
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+OpenAiSpeakProvider = typing.Any

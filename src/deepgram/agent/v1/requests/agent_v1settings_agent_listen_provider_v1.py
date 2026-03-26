@@ -3,10 +3,11 @@
 import typing
 
 import typing_extensions
+from ..types.agent_v1settings_agent_listen_provider_v1type import AgentV1SettingsAgentListenProviderV1Type
 
 
 class AgentV1SettingsAgentListenProviderV1Params(typing_extensions.TypedDict):
-    type: typing.Literal["deepgram"]
+    type: AgentV1SettingsAgentListenProviderV1Type
     """
     Provider type for speech-to-text
     """

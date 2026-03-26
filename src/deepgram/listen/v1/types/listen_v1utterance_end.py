@@ -5,10 +5,11 @@ import typing
 import pydantic
 from ....core.pydantic_utilities import IS_PYDANTIC_V2
 from ....core.unchecked_base_model import UncheckedBaseModel
+from .listen_v1utterance_end_type import ListenV1UtteranceEndType
 
 
 class ListenV1UtteranceEnd(UncheckedBaseModel):
-    type: typing.Literal["UtteranceEnd"] = pydantic.Field(default="UtteranceEnd")
+    type: ListenV1UtteranceEndType = pydantic.Field()
     """
     Message type identifier
     """

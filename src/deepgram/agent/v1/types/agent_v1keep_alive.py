@@ -5,6 +5,7 @@ import typing
 import pydantic
 from ....core.pydantic_utilities import IS_PYDANTIC_V2
 from ....core.unchecked_base_model import UncheckedBaseModel
+from .agent_v1keep_alive_type import AgentV1KeepAliveType
 
 
 class AgentV1KeepAlive(UncheckedBaseModel):
@@ -12,7 +13,7 @@ class AgentV1KeepAlive(UncheckedBaseModel):
     Send a control message to the agent
     """
 
-    type: typing.Literal["KeepAlive"] = pydantic.Field(default="KeepAlive")
+    type: AgentV1KeepAliveType = pydantic.Field()
     """
     Message type identifier
     """

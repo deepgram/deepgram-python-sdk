@@ -5,25 +5,10 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .think_settings_v1context_length import ThinkSettingsV1ContextLength
-from .think_settings_v1endpoint import ThinkSettingsV1Endpoint
-from .think_settings_v1functions_item import ThinkSettingsV1FunctionsItem
-from .think_settings_v1provider import ThinkSettingsV1Provider
 
 
 class ThinkSettingsV1(UncheckedBaseModel):
-    provider: ThinkSettingsV1Provider
-    endpoint: typing.Optional[ThinkSettingsV1Endpoint] = pydantic.Field(default=None)
-    """
-    Optional for non-Deepgram LLM providers. When present, must include url field and headers object
-    """
-
-    functions: typing.Optional[typing.List[ThinkSettingsV1FunctionsItem]] = None
-    prompt: typing.Optional[str] = None
-    context_length: typing.Optional[ThinkSettingsV1ContextLength] = pydantic.Field(default=None)
-    """
-    Specifies the number of characters retained in context between user messages, agent responses, and function calls. This setting is only configurable when a custom think endpoint is used
-    """
+    context_length: typing.Optional[typing.Any] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

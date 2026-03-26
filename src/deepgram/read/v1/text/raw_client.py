@@ -15,7 +15,7 @@ from ....types.read_v1response import ReadV1Response
 from .types.text_analyze_request_callback_method import TextAnalyzeRequestCallbackMethod
 from .types.text_analyze_request_custom_intent_mode import TextAnalyzeRequestCustomIntentMode
 from .types.text_analyze_request_custom_topic_mode import TextAnalyzeRequestCustomTopicMode
-from .types.text_analyze_request_summarize import TextAnalyzeRequestSummarize
+from .types.text_analyze_request_summarize_zero import TextAnalyzeRequestSummarizeZero
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -32,7 +32,7 @@ class RawTextClient:
         callback: typing.Optional[str] = None,
         callback_method: typing.Optional[TextAnalyzeRequestCallbackMethod] = None,
         sentiment: typing.Optional[bool] = None,
-        summarize: typing.Optional[TextAnalyzeRequestSummarize] = None,
+        summarize: typing.Optional[TextAnalyzeRequestSummarizeZero] = None,
         tag: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         topics: typing.Optional[bool] = None,
         custom_topic: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
@@ -59,7 +59,7 @@ class RawTextClient:
         sentiment : typing.Optional[bool]
             Recognizes the sentiment throughout a transcript or text
 
-        summarize : typing.Optional[TextAnalyzeRequestSummarize]
+        summarize : typing.Optional[TextAnalyzeRequestSummarizeZero]
             Summarize content. For Listen API, supports string version option. For Read API, accepts boolean only.
 
         tag : typing.Optional[typing.Union[str, typing.Sequence[str]]]
@@ -159,7 +159,7 @@ class AsyncRawTextClient:
         callback: typing.Optional[str] = None,
         callback_method: typing.Optional[TextAnalyzeRequestCallbackMethod] = None,
         sentiment: typing.Optional[bool] = None,
-        summarize: typing.Optional[TextAnalyzeRequestSummarize] = None,
+        summarize: typing.Optional[TextAnalyzeRequestSummarizeZero] = None,
         tag: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         topics: typing.Optional[bool] = None,
         custom_topic: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
@@ -186,7 +186,7 @@ class AsyncRawTextClient:
         sentiment : typing.Optional[bool]
             Recognizes the sentiment throughout a transcript or text
 
-        summarize : typing.Optional[TextAnalyzeRequestSummarize]
+        summarize : typing.Optional[TextAnalyzeRequestSummarizeZero]
             Summarize content. For Listen API, supports string version option. For Read API, accepts boolean only.
 
         tag : typing.Optional[typing.Union[str, typing.Sequence[str]]]

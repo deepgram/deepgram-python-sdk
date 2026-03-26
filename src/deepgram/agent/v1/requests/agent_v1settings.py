@@ -3,13 +3,14 @@
 import typing
 
 import typing_extensions
+from ..types.agent_v1settings_type import AgentV1SettingsType
 from .agent_v1settings_agent import AgentV1SettingsAgentParams
 from .agent_v1settings_audio import AgentV1SettingsAudioParams
 from .agent_v1settings_flags import AgentV1SettingsFlagsParams
 
 
 class AgentV1SettingsParams(typing_extensions.TypedDict):
-    type: typing.Literal["Settings"]
+    type: AgentV1SettingsType
     tags: typing_extensions.NotRequired[typing.Sequence[str]]
     """
     Tags to associate with the request

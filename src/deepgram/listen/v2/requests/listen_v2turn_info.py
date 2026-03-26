@@ -4,6 +4,7 @@ import typing
 
 import typing_extensions
 from ..types.listen_v2turn_info_event import ListenV2TurnInfoEvent
+from ..types.listen_v2turn_info_type import ListenV2TurnInfoType
 from .listen_v2turn_info_words_item import ListenV2TurnInfoWordsItemParams
 
 
@@ -12,7 +13,7 @@ class ListenV2TurnInfoParams(typing_extensions.TypedDict):
     Describes the current turn and latest state of the turn
     """
 
-    type: typing.Literal["TurnInfo"]
+    type: ListenV2TurnInfoType
     request_id: str
     """
     The unique identifier of the request

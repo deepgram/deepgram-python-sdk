@@ -5,6 +5,8 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .agent_think_models_v1response_models_item_three_id import AgentThinkModelsV1ResponseModelsItemThreeId
+from .agent_think_models_v1response_models_item_three_provider import AgentThinkModelsV1ResponseModelsItemThreeProvider
 
 
 class AgentThinkModelsV1ResponseModelsItemThree(UncheckedBaseModel):
@@ -12,7 +14,7 @@ class AgentThinkModelsV1ResponseModelsItemThree(UncheckedBaseModel):
     Groq models
     """
 
-    id: typing.Literal["openai/gpt-oss-20b"] = pydantic.Field(default="openai/gpt-oss-20b")
+    id: AgentThinkModelsV1ResponseModelsItemThreeId = pydantic.Field()
     """
     The unique identifier of the Groq model
     """
@@ -22,7 +24,7 @@ class AgentThinkModelsV1ResponseModelsItemThree(UncheckedBaseModel):
     The display name of the model
     """
 
-    provider: typing.Literal["groq"] = pydantic.Field(default="groq")
+    provider: AgentThinkModelsV1ResponseModelsItemThreeProvider = pydantic.Field()
     """
     The provider of the model
     """

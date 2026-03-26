@@ -7,8 +7,12 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from . import distribution_credentials
-    from .distribution_credentials import DistributionCredentialsCreateRequestScopesItem
+    from .distribution_credentials import (
+        DistributionCredentialsCreateRequestProvider,
+        DistributionCredentialsCreateRequestScopesItem,
+    )
 _dynamic_imports: typing.Dict[str, str] = {
+    "DistributionCredentialsCreateRequestProvider": ".distribution_credentials",
     "DistributionCredentialsCreateRequestScopesItem": ".distribution_credentials",
     "distribution_credentials": ".distribution_credentials",
 }
@@ -35,4 +39,8 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["DistributionCredentialsCreateRequestScopesItem", "distribution_credentials"]
+__all__ = [
+    "DistributionCredentialsCreateRequestProvider",
+    "DistributionCredentialsCreateRequestScopesItem",
+    "distribution_credentials",
+]

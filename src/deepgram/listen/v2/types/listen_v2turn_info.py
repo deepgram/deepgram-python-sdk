@@ -6,6 +6,7 @@ import pydantic
 from ....core.pydantic_utilities import IS_PYDANTIC_V2
 from ....core.unchecked_base_model import UncheckedBaseModel
 from .listen_v2turn_info_event import ListenV2TurnInfoEvent
+from .listen_v2turn_info_type import ListenV2TurnInfoType
 from .listen_v2turn_info_words_item import ListenV2TurnInfoWordsItem
 
 
@@ -14,7 +15,7 @@ class ListenV2TurnInfo(UncheckedBaseModel):
     Describes the current turn and latest state of the turn
     """
 
-    type: typing.Literal["TurnInfo"] = "TurnInfo"
+    type: ListenV2TurnInfoType
     request_id: str = pydantic.Field()
     """
     The unique identifier of the request

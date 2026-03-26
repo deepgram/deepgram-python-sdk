@@ -2,34 +2,4 @@
 
 import typing
 
-import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
-from ..core.unchecked_base_model import UncheckedBaseModel
-from .google_think_provider_model import GoogleThinkProviderModel
-
-
-class Google(UncheckedBaseModel):
-    type: typing.Literal["google"] = "google"
-    version: typing.Optional[typing.Literal["v1beta"]] = pydantic.Field(default=None)
-    """
-    The REST API version for the Google generative language API
-    """
-
-    model: GoogleThinkProviderModel = pydantic.Field()
-    """
-    Google model to use
-    """
-
-    temperature: typing.Optional[float] = pydantic.Field(default=None)
-    """
-    Google temperature (0-2)
-    """
-
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+Google = typing.Any

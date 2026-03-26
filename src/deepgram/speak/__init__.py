@@ -25,10 +25,13 @@ if typing.TYPE_CHECKING:
         SpeakV1FlushedType,
         SpeakV1Metadata,
         SpeakV1MetadataParams,
+        SpeakV1MetadataType,
         SpeakV1Text,
         SpeakV1TextParams,
+        SpeakV1TextType,
         SpeakV1Warning,
         SpeakV1WarningParams,
+        SpeakV1WarningType,
     )
 _dynamic_imports: typing.Dict[str, str] = {
     "SpeakV1Clear": ".v1",
@@ -48,10 +51,13 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SpeakV1FlushedType": ".v1",
     "SpeakV1Metadata": ".v1",
     "SpeakV1MetadataParams": ".v1",
+    "SpeakV1MetadataType": ".v1",
     "SpeakV1Text": ".v1",
     "SpeakV1TextParams": ".v1",
+    "SpeakV1TextType": ".v1",
     "SpeakV1Warning": ".v1",
     "SpeakV1WarningParams": ".v1",
+    "SpeakV1WarningType": ".v1",
     "v1": ".v1",
 }
 
@@ -95,9 +101,12 @@ __all__ = [
     "SpeakV1FlushedType",
     "SpeakV1Metadata",
     "SpeakV1MetadataParams",
+    "SpeakV1MetadataType",
     "SpeakV1Text",
     "SpeakV1TextParams",
+    "SpeakV1TextType",
     "SpeakV1Warning",
     "SpeakV1WarningParams",
+    "SpeakV1WarningType",
     "v1",
 ]

@@ -3,13 +3,14 @@
 import typing
 
 import typing_extensions
+from ..types.listen_v1results_type import ListenV1ResultsType
 from .listen_v1results_channel import ListenV1ResultsChannelParams
 from .listen_v1results_entities_item import ListenV1ResultsEntitiesItemParams
 from .listen_v1results_metadata import ListenV1ResultsMetadataParams
 
 
 class ListenV1ResultsParams(typing_extensions.TypedDict):
-    type: typing.Literal["Results"]
+    type: ListenV1ResultsType
     """
     Message type identifier
     """

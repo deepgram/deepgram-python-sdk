@@ -3,5 +3,6 @@
 import typing
 
 from ....types.think_settings_v1 import ThinkSettingsV1
+from .agent_v1settings_agent_think_one_item import AgentV1SettingsAgentThinkOneItem
 
-AgentV1SettingsAgentThink = typing.Union[ThinkSettingsV1, typing.List[ThinkSettingsV1]]
+AgentV1SettingsAgentThink = typing.Union[ThinkSettingsV1, typing.List[AgentV1SettingsAgentThinkOneItem]]
