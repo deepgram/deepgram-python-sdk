@@ -42,7 +42,63 @@ if typing.TYPE_CHECKING:
     from .agent_v1settings_agent_listen_provider_v1 import AgentV1SettingsAgentListenProviderV1Params
     from .agent_v1settings_agent_listen_provider_v2 import AgentV1SettingsAgentListenProviderV2Params
     from .agent_v1settings_agent_speak import AgentV1SettingsAgentSpeakParams
+    from .agent_v1settings_agent_speak_endpoint import AgentV1SettingsAgentSpeakEndpointParams
+    from .agent_v1settings_agent_speak_endpoint_endpoint import AgentV1SettingsAgentSpeakEndpointEndpointParams
+    from .agent_v1settings_agent_speak_endpoint_provider import (
+        AgentV1SettingsAgentSpeakEndpointProviderParams,
+        AgentV1SettingsAgentSpeakEndpointProvider_AwsPollyParams,
+        AgentV1SettingsAgentSpeakEndpointProvider_CartesiaParams,
+        AgentV1SettingsAgentSpeakEndpointProvider_DeepgramParams,
+        AgentV1SettingsAgentSpeakEndpointProvider_ElevenLabsParams,
+        AgentV1SettingsAgentSpeakEndpointProvider_OpenAiParams,
+    )
+    from .agent_v1settings_agent_speak_endpoint_provider_aws_polly import (
+        AgentV1SettingsAgentSpeakEndpointProviderAwsPollyParams,
+    )
+    from .agent_v1settings_agent_speak_endpoint_provider_aws_polly_credentials import (
+        AgentV1SettingsAgentSpeakEndpointProviderAwsPollyCredentialsParams,
+    )
+    from .agent_v1settings_agent_speak_endpoint_provider_cartesia_voice import (
+        AgentV1SettingsAgentSpeakEndpointProviderCartesiaVoiceParams,
+    )
+    from .agent_v1settings_agent_speak_endpoint_provider_open_ai import (
+        AgentV1SettingsAgentSpeakEndpointProviderOpenAiParams,
+    )
+    from .agent_v1settings_agent_speak_one_item import AgentV1SettingsAgentSpeakOneItemParams
+    from .agent_v1settings_agent_speak_one_item_endpoint import AgentV1SettingsAgentSpeakOneItemEndpointParams
+    from .agent_v1settings_agent_speak_one_item_provider import (
+        AgentV1SettingsAgentSpeakOneItemProviderParams,
+        AgentV1SettingsAgentSpeakOneItemProvider_AwsPollyParams,
+        AgentV1SettingsAgentSpeakOneItemProvider_CartesiaParams,
+        AgentV1SettingsAgentSpeakOneItemProvider_DeepgramParams,
+        AgentV1SettingsAgentSpeakOneItemProvider_ElevenLabsParams,
+        AgentV1SettingsAgentSpeakOneItemProvider_OpenAiParams,
+    )
+    from .agent_v1settings_agent_speak_one_item_provider_aws_polly import (
+        AgentV1SettingsAgentSpeakOneItemProviderAwsPollyParams,
+    )
+    from .agent_v1settings_agent_speak_one_item_provider_aws_polly_credentials import (
+        AgentV1SettingsAgentSpeakOneItemProviderAwsPollyCredentialsParams,
+    )
+    from .agent_v1settings_agent_speak_one_item_provider_cartesia_voice import (
+        AgentV1SettingsAgentSpeakOneItemProviderCartesiaVoiceParams,
+    )
+    from .agent_v1settings_agent_speak_one_item_provider_open_ai import (
+        AgentV1SettingsAgentSpeakOneItemProviderOpenAiParams,
+    )
     from .agent_v1settings_agent_think import AgentV1SettingsAgentThinkParams
+    from .agent_v1settings_agent_think_one_item import AgentV1SettingsAgentThinkOneItemParams
+    from .agent_v1settings_agent_think_one_item_context_length import (
+        AgentV1SettingsAgentThinkOneItemContextLengthParams,
+    )
+    from .agent_v1settings_agent_think_one_item_endpoint import AgentV1SettingsAgentThinkOneItemEndpointParams
+    from .agent_v1settings_agent_think_one_item_functions_item import (
+        AgentV1SettingsAgentThinkOneItemFunctionsItemParams,
+    )
+    from .agent_v1settings_agent_think_one_item_functions_item_endpoint import (
+        AgentV1SettingsAgentThinkOneItemFunctionsItemEndpointParams,
+    )
+    from .agent_v1settings_agent_think_one_item_provider import AgentV1SettingsAgentThinkOneItemProviderParams
     from .agent_v1settings_applied import AgentV1SettingsAppliedParams
     from .agent_v1settings_audio import AgentV1SettingsAudioParams
     from .agent_v1settings_audio_input import AgentV1SettingsAudioInputParams
@@ -51,9 +107,73 @@ if typing.TYPE_CHECKING:
     from .agent_v1speak_updated import AgentV1SpeakUpdatedParams
     from .agent_v1update_prompt import AgentV1UpdatePromptParams
     from .agent_v1update_speak import AgentV1UpdateSpeakParams
+    from .agent_v1update_speak_speak import AgentV1UpdateSpeakSpeakParams
+    from .agent_v1update_speak_speak_endpoint import AgentV1UpdateSpeakSpeakEndpointParams
+    from .agent_v1update_speak_speak_endpoint_endpoint import AgentV1UpdateSpeakSpeakEndpointEndpointParams
+    from .agent_v1update_speak_speak_endpoint_provider import (
+        AgentV1UpdateSpeakSpeakEndpointProviderParams,
+        AgentV1UpdateSpeakSpeakEndpointProvider_AwsPollyParams,
+        AgentV1UpdateSpeakSpeakEndpointProvider_CartesiaParams,
+        AgentV1UpdateSpeakSpeakEndpointProvider_DeepgramParams,
+        AgentV1UpdateSpeakSpeakEndpointProvider_ElevenLabsParams,
+        AgentV1UpdateSpeakSpeakEndpointProvider_OpenAiParams,
+    )
+    from .agent_v1update_speak_speak_endpoint_provider_aws_polly import (
+        AgentV1UpdateSpeakSpeakEndpointProviderAwsPollyParams,
+    )
+    from .agent_v1update_speak_speak_endpoint_provider_aws_polly_credentials import (
+        AgentV1UpdateSpeakSpeakEndpointProviderAwsPollyCredentialsParams,
+    )
+    from .agent_v1update_speak_speak_endpoint_provider_cartesia import (
+        AgentV1UpdateSpeakSpeakEndpointProviderCartesiaParams,
+    )
+    from .agent_v1update_speak_speak_endpoint_provider_cartesia_voice import (
+        AgentV1UpdateSpeakSpeakEndpointProviderCartesiaVoiceParams,
+    )
+    from .agent_v1update_speak_speak_endpoint_provider_deepgram import (
+        AgentV1UpdateSpeakSpeakEndpointProviderDeepgramParams,
+    )
+    from .agent_v1update_speak_speak_endpoint_provider_eleven_labs import (
+        AgentV1UpdateSpeakSpeakEndpointProviderElevenLabsParams,
+    )
+    from .agent_v1update_speak_speak_endpoint_provider_open_ai import (
+        AgentV1UpdateSpeakSpeakEndpointProviderOpenAiParams,
+    )
+    from .agent_v1update_speak_speak_one_item import AgentV1UpdateSpeakSpeakOneItemParams
+    from .agent_v1update_speak_speak_one_item_endpoint import AgentV1UpdateSpeakSpeakOneItemEndpointParams
+    from .agent_v1update_speak_speak_one_item_provider import (
+        AgentV1UpdateSpeakSpeakOneItemProviderParams,
+        AgentV1UpdateSpeakSpeakOneItemProvider_AwsPollyParams,
+        AgentV1UpdateSpeakSpeakOneItemProvider_CartesiaParams,
+        AgentV1UpdateSpeakSpeakOneItemProvider_DeepgramParams,
+        AgentV1UpdateSpeakSpeakOneItemProvider_ElevenLabsParams,
+        AgentV1UpdateSpeakSpeakOneItemProvider_OpenAiParams,
+    )
+    from .agent_v1update_speak_speak_one_item_provider_aws_polly import (
+        AgentV1UpdateSpeakSpeakOneItemProviderAwsPollyParams,
+    )
+    from .agent_v1update_speak_speak_one_item_provider_aws_polly_credentials import (
+        AgentV1UpdateSpeakSpeakOneItemProviderAwsPollyCredentialsParams,
+    )
+    from .agent_v1update_speak_speak_one_item_provider_cartesia import (
+        AgentV1UpdateSpeakSpeakOneItemProviderCartesiaParams,
+    )
+    from .agent_v1update_speak_speak_one_item_provider_cartesia_voice import (
+        AgentV1UpdateSpeakSpeakOneItemProviderCartesiaVoiceParams,
+    )
+    from .agent_v1update_speak_speak_one_item_provider_deepgram import (
+        AgentV1UpdateSpeakSpeakOneItemProviderDeepgramParams,
+    )
+    from .agent_v1update_speak_speak_one_item_provider_eleven_labs import (
+        AgentV1UpdateSpeakSpeakOneItemProviderElevenLabsParams,
+    )
+    from .agent_v1update_speak_speak_one_item_provider_open_ai import AgentV1UpdateSpeakSpeakOneItemProviderOpenAiParams
     from .agent_v1user_started_speaking import AgentV1UserStartedSpeakingParams
     from .agent_v1warning import AgentV1WarningParams
     from .agent_v1welcome import AgentV1WelcomeParams
+    from .cartesia import CartesiaParams
+    from .deepgram import DeepgramParams
+    from .eleven_labs import ElevenLabsParams
 _dynamic_imports: typing.Dict[str, str] = {
     "AgentV1AgentAudioDoneParams": ".agent_v1agent_audio_done",
     "AgentV1AgentStartedSpeakingParams": ".agent_v1agent_started_speaking",
@@ -81,7 +201,37 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AgentV1SettingsAgentListenProvider_V1Params": ".agent_v1settings_agent_listen_provider",
     "AgentV1SettingsAgentListenProvider_V2Params": ".agent_v1settings_agent_listen_provider",
     "AgentV1SettingsAgentParams": ".agent_v1settings_agent",
+    "AgentV1SettingsAgentSpeakEndpointEndpointParams": ".agent_v1settings_agent_speak_endpoint_endpoint",
+    "AgentV1SettingsAgentSpeakEndpointParams": ".agent_v1settings_agent_speak_endpoint",
+    "AgentV1SettingsAgentSpeakEndpointProviderAwsPollyCredentialsParams": ".agent_v1settings_agent_speak_endpoint_provider_aws_polly_credentials",
+    "AgentV1SettingsAgentSpeakEndpointProviderAwsPollyParams": ".agent_v1settings_agent_speak_endpoint_provider_aws_polly",
+    "AgentV1SettingsAgentSpeakEndpointProviderCartesiaVoiceParams": ".agent_v1settings_agent_speak_endpoint_provider_cartesia_voice",
+    "AgentV1SettingsAgentSpeakEndpointProviderOpenAiParams": ".agent_v1settings_agent_speak_endpoint_provider_open_ai",
+    "AgentV1SettingsAgentSpeakEndpointProviderParams": ".agent_v1settings_agent_speak_endpoint_provider",
+    "AgentV1SettingsAgentSpeakEndpointProvider_AwsPollyParams": ".agent_v1settings_agent_speak_endpoint_provider",
+    "AgentV1SettingsAgentSpeakEndpointProvider_CartesiaParams": ".agent_v1settings_agent_speak_endpoint_provider",
+    "AgentV1SettingsAgentSpeakEndpointProvider_DeepgramParams": ".agent_v1settings_agent_speak_endpoint_provider",
+    "AgentV1SettingsAgentSpeakEndpointProvider_ElevenLabsParams": ".agent_v1settings_agent_speak_endpoint_provider",
+    "AgentV1SettingsAgentSpeakEndpointProvider_OpenAiParams": ".agent_v1settings_agent_speak_endpoint_provider",
+    "AgentV1SettingsAgentSpeakOneItemEndpointParams": ".agent_v1settings_agent_speak_one_item_endpoint",
+    "AgentV1SettingsAgentSpeakOneItemParams": ".agent_v1settings_agent_speak_one_item",
+    "AgentV1SettingsAgentSpeakOneItemProviderAwsPollyCredentialsParams": ".agent_v1settings_agent_speak_one_item_provider_aws_polly_credentials",
+    "AgentV1SettingsAgentSpeakOneItemProviderAwsPollyParams": ".agent_v1settings_agent_speak_one_item_provider_aws_polly",
+    "AgentV1SettingsAgentSpeakOneItemProviderCartesiaVoiceParams": ".agent_v1settings_agent_speak_one_item_provider_cartesia_voice",
+    "AgentV1SettingsAgentSpeakOneItemProviderOpenAiParams": ".agent_v1settings_agent_speak_one_item_provider_open_ai",
+    "AgentV1SettingsAgentSpeakOneItemProviderParams": ".agent_v1settings_agent_speak_one_item_provider",
+    "AgentV1SettingsAgentSpeakOneItemProvider_AwsPollyParams": ".agent_v1settings_agent_speak_one_item_provider",
+    "AgentV1SettingsAgentSpeakOneItemProvider_CartesiaParams": ".agent_v1settings_agent_speak_one_item_provider",
+    "AgentV1SettingsAgentSpeakOneItemProvider_DeepgramParams": ".agent_v1settings_agent_speak_one_item_provider",
+    "AgentV1SettingsAgentSpeakOneItemProvider_ElevenLabsParams": ".agent_v1settings_agent_speak_one_item_provider",
+    "AgentV1SettingsAgentSpeakOneItemProvider_OpenAiParams": ".agent_v1settings_agent_speak_one_item_provider",
     "AgentV1SettingsAgentSpeakParams": ".agent_v1settings_agent_speak",
+    "AgentV1SettingsAgentThinkOneItemContextLengthParams": ".agent_v1settings_agent_think_one_item_context_length",
+    "AgentV1SettingsAgentThinkOneItemEndpointParams": ".agent_v1settings_agent_think_one_item_endpoint",
+    "AgentV1SettingsAgentThinkOneItemFunctionsItemEndpointParams": ".agent_v1settings_agent_think_one_item_functions_item_endpoint",
+    "AgentV1SettingsAgentThinkOneItemFunctionsItemParams": ".agent_v1settings_agent_think_one_item_functions_item",
+    "AgentV1SettingsAgentThinkOneItemParams": ".agent_v1settings_agent_think_one_item",
+    "AgentV1SettingsAgentThinkOneItemProviderParams": ".agent_v1settings_agent_think_one_item_provider",
     "AgentV1SettingsAgentThinkParams": ".agent_v1settings_agent_think",
     "AgentV1SettingsAppliedParams": ".agent_v1settings_applied",
     "AgentV1SettingsAudioInputParams": ".agent_v1settings_audio_input",
@@ -92,9 +242,43 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AgentV1SpeakUpdatedParams": ".agent_v1speak_updated",
     "AgentV1UpdatePromptParams": ".agent_v1update_prompt",
     "AgentV1UpdateSpeakParams": ".agent_v1update_speak",
+    "AgentV1UpdateSpeakSpeakEndpointEndpointParams": ".agent_v1update_speak_speak_endpoint_endpoint",
+    "AgentV1UpdateSpeakSpeakEndpointParams": ".agent_v1update_speak_speak_endpoint",
+    "AgentV1UpdateSpeakSpeakEndpointProviderAwsPollyCredentialsParams": ".agent_v1update_speak_speak_endpoint_provider_aws_polly_credentials",
+    "AgentV1UpdateSpeakSpeakEndpointProviderAwsPollyParams": ".agent_v1update_speak_speak_endpoint_provider_aws_polly",
+    "AgentV1UpdateSpeakSpeakEndpointProviderCartesiaParams": ".agent_v1update_speak_speak_endpoint_provider_cartesia",
+    "AgentV1UpdateSpeakSpeakEndpointProviderCartesiaVoiceParams": ".agent_v1update_speak_speak_endpoint_provider_cartesia_voice",
+    "AgentV1UpdateSpeakSpeakEndpointProviderDeepgramParams": ".agent_v1update_speak_speak_endpoint_provider_deepgram",
+    "AgentV1UpdateSpeakSpeakEndpointProviderElevenLabsParams": ".agent_v1update_speak_speak_endpoint_provider_eleven_labs",
+    "AgentV1UpdateSpeakSpeakEndpointProviderOpenAiParams": ".agent_v1update_speak_speak_endpoint_provider_open_ai",
+    "AgentV1UpdateSpeakSpeakEndpointProviderParams": ".agent_v1update_speak_speak_endpoint_provider",
+    "AgentV1UpdateSpeakSpeakEndpointProvider_AwsPollyParams": ".agent_v1update_speak_speak_endpoint_provider",
+    "AgentV1UpdateSpeakSpeakEndpointProvider_CartesiaParams": ".agent_v1update_speak_speak_endpoint_provider",
+    "AgentV1UpdateSpeakSpeakEndpointProvider_DeepgramParams": ".agent_v1update_speak_speak_endpoint_provider",
+    "AgentV1UpdateSpeakSpeakEndpointProvider_ElevenLabsParams": ".agent_v1update_speak_speak_endpoint_provider",
+    "AgentV1UpdateSpeakSpeakEndpointProvider_OpenAiParams": ".agent_v1update_speak_speak_endpoint_provider",
+    "AgentV1UpdateSpeakSpeakOneItemEndpointParams": ".agent_v1update_speak_speak_one_item_endpoint",
+    "AgentV1UpdateSpeakSpeakOneItemParams": ".agent_v1update_speak_speak_one_item",
+    "AgentV1UpdateSpeakSpeakOneItemProviderAwsPollyCredentialsParams": ".agent_v1update_speak_speak_one_item_provider_aws_polly_credentials",
+    "AgentV1UpdateSpeakSpeakOneItemProviderAwsPollyParams": ".agent_v1update_speak_speak_one_item_provider_aws_polly",
+    "AgentV1UpdateSpeakSpeakOneItemProviderCartesiaParams": ".agent_v1update_speak_speak_one_item_provider_cartesia",
+    "AgentV1UpdateSpeakSpeakOneItemProviderCartesiaVoiceParams": ".agent_v1update_speak_speak_one_item_provider_cartesia_voice",
+    "AgentV1UpdateSpeakSpeakOneItemProviderDeepgramParams": ".agent_v1update_speak_speak_one_item_provider_deepgram",
+    "AgentV1UpdateSpeakSpeakOneItemProviderElevenLabsParams": ".agent_v1update_speak_speak_one_item_provider_eleven_labs",
+    "AgentV1UpdateSpeakSpeakOneItemProviderOpenAiParams": ".agent_v1update_speak_speak_one_item_provider_open_ai",
+    "AgentV1UpdateSpeakSpeakOneItemProviderParams": ".agent_v1update_speak_speak_one_item_provider",
+    "AgentV1UpdateSpeakSpeakOneItemProvider_AwsPollyParams": ".agent_v1update_speak_speak_one_item_provider",
+    "AgentV1UpdateSpeakSpeakOneItemProvider_CartesiaParams": ".agent_v1update_speak_speak_one_item_provider",
+    "AgentV1UpdateSpeakSpeakOneItemProvider_DeepgramParams": ".agent_v1update_speak_speak_one_item_provider",
+    "AgentV1UpdateSpeakSpeakOneItemProvider_ElevenLabsParams": ".agent_v1update_speak_speak_one_item_provider",
+    "AgentV1UpdateSpeakSpeakOneItemProvider_OpenAiParams": ".agent_v1update_speak_speak_one_item_provider",
+    "AgentV1UpdateSpeakSpeakParams": ".agent_v1update_speak_speak",
     "AgentV1UserStartedSpeakingParams": ".agent_v1user_started_speaking",
     "AgentV1WarningParams": ".agent_v1warning",
     "AgentV1WelcomeParams": ".agent_v1welcome",
+    "CartesiaParams": ".cartesia",
+    "DeepgramParams": ".deepgram",
+    "ElevenLabsParams": ".eleven_labs",
 }
 
 
@@ -146,7 +330,37 @@ __all__ = [
     "AgentV1SettingsAgentListenProvider_V1Params",
     "AgentV1SettingsAgentListenProvider_V2Params",
     "AgentV1SettingsAgentParams",
+    "AgentV1SettingsAgentSpeakEndpointEndpointParams",
+    "AgentV1SettingsAgentSpeakEndpointParams",
+    "AgentV1SettingsAgentSpeakEndpointProviderAwsPollyCredentialsParams",
+    "AgentV1SettingsAgentSpeakEndpointProviderAwsPollyParams",
+    "AgentV1SettingsAgentSpeakEndpointProviderCartesiaVoiceParams",
+    "AgentV1SettingsAgentSpeakEndpointProviderOpenAiParams",
+    "AgentV1SettingsAgentSpeakEndpointProviderParams",
+    "AgentV1SettingsAgentSpeakEndpointProvider_AwsPollyParams",
+    "AgentV1SettingsAgentSpeakEndpointProvider_CartesiaParams",
+    "AgentV1SettingsAgentSpeakEndpointProvider_DeepgramParams",
+    "AgentV1SettingsAgentSpeakEndpointProvider_ElevenLabsParams",
+    "AgentV1SettingsAgentSpeakEndpointProvider_OpenAiParams",
+    "AgentV1SettingsAgentSpeakOneItemEndpointParams",
+    "AgentV1SettingsAgentSpeakOneItemParams",
+    "AgentV1SettingsAgentSpeakOneItemProviderAwsPollyCredentialsParams",
+    "AgentV1SettingsAgentSpeakOneItemProviderAwsPollyParams",
+    "AgentV1SettingsAgentSpeakOneItemProviderCartesiaVoiceParams",
+    "AgentV1SettingsAgentSpeakOneItemProviderOpenAiParams",
+    "AgentV1SettingsAgentSpeakOneItemProviderParams",
+    "AgentV1SettingsAgentSpeakOneItemProvider_AwsPollyParams",
+    "AgentV1SettingsAgentSpeakOneItemProvider_CartesiaParams",
+    "AgentV1SettingsAgentSpeakOneItemProvider_DeepgramParams",
+    "AgentV1SettingsAgentSpeakOneItemProvider_ElevenLabsParams",
+    "AgentV1SettingsAgentSpeakOneItemProvider_OpenAiParams",
     "AgentV1SettingsAgentSpeakParams",
+    "AgentV1SettingsAgentThinkOneItemContextLengthParams",
+    "AgentV1SettingsAgentThinkOneItemEndpointParams",
+    "AgentV1SettingsAgentThinkOneItemFunctionsItemEndpointParams",
+    "AgentV1SettingsAgentThinkOneItemFunctionsItemParams",
+    "AgentV1SettingsAgentThinkOneItemParams",
+    "AgentV1SettingsAgentThinkOneItemProviderParams",
     "AgentV1SettingsAgentThinkParams",
     "AgentV1SettingsAppliedParams",
     "AgentV1SettingsAudioInputParams",
@@ -157,7 +371,41 @@ __all__ = [
     "AgentV1SpeakUpdatedParams",
     "AgentV1UpdatePromptParams",
     "AgentV1UpdateSpeakParams",
+    "AgentV1UpdateSpeakSpeakEndpointEndpointParams",
+    "AgentV1UpdateSpeakSpeakEndpointParams",
+    "AgentV1UpdateSpeakSpeakEndpointProviderAwsPollyCredentialsParams",
+    "AgentV1UpdateSpeakSpeakEndpointProviderAwsPollyParams",
+    "AgentV1UpdateSpeakSpeakEndpointProviderCartesiaParams",
+    "AgentV1UpdateSpeakSpeakEndpointProviderCartesiaVoiceParams",
+    "AgentV1UpdateSpeakSpeakEndpointProviderDeepgramParams",
+    "AgentV1UpdateSpeakSpeakEndpointProviderElevenLabsParams",
+    "AgentV1UpdateSpeakSpeakEndpointProviderOpenAiParams",
+    "AgentV1UpdateSpeakSpeakEndpointProviderParams",
+    "AgentV1UpdateSpeakSpeakEndpointProvider_AwsPollyParams",
+    "AgentV1UpdateSpeakSpeakEndpointProvider_CartesiaParams",
+    "AgentV1UpdateSpeakSpeakEndpointProvider_DeepgramParams",
+    "AgentV1UpdateSpeakSpeakEndpointProvider_ElevenLabsParams",
+    "AgentV1UpdateSpeakSpeakEndpointProvider_OpenAiParams",
+    "AgentV1UpdateSpeakSpeakOneItemEndpointParams",
+    "AgentV1UpdateSpeakSpeakOneItemParams",
+    "AgentV1UpdateSpeakSpeakOneItemProviderAwsPollyCredentialsParams",
+    "AgentV1UpdateSpeakSpeakOneItemProviderAwsPollyParams",
+    "AgentV1UpdateSpeakSpeakOneItemProviderCartesiaParams",
+    "AgentV1UpdateSpeakSpeakOneItemProviderCartesiaVoiceParams",
+    "AgentV1UpdateSpeakSpeakOneItemProviderDeepgramParams",
+    "AgentV1UpdateSpeakSpeakOneItemProviderElevenLabsParams",
+    "AgentV1UpdateSpeakSpeakOneItemProviderOpenAiParams",
+    "AgentV1UpdateSpeakSpeakOneItemProviderParams",
+    "AgentV1UpdateSpeakSpeakOneItemProvider_AwsPollyParams",
+    "AgentV1UpdateSpeakSpeakOneItemProvider_CartesiaParams",
+    "AgentV1UpdateSpeakSpeakOneItemProvider_DeepgramParams",
+    "AgentV1UpdateSpeakSpeakOneItemProvider_ElevenLabsParams",
+    "AgentV1UpdateSpeakSpeakOneItemProvider_OpenAiParams",
+    "AgentV1UpdateSpeakSpeakParams",
     "AgentV1UserStartedSpeakingParams",
     "AgentV1WarningParams",
     "AgentV1WelcomeParams",
+    "CartesiaParams",
+    "DeepgramParams",
+    "ElevenLabsParams",
 ]

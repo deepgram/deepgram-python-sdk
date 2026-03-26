@@ -5,10 +5,11 @@ import typing
 import pydantic
 from ....core.pydantic_utilities import IS_PYDANTIC_V2
 from ....core.unchecked_base_model import UncheckedBaseModel
+from .agent_v1error_type import AgentV1ErrorType
 
 
 class AgentV1Error(UncheckedBaseModel):
-    type: typing.Literal["Error"] = pydantic.Field(default="Error")
+    type: AgentV1ErrorType = pydantic.Field()
     """
     Message type identifier for error responses
     """

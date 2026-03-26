@@ -2,34 +2,4 @@
 
 import typing
 
-import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
-from ..core.unchecked_base_model import UncheckedBaseModel
-from .open_ai_think_provider_model import OpenAiThinkProviderModel
-
-
-class OpenAiThinkProvider(UncheckedBaseModel):
-    type: typing.Literal["open_ai"] = "open_ai"
-    version: typing.Optional[typing.Literal["v1"]] = pydantic.Field(default=None)
-    """
-    The REST API version for the OpenAI chat completions API
-    """
-
-    model: OpenAiThinkProviderModel = pydantic.Field()
-    """
-    OpenAI model to use
-    """
-
-    temperature: typing.Optional[float] = pydantic.Field(default=None)
-    """
-    OpenAI temperature (0-2)
-    """
-
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+OpenAiThinkProvider = typing.Any

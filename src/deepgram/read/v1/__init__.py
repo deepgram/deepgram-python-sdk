@@ -11,13 +11,13 @@ if typing.TYPE_CHECKING:
         TextAnalyzeRequestCallbackMethod,
         TextAnalyzeRequestCustomIntentMode,
         TextAnalyzeRequestCustomTopicMode,
-        TextAnalyzeRequestSummarize,
+        TextAnalyzeRequestSummarizeZero,
     )
 _dynamic_imports: typing.Dict[str, str] = {
     "TextAnalyzeRequestCallbackMethod": ".text",
     "TextAnalyzeRequestCustomIntentMode": ".text",
     "TextAnalyzeRequestCustomTopicMode": ".text",
-    "TextAnalyzeRequestSummarize": ".text",
+    "TextAnalyzeRequestSummarizeZero": ".text",
     "text": ".text",
 }
 
@@ -47,6 +47,6 @@ __all__ = [
     "TextAnalyzeRequestCallbackMethod",
     "TextAnalyzeRequestCustomIntentMode",
     "TextAnalyzeRequestCustomTopicMode",
-    "TextAnalyzeRequestSummarize",
+    "TextAnalyzeRequestSummarizeZero",
     "text",
 ]

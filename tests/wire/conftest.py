@@ -26,9 +26,8 @@ except (TypeError, ValueError):
 
 
 def _get_wiremock_base_url() -> str:
-    """Returns the WireMock base URL using the dynamically assigned port."""
-    port = os.environ.get("WIREMOCK_PORT", "8080")
-    return f"http://localhost:{port}"
+    """Returns the WireMock base URL from the WIREMOCK_URL environment variable."""
+    return os.environ.get("WIREMOCK_URL", "http://localhost:8080")
 
 
 def get_client(test_id: str) -> DeepgramClient:
@@ -46,13 +45,13 @@ def get_client(test_id: str) -> DeepgramClient:
 
     if _CLIENT_SUPPORTS_HEADERS:
         return DeepgramClient(
-            environment=DeepgramClientEnvironment(base=base_url, production=base_url, agent=base_url),
+            environment=DeepgramClientEnvironment(base=base_url, agent=base_url, production=base_url),
             headers=test_headers,
             api_key="test_api_key",
         )
 
     return DeepgramClient(
-        environment=DeepgramClientEnvironment(base=base_url, production=base_url, agent=base_url),
+        environment=DeepgramClientEnvironment(base=base_url, agent=base_url, production=base_url),
         httpx_client=httpx.Client(headers=test_headers),
         api_key="test_api_key",
     )

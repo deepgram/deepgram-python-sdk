@@ -5,10 +5,11 @@ import typing
 import pydantic
 from ....core.pydantic_utilities import IS_PYDANTIC_V2
 from ....core.unchecked_base_model import UncheckedBaseModel
+from .agent_v1agent_audio_done_type import AgentV1AgentAudioDoneType
 
 
 class AgentV1AgentAudioDone(UncheckedBaseModel):
-    type: typing.Literal["AgentAudioDone"] = pydantic.Field(default="AgentAudioDone")
+    type: AgentV1AgentAudioDoneType = pydantic.Field()
     """
     Message type identifier indicating the agent has finished sending audio
     """

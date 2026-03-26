@@ -6,6 +6,7 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .agent_think_models_v1response_models_item_one_id import AgentThinkModelsV1ResponseModelsItemOneId
+from .agent_think_models_v1response_models_item_one_provider import AgentThinkModelsV1ResponseModelsItemOneProvider
 
 
 class AgentThinkModelsV1ResponseModelsItemOne(UncheckedBaseModel):
@@ -23,7 +24,7 @@ class AgentThinkModelsV1ResponseModelsItemOne(UncheckedBaseModel):
     The display name of the model
     """
 
-    provider: typing.Literal["anthropic"] = pydantic.Field(default="anthropic")
+    provider: AgentThinkModelsV1ResponseModelsItemOneProvider = pydantic.Field()
     """
     The provider of the model
     """

@@ -33,11 +33,7 @@ class UsageBreakdownV1ResponseResultsItemGrouping(UncheckedBaseModel):
     Optional feature set identifier
     """
 
-    models: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    Optional models identifier
-    """
-
+    models: typing.Optional[typing.List[typing.Optional[str]]] = None
     method: typing.Optional[str] = pydantic.Field(default=None)
     """
     Optional method identifier

@@ -3,10 +3,11 @@
 import typing
 
 import typing_extensions
+from ..types.listen_v1speech_started_type import ListenV1SpeechStartedType
 
 
 class ListenV1SpeechStartedParams(typing_extensions.TypedDict):
-    type: typing.Literal["SpeechStarted"]
+    type: ListenV1SpeechStartedType
     """
     Message type identifier
     """

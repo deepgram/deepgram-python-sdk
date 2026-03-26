@@ -2,39 +2,4 @@
 
 import typing
 
-import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
-from ..core.unchecked_base_model import UncheckedBaseModel
-from .aws_polly_speak_provider_credentials import AwsPollySpeakProviderCredentials
-from .aws_polly_speak_provider_engine import AwsPollySpeakProviderEngine
-from .aws_polly_speak_provider_voice import AwsPollySpeakProviderVoice
-
-
-class AwsPollySpeakProvider(UncheckedBaseModel):
-    type: typing.Literal["aws_polly"] = "aws_polly"
-    voice: AwsPollySpeakProviderVoice = pydantic.Field()
-    """
-    AWS Polly voice name
-    """
-
-    language: str = pydantic.Field()
-    """
-    Language code to use, e.g. 'en-US'. Corresponds to the `language_code` parameter in the AWS Polly API
-    """
-
-    language_code: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    Use the `language` field instead.
-    """
-
-    engine: AwsPollySpeakProviderEngine
-    credentials: AwsPollySpeakProviderCredentials
-
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+AwsPollySpeakProvider = typing.Any

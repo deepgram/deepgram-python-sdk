@@ -5,6 +5,7 @@ import typing
 import pydantic
 from ....core.pydantic_utilities import IS_PYDANTIC_V2
 from ....core.unchecked_base_model import UncheckedBaseModel
+from .agent_v1warning_type import AgentV1WarningType
 
 
 class AgentV1Warning(UncheckedBaseModel):
@@ -12,7 +13,7 @@ class AgentV1Warning(UncheckedBaseModel):
     Notifies the client of non-fatal errors or warnings
     """
 
-    type: typing.Literal["Warning"] = pydantic.Field(default="Warning")
+    type: AgentV1WarningType = pydantic.Field()
     """
     Message type identifier for warnings
     """

@@ -5,10 +5,11 @@ import typing
 import pydantic
 from ....core.pydantic_utilities import IS_PYDANTIC_V2
 from ....core.unchecked_base_model import UncheckedBaseModel
+from .listen_v2connected_type import ListenV2ConnectedType
 
 
 class ListenV2Connected(UncheckedBaseModel):
-    type: typing.Literal["Connected"] = pydantic.Field(default="Connected")
+    type: ListenV2ConnectedType = pydantic.Field()
     """
     Message type identifier
     """

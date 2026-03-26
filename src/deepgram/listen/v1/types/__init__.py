@@ -13,6 +13,7 @@ if typing.TYPE_CHECKING:
     from .listen_v1keep_alive import ListenV1KeepAlive
     from .listen_v1keep_alive_type import ListenV1KeepAliveType
     from .listen_v1metadata import ListenV1Metadata
+    from .listen_v1metadata_type import ListenV1MetadataType
     from .listen_v1results import ListenV1Results
     from .listen_v1results_channel import ListenV1ResultsChannel
     from .listen_v1results_channel_alternatives_item import ListenV1ResultsChannelAlternativesItem
@@ -20,8 +21,11 @@ if typing.TYPE_CHECKING:
     from .listen_v1results_entities_item import ListenV1ResultsEntitiesItem
     from .listen_v1results_metadata import ListenV1ResultsMetadata
     from .listen_v1results_metadata_model_info import ListenV1ResultsMetadataModelInfo
+    from .listen_v1results_type import ListenV1ResultsType
     from .listen_v1speech_started import ListenV1SpeechStarted
+    from .listen_v1speech_started_type import ListenV1SpeechStartedType
     from .listen_v1utterance_end import ListenV1UtteranceEnd
+    from .listen_v1utterance_end_type import ListenV1UtteranceEndType
 _dynamic_imports: typing.Dict[str, str] = {
     "ListenV1CloseStream": ".listen_v1close_stream",
     "ListenV1CloseStreamType": ".listen_v1close_stream_type",
@@ -30,6 +34,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ListenV1KeepAlive": ".listen_v1keep_alive",
     "ListenV1KeepAliveType": ".listen_v1keep_alive_type",
     "ListenV1Metadata": ".listen_v1metadata",
+    "ListenV1MetadataType": ".listen_v1metadata_type",
     "ListenV1Results": ".listen_v1results",
     "ListenV1ResultsChannel": ".listen_v1results_channel",
     "ListenV1ResultsChannelAlternativesItem": ".listen_v1results_channel_alternatives_item",
@@ -37,8 +42,11 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ListenV1ResultsEntitiesItem": ".listen_v1results_entities_item",
     "ListenV1ResultsMetadata": ".listen_v1results_metadata",
     "ListenV1ResultsMetadataModelInfo": ".listen_v1results_metadata_model_info",
+    "ListenV1ResultsType": ".listen_v1results_type",
     "ListenV1SpeechStarted": ".listen_v1speech_started",
+    "ListenV1SpeechStartedType": ".listen_v1speech_started_type",
     "ListenV1UtteranceEnd": ".listen_v1utterance_end",
+    "ListenV1UtteranceEndType": ".listen_v1utterance_end_type",
 }
 
 
@@ -71,6 +79,7 @@ __all__ = [
     "ListenV1KeepAlive",
     "ListenV1KeepAliveType",
     "ListenV1Metadata",
+    "ListenV1MetadataType",
     "ListenV1Results",
     "ListenV1ResultsChannel",
     "ListenV1ResultsChannelAlternativesItem",
@@ -78,6 +87,9 @@ __all__ = [
     "ListenV1ResultsEntitiesItem",
     "ListenV1ResultsMetadata",
     "ListenV1ResultsMetadataModelInfo",
+    "ListenV1ResultsType",
     "ListenV1SpeechStarted",
+    "ListenV1SpeechStartedType",
     "ListenV1UtteranceEnd",
+    "ListenV1UtteranceEndType",
 ]

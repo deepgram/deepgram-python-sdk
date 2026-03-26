@@ -5,10 +5,11 @@ import typing
 import pydantic
 from ....core.pydantic_utilities import IS_PYDANTIC_V2
 from ....core.unchecked_base_model import UncheckedBaseModel
+from .agent_v1speak_updated_type import AgentV1SpeakUpdatedType
 
 
 class AgentV1SpeakUpdated(UncheckedBaseModel):
-    type: typing.Literal["SpeakUpdated"] = pydantic.Field(default="SpeakUpdated")
+    type: AgentV1SpeakUpdatedType = pydantic.Field()
     """
     Message type identifier for speak update confirmation
     """

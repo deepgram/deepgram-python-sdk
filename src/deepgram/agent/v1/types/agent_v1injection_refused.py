@@ -5,10 +5,11 @@ import typing
 import pydantic
 from ....core.pydantic_utilities import IS_PYDANTIC_V2
 from ....core.unchecked_base_model import UncheckedBaseModel
+from .agent_v1injection_refused_type import AgentV1InjectionRefusedType
 
 
 class AgentV1InjectionRefused(UncheckedBaseModel):
-    type: typing.Literal["InjectionRefused"] = pydantic.Field(default="InjectionRefused")
+    type: AgentV1InjectionRefusedType = pydantic.Field()
     """
     Message type identifier for injection refused
     """

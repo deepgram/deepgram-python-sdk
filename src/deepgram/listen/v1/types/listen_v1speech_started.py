@@ -5,10 +5,11 @@ import typing
 import pydantic
 from ....core.pydantic_utilities import IS_PYDANTIC_V2
 from ....core.unchecked_base_model import UncheckedBaseModel
+from .listen_v1speech_started_type import ListenV1SpeechStartedType
 
 
 class ListenV1SpeechStarted(UncheckedBaseModel):
-    type: typing.Literal["SpeechStarted"] = pydantic.Field(default="SpeechStarted")
+    type: ListenV1SpeechStartedType = pydantic.Field()
     """
     Message type identifier
     """

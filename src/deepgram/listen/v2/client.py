@@ -11,7 +11,17 @@ from ...core.jsonable_encoder import jsonable_encoder
 from ...core.query_encoder import encode_query
 from ...core.remove_none_from_dict import remove_none_from_dict
 from ...core.request_options import RequestOptions
+from ...core.serialization import convert_and_respect_annotation_metadata
 from ...core.websocket_compat import InvalidWebSocketStatus, get_status_code
+from ...requests.listen_v2keyterm import ListenV2KeytermParams
+from ...types.listen_v2eager_eot_threshold import ListenV2EagerEotThreshold
+from ...types.listen_v2encoding import ListenV2Encoding
+from ...types.listen_v2eot_threshold import ListenV2EotThreshold
+from ...types.listen_v2eot_timeout_ms import ListenV2EotTimeoutMs
+from ...types.listen_v2mip_opt_out import ListenV2MipOptOut
+from ...types.listen_v2model import ListenV2Model
+from ...types.listen_v2sample_rate import ListenV2SampleRate
+from ...types.listen_v2tag import ListenV2Tag
 from .raw_client import AsyncRawV2Client, RawV2Client
 from .socket_client import AsyncV2SocketClient, V2SocketClient
 
@@ -40,15 +50,15 @@ class V2Client:
     def connect(
         self,
         *,
-        model: str,
-        encoding: typing.Optional[str] = None,
-        sample_rate: typing.Optional[str] = None,
-        eager_eot_threshold: typing.Optional[str] = None,
-        eot_threshold: typing.Optional[str] = None,
-        eot_timeout_ms: typing.Optional[str] = None,
-        keyterm: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
-        mip_opt_out: typing.Optional[str] = None,
-        tag: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        model: ListenV2Model,
+        encoding: typing.Optional[ListenV2Encoding] = None,
+        sample_rate: typing.Optional[ListenV2SampleRate] = None,
+        eager_eot_threshold: typing.Optional[ListenV2EagerEotThreshold] = None,
+        eot_threshold: typing.Optional[ListenV2EotThreshold] = None,
+        eot_timeout_ms: typing.Optional[ListenV2EotTimeoutMs] = None,
+        keyterm: typing.Optional[ListenV2KeytermParams] = None,
+        mip_opt_out: typing.Optional[ListenV2MipOptOut] = None,
+        tag: typing.Optional[ListenV2Tag] = None,
         authorization: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Iterator[V2SocketClient]:
@@ -58,30 +68,28 @@ class V2Client:
 
         Parameters
         ----------
-        model : str
+        model : ListenV2Model
 
-        encoding : typing.Optional[str]
+        encoding : typing.Optional[ListenV2Encoding]
 
-        sample_rate : typing.Optional[str]
+        sample_rate : typing.Optional[ListenV2SampleRate]
 
-        eager_eot_threshold : typing.Optional[str]
+        eager_eot_threshold : typing.Optional[ListenV2EagerEotThreshold]
 
-        eot_threshold : typing.Optional[str]
+        eot_threshold : typing.Optional[ListenV2EotThreshold]
 
-        eot_timeout_ms : typing.Optional[str]
+        eot_timeout_ms : typing.Optional[ListenV2EotTimeoutMs]
 
-        keyterm : typing.Optional[typing.Union[str, typing.Sequence[str]]]
-            Keyterm prompting can improve recognition of specialized terminology. Pass a single string or a list of strings.
+        keyterm : typing.Optional[ListenV2KeytermParams]
 
-        mip_opt_out : typing.Optional[str]
+        mip_opt_out : typing.Optional[ListenV2MipOptOut]
 
-        tag : typing.Optional[typing.Union[str, typing.Sequence[str]]]
-            Label your requests for the purpose of identification during usage reporting. Pass a single string or a list of strings.
+        tag : typing.Optional[ListenV2Tag]
 
         authorization : typing.Optional[str]
-            Use your API key for authentication, or alternatively generate a [temporary token](/guides/fundamentals/token-based-authentication) and pass it via the `token` query parameter.
+            Use your API key or a [temporary token](/guides/fundamentals/token-based-authentication) for authentication via the `Authorization` header. In client-side environments where custom headers are not supported, use the [`Sec-WebSocket-Protocol`](/guides/deep-dives/using-the-sec-websocket-protocol) header instead.
 
-            **Example:** `token %DEEPGRAM_API_KEY%` or `bearer %DEEPGRAM_TOKEN%`
+            **Example:** `Authorization: Token %DEEPGRAM_API_KEY%` or `Authorization: Bearer %DEEPGRAM_TOKEN%`
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -101,7 +109,13 @@ class V2Client:
                         "eager_eot_threshold": eager_eot_threshold,
                         "eot_threshold": eot_threshold,
                         "eot_timeout_ms": eot_timeout_ms,
-                        "keyterm": keyterm,
+                        "keyterm": convert_and_respect_annotation_metadata(
+                            object_=convert_and_respect_annotation_metadata(
+                                object_=keyterm, annotation=ListenV2KeytermParams, direction="write"
+                            ),
+                            annotation=ListenV2KeytermParams,
+                            direction="write",
+                        ),
                         "mip_opt_out": mip_opt_out,
                         "tag": tag,
                         **(
@@ -157,15 +171,15 @@ class AsyncV2Client:
     async def connect(
         self,
         *,
-        model: str,
-        encoding: typing.Optional[str] = None,
-        sample_rate: typing.Optional[str] = None,
-        eager_eot_threshold: typing.Optional[str] = None,
-        eot_threshold: typing.Optional[str] = None,
-        eot_timeout_ms: typing.Optional[str] = None,
-        keyterm: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
-        mip_opt_out: typing.Optional[str] = None,
-        tag: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        model: ListenV2Model,
+        encoding: typing.Optional[ListenV2Encoding] = None,
+        sample_rate: typing.Optional[ListenV2SampleRate] = None,
+        eager_eot_threshold: typing.Optional[ListenV2EagerEotThreshold] = None,
+        eot_threshold: typing.Optional[ListenV2EotThreshold] = None,
+        eot_timeout_ms: typing.Optional[ListenV2EotTimeoutMs] = None,
+        keyterm: typing.Optional[ListenV2KeytermParams] = None,
+        mip_opt_out: typing.Optional[ListenV2MipOptOut] = None,
+        tag: typing.Optional[ListenV2Tag] = None,
         authorization: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.AsyncIterator[AsyncV2SocketClient]:
@@ -175,30 +189,28 @@ class AsyncV2Client:
 
         Parameters
         ----------
-        model : str
+        model : ListenV2Model
 
-        encoding : typing.Optional[str]
+        encoding : typing.Optional[ListenV2Encoding]
 
-        sample_rate : typing.Optional[str]
+        sample_rate : typing.Optional[ListenV2SampleRate]
 
-        eager_eot_threshold : typing.Optional[str]
+        eager_eot_threshold : typing.Optional[ListenV2EagerEotThreshold]
 
-        eot_threshold : typing.Optional[str]
+        eot_threshold : typing.Optional[ListenV2EotThreshold]
 
-        eot_timeout_ms : typing.Optional[str]
+        eot_timeout_ms : typing.Optional[ListenV2EotTimeoutMs]
 
-        keyterm : typing.Optional[typing.Union[str, typing.Sequence[str]]]
-            Keyterm prompting can improve recognition of specialized terminology. Pass a single string or a list of strings.
+        keyterm : typing.Optional[ListenV2KeytermParams]
 
-        mip_opt_out : typing.Optional[str]
+        mip_opt_out : typing.Optional[ListenV2MipOptOut]
 
-        tag : typing.Optional[typing.Union[str, typing.Sequence[str]]]
-            Label your requests for the purpose of identification during usage reporting. Pass a single string or a list of strings.
+        tag : typing.Optional[ListenV2Tag]
 
         authorization : typing.Optional[str]
-            Use your API key for authentication, or alternatively generate a [temporary token](/guides/fundamentals/token-based-authentication) and pass it via the `token` query parameter.
+            Use your API key or a [temporary token](/guides/fundamentals/token-based-authentication) for authentication via the `Authorization` header. In client-side environments where custom headers are not supported, use the [`Sec-WebSocket-Protocol`](/guides/deep-dives/using-the-sec-websocket-protocol) header instead.
 
-            **Example:** `token %DEEPGRAM_API_KEY%` or `bearer %DEEPGRAM_TOKEN%`
+            **Example:** `Authorization: Token %DEEPGRAM_API_KEY%` or `Authorization: Bearer %DEEPGRAM_TOKEN%`
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -218,7 +230,13 @@ class AsyncV2Client:
                         "eager_eot_threshold": eager_eot_threshold,
                         "eot_threshold": eot_threshold,
                         "eot_timeout_ms": eot_timeout_ms,
-                        "keyterm": keyterm,
+                        "keyterm": convert_and_respect_annotation_metadata(
+                            object_=convert_and_respect_annotation_metadata(
+                                object_=keyterm, annotation=ListenV2KeytermParams, direction="write"
+                            ),
+                            annotation=ListenV2KeytermParams,
+                            direction="write",
+                        ),
                         "mip_opt_out": mip_opt_out,
                         "tag": tag,
                         **(

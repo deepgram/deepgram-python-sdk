@@ -14,6 +14,10 @@ from ...core.query_encoder import encode_query
 from ...core.remove_none_from_dict import remove_none_from_dict
 from ...core.request_options import RequestOptions
 from ...core.websocket_compat import InvalidWebSocketStatus, get_status_code
+from ...types.speak_v1encoding import SpeakV1Encoding
+from ...types.speak_v1mip_opt_out import SpeakV1MipOptOut
+from ...types.speak_v1model import SpeakV1Model
+from ...types.speak_v1sample_rate import SpeakV1SampleRate
 from .raw_client import AsyncRawV1Client, RawV1Client
 from .socket_client import AsyncV1SocketClient, V1SocketClient
 
@@ -47,10 +51,10 @@ class V1Client:
     def connect(
         self,
         *,
-        encoding: typing.Optional[str] = None,
-        mip_opt_out: typing.Optional[str] = None,
-        model: typing.Optional[str] = None,
-        sample_rate: typing.Optional[str] = None,
+        encoding: typing.Optional[SpeakV1Encoding] = None,
+        mip_opt_out: typing.Optional[SpeakV1MipOptOut] = None,
+        model: typing.Optional[SpeakV1Model] = None,
+        sample_rate: typing.Optional[SpeakV1SampleRate] = None,
         authorization: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Iterator[V1SocketClient]:
@@ -59,18 +63,18 @@ class V1Client:
 
         Parameters
         ----------
-        encoding : typing.Optional[str]
+        encoding : typing.Optional[SpeakV1Encoding]
 
-        mip_opt_out : typing.Optional[str]
+        mip_opt_out : typing.Optional[SpeakV1MipOptOut]
 
-        model : typing.Optional[str]
+        model : typing.Optional[SpeakV1Model]
 
-        sample_rate : typing.Optional[str]
+        sample_rate : typing.Optional[SpeakV1SampleRate]
 
         authorization : typing.Optional[str]
-            Use your API key for authentication, or alternatively generate a [temporary token](/guides/fundamentals/token-based-authentication) and pass it via the `token` query parameter.
+            Use your API key or a [temporary token](/guides/fundamentals/token-based-authentication) for authentication via the `Authorization` header. In client-side environments where custom headers are not supported, use the [`Sec-WebSocket-Protocol`](/guides/deep-dives/using-the-sec-websocket-protocol) header instead.
 
-            **Example:** `token %DEEPGRAM_API_KEY%` or `bearer %DEEPGRAM_TOKEN%`
+            **Example:** `Authorization: Token %DEEPGRAM_API_KEY%` or `Authorization: Bearer %DEEPGRAM_TOKEN%`
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -151,10 +155,10 @@ class AsyncV1Client:
     async def connect(
         self,
         *,
-        encoding: typing.Optional[str] = None,
-        mip_opt_out: typing.Optional[str] = None,
-        model: typing.Optional[str] = None,
-        sample_rate: typing.Optional[str] = None,
+        encoding: typing.Optional[SpeakV1Encoding] = None,
+        mip_opt_out: typing.Optional[SpeakV1MipOptOut] = None,
+        model: typing.Optional[SpeakV1Model] = None,
+        sample_rate: typing.Optional[SpeakV1SampleRate] = None,
         authorization: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.AsyncIterator[AsyncV1SocketClient]:
@@ -163,18 +167,18 @@ class AsyncV1Client:
 
         Parameters
         ----------
-        encoding : typing.Optional[str]
+        encoding : typing.Optional[SpeakV1Encoding]
 
-        mip_opt_out : typing.Optional[str]
+        mip_opt_out : typing.Optional[SpeakV1MipOptOut]
 
-        model : typing.Optional[str]
+        model : typing.Optional[SpeakV1Model]
 
-        sample_rate : typing.Optional[str]
+        sample_rate : typing.Optional[SpeakV1SampleRate]
 
         authorization : typing.Optional[str]
-            Use your API key for authentication, or alternatively generate a [temporary token](/guides/fundamentals/token-based-authentication) and pass it via the `token` query parameter.
+            Use your API key or a [temporary token](/guides/fundamentals/token-based-authentication) for authentication via the `Authorization` header. In client-side environments where custom headers are not supported, use the [`Sec-WebSocket-Protocol`](/guides/deep-dives/using-the-sec-websocket-protocol) header instead.
 
-            **Example:** `token %DEEPGRAM_API_KEY%` or `bearer %DEEPGRAM_TOKEN%`
+            **Example:** `Authorization: Token %DEEPGRAM_API_KEY%` or `Authorization: Bearer %DEEPGRAM_TOKEN%`
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.

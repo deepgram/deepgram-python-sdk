@@ -18,8 +18,11 @@ if typing.TYPE_CHECKING:
         SpeakV1Flushed,
         SpeakV1FlushedType,
         SpeakV1Metadata,
+        SpeakV1MetadataType,
         SpeakV1Text,
+        SpeakV1TextType,
         SpeakV1Warning,
+        SpeakV1WarningType,
     )
     from . import audio
     from .audio import (
@@ -60,10 +63,13 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SpeakV1FlushedType": ".types",
     "SpeakV1Metadata": ".types",
     "SpeakV1MetadataParams": ".requests",
+    "SpeakV1MetadataType": ".types",
     "SpeakV1Text": ".types",
     "SpeakV1TextParams": ".requests",
+    "SpeakV1TextType": ".types",
     "SpeakV1Warning": ".types",
     "SpeakV1WarningParams": ".requests",
+    "SpeakV1WarningType": ".types",
     "audio": ".audio",
 }
 
@@ -111,9 +117,12 @@ __all__ = [
     "SpeakV1FlushedType",
     "SpeakV1Metadata",
     "SpeakV1MetadataParams",
+    "SpeakV1MetadataType",
     "SpeakV1Text",
     "SpeakV1TextParams",
+    "SpeakV1TextType",
     "SpeakV1Warning",
     "SpeakV1WarningParams",
+    "SpeakV1WarningType",
     "audio",
 ]

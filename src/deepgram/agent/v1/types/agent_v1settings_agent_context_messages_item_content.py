@@ -8,6 +8,9 @@ from ....core.unchecked_base_model import UncheckedBaseModel
 from .agent_v1settings_agent_context_messages_item_content_role import (
     AgentV1SettingsAgentContextMessagesItemContentRole,
 )
+from .agent_v1settings_agent_context_messages_item_content_type import (
+    AgentV1SettingsAgentContextMessagesItemContentType,
+)
 
 
 class AgentV1SettingsAgentContextMessagesItemContent(UncheckedBaseModel):
@@ -15,7 +18,7 @@ class AgentV1SettingsAgentContextMessagesItemContent(UncheckedBaseModel):
     Conversation text as part of the conversation history
     """
 
-    type: typing.Literal["History"] = pydantic.Field(default="History")
+    type: AgentV1SettingsAgentContextMessagesItemContentType = pydantic.Field()
     """
     Message type identifier for conversation text
     """

@@ -17,8 +17,11 @@ if typing.TYPE_CHECKING:
     from .speak_v1flushed import SpeakV1Flushed
     from .speak_v1flushed_type import SpeakV1FlushedType
     from .speak_v1metadata import SpeakV1Metadata
+    from .speak_v1metadata_type import SpeakV1MetadataType
     from .speak_v1text import SpeakV1Text
+    from .speak_v1text_type import SpeakV1TextType
     from .speak_v1warning import SpeakV1Warning
+    from .speak_v1warning_type import SpeakV1WarningType
 _dynamic_imports: typing.Dict[str, str] = {
     "SpeakV1Clear": ".speak_v1clear",
     "SpeakV1ClearType": ".speak_v1clear_type",
@@ -31,8 +34,11 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SpeakV1Flushed": ".speak_v1flushed",
     "SpeakV1FlushedType": ".speak_v1flushed_type",
     "SpeakV1Metadata": ".speak_v1metadata",
+    "SpeakV1MetadataType": ".speak_v1metadata_type",
     "SpeakV1Text": ".speak_v1text",
+    "SpeakV1TextType": ".speak_v1text_type",
     "SpeakV1Warning": ".speak_v1warning",
+    "SpeakV1WarningType": ".speak_v1warning_type",
 }
 
 
@@ -69,6 +75,9 @@ __all__ = [
     "SpeakV1Flushed",
     "SpeakV1FlushedType",
     "SpeakV1Metadata",
+    "SpeakV1MetadataType",
     "SpeakV1Text",
+    "SpeakV1TextType",
     "SpeakV1Warning",
+    "SpeakV1WarningType",
 ]
