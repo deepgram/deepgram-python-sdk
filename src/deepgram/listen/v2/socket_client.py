@@ -34,7 +34,7 @@ class AsyncV2SocketClient(EventEmitterMixin):
                 yield message
             else:
                 try:
-                    yield construct_type(V2SocketClientResponse, json.loads(message))  # type: ignore
+                    yield construct_type(type_=V2SocketClientResponse, object_=json.loads(message))  # type: ignore
                 except Exception:
                     _logger.warning(
                         "Skipping unknown WebSocket message; update your SDK version to support new message types."
@@ -59,14 +59,14 @@ class AsyncV2SocketClient(EventEmitterMixin):
                 else:
                     json_data = json.loads(raw_message)
                     try:
-                        parsed = construct_type(V2SocketClientResponse, json_data)  # type: ignore
+                        parsed = construct_type(type_=V2SocketClientResponse, object_=json_data)  # type: ignore
                     except Exception:
                         _logger.warning(
                             "Skipping unknown WebSocket message; update your SDK version to support new message types."
                         )
                         continue
                 await self._emit_async(EventType.MESSAGE, parsed)
-        except (websockets.WebSocketException, JSONDecodeError) as exc:
+        except Exception as exc:
             await self._emit_async(EventType.ERROR, exc)
         finally:
             await self._emit_async(EventType.CLOSE, None)
@@ -94,7 +94,7 @@ class AsyncV2SocketClient(EventEmitterMixin):
             return data  # type: ignore
         json_data = json.loads(data)
         try:
-            return construct_type(V2SocketClientResponse, json_data)  # type: ignore
+            return construct_type(type_=V2SocketClientResponse, object_=json_data)  # type: ignore
         except Exception:
             _logger.warning("Skipping unknown WebSocket message; update your SDK version to support new message types.")
             return json_data  # type: ignore
@@ -125,7 +125,7 @@ class V2SocketClient(EventEmitterMixin):
                 yield message
             else:
                 try:
-                    yield construct_type(V2SocketClientResponse, json.loads(message))  # type: ignore
+                    yield construct_type(type_=V2SocketClientResponse, object_=json.loads(message))  # type: ignore
                 except Exception:
                     _logger.warning(
                         "Skipping unknown WebSocket message; update your SDK version to support new message types."
@@ -150,14 +150,14 @@ class V2SocketClient(EventEmitterMixin):
                 else:
                     json_data = json.loads(raw_message)
                     try:
-                        parsed = construct_type(V2SocketClientResponse, json_data)  # type: ignore
+                        parsed = construct_type(type_=V2SocketClientResponse, object_=json_data)  # type: ignore
                     except Exception:
                         _logger.warning(
                             "Skipping unknown WebSocket message; update your SDK version to support new message types."
                         )
                         continue
                 self._emit(EventType.MESSAGE, parsed)
-        except (websockets.WebSocketException, JSONDecodeError) as exc:
+        except Exception as exc:
             self._emit(EventType.ERROR, exc)
         finally:
             self._emit(EventType.CLOSE, None)
@@ -185,7 +185,7 @@ class V2SocketClient(EventEmitterMixin):
             return data  # type: ignore
         json_data = json.loads(data)
         try:
-            return construct_type(V2SocketClientResponse, json_data)  # type: ignore
+            return construct_type(type_=V2SocketClientResponse, object_=json_data)  # type: ignore
         except Exception:
             _logger.warning("Skipping unknown WebSocket message; update your SDK version to support new message types.")
             return json_data  # type: ignore
