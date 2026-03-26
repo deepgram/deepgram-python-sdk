@@ -1,5 +1,12 @@
 # Changelog
 
+## [6.1.0](https://github.com/deepgram/deepgram-python-sdk/compare/v6.0.1...v6.1.0) (2026-03-26)
+
+
+### Features
+
+* **agent:** support multi-provider speak/think configuration and typed listen parameters ([#676](https://github.com/deepgram/deepgram-python-sdk/issues/676)) ([5dfb1aa](https://github.com/deepgram/deepgram-python-sdk/commit/5dfb1aa9a2357f8cfc0e08f55284fd8521446bf7))
+
 ## [6.0.1](https://github.com/deepgram/deepgram-python-sdk/compare/v6.0.0...v6.0.1) (2026-02-24)
 
 
