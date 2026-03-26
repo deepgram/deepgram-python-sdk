@@ -76,3 +76,5 @@ AGENTS.md
 .github
 docs
 examples
+.fern/replay.lock
+.fern/replay.yml
