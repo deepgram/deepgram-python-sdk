@@ -8,6 +8,8 @@ src/deepgram/client.py
 # - construct_type keyword args fix (generator uses positional, function requires keyword-only)
 # - except Exception broad catch (supports custom transports, generator narrows to WebSocketException)
 # - _sanitize_numeric_types in agent socket client (float→int for API)
+# - optional message param on control send_ methods (send_keep_alive, send_close_stream, etc.)
+#   so users don't need to instantiate the type themselves for no-payload control messages
 # [temporarily frozen — generator bugs in construct_type call convention and exception handling]
 src/deepgram/agent/v1/socket_client.py
 src/deepgram/listen/v1/socket_client.py
