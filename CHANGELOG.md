@@ -1,5 +1,12 @@
 # Changelog
 
+## [6.1.1](https://github.com/deepgram/deepgram-python-sdk/compare/v6.1.0...v6.1.1) (2026-03-27)
+
+
+### Bug Fixes
+
+* **websockets:** restore optional message param on control send_ methods ([#680](https://github.com/deepgram/deepgram-python-sdk/issues/680)) ([0018fc4](https://github.com/deepgram/deepgram-python-sdk/commit/0018fc489dd05f81773086044ff476514ceed0e0))
+
 ## [6.1.0](https://github.com/deepgram/deepgram-python-sdk/compare/v6.0.1...v6.1.0) (2026-03-26)
 
 
