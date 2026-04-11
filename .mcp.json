@@ -1,0 +1,22 @@
+{
+  "mcpServers": {
+    "context7": {
+      "type": "remote",
+      "url": "https://context7.com/deepgram/deepgram-python-sdk",
+      "env": {
+        "CONTEXT7_PUBLIC_KEY": "pk_hu7APZeIXQ14hNyaCBm0A"
+      }
+    },
+    "deepgram-styles": {
+      "type": "stdio",
+      "command": "npx",
+      "args": [
+        "-y",
+        "-p",
+        "@deepgram/styles",
+        "mcp"
+      ],
+      "env": {}
+    }
+  }
+}
