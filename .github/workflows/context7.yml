@@ -1,0 +1,17 @@
+name: Update Context7 Documentation
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+
+jobs:
+  update-docs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Update Context7 Documentation
+        id: context7
+        uses: rennf93/upsert-context7@1.1
+        with:
+          operation: refresh
