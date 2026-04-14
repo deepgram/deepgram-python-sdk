@@ -18,14 +18,12 @@ async def main() -> None:
     try:
         text = "Hello, this is a sample text to speech conversion."
         print(f"Sending async text-to-speech generation request - Text: {text[:50]}...")
-        response = await client.speak.v1.audio.generate(
+        response = client.speak.v1.audio.generate(
             text=text,
         )
         print("Response received successfully")
-        print(f"Response type: {type(response)}")
-        if hasattr(response, "audio"):
-            print(f"Audio data length: {len(response.audio) if response.audio else 0} bytes")
-        print(f"Response body: {response}")
+        audio_bytes = b"".join([chunk async for chunk in response])
+        print(f"Audio data length: {len(audio_bytes)} bytes")
     except Exception as e:
         print(f"Error occurred: {type(e).__name__}")
         # Log request headers if available
