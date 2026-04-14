@@ -41,17 +41,17 @@ try:
             "scopes": ["usage:read"],
         },
     )
-    print(f"Created key ID: {new_key.key_id}")
+    print(f"Created key ID: {new_key.api_key_id}")
     print(f"Key: {new_key.key}")
     print("⚠️  Save this key now - it won't be shown again!")
 
     # Get a specific key
     if keys.api_keys:
-        key_id = keys.api_keys[0].key_id
+        key_id = keys.api_keys[0].api_key.api_key_id
         print(f"\nGetting key details for: {key_id}")
         key = client.manage.v1.projects.keys.get(project_id=project_id, key_id=key_id)
-        print(f"Key comment: {key.comment}")
-        print(f"Key scopes: {key.scopes}")
+        print(f"Key comment: {key.api_key['comment']}")
+        print(f"Key scopes: {key.api_key['scopes']}")
 
     # Delete a key (commented out for safety)
     # client.manage.v1.projects.keys.delete(

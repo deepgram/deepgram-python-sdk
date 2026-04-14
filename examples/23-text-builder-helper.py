@@ -10,10 +10,6 @@ import os
 
 from deepgram import DeepgramClient
 from deepgram.helpers import TextBuilder, add_pronunciation, ssml_to_deepgram
-from deepgram.speak.v1.audio.types import (
-    AudioGenerateRequestEncoding,
-    AudioGenerateRequestModel,
-)
 
 
 def example_basic_text_builder():
@@ -21,16 +17,16 @@ def example_basic_text_builder():
     print("Example 1: Basic TextBuilder Usage")
     print("-" * 50)
 
-    # Build text with pronunciations and pauses
+    # Build text with pronunciations
+    # Note: .pause() is supported in streaming (WebSocket) mode.
+    # For REST API, use plain text between pronunciations.
     text = (
         TextBuilder()
         .text("Take ")
         .pronunciation("azathioprine", "ˌæzəˈθaɪəpriːn")
         .text(" twice daily with ")
         .pronunciation("dupilumab", "duːˈpɪljuːmæb")
-        .text(" injections")
-        .pause(500)
-        .text(" Do not exceed prescribed dosage.")
+        .text(" injections. Do not exceed prescribed dosage.")
         .build()
     )
 
@@ -42,15 +38,16 @@ def example_basic_text_builder():
         client = DeepgramClient(api_key=api_key)
 
         # Generate speech with custom pronunciations
-        response = client.speak.v1.generate(
-            text,
-            model=AudioGenerateRequestModel.AURA_ASTERIA_EN,
-            encoding=AudioGenerateRequestEncoding.LINEAR16,
+        response = client.speak.v1.audio.generate(
+            text=text,
+            model="aura-2-asteria-en",
+            encoding="linear16",
         )
 
         # Save to file
         with open("output_example1.wav", "wb") as f:
-            f.write(response)
+            for chunk in response:
+                f.write(chunk)
 
         print("✓ Audio saved to output_example1.wav")
     else:
@@ -75,13 +72,14 @@ def example_add_pronunciation_function():
     if api_key:
         client = DeepgramClient(api_key=api_key)
 
-        response = client.speak.v1.generate(
-            text,
-            model=AudioGenerateRequestModel.AURA_ASTERIA_EN,
+        response = client.speak.v1.audio.generate(
+            text=text,
+            model="aura-2-asteria-en",
         )
 
         with open("output_example2.wav", "wb") as f:
-            f.write(response)
+            for chunk in response:
+                f.write(chunk)
 
         print("✓ Audio saved to output_example2.wav")
     else:
@@ -96,10 +94,8 @@ def example_ssml_migration():
     # Existing SSML from another TTS provider
     ssml = """<speak>
         Welcome to your medication guide.
-        <break time="500ms"/>
-        Take <phoneme alphabet="ipa" ph="ˌæzəˈθaɪəpriːn">azathioprine</phoneme> 
+        Take <phoneme alphabet="ipa" ph="ˌæzəˈθaɪəpriːn">azathioprine</phoneme>
         as prescribed.
-        <break time="1000ms"/>
         Contact your doctor if you experience side effects.
     </speak>"""
 
@@ -112,13 +108,14 @@ def example_ssml_migration():
     if api_key:
         client = DeepgramClient(api_key=api_key)
 
-        response = client.speak.v1.generate(
-            text,
-            model=AudioGenerateRequestModel.AURA_ASTERIA_EN,
+        response = client.speak.v1.audio.generate(
+            text=text,
+            model="aura-2-asteria-en",
         )
 
         with open("output_example3.wav", "wb") as f:
-            f.write(response)
+            for chunk in response:
+                f.write(chunk)
 
         print("✓ Audio saved to output_example3.wav")
     else:
@@ -137,9 +134,7 @@ def example_mixed_ssml_and_builder():
     text = (
         TextBuilder()
         .from_ssml(ssml)
-        .pause(500)
         .text(" Store at room temperature.")
-        .pause(500)
         .text(" Keep out of reach of children.")
         .build()
     )
@@ -150,13 +145,14 @@ def example_mixed_ssml_and_builder():
     if api_key:
         client = DeepgramClient(api_key=api_key)
 
-        response = client.speak.v1.generate(
-            text,
-            model=AudioGenerateRequestModel.AURA_ASTERIA_EN,
+        response = client.speak.v1.audio.generate(
+            text=text,
+            model="aura-2-asteria-en",
         )
 
         with open("output_example4.wav", "wb") as f:
-            f.write(response)
+            for chunk in response:
+                f.write(chunk)
 
         print("✓ Audio saved to output_example4.wav")
     else:
@@ -172,19 +168,15 @@ def example_pharmacy_instructions():
         TextBuilder()
         .text("Prescription for ")
         .pronunciation("lisinopril", "laɪˈsɪnəprɪl")
-        .pause(300)
-        .text(" Take one tablet by mouth daily for hypertension.")
-        .pause(500)
+        .text(". Take one tablet by mouth daily for hypertension.")
         .text(" Common side effects may include ")
         .pronunciation("hypotension", "ˌhaɪpoʊˈtɛnʃən")
         .text(" or dizziness.")
-        .pause(500)
         .text(" Do not take with ")
         .pronunciation("aliskiren", "əˈlɪskɪrɛn")
         .text(" or ")
         .pronunciation("sacubitril", "səˈkjuːbɪtrɪl")
-        .pause(500)
-        .text(" Call your doctor if symptoms worsen.")
+        .text(". Call your doctor if symptoms worsen.")
         .build()
     )
 
@@ -194,14 +186,15 @@ def example_pharmacy_instructions():
     if api_key:
         client = DeepgramClient(api_key=api_key)
 
-        response = client.speak.v1.generate(
-            text,
-            model=AudioGenerateRequestModel.AURA_ASTERIA_EN,
-            encoding=AudioGenerateRequestEncoding.LINEAR16,
+        response = client.speak.v1.audio.generate(
+            text=text,
+            model="aura-2-asteria-en",
+            encoding="linear16",
         )
 
         with open("output_example5.wav", "wb") as f:
-            f.write(response)
+            for chunk in response:
+                f.write(chunk)
 
         print("✓ Audio saved to output_example5.wav")
     else:
