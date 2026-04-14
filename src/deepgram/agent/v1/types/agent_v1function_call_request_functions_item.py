@@ -28,6 +28,11 @@ class AgentV1FunctionCallRequestFunctionsItem(UncheckedBaseModel):
     Whether the function should be executed client-side
     """
 
+    thought_signature: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Some Gemini models require this as an additional function call identifier
+    """
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:

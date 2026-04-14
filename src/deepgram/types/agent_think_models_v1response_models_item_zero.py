@@ -6,7 +6,6 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .agent_think_models_v1response_models_item_zero_id import AgentThinkModelsV1ResponseModelsItemZeroId
-from .agent_think_models_v1response_models_item_zero_provider import AgentThinkModelsV1ResponseModelsItemZeroProvider
 
 
 class AgentThinkModelsV1ResponseModelsItemZero(UncheckedBaseModel):
@@ -24,7 +23,7 @@ class AgentThinkModelsV1ResponseModelsItemZero(UncheckedBaseModel):
     The display name of the model
     """
 
-    provider: AgentThinkModelsV1ResponseModelsItemZeroProvider = pydantic.Field()
+    provider: typing.Literal["open_ai"] = pydantic.Field(default="open_ai")
     """
     The provider of the model
     """

@@ -10,18 +10,18 @@ if typing.TYPE_CHECKING:
     from .media_transcribe_request_custom_intent_mode import MediaTranscribeRequestCustomIntentMode
     from .media_transcribe_request_custom_topic_mode import MediaTranscribeRequestCustomTopicMode
     from .media_transcribe_request_encoding import MediaTranscribeRequestEncoding
-    from .media_transcribe_request_model_zero import MediaTranscribeRequestModelZero
-    from .media_transcribe_request_summarize_zero import MediaTranscribeRequestSummarizeZero
-    from .media_transcribe_request_version_zero import MediaTranscribeRequestVersionZero
+    from .media_transcribe_request_model import MediaTranscribeRequestModel
+    from .media_transcribe_request_summarize import MediaTranscribeRequestSummarize
+    from .media_transcribe_request_version import MediaTranscribeRequestVersion
     from .media_transcribe_response import MediaTranscribeResponse
 _dynamic_imports: typing.Dict[str, str] = {
     "MediaTranscribeRequestCallbackMethod": ".media_transcribe_request_callback_method",
     "MediaTranscribeRequestCustomIntentMode": ".media_transcribe_request_custom_intent_mode",
     "MediaTranscribeRequestCustomTopicMode": ".media_transcribe_request_custom_topic_mode",
     "MediaTranscribeRequestEncoding": ".media_transcribe_request_encoding",
-    "MediaTranscribeRequestModelZero": ".media_transcribe_request_model_zero",
-    "MediaTranscribeRequestSummarizeZero": ".media_transcribe_request_summarize_zero",
-    "MediaTranscribeRequestVersionZero": ".media_transcribe_request_version_zero",
+    "MediaTranscribeRequestModel": ".media_transcribe_request_model",
+    "MediaTranscribeRequestSummarize": ".media_transcribe_request_summarize",
+    "MediaTranscribeRequestVersion": ".media_transcribe_request_version",
     "MediaTranscribeResponse": ".media_transcribe_response",
 }
 
@@ -52,8 +52,8 @@ __all__ = [
     "MediaTranscribeRequestCustomIntentMode",
     "MediaTranscribeRequestCustomTopicMode",
     "MediaTranscribeRequestEncoding",
-    "MediaTranscribeRequestModelZero",
-    "MediaTranscribeRequestSummarizeZero",
-    "MediaTranscribeRequestVersionZero",
+    "MediaTranscribeRequestModel",
+    "MediaTranscribeRequestSummarize",
+    "MediaTranscribeRequestVersion",
     "MediaTranscribeResponse",
 ]

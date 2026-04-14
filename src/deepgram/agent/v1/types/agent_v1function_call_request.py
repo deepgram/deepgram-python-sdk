@@ -6,11 +6,10 @@ import pydantic
 from ....core.pydantic_utilities import IS_PYDANTIC_V2
 from ....core.unchecked_base_model import UncheckedBaseModel
 from .agent_v1function_call_request_functions_item import AgentV1FunctionCallRequestFunctionsItem
-from .agent_v1function_call_request_type import AgentV1FunctionCallRequestType
 
 
 class AgentV1FunctionCallRequest(UncheckedBaseModel):
-    type: AgentV1FunctionCallRequestType = pydantic.Field()
+    type: typing.Literal["FunctionCallRequest"] = pydantic.Field(default="FunctionCallRequest")
     """
     Message type identifier for function call requests
     """

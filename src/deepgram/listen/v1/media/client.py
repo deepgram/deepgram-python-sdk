@@ -9,9 +9,9 @@ from .types.media_transcribe_request_callback_method import MediaTranscribeReque
 from .types.media_transcribe_request_custom_intent_mode import MediaTranscribeRequestCustomIntentMode
 from .types.media_transcribe_request_custom_topic_mode import MediaTranscribeRequestCustomTopicMode
 from .types.media_transcribe_request_encoding import MediaTranscribeRequestEncoding
-from .types.media_transcribe_request_model_zero import MediaTranscribeRequestModelZero
-from .types.media_transcribe_request_summarize_zero import MediaTranscribeRequestSummarizeZero
-from .types.media_transcribe_request_version_zero import MediaTranscribeRequestVersionZero
+from .types.media_transcribe_request_model import MediaTranscribeRequestModel
+from .types.media_transcribe_request_summarize import MediaTranscribeRequestSummarize
+from .types.media_transcribe_request_version import MediaTranscribeRequestVersion
 from .types.media_transcribe_response import MediaTranscribeResponse
 
 # this is used as the default value for optional parameters
@@ -41,7 +41,7 @@ class MediaClient:
         callback_method: typing.Optional[MediaTranscribeRequestCallbackMethod] = None,
         extra: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         sentiment: typing.Optional[bool] = None,
-        summarize: typing.Optional[MediaTranscribeRequestSummarizeZero] = None,
+        summarize: typing.Optional[MediaTranscribeRequestSummarize] = None,
         tag: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         topics: typing.Optional[bool] = None,
         custom_topic: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
@@ -59,7 +59,7 @@ class MediaClient:
         keywords: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         language: typing.Optional[str] = None,
         measurements: typing.Optional[bool] = None,
-        model: typing.Optional[MediaTranscribeRequestModelZero] = None,
+        model: typing.Optional[MediaTranscribeRequestModel] = None,
         multichannel: typing.Optional[bool] = None,
         numerals: typing.Optional[bool] = None,
         paragraphs: typing.Optional[bool] = None,
@@ -71,7 +71,7 @@ class MediaClient:
         smart_format: typing.Optional[bool] = None,
         utterances: typing.Optional[bool] = None,
         utt_split: typing.Optional[float] = None,
-        version: typing.Optional[MediaTranscribeRequestVersionZero] = None,
+        version: typing.Optional[MediaTranscribeRequestVersion] = None,
         mip_opt_out: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> MediaTranscribeResponse:
@@ -94,7 +94,7 @@ class MediaClient:
         sentiment : typing.Optional[bool]
             Recognizes the sentiment throughout a transcript or text
 
-        summarize : typing.Optional[MediaTranscribeRequestSummarizeZero]
+        summarize : typing.Optional[MediaTranscribeRequestSummarize]
             Summarize content. For Listen API, supports string version option. For Read API, accepts boolean only.
 
         tag : typing.Optional[typing.Union[str, typing.Sequence[str]]]
@@ -148,7 +148,7 @@ class MediaClient:
         measurements : typing.Optional[bool]
             Spoken measurements will be converted to their corresponding abbreviations
 
-        model : typing.Optional[MediaTranscribeRequestModelZero]
+        model : typing.Optional[MediaTranscribeRequestModel]
             AI model used to process submitted audio
 
         multichannel : typing.Optional[bool]
@@ -184,7 +184,7 @@ class MediaClient:
         utt_split : typing.Optional[float]
             Seconds to wait before detecting a pause between words in submitted audio
 
-        version : typing.Optional[MediaTranscribeRequestVersionZero]
+        version : typing.Optional[MediaTranscribeRequestVersion]
             Version of an AI model to use
 
         mip_opt_out : typing.Optional[bool]
@@ -294,7 +294,7 @@ class MediaClient:
         callback_method: typing.Optional[MediaTranscribeRequestCallbackMethod] = None,
         extra: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         sentiment: typing.Optional[bool] = None,
-        summarize: typing.Optional[MediaTranscribeRequestSummarizeZero] = None,
+        summarize: typing.Optional[MediaTranscribeRequestSummarize] = None,
         tag: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         topics: typing.Optional[bool] = None,
         custom_topic: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
@@ -312,7 +312,7 @@ class MediaClient:
         keywords: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         language: typing.Optional[str] = None,
         measurements: typing.Optional[bool] = None,
-        model: typing.Optional[MediaTranscribeRequestModelZero] = None,
+        model: typing.Optional[MediaTranscribeRequestModel] = None,
         multichannel: typing.Optional[bool] = None,
         numerals: typing.Optional[bool] = None,
         paragraphs: typing.Optional[bool] = None,
@@ -324,7 +324,7 @@ class MediaClient:
         smart_format: typing.Optional[bool] = None,
         utterances: typing.Optional[bool] = None,
         utt_split: typing.Optional[float] = None,
-        version: typing.Optional[MediaTranscribeRequestVersionZero] = None,
+        version: typing.Optional[MediaTranscribeRequestVersion] = None,
         mip_opt_out: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> MediaTranscribeResponse:
@@ -347,7 +347,7 @@ class MediaClient:
         sentiment : typing.Optional[bool]
             Recognizes the sentiment throughout a transcript or text
 
-        summarize : typing.Optional[MediaTranscribeRequestSummarizeZero]
+        summarize : typing.Optional[MediaTranscribeRequestSummarize]
             Summarize content. For Listen API, supports string version option. For Read API, accepts boolean only.
 
         tag : typing.Optional[typing.Union[str, typing.Sequence[str]]]
@@ -401,7 +401,7 @@ class MediaClient:
         measurements : typing.Optional[bool]
             Spoken measurements will be converted to their corresponding abbreviations
 
-        model : typing.Optional[MediaTranscribeRequestModelZero]
+        model : typing.Optional[MediaTranscribeRequestModel]
             AI model used to process submitted audio
 
         multichannel : typing.Optional[bool]
@@ -437,7 +437,7 @@ class MediaClient:
         utt_split : typing.Optional[float]
             Seconds to wait before detecting a pause between words in submitted audio
 
-        version : typing.Optional[MediaTranscribeRequestVersionZero]
+        version : typing.Optional[MediaTranscribeRequestVersion]
             Version of an AI model to use
 
         mip_opt_out : typing.Optional[bool]
@@ -526,7 +526,7 @@ class AsyncMediaClient:
         callback_method: typing.Optional[MediaTranscribeRequestCallbackMethod] = None,
         extra: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         sentiment: typing.Optional[bool] = None,
-        summarize: typing.Optional[MediaTranscribeRequestSummarizeZero] = None,
+        summarize: typing.Optional[MediaTranscribeRequestSummarize] = None,
         tag: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         topics: typing.Optional[bool] = None,
         custom_topic: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
@@ -544,7 +544,7 @@ class AsyncMediaClient:
         keywords: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         language: typing.Optional[str] = None,
         measurements: typing.Optional[bool] = None,
-        model: typing.Optional[MediaTranscribeRequestModelZero] = None,
+        model: typing.Optional[MediaTranscribeRequestModel] = None,
         multichannel: typing.Optional[bool] = None,
         numerals: typing.Optional[bool] = None,
         paragraphs: typing.Optional[bool] = None,
@@ -556,7 +556,7 @@ class AsyncMediaClient:
         smart_format: typing.Optional[bool] = None,
         utterances: typing.Optional[bool] = None,
         utt_split: typing.Optional[float] = None,
-        version: typing.Optional[MediaTranscribeRequestVersionZero] = None,
+        version: typing.Optional[MediaTranscribeRequestVersion] = None,
         mip_opt_out: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> MediaTranscribeResponse:
@@ -579,7 +579,7 @@ class AsyncMediaClient:
         sentiment : typing.Optional[bool]
             Recognizes the sentiment throughout a transcript or text
 
-        summarize : typing.Optional[MediaTranscribeRequestSummarizeZero]
+        summarize : typing.Optional[MediaTranscribeRequestSummarize]
             Summarize content. For Listen API, supports string version option. For Read API, accepts boolean only.
 
         tag : typing.Optional[typing.Union[str, typing.Sequence[str]]]
@@ -633,7 +633,7 @@ class AsyncMediaClient:
         measurements : typing.Optional[bool]
             Spoken measurements will be converted to their corresponding abbreviations
 
-        model : typing.Optional[MediaTranscribeRequestModelZero]
+        model : typing.Optional[MediaTranscribeRequestModel]
             AI model used to process submitted audio
 
         multichannel : typing.Optional[bool]
@@ -669,7 +669,7 @@ class AsyncMediaClient:
         utt_split : typing.Optional[float]
             Seconds to wait before detecting a pause between words in submitted audio
 
-        version : typing.Optional[MediaTranscribeRequestVersionZero]
+        version : typing.Optional[MediaTranscribeRequestVersion]
             Version of an AI model to use
 
         mip_opt_out : typing.Optional[bool]
@@ -787,7 +787,7 @@ class AsyncMediaClient:
         callback_method: typing.Optional[MediaTranscribeRequestCallbackMethod] = None,
         extra: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         sentiment: typing.Optional[bool] = None,
-        summarize: typing.Optional[MediaTranscribeRequestSummarizeZero] = None,
+        summarize: typing.Optional[MediaTranscribeRequestSummarize] = None,
         tag: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         topics: typing.Optional[bool] = None,
         custom_topic: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
@@ -805,7 +805,7 @@ class AsyncMediaClient:
         keywords: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         language: typing.Optional[str] = None,
         measurements: typing.Optional[bool] = None,
-        model: typing.Optional[MediaTranscribeRequestModelZero] = None,
+        model: typing.Optional[MediaTranscribeRequestModel] = None,
         multichannel: typing.Optional[bool] = None,
         numerals: typing.Optional[bool] = None,
         paragraphs: typing.Optional[bool] = None,
@@ -817,7 +817,7 @@ class AsyncMediaClient:
         smart_format: typing.Optional[bool] = None,
         utterances: typing.Optional[bool] = None,
         utt_split: typing.Optional[float] = None,
-        version: typing.Optional[MediaTranscribeRequestVersionZero] = None,
+        version: typing.Optional[MediaTranscribeRequestVersion] = None,
         mip_opt_out: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> MediaTranscribeResponse:
@@ -840,7 +840,7 @@ class AsyncMediaClient:
         sentiment : typing.Optional[bool]
             Recognizes the sentiment throughout a transcript or text
 
-        summarize : typing.Optional[MediaTranscribeRequestSummarizeZero]
+        summarize : typing.Optional[MediaTranscribeRequestSummarize]
             Summarize content. For Listen API, supports string version option. For Read API, accepts boolean only.
 
         tag : typing.Optional[typing.Union[str, typing.Sequence[str]]]
@@ -894,7 +894,7 @@ class AsyncMediaClient:
         measurements : typing.Optional[bool]
             Spoken measurements will be converted to their corresponding abbreviations
 
-        model : typing.Optional[MediaTranscribeRequestModelZero]
+        model : typing.Optional[MediaTranscribeRequestModel]
             AI model used to process submitted audio
 
         multichannel : typing.Optional[bool]
@@ -930,7 +930,7 @@ class AsyncMediaClient:
         utt_split : typing.Optional[float]
             Seconds to wait before detecting a pause between words in submitted audio
 
-        version : typing.Optional[MediaTranscribeRequestVersionZero]
+        version : typing.Optional[MediaTranscribeRequestVersion]
             Version of an AI model to use
 
         mip_opt_out : typing.Optional[bool]

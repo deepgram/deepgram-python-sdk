@@ -5,11 +5,10 @@ import typing
 import pydantic
 from ....core.pydantic_utilities import IS_PYDANTIC_V2
 from ....core.unchecked_base_model import UncheckedBaseModel
-from .speak_v1warning_type import SpeakV1WarningType
 
 
 class SpeakV1Warning(UncheckedBaseModel):
-    type: SpeakV1WarningType = pydantic.Field()
+    type: typing.Literal["Warning"] = pydantic.Field(default="Warning")
     """
     Message type identifier
     """

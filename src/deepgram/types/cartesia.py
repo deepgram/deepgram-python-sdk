@@ -2,4 +2,41 @@
 
 import typing
 
-Cartesia = typing.Any
+import pydantic
+from ..core.pydantic_utilities import IS_PYDANTIC_V2
+from ..core.unchecked_base_model import UncheckedBaseModel
+from .cartesia_speak_provider_model_id import CartesiaSpeakProviderModelId
+from .cartesia_speak_provider_voice import CartesiaSpeakProviderVoice
+
+
+class Cartesia(UncheckedBaseModel):
+    type: typing.Literal["cartesia"] = "cartesia"
+    version: typing.Optional[typing.Literal["2025-03-17"]] = pydantic.Field(default=None)
+    """
+    The API version header for the Cartesia text-to-speech API
+    """
+
+    model_id: CartesiaSpeakProviderModelId = pydantic.Field()
+    """
+    Cartesia model ID
+    """
+
+    voice: CartesiaSpeakProviderVoice
+    language: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Cartesia language code
+    """
+
+    volume: typing.Optional[float] = pydantic.Field(default=None)
+    """
+    Volume level for Cartesia TTS output. Valid range: 0.5 to 2.0. See [Cartesia documentation](https://docs.cartesia.ai/build-with-cartesia/sonic-3/volume-speed-emotion#volume-speed-and-emotion).
+    """
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow

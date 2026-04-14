@@ -7,12 +7,14 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from .listen_v2close_stream import ListenV2CloseStreamParams
+    from .listen_v2configure_failure import ListenV2ConfigureFailureParams
     from .listen_v2connected import ListenV2ConnectedParams
     from .listen_v2fatal_error import ListenV2FatalErrorParams
     from .listen_v2turn_info import ListenV2TurnInfoParams
     from .listen_v2turn_info_words_item import ListenV2TurnInfoWordsItemParams
 _dynamic_imports: typing.Dict[str, str] = {
     "ListenV2CloseStreamParams": ".listen_v2close_stream",
+    "ListenV2ConfigureFailureParams": ".listen_v2configure_failure",
     "ListenV2ConnectedParams": ".listen_v2connected",
     "ListenV2FatalErrorParams": ".listen_v2fatal_error",
     "ListenV2TurnInfoParams": ".listen_v2turn_info",
@@ -43,6 +45,7 @@ def __dir__():
 
 __all__ = [
     "ListenV2CloseStreamParams",
+    "ListenV2ConfigureFailureParams",
     "ListenV2ConnectedParams",
     "ListenV2FatalErrorParams",
     "ListenV2TurnInfoParams",

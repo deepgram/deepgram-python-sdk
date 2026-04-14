@@ -8,13 +8,11 @@ import pydantic
 import typing_extensions
 from ....core.pydantic_utilities import IS_PYDANTIC_V2
 from ....core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
-from .agent_v1settings_agent_listen_provider_v1type import AgentV1SettingsAgentListenProviderV1Type
-from .agent_v1settings_agent_listen_provider_v2type import AgentV1SettingsAgentListenProviderV2Type
 
 
 class AgentV1SettingsAgentListenProvider_V1(UncheckedBaseModel):
     version: typing.Literal["v1"] = "v1"
-    type: AgentV1SettingsAgentListenProviderV1Type
+    type: typing.Literal["deepgram"] = "deepgram"
     model: typing.Optional[str] = None
     language: typing.Optional[str] = None
     keyterms: typing.Optional[typing.List[str]] = None
@@ -32,7 +30,7 @@ class AgentV1SettingsAgentListenProvider_V1(UncheckedBaseModel):
 
 class AgentV1SettingsAgentListenProvider_V2(UncheckedBaseModel):
     version: typing.Literal["v2"] = "v2"
-    type: AgentV1SettingsAgentListenProviderV2Type
+    type: typing.Literal["deepgram"] = "deepgram"
     model: str
     keyterms: typing.Optional[typing.List[str]] = None
 

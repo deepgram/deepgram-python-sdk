@@ -2,4 +2,34 @@
 
 import typing
 
-Anthropic = typing.Any
+import pydantic
+from ..core.pydantic_utilities import IS_PYDANTIC_V2
+from ..core.unchecked_base_model import UncheckedBaseModel
+from .anthropic_think_provider_model import AnthropicThinkProviderModel
+
+
+class Anthropic(UncheckedBaseModel):
+    type: typing.Literal["anthropic"] = "anthropic"
+    version: typing.Optional[typing.Literal["v1"]] = pydantic.Field(default=None)
+    """
+    The REST API version for the Anthropic Messages API
+    """
+
+    model: AnthropicThinkProviderModel = pydantic.Field()
+    """
+    Anthropic model to use
+    """
+
+    temperature: typing.Optional[float] = pydantic.Field(default=None)
+    """
+    Anthropic temperature (0-1)
+    """
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow

@@ -3,11 +3,10 @@
 import typing
 
 import typing_extensions
-from ..types.listen_v1utterance_end_type import ListenV1UtteranceEndType
 
 
 class ListenV1UtteranceEndParams(typing_extensions.TypedDict):
-    type: ListenV1UtteranceEndType
+    type: typing.Literal["UtteranceEnd"]
     """
     Message type identifier
     """

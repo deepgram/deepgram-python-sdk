@@ -6,11 +6,9 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .distribution_credentials_create_request_provider import DistributionCredentialsCreateRequestProvider
     from .distribution_credentials_create_request_scopes_item import DistributionCredentialsCreateRequestScopesItem
 _dynamic_imports: typing.Dict[str, str] = {
-    "DistributionCredentialsCreateRequestProvider": ".distribution_credentials_create_request_provider",
-    "DistributionCredentialsCreateRequestScopesItem": ".distribution_credentials_create_request_scopes_item",
+    "DistributionCredentialsCreateRequestScopesItem": ".distribution_credentials_create_request_scopes_item"
 }
 
 
@@ -35,4 +33,4 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["DistributionCredentialsCreateRequestProvider", "DistributionCredentialsCreateRequestScopesItem"]
+__all__ = ["DistributionCredentialsCreateRequestScopesItem"]
