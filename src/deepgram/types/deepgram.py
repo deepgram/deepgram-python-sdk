@@ -2,4 +2,34 @@
 
 import typing
 
-Deepgram = typing.Any
+import pydantic
+from ..core.pydantic_utilities import IS_PYDANTIC_V2
+from ..core.unchecked_base_model import UncheckedBaseModel
+from .deepgram_speak_provider_model import DeepgramSpeakProviderModel
+
+
+class Deepgram(UncheckedBaseModel):
+    type: typing.Literal["deepgram"] = "deepgram"
+    version: typing.Optional[typing.Literal["v1"]] = pydantic.Field(default=None)
+    """
+    The REST API version for the Deepgram text-to-speech API
+    """
+
+    model: DeepgramSpeakProviderModel = pydantic.Field()
+    """
+    Deepgram TTS model
+    """
+
+    speed: typing.Optional[float] = pydantic.Field(default=None)
+    """
+    Speaking rate multiplier that adjusts the pace of generated speech while preserving natural prosody and voice quality. Not yet supported in all languages.
+    """
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow

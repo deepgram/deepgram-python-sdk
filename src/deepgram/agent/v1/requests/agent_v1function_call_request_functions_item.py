@@ -23,3 +23,8 @@ class AgentV1FunctionCallRequestFunctionsItemParams(typing_extensions.TypedDict)
     """
     Whether the function should be executed client-side
     """
+
+    thought_signature: typing_extensions.NotRequired[str]
+    """
+    Some Gemini models require this as an additional function call identifier
+    """

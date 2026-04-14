@@ -2,7 +2,6 @@
 
 import typing
 
-from .agent_v1update_speak_speak_endpoint import AgentV1UpdateSpeakSpeakEndpoint
-from .agent_v1update_speak_speak_one_item import AgentV1UpdateSpeakSpeakOneItem
+from ....types.speak_settings_v1 import SpeakSettingsV1
 
-AgentV1UpdateSpeakSpeak = typing.Union[AgentV1UpdateSpeakSpeakEndpoint, typing.List[AgentV1UpdateSpeakSpeakOneItem]]
+AgentV1UpdateSpeakSpeak = typing.Union[SpeakSettingsV1, typing.List[SpeakSettingsV1]]

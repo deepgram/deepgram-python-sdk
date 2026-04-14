@@ -5,11 +5,10 @@ import typing
 import pydantic
 from ....core.pydantic_utilities import IS_PYDANTIC_V2
 from ....core.unchecked_base_model import UncheckedBaseModel
-from .agent_v1inject_agent_message_type import AgentV1InjectAgentMessageType
 
 
 class AgentV1InjectAgentMessage(UncheckedBaseModel):
-    type: AgentV1InjectAgentMessageType = pydantic.Field()
+    type: typing.Literal["InjectAgentMessage"] = pydantic.Field(default="InjectAgentMessage")
     """
     Message type identifier for injecting an agent message
     """

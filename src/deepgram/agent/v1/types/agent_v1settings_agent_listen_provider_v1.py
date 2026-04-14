@@ -5,11 +5,10 @@ import typing
 import pydantic
 from ....core.pydantic_utilities import IS_PYDANTIC_V2
 from ....core.unchecked_base_model import UncheckedBaseModel
-from .agent_v1settings_agent_listen_provider_v1type import AgentV1SettingsAgentListenProviderV1Type
 
 
 class AgentV1SettingsAgentListenProviderV1(UncheckedBaseModel):
-    type: AgentV1SettingsAgentListenProviderV1Type = pydantic.Field()
+    type: typing.Literal["deepgram"] = pydantic.Field(default="deepgram")
     """
     Provider type for speech-to-text
     """

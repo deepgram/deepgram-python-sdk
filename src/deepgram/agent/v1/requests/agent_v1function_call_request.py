@@ -3,12 +3,11 @@
 import typing
 
 import typing_extensions
-from ..types.agent_v1function_call_request_type import AgentV1FunctionCallRequestType
 from .agent_v1function_call_request_functions_item import AgentV1FunctionCallRequestFunctionsItemParams
 
 
 class AgentV1FunctionCallRequestParams(typing_extensions.TypedDict):
-    type: AgentV1FunctionCallRequestType
+    type: typing.Literal["FunctionCallRequest"]
     """
     Message type identifier for function call requests
     """

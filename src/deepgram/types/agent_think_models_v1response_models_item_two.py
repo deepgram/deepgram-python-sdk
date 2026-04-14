@@ -6,7 +6,6 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .agent_think_models_v1response_models_item_two_id import AgentThinkModelsV1ResponseModelsItemTwoId
-from .agent_think_models_v1response_models_item_two_provider import AgentThinkModelsV1ResponseModelsItemTwoProvider
 
 
 class AgentThinkModelsV1ResponseModelsItemTwo(UncheckedBaseModel):
@@ -24,7 +23,7 @@ class AgentThinkModelsV1ResponseModelsItemTwo(UncheckedBaseModel):
     The display name of the model
     """
 
-    provider: AgentThinkModelsV1ResponseModelsItemTwoProvider = pydantic.Field()
+    provider: typing.Literal["google"] = pydantic.Field(default="google")
     """
     The provider of the model
     """

@@ -2,4 +2,33 @@
 
 import typing
 
-Groq = typing.Any
+import pydantic
+from ..core.pydantic_utilities import IS_PYDANTIC_V2
+from ..core.unchecked_base_model import UncheckedBaseModel
+
+
+class Groq(UncheckedBaseModel):
+    type: typing.Literal["groq"] = "groq"
+    version: typing.Optional[typing.Literal["v1"]] = pydantic.Field(default=None)
+    """
+    The REST API version for the Groq's chat completions API (mostly OpenAI-compatible)
+    """
+
+    model: typing.Literal["openai/gpt-oss-20b"] = pydantic.Field(default="openai/gpt-oss-20b")
+    """
+    Groq model to use
+    """
+
+    temperature: typing.Optional[float] = pydantic.Field(default=None)
+    """
+    Groq temperature (0-2)
+    """
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow

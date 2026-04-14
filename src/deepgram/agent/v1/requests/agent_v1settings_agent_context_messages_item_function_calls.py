@@ -3,9 +3,6 @@
 import typing
 
 import typing_extensions
-from ..types.agent_v1settings_agent_context_messages_item_function_calls_type import (
-    AgentV1SettingsAgentContextMessagesItemFunctionCallsType,
-)
 from .agent_v1settings_agent_context_messages_item_function_calls_function_calls_item import (
     AgentV1SettingsAgentContextMessagesItemFunctionCallsFunctionCallsItemParams,
 )
@@ -16,7 +13,7 @@ class AgentV1SettingsAgentContextMessagesItemFunctionCallsParams(typing_extensio
     Client-side or server-side function call request and response as part of the conversation history
     """
 
-    type: AgentV1SettingsAgentContextMessagesItemFunctionCallsType
+    type: typing.Literal["History"]
     function_calls: typing.Sequence[AgentV1SettingsAgentContextMessagesItemFunctionCallsFunctionCallsItemParams]
     """
     List of function call objects

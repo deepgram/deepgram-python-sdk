@@ -5,7 +5,6 @@ import typing
 import pydantic
 from ....core.pydantic_utilities import IS_PYDANTIC_V2
 from ....core.unchecked_base_model import UncheckedBaseModel
-from .agent_v1receive_function_call_response_type import AgentV1ReceiveFunctionCallResponseType
 
 
 class AgentV1ReceiveFunctionCallResponse(UncheckedBaseModel):
@@ -21,7 +20,7 @@ class AgentV1ReceiveFunctionCallResponse(UncheckedBaseModel):
     interface for function call responses regardless of execution location.
     """
 
-    type: AgentV1ReceiveFunctionCallResponseType = pydantic.Field()
+    type: typing.Literal["FunctionCallResponse"] = pydantic.Field(default="FunctionCallResponse")
     """
     Message type identifier for function call responses
     """

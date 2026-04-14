@@ -37,7 +37,7 @@ class AsyncV1SocketClient(EventEmitterMixin):
                 yield message
             else:
                 try:
-                    yield construct_type(type_=V1SocketClientResponse, object_=json.loads(message))  # type: ignore
+                    yield construct_type(V1SocketClientResponse, json.loads(message))  # type: ignore
                 except Exception:
                     _logger.warning(
                         "Skipping unknown WebSocket message; update your SDK version to support new message types."
@@ -62,14 +62,14 @@ class AsyncV1SocketClient(EventEmitterMixin):
                 else:
                     json_data = json.loads(raw_message)
                     try:
-                        parsed = construct_type(type_=V1SocketClientResponse, object_=json_data)  # type: ignore
+                        parsed = construct_type(V1SocketClientResponse, json_data)  # type: ignore
                     except Exception:
                         _logger.warning(
                             "Skipping unknown WebSocket message; update your SDK version to support new message types."
                         )
                         continue
                 await self._emit_async(EventType.MESSAGE, parsed)
-        except Exception as exc:
+        except (websockets.WebSocketException, JSONDecodeError) as exc:
             await self._emit_async(EventType.ERROR, exc)
         finally:
             await self._emit_async(EventType.CLOSE, None)
@@ -81,26 +81,26 @@ class AsyncV1SocketClient(EventEmitterMixin):
         """
         await self._send(message)
 
-    async def send_finalize(self, message: typing.Optional[ListenV1Finalize] = None) -> None:
+    async def send_finalize(self, message: ListenV1Finalize) -> None:
         """
         Send a message to the websocket connection.
         The message will be sent as a ListenV1Finalize.
         """
-        await self._send_model(message or ListenV1Finalize(type="Finalize"))
+        await self._send_model(message)
 
-    async def send_close_stream(self, message: typing.Optional[ListenV1CloseStream] = None) -> None:
+    async def send_close_stream(self, message: ListenV1CloseStream) -> None:
         """
         Send a message to the websocket connection.
         The message will be sent as a ListenV1CloseStream.
         """
-        await self._send_model(message or ListenV1CloseStream(type="CloseStream"))
+        await self._send_model(message)
 
-    async def send_keep_alive(self, message: typing.Optional[ListenV1KeepAlive] = None) -> None:
+    async def send_keep_alive(self, message: ListenV1KeepAlive) -> None:
         """
         Send a message to the websocket connection.
         The message will be sent as a ListenV1KeepAlive.
         """
-        await self._send_model(message or ListenV1KeepAlive(type="KeepAlive"))
+        await self._send_model(message)
 
     async def recv(self) -> V1SocketClientResponse:
         """
@@ -111,7 +111,7 @@ class AsyncV1SocketClient(EventEmitterMixin):
             return data  # type: ignore
         json_data = json.loads(data)
         try:
-            return construct_type(type_=V1SocketClientResponse, object_=json_data)  # type: ignore
+            return construct_type(V1SocketClientResponse, json_data)  # type: ignore
         except Exception:
             _logger.warning("Skipping unknown WebSocket message; update your SDK version to support new message types.")
             return json_data  # type: ignore
@@ -142,7 +142,7 @@ class V1SocketClient(EventEmitterMixin):
                 yield message
             else:
                 try:
-                    yield construct_type(type_=V1SocketClientResponse, object_=json.loads(message))  # type: ignore
+                    yield construct_type(V1SocketClientResponse, json.loads(message))  # type: ignore
                 except Exception:
                     _logger.warning(
                         "Skipping unknown WebSocket message; update your SDK version to support new message types."
@@ -167,14 +167,14 @@ class V1SocketClient(EventEmitterMixin):
                 else:
                     json_data = json.loads(raw_message)
                     try:
-                        parsed = construct_type(type_=V1SocketClientResponse, object_=json_data)  # type: ignore
+                        parsed = construct_type(V1SocketClientResponse, json_data)  # type: ignore
                     except Exception:
                         _logger.warning(
                             "Skipping unknown WebSocket message; update your SDK version to support new message types."
                         )
                         continue
                 self._emit(EventType.MESSAGE, parsed)
-        except Exception as exc:
+        except (websockets.WebSocketException, JSONDecodeError) as exc:
             self._emit(EventType.ERROR, exc)
         finally:
             self._emit(EventType.CLOSE, None)
@@ -186,26 +186,26 @@ class V1SocketClient(EventEmitterMixin):
         """
         self._send(message)
 
-    def send_finalize(self, message: typing.Optional[ListenV1Finalize] = None) -> None:
+    def send_finalize(self, message: ListenV1Finalize) -> None:
         """
         Send a message to the websocket connection.
         The message will be sent as a ListenV1Finalize.
         """
-        self._send_model(message or ListenV1Finalize(type="Finalize"))
+        self._send_model(message)
 
-    def send_close_stream(self, message: typing.Optional[ListenV1CloseStream] = None) -> None:
+    def send_close_stream(self, message: ListenV1CloseStream) -> None:
         """
         Send a message to the websocket connection.
         The message will be sent as a ListenV1CloseStream.
         """
-        self._send_model(message or ListenV1CloseStream(type="CloseStream"))
+        self._send_model(message)
 
-    def send_keep_alive(self, message: typing.Optional[ListenV1KeepAlive] = None) -> None:
+    def send_keep_alive(self, message: ListenV1KeepAlive) -> None:
         """
         Send a message to the websocket connection.
         The message will be sent as a ListenV1KeepAlive.
         """
-        self._send_model(message or ListenV1KeepAlive(type="KeepAlive"))
+        self._send_model(message)
 
     def recv(self) -> V1SocketClientResponse:
         """
@@ -216,7 +216,7 @@ class V1SocketClient(EventEmitterMixin):
             return data  # type: ignore
         json_data = json.loads(data)
         try:
-            return construct_type(type_=V1SocketClientResponse, object_=json_data)  # type: ignore
+            return construct_type(V1SocketClientResponse, json_data)  # type: ignore
         except Exception:
             _logger.warning("Skipping unknown WebSocket message; update your SDK version to support new message types.")
             return json_data  # type: ignore

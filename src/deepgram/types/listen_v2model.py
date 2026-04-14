@@ -2,4 +2,4 @@
 
 import typing
 
-ListenV2Model = typing.Union[typing.Literal["flux-general-en"], typing.Any]
+ListenV2Model = typing.Union[typing.Literal["flux-general-en", "flux-general-multi"], typing.Any]

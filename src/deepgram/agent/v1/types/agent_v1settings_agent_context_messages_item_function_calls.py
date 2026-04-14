@@ -8,9 +8,6 @@ from ....core.unchecked_base_model import UncheckedBaseModel
 from .agent_v1settings_agent_context_messages_item_function_calls_function_calls_item import (
     AgentV1SettingsAgentContextMessagesItemFunctionCallsFunctionCallsItem,
 )
-from .agent_v1settings_agent_context_messages_item_function_calls_type import (
-    AgentV1SettingsAgentContextMessagesItemFunctionCallsType,
-)
 
 
 class AgentV1SettingsAgentContextMessagesItemFunctionCalls(UncheckedBaseModel):
@@ -18,7 +15,7 @@ class AgentV1SettingsAgentContextMessagesItemFunctionCalls(UncheckedBaseModel):
     Client-side or server-side function call request and response as part of the conversation history
     """
 
-    type: AgentV1SettingsAgentContextMessagesItemFunctionCallsType
+    type: typing.Literal["History"] = "History"
     function_calls: typing.List[AgentV1SettingsAgentContextMessagesItemFunctionCallsFunctionCallsItem] = (
         pydantic.Field()
     )

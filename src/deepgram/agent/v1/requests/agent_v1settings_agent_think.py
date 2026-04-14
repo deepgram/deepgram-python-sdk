@@ -3,8 +3,5 @@
 import typing
 
 from ....requests.think_settings_v1 import ThinkSettingsV1Params
-from .agent_v1settings_agent_think_one_item import AgentV1SettingsAgentThinkOneItemParams
 
-AgentV1SettingsAgentThinkParams = typing.Union[
-    ThinkSettingsV1Params, typing.Sequence[AgentV1SettingsAgentThinkOneItemParams]
-]
+AgentV1SettingsAgentThinkParams = typing.Union[ThinkSettingsV1Params, typing.Sequence[ThinkSettingsV1Params]]

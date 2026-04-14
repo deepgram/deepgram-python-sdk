@@ -5,11 +5,10 @@ import typing
 import pydantic
 from ....core.pydantic_utilities import IS_PYDANTIC_V2
 from ....core.unchecked_base_model import UncheckedBaseModel
-from .speak_v1metadata_type import SpeakV1MetadataType
 
 
 class SpeakV1Metadata(UncheckedBaseModel):
-    type: SpeakV1MetadataType = pydantic.Field()
+    type: typing.Literal["Metadata"] = pydantic.Field(default="Metadata")
     """
     Message type identifier
     """

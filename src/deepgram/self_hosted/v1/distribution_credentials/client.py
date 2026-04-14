@@ -8,7 +8,6 @@ from ....types.create_project_distribution_credentials_v1response import CreateP
 from ....types.get_project_distribution_credentials_v1response import GetProjectDistributionCredentialsV1Response
 from ....types.list_project_distribution_credentials_v1response import ListProjectDistributionCredentialsV1Response
 from .raw_client import AsyncRawDistributionCredentialsClient, RawDistributionCredentialsClient
-from .types.distribution_credentials_create_request_provider import DistributionCredentialsCreateRequestProvider
 from .types.distribution_credentials_create_request_scopes_item import DistributionCredentialsCreateRequestScopesItem
 
 # this is used as the default value for optional parameters
@@ -73,7 +72,7 @@ class DistributionCredentialsClient:
                 typing.Sequence[DistributionCredentialsCreateRequestScopesItem],
             ]
         ] = None,
-        provider: typing.Optional[DistributionCredentialsCreateRequestProvider] = None,
+        provider: typing.Optional[typing.Literal["quay"]] = None,
         comment: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> CreateProjectDistributionCredentialsV1Response:
@@ -88,7 +87,7 @@ class DistributionCredentialsClient:
         scopes : typing.Optional[typing.Union[DistributionCredentialsCreateRequestScopesItem, typing.Sequence[DistributionCredentialsCreateRequestScopesItem]]]
             List of permission scopes for the credentials
 
-        provider : typing.Optional[DistributionCredentialsCreateRequestProvider]
+        provider : typing.Optional[typing.Literal["quay"]]
             The provider of the distribution service
 
         comment : typing.Optional[str]
@@ -111,7 +110,6 @@ class DistributionCredentialsClient:
         )
         client.self_hosted.v1.distribution_credentials.create(
             project_id="123456-7890-1234-5678-901234",
-            provider="quay",
         )
         """
         _response = self._raw_client.create(
@@ -268,7 +266,7 @@ class AsyncDistributionCredentialsClient:
                 typing.Sequence[DistributionCredentialsCreateRequestScopesItem],
             ]
         ] = None,
-        provider: typing.Optional[DistributionCredentialsCreateRequestProvider] = None,
+        provider: typing.Optional[typing.Literal["quay"]] = None,
         comment: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> CreateProjectDistributionCredentialsV1Response:
@@ -283,7 +281,7 @@ class AsyncDistributionCredentialsClient:
         scopes : typing.Optional[typing.Union[DistributionCredentialsCreateRequestScopesItem, typing.Sequence[DistributionCredentialsCreateRequestScopesItem]]]
             List of permission scopes for the credentials
 
-        provider : typing.Optional[DistributionCredentialsCreateRequestProvider]
+        provider : typing.Optional[typing.Literal["quay"]]
             The provider of the distribution service
 
         comment : typing.Optional[str]
@@ -311,7 +309,6 @@ class AsyncDistributionCredentialsClient:
         async def main() -> None:
             await client.self_hosted.v1.distribution_credentials.create(
                 project_id="123456-7890-1234-5678-901234",
-                provider="quay",
             )
 
 

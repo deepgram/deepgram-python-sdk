@@ -11,9 +11,9 @@ if typing.TYPE_CHECKING:
         MediaTranscribeRequestCustomIntentMode,
         MediaTranscribeRequestCustomTopicMode,
         MediaTranscribeRequestEncoding,
-        MediaTranscribeRequestModelZero,
-        MediaTranscribeRequestSummarizeZero,
-        MediaTranscribeRequestVersionZero,
+        MediaTranscribeRequestModel,
+        MediaTranscribeRequestSummarize,
+        MediaTranscribeRequestVersion,
         MediaTranscribeResponse,
     )
     from .requests import MediaTranscribeResponseParams
@@ -22,9 +22,9 @@ _dynamic_imports: typing.Dict[str, str] = {
     "MediaTranscribeRequestCustomIntentMode": ".types",
     "MediaTranscribeRequestCustomTopicMode": ".types",
     "MediaTranscribeRequestEncoding": ".types",
-    "MediaTranscribeRequestModelZero": ".types",
-    "MediaTranscribeRequestSummarizeZero": ".types",
-    "MediaTranscribeRequestVersionZero": ".types",
+    "MediaTranscribeRequestModel": ".types",
+    "MediaTranscribeRequestSummarize": ".types",
+    "MediaTranscribeRequestVersion": ".types",
     "MediaTranscribeResponse": ".types",
     "MediaTranscribeResponseParams": ".requests",
 }
@@ -56,9 +56,9 @@ __all__ = [
     "MediaTranscribeRequestCustomIntentMode",
     "MediaTranscribeRequestCustomTopicMode",
     "MediaTranscribeRequestEncoding",
-    "MediaTranscribeRequestModelZero",
-    "MediaTranscribeRequestSummarizeZero",
-    "MediaTranscribeRequestVersionZero",
+    "MediaTranscribeRequestModel",
+    "MediaTranscribeRequestSummarize",
+    "MediaTranscribeRequestVersion",
     "MediaTranscribeResponse",
     "MediaTranscribeResponseParams",
 ]

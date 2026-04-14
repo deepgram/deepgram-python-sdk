@@ -5,11 +5,10 @@ import typing
 import pydantic
 from ....core.pydantic_utilities import IS_PYDANTIC_V2
 from ....core.unchecked_base_model import UncheckedBaseModel
-from .speak_v1text_type import SpeakV1TextType
 
 
 class SpeakV1Text(UncheckedBaseModel):
-    type: SpeakV1TextType = pydantic.Field()
+    type: typing.Literal["Speak"] = pydantic.Field(default="Speak")
     """
     Message type identifier
     """
