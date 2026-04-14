@@ -3,9 +3,7 @@
 import json
 import logging
 import typing
-from json.decoder import JSONDecodeError
 
-import websockets
 import websockets.sync.connection as websockets_sync_connection
 from ...core.events import EventEmitterMixin, EventType
 from ...core.unchecked_base_model import construct_type
@@ -39,6 +37,26 @@ except ImportError:
     from websockets import WebSocketClientProtocol  # type: ignore
 
 _logger = logging.getLogger(__name__)
+
+
+def _sanitize_numeric_types(obj: typing.Any) -> typing.Any:
+    """
+    Recursively convert float values that are whole numbers to int.
+
+    Workaround for Fern-generated models that type integer API fields
+    (like sample_rate) as float, causing JSON serialization to produce
+    values like 44100.0 instead of 44100. The Deepgram API rejects
+    float representations of integer fields.
+
+    See: https://github.com/deepgram/internal-api-specs/issues/205
+    """
+    if isinstance(obj, dict):
+        return {k: _sanitize_numeric_types(v) for k, v in obj.items()}
+    elif isinstance(obj, list):
+        return [_sanitize_numeric_types(item) for item in obj]
+    elif isinstance(obj, float) and obj.is_integer():
+        return int(obj)
+    return obj
 V1SocketClientResponse = typing.Union[
     AgentV1ReceiveFunctionCallResponse,
     AgentV1PromptUpdated,
@@ -70,7 +88,7 @@ class AsyncV1SocketClient(EventEmitterMixin):
                 yield message
             else:
                 try:
-                    yield construct_type(V1SocketClientResponse, json.loads(message))  # type: ignore
+                    yield construct_type(type_=V1SocketClientResponse, object_=json.loads(message))  # type: ignore
                 except Exception:
                     _logger.warning(
                         "Skipping unknown WebSocket message; update your SDK version to support new message types."
@@ -95,14 +113,14 @@ class AsyncV1SocketClient(EventEmitterMixin):
                 else:
                     json_data = json.loads(raw_message)
                     try:
-                        parsed = construct_type(V1SocketClientResponse, json_data)  # type: ignore
+                        parsed = construct_type(type_=V1SocketClientResponse, object_=json_data)  # type: ignore
                     except Exception:
                         _logger.warning(
                             "Skipping unknown WebSocket message; update your SDK version to support new message types."
                         )
                         continue
                 await self._emit_async(EventType.MESSAGE, parsed)
-        except (websockets.WebSocketException, JSONDecodeError) as exc:
+        except Exception as exc:
             await self._emit_async(EventType.ERROR, exc)
         finally:
             await self._emit_async(EventType.CLOSE, None)
@@ -142,12 +160,12 @@ class AsyncV1SocketClient(EventEmitterMixin):
         """
         await self._send_model(message)
 
-    async def send_keep_alive(self, message: AgentV1KeepAlive) -> None:
+    async def send_keep_alive(self, message: typing.Optional[AgentV1KeepAlive] = None) -> None:
         """
         Send a message to the websocket connection.
         The message will be sent as a AgentV1KeepAlive.
         """
-        await self._send_model(message)
+        await self._send_model(message or AgentV1KeepAlive(type="KeepAlive"))
 
     async def send_update_prompt(self, message: AgentV1UpdatePrompt) -> None:
         """
@@ -179,7 +197,7 @@ class AsyncV1SocketClient(EventEmitterMixin):
             return data  # type: ignore
         json_data = json.loads(data)
         try:
-            return construct_type(V1SocketClientResponse, json_data)  # type: ignore
+            return construct_type(type_=V1SocketClientResponse, object_=json_data)  # type: ignore
         except Exception:
             _logger.warning("Skipping unknown WebSocket message; update your SDK version to support new message types.")
             return json_data  # type: ignore
@@ -196,7 +214,7 @@ class AsyncV1SocketClient(EventEmitterMixin):
         """
         Send a Pydantic model to the websocket connection.
         """
-        await self._send(data.dict())
+        await self._send(_sanitize_numeric_types(data.dict()))
 
 
 class V1SocketClient(EventEmitterMixin):
@@ -210,7 +228,7 @@ class V1SocketClient(EventEmitterMixin):
                 yield message
             else:
                 try:
-                    yield construct_type(V1SocketClientResponse, json.loads(message))  # type: ignore
+                    yield construct_type(type_=V1SocketClientResponse, object_=json.loads(message))  # type: ignore
                 except Exception:
                     _logger.warning(
                         "Skipping unknown WebSocket message; update your SDK version to support new message types."
@@ -235,14 +253,14 @@ class V1SocketClient(EventEmitterMixin):
                 else:
                     json_data = json.loads(raw_message)
                     try:
-                        parsed = construct_type(V1SocketClientResponse, json_data)  # type: ignore
+                        parsed = construct_type(type_=V1SocketClientResponse, object_=json_data)  # type: ignore
                     except Exception:
                         _logger.warning(
                             "Skipping unknown WebSocket message; update your SDK version to support new message types."
                         )
                         continue
                 self._emit(EventType.MESSAGE, parsed)
-        except (websockets.WebSocketException, JSONDecodeError) as exc:
+        except Exception as exc:
             self._emit(EventType.ERROR, exc)
         finally:
             self._emit(EventType.CLOSE, None)
@@ -282,12 +300,12 @@ class V1SocketClient(EventEmitterMixin):
         """
         self._send_model(message)
 
-    def send_keep_alive(self, message: AgentV1KeepAlive) -> None:
+    def send_keep_alive(self, message: typing.Optional[AgentV1KeepAlive] = None) -> None:
         """
         Send a message to the websocket connection.
         The message will be sent as a AgentV1KeepAlive.
         """
-        self._send_model(message)
+        self._send_model(message or AgentV1KeepAlive(type="KeepAlive"))
 
     def send_update_prompt(self, message: AgentV1UpdatePrompt) -> None:
         """
@@ -319,7 +337,7 @@ class V1SocketClient(EventEmitterMixin):
             return data  # type: ignore
         json_data = json.loads(data)
         try:
-            return construct_type(V1SocketClientResponse, json_data)  # type: ignore
+            return construct_type(type_=V1SocketClientResponse, object_=json_data)  # type: ignore
         except Exception:
             _logger.warning("Skipping unknown WebSocket message; update your SDK version to support new message types.")
             return json_data  # type: ignore
@@ -336,4 +354,4 @@ class V1SocketClient(EventEmitterMixin):
         """
         Send a Pydantic model to the websocket connection.
         """
-        self._send(data.dict())
+        self._send(_sanitize_numeric_types(data.dict()))
