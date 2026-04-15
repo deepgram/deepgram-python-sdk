@@ -57,6 +57,8 @@ def _sanitize_numeric_types(obj: typing.Any) -> typing.Any:
     elif isinstance(obj, float) and obj.is_integer():
         return int(obj)
     return obj
+
+
 V1SocketClientResponse = typing.Union[
     AgentV1ReceiveFunctionCallResponse,
     AgentV1PromptUpdated,
