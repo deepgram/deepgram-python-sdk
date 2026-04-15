@@ -19,6 +19,7 @@ if typing.TYPE_CHECKING:
     from .read.client import AsyncReadClient, ReadClient
     from .self_hosted.client import AsyncSelfHostedClient, SelfHostedClient
     from .speak.client import AsyncSpeakClient, SpeakClient
+    from .voice_agent.client import AsyncVoiceAgentClient, VoiceAgentClient
 
 
 class BaseClient:
@@ -98,6 +99,7 @@ class BaseClient:
         self._read: typing.Optional[ReadClient] = None
         self._self_hosted: typing.Optional[SelfHostedClient] = None
         self._speak: typing.Optional[SpeakClient] = None
+        self._voice_agent: typing.Optional[VoiceAgentClient] = None
 
     @property
     def agent(self):
@@ -154,6 +156,14 @@ class BaseClient:
 
             self._speak = SpeakClient(client_wrapper=self._client_wrapper)
         return self._speak
+
+    @property
+    def voice_agent(self):
+        if self._voice_agent is None:
+            from .voice_agent.client import VoiceAgentClient  # noqa: E402
+
+            self._voice_agent = VoiceAgentClient(client_wrapper=self._client_wrapper)
+        return self._voice_agent
 
 
 class AsyncBaseClient:
@@ -233,6 +243,7 @@ class AsyncBaseClient:
         self._read: typing.Optional[AsyncReadClient] = None
         self._self_hosted: typing.Optional[AsyncSelfHostedClient] = None
         self._speak: typing.Optional[AsyncSpeakClient] = None
+        self._voice_agent: typing.Optional[AsyncVoiceAgentClient] = None
 
     @property
     def agent(self):
@@ -289,3 +300,11 @@ class AsyncBaseClient:
 
             self._speak = AsyncSpeakClient(client_wrapper=self._client_wrapper)
         return self._speak
+
+    @property
+    def voice_agent(self):
+        if self._voice_agent is None:
+            from .voice_agent.client import AsyncVoiceAgentClient  # noqa: E402
+
+            self._voice_agent = AsyncVoiceAgentClient(client_wrapper=self._client_wrapper)
+        return self._voice_agent

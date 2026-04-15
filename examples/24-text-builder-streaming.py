@@ -65,16 +65,13 @@ def example_streaming_with_textbuilder():
             connection.on(EventType.ERROR, lambda error: print(f"✗ Error: {error}"))
 
             # Send the TextBuilder-generated text
-            text_message = SpeakV1Text(text=text)
-            connection.send_speak_v_1_text(text_message)
+            connection.send_text(SpeakV1Text(text=text))
 
             # Flush to ensure all text is processed
-            flush_message = SpeakV1Flush()
-            connection.send_speak_v_1_flush(flush_message)
+            connection.send_flush()
 
             # Close the connection when done
-            close_message = SpeakV1Close()
-            connection.send_speak_v_1_close(close_message)
+            connection.send_close()
 
             # Start listening - this blocks until the connection closes
             connection.start_listening()
@@ -138,10 +135,10 @@ def example_multiple_messages():
             # Send multiple messages
             for i, text in enumerate([intro, instruction1, instruction2, closing], 1):
                 print(f"Sending message {i}: {text[:50]}...")
-                connection.send_speak_v_1_text(SpeakV1Text(text=text))
+                connection.send_text(SpeakV1Text(text=text))
 
-            connection.send_speak_v_1_flush(SpeakV1Flush())
-            connection.send_speak_v_1_close(SpeakV1Close())
+            connection.send_flush()
+            connection.send_close()
 
             connection.start_listening()
 

@@ -39,18 +39,20 @@ try:
 
     # Get billing breakdown
     print("\nGetting billing breakdown...")
-    breakdown = client.manage.v1.projects.billing.breakdown.get(project_id=project_id)
-    print(f"Breakdown entries: {len(breakdown.entries) if breakdown.entries else 0}")
+    breakdown = client.manage.v1.projects.billing.breakdown.list(project_id=project_id)
+    print(f"Breakdown results: {len(breakdown.results) if breakdown.results else 0}")
 
     # Get billing fields
     print("\nGetting billing fields...")
     fields = client.manage.v1.projects.billing.fields.list(project_id=project_id)
-    print(f"Available fields: {len(fields.fields) if fields.fields else 0}")
+    print(f"Accessors: {len(fields.accessors) if fields.accessors else 0}"
+          f", Deployments: {len(fields.deployments) if fields.deployments else 0}"
+          f", Tags: {len(fields.tags) if fields.tags else 0}")
 
     # List billing purchases
     print("\nListing billing purchases...")
     purchases = client.manage.v1.projects.billing.purchases.list(project_id=project_id)
-    print(f"Found {len(purchases.purchases) if purchases.purchases else 0} purchases")
+    print(f"Found {len(purchases.orders) if purchases.orders else 0} purchases")
 
     # For async version:
     # from deepgram import AsyncDeepgramClient

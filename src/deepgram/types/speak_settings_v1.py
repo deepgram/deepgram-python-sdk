@@ -2,4 +2,26 @@
 
 import typing
 
-SpeakSettingsV1 = typing.Any
+import pydantic
+from ..core.pydantic_utilities import IS_PYDANTIC_V2
+from ..core.unchecked_base_model import UncheckedBaseModel
+from .speak_settings_v1endpoint import SpeakSettingsV1Endpoint
+from .speak_settings_v1provider import SpeakSettingsV1Provider
+
+
+class SpeakSettingsV1(UncheckedBaseModel):
+    provider: SpeakSettingsV1Provider
+    endpoint: typing.Optional[SpeakSettingsV1Endpoint] = pydantic.Field(default=None)
+    """
+    Optional if provider is Deepgram. Required for non-Deepgram TTS providers.
+    When present, must include url field and headers object. Valid schemes are https and wss with wss only supported for Eleven Labs.
+    """
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow

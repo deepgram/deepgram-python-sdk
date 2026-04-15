@@ -5,7 +5,6 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .agent_think_models_v1response_models_item_id_provider import AgentThinkModelsV1ResponseModelsItemIdProvider
 
 
 class AgentThinkModelsV1ResponseModelsItemId(UncheckedBaseModel):
@@ -23,7 +22,7 @@ class AgentThinkModelsV1ResponseModelsItemId(UncheckedBaseModel):
     The display name of the model
     """
 
-    provider: AgentThinkModelsV1ResponseModelsItemIdProvider = pydantic.Field()
+    provider: typing.Literal["aws_bedrock"] = pydantic.Field(default="aws_bedrock")
     """
     The provider of the model
     """

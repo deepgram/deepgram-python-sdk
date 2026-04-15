@@ -5,11 +5,10 @@ import typing
 import pydantic
 from ....core.pydantic_utilities import IS_PYDANTIC_V2
 from ....core.unchecked_base_model import UncheckedBaseModel
-from .listen_v2fatal_error_type import ListenV2FatalErrorType
 
 
 class ListenV2FatalError(UncheckedBaseModel):
-    type: ListenV2FatalErrorType = pydantic.Field()
+    type: typing.Literal["Error"] = pydantic.Field(default="Error")
     """
     Message type identifier
     """

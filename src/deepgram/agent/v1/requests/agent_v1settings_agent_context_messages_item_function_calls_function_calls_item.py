@@ -28,3 +28,8 @@ class AgentV1SettingsAgentContextMessagesItemFunctionCallsFunctionCallsItemParam
     """
     Response from the function call
     """
+
+    thought_signature: typing_extensions.NotRequired[str]
+    """
+    Some Gemini models require this as an additional function call identifier
+    """

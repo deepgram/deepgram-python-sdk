@@ -5,11 +5,10 @@ import typing
 import pydantic
 from ....core.pydantic_utilities import IS_PYDANTIC_V2
 from ....core.unchecked_base_model import UncheckedBaseModel
-from .agent_v1settings_applied_type import AgentV1SettingsAppliedType
 
 
 class AgentV1SettingsApplied(UncheckedBaseModel):
-    type: AgentV1SettingsAppliedType = pydantic.Field()
+    type: typing.Literal["SettingsApplied"] = pydantic.Field(default="SettingsApplied")
     """
     Message type identifier for settings applied confirmation
     """

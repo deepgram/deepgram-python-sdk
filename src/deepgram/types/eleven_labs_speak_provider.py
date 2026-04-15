@@ -2,4 +2,39 @@
 
 import typing
 
-ElevenLabsSpeakProvider = typing.Any
+import pydantic
+from ..core.pydantic_utilities import IS_PYDANTIC_V2
+from ..core.unchecked_base_model import UncheckedBaseModel
+from .eleven_labs_speak_provider_model_id import ElevenLabsSpeakProviderModelId
+
+
+class ElevenLabsSpeakProvider(UncheckedBaseModel):
+    type: typing.Literal["eleven_labs"] = "eleven_labs"
+    version: typing.Optional[typing.Literal["v1"]] = pydantic.Field(default=None)
+    """
+    The REST API version for the ElevenLabs text-to-speech API
+    """
+
+    model_id: ElevenLabsSpeakProviderModelId = pydantic.Field()
+    """
+    Eleven Labs model ID
+    """
+
+    language: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Optional language to use, e.g. 'en-US'. Corresponds to the `language_code` parameter in the ElevenLabs API
+    """
+
+    language_code: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Use the `language` field instead.
+    """
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow

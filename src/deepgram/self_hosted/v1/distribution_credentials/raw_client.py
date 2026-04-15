@@ -13,7 +13,6 @@ from ....errors.bad_request_error import BadRequestError
 from ....types.create_project_distribution_credentials_v1response import CreateProjectDistributionCredentialsV1Response
 from ....types.get_project_distribution_credentials_v1response import GetProjectDistributionCredentialsV1Response
 from ....types.list_project_distribution_credentials_v1response import ListProjectDistributionCredentialsV1Response
-from .types.distribution_credentials_create_request_provider import DistributionCredentialsCreateRequestProvider
 from .types.distribution_credentials_create_request_scopes_item import DistributionCredentialsCreateRequestScopesItem
 
 # this is used as the default value for optional parameters
@@ -85,7 +84,7 @@ class RawDistributionCredentialsClient:
                 typing.Sequence[DistributionCredentialsCreateRequestScopesItem],
             ]
         ] = None,
-        provider: typing.Optional[DistributionCredentialsCreateRequestProvider] = None,
+        provider: typing.Optional[typing.Literal["quay"]] = None,
         comment: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[CreateProjectDistributionCredentialsV1Response]:
@@ -100,7 +99,7 @@ class RawDistributionCredentialsClient:
         scopes : typing.Optional[typing.Union[DistributionCredentialsCreateRequestScopesItem, typing.Sequence[DistributionCredentialsCreateRequestScopesItem]]]
             List of permission scopes for the credentials
 
-        provider : typing.Optional[DistributionCredentialsCreateRequestProvider]
+        provider : typing.Optional[typing.Literal["quay"]]
             The provider of the distribution service
 
         comment : typing.Optional[str]
@@ -339,7 +338,7 @@ class AsyncRawDistributionCredentialsClient:
                 typing.Sequence[DistributionCredentialsCreateRequestScopesItem],
             ]
         ] = None,
-        provider: typing.Optional[DistributionCredentialsCreateRequestProvider] = None,
+        provider: typing.Optional[typing.Literal["quay"]] = None,
         comment: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[CreateProjectDistributionCredentialsV1Response]:
@@ -354,7 +353,7 @@ class AsyncRawDistributionCredentialsClient:
         scopes : typing.Optional[typing.Union[DistributionCredentialsCreateRequestScopesItem, typing.Sequence[DistributionCredentialsCreateRequestScopesItem]]]
             List of permission scopes for the credentials
 
-        provider : typing.Optional[DistributionCredentialsCreateRequestProvider]
+        provider : typing.Optional[typing.Literal["quay"]]
             The provider of the distribution service
 
         comment : typing.Optional[str]

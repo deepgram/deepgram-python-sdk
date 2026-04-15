@@ -3,9 +3,7 @@
 import json
 import logging
 import typing
-from json.decoder import JSONDecodeError
 
-import websockets
 import websockets.sync.connection as websockets_sync_connection
 from ...core.events import EventEmitterMixin, EventType
 from ...core.unchecked_base_model import construct_type

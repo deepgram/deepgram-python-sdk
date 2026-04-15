@@ -2,8 +2,12 @@
 Example: Voice Agent (Agent V1)
 
 This example shows how to set up a voice agent that can listen, think, and speak.
+It streams a pre-recorded audio file to simulate user speech.
 """
 
+import os
+import threading
+import time
 from typing import Union
 
 from dotenv import load_dotenv
@@ -29,6 +33,8 @@ AgentV1SocketClientResponse = Union[str, bytes]
 
 client = DeepgramClient()
 
+audio_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "fixtures", "audio.wav")
+
 try:
     with client.agent.v1.connect() as agent:
         # Configure the agent settings
@@ -52,7 +58,7 @@ try:
                         model="gpt-4o-mini",
                         temperature=0.7,
                     ),
-                    prompt="You are a helpful AI assistant.",
+                    prompt="You are a helpful AI assistant. Keep your responses brief.",
                 ),
                 speak=SpeakSettingsV1(
                     provider=SpeakSettingsV1Provider_Deepgram(
@@ -68,31 +74,49 @@ try:
 
         def on_message(message: AgentV1SocketClientResponse) -> None:
             if isinstance(message, bytes):
-                print("Received audio data")
-                # In production, you would play this audio or write it to a file
+                print(f"Received agent audio ({len(message)} bytes)")
             else:
                 msg_type = getattr(message, "type", "Unknown")
-                print(f"Received {msg_type} event")
+                if msg_type == "ConversationText":
+                    role = getattr(message, "role", "unknown")
+                    content = getattr(message, "content", "")
+                    print(f"[{role}] {content}")
+                elif msg_type == "UserStartedSpeaking":
+                    print(">> User started speaking")
+                elif msg_type == "AgentThinking":
+                    print(">> Agent thinking...")
+                elif msg_type == "AgentStartedSpeaking":
+                    print(">> Agent started speaking")
+                elif msg_type == "AgentAudioDone":
+                    print(">> Agent finished speaking")
+                else:
+                    print(f"Received {msg_type} event")
 
         agent.on(EventType.OPEN, lambda _: print("Connection opened"))
         agent.on(EventType.MESSAGE, on_message)
         agent.on(EventType.CLOSE, lambda _: print("Connection closed"))
         agent.on(EventType.ERROR, lambda error: print(f"Error: {error}"))
 
-        # Start listening - this blocks until the connection closes
-        # In production, you would send audio from your microphone or audio source:
-        # with open("audio.wav", "rb") as audio_file:
-        #     audio_data = audio_file.read()
-        #     agent.send_media(audio_data)
+        # Stream audio in a background thread
+        def send_audio():
+            with open(audio_path, "rb") as f:
+                audio_data = f.read()
 
+            chunk_size = 8192
+            for i in range(0, len(audio_data), chunk_size):
+                chunk = audio_data[i : i + chunk_size]
+                if chunk:
+                    agent.send_media(chunk)
+                time.sleep(0.01)
+
+            print("Finished streaming audio, waiting for agent response...")
+            time.sleep(15)
+
+        sender = threading.Thread(target=send_audio, daemon=True)
+        sender.start()
+
+        # Start listening - blocks until connection closes
         agent.start_listening()
-
-    # For async version:
-    # from deepgram import AsyncDeepgramClient
-    # async with client.agent.v1.connect() as agent:
-    #     # ... same configuration ...
-    #     await agent.send_settings(settings)
-    #     await agent.start_listening()
 
 except Exception as e:
     print(f"Error: {e}")

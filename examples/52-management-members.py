@@ -35,14 +35,14 @@ try:
         member_id = members.members[0].member_id
         print(f"\nGetting scopes for member: {member_id}")
         scopes = client.manage.v1.projects.members.scopes.list(project_id=project_id, member_id=member_id)
-        print(f"Member scopes: {scopes.scope}")
+        print(f"Member scopes: {scopes.scopes}")
 
         # Update member scopes
         print("\nUpdating member scopes...")
         updated = client.manage.v1.projects.members.scopes.update(
             project_id=project_id, member_id=member_id, scope="admin"
         )
-        print(f"Updated scopes: {updated.scope}")
+        print(f"Updated scopes: {updated.scopes}")
 
     # Remove a member (commented out for safety)
     # client.manage.v1.projects.members.delete(

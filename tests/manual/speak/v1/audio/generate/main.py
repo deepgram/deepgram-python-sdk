@@ -19,10 +19,8 @@ try:
         text=text,
     )
     print("Response received successfully")
-    print(f"Response type: {type(response)}")
-    if hasattr(response, "audio"):
-        print(f"Audio data length: {len(response.audio) if response.audio else 0} bytes")
-    print(f"Response body: {response}")
+    audio_bytes = b"".join(response)
+    print(f"Audio data length: {len(audio_bytes)} bytes")
 except Exception as e:
     print(f"Error occurred: {type(e).__name__}")
     # Log request headers if available

@@ -8,11 +8,10 @@ from ....core.unchecked_base_model import UncheckedBaseModel
 from .agent_v1settings_agent import AgentV1SettingsAgent
 from .agent_v1settings_audio import AgentV1SettingsAudio
 from .agent_v1settings_flags import AgentV1SettingsFlags
-from .agent_v1settings_type import AgentV1SettingsType
 
 
 class AgentV1Settings(UncheckedBaseModel):
-    type: AgentV1SettingsType
+    type: typing.Literal["Settings"] = "Settings"
     tags: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
     """
     Tags to associate with the request

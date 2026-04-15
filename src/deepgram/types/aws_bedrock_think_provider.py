@@ -2,4 +2,35 @@
 
 import typing
 
-AwsBedrockThinkProvider = typing.Any
+import pydantic
+from ..core.pydantic_utilities import IS_PYDANTIC_V2
+from ..core.unchecked_base_model import UncheckedBaseModel
+from .aws_bedrock_think_provider_credentials import AwsBedrockThinkProviderCredentials
+from .aws_bedrock_think_provider_model import AwsBedrockThinkProviderModel
+
+
+class AwsBedrockThinkProvider(UncheckedBaseModel):
+    type: typing.Literal["aws_bedrock"] = "aws_bedrock"
+    model: AwsBedrockThinkProviderModel = pydantic.Field()
+    """
+    AWS Bedrock model to use
+    """
+
+    temperature: typing.Optional[float] = pydantic.Field(default=None)
+    """
+    AWS Bedrock temperature (0-2)
+    """
+
+    credentials: typing.Optional[AwsBedrockThinkProviderCredentials] = pydantic.Field(default=None)
+    """
+    AWS credentials type (STS short-lived or IAM long-lived)
+    """
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow

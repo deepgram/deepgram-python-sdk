@@ -2,9 +2,6 @@
 
 import typing
 
-from .agent_v1update_speak_speak_endpoint import AgentV1UpdateSpeakSpeakEndpointParams
-from .agent_v1update_speak_speak_one_item import AgentV1UpdateSpeakSpeakOneItemParams
+from ....requests.speak_settings_v1 import SpeakSettingsV1Params
 
-AgentV1UpdateSpeakSpeakParams = typing.Union[
-    AgentV1UpdateSpeakSpeakEndpointParams, typing.Sequence[AgentV1UpdateSpeakSpeakOneItemParams]
-]
+AgentV1UpdateSpeakSpeakParams = typing.Union[SpeakSettingsV1Params, typing.Sequence[SpeakSettingsV1Params]]

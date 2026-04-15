@@ -36,14 +36,22 @@ try:
     ) as connection:
 
         def on_message(message: ListenV2SocketClientResponse) -> None:
-            msg_type = getattr(message, "type", type(message).__name__)
-            print(f"Received {msg_type} event ({type(message).__name__})")
-
-            # Extract transcription from TurnInfo events
-            if isinstance(message, ListenV2TurnInfo):
+            # V2 messages may arrive as typed objects or dicts depending on the union match
+            if isinstance(message, dict):
+                msg_type = message.get("type", "Unknown")
+                print(f"Received {msg_type} event")
+                if msg_type == "TurnInfo":
+                    print(f"  transcript: {message.get('transcript', '')}")
+                    print(f"  event: {message.get('event', '')}")
+                    print(f"  turn_index: {message.get('turn_index', '')}")
+            elif isinstance(message, ListenV2TurnInfo):
+                print(f"Received TurnInfo event")
                 print(f"  transcript: {message.transcript}")
                 print(f"  event: {message.event}")
                 print(f"  turn_index: {message.turn_index}")
+            else:
+                msg_type = getattr(message, "type", type(message).__name__)
+                print(f"Received {msg_type} event")
 
         connection.on(EventType.OPEN, lambda _: print("Connection opened"))
         connection.on(EventType.MESSAGE, on_message)
