@@ -2,7 +2,7 @@
 
 ![Built with Fern](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)
 [![PyPI version](https://img.shields.io/pypi/v/deepgram-sdk)](https://pypi.python.org/pypi/deepgram-sdk)
-[![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
+[![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
 [![MIT License](https://img.shields.io/badge/license-MIT-green.svg)](./LICENSE)
 
 The official Python SDK for Deepgram's automated speech recognition, text-to-speech, and language understanding APIs. Power your applications with world-class speech and Language AI models.
@@ -464,7 +464,7 @@ See our [CONTRIBUTING](./CONTRIBUTING.md) guide.
 
 ### Requirements
 
-- Python 3.8+
+- Python 3.10+
 - See `pyproject.toml` for full dependency list
 
 ## Community Code of Conduct
