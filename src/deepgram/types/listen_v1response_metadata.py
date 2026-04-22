@@ -18,7 +18,7 @@ class ListenV1ResponseMetadata(UncheckedBaseModel):
     sha256: str
     created: dt.datetime
     duration: float
-    channels: float
+    channels: int
     models: typing.List[str]
     model_info: typing.Dict[str, typing.Any]
     summary_info: typing.Optional[ListenV1ResponseMetadataSummaryInfo] = None

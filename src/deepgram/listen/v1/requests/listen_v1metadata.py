@@ -36,7 +36,7 @@ class ListenV1MetadataParams(typing_extensions.TypedDict):
     The duration
     """
 
-    channels: float
+    channels: int
     """
     The channels
     """

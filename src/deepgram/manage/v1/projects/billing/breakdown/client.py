@@ -92,6 +92,7 @@ class BreakdownClient:
             deployment="hosted",
             tag="tag1",
             line_item="streaming::nova-3",
+            grouping=["deployment", "line_item"],
         )
         """
         _response = self._raw_client.list(
@@ -195,6 +196,7 @@ class AsyncBreakdownClient:
                 deployment="hosted",
                 tag="tag1",
                 line_item="streaming::nova-3",
+                grouping=["deployment", "line_item"],
             )
 
 

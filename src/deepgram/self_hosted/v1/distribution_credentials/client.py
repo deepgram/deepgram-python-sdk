@@ -110,6 +110,7 @@ class DistributionCredentialsClient:
         )
         client.self_hosted.v1.distribution_credentials.create(
             project_id="123456-7890-1234-5678-901234",
+            scopes=["self-hosted:products"],
         )
         """
         _response = self._raw_client.create(
@@ -309,6 +310,7 @@ class AsyncDistributionCredentialsClient:
         async def main() -> None:
             await client.self_hosted.v1.distribution_credentials.create(
                 project_id="123456-7890-1234-5678-901234",
+                scopes=["self-hosted:products"],
             )
 
 

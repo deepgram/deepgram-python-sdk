@@ -11,7 +11,7 @@ class ListenV1SpeechStartedParams(typing_extensions.TypedDict):
     Message type identifier
     """
 
-    channel: typing.Sequence[float]
+    channel: typing.Sequence[int]
     """
     The channel
     """
