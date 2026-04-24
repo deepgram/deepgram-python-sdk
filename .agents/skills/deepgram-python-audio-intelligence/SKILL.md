@@ -114,7 +114,7 @@ with client.listen.v1.connect(model="nova-3", diarize=True, redact=["pii"]) as c
 
 `summarize`, `topics`, `intents`, `sentiment`, `detect_language`, `diarize`, `redact`, `custom_topic`, `custom_topic_mode`, `custom_intent`, `custom_intent_mode`, `detect_entities`, plus all the standard STT params (`model`, `language`, `encoding`, `sample_rate`, ...).
 
-`redact` accepts a string OR sequence (e.g. `"pci"` or `["pci", "pii", "numbers", "phi"]`). The SDK supports both via `Union[str, Sequence[str]]` — see the permanent patches in `.fernignore` for `listen_v1redact.py`.
+`redact` is typed as `Optional[str]` in the current generated SDK (`src/deepgram/listen/v1/media/client.py`). Pass a single redaction mode such as `"pci"`, `"pii"`, `"numbers"`, or `"phi"`. Multi-mode redaction at the transport level is supported by sending `redact` as a repeated query parameter — check `src/deepgram/types/listen_v1redact.py` for the current type and fall back to raw query-param construction (or multiple calls) if you need several modes. The earlier `Union[str, Sequence[str]]` override is no longer carried in `.fernignore`.
 
 ## API reference (layered)
 

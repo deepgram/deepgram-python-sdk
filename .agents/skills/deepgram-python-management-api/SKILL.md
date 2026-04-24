@@ -62,15 +62,18 @@ project_models = client.manage.v1.projects.models.list(project_id=project.projec
 All project-scoped resources live under `client.manage.v1.projects.*`:
 
 ```python
-# Keys
+# Keys — `create` takes a single `request=` payload, not top-level kwargs
 keys = client.manage.v1.projects.keys.list(project_id=pid)
-client.manage.v1.projects.keys.create(project_id=pid, comment="CI key", scopes=["usage:write"])
+client.manage.v1.projects.keys.create(
+    project_id=pid,
+    request={"comment": "CI key", "scopes": ["usage:write"]},
+)
 client.manage.v1.projects.keys.delete(project_id=pid, key_id=kid)
 
-# Members + invites (invites are nested under members)
+# Members + invites (invites are nested under members; method is `create`, not `send`)
 members = client.manage.v1.projects.members.list(project_id=pid)
 invites = client.manage.v1.projects.members.invites.list(project_id=pid)
-client.manage.v1.projects.members.invites.send(project_id=pid, email="new@example.com", scope="member")
+client.manage.v1.projects.members.invites.create(project_id=pid, email="new@example.com", scope="member")
 
 # Usage (get, not list) + billing balances (nested)
 usage = client.manage.v1.projects.usage.get(project_id=pid)
@@ -140,7 +143,7 @@ projects = await client.manage.v1.projects.list()
 ## Gotchas
 
 1. **`Token` auth, not `Bearer`.**
-2. **Project-scoped resources are nested under `.projects.*`.** There is no top-level `client.manage.v1.keys` / `.members` / `.invites` / `.usage` / `.billing`. Use `client.manage.v1.projects.keys`, `...projects.members`, `...projects.members.invites`, `...projects.usage`, `...projects.billing.balances`. The only top-level `client.manage.v1.*` methods are `projects`, `models`, and `requests` utilities.
+2. **Project-scoped resources are nested under `.projects.*`.** There is no top-level `client.manage.v1.keys` / `.members` / `.invites` / `.usage` / `.billing`. Use `client.manage.v1.projects.keys`, `...projects.members`, `...projects.members.invites`, `...projects.usage`, `...projects.billing.balances`, and `...projects.requests` for request logs. The only top-level `client.manage.v1.*` namespaces are `projects` and `models`.
 3. **Think-model discovery is on the Agent client**, not Manage: `client.agent.v1.settings.think.models.list()`. There is no `client.manage.v1.agent.*`.
 4. **Agent config body is a JSON STRING on create**, not a nested object. Pass `config=json.dumps(...)`.
 5. **Agent config is the `agent` block only**, not the full Settings message. Do not include top-level fields like `audio` — those go in the live Settings message at connect time.

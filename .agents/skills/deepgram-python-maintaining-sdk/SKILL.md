@@ -43,20 +43,12 @@ How to identify:
 - The file **exists in Fern's output** — if you removed it from `.fernignore` and ran the generator, Fern would produce a version of it.
 - Our version is a **modified copy** of what Fern generates (e.g. changed `float` to `int`, added optional defaults, broadened a Union type).
 
-Current temporarily frozen files:
+Current temporarily frozen files (reflects the live `.fernignore` in this repo; treat `.fernignore` as the source of truth and re-check before starting a regen):
 
-- `src/deepgram/speak/v1/socket_client.py` — optional message param defaults, broad exception catch
-- `src/deepgram/listen/v1/socket_client.py` — same + `construct_type` for unknown WS messages
-- `src/deepgram/listen/v2/socket_client.py` — same
-- `src/deepgram/agent/v1/socket_client.py` — same + `_sanitize_numeric_types`
-- `src/deepgram/types/listen_v1response_results_utterances_item.py` — `float` → `int` fix
-- `src/deepgram/types/listen_v1response_results_utterances_item_words_item.py` — `float` → `int` fix
-- `src/deepgram/types/listen_v1response_results_channels_item_alternatives_item_paragraphs_paragraphs_item.py` — `float` → `int` fix
-- `src/deepgram/types/listen_v1redact.py` — `Union[str, Sequence[str]]` support
-- `src/deepgram/listen/v1/client.py` — `Union[str, Sequence[str]]` array param support
-- `src/deepgram/listen/v2/client.py` — same
-- `tests/wire/test_listen_v1_media.py` — `transcribe_file()` bytes param fix
-- `wiremock/wiremock-mappings.json` — removed duplicate stub
+- `src/deepgram/agent/v1/socket_client.py`, `src/deepgram/listen/v1/socket_client.py`, `src/deepgram/listen/v2/socket_client.py`, `src/deepgram/speak/v1/socket_client.py` — generator bugs in `construct_type` call convention and exception handling; broad `except Exception` catch for custom transports; optional control-message params on `send_keep_alive` / `send_close_stream` / etc.; agent client additionally carries `_sanitize_numeric_types` (float → int) for unknown WS message shapes.
+- `src/deepgram/types/listen_v1response_results_utterances_item.py`, `...item_words_item.py`, and `...channels_item_alternatives_item_paragraphs_paragraphs_item.py` — manual `float` → `int` corrections for speaker / channel / num_words fields (waiting on internal-api-specs#205).
+
+Any other entries (previously frozen `listen_v1redact.py`, `listen/v1/client.py`, `listen/v2/client.py`, `tests/wire/test_listen_v1_media.py`, `wiremock/wiremock-mappings.json`) have been removed from `.fernignore` as Fern output improved. Read `.fernignore` directly before a regen rather than relying on this list staying perfectly current.
 
 ## Prepare repo for regeneration
 

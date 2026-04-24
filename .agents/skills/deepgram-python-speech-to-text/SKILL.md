@@ -118,7 +118,7 @@ async with client.listen.v1.connect(model="nova-3") as conn:
 
 ## Gotchas
 
-1. **`Token` auth, not `Bearer`.** Deepgram rejects `Authorization: Bearer ...`.
+1. **Use the right auth scheme for the credential type.** API keys use `Authorization: Token <api_key>`. Temporary / access tokens (from `client.auth.v1.tokens.grant()` or an equivalent server) use `Authorization: Bearer <access_token>` — the custom `DeepgramClient` installs a Bearer override when you pass `access_token=...` (see `src/deepgram/client.py`). Sending `Bearer <api_key>` with a long-lived API key is what fails.
 2. **Encoding must match the audio.** Declaring `encoding="linear16"` but sending Opus → garbage output or 400.
 3. **Close streams cleanly.** Call `send_finalize()` before exiting the WSS context — otherwise the last partial is dropped.
 4. **Keepalive on long WSS sessions.** If idle > ~10s, the server closes. Send `KeepAlive` messages or audio chunks.

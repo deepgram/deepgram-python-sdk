@@ -137,14 +137,14 @@ You can persist the **`agent` block** of a Settings message server-side and reus
 
 ## Gotchas
 
-1. **`Token` auth, not `Bearer`.**
+1. **Pick the right auth scheme for the credential type.** API keys use `Authorization: Token <api_key>`. Temporary / access tokens (created via `client.auth.v1.tokens.grant()` or an equivalent server) use `Authorization: Bearer <access_token>`. The custom `DeepgramClient` in this repo accepts an `access_token` parameter and installs a Bearer override for all HTTP + WebSocket calls — see `src/deepgram/client.py`.
 2. **Base URL is `agent.deepgram.com`, not `api.deepgram.com`.**
 3. **Send `Settings` IMMEDIATELY after connect** — no audio before settings are applied.
 4. **Listen/speak encoding + sample_rate must match** both your input audio and your playback path.
 5. **Keepalive on long idle sessions**, otherwise the server closes.
 6. **Function call responses are synchronous to the turn** — reply promptly.
 7. **Provider types are tagged unions** (`ThinkSettingsV1Provider_OpenAi`, `SpeakSettingsV1Provider_Deepgram`, ...). Pick the right union variant; don't pass raw dicts.
-8. **`socket_client.py` is permanently patched** (see `.fernignore` → `agent/v1/socket_client.py`) with `_sanitize_numeric_types` — needed for unknown WS message shapes.
+8. **`socket_client.py` is temporarily frozen** (see `.fernignore` → `src/deepgram/agent/v1/socket_client.py`) and currently carries `_sanitize_numeric_types` plus the `construct_type` / broad-catch fixes — needed for unknown WS message shapes. Expected to be unfrozen during a future Fern regen and re-compared.
 
 ## Example files in this repo
 

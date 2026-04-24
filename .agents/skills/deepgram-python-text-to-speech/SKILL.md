@@ -82,11 +82,17 @@ In **sync** mode, `start_listening()` blocks — send all text + flush + close B
 ```python
 from deepgram.helpers import TextBuilder
 
-builder = TextBuilder()
-builder.add("Hello,")
-builder.add(" this is built incrementally.")
-final_text = builder.build()
+final_text = (
+    TextBuilder()
+    .text("Hello,")
+    .text(" this is built incrementally.")
+    .pronunciation("Deepgram", "ˈdiːpɡɹæm")
+    .pause(200)
+    .build()
+)
 ```
+
+The fluent API is `.text(...)` (append raw text), `.pronunciation(word, ipa)` (pin pronunciation), `.pause(duration_ms)` (insert a pause), and `.build()` (return the final SSML-ish string). There is no `.add(...)` method.
 
 See `examples/22-text-builder-demo.py`, `examples/23-text-builder-helper.py`, `examples/24-text-builder-streaming.py`.
 

@@ -130,7 +130,7 @@ async with client.listen.v2.connect(model="flux-general-en", ...) as conn:
 5. **Send ~80ms audio chunks** for best turn-detection latency.
 6. **Close with `send_close_stream(ListenV2CloseStream(type="CloseStream"))`** — not `send_finalize` (that's v1).
 7. **Messages may arrive as typed objects OR raw dicts** — the SDK uses a tagged union with `construct_type` for unknowns. Handle both branches (see `socket_client.py` patch in `.fernignore`).
-8. **`client.py` and `socket_client.py` are patched** (see `.fernignore` → `listen/v2/`). Don't edit auto-generated versions directly.
+8. **`socket_client.py` is patched / frozen** (see `.fernignore` → `src/deepgram/listen/v2/socket_client.py`). Don't overwrite that manual patch during regeneration; treat other `listen/v2` files as generated unless the regen workflow says otherwise.
 9. **Omit `encoding`/`sample_rate` for containerized audio** (WAV, OGG, etc.) — the server detects them from the container.
 
 ## Example files in this repo
