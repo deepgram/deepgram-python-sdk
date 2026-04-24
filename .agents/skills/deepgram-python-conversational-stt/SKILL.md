@@ -1,6 +1,6 @@
 ---
-name: using-conversational-stt
-description: Use when writing or reviewing Python code in this repo that calls Deepgram Conversational STT v2 / Flux (`/v2/listen`) for turn-aware streaming transcription. Covers `client.listen.v2.connect(...)`, Flux models, end-of-turn detection. Use `using-speech-to-text` for standard v1 ASR, `using-voice-agent` for full-duplex interactive assistants. Triggers include "flux", "v2 listen", "conversational STT", "turn detection", "end of turn", "EOT", "listen.v2", "flux-general-en", "flux-general-multi".
+name: deepgram-python-conversational-stt
+description: Use when writing or reviewing Python code in this repo that calls Deepgram Conversational STT v2 / Flux (`/v2/listen`) for turn-aware streaming transcription. Covers `client.listen.v2.connect(...)`, Flux models, end-of-turn detection. Use `deepgram-python-speech-to-text` for standard v1 ASR, `deepgram-python-voice-agent` for full-duplex interactive assistants. Triggers include "flux", "v2 listen", "conversational STT", "turn detection", "end of turn", "EOT", "listen.v2", "flux-general-en", "flux-general-multi".
 ---
 
 # Using Deepgram Conversational STT / Flux (Python SDK)
@@ -14,9 +14,9 @@ Turn-aware streaming STT at `/v2/listen` — optimized for conversational audio 
 - You want lower latency turn signals than v1 utterance_end.
 
 **Use a different skill when:**
-- You want general-purpose transcription (captions, batch, non-conversational) → `using-speech-to-text`.
-- You want a full interactive agent (STT + LLM + TTS) → `using-voice-agent`.
-- You want analytics (summarize/sentiment) → `using-audio-intelligence`.
+- You want general-purpose transcription (captions, batch, non-conversational) → `deepgram-python-speech-to-text`.
+- You want a full interactive agent (STT + LLM + TTS) → `deepgram-python-voice-agent`.
+- You want analytics (summarize/sentiment) → `deepgram-python-audio-intelligence`.
 
 ## Authentication
 
@@ -140,8 +140,8 @@ async with client.listen.v2.connect(model="flux-general-en", ...) as conn:
 
 ## Related skills
 
-- `using-speech-to-text` — v1 general-purpose STT (REST + WSS)
-- `using-voice-agent` — full interactive assistant
+- `deepgram-python-speech-to-text` — v1 general-purpose STT (REST + WSS)
+- `deepgram-python-voice-agent` — full interactive assistant
 
 ## Central product skills
 

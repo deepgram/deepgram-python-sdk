@@ -1,5 +1,5 @@
 ---
-name: maintaining-python-sdk
+name: deepgram-python-maintaining-sdk
 description: Use when regenerating this Python SDK with Fern, editing `.fernignore`, preparing the repo for a generator release, reconciling manually-patched files after regen, or deciding whether a file should be permanently frozen vs temporarily frozen. This SDK is Fern-generated - most files under `src/deepgram/` should NOT be edited directly. Triggers include "fern regen", "regenerate SDK", ".fernignore", "unfreeze", "re-apply patches", "SDK regeneration", "freeze classification", "generator release".
 ---
 

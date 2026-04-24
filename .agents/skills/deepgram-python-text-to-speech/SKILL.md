@@ -1,6 +1,6 @@
 ---
-name: using-text-to-speech
-description: Use when writing or reviewing Python code in this repo that calls Deepgram Text-to-Speech v1 (`/v1/speak`) for audio synthesis. Covers one-shot REST (`client.speak.v1.audio.generate`) and streaming WebSocket (`client.speak.v1.connect`). Also covers the in-repo `deepgram.helpers.TextBuilder` for incremental text assembly before synthesis. Use `using-voice-agent` when you need full-duplex STT + LLM + TTS with barge-in. Triggers include "TTS", "speak", "synthesize voice", "aura", "text to speech", "speak.v1", "TextBuilder".
+name: deepgram-python-text-to-speech
+description: Use when writing or reviewing Python code in this repo that calls Deepgram Text-to-Speech v1 (`/v1/speak`) for audio synthesis. Covers one-shot REST (`client.speak.v1.audio.generate`) and streaming WebSocket (`client.speak.v1.connect`). Also covers the in-repo `deepgram.helpers.TextBuilder` for incremental text assembly before synthesis. Use `deepgram-python-voice-agent` when you need full-duplex STT + LLM + TTS with barge-in. Triggers include "TTS", "speak", "synthesize voice", "aura", "text to speech", "speak.v1", "TextBuilder".
 ---
 
 # Using Deepgram Text-to-Speech (Python SDK)
@@ -13,7 +13,7 @@ Convert text to audio: one-shot REST download or low-latency streaming synthesis
 - **WebSocket (`speak.v1.connect`)** — incremental text input, streaming audio output. Use for low-latency playback while an LLM is still producing tokens.
 
 **Use a different skill when:**
-- You need the agent to also listen and converse (full-duplex) → `using-voice-agent`.
+- You need the agent to also listen and converse (full-duplex) → `deepgram-python-voice-agent`.
 
 ## Authentication
 

@@ -1,6 +1,6 @@
 ---
-name: using-management-api
-description: Use when writing or reviewing Python code in this repo that calls Deepgram Management APIs - projects, API keys, members, invites, usage, billing, models, and reusable Voice Agent configurations. Covers `client.manage.v1.projects`, project-scoped resources under `client.manage.v1.projects.*` (keys, members, members.invites, usage, billing, models, requests), global `client.manage.v1.models`, think-model discovery at `client.agent.v1.settings.think.models`, and `client.voice_agent.configurations.*`. Use `using-voice-agent` when you want to run an agent interactively, this skill to PERSIST/LIST agent configs. Triggers include "management API", "list projects", "API keys", "members", "usage stats", "billing", "list models", "agent configurations", "manage.v1".
+name: deepgram-python-management-api
+description: Use when writing or reviewing Python code in this repo that calls Deepgram Management APIs - projects, API keys, members, invites, usage, billing, models, and reusable Voice Agent configurations. Covers `client.manage.v1.projects`, project-scoped resources under `client.manage.v1.projects.*` (keys, members, members.invites, usage, billing, models, requests), global `client.manage.v1.models`, think-model discovery at `client.agent.v1.settings.think.models`, and `client.voice_agent.configurations.*`. Use `deepgram-python-voice-agent` when you want to run an agent interactively, this skill to PERSIST/LIST agent configs. Triggers include "management API", "list projects", "API keys", "members", "usage stats", "billing", "list models", "agent configurations", "manage.v1".
 ---
 
 # Using Deepgram Management API (Python SDK)
@@ -17,7 +17,7 @@ Administrative REST endpoints at `api.deepgram.com/v1/projects`, `/v1/models`, a
 - **Reusable Voice Agent configs**: persist the **`agent` block** of a Settings message on the server, reference by `agent_id`. The stored blob is the `agent` object only (listen / think / speak providers + prompt), not the full `AgentV1Settings`.
 
 **Use a different skill when:**
-- You want to actually talk to an agent → `using-voice-agent`.
+- You want to actually talk to an agent → `deepgram-python-voice-agent`.
 - You want to transcribe or synthesize → STT/TTS skills.
 
 ## Authentication
@@ -165,7 +165,7 @@ projects = await client.manage.v1.projects.list()
 
 ## Related skills
 
-- `using-voice-agent` — run an agent (use a config created here)
+- `deepgram-python-voice-agent` — run an agent (use a config created here)
 
 ## Central product skills
 

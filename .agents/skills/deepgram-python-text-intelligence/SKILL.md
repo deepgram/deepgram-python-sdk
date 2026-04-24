@@ -1,6 +1,6 @@
 ---
-name: using-text-intelligence
-description: Use when writing or reviewing Python code in this repo that calls Deepgram Text Intelligence / Read (`/v1/read`) for sentiment, summarization, topic detection, and intent recognition on text input. Covers `client.read.v1.text.analyze(...)` with body `text` or `url`. Use `using-audio-intelligence` when the source is audio instead of text. Triggers include "read API", "text intelligence", "analyze text", "sentiment", "summarize text", "topics", "intents", "read.v1".
+name: deepgram-python-text-intelligence
+description: Use when writing or reviewing Python code in this repo that calls Deepgram Text Intelligence / Read (`/v1/read`) for sentiment, summarization, topic detection, and intent recognition on text input. Covers `client.read.v1.text.analyze(...)` with body `text` or `url`. Use `deepgram-python-audio-intelligence` when the source is audio instead of text. Triggers include "read API", "text intelligence", "analyze text", "sentiment", "summarize text", "topics", "intents", "read.v1".
 ---
 
 # Using Deepgram Text Intelligence (Python SDK)
@@ -13,7 +13,7 @@ Analyze plain text (or a hosted text URL) for sentiment, summarization, topics, 
 - You want a quick one-shot analysis — REST only, no streaming.
 
 **Use a different skill when:**
-- The source is audio and you want analytics overlays → `using-audio-intelligence` (same analytics, applied at transcription time).
+- The source is audio and you want analytics overlays → `deepgram-python-audio-intelligence` (same analytics, applied at transcription time).
 
 ## Authentication
 
@@ -66,7 +66,7 @@ response = await client.read.v1.text.analyze(request={"text": "..."}, language="
 | `request` | `{"text": str}` or `{"url": str}` | One of these is required |
 | `language` | `str` | Required for most analytics. English only today. |
 | `sentiment` | `bool` | Per-segment + average sentiment |
-| `summarize` | `bool` | `/v1/read` accepts **boolean only**. The SDK type alias `TextAnalyzeRequestSummarize = typing.Union[typing.Literal["v2"], typing.Any]` is shared with Listen and is broader than what Read actually supports — the `analyze` method docstring states: "For Read API, accepts boolean only." (Listen's `summarize="v2"` is a different product — see `using-audio-intelligence`.) |
+| `summarize` | `bool` | `/v1/read` accepts **boolean only**. The SDK type alias `TextAnalyzeRequestSummarize = typing.Union[typing.Literal["v2"], typing.Any]` is shared with Listen and is broader than what Read actually supports — the `analyze` method docstring states: "For Read API, accepts boolean only." (Listen's `summarize="v2"` is a different product — see `deepgram-python-audio-intelligence`.) |
 | `topics` | `bool` | Topic detection per segment |
 | `intents` | `bool` | Intent recognition per segment |
 | `custom_topic` / `custom_topic_mode` | `list[str]` / `str` | User-defined topics |
@@ -100,7 +100,7 @@ See `reference.md` → "Read V1 Text" for full shape. Request body model: `ReadV
 
 1. **`Token` auth, not `Bearer`.**
 2. **English-only** for sentiment / summarize / topics / intents today.
-3. **`summarize` on `/v1/read` is boolean only.** Pass `True` or `False`. Do not pass `"v2"` on `/v1/read` — that's a Listen-only option (see `using-audio-intelligence`). The SDK type `Union[Literal["v2"], Any]` is shared with Listen and wider than Read actually accepts; the `analyze` docstring clarifies: "For Read API, accepts boolean only." The generated wire test passing `summarize="v2"` against a mock server is a Fern artifact and does not indicate real `/v1/read` support.
+3. **`summarize` on `/v1/read` is boolean only.** Pass `True` or `False`. Do not pass `"v2"` on `/v1/read` — that's a Listen-only option (see `deepgram-python-audio-intelligence`). The SDK type `Union[Literal["v2"], Any]` is shared with Listen and wider than Read actually accepts; the `analyze` docstring clarifies: "For Read API, accepts boolean only." The generated wire test passing `summarize="v2"` against a mock server is a Fern artifact and does not indicate real `/v1/read` support.
 4. **`language` is required** for the gated analytics features above.
 5. **Body is JSON `request=`**, not query parameters. Don't confuse with `/v1/listen` which takes audio as the body.
 6. **Custom topics/intents need a mode** (`custom_topic_mode="extended"`, `"strict"`) or they are ignored.

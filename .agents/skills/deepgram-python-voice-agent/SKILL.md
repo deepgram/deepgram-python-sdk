@@ -1,6 +1,6 @@
 ---
-name: using-voice-agent
-description: Use when writing or reviewing Python code in this repo that builds an interactive voice agent via `agent.deepgram.com/v1/agent/converse`. Covers `client.agent.v1.connect()`, `AgentV1Settings`, `send_settings`, `send_media`, event handling, and function/tool calling. Full-duplex STT + LLM + TTS with barge-in. Use `using-text-to-speech` for one-way synthesis, `using-speech-to-text` / `using-conversational-stt` for transcription only. Triggers include "voice agent", "agent converse", "full duplex", "interactive assistant", "barge-in", "agent.v1", "function calling", "AgentV1Settings".
+name: deepgram-python-voice-agent
+description: Use when writing or reviewing Python code in this repo that builds an interactive voice agent via `agent.deepgram.com/v1/agent/converse`. Covers `client.agent.v1.connect()`, `AgentV1Settings`, `send_settings`, `send_media`, event handling, and function/tool calling. Full-duplex STT + LLM + TTS with barge-in. Use `deepgram-python-text-to-speech` for one-way synthesis, `deepgram-python-speech-to-text` / `deepgram-python-conversational-stt` for transcription only. Triggers include "voice agent", "agent converse", "full duplex", "interactive assistant", "barge-in", "agent.v1", "function calling", "AgentV1Settings".
 ---
 
 # Using Deepgram Voice Agent (Python SDK)
@@ -14,10 +14,10 @@ Full-duplex voice agent runtime: STT + LLM (think) + TTS + function calling over
 - You want Deepgram to host the orchestration (vs wiring STT + LLM + TTS yourself).
 
 **Use a different skill when:**
-- One-way transcription → `using-speech-to-text` or `using-conversational-stt`.
-- One-way synthesis → `using-text-to-speech`.
-- Analytics on finished audio → `using-audio-intelligence`.
-- Managing reusable agent configs (persisted on the server) → `using-management-api`.
+- One-way transcription → `deepgram-python-speech-to-text` or `deepgram-python-conversational-stt`.
+- One-way synthesis → `deepgram-python-text-to-speech`.
+- Analytics on finished audio → `deepgram-python-audio-intelligence`.
+- Managing reusable agent configs (persisted on the server) → `deepgram-python-management-api`.
 
 ## Authentication
 
@@ -122,7 +122,7 @@ with client.agent.v1.connect() as agent:
 
 ## Reusable agent configurations
 
-You can persist the **`agent` block** of a Settings message server-side and reuse it by `agent_id`. `client.voice_agent.configurations.create` stores a JSON string representing the `agent` object only (listen / think / speak providers + prompt) — NOT the full `AgentV1Settings` payload. Do not send top-level Settings fields like `audio` to that API; those still go in the live Settings message at connect time. The returned `agent_id` replaces the inline `agent` object in future Settings messages. Managed via `client.voice_agent.configurations.*` — see `using-management-api`.
+You can persist the **`agent` block** of a Settings message server-side and reuse it by `agent_id`. `client.voice_agent.configurations.create` stores a JSON string representing the `agent` object only (listen / think / speak providers + prompt) — NOT the full `AgentV1Settings` payload. Do not send top-level Settings fields like `audio` to that API; those still go in the live Settings message at connect time. The returned `agent_id` replaces the inline `agent` object in future Settings messages. Managed via `client.voice_agent.configurations.*` — see `deepgram-python-management-api`.
 
 ## API reference (layered)
 

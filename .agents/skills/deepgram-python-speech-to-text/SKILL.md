@@ -1,6 +1,6 @@
 ---
-name: using-speech-to-text
-description: Use when writing or reviewing Python code in this repo that calls Deepgram Speech-to-Text v1 (`/v1/listen`) for prerecorded or live audio transcription. Covers `client.listen.v1.media.transcribe_url` / `transcribe_file` (REST) and `client.listen.v1.connect` (WebSocket). Use this skill for basic ASR; use `using-audio-intelligence` for summarize/sentiment/topics/diarize overlays, `using-conversational-stt` for turn-taking v2/Flux, and `using-voice-agent` for full-duplex assistants. Triggers include "transcribe", "live transcription", "speech to text", "STT", "listen endpoint", "nova-3", "listen.v1".
+name: deepgram-python-speech-to-text
+description: Use when writing or reviewing Python code in this repo that calls Deepgram Speech-to-Text v1 (`/v1/listen`) for prerecorded or live audio transcription. Covers `client.listen.v1.media.transcribe_url` / `transcribe_file` (REST) and `client.listen.v1.connect` (WebSocket). Use this skill for basic ASR; use `deepgram-python-audio-intelligence` for summarize/sentiment/topics/diarize overlays, `deepgram-python-conversational-stt` for turn-taking v2/Flux, and `deepgram-python-voice-agent` for full-duplex assistants. Triggers include "transcribe", "live transcription", "speech to text", "STT", "listen endpoint", "nova-3", "listen.v1".
 ---
 
 # Using Deepgram Speech-to-Text (Python SDK)
@@ -13,9 +13,9 @@ Basic transcription (ASR) for prerecorded audio (REST) or live audio (WebSocket)
 - **WebSocket (`listen.v1.connect`)** — continuous streaming transcription. Use for live captions, real-time microphone input, phone audio.
 
 **Use a different skill when:**
-- You want summaries, sentiment, topics, intents, diarization, or redaction on the audio → `using-audio-intelligence` (same endpoint, different params).
-- You need turn-taking / end-of-turn events → `using-conversational-stt` (v2 / Flux).
-- You need a full-duplex interactive assistant (STT + LLM + TTS + function calls) → `using-voice-agent`.
+- You want summaries, sentiment, topics, intents, diarization, or redaction on the audio → `deepgram-python-audio-intelligence` (same endpoint, different params).
+- You need turn-taking / end-of-turn events → `deepgram-python-conversational-stt` (v2 / Flux).
+- You need a full-duplex interactive assistant (STT + LLM + TTS + function calls) → `deepgram-python-voice-agent`.
 
 ## Authentication
 
@@ -122,7 +122,7 @@ async with client.listen.v1.connect(model="nova-3") as conn:
 2. **Encoding must match the audio.** Declaring `encoding="linear16"` but sending Opus → garbage output or 400.
 3. **Close streams cleanly.** Call `send_finalize()` before exiting the WSS context — otherwise the last partial is dropped.
 4. **Keepalive on long WSS sessions.** If idle > ~10s, the server closes. Send `KeepAlive` messages or audio chunks.
-5. **Intelligence features are REST-only.** `summarize`, `topics`, `intents`, `sentiment`, `detect_language` do NOT work over WSS — see `using-audio-intelligence`.
+5. **Intelligence features are REST-only.** `summarize`, `topics`, `intents`, `sentiment`, `detect_language` do NOT work over WSS — see `deepgram-python-audio-intelligence`.
 6. **`transcribe_file(request=...)` takes bytes or an iterator**, not a file handle.
 7. **`nova-3` is the current flagship STT model.** Check `client.manage.v1.models.list()` for the live set.
 8. **Sync `connection.start_listening()` blocks.** Run it in a thread (sync) or as a task (async) so you can send audio concurrently.
