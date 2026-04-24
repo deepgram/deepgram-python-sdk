@@ -3,16 +3,12 @@
 import json
 import logging
 import typing
-from json.decoder import JSONDecodeError
 
-import websockets
 import websockets.sync.connection as websockets_sync_connection
 from ...core.events import EventEmitterMixin, EventType
 from ...core.unchecked_base_model import construct_type
 from .types.listen_v2close_stream import ListenV2CloseStream
-from .types.listen_v2configure import ListenV2Configure
 from .types.listen_v2configure_failure import ListenV2ConfigureFailure
-from .types.listen_v2configure_success import ListenV2ConfigureSuccess
 from .types.listen_v2connected import ListenV2Connected
 from .types.listen_v2fatal_error import ListenV2FatalError
 from .types.listen_v2turn_info import ListenV2TurnInfo
@@ -24,7 +20,7 @@ except ImportError:
 
 _logger = logging.getLogger(__name__)
 V2SocketClientResponse = typing.Union[
-    ListenV2Connected, ListenV2TurnInfo, ListenV2ConfigureSuccess, ListenV2ConfigureFailure, ListenV2FatalError
+    ListenV2Connected, ListenV2TurnInfo, typing.Any, ListenV2ConfigureFailure, ListenV2FatalError
 ]
 
 
@@ -71,7 +67,7 @@ class AsyncV2SocketClient(EventEmitterMixin):
                         )
                         continue
                 await self._emit_async(EventType.MESSAGE, parsed)
-        except (websockets.WebSocketException, JSONDecodeError) as exc:
+        except Exception as exc:
             await self._emit_async(EventType.ERROR, exc)
         finally:
             await self._emit_async(EventType.CLOSE, None)
@@ -83,19 +79,19 @@ class AsyncV2SocketClient(EventEmitterMixin):
         """
         await self._send(message)
 
-    async def send_close_stream(self, message: ListenV2CloseStream) -> None:
+    async def send_close_stream(self, message: typing.Optional[ListenV2CloseStream] = None) -> None:
         """
         Send a message to the websocket connection.
         The message will be sent as a ListenV2CloseStream.
         """
-        await self._send_model(message)
+        await self._send_model(message or ListenV2CloseStream(type="CloseStream"))
 
-    async def send_configure(self, message: ListenV2Configure) -> None:
+    async def send_configure(self, message: typing.Any) -> None:
         """
         Send a message to the websocket connection.
-        The message will be sent as a ListenV2Configure.
+        The message will be sent as a typing.Any.
         """
-        await self._send_model(message)
+        await self._send(message)
 
     async def recv(self) -> V2SocketClientResponse:
         """
@@ -169,7 +165,7 @@ class V2SocketClient(EventEmitterMixin):
                         )
                         continue
                 self._emit(EventType.MESSAGE, parsed)
-        except (websockets.WebSocketException, JSONDecodeError) as exc:
+        except Exception as exc:
             self._emit(EventType.ERROR, exc)
         finally:
             self._emit(EventType.CLOSE, None)
@@ -181,19 +177,19 @@ class V2SocketClient(EventEmitterMixin):
         """
         self._send(message)
 
-    def send_close_stream(self, message: ListenV2CloseStream) -> None:
+    def send_close_stream(self, message: typing.Optional[ListenV2CloseStream] = None) -> None:
         """
         Send a message to the websocket connection.
         The message will be sent as a ListenV2CloseStream.
         """
-        self._send_model(message)
+        self._send_model(message or ListenV2CloseStream(type="CloseStream"))
 
-    def send_configure(self, message: ListenV2Configure) -> None:
+    def send_configure(self, message: typing.Any) -> None:
         """
         Send a message to the websocket connection.
-        The message will be sent as a ListenV2Configure.
+        The message will be sent as a typing.Any.
         """
-        self._send_model(message)
+        self._send(message)
 
     def recv(self) -> V2SocketClientResponse:
         """
