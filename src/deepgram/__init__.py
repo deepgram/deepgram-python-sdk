@@ -213,6 +213,7 @@ if typing.TYPE_CHECKING:
         SpeakV1Model,
         SpeakV1Response,
         SpeakV1SampleRate,
+        SpeakV1Speed,
         ThinkSettingsV1,
         ThinkSettingsV1ContextLength,
         ThinkSettingsV1Endpoint,
@@ -237,6 +238,7 @@ if typing.TYPE_CHECKING:
     )
     from .errors import BadRequestError
     from . import agent, auth, listen, manage, read, self_hosted, speak, voice_agent
+    from ._default_clients import DefaultAioHttpClient, DefaultAsyncHttpxClient
     from .client import AsyncDeepgramClient, DeepgramClient
     from .environment import DeepgramClientEnvironment
     from .requests import (
@@ -477,6 +479,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "DeepgramClientEnvironment": ".environment",
     "DeepgramParams": ".requests",
     "DeepgramSpeakProviderModel": ".types",
+    "DefaultAioHttpClient": "._default_clients",
+    "DefaultAsyncHttpxClient": "._default_clients",
     "DeleteAgentConfigurationV1Response": ".types",
     "DeleteAgentVariableV1Response": ".types",
     "DeleteProjectInviteV1Response": ".types",
@@ -760,6 +764,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SpeakV1Model": ".types",
     "SpeakV1Response": ".types",
     "SpeakV1SampleRate": ".types",
+    "SpeakV1Speed": ".types",
     "ThinkSettingsV1": ".types",
     "ThinkSettingsV1ContextLength": ".types",
     "ThinkSettingsV1ContextLengthParams": ".requests",
@@ -906,6 +911,8 @@ __all__ = [
     "DeepgramClientEnvironment",
     "DeepgramParams",
     "DeepgramSpeakProviderModel",
+    "DefaultAioHttpClient",
+    "DefaultAsyncHttpxClient",
     "DeleteAgentConfigurationV1Response",
     "DeleteAgentVariableV1Response",
     "DeleteProjectInviteV1Response",
@@ -1189,6 +1196,7 @@ __all__ = [
     "SpeakV1Model",
     "SpeakV1Response",
     "SpeakV1SampleRate",
+    "SpeakV1Speed",
     "ThinkSettingsV1",
     "ThinkSettingsV1ContextLength",
     "ThinkSettingsV1ContextLengthParams",

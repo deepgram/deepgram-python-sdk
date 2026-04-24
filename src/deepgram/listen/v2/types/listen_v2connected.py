@@ -18,7 +18,7 @@ class ListenV2Connected(UncheckedBaseModel):
     The unique identifier of the request
     """
 
-    sequence_id: float = pydantic.Field()
+    sequence_id: int = pydantic.Field()
     """
     Starts at `0` and increments for each message the server sends
     to the client.  This includes messages of other types, like

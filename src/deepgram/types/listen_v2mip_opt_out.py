@@ -3,3 +3,8 @@
 import typing
 
 ListenV2MipOptOut = typing.Any
+"""
+Opts out requests from the Deepgram Model Improvement Program. Refer
+to our Docs for pricing impacts before setting this to true.
+https://dpgr.am/deepgram-mip
+"""

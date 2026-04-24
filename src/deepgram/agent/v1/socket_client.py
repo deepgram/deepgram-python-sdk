@@ -13,6 +13,7 @@ from .types.agent_v1agent_thinking import AgentV1AgentThinking
 from .types.agent_v1conversation_text import AgentV1ConversationText
 from .types.agent_v1error import AgentV1Error
 from .types.agent_v1function_call_request import AgentV1FunctionCallRequest
+from .types.agent_v1history import AgentV1History
 from .types.agent_v1inject_agent_message import AgentV1InjectAgentMessage
 from .types.agent_v1inject_user_message import AgentV1InjectUserMessage
 from .types.agent_v1injection_refused import AgentV1InjectionRefused
@@ -57,6 +58,8 @@ def _sanitize_numeric_types(obj: typing.Any) -> typing.Any:
     elif isinstance(obj, float) and obj.is_integer():
         return int(obj)
     return obj
+
+
 V1SocketClientResponse = typing.Union[
     AgentV1ReceiveFunctionCallResponse,
     AgentV1PromptUpdated,
@@ -73,6 +76,7 @@ V1SocketClientResponse = typing.Union[
     AgentV1AgentAudioDone,
     AgentV1Error,
     AgentV1Warning,
+    AgentV1History,
     bytes,
 ]
 

@@ -3,3 +3,6 @@
 import typing
 
 ListenV1UtteranceEndMs = typing.Any
+"""
+Indicates how long Deepgram will wait to send an UtteranceEnd message after a word has been transcribed. Use with interim_results
+"""

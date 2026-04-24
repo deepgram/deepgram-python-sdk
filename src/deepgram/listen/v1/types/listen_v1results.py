@@ -16,7 +16,7 @@ class ListenV1Results(UncheckedBaseModel):
     Message type identifier
     """
 
-    channel_index: typing.List[float] = pydantic.Field()
+    channel_index: typing.List[int] = pydantic.Field()
     """
     The index of the channel
     """

@@ -25,6 +25,7 @@ Current permanently frozen files:
 - `src/deepgram/client.py` — entirely custom (Bearer auth, session ID); no Fern equivalent
 - `src/deepgram/helpers/` — hand-written TextBuilder helpers
 - `src/deepgram/transport_interface.py`, `src/deepgram/transport.py`, `src/deepgram/transports/` — custom transport layer
+- `tests/custom/test_agent_history.py` — hand-written regression test for Agent History websocket payload parsing
 - `tests/custom/test_text_builder.py`, `tests/custom/test_transport.py` — hand-written tests
 - `tests/manual/` — manual standalone tests
 - `README.md`, `CHANGELOG.md`, `CONTRIBUTING.md`, `reference.md` — docs
@@ -41,17 +42,9 @@ How to identify:
 
 Current temporarily frozen files:
 - `src/deepgram/speak/v1/socket_client.py` — optional message param defaults, broad exception catch
-- `src/deepgram/listen/v1/socket_client.py` — same + `construct_type` for unknown WS messages
-- `src/deepgram/listen/v2/socket_client.py` — same
+- `src/deepgram/listen/v1/socket_client.py` — same
+- `src/deepgram/listen/v2/socket_client.py` — same + `send_configure` typing.Any/raw shim, response Union uses typing.Any instead of `ListenV2ConfigureSuccess`
 - `src/deepgram/agent/v1/socket_client.py` — same + `_sanitize_numeric_types`
-- `src/deepgram/types/listen_v1response_results_utterances_item.py` — `float` → `int` fix
-- `src/deepgram/types/listen_v1response_results_utterances_item_words_item.py` — `float` → `int` fix
-- `src/deepgram/types/listen_v1response_results_channels_item_alternatives_item_paragraphs_paragraphs_item.py` — `float` → `int` fix
-- `src/deepgram/types/listen_v1redact.py` — Union[str, Sequence[str]] support
-- `src/deepgram/listen/v1/client.py` — Union[str, Sequence[str]] array param support
-- `src/deepgram/listen/v2/client.py` — same
-- `tests/wire/test_listen_v1_media.py` — `transcribe_file()` bytes param fix
-- `wiremock/wiremock-mappings.json` — removed duplicate stub
 
 ### Prepare repo for regeneration
 

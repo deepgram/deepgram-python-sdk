@@ -13,6 +13,7 @@ def test_manage_v1_projects_billing_breakdown_list_() -> None:
         deployment="hosted",
         tag="tag1",
         line_item="streaming::nova-3",
+        grouping=["deployment", "line_item"],
     )
     verify_request_count(
         test_id,
@@ -25,6 +26,7 @@ def test_manage_v1_projects_billing_breakdown_list_() -> None:
             "deployment": "hosted",
             "tag": "tag1",
             "line_item": "streaming::nova-3",
+            "grouping": ["deployment", "line_item"],
         },
         1,
     )

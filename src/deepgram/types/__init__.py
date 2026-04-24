@@ -248,6 +248,7 @@ if typing.TYPE_CHECKING:
     from .speak_v1model import SpeakV1Model
     from .speak_v1response import SpeakV1Response
     from .speak_v1sample_rate import SpeakV1SampleRate
+    from .speak_v1speed import SpeakV1Speed
     from .think_settings_v1 import ThinkSettingsV1
     from .think_settings_v1context_length import ThinkSettingsV1ContextLength
     from .think_settings_v1endpoint import ThinkSettingsV1Endpoint
@@ -478,6 +479,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SpeakV1Model": ".speak_v1model",
     "SpeakV1Response": ".speak_v1response",
     "SpeakV1SampleRate": ".speak_v1sample_rate",
+    "SpeakV1Speed": ".speak_v1speed",
     "ThinkSettingsV1": ".think_settings_v1",
     "ThinkSettingsV1ContextLength": ".think_settings_v1context_length",
     "ThinkSettingsV1Endpoint": ".think_settings_v1endpoint",
@@ -730,6 +732,7 @@ __all__ = [
     "SpeakV1Model",
     "SpeakV1Response",
     "SpeakV1SampleRate",
+    "SpeakV1Speed",
     "ThinkSettingsV1",
     "ThinkSettingsV1ContextLength",
     "ThinkSettingsV1Endpoint",

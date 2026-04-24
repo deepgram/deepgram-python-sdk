@@ -6,7 +6,8 @@ from json.decoder import JSONDecodeError
 from ....core.api_error import ApiError
 from ....core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ....core.http_response import AsyncHttpResponse, HttpResponse
-from ....core.jsonable_encoder import jsonable_encoder
+from ....core.jsonable_encoder import encode_path_param
+from ....core.parse_error import ParsingError
 from ....core.request_options import RequestOptions
 from ....core.unchecked_base_model import construct_type
 from ....errors.bad_request_error import BadRequestError
@@ -15,6 +16,7 @@ from ....types.get_project_v1response import GetProjectV1Response
 from ....types.leave_project_v1response import LeaveProjectV1Response
 from ....types.list_projects_v1response import ListProjectsV1Response
 from ....types.update_project_v1response import UpdateProjectV1Response
+from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -68,6 +70,10 @@ class RawProjectsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def get(
@@ -101,7 +107,7 @@ class RawProjectsClient:
             A project
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"v1/projects/{jsonable_encoder(project_id)}",
+            f"v1/projects/{encode_path_param(project_id)}",
             base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
@@ -134,6 +140,10 @@ class RawProjectsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def delete(
@@ -156,7 +166,7 @@ class RawProjectsClient:
             A project
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"v1/projects/{jsonable_encoder(project_id)}",
+            f"v1/projects/{encode_path_param(project_id)}",
             base_url=self._client_wrapper.get_environment().base,
             method="DELETE",
             request_options=request_options,
@@ -185,6 +195,10 @@ class RawProjectsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def update(
@@ -214,7 +228,7 @@ class RawProjectsClient:
             A project
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"v1/projects/{jsonable_encoder(project_id)}",
+            f"v1/projects/{encode_path_param(project_id)}",
             base_url=self._client_wrapper.get_environment().base,
             method="PATCH",
             json={
@@ -250,6 +264,10 @@ class RawProjectsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def leave(
@@ -272,7 +290,7 @@ class RawProjectsClient:
             Successfully removed account from project
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"v1/projects/{jsonable_encoder(project_id)}/leave",
+            f"v1/projects/{encode_path_param(project_id)}/leave",
             base_url=self._client_wrapper.get_environment().base,
             method="DELETE",
             request_options=request_options,
@@ -301,6 +319,10 @@ class RawProjectsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
 
@@ -354,6 +376,10 @@ class AsyncRawProjectsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def get(
@@ -387,7 +413,7 @@ class AsyncRawProjectsClient:
             A project
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"v1/projects/{jsonable_encoder(project_id)}",
+            f"v1/projects/{encode_path_param(project_id)}",
             base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
@@ -420,6 +446,10 @@ class AsyncRawProjectsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def delete(
@@ -442,7 +472,7 @@ class AsyncRawProjectsClient:
             A project
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"v1/projects/{jsonable_encoder(project_id)}",
+            f"v1/projects/{encode_path_param(project_id)}",
             base_url=self._client_wrapper.get_environment().base,
             method="DELETE",
             request_options=request_options,
@@ -471,6 +501,10 @@ class AsyncRawProjectsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def update(
@@ -500,7 +534,7 @@ class AsyncRawProjectsClient:
             A project
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"v1/projects/{jsonable_encoder(project_id)}",
+            f"v1/projects/{encode_path_param(project_id)}",
             base_url=self._client_wrapper.get_environment().base,
             method="PATCH",
             json={
@@ -536,6 +570,10 @@ class AsyncRawProjectsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def leave(
@@ -558,7 +596,7 @@ class AsyncRawProjectsClient:
             Successfully removed account from project
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"v1/projects/{jsonable_encoder(project_id)}/leave",
+            f"v1/projects/{encode_path_param(project_id)}/leave",
             base_url=self._client_wrapper.get_environment().base,
             method="DELETE",
             request_options=request_options,
@@ -587,4 +625,8 @@ class AsyncRawProjectsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)

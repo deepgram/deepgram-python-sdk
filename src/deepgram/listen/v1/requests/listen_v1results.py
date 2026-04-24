@@ -14,7 +14,7 @@ class ListenV1ResultsParams(typing_extensions.TypedDict):
     Message type identifier
     """
 
-    channel_index: typing.Sequence[float]
+    channel_index: typing.Sequence[int]
     """
     The index of the channel
     """
