@@ -26,7 +26,7 @@ Analytics overlays applied to `/v1/listen` transcription: summarize, topics, int
 | `redact` | yes | yes |
 | `punctuate`, `smart_format` | yes | yes |
 | Entity detection | yes | yes |
-| `summarize=v2` | yes | **no** |
+| `summarize` | yes | **no** |
 | `topics` | yes | **no** |
 | `intents` | yes | **no** |
 | `sentiment` | yes | **no** |
@@ -56,7 +56,7 @@ response = client.listen.v1.media.transcribe_url(
     smart_format=True,
     punctuate=True,
     diarize=True,              # speaker separation
-    summarize="v2",            # string "v2", not boolean
+    summarize="v2",            # "v2" for the current model; True also accepted on /v1/listen
     topics=True,
     intents=True,
     sentiment=True,
@@ -134,7 +134,7 @@ with client.listen.v1.connect(model="nova-3", diarize=True, redact=["pii"]) as c
 
 ## Gotchas
 
-1. **`summarize="v2"` is a STRING** for `/v1/listen`, not a boolean (boolean is for `/v1/read`).
+1. **`summarize` on `/v1/listen` accepts a boolean OR the string `"v2"`.** Use `"v2"` to pin the current summarization model; `True` also works (maps to the default model). `/v1/read` is the reverse — it accepts boolean only. If you need summarization on already-transcribed text, see `using-text-intelligence`.
 2. **Sentiment / topics / intents / summarize / detect_language are REST-only.** Don't pass them on WSS — they'll be ignored or rejected.
 3. **English-only** for sentiment / topics / intents / summarize.
 4. **Not all models support all overlays.** Flux / Base models have restrictions. Stick to `nova-3` unless you have a reason.

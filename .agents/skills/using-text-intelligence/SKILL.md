@@ -34,7 +34,7 @@ response = client.read.v1.text.analyze(
     request={"text": "Hello, world! This is a sample text for analysis."},
     language="en",
     sentiment=True,
-    summarize=True,   # boolean per docstring; "v2" also works (see gotchas)
+    summarize=True,   # /v1/read is boolean-only (see gotchas)
     topics=True,
     intents=True,
 )
@@ -66,7 +66,7 @@ response = await client.read.v1.text.analyze(request={"text": "..."}, language="
 | `request` | `{"text": str}` or `{"url": str}` | One of these is required |
 | `language` | `str` | Required for most analytics. English only today. |
 | `sentiment` | `bool` | Per-segment + average sentiment |
-| `summarize` | `bool` or `"v2"` | Type alias `TextAnalyzeRequestSummarize = typing.Union[typing.Literal["v2"], typing.Any]` accepts either. The `analyze` docstring says "For Read API, accepts boolean only" — but the wire test uses `summarize="v2"` on `/read` and the server accepts it. Both work; `bool` matches the documented Read shape. |
+| `summarize` | `bool` | `/v1/read` accepts **boolean only**. The SDK type alias `TextAnalyzeRequestSummarize = typing.Union[typing.Literal["v2"], typing.Any]` is shared with Listen and is broader than what Read actually supports — the `analyze` method docstring states: "For Read API, accepts boolean only." (Listen's `summarize="v2"` is a different product — see `using-audio-intelligence`.) |
 | `topics` | `bool` | Topic detection per segment |
 | `intents` | `bool` | Intent recognition per segment |
 | `custom_topic` / `custom_topic_mode` | `list[str]` / `str` | User-defined topics |
@@ -100,7 +100,7 @@ See `reference.md` → "Read V1 Text" for full shape. Request body model: `ReadV
 
 1. **`Token` auth, not `Bearer`.**
 2. **English-only** for sentiment / summarize / topics / intents today.
-3. **`summarize` accepts either a boolean or the string `"v2"`** — both work on `/v1/read`. The SDK type `Union[Literal["v2"], Any]` permits either. The `analyze` method docstring says "For Read API, accepts boolean only" (distinguishing it from Listen's versioned string), but the generated wire test uses `summarize="v2"` and the server accepts it. Use `True`/`False` to match the documented Read shape, or `"v2"` to align with Listen — don't assume one form is the "only" one.
+3. **`summarize` on `/v1/read` is boolean only.** Pass `True` or `False`. Do not pass `"v2"` on `/v1/read` — that's a Listen-only option (see `using-audio-intelligence`). The SDK type `Union[Literal["v2"], Any]` is shared with Listen and wider than Read actually accepts; the `analyze` docstring clarifies: "For Read API, accepts boolean only." The generated wire test passing `summarize="v2"` against a mock server is a Fern artifact and does not indicate real `/v1/read` support.
 4. **`language` is required** for the gated analytics features above.
 5. **Body is JSON `request=`**, not query parameters. Don't confuse with `/v1/listen` which takes audio as the body.
 6. **Custom topics/intents need a mode** (`custom_topic_mode="extended"`, `"strict"`) or they are ignored.
