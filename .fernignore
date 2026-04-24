@@ -11,7 +11,6 @@ src/deepgram/client.py
 #   so users don't need to instantiate the type themselves for no-payload control messages
 # - listen/v2 send_configure: typing.Any / raw _send shim (generator's ListenV2Configure model
 #   and ListenV2ConfigureSuccess not used)
-# - agent/v1: AgentV1History excluded from response Union and import
 # [temporarily frozen — manual patches listed above]
 src/deepgram/agent/v1/socket_client.py
 src/deepgram/listen/v1/socket_client.py
@@ -19,6 +18,7 @@ src/deepgram/listen/v2/socket_client.py
 src/deepgram/speak/v1/socket_client.py
 
 # Hand-written custom tests
+tests/custom/test_agent_history.py
 tests/custom/test_text_builder.py
 tests/custom/test_transport.py
 
