@@ -1,11 +1,11 @@
 ---
 name: using-management-api
-description: Use when writing or reviewing Python code in this repo that calls Deepgram Management APIs - projects, API keys, members, invites, usage, billing, models, and reusable Voice Agent configurations. Covers `client.manage.v1.*` (projects/keys/members/invites/usage/billing/models) and `client.voice_agent.configurations.*`. Use `using-voice-agent` when you want to run an agent interactively, this skill to PERSIST/LIST agent configs. Triggers include "management API", "list projects", "API keys", "members", "usage stats", "billing", "list models", "agent configurations", "manage.v1".
+description: Use when writing or reviewing Python code in this repo that calls Deepgram Management APIs - projects, API keys, members, invites, usage, billing, models, and reusable Voice Agent configurations. Covers `client.manage.v1.projects`, project-scoped resources under `client.manage.v1.projects.*` (keys, members, members.invites, usage, billing, models, requests), global `client.manage.v1.models`, think-model discovery at `client.agent.v1.settings.think.models`, and `client.voice_agent.configurations.*`. Use `using-voice-agent` when you want to run an agent interactively, this skill to PERSIST/LIST agent configs. Triggers include "management API", "list projects", "API keys", "members", "usage stats", "billing", "list models", "agent configurations", "manage.v1".
 ---
 
 # Using Deepgram Management API (Python SDK)
 
-Administrative REST endpoints at `api.deepgram.com/v1/projects`, `/v1/models`, and reusable agent configuration storage. All `client.manage.v1.*` + `client.voice_agent.configurations.*`.
+Administrative REST endpoints at `api.deepgram.com/v1/projects`, `/v1/models`, and reusable agent configuration storage. Project-scoped resources live under `client.manage.v1.projects.*` (keys, members, members.invites, usage, billing, models, requests). Global models at `client.manage.v1.models`. Think-model discovery at `client.agent.v1.settings.think.models`. Reusable agent configs at `client.voice_agent.configurations.*`.
 
 ## When to use this product
 
@@ -14,7 +14,7 @@ Administrative REST endpoints at `api.deepgram.com/v1/projects`, `/v1/models`, a
 - **API key lifecycle**: list/create/delete project keys.
 - **Member + invite management**: add/remove members, manage roles, send/revoke invites.
 - **Usage + billing**: query request volume, balances.
-- **Reusable Voice Agent configs**: persist an `AgentV1Settings`-shaped config on the server, reference by `agent_id`.
+- **Reusable Voice Agent configs**: persist the **`agent` block** of a Settings message on the server, reference by `agent_id`. The stored blob is the `agent` object only (listen / think / speak providers + prompt), not the full `AgentV1Settings`.
 
 **Use a different skill when:**
 - You want to actually talk to an agent → `using-voice-agent`.
@@ -59,20 +59,23 @@ project_models = client.manage.v1.projects.models.list(project_id=project.projec
 
 ## Quick start — keys / members / invites / usage / billing
 
+All project-scoped resources live under `client.manage.v1.projects.*`:
+
 ```python
 # Keys
-keys = client.manage.v1.keys.list(project_id=pid)
-client.manage.v1.keys.create(project_id=pid, comment="CI key", scopes=["usage:write"])
-client.manage.v1.keys.delete(project_id=pid, key_id=kid)
+keys = client.manage.v1.projects.keys.list(project_id=pid)
+client.manage.v1.projects.keys.create(project_id=pid, comment="CI key", scopes=["usage:write"])
+client.manage.v1.projects.keys.delete(project_id=pid, key_id=kid)
 
-# Members + invites
-members = client.manage.v1.members.list(project_id=pid)
-invites = client.manage.v1.invites.list(project_id=pid)
-client.manage.v1.invites.send(project_id=pid, email="new@example.com", scope="member")
+# Members + invites (invites are nested under members)
+members = client.manage.v1.projects.members.list(project_id=pid)
+invites = client.manage.v1.projects.members.invites.list(project_id=pid)
+client.manage.v1.projects.members.invites.send(project_id=pid, email="new@example.com", scope="member")
 
-# Usage + billing
-usage = client.manage.v1.usage.list(project_id=pid)
-balance = client.manage.v1.billing.get(project_id=pid)
+# Usage (get, not list) + billing balances (nested)
+usage = client.manage.v1.projects.usage.get(project_id=pid)
+usage_breakdown = client.manage.v1.projects.usage.breakdown.list(project_id=pid)
+balance = client.manage.v1.projects.billing.balances.get(project_id=pid)
 ```
 
 See `examples/51-55` for each sub-module.
@@ -83,15 +86,15 @@ See `examples/51-55` for each sub-module.
 # List reusable configs
 configs = client.voice_agent.configurations.list(project_id=pid)
 
-# Create (config is a JSON string of the AgentV1Settings shape)
+# Create: `config` is a JSON string of the `agent` BLOCK ONLY — not the full
+# Settings message. Do NOT include top-level Settings fields like `audio`;
+# those are sent at connect-time in the live Settings message. The stored
+# `agent_id` later replaces the inline `agent` object in a Settings message.
 import json
 config_json = json.dumps({
-    "audio": {"input": {"encoding": "linear16", "sample_rate": 24000}},
-    "agent": {
-        "listen": {"provider": {"type": "deepgram", "model": "nova-3"}},
-        "think":  {"provider": {"type": "open_ai", "model": "gpt-4o-mini"}, "prompt": "..."},
-        "speak":  {"provider": {"type": "deepgram", "model": "aura-2-asteria-en"}},
-    },
+    "listen": {"provider": {"type": "deepgram", "model": "nova-3"}},
+    "think":  {"provider": {"type": "open_ai", "model": "gpt-4o-mini"}, "prompt": "..."},
+    "speak":  {"provider": {"type": "deepgram", "model": "aura-2-asteria-en"}},
 })
 created = client.voice_agent.configurations.create(
     project_id=pid,
@@ -111,7 +114,7 @@ one = client.voice_agent.configurations.get(project_id=pid, agent_id=created.age
 Think-provider model discovery (which LLMs Agent supports):
 
 ```python
-think_models = client.manage.v1.agent.settings.think.models.list()
+think_models = client.agent.v1.settings.think.models.list()
 ```
 
 ## Async equivalent
@@ -137,12 +140,15 @@ projects = await client.manage.v1.projects.list()
 ## Gotchas
 
 1. **`Token` auth, not `Bearer`.**
-2. **Agent config body is a JSON STRING on create**, not a nested object. Pass `config=json.dumps(...)`.
-3. **Agent configs are immutable** — you cannot edit the config body. Create a new one to change behavior. Only metadata is mutable.
-4. **Use `include_outdated=True`** on `models.list()` when pinning older models.
-5. **Delete is irreversible.** Wire tests typically comment out destructive calls.
-6. **Project-scoped vs global models**: `client.manage.v1.models.list()` returns all; `client.manage.v1.projects.models.list(project_id=...)` returns what the project can access.
-7. **Returned agent configs are uninterpolated** — raw stored JSON string. Parse before use.
+2. **Project-scoped resources are nested under `.projects.*`.** There is no top-level `client.manage.v1.keys` / `.members` / `.invites` / `.usage` / `.billing`. Use `client.manage.v1.projects.keys`, `...projects.members`, `...projects.members.invites`, `...projects.usage`, `...projects.billing.balances`. The only top-level `client.manage.v1.*` methods are `projects`, `models`, and `requests` utilities.
+3. **Think-model discovery is on the Agent client**, not Manage: `client.agent.v1.settings.think.models.list()`. There is no `client.manage.v1.agent.*`.
+4. **Agent config body is a JSON STRING on create**, not a nested object. Pass `config=json.dumps(...)`.
+5. **Agent config is the `agent` block only**, not the full Settings message. Do not include top-level fields like `audio` — those go in the live Settings message at connect time.
+6. **Agent configs are immutable** — you cannot edit the config body. Create a new one to change behavior. Only metadata is mutable.
+7. **Use `include_outdated=True`** on `models.list()` when pinning older models.
+8. **Delete is irreversible.** Wire tests typically comment out destructive calls.
+9. **Project-scoped vs global models**: `client.manage.v1.models.list()` returns all; `client.manage.v1.projects.models.list(project_id=...)` returns what the project can access.
+10. **Returned agent configs are uninterpolated** — raw stored JSON string. Parse before use.
 
 ## Example files in this repo
 

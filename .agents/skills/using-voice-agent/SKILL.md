@@ -122,7 +122,7 @@ with client.agent.v1.connect() as agent:
 
 ## Reusable agent configurations
 
-You can persist an `AgentV1Settings`-shaped config server-side and reuse it by ID. Managed via `client.voice_agent.configurations.*` — see `using-management-api`.
+You can persist the **`agent` block** of a Settings message server-side and reuse it by `agent_id`. `client.voice_agent.configurations.create` stores a JSON string representing the `agent` object only (listen / think / speak providers + prompt) — NOT the full `AgentV1Settings` payload. Do not send top-level Settings fields like `audio` to that API; those still go in the live Settings message at connect time. The returned `agent_id` replaces the inline `agent` object in future Settings messages. Managed via `client.voice_agent.configurations.*` — see `using-management-api`.
 
 ## API reference (layered)
 

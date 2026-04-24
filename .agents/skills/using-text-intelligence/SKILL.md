@@ -34,7 +34,7 @@ response = client.read.v1.text.analyze(
     request={"text": "Hello, world! This is a sample text for analysis."},
     language="en",
     sentiment=True,
-    summarize=True,
+    summarize="v2",   # string literal "v2", not a boolean
     topics=True,
     intents=True,
 )
@@ -66,7 +66,7 @@ response = await client.read.v1.text.analyze(request={"text": "..."}, language="
 | `request` | `{"text": str}` or `{"url": str}` | One of these is required |
 | `language` | `str` | Required for most analytics. English only today. |
 | `sentiment` | `bool` | Per-segment + average sentiment |
-| `summarize` | `bool` | Boolean on `/read` (NOT `v2` string) |
+| `summarize` | `"v2"` (string literal) | Type alias `TextAnalyzeRequestSummarize = typing.Union[typing.Literal["v2"], typing.Any]`. Pass the string `"v2"`, not a boolean. |
 | `topics` | `bool` | Topic detection per segment |
 | `intents` | `bool` | Intent recognition per segment |
 | `custom_topic` / `custom_topic_mode` | `list[str]` / `str` | User-defined topics |
@@ -100,7 +100,7 @@ See `reference.md` → "Read V1 Text" for full shape. Request body model: `ReadV
 
 1. **`Token` auth, not `Bearer`.**
 2. **English-only** for sentiment / summarize / topics / intents today.
-3. **`summarize` on `/read` is a boolean**, not the string `"v2"` used on `/v1/listen`.
+3. **`summarize` takes the string `"v2"`**, not a boolean. The SDK typedef is `TextAnalyzeRequestSummarize = typing.Union[typing.Literal["v2"], typing.Any]`; wire tests pass `summarize="v2"`. Passing `summarize=True` sends the wrong shape.
 4. **`language` is required** for the gated analytics features above.
 5. **Body is JSON `request=`**, not query parameters. Don't confuse with `/v1/listen` which takes audio as the body.
 6. **Custom topics/intents need a mode** (`custom_topic_mode="extended"`, `"strict"`) or they are ignored.
