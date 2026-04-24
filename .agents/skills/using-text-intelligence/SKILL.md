@@ -109,3 +109,13 @@ See `reference.md` → "Read V1 Text" for full shape. Request body model: `ReadV
 
 - `examples/40-text-intelligence.py`
 - `tests/wire/test_read_v1_text.py`
+
+## Central product skills
+
+For cross-language Deepgram product knowledge — the consolidated API reference, documentation finder, focused runnable recipes, third-party integration examples, and MCP setup — install the central skills:
+
+```bash
+npx skills add deepgram/skills
+```
+
+This SDK ships language-idiomatic code skills; `deepgram/skills` ships cross-language product knowledge (see `api`, `docs`, `recipes`, `examples`, `starters`, `setup-mcp`).

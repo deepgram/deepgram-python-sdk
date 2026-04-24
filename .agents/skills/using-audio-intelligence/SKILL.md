@@ -153,3 +153,13 @@ with client.listen.v1.connect(model="nova-3", diarize=True, redact=["pii"]) as c
 - `using-text-intelligence` — same analytics, text input
 - `using-conversational-stt` — Flux for turn-taking
 - `using-voice-agent` — interactive assistants
+
+## Central product skills
+
+For cross-language Deepgram product knowledge — the consolidated API reference, documentation finder, focused runnable recipes, third-party integration examples, and MCP setup — install the central skills:
+
+```bash
+npx skills add deepgram/skills
+```
+
+This SDK ships language-idiomatic code skills; `deepgram/skills` ships cross-language product knowledge (see `api`, `docs`, `recipes`, `examples`, `starters`, `setup-mcp`).

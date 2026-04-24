@@ -146,3 +146,13 @@ WSS client messages: `SpeakV1Text`, `Flush`, `Clear`, `Close`.
 - `examples/24-text-builder-streaming.py` — TextBuilder + WSS
 - `tests/wire/test_speak_v1_audio.py` — REST wire test
 - `tests/manual/speak/v1/connect/main.py` — live WSS test
+
+## Central product skills
+
+For cross-language Deepgram product knowledge — the consolidated API reference, documentation finder, focused runnable recipes, third-party integration examples, and MCP setup — install the central skills:
+
+```bash
+npx skills add deepgram/skills
+```
+
+This SDK ships language-idiomatic code skills; `deepgram/skills` ships cross-language product knowledge (see `api`, `docs`, `recipes`, `examples`, `starters`, `setup-mcp`).

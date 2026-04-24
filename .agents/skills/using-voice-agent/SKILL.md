@@ -150,3 +150,13 @@ You can persist an `AgentV1Settings`-shaped config server-side and reuse it by I
 
 - `examples/30-voice-agent.py`
 - `tests/manual/agent/v1/connect/main.py` — live connection test
+
+## Central product skills
+
+For cross-language Deepgram product knowledge — the consolidated API reference, documentation finder, focused runnable recipes, third-party integration examples, and MCP setup — install the central skills:
+
+```bash
+npx skills add deepgram/skills
+```
+
+This SDK ships language-idiomatic code skills; `deepgram/skills` ships cross-language product knowledge (see `api`, `docs`, `recipes`, `examples`, `starters`, `setup-mcp`).
