@@ -19,13 +19,14 @@ def test_selfHosted_v1_distributionCredentials_create() -> None:
     client = get_client(test_id)
     client.self_hosted.v1.distribution_credentials.create(
         project_id="123456-7890-1234-5678-901234",
+        scopes=["self-hosted:products"],
         provider="quay",
     )
     verify_request_count(
         test_id,
         "POST",
         "/v1/projects/123456-7890-1234-5678-901234/self-hosted/distribution/credentials",
-        {"provider": "quay"},
+        {"scopes": "self-hosted:products", "provider": "quay"},
         1,
     )
 

@@ -14,7 +14,7 @@ class SpeakV1Flushed(UncheckedBaseModel):
     Message type identifier
     """
 
-    sequence_id: float = pydantic.Field()
+    sequence_id: int = pydantic.Field()
     """
     The sequence ID of the response
     """

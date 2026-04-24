@@ -14,7 +14,7 @@ class AgentV1SettingsAudioInputParams(typing_extensions.TypedDict):
     Audio encoding format
     """
 
-    sample_rate: float
+    sample_rate: int
     """
     Sample rate in Hz. Common values are 16000, 24000, 44100, 48000
     """

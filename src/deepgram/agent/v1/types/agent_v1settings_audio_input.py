@@ -18,7 +18,7 @@ class AgentV1SettingsAudioInput(UncheckedBaseModel):
     Audio encoding format
     """
 
-    sample_rate: float = pydantic.Field()
+    sample_rate: int = pydantic.Field()
     """
     Sample rate in Hz. Common values are 16000, 24000, 44100, 48000
     """

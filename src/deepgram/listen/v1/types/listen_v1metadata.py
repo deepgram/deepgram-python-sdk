@@ -38,7 +38,7 @@ class ListenV1Metadata(UncheckedBaseModel):
     The duration
     """
 
-    channels: float = pydantic.Field()
+    channels: int = pydantic.Field()
     """
     The channels
     """

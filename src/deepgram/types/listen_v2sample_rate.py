@@ -3,3 +3,6 @@
 import typing
 
 ListenV2SampleRate = typing.Any
+"""
+Sample rate of the audio stream in Hz. Required if sending non-containerized/raw audio. If sending containerized audio, this parameter should be omitted.
+"""

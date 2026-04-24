@@ -18,7 +18,7 @@ class ListenV2TurnInfoParams(typing_extensions.TypedDict):
     The unique identifier of the request
     """
 
-    sequence_id: float
+    sequence_id: int
     """
     Starts at `0` and increments for each message the server sends to the client.  This includes messages of other types, like `Connected` messages.
     """
@@ -34,7 +34,7 @@ class ListenV2TurnInfoParams(typing_extensions.TypedDict):
     - **EndOfTurn** - The user has finished speaking for the turn
     """
 
-    turn_index: float
+    turn_index: int
     """
     The index of the current turn
     """

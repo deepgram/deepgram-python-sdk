@@ -11,7 +11,7 @@ class ListenV2FatalErrorParams(typing_extensions.TypedDict):
     Message type identifier
     """
 
-    sequence_id: float
+    sequence_id: int
     """
     Starts at `0` and increments for each message the server sends
     to the client.  This includes messages of other types, like

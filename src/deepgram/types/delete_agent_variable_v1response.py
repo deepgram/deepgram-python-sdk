@@ -3,3 +3,6 @@
 import typing
 
 DeleteAgentVariableV1Response = typing.Dict[str, typing.Any]
+"""
+Confirmation that the agent variable was deleted
+"""

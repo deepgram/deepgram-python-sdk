@@ -3,3 +3,6 @@
 import typing
 
 ListenV1Replace = typing.Any
+"""
+Search for terms or phrases in submitted audio and replaces them
+"""

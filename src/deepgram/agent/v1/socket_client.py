@@ -3,7 +3,9 @@
 import json
 import logging
 import typing
+from json.decoder import JSONDecodeError
 
+import websockets
 import websockets.sync.connection as websockets_sync_connection
 from ...core.events import EventEmitterMixin, EventType
 from ...core.unchecked_base_model import construct_type
@@ -13,6 +15,7 @@ from .types.agent_v1agent_thinking import AgentV1AgentThinking
 from .types.agent_v1conversation_text import AgentV1ConversationText
 from .types.agent_v1error import AgentV1Error
 from .types.agent_v1function_call_request import AgentV1FunctionCallRequest
+from .types.agent_v1history import AgentV1History
 from .types.agent_v1inject_agent_message import AgentV1InjectAgentMessage
 from .types.agent_v1inject_user_message import AgentV1InjectUserMessage
 from .types.agent_v1injection_refused import AgentV1InjectionRefused
@@ -37,26 +40,6 @@ except ImportError:
     from websockets import WebSocketClientProtocol  # type: ignore
 
 _logger = logging.getLogger(__name__)
-
-
-def _sanitize_numeric_types(obj: typing.Any) -> typing.Any:
-    """
-    Recursively convert float values that are whole numbers to int.
-
-    Workaround for Fern-generated models that type integer API fields
-    (like sample_rate) as float, causing JSON serialization to produce
-    values like 44100.0 instead of 44100. The Deepgram API rejects
-    float representations of integer fields.
-
-    See: https://github.com/deepgram/internal-api-specs/issues/205
-    """
-    if isinstance(obj, dict):
-        return {k: _sanitize_numeric_types(v) for k, v in obj.items()}
-    elif isinstance(obj, list):
-        return [_sanitize_numeric_types(item) for item in obj]
-    elif isinstance(obj, float) and obj.is_integer():
-        return int(obj)
-    return obj
 V1SocketClientResponse = typing.Union[
     AgentV1ReceiveFunctionCallResponse,
     AgentV1PromptUpdated,
@@ -73,6 +56,7 @@ V1SocketClientResponse = typing.Union[
     AgentV1AgentAudioDone,
     AgentV1Error,
     AgentV1Warning,
+    AgentV1History,
     bytes,
 ]
 
@@ -120,7 +104,7 @@ class AsyncV1SocketClient(EventEmitterMixin):
                         )
                         continue
                 await self._emit_async(EventType.MESSAGE, parsed)
-        except Exception as exc:
+        except (websockets.WebSocketException, JSONDecodeError) as exc:
             await self._emit_async(EventType.ERROR, exc)
         finally:
             await self._emit_async(EventType.CLOSE, None)
@@ -160,12 +144,12 @@ class AsyncV1SocketClient(EventEmitterMixin):
         """
         await self._send_model(message)
 
-    async def send_keep_alive(self, message: typing.Optional[AgentV1KeepAlive] = None) -> None:
+    async def send_keep_alive(self, message: AgentV1KeepAlive) -> None:
         """
         Send a message to the websocket connection.
         The message will be sent as a AgentV1KeepAlive.
         """
-        await self._send_model(message or AgentV1KeepAlive(type="KeepAlive"))
+        await self._send_model(message)
 
     async def send_update_prompt(self, message: AgentV1UpdatePrompt) -> None:
         """
@@ -214,7 +198,7 @@ class AsyncV1SocketClient(EventEmitterMixin):
         """
         Send a Pydantic model to the websocket connection.
         """
-        await self._send(_sanitize_numeric_types(data.dict()))
+        await self._send(data.dict())
 
 
 class V1SocketClient(EventEmitterMixin):
@@ -260,7 +244,7 @@ class V1SocketClient(EventEmitterMixin):
                         )
                         continue
                 self._emit(EventType.MESSAGE, parsed)
-        except Exception as exc:
+        except (websockets.WebSocketException, JSONDecodeError) as exc:
             self._emit(EventType.ERROR, exc)
         finally:
             self._emit(EventType.CLOSE, None)
@@ -300,12 +284,12 @@ class V1SocketClient(EventEmitterMixin):
         """
         self._send_model(message)
 
-    def send_keep_alive(self, message: typing.Optional[AgentV1KeepAlive] = None) -> None:
+    def send_keep_alive(self, message: AgentV1KeepAlive) -> None:
         """
         Send a message to the websocket connection.
         The message will be sent as a AgentV1KeepAlive.
         """
-        self._send_model(message or AgentV1KeepAlive(type="KeepAlive"))
+        self._send_model(message)
 
     def send_update_prompt(self, message: AgentV1UpdatePrompt) -> None:
         """
@@ -354,4 +338,4 @@ class V1SocketClient(EventEmitterMixin):
         """
         Send a Pydantic model to the websocket connection.
         """
-        self._send(_sanitize_numeric_types(data.dict()))
+        self._send(data.dict())

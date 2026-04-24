@@ -13,7 +13,7 @@ class ListenV1SpeechStarted(UncheckedBaseModel):
     Message type identifier
     """
 
-    channel: typing.List[float] = pydantic.Field()
+    channel: typing.List[int] = pydantic.Field()
     """
     The channel
     """

@@ -14,12 +14,12 @@ class AgentV1SettingsAudioOutputParams(typing_extensions.TypedDict):
     Audio encoding format for streaming TTS output
     """
 
-    sample_rate: typing_extensions.NotRequired[float]
+    sample_rate: typing_extensions.NotRequired[int]
     """
     Sample rate in Hz
     """
 
-    bitrate: typing_extensions.NotRequired[float]
+    bitrate: typing_extensions.NotRequired[int]
     """
     Audio bitrate in bits per second
     """

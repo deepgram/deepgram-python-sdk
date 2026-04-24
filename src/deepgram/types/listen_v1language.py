@@ -3,3 +3,6 @@
 import typing
 
 ListenV1Language = typing.Any
+"""
+The [BCP-47 language tag](https://tools.ietf.org/html/bcp47) that hints at the primary spoken language. Depending on the Model you choose only certain languages are available
+"""

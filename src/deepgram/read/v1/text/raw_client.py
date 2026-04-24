@@ -6,6 +6,7 @@ from json.decoder import JSONDecodeError
 from ....core.api_error import ApiError
 from ....core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ....core.http_response import AsyncHttpResponse, HttpResponse
+from ....core.parse_error import ParsingError
 from ....core.request_options import RequestOptions
 from ....core.serialization import convert_and_respect_annotation_metadata
 from ....core.unchecked_base_model import construct_type
@@ -16,6 +17,7 @@ from .types.text_analyze_request_callback_method import TextAnalyzeRequestCallba
 from .types.text_analyze_request_custom_intent_mode import TextAnalyzeRequestCustomIntentMode
 from .types.text_analyze_request_custom_topic_mode import TextAnalyzeRequestCustomTopicMode
 from .types.text_analyze_request_summarize import TextAnalyzeRequestSummarize
+from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -145,6 +147,10 @@ class RawTextClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
 
@@ -272,4 +278,8 @@ class AsyncRawTextClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
