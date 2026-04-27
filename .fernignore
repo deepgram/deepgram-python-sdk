@@ -55,10 +55,12 @@ src/deepgram/transport_interface.py
 src/deepgram/transport.py
 src/deepgram/transports
 
-# Claude Code agent files
+# Agent files (Claude Code, OpenCode, other agent tools)
+# .agents/skills/ holds agent-agnostic skills discoverable via `npx skills`
 CLAUDE.md
 AGENTS.md
 .claude
+.agents
 
 # Folders to ignore
 .github
