@@ -96,6 +96,47 @@ response = client.listen.v1.media.transcribe_file(
 )
 ```
 
+## Quick start — diarization with word-level timings
+
+Enable speaker separation and word-level timestamps in a single request, then iterate the per-word objects to build a speaker-labelled transcript with timing.
+
+```python
+response = client.listen.v1.media.transcribe_url(
+    url="https://dpgr.am/spacewalk.wav",
+    model="nova-3",
+    diarize=True,        # tag each word with a speaker id
+    smart_format=True,   # punctuated_word for cleaner output
+    punctuate=True,
+)
+
+words = response.results.channels[0].alternatives[0].words or []
+
+# Per-word: speaker, timestamps, confidence
+for w in words:
+    speaker = getattr(w, "speaker", None)
+    text = w.punctuated_word or w.word
+    print(f"[speaker {speaker}] {text}  ({w.start:.2f}s–{w.end:.2f}s, conf={w.confidence:.2f})")
+
+# Group consecutive words by speaker into utterances
+from itertools import groupby
+for speaker, group in groupby(words, key=lambda w: getattr(w, "speaker", None)):
+    text = " ".join((w.punctuated_word or w.word) for w in group)
+    print(f"Speaker {speaker}: {text}")
+```
+
+Per-word fields available on each entry:
+
+| Field | Type | Description |
+|---|---|---|
+| `word` | `str` | Lowercase token |
+| `punctuated_word` | `str \| None` | Token with smart-formatted casing/punctuation (when `smart_format=True`) |
+| `start`, `end` | `float` | Audio timestamps in seconds |
+| `confidence` | `float` | 0.0–1.0 confidence |
+| `speaker` | `int \| None` | Speaker id (when `diarize=True`); `None` if diarization disabled |
+| `speaker_confidence` | `float \| None` | Speaker-id confidence |
+
+For a higher-level breakdown, set `utterances=True` to get pre-grouped speaker turns at `response.results.utterances`. Set `paragraphs=True` for a `paragraphs` view organised by speaker turn boundaries.
+
 ## Quick start — WSS subset (diarize / redact / entities only)
 
 ```python

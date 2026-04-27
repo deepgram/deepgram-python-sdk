@@ -124,6 +124,145 @@ with client.agent.v1.connect() as agent:
 
 You can persist the **`agent` block** of a Settings message server-side and reuse it by `agent_id`. `client.voice_agent.configurations.create` stores a JSON string representing the `agent` object only (listen / think / speak providers + prompt) — NOT the full `AgentV1Settings` payload. Do not send top-level Settings fields like `audio` to that API; those still go in the live Settings message at connect time. The returned `agent_id` replaces the inline `agent` object in future Settings messages. Managed via `client.voice_agent.configurations.*` — see `deepgram-python-management-api`.
 
+## Dynamic mid-session adjustment
+
+You can change agent behavior **without disconnecting** by sending control messages on the live socket. Each method is available on the agent connection object (`agent` in the quick-start) for both sync and async clients.
+
+```python
+from deepgram.agent.v1.types import (
+    AgentV1UpdatePrompt,
+    AgentV1UpdateSpeak,
+    AgentV1UpdateSpeakSpeak,        # type alias accepting SpeakSettingsV1 or list
+    AgentV1UpdateThink,
+    AgentV1UpdateThinkThink,        # type alias accepting ThinkSettingsV1 or list
+    AgentV1InjectAgentMessage,
+    AgentV1InjectUserMessage,
+    AgentV1KeepAlive,
+)
+from deepgram.types.speak_settings_v1 import SpeakSettingsV1
+from deepgram.types.speak_settings_v1provider import SpeakSettingsV1Provider_Deepgram
+from deepgram.types.think_settings_v1 import ThinkSettingsV1
+from deepgram.types.think_settings_v1provider import ThinkSettingsV1Provider_OpenAi
+
+# 1. Swap the LLM system prompt mid-conversation (e.g. escalate to a different persona)
+agent.send_update_prompt(
+    AgentV1UpdatePrompt(prompt="You are now in expert escalation mode. Be precise and concise.")
+)
+# Server replies with a `PromptUpdated` event when the new prompt is in effect.
+
+# 2. Swap the TTS voice without reconnecting (e.g. switch language or persona)
+agent.send_update_speak(
+    AgentV1UpdateSpeak(
+        speak=SpeakSettingsV1(
+            provider=SpeakSettingsV1Provider_Deepgram(
+                type="deepgram", model="aura-2-luna-en",
+            ),
+        ),
+    )
+)
+# Server replies with a `SpeakUpdated` event.
+
+# 3. Swap the LLM provider/model (e.g. cheaper model for follow-ups)
+agent.send_update_think(
+    AgentV1UpdateThink(
+        think=ThinkSettingsV1(
+            provider=ThinkSettingsV1Provider_OpenAi(
+                type="open_ai", model="gpt-4o-mini", temperature=0.3,
+            ),
+            prompt="You are a helpful assistant. Keep replies brief.",
+        ),
+    )
+)
+# Server replies with a `ThinkUpdated` event.
+
+# 4. Force the agent to say something specific (without waiting for user audio)
+agent.send_inject_agent_message(
+    AgentV1InjectAgentMessage(message="Quick reminder: your call is being recorded.")
+)
+# Useful for proactive prompts, status updates, or scripted segues.
+
+# 5. Inject a user message (e.g. text input from a chat sidebar alongside voice)
+agent.send_inject_user_message(
+    AgentV1InjectUserMessage(content="Schedule a follow-up for next Tuesday at 2pm.")
+)
+# Server may reply with `InjectionRefused` if the agent is mid-utterance — retry after `AgentAudioDone`.
+
+# 6. Idle-period keep-alive (no payload required; the SDK fills in the type literal)
+agent.send_keep_alive(AgentV1KeepAlive())
+# Or simply: agent.send_keep_alive()  — the message arg is optional.
+```
+
+Async client equivalents are identical but `await`-prefixed:
+
+```python
+await agent.send_update_prompt(AgentV1UpdatePrompt(prompt="..."))
+await agent.send_inject_agent_message(AgentV1InjectAgentMessage(message="..."))
+```
+
+## Stream lifecycle & recovery
+
+Continuous voice agents need explicit handling for idle periods, stream pauses, and reconnects.
+
+**Pause / idle (no audio for several seconds):** stop calling `send_media`, but emit a `KeepAlive` every ~5 seconds. Without it, the server closes the socket at ~10 seconds of idle.
+
+```python
+import threading, time
+
+stop = threading.Event()
+
+def keepalive_loop():
+    while not stop.is_set():
+        if stop.wait(5):
+            return
+        try:
+            agent.send_keep_alive()
+        except Exception:
+            return  # socket closed; outer loop will reconnect
+
+threading.Thread(target=keepalive_loop, daemon=True).start()
+```
+
+**Resume after pause:** just call `send_media` again. No control message is required — the agent picks up VAD on the next chunk.
+
+**Reconnect after disconnect (preserve conversation context):** `Settings` cannot be re-sent on the same closed socket; open a new connection and resend the same `Settings`. To carry conversation history forward, include it in the new `Settings.agent.context.messages` so the LLM resumes with prior turns:
+
+```python
+from deepgram.agent.v1.types import (
+    AgentV1SettingsAgentContext,
+    AgentV1SettingsAgentContextMessagesItem,
+    AgentV1SettingsAgentContextMessagesItemContent,
+    AgentV1SettingsAgentContextMessagesItemContentRole,
+)
+
+# Build the new Settings with the captured prior turns
+context = AgentV1SettingsAgentContext(
+    messages=[
+        AgentV1SettingsAgentContextMessagesItem(
+            content=AgentV1SettingsAgentContextMessagesItemContent(
+                role=AgentV1SettingsAgentContextMessagesItemContentRole.USER,
+                content="Hi, I'd like to schedule a meeting.",
+            ),
+        ),
+        AgentV1SettingsAgentContextMessagesItem(
+            content=AgentV1SettingsAgentContextMessagesItemContent(
+                role=AgentV1SettingsAgentContextMessagesItemContentRole.ASSISTANT,
+                content="Sure — what day works best?",
+            ),
+        ),
+    ],
+)
+new_settings = settings.model_copy(update={"agent": settings.agent.model_copy(update={"context": context})})
+
+# Open a fresh connection and replay
+with client.agent.v1.connect() as agent2:
+    agent2.send_settings(new_settings)
+    # ... same handlers + audio loop as before
+```
+
+The server emits a `History` message on connect when the SDK has captured prior turns; in Python you receive this as an `AgentV1History` object (wire `type` literal: `"History"`). Persist these turns in your application so a reconnect can rebuild `context.messages`.
+
+**Detect disconnects:** the `EventType.CLOSE` handler fires before the `with` block exits. Catch it and trigger your reconnect logic from there. Check `EventType.ERROR` payloads for cause (network drop vs server-initiated close vs warning).
+
 ## API reference (layered)
 
 1. **In-repo reference**: `reference.md` — "Agent V1 Connect", "Voice Agent Configurations".
