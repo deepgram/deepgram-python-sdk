@@ -70,8 +70,6 @@ from deepgram.listen.v1.types import (
     ListenV1SpeechStarted, ListenV1UtteranceEnd,
 )
 
-last_interim_len = 0  # length of the last interim line (for clean overwrite)
-
 with client.listen.v1.connect(
     model="nova-3",
     interim_results=True,    # ← emit partial results while user is still speaking
@@ -79,22 +77,24 @@ with client.listen.v1.connect(
     vad_events=True,         # SpeechStarted events
     smart_format=True,
 ) as conn:
+    # Mutable container so the on_message closure can update state without `global`
+    state = {"last_interim_len": 0}
+
     def on_message(m):
-        global last_interim_len
         if isinstance(m, ListenV1Results) and m.channel and m.channel.alternatives:
             transcript = m.channel.alternatives[0].transcript
             if not transcript:
                 return
             if m.is_final:
                 # Final segment: overwrite the running interim line, newline if utterance ended
-                pad = " " * max(0, last_interim_len - len(transcript))
+                pad = " " * max(0, state["last_interim_len"] - len(transcript))
                 end = "\n" if m.speech_final else ""
                 print(f"\r{transcript}{pad}", end=end, flush=True)
-                last_interim_len = 0
+                state["last_interim_len"] = 0
             else:
                 # Interim: keep overwriting the same console line as the user speaks
                 print(f"\r{transcript}", end="", flush=True)
-                last_interim_len = len(transcript)
+                state["last_interim_len"] = len(transcript)
         elif isinstance(m, ListenV1UtteranceEnd):
             print()  # newline; UtteranceEnd fires after final results when audio goes silent
         elif isinstance(m, ListenV1SpeechStarted):

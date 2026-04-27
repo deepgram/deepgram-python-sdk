@@ -259,7 +259,7 @@ with client.agent.v1.connect() as agent2:
     # ... same handlers + audio loop as before
 ```
 
-The server emits a `History` event (type `agent_v1history`) on connect when the SDK has captured prior turns; persist these in your application so a reconnect can rebuild `context.messages`.
+The server emits a `History` message on connect when the SDK has captured prior turns; in Python you receive this as an `AgentV1History` object (wire `type` literal: `"History"`). Persist these turns in your application so a reconnect can rebuild `context.messages`.
 
 **Detect disconnects:** the `EventType.CLOSE` handler fires before the `with` block exits. Catch it and trigger your reconnect logic from there. Check `EventType.ERROR` payloads for cause (network drop vs server-initiated close vs warning).
 
