@@ -3,3 +3,7 @@
 import typing
 
 ListenV2EotThreshold = typing.Any
+"""
+End-of-turn confidence required to finish a turn. Valid Values 0.5 -
+0.9.
+"""

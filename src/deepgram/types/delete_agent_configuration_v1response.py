@@ -3,3 +3,6 @@
 import typing
 
 DeleteAgentConfigurationV1Response = typing.Dict[str, typing.Any]
+"""
+Confirmation that the agent configuration was deleted
+"""

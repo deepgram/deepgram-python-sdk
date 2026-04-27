@@ -6,13 +6,15 @@ from json.decoder import JSONDecodeError
 from ......core.api_error import ApiError
 from ......core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ......core.http_response import AsyncHttpResponse, HttpResponse
-from ......core.jsonable_encoder import jsonable_encoder
+from ......core.jsonable_encoder import encode_path_param
+from ......core.parse_error import ParsingError
 from ......core.request_options import RequestOptions
 from ......core.unchecked_base_model import construct_type
 from ......errors.bad_request_error import BadRequestError
 from ......types.create_project_invite_v1response import CreateProjectInviteV1Response
 from ......types.delete_project_invite_v1response import DeleteProjectInviteV1Response
 from ......types.list_project_invites_v1response import ListProjectInvitesV1Response
+from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -42,7 +44,7 @@ class RawInvitesClient:
             A list of invites for a specific project
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"v1/projects/{jsonable_encoder(project_id)}/invites",
+            f"v1/projects/{encode_path_param(project_id)}/invites",
             base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
@@ -71,6 +73,10 @@ class RawInvitesClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def create(
@@ -99,7 +105,7 @@ class RawInvitesClient:
             The invite was successfully generated
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"v1/projects/{jsonable_encoder(project_id)}/invites",
+            f"v1/projects/{encode_path_param(project_id)}/invites",
             base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
@@ -136,6 +142,10 @@ class RawInvitesClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def delete(
@@ -161,7 +171,7 @@ class RawInvitesClient:
             The invite was successfully deleted
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"v1/projects/{jsonable_encoder(project_id)}/invites/{jsonable_encoder(email)}",
+            f"v1/projects/{encode_path_param(project_id)}/invites/{encode_path_param(email)}",
             base_url=self._client_wrapper.get_environment().base,
             method="DELETE",
             request_options=request_options,
@@ -190,6 +200,10 @@ class RawInvitesClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
 
@@ -217,7 +231,7 @@ class AsyncRawInvitesClient:
             A list of invites for a specific project
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"v1/projects/{jsonable_encoder(project_id)}/invites",
+            f"v1/projects/{encode_path_param(project_id)}/invites",
             base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
@@ -246,6 +260,10 @@ class AsyncRawInvitesClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def create(
@@ -274,7 +292,7 @@ class AsyncRawInvitesClient:
             The invite was successfully generated
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"v1/projects/{jsonable_encoder(project_id)}/invites",
+            f"v1/projects/{encode_path_param(project_id)}/invites",
             base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
@@ -311,6 +329,10 @@ class AsyncRawInvitesClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def delete(
@@ -336,7 +358,7 @@ class AsyncRawInvitesClient:
             The invite was successfully deleted
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"v1/projects/{jsonable_encoder(project_id)}/invites/{jsonable_encoder(email)}",
+            f"v1/projects/{encode_path_param(project_id)}/invites/{encode_path_param(email)}",
             base_url=self._client_wrapper.get_environment().base,
             method="DELETE",
             request_options=request_options,
@@ -365,4 +387,8 @@ class AsyncRawInvitesClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)

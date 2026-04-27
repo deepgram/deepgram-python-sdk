@@ -3,3 +3,8 @@
 import typing
 
 ListenV2EagerEotThreshold = typing.Any
+"""
+End-of-turn confidence required to fire an eager end-of-turn event.
+When set, enables `EagerEndOfTurn` and `TurnResumed` events. Valid
+Values 0.3 - 0.9.
+"""

@@ -3,3 +3,6 @@
 import typing
 
 ListenV1Keyterm = typing.Any
+"""
+Key term prompting can boost specialized terminology and brands. Only compatible with Nova-3
+"""

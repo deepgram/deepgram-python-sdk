@@ -42,6 +42,7 @@ class AudioClient:
         encoding: typing.Optional[AudioGenerateRequestEncoding] = None,
         model: typing.Optional[AudioGenerateRequestModel] = None,
         sample_rate: typing.Optional[float] = None,
+        speed: typing.Optional[float] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Iterator[bytes]:
         """
@@ -79,6 +80,9 @@ class AudioClient:
         sample_rate : typing.Optional[float]
             Sample Rate specifies the sample rate for the output audio. Based on the encoding, different sample rates are supported. For some encodings, the sample rate is not configurable
 
+        speed : typing.Optional[float]
+            Speaking rate multiplier that adjusts the pace of generated speech while preserving natural prosody and voice quality. Not yet supported in all languages.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
 
@@ -109,6 +113,7 @@ class AudioClient:
             encoding=encoding,
             model=model,
             sample_rate=sample_rate,
+            speed=speed,
             request_options=request_options,
         ) as r:
             yield from r.data
@@ -142,6 +147,7 @@ class AsyncAudioClient:
         encoding: typing.Optional[AudioGenerateRequestEncoding] = None,
         model: typing.Optional[AudioGenerateRequestModel] = None,
         sample_rate: typing.Optional[float] = None,
+        speed: typing.Optional[float] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.AsyncIterator[bytes]:
         """
@@ -178,6 +184,9 @@ class AsyncAudioClient:
 
         sample_rate : typing.Optional[float]
             Sample Rate specifies the sample rate for the output audio. Based on the encoding, different sample rates are supported. For some encodings, the sample rate is not configurable
+
+        speed : typing.Optional[float]
+            Speaking rate multiplier that adjusts the pace of generated speech while preserving natural prosody and voice quality. Not yet supported in all languages.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
@@ -217,6 +226,7 @@ class AsyncAudioClient:
             encoding=encoding,
             model=model,
             sample_rate=sample_rate,
+            speed=speed,
             request_options=request_options,
         ) as r:
             async for _chunk in r.data:

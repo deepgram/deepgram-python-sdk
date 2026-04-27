@@ -37,9 +37,9 @@ class UsageBreakdownV1ResponseResultsItemGroupingParams(typing_extensions.TypedD
     Optional method identifier
     """
 
-    tags: typing_extensions.NotRequired[str]
+    tags: typing_extensions.NotRequired[typing.Sequence[str]]
     """
-    Optional tags
+    Optional list of tags, null unless grouped by tags.
     """
 
     deployment: typing_extensions.NotRequired[str]

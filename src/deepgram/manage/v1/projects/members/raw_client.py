@@ -6,12 +6,14 @@ from json.decoder import JSONDecodeError
 from .....core.api_error import ApiError
 from .....core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from .....core.http_response import AsyncHttpResponse, HttpResponse
-from .....core.jsonable_encoder import jsonable_encoder
+from .....core.jsonable_encoder import encode_path_param
+from .....core.parse_error import ParsingError
 from .....core.request_options import RequestOptions
 from .....core.unchecked_base_model import construct_type
 from .....errors.bad_request_error import BadRequestError
 from .....types.delete_project_member_v1response import DeleteProjectMemberV1Response
 from .....types.list_project_members_v1response import ListProjectMembersV1Response
+from pydantic import ValidationError
 
 
 class RawMembersClient:
@@ -38,7 +40,7 @@ class RawMembersClient:
             A list of members for a given project
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"v1/projects/{jsonable_encoder(project_id)}/members",
+            f"v1/projects/{encode_path_param(project_id)}/members",
             base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
@@ -67,6 +69,10 @@ class RawMembersClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def delete(
@@ -92,7 +98,7 @@ class RawMembersClient:
             Delete the specific member from the project
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"v1/projects/{jsonable_encoder(project_id)}/members/{jsonable_encoder(member_id)}",
+            f"v1/projects/{encode_path_param(project_id)}/members/{encode_path_param(member_id)}",
             base_url=self._client_wrapper.get_environment().base,
             method="DELETE",
             request_options=request_options,
@@ -121,6 +127,10 @@ class RawMembersClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
 
@@ -148,7 +158,7 @@ class AsyncRawMembersClient:
             A list of members for a given project
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"v1/projects/{jsonable_encoder(project_id)}/members",
+            f"v1/projects/{encode_path_param(project_id)}/members",
             base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
@@ -177,6 +187,10 @@ class AsyncRawMembersClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def delete(
@@ -202,7 +216,7 @@ class AsyncRawMembersClient:
             Delete the specific member from the project
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"v1/projects/{jsonable_encoder(project_id)}/members/{jsonable_encoder(member_id)}",
+            f"v1/projects/{encode_path_param(project_id)}/members/{encode_path_param(member_id)}",
             base_url=self._client_wrapper.get_environment().base,
             method="DELETE",
             request_options=request_options,
@@ -231,4 +245,8 @@ class AsyncRawMembersClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)

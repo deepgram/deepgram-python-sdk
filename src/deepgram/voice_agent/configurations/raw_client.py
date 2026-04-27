@@ -6,7 +6,8 @@ from json.decoder import JSONDecodeError
 from ...core.api_error import ApiError
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.http_response import AsyncHttpResponse, HttpResponse
-from ...core.jsonable_encoder import jsonable_encoder
+from ...core.jsonable_encoder import encode_path_param
+from ...core.parse_error import ParsingError
 from ...core.request_options import RequestOptions
 from ...core.unchecked_base_model import construct_type
 from ...errors.bad_request_error import BadRequestError
@@ -14,6 +15,7 @@ from ...types.agent_configuration_v1 import AgentConfigurationV1
 from ...types.create_agent_configuration_v1response import CreateAgentConfigurationV1Response
 from ...types.delete_agent_configuration_v1response import DeleteAgentConfigurationV1Response
 from ...types.list_agent_configurations_v1response import ListAgentConfigurationsV1Response
+from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -43,7 +45,7 @@ class RawConfigurationsClient:
             A list of agent configurations
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"v1/projects/{jsonable_encoder(project_id)}/agents",
+            f"v1/projects/{encode_path_param(project_id)}/agents",
             base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
@@ -72,6 +74,10 @@ class RawConfigurationsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def create(
@@ -109,7 +115,7 @@ class RawConfigurationsClient:
             Agent configuration created successfully
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"v1/projects/{jsonable_encoder(project_id)}/agents",
+            f"v1/projects/{encode_path_param(project_id)}/agents",
             base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
@@ -147,6 +153,10 @@ class RawConfigurationsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def get(
@@ -172,7 +182,7 @@ class RawConfigurationsClient:
             An agent configuration
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"v1/projects/{jsonable_encoder(project_id)}/agents/{jsonable_encoder(agent_id)}",
+            f"v1/projects/{encode_path_param(project_id)}/agents/{encode_path_param(agent_id)}",
             base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
@@ -201,6 +211,10 @@ class RawConfigurationsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def update(
@@ -234,7 +248,7 @@ class RawConfigurationsClient:
             Agent configuration updated
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"v1/projects/{jsonable_encoder(project_id)}/agents/{jsonable_encoder(agent_id)}",
+            f"v1/projects/{encode_path_param(project_id)}/agents/{encode_path_param(agent_id)}",
             base_url=self._client_wrapper.get_environment().base,
             method="PUT",
             json={
@@ -270,6 +284,10 @@ class RawConfigurationsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def delete(
@@ -295,7 +313,7 @@ class RawConfigurationsClient:
             Agent configuration deleted
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"v1/projects/{jsonable_encoder(project_id)}/agents/{jsonable_encoder(agent_id)}",
+            f"v1/projects/{encode_path_param(project_id)}/agents/{encode_path_param(agent_id)}",
             base_url=self._client_wrapper.get_environment().base,
             method="DELETE",
             request_options=request_options,
@@ -324,6 +342,10 @@ class RawConfigurationsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
 
@@ -351,7 +373,7 @@ class AsyncRawConfigurationsClient:
             A list of agent configurations
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"v1/projects/{jsonable_encoder(project_id)}/agents",
+            f"v1/projects/{encode_path_param(project_id)}/agents",
             base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
@@ -380,6 +402,10 @@ class AsyncRawConfigurationsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def create(
@@ -417,7 +443,7 @@ class AsyncRawConfigurationsClient:
             Agent configuration created successfully
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"v1/projects/{jsonable_encoder(project_id)}/agents",
+            f"v1/projects/{encode_path_param(project_id)}/agents",
             base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json={
@@ -455,6 +481,10 @@ class AsyncRawConfigurationsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def get(
@@ -480,7 +510,7 @@ class AsyncRawConfigurationsClient:
             An agent configuration
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"v1/projects/{jsonable_encoder(project_id)}/agents/{jsonable_encoder(agent_id)}",
+            f"v1/projects/{encode_path_param(project_id)}/agents/{encode_path_param(agent_id)}",
             base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
@@ -509,6 +539,10 @@ class AsyncRawConfigurationsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def update(
@@ -542,7 +576,7 @@ class AsyncRawConfigurationsClient:
             Agent configuration updated
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"v1/projects/{jsonable_encoder(project_id)}/agents/{jsonable_encoder(agent_id)}",
+            f"v1/projects/{encode_path_param(project_id)}/agents/{encode_path_param(agent_id)}",
             base_url=self._client_wrapper.get_environment().base,
             method="PUT",
             json={
@@ -578,6 +612,10 @@ class AsyncRawConfigurationsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def delete(
@@ -603,7 +641,7 @@ class AsyncRawConfigurationsClient:
             Agent configuration deleted
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"v1/projects/{jsonable_encoder(project_id)}/agents/{jsonable_encoder(agent_id)}",
+            f"v1/projects/{encode_path_param(project_id)}/agents/{encode_path_param(agent_id)}",
             base_url=self._client_wrapper.get_environment().base,
             method="DELETE",
             request_options=request_options,
@@ -632,4 +670,8 @@ class AsyncRawConfigurationsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)

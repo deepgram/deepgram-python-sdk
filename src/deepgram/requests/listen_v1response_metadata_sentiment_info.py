@@ -5,5 +5,5 @@ import typing_extensions
 
 class ListenV1ResponseMetadataSentimentInfoParams(typing_extensions.TypedDict):
     model_uuid: typing_extensions.NotRequired[str]
-    input_tokens: typing_extensions.NotRequired[float]
-    output_tokens: typing_extensions.NotRequired[float]
+    input_tokens: typing_extensions.NotRequired[int]
+    output_tokens: typing_extensions.NotRequired[int]

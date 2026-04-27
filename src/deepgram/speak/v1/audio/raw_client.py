@@ -7,6 +7,7 @@ from json.decoder import JSONDecodeError
 from ....core.api_error import ApiError
 from ....core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ....core.http_response import AsyncHttpResponse, HttpResponse
+from ....core.parse_error import ParsingError
 from ....core.request_options import RequestOptions
 from ....core.unchecked_base_model import construct_type
 from ....errors.bad_request_error import BadRequestError
@@ -14,6 +15,7 @@ from .types.audio_generate_request_callback_method import AudioGenerateRequestCa
 from .types.audio_generate_request_container import AudioGenerateRequestContainer
 from .types.audio_generate_request_encoding import AudioGenerateRequestEncoding
 from .types.audio_generate_request_model import AudioGenerateRequestModel
+from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -37,6 +39,7 @@ class RawAudioClient:
         encoding: typing.Optional[AudioGenerateRequestEncoding] = None,
         model: typing.Optional[AudioGenerateRequestModel] = None,
         sample_rate: typing.Optional[float] = None,
+        speed: typing.Optional[float] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Iterator[HttpResponse[typing.Iterator[bytes]]]:
         """
@@ -74,6 +77,9 @@ class RawAudioClient:
         sample_rate : typing.Optional[float]
             Sample Rate specifies the sample rate for the output audio. Based on the encoding, different sample rates are supported. For some encodings, the sample rate is not configurable
 
+        speed : typing.Optional[float]
+            Speaking rate multiplier that adjusts the pace of generated speech while preserving natural prosody and voice quality. Not yet supported in all languages.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
 
@@ -96,6 +102,7 @@ class RawAudioClient:
                 "encoding": encoding,
                 "model": model,
                 "sample_rate": sample_rate,
+                "speed": speed,
             },
             json={
                 "text": text,
@@ -131,6 +138,13 @@ class RawAudioClient:
                     raise ApiError(
                         status_code=_response.status_code, headers=dict(_response.headers), body=_response.text
                     )
+                except ValidationError as e:
+                    raise ParsingError(
+                        status_code=_response.status_code,
+                        headers=dict(_response.headers),
+                        body=_response.json(),
+                        cause=e,
+                    )
                 raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
             yield _stream()
@@ -154,6 +168,7 @@ class AsyncRawAudioClient:
         encoding: typing.Optional[AudioGenerateRequestEncoding] = None,
         model: typing.Optional[AudioGenerateRequestModel] = None,
         sample_rate: typing.Optional[float] = None,
+        speed: typing.Optional[float] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.AsyncIterator[AsyncHttpResponse[typing.AsyncIterator[bytes]]]:
         """
@@ -191,6 +206,9 @@ class AsyncRawAudioClient:
         sample_rate : typing.Optional[float]
             Sample Rate specifies the sample rate for the output audio. Based on the encoding, different sample rates are supported. For some encodings, the sample rate is not configurable
 
+        speed : typing.Optional[float]
+            Speaking rate multiplier that adjusts the pace of generated speech while preserving natural prosody and voice quality. Not yet supported in all languages.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
 
@@ -213,6 +231,7 @@ class AsyncRawAudioClient:
                 "encoding": encoding,
                 "model": model,
                 "sample_rate": sample_rate,
+                "speed": speed,
             },
             json={
                 "text": text,
@@ -248,6 +267,13 @@ class AsyncRawAudioClient:
                 except JSONDecodeError:
                     raise ApiError(
                         status_code=_response.status_code, headers=dict(_response.headers), body=_response.text
+                    )
+                except ValidationError as e:
+                    raise ParsingError(
+                        status_code=_response.status_code,
+                        headers=dict(_response.headers),
+                        body=_response.json(),
+                        cause=e,
                     )
                 raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 

@@ -38,7 +38,7 @@ class ListenV1ResultsChannelAlternativesItemWordsItem(UncheckedBaseModel):
     The punctuated word of the word
     """
 
-    speaker: typing.Optional[float] = pydantic.Field(default=None)
+    speaker: typing.Optional[int] = pydantic.Field(default=None)
     """
     The speaker of the word
     """

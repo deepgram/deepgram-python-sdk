@@ -3,3 +3,6 @@
 import typing
 
 ListenV1Version = typing.Any
+"""
+Version of an AI model to use
+"""

@@ -39,9 +39,9 @@ class UsageBreakdownV1ResponseResultsItemGrouping(UncheckedBaseModel):
     Optional method identifier
     """
 
-    tags: typing.Optional[str] = pydantic.Field(default=None)
+    tags: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
     """
-    Optional tags
+    Optional list of tags, null unless grouped by tags.
     """
 
     deployment: typing.Optional[str] = pydantic.Field(default=None)

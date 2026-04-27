@@ -10,7 +10,7 @@ class SpeakV1ClearedParams(typing_extensions.TypedDict):
     Message type identifier
     """
 
-    sequence_id: float
+    sequence_id: int
     """
     The sequence ID of the response
     """

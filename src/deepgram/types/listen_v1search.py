@@ -3,3 +3,6 @@
 import typing
 
 ListenV1Search = typing.Any
+"""
+Search for terms or phrases in submitted audio
+"""

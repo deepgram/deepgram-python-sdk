@@ -16,6 +16,7 @@ from ...types.speak_v1encoding import SpeakV1Encoding
 from ...types.speak_v1mip_opt_out import SpeakV1MipOptOut
 from ...types.speak_v1model import SpeakV1Model
 from ...types.speak_v1sample_rate import SpeakV1SampleRate
+from ...types.speak_v1speed import SpeakV1Speed
 from .socket_client import AsyncV1SocketClient, V1SocketClient
 
 try:
@@ -36,6 +37,7 @@ class RawV1Client:
         mip_opt_out: typing.Optional[SpeakV1MipOptOut] = None,
         model: typing.Optional[SpeakV1Model] = None,
         sample_rate: typing.Optional[SpeakV1SampleRate] = None,
+        speed: typing.Optional[SpeakV1Speed] = None,
         authorization: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Iterator[V1SocketClient]:
@@ -51,6 +53,8 @@ class RawV1Client:
         model : typing.Optional[SpeakV1Model]
 
         sample_rate : typing.Optional[SpeakV1SampleRate]
+
+        speed : typing.Optional[SpeakV1Speed]
 
         authorization : typing.Optional[str]
             Use your API key or a [temporary token](/guides/fundamentals/token-based-authentication) for authentication via the `Authorization` header. In client-side environments where custom headers are not supported, use the [`Sec-WebSocket-Protocol`](/guides/deep-dives/using-the-sec-websocket-protocol) header instead.
@@ -73,6 +77,7 @@ class RawV1Client:
                         "mip_opt_out": mip_opt_out,
                         "model": model,
                         "sample_rate": sample_rate,
+                        "speed": speed,
                         **(
                             request_options.get("additional_query_parameters", {}) or {}
                             if request_options is not None
@@ -119,6 +124,7 @@ class AsyncRawV1Client:
         mip_opt_out: typing.Optional[SpeakV1MipOptOut] = None,
         model: typing.Optional[SpeakV1Model] = None,
         sample_rate: typing.Optional[SpeakV1SampleRate] = None,
+        speed: typing.Optional[SpeakV1Speed] = None,
         authorization: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.AsyncIterator[AsyncV1SocketClient]:
@@ -134,6 +140,8 @@ class AsyncRawV1Client:
         model : typing.Optional[SpeakV1Model]
 
         sample_rate : typing.Optional[SpeakV1SampleRate]
+
+        speed : typing.Optional[SpeakV1Speed]
 
         authorization : typing.Optional[str]
             Use your API key or a [temporary token](/guides/fundamentals/token-based-authentication) for authentication via the `Authorization` header. In client-side environments where custom headers are not supported, use the [`Sec-WebSocket-Protocol`](/guides/deep-dives/using-the-sec-websocket-protocol) header instead.
@@ -156,6 +164,7 @@ class AsyncRawV1Client:
                         "mip_opt_out": mip_opt_out,
                         "model": model,
                         "sample_rate": sample_rate,
+                        "speed": speed,
                         **(
                             request_options.get("additional_query_parameters", {}) or {}
                             if request_options is not None

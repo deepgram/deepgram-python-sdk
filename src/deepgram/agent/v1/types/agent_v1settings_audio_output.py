@@ -18,12 +18,12 @@ class AgentV1SettingsAudioOutput(UncheckedBaseModel):
     Audio encoding format for streaming TTS output
     """
 
-    sample_rate: typing.Optional[float] = pydantic.Field(default=None)
+    sample_rate: typing.Optional[int] = pydantic.Field(default=None)
     """
     Sample rate in Hz
     """
 
-    bitrate: typing.Optional[float] = pydantic.Field(default=None)
+    bitrate: typing.Optional[int] = pydantic.Field(default=None)
     """
     Audio bitrate in bits per second
     """

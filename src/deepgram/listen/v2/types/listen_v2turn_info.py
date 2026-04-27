@@ -20,7 +20,7 @@ class ListenV2TurnInfo(UncheckedBaseModel):
     The unique identifier of the request
     """
 
-    sequence_id: float = pydantic.Field()
+    sequence_id: int = pydantic.Field()
     """
     Starts at `0` and increments for each message the server sends to the client.  This includes messages of other types, like `Connected` messages.
     """
@@ -36,7 +36,7 @@ class ListenV2TurnInfo(UncheckedBaseModel):
     - **EndOfTurn** - The user has finished speaking for the turn
     """
 
-    turn_index: float = pydantic.Field()
+    turn_index: int = pydantic.Field()
     """
     The index of the current turn
     """

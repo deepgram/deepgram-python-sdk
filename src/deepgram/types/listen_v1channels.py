@@ -3,3 +3,6 @@
 import typing
 
 ListenV1Channels = typing.Any
+"""
+The number of channels in the submitted audio
+"""

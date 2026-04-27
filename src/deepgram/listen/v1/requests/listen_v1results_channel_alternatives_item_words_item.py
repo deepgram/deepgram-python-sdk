@@ -34,7 +34,7 @@ class ListenV1ResultsChannelAlternativesItemWordsItemParams(typing_extensions.Ty
     The punctuated word of the word
     """
 
-    speaker: typing_extensions.NotRequired[float]
+    speaker: typing_extensions.NotRequired[int]
     """
     The speaker of the word
     """

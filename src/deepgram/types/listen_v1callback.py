@@ -3,3 +3,6 @@
 import typing
 
 ListenV1Callback = typing.Any
+"""
+URL to which we'll make the callback request
+"""

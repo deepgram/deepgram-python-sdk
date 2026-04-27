@@ -6,7 +6,8 @@ from json.decoder import JSONDecodeError
 from .....core.api_error import ApiError
 from .....core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from .....core.http_response import AsyncHttpResponse, HttpResponse
-from .....core.jsonable_encoder import jsonable_encoder
+from .....core.jsonable_encoder import encode_path_param
+from .....core.parse_error import ParsingError
 from .....core.request_options import RequestOptions
 from .....core.unchecked_base_model import construct_type
 from .....errors.bad_request_error import BadRequestError
@@ -16,6 +17,7 @@ from .....types.delete_project_key_v1response import DeleteProjectKeyV1Response
 from .....types.get_project_key_v1response import GetProjectKeyV1Response
 from .....types.list_project_keys_v1response import ListProjectKeysV1Response
 from .types.keys_list_request_status import KeysListRequestStatus
+from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -52,7 +54,7 @@ class RawKeysClient:
             A list of API keys
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"v1/projects/{jsonable_encoder(project_id)}/keys",
+            f"v1/projects/{encode_path_param(project_id)}/keys",
             base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
@@ -84,6 +86,10 @@ class RawKeysClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def create(
@@ -112,7 +118,7 @@ class RawKeysClient:
             API key created successfully
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"v1/projects/{jsonable_encoder(project_id)}/keys",
+            f"v1/projects/{encode_path_param(project_id)}/keys",
             base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json=request,
@@ -146,6 +152,10 @@ class RawKeysClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def get(
@@ -171,7 +181,7 @@ class RawKeysClient:
             A specific API key
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"v1/projects/{jsonable_encoder(project_id)}/keys/{jsonable_encoder(key_id)}",
+            f"v1/projects/{encode_path_param(project_id)}/keys/{encode_path_param(key_id)}",
             base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
@@ -200,6 +210,10 @@ class RawKeysClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def delete(
@@ -225,7 +239,7 @@ class RawKeysClient:
             API key deleted
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"v1/projects/{jsonable_encoder(project_id)}/keys/{jsonable_encoder(key_id)}",
+            f"v1/projects/{encode_path_param(project_id)}/keys/{encode_path_param(key_id)}",
             base_url=self._client_wrapper.get_environment().base,
             method="DELETE",
             request_options=request_options,
@@ -254,6 +268,10 @@ class RawKeysClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
 
@@ -288,7 +306,7 @@ class AsyncRawKeysClient:
             A list of API keys
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"v1/projects/{jsonable_encoder(project_id)}/keys",
+            f"v1/projects/{encode_path_param(project_id)}/keys",
             base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
@@ -320,6 +338,10 @@ class AsyncRawKeysClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def create(
@@ -348,7 +370,7 @@ class AsyncRawKeysClient:
             API key created successfully
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"v1/projects/{jsonable_encoder(project_id)}/keys",
+            f"v1/projects/{encode_path_param(project_id)}/keys",
             base_url=self._client_wrapper.get_environment().base,
             method="POST",
             json=request,
@@ -382,6 +404,10 @@ class AsyncRawKeysClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def get(
@@ -407,7 +433,7 @@ class AsyncRawKeysClient:
             A specific API key
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"v1/projects/{jsonable_encoder(project_id)}/keys/{jsonable_encoder(key_id)}",
+            f"v1/projects/{encode_path_param(project_id)}/keys/{encode_path_param(key_id)}",
             base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
@@ -436,6 +462,10 @@ class AsyncRawKeysClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def delete(
@@ -461,7 +491,7 @@ class AsyncRawKeysClient:
             API key deleted
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"v1/projects/{jsonable_encoder(project_id)}/keys/{jsonable_encoder(key_id)}",
+            f"v1/projects/{encode_path_param(project_id)}/keys/{encode_path_param(key_id)}",
             base_url=self._client_wrapper.get_environment().base,
             method="DELETE",
             request_options=request_options,
@@ -490,4 +520,8 @@ class AsyncRawKeysClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)

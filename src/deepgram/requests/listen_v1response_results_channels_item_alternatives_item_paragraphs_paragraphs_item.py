@@ -12,7 +12,7 @@ class ListenV1ResponseResultsChannelsItemAlternativesItemParagraphsParagraphsIte
     sentences: typing_extensions.NotRequired[
         typing.Sequence[ListenV1ResponseResultsChannelsItemAlternativesItemParagraphsParagraphsItemSentencesItemParams]
     ]
-    speaker: typing_extensions.NotRequired[float]
-    num_words: typing_extensions.NotRequired[float]
+    speaker: typing_extensions.NotRequired[int]
+    num_words: typing_extensions.NotRequired[int]
     start: typing_extensions.NotRequired[float]
     end: typing_extensions.NotRequired[float]

@@ -16,7 +16,7 @@ class ListenV1ResponseMetadataParams(typing_extensions.TypedDict):
     sha256: str
     created: dt.datetime
     duration: float
-    channels: float
+    channels: int
     models: typing.Sequence[str]
     model_info: typing.Dict[str, typing.Any]
     summary_info: typing_extensions.NotRequired[ListenV1ResponseMetadataSummaryInfoParams]

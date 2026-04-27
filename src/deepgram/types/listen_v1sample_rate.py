@@ -3,3 +3,6 @@
 import typing
 
 ListenV1SampleRate = typing.Any
+"""
+Sample rate of submitted audio. Required (and only read) when a value is provided for encoding
+"""

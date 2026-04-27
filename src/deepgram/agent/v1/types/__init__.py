@@ -14,6 +14,11 @@ if typing.TYPE_CHECKING:
     from .agent_v1error import AgentV1Error
     from .agent_v1function_call_request import AgentV1FunctionCallRequest
     from .agent_v1function_call_request_functions_item import AgentV1FunctionCallRequestFunctionsItem
+    from .agent_v1history import AgentV1History
+    from .agent_v1history_content import AgentV1HistoryContent
+    from .agent_v1history_content_role import AgentV1HistoryContentRole
+    from .agent_v1history_function_calls import AgentV1HistoryFunctionCalls
+    from .agent_v1history_function_calls_function_calls_item import AgentV1HistoryFunctionCallsFunctionCallsItem
     from .agent_v1inject_agent_message import AgentV1InjectAgentMessage
     from .agent_v1inject_user_message import AgentV1InjectUserMessage
     from .agent_v1injection_refused import AgentV1InjectionRefused
@@ -71,6 +76,11 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AgentV1Error": ".agent_v1error",
     "AgentV1FunctionCallRequest": ".agent_v1function_call_request",
     "AgentV1FunctionCallRequestFunctionsItem": ".agent_v1function_call_request_functions_item",
+    "AgentV1History": ".agent_v1history",
+    "AgentV1HistoryContent": ".agent_v1history_content",
+    "AgentV1HistoryContentRole": ".agent_v1history_content_role",
+    "AgentV1HistoryFunctionCalls": ".agent_v1history_function_calls",
+    "AgentV1HistoryFunctionCallsFunctionCallsItem": ".agent_v1history_function_calls_function_calls_item",
     "AgentV1InjectAgentMessage": ".agent_v1inject_agent_message",
     "AgentV1InjectUserMessage": ".agent_v1inject_user_message",
     "AgentV1InjectionRefused": ".agent_v1injection_refused",
@@ -144,6 +154,11 @@ __all__ = [
     "AgentV1Error",
     "AgentV1FunctionCallRequest",
     "AgentV1FunctionCallRequestFunctionsItem",
+    "AgentV1History",
+    "AgentV1HistoryContent",
+    "AgentV1HistoryContentRole",
+    "AgentV1HistoryFunctionCalls",
+    "AgentV1HistoryFunctionCallsFunctionCallsItem",
     "AgentV1InjectAgentMessage",
     "AgentV1InjectUserMessage",
     "AgentV1InjectionRefused",

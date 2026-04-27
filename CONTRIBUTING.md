@@ -2,7 +2,7 @@
 
 Contributions are welcome. This is a generated library, and changes to core files should be promoted to our generator code.
 
-Requires Python 3.8+
+Requires Python 3.10+
 
 ## Fork Repository
 

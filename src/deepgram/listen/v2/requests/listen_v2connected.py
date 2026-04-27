@@ -16,7 +16,7 @@ class ListenV2ConnectedParams(typing_extensions.TypedDict):
     The unique identifier of the request
     """
 
-    sequence_id: float
+    sequence_id: int
     """
     Starts at `0` and increments for each message the server sends
     to the client.  This includes messages of other types, like

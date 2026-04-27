@@ -8,7 +8,8 @@ from .....core.api_error import ApiError
 from .....core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from .....core.datetime_utils import serialize_datetime
 from .....core.http_response import AsyncHttpResponse, HttpResponse
-from .....core.jsonable_encoder import jsonable_encoder
+from .....core.jsonable_encoder import encode_path_param
+from .....core.parse_error import ParsingError
 from .....core.request_options import RequestOptions
 from .....core.unchecked_base_model import construct_type
 from .....errors.bad_request_error import BadRequestError
@@ -18,6 +19,7 @@ from .types.requests_list_request_deployment import RequestsListRequestDeploymen
 from .types.requests_list_request_endpoint import RequestsListRequestEndpoint
 from .types.requests_list_request_method import RequestsListRequestMethod
 from .types.requests_list_request_status import RequestsListRequestStatus
+from pydantic import ValidationError
 
 
 class RawRequestsClient:
@@ -87,7 +89,7 @@ class RawRequestsClient:
             A list of requests for a specific project
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"v1/projects/{jsonable_encoder(project_id)}/requests",
+            f"v1/projects/{encode_path_param(project_id)}/requests",
             base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
@@ -128,6 +130,10 @@ class RawRequestsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def get(
@@ -153,7 +159,7 @@ class RawRequestsClient:
             A specific request for a specific project
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"v1/projects/{jsonable_encoder(project_id)}/requests/{jsonable_encoder(request_id)}",
+            f"v1/projects/{encode_path_param(project_id)}/requests/{encode_path_param(request_id)}",
             base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
@@ -182,6 +188,10 @@ class RawRequestsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
 
@@ -252,7 +262,7 @@ class AsyncRawRequestsClient:
             A list of requests for a specific project
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"v1/projects/{jsonable_encoder(project_id)}/requests",
+            f"v1/projects/{encode_path_param(project_id)}/requests",
             base_url=self._client_wrapper.get_environment().base,
             method="GET",
             params={
@@ -293,6 +303,10 @@ class AsyncRawRequestsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def get(
@@ -318,7 +332,7 @@ class AsyncRawRequestsClient:
             A specific request for a specific project
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"v1/projects/{jsonable_encoder(project_id)}/requests/{jsonable_encoder(request_id)}",
+            f"v1/projects/{encode_path_param(project_id)}/requests/{encode_path_param(request_id)}",
             base_url=self._client_wrapper.get_environment().base,
             method="GET",
             request_options=request_options,
@@ -347,4 +361,8 @@ class AsyncRawRequestsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
