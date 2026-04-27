@@ -1,5 +1,18 @@
 # Changelog
 
+## [7.0.0](https://github.com/deepgram/deepgram-python-sdk/compare/v6.1.1...v7.0.0) (2026-04-27)
+
+
+### ⚠ BREAKING CHANGES
+
+* sdk regeneration 2026-04-24 ([#696](https://github.com/deepgram/deepgram-python-sdk/issues/696))
+* sdk regeneration 2026-04-14 ([#690](https://github.com/deepgram/deepgram-python-sdk/issues/690))
+
+### Features
+
+* sdk regeneration 2026-04-14 ([#690](https://github.com/deepgram/deepgram-python-sdk/issues/690)) ([d4d129f](https://github.com/deepgram/deepgram-python-sdk/commit/d4d129f74edb479a3d34c125cc46412c25e072ff))
+* sdk regeneration 2026-04-24 ([#696](https://github.com/deepgram/deepgram-python-sdk/issues/696)) ([4714207](https://github.com/deepgram/deepgram-python-sdk/commit/47142072be6e674d518791579529d67e2555dcc0))
+
 ## [6.1.1](https://github.com/deepgram/deepgram-python-sdk/compare/v6.1.0...v6.1.1) (2026-03-27)
 
 
