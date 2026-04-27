@@ -13,7 +13,8 @@ Comprehensive API documentation and guides are available at [developers.deepgram
 
 ### Migrating From Earlier Versions
 
-- [v5 to v6](./docs/Migrating-v5-to-v6.md) (current)
+- [v6 to v7](./docs/Migrating-v6-to-v7.md) (current)
+- [v5 to v6](./docs/Migrating-v5-to-v6.md)
 - [v3+ to v5](./docs/Migrating-v3-to-v5.md)
 - [v2 to v3+](./docs/Migrating-v2-to-v3.md)
 
