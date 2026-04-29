@@ -28,6 +28,7 @@ if typing.TYPE_CHECKING:
     from .cartesia_speak_provider_voice import CartesiaSpeakProviderVoiceParams
     from .create_agent_configuration_v1response import CreateAgentConfigurationV1ResponseParams
     from .create_key_v1request import CreateKeyV1RequestParams
+    from .create_key_v1request_one import CreateKeyV1RequestOneParams
     from .create_key_v1response import CreateKeyV1ResponseParams
     from .create_project_distribution_credentials_v1response import CreateProjectDistributionCredentialsV1ResponseParams
     from .create_project_distribution_credentials_v1response_distribution_credentials import (
@@ -237,6 +238,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "CartesiaSpeakProviderVoiceParams": ".cartesia_speak_provider_voice",
     "CreateAgentConfigurationV1ResponseParams": ".create_agent_configuration_v1response",
     "CreateKeyV1RequestParams": ".create_key_v1request",
+    "CreateKeyV1RequestOneParams": ".create_key_v1request_one",
     "CreateKeyV1ResponseParams": ".create_key_v1response",
     "CreateProjectDistributionCredentialsV1ResponseDistributionCredentialsParams": ".create_project_distribution_credentials_v1response_distribution_credentials",
     "CreateProjectDistributionCredentialsV1ResponseMemberParams": ".create_project_distribution_credentials_v1response_member",
@@ -428,6 +430,7 @@ __all__ = [
     "CartesiaSpeakProviderVoiceParams",
     "CreateAgentConfigurationV1ResponseParams",
     "CreateKeyV1RequestParams",
+    "CreateKeyV1RequestOneParams",
     "CreateKeyV1ResponseParams",
     "CreateProjectDistributionCredentialsV1ResponseDistributionCredentialsParams",
     "CreateProjectDistributionCredentialsV1ResponseMemberParams",
