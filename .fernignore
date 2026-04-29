@@ -12,10 +12,10 @@ src/deepgram/client.py
 # - listen/v2 send_configure: typing.Any / raw _send shim (generator's ListenV2Configure model
 #   and ListenV2ConfigureSuccess not used)
 # [temporarily frozen — manual patches listed above]
-src/deepgram/agent/v1/socket_client.py
-src/deepgram/listen/v1/socket_client.py
-src/deepgram/listen/v2/socket_client.py
-src/deepgram/speak/v1/socket_client.py
+src/deepgram/agent/v1/socket_client.py.bak
+src/deepgram/listen/v1/socket_client.py.bak
+src/deepgram/listen/v2/socket_client.py.bak
+src/deepgram/speak/v1/socket_client.py.bak
 
 # Hand-written custom tests
 tests/custom/test_agent_history.py
