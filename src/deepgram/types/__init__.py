@@ -37,7 +37,7 @@ if typing.TYPE_CHECKING:
     from .cartesia_speak_provider_model_id import CartesiaSpeakProviderModelId
     from .cartesia_speak_provider_voice import CartesiaSpeakProviderVoice
     from .create_agent_configuration_v1response import CreateAgentConfigurationV1Response
-    from .create_key_v1request_one import CreateKeyV1RequestOne
+    from .create_key_v1request import CreateKeyV1Request
     from .create_key_v1response import CreateKeyV1Response
     from .create_project_distribution_credentials_v1response import CreateProjectDistributionCredentialsV1Response
     from .create_project_distribution_credentials_v1response_distribution_credentials import (
@@ -194,6 +194,7 @@ if typing.TYPE_CHECKING:
     from .listen_v2eot_threshold import ListenV2EotThreshold
     from .listen_v2eot_timeout_ms import ListenV2EotTimeoutMs
     from .listen_v2keyterm import ListenV2Keyterm
+    from .listen_v2language_hint import ListenV2LanguageHint
     from .listen_v2mip_opt_out import ListenV2MipOptOut
     from .listen_v2model import ListenV2Model
     from .listen_v2sample_rate import ListenV2SampleRate
@@ -304,7 +305,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "CartesiaSpeakProviderModelId": ".cartesia_speak_provider_model_id",
     "CartesiaSpeakProviderVoice": ".cartesia_speak_provider_voice",
     "CreateAgentConfigurationV1Response": ".create_agent_configuration_v1response",
-    "CreateKeyV1RequestOne": ".create_key_v1request_one",
+    "CreateKeyV1Request": ".create_key_v1request",
     "CreateKeyV1Response": ".create_key_v1response",
     "CreateProjectDistributionCredentialsV1Response": ".create_project_distribution_credentials_v1response",
     "CreateProjectDistributionCredentialsV1ResponseDistributionCredentials": ".create_project_distribution_credentials_v1response_distribution_credentials",
@@ -429,6 +430,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ListenV2EotThreshold": ".listen_v2eot_threshold",
     "ListenV2EotTimeoutMs": ".listen_v2eot_timeout_ms",
     "ListenV2Keyterm": ".listen_v2keyterm",
+    "ListenV2LanguageHint": ".listen_v2language_hint",
     "ListenV2MipOptOut": ".listen_v2mip_opt_out",
     "ListenV2Model": ".listen_v2model",
     "ListenV2SampleRate": ".listen_v2sample_rate",
@@ -557,7 +559,7 @@ __all__ = [
     "CartesiaSpeakProviderModelId",
     "CartesiaSpeakProviderVoice",
     "CreateAgentConfigurationV1Response",
-    "CreateKeyV1RequestOne",
+    "CreateKeyV1Request",
     "CreateKeyV1Response",
     "CreateProjectDistributionCredentialsV1Response",
     "CreateProjectDistributionCredentialsV1ResponseDistributionCredentials",
@@ -682,6 +684,7 @@ __all__ = [
     "ListenV2EotThreshold",
     "ListenV2EotTimeoutMs",
     "ListenV2Keyterm",
+    "ListenV2LanguageHint",
     "ListenV2MipOptOut",
     "ListenV2Model",
     "ListenV2SampleRate",

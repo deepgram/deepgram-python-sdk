@@ -2,4 +2,4 @@
 
 import typing
 
-CreateKeyV1RequestOne = typing.Any
+CreateKeyV1RequestParams = typing.Union[typing.Any]

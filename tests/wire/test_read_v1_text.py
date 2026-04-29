@@ -1,7 +1,5 @@
 from .conftest import get_client, verify_request_count
 
-from deepgram import ReadV1RequestUrl
-
 
 def test_read_v1_text_analyze() -> None:
     """Test analyze endpoint with WireMock"""
@@ -20,9 +18,7 @@ def test_read_v1_text_analyze() -> None:
         custom_intent=["custom_intent"],
         custom_intent_mode="extended",
         language="language",
-        request=ReadV1RequestUrl(
-            url="url",
-        ),
+        request={"url": "url"},
     )
     verify_request_count(
         test_id,

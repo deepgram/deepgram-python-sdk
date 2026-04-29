@@ -27,6 +27,7 @@ if typing.TYPE_CHECKING:
     from .cartesia import CartesiaParams
     from .cartesia_speak_provider_voice import CartesiaSpeakProviderVoiceParams
     from .create_agent_configuration_v1response import CreateAgentConfigurationV1ResponseParams
+    from .create_key_v1request import CreateKeyV1RequestParams
     from .create_key_v1response import CreateKeyV1ResponseParams
     from .create_project_distribution_credentials_v1response import CreateProjectDistributionCredentialsV1ResponseParams
     from .create_project_distribution_credentials_v1response_distribution_credentials import (
@@ -145,6 +146,7 @@ if typing.TYPE_CHECKING:
         ListenV1ResponseResultsUtterancesItemWordsItemParams,
     )
     from .listen_v2keyterm import ListenV2KeytermParams
+    from .listen_v2language_hint import ListenV2LanguageHintParams
     from .open_ai_speak_provider import OpenAiSpeakProviderParams
     from .open_ai_think_provider import OpenAiThinkProviderParams
     from .project_request_response import ProjectRequestResponseParams
@@ -234,6 +236,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "CartesiaParams": ".cartesia",
     "CartesiaSpeakProviderVoiceParams": ".cartesia_speak_provider_voice",
     "CreateAgentConfigurationV1ResponseParams": ".create_agent_configuration_v1response",
+    "CreateKeyV1RequestParams": ".create_key_v1request",
     "CreateKeyV1ResponseParams": ".create_key_v1response",
     "CreateProjectDistributionCredentialsV1ResponseDistributionCredentialsParams": ".create_project_distribution_credentials_v1response_distribution_credentials",
     "CreateProjectDistributionCredentialsV1ResponseMemberParams": ".create_project_distribution_credentials_v1response_member",
@@ -318,6 +321,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ListenV1ResponseResultsUtterancesItemWordsItemParams": ".listen_v1response_results_utterances_item_words_item",
     "ListenV1ResponseResultsUtterancesParams": ".listen_v1response_results_utterances",
     "ListenV2KeytermParams": ".listen_v2keyterm",
+    "ListenV2LanguageHintParams": ".listen_v2language_hint",
     "OpenAiSpeakProviderParams": ".open_ai_speak_provider",
     "OpenAiThinkProviderParams": ".open_ai_think_provider",
     "ProjectRequestResponseParams": ".project_request_response",
@@ -423,6 +427,7 @@ __all__ = [
     "CartesiaParams",
     "CartesiaSpeakProviderVoiceParams",
     "CreateAgentConfigurationV1ResponseParams",
+    "CreateKeyV1RequestParams",
     "CreateKeyV1ResponseParams",
     "CreateProjectDistributionCredentialsV1ResponseDistributionCredentialsParams",
     "CreateProjectDistributionCredentialsV1ResponseMemberParams",
@@ -507,6 +512,7 @@ __all__ = [
     "ListenV1ResponseResultsUtterancesItemWordsItemParams",
     "ListenV1ResponseResultsUtterancesParams",
     "ListenV2KeytermParams",
+    "ListenV2LanguageHintParams",
     "OpenAiSpeakProviderParams",
     "OpenAiThinkProviderParams",
     "ProjectRequestResponseParams",

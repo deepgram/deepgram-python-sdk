@@ -9,9 +9,10 @@ from .....core.http_response import AsyncHttpResponse, HttpResponse
 from .....core.jsonable_encoder import encode_path_param
 from .....core.parse_error import ParsingError
 from .....core.request_options import RequestOptions
+from .....core.serialization import convert_and_respect_annotation_metadata
 from .....core.unchecked_base_model import construct_type
 from .....errors.bad_request_error import BadRequestError
-from .....types.create_key_v1request_one import CreateKeyV1RequestOne
+from .....requests.create_key_v1request import CreateKeyV1RequestParams
 from .....types.create_key_v1response import CreateKeyV1Response
 from .....types.delete_project_key_v1response import DeleteProjectKeyV1Response
 from .....types.get_project_key_v1response import GetProjectKeyV1Response
@@ -96,7 +97,7 @@ class RawKeysClient:
         self,
         project_id: str,
         *,
-        request: CreateKeyV1RequestOne,
+        request: CreateKeyV1RequestParams,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[CreateKeyV1Response]:
         """
@@ -107,7 +108,7 @@ class RawKeysClient:
         project_id : str
             The unique identifier of the project
 
-        request : CreateKeyV1RequestOne
+        request : CreateKeyV1RequestParams
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -121,7 +122,9 @@ class RawKeysClient:
             f"v1/projects/{encode_path_param(project_id)}/keys",
             base_url=self._client_wrapper.get_environment().base,
             method="POST",
-            json=request,
+            json=convert_and_respect_annotation_metadata(
+                object_=request, annotation=CreateKeyV1RequestParams, direction="write"
+            ),
             headers={
                 "content-type": "application/json",
             },
@@ -348,7 +351,7 @@ class AsyncRawKeysClient:
         self,
         project_id: str,
         *,
-        request: CreateKeyV1RequestOne,
+        request: CreateKeyV1RequestParams,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[CreateKeyV1Response]:
         """
@@ -359,7 +362,7 @@ class AsyncRawKeysClient:
         project_id : str
             The unique identifier of the project
 
-        request : CreateKeyV1RequestOne
+        request : CreateKeyV1RequestParams
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -373,7 +376,9 @@ class AsyncRawKeysClient:
             f"v1/projects/{encode_path_param(project_id)}/keys",
             base_url=self._client_wrapper.get_environment().base,
             method="POST",
-            json=request,
+            json=convert_and_respect_annotation_metadata(
+                object_=request, annotation=CreateKeyV1RequestParams, direction="write"
+            ),
             headers={
                 "content-type": "application/json",
             },

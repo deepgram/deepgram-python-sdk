@@ -8,7 +8,7 @@ from .agent_v1settings_agent_context_messages_item_function_calls_function_calls
 )
 
 
-class AgentV1SettingsAgentContextMessagesItemFunctionCallsParams(typing_extensions.TypedDict):
+class FunctionCallHistoryMessageParams(typing_extensions.TypedDict):
     """
     Client-side or server-side function call request and response as part of the conversation history
     """

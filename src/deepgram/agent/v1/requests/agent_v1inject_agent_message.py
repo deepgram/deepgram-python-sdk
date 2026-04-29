@@ -3,6 +3,7 @@
 import typing
 
 import typing_extensions
+from ..types.agent_v1inject_agent_message_behavior import AgentV1InjectAgentMessageBehavior
 
 
 class AgentV1InjectAgentMessageParams(typing_extensions.TypedDict):
@@ -14,4 +15,12 @@ class AgentV1InjectAgentMessageParams(typing_extensions.TypedDict):
     message: str
     """
     The statement that the agent should say
+    """
+
+    behavior: typing_extensions.NotRequired[AgentV1InjectAgentMessageBehavior]
+    """
+    Controls how the injection interacts with any in-progress user or agent turn.
+    
+    * `default` — The agent speaks only if neither the user nor the agent is mid-turn. If a turn is in progress, the server replies with `InjectionRefused`.
+    * `queue` — The message is appended after any already-queued `ConversationText` without interrupting the current agent turn or think response. If nothing is queued, the message plays immediately.
     """

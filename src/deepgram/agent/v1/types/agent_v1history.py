@@ -2,7 +2,7 @@
 
 import typing
 
-from .agent_v1history_content import AgentV1HistoryContent
-from .agent_v1history_function_calls import AgentV1HistoryFunctionCalls
+from .conversation_history_message import ConversationHistoryMessage
+from .function_call_history_message import FunctionCallHistoryMessage
 
-AgentV1History = typing.Union[AgentV1HistoryContent, AgentV1HistoryFunctionCalls]
+AgentV1History = typing.Union[ConversationHistoryMessage, FunctionCallHistoryMessage]

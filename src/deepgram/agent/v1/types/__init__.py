@@ -15,11 +15,10 @@ if typing.TYPE_CHECKING:
     from .agent_v1function_call_request import AgentV1FunctionCallRequest
     from .agent_v1function_call_request_functions_item import AgentV1FunctionCallRequestFunctionsItem
     from .agent_v1history import AgentV1History
-    from .agent_v1history_content import AgentV1HistoryContent
     from .agent_v1history_content_role import AgentV1HistoryContentRole
-    from .agent_v1history_function_calls import AgentV1HistoryFunctionCalls
     from .agent_v1history_function_calls_function_calls_item import AgentV1HistoryFunctionCallsFunctionCallsItem
     from .agent_v1inject_agent_message import AgentV1InjectAgentMessage
+    from .agent_v1inject_agent_message_behavior import AgentV1InjectAgentMessageBehavior
     from .agent_v1inject_user_message import AgentV1InjectUserMessage
     from .agent_v1injection_refused import AgentV1InjectionRefused
     from .agent_v1keep_alive import AgentV1KeepAlive
@@ -30,12 +29,8 @@ if typing.TYPE_CHECKING:
     from .agent_v1settings_agent import AgentV1SettingsAgent
     from .agent_v1settings_agent_context import AgentV1SettingsAgentContext
     from .agent_v1settings_agent_context_messages_item import AgentV1SettingsAgentContextMessagesItem
-    from .agent_v1settings_agent_context_messages_item_content import AgentV1SettingsAgentContextMessagesItemContent
     from .agent_v1settings_agent_context_messages_item_content_role import (
         AgentV1SettingsAgentContextMessagesItemContentRole,
-    )
-    from .agent_v1settings_agent_context_messages_item_function_calls import (
-        AgentV1SettingsAgentContextMessagesItemFunctionCalls,
     )
     from .agent_v1settings_agent_context_messages_item_function_calls_function_calls_item import (
         AgentV1SettingsAgentContextMessagesItemFunctionCallsFunctionCallsItem,
@@ -67,6 +62,8 @@ if typing.TYPE_CHECKING:
     from .agent_v1user_started_speaking import AgentV1UserStartedSpeaking
     from .agent_v1warning import AgentV1Warning
     from .agent_v1welcome import AgentV1Welcome
+    from .conversation_history_message import ConversationHistoryMessage
+    from .function_call_history_message import FunctionCallHistoryMessage
 _dynamic_imports: typing.Dict[str, str] = {
     "AgentV1AgentAudioDone": ".agent_v1agent_audio_done",
     "AgentV1AgentStartedSpeaking": ".agent_v1agent_started_speaking",
@@ -77,11 +74,10 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AgentV1FunctionCallRequest": ".agent_v1function_call_request",
     "AgentV1FunctionCallRequestFunctionsItem": ".agent_v1function_call_request_functions_item",
     "AgentV1History": ".agent_v1history",
-    "AgentV1HistoryContent": ".agent_v1history_content",
     "AgentV1HistoryContentRole": ".agent_v1history_content_role",
-    "AgentV1HistoryFunctionCalls": ".agent_v1history_function_calls",
     "AgentV1HistoryFunctionCallsFunctionCallsItem": ".agent_v1history_function_calls_function_calls_item",
     "AgentV1InjectAgentMessage": ".agent_v1inject_agent_message",
+    "AgentV1InjectAgentMessageBehavior": ".agent_v1inject_agent_message_behavior",
     "AgentV1InjectUserMessage": ".agent_v1inject_user_message",
     "AgentV1InjectionRefused": ".agent_v1injection_refused",
     "AgentV1KeepAlive": ".agent_v1keep_alive",
@@ -92,9 +88,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AgentV1SettingsAgent": ".agent_v1settings_agent",
     "AgentV1SettingsAgentContext": ".agent_v1settings_agent_context",
     "AgentV1SettingsAgentContextMessagesItem": ".agent_v1settings_agent_context_messages_item",
-    "AgentV1SettingsAgentContextMessagesItemContent": ".agent_v1settings_agent_context_messages_item_content",
     "AgentV1SettingsAgentContextMessagesItemContentRole": ".agent_v1settings_agent_context_messages_item_content_role",
-    "AgentV1SettingsAgentContextMessagesItemFunctionCalls": ".agent_v1settings_agent_context_messages_item_function_calls",
     "AgentV1SettingsAgentContextMessagesItemFunctionCallsFunctionCallsItem": ".agent_v1settings_agent_context_messages_item_function_calls_function_calls_item",
     "AgentV1SettingsAgentListen": ".agent_v1settings_agent_listen",
     "AgentV1SettingsAgentListenProvider": ".agent_v1settings_agent_listen_provider",
@@ -121,6 +115,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AgentV1UserStartedSpeaking": ".agent_v1user_started_speaking",
     "AgentV1Warning": ".agent_v1warning",
     "AgentV1Welcome": ".agent_v1welcome",
+    "ConversationHistoryMessage": ".conversation_history_message",
+    "FunctionCallHistoryMessage": ".function_call_history_message",
 }
 
 
@@ -155,11 +151,10 @@ __all__ = [
     "AgentV1FunctionCallRequest",
     "AgentV1FunctionCallRequestFunctionsItem",
     "AgentV1History",
-    "AgentV1HistoryContent",
     "AgentV1HistoryContentRole",
-    "AgentV1HistoryFunctionCalls",
     "AgentV1HistoryFunctionCallsFunctionCallsItem",
     "AgentV1InjectAgentMessage",
+    "AgentV1InjectAgentMessageBehavior",
     "AgentV1InjectUserMessage",
     "AgentV1InjectionRefused",
     "AgentV1KeepAlive",
@@ -170,9 +165,7 @@ __all__ = [
     "AgentV1SettingsAgent",
     "AgentV1SettingsAgentContext",
     "AgentV1SettingsAgentContextMessagesItem",
-    "AgentV1SettingsAgentContextMessagesItemContent",
     "AgentV1SettingsAgentContextMessagesItemContentRole",
-    "AgentV1SettingsAgentContextMessagesItemFunctionCalls",
     "AgentV1SettingsAgentContextMessagesItemFunctionCallsFunctionCallsItem",
     "AgentV1SettingsAgentListen",
     "AgentV1SettingsAgentListenProvider",
@@ -199,4 +192,6 @@ __all__ = [
     "AgentV1UserStartedSpeaking",
     "AgentV1Warning",
     "AgentV1Welcome",
+    "ConversationHistoryMessage",
+    "FunctionCallHistoryMessage",
 ]
