@@ -27,10 +27,14 @@ try:
         project = client.manage.v1.projects.get(project_id=project_id)
         print(f"Project name: {project.name}")
 
-        # Update project name
+        # Update the project using the current name so the example exercises the
+        # update endpoint without unexpectedly renaming a live project.
         print("\nUpdating project name...")
-        updated = client.manage.v1.projects.update(project_id=project_id, name="Updated Project Name")
-        print(f"Updated project name: {updated.name}")
+        updated = client.manage.v1.projects.update(project_id=project_id, name=project.name)
+        print(f"Update response: {updated.message}")
+
+        refreshed_project = client.manage.v1.projects.get(project_id=project_id)
+        print(f"Verified project name: {refreshed_project.name}")
 
         # Note: Delete and leave operations are commented out for safety
         # Delete a project:
