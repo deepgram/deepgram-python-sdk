@@ -12,10 +12,10 @@ src/deepgram/client.py
 # - listen/v2 send_configure: typing.Any / raw _send shim (generator's ListenV2Configure model
 #   and ListenV2ConfigureSuccess not used)
 # [temporarily frozen — manual patches listed above]
-src/deepgram/agent/v1/socket_client.py.bak
-src/deepgram/listen/v1/socket_client.py.bak
-src/deepgram/listen/v2/socket_client.py.bak
-src/deepgram/speak/v1/socket_client.py.bak
+src/deepgram/agent/v1/socket_client.py
+src/deepgram/listen/v1/socket_client.py
+src/deepgram/listen/v2/socket_client.py
+src/deepgram/speak/v1/socket_client.py
 
 # Backward-compatibility alias shims for renamed generated public types/params.
 # These are hand-written wrappers around the current generated names and must not be regenerated.
@@ -29,6 +29,18 @@ src/deepgram/agent/v1/requests/agent_v1settings_agent_context_messages_item_cont
 src/deepgram/agent/v1/requests/agent_v1settings_agent_context_messages_item_function_calls.py
 src/deepgram/types/create_key_v1request_one.py
 src/deepgram/requests/create_key_v1request_one.py
+
+# Package __init__.py files that carry hand-applied legacy alias re-exports for the
+# above shims. Fern would otherwise regenerate these and strip the legacy entries on
+# every regen. Frozen to preserve the public-import surface for renamed types/params.
+# Re-apply genuine new generator additions to these files manually after each regen.
+src/deepgram/__init__.py
+src/deepgram/agent/__init__.py
+src/deepgram/agent/v1/__init__.py
+src/deepgram/agent/v1/types/__init__.py
+src/deepgram/agent/v1/requests/__init__.py
+src/deepgram/types/__init__.py
+src/deepgram/requests/__init__.py
 
 # Hand-written custom tests
 tests/custom/test_agent_history.py

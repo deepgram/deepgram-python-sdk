@@ -50,6 +50,7 @@ Current temporarily frozen files:
 - `src/deepgram/listen/v1/socket_client.py` — same
 - `src/deepgram/listen/v2/socket_client.py` — same + `send_configure` typing.Any/raw shim, response Union uses typing.Any instead of `ListenV2ConfigureSuccess`
 - `src/deepgram/agent/v1/socket_client.py` — same + `_sanitize_numeric_types`
+- `src/deepgram/__init__.py`, `src/deepgram/agent/__init__.py`, `src/deepgram/agent/v1/__init__.py`, `src/deepgram/agent/v1/types/__init__.py`, `src/deepgram/agent/v1/requests/__init__.py`, `src/deepgram/types/__init__.py`, `src/deepgram/requests/__init__.py` — package `__init__.py` files carrying hand-applied legacy alias re-exports for `CreateKeyV1RequestOne`, `AgentV1HistoryContent`, `AgentV1HistoryFunctionCalls`, `AgentV1SettingsAgentContextMessagesItemContent`, `AgentV1SettingsAgentContextMessagesItemFunctionCalls` (and their `*Params` variants). Fern would otherwise regenerate these and strip the legacy entries. After unfreezing for the next regen and reviewing the new generated content, re-apply the legacy re-exports plus any genuine new entries Fern added.
 
 ### Prepare repo for regeneration
 

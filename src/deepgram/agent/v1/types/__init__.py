@@ -15,7 +15,9 @@ if typing.TYPE_CHECKING:
     from .agent_v1function_call_request import AgentV1FunctionCallRequest
     from .agent_v1function_call_request_functions_item import AgentV1FunctionCallRequestFunctionsItem
     from .agent_v1history import AgentV1History
+    from .agent_v1history_content import AgentV1HistoryContent
     from .agent_v1history_content_role import AgentV1HistoryContentRole
+    from .agent_v1history_function_calls import AgentV1HistoryFunctionCalls
     from .agent_v1history_function_calls_function_calls_item import AgentV1HistoryFunctionCallsFunctionCallsItem
     from .agent_v1inject_agent_message import AgentV1InjectAgentMessage
     from .agent_v1inject_agent_message_behavior import AgentV1InjectAgentMessageBehavior
@@ -46,6 +48,10 @@ if typing.TYPE_CHECKING:
     from .agent_v1settings_agent_context_listen_provider_v2 import AgentV1SettingsAgentContextListenProviderV2
     from .agent_v1settings_agent_context_listen_provider_v2language_hint import (
         AgentV1SettingsAgentContextListenProviderV2LanguageHint,
+    )
+    from .agent_v1settings_agent_context_messages_item_content import AgentV1SettingsAgentContextMessagesItemContent
+    from .agent_v1settings_agent_context_messages_item_function_calls import (
+        AgentV1SettingsAgentContextMessagesItemFunctionCalls,
     )
     from .agent_v1settings_agent_context_speak import AgentV1SettingsAgentContextSpeak
     from .agent_v1settings_agent_context_think import AgentV1SettingsAgentContextThink
@@ -89,7 +95,9 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AgentV1FunctionCallRequest": ".agent_v1function_call_request",
     "AgentV1FunctionCallRequestFunctionsItem": ".agent_v1function_call_request_functions_item",
     "AgentV1History": ".agent_v1history",
+    "AgentV1HistoryContent": ".agent_v1history_content",
     "AgentV1HistoryContentRole": ".agent_v1history_content_role",
+    "AgentV1HistoryFunctionCalls": ".agent_v1history_function_calls",
     "AgentV1HistoryFunctionCallsFunctionCallsItem": ".agent_v1history_function_calls_function_calls_item",
     "AgentV1InjectAgentMessage": ".agent_v1inject_agent_message",
     "AgentV1InjectAgentMessageBehavior": ".agent_v1inject_agent_message_behavior",
@@ -113,6 +121,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AgentV1SettingsAgentContextListenProviderV2LanguageHint": ".agent_v1settings_agent_context_listen_provider_v2language_hint",
     "AgentV1SettingsAgentContextListenProvider_V1": ".agent_v1settings_agent_context_listen_provider",
     "AgentV1SettingsAgentContextListenProvider_V2": ".agent_v1settings_agent_context_listen_provider",
+    "AgentV1SettingsAgentContextMessagesItemContent": ".agent_v1settings_agent_context_messages_item_content",
+    "AgentV1SettingsAgentContextMessagesItemFunctionCalls": ".agent_v1settings_agent_context_messages_item_function_calls",
     "AgentV1SettingsAgentContextSpeak": ".agent_v1settings_agent_context_speak",
     "AgentV1SettingsAgentContextThink": ".agent_v1settings_agent_context_think",
     "AgentV1SettingsAgentListen": ".agent_v1settings_agent_listen",
@@ -177,7 +187,9 @@ __all__ = [
     "AgentV1FunctionCallRequest",
     "AgentV1FunctionCallRequestFunctionsItem",
     "AgentV1History",
+    "AgentV1HistoryContent",
     "AgentV1HistoryContentRole",
+    "AgentV1HistoryFunctionCalls",
     "AgentV1HistoryFunctionCallsFunctionCallsItem",
     "AgentV1InjectAgentMessage",
     "AgentV1InjectAgentMessageBehavior",
@@ -201,6 +213,8 @@ __all__ = [
     "AgentV1SettingsAgentContextListenProviderV2LanguageHint",
     "AgentV1SettingsAgentContextListenProvider_V1",
     "AgentV1SettingsAgentContextListenProvider_V2",
+    "AgentV1SettingsAgentContextMessagesItemContent",
+    "AgentV1SettingsAgentContextMessagesItemFunctionCalls",
     "AgentV1SettingsAgentContextSpeak",
     "AgentV1SettingsAgentContextThink",
     "AgentV1SettingsAgentListen",
