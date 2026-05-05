@@ -1,5 +1,5 @@
 from deepgram.agent.v1.socket_client import V1SocketClientResponse
-from deepgram.agent.v1.types import AgentV1HistoryContent, AgentV1HistoryFunctionCalls
+from deepgram.agent.v1.types import ConversationHistoryMessage, FunctionCallHistoryMessage
 from deepgram.core.unchecked_base_model import construct_type
 
 
@@ -9,7 +9,7 @@ def test_agent_history_content_parses_from_socket_union() -> None:
         object_={"type": "History", "role": "user", "content": "hello"},
     )
 
-    assert isinstance(parsed, AgentV1HistoryContent)
+    assert isinstance(parsed, ConversationHistoryMessage)
     assert parsed.type == "History"
     assert parsed.role == "user"
     assert parsed.content == "hello"
@@ -32,7 +32,7 @@ def test_agent_history_function_calls_parse_from_socket_union() -> None:
         },
     )
 
-    assert isinstance(parsed, AgentV1HistoryFunctionCalls)
+    assert isinstance(parsed, FunctionCallHistoryMessage)
     assert parsed.type == "History"
     assert len(parsed.function_calls) == 1
 

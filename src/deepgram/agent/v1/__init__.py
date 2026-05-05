@@ -21,6 +21,7 @@ if typing.TYPE_CHECKING:
         AgentV1HistoryFunctionCalls,
         AgentV1HistoryFunctionCallsFunctionCallsItem,
         AgentV1InjectAgentMessage,
+        AgentV1InjectAgentMessageBehavior,
         AgentV1InjectUserMessage,
         AgentV1InjectionRefused,
         AgentV1KeepAlive,
@@ -60,6 +61,8 @@ if typing.TYPE_CHECKING:
         AgentV1UserStartedSpeaking,
         AgentV1Warning,
         AgentV1Welcome,
+        ConversationHistoryMessage,
+        FunctionCallHistoryMessage,
     )
     from . import settings
     from .requests import (
@@ -81,8 +84,8 @@ if typing.TYPE_CHECKING:
         AgentV1PromptUpdatedParams,
         AgentV1ReceiveFunctionCallResponseParams,
         AgentV1SendFunctionCallResponseParams,
-        AgentV1SettingsAgentContextMessagesItemContentParams,
         AgentV1SettingsAgentContextMessagesItemFunctionCallsFunctionCallsItemParams,
+        AgentV1SettingsAgentContextMessagesItemContentParams,
         AgentV1SettingsAgentContextMessagesItemFunctionCallsParams,
         AgentV1SettingsAgentContextMessagesItemParams,
         AgentV1SettingsAgentContextParams,
@@ -111,6 +114,8 @@ if typing.TYPE_CHECKING:
         AgentV1UserStartedSpeakingParams,
         AgentV1WarningParams,
         AgentV1WelcomeParams,
+        ConversationHistoryMessageParams,
+        FunctionCallHistoryMessageParams,
     )
 _dynamic_imports: typing.Dict[str, str] = {
     "AgentV1AgentAudioDone": ".types",
@@ -138,6 +143,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AgentV1HistoryFunctionCallsParams": ".requests",
     "AgentV1HistoryParams": ".requests",
     "AgentV1InjectAgentMessage": ".types",
+    "AgentV1InjectAgentMessageBehavior": ".types",
     "AgentV1InjectAgentMessageParams": ".requests",
     "AgentV1InjectUserMessage": ".types",
     "AgentV1InjectUserMessageParams": ".requests",
@@ -214,6 +220,10 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AgentV1WarningParams": ".requests",
     "AgentV1Welcome": ".types",
     "AgentV1WelcomeParams": ".requests",
+    "ConversationHistoryMessage": ".types",
+    "ConversationHistoryMessageParams": ".requests",
+    "FunctionCallHistoryMessage": ".types",
+    "FunctionCallHistoryMessageParams": ".requests",
     "settings": ".settings",
 }
 
@@ -265,6 +275,7 @@ __all__ = [
     "AgentV1HistoryFunctionCallsParams",
     "AgentV1HistoryParams",
     "AgentV1InjectAgentMessage",
+    "AgentV1InjectAgentMessageBehavior",
     "AgentV1InjectAgentMessageParams",
     "AgentV1InjectUserMessage",
     "AgentV1InjectUserMessageParams",
@@ -341,5 +352,9 @@ __all__ = [
     "AgentV1WarningParams",
     "AgentV1Welcome",
     "AgentV1WelcomeParams",
+    "ConversationHistoryMessage",
+    "ConversationHistoryMessageParams",
+    "FunctionCallHistoryMessage",
+    "FunctionCallHistoryMessageParams",
     "settings",
 ]

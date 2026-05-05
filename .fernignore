@@ -17,10 +17,25 @@ src/deepgram/listen/v1/socket_client.py
 src/deepgram/listen/v2/socket_client.py
 src/deepgram/speak/v1/socket_client.py
 
+# Backward-compatibility alias shims for renamed generated public types/params.
+# These are hand-written wrappers around the current generated names and must not be regenerated.
+src/deepgram/agent/v1/types/agent_v1history_content.py
+src/deepgram/agent/v1/types/agent_v1history_function_calls.py
+src/deepgram/agent/v1/types/agent_v1settings_agent_context_messages_item_content.py
+src/deepgram/agent/v1/types/agent_v1settings_agent_context_messages_item_function_calls.py
+src/deepgram/agent/v1/requests/agent_v1history_content.py
+src/deepgram/agent/v1/requests/agent_v1history_function_calls.py
+src/deepgram/agent/v1/requests/agent_v1settings_agent_context_messages_item_content.py
+src/deepgram/agent/v1/requests/agent_v1settings_agent_context_messages_item_function_calls.py
+src/deepgram/types/create_key_v1request_one.py
+src/deepgram/requests/create_key_v1request_one.py
+
 # Hand-written custom tests
 tests/custom/test_agent_history.py
+tests/custom/test_compat_aliases.py
 tests/custom/test_text_builder.py
 tests/custom/test_transport.py
+tests/typecheck/compat_aliases.py
 
 # Manual standalone tests
 tests/manual

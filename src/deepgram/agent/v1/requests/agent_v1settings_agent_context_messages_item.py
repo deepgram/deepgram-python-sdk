@@ -2,11 +2,9 @@
 
 import typing
 
-from .agent_v1settings_agent_context_messages_item_content import AgentV1SettingsAgentContextMessagesItemContentParams
-from .agent_v1settings_agent_context_messages_item_function_calls import (
-    AgentV1SettingsAgentContextMessagesItemFunctionCallsParams,
-)
+from .conversation_history_message import ConversationHistoryMessageParams
+from .function_call_history_message import FunctionCallHistoryMessageParams
 
 AgentV1SettingsAgentContextMessagesItemParams = typing.Union[
-    AgentV1SettingsAgentContextMessagesItemContentParams, AgentV1SettingsAgentContextMessagesItemFunctionCallsParams
+    ConversationHistoryMessageParams, FunctionCallHistoryMessageParams
 ]

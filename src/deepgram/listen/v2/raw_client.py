@@ -14,6 +14,7 @@ from ...core.request_options import RequestOptions
 from ...core.serialization import convert_and_respect_annotation_metadata
 from ...core.websocket_compat import InvalidWebSocketStatus, get_status_code
 from ...requests.listen_v2keyterm import ListenV2KeytermParams
+from ...requests.listen_v2language_hint import ListenV2LanguageHintParams
 from ...types.listen_v2eager_eot_threshold import ListenV2EagerEotThreshold
 from ...types.listen_v2encoding import ListenV2Encoding
 from ...types.listen_v2eot_threshold import ListenV2EotThreshold
@@ -45,6 +46,7 @@ class RawV2Client:
         eot_threshold: typing.Optional[ListenV2EotThreshold] = None,
         eot_timeout_ms: typing.Optional[ListenV2EotTimeoutMs] = None,
         keyterm: typing.Optional[ListenV2KeytermParams] = None,
+        language_hint: typing.Optional[ListenV2LanguageHintParams] = None,
         mip_opt_out: typing.Optional[ListenV2MipOptOut] = None,
         tag: typing.Optional[ListenV2Tag] = None,
         authorization: typing.Optional[str] = None,
@@ -69,6 +71,8 @@ class RawV2Client:
         eot_timeout_ms : typing.Optional[ListenV2EotTimeoutMs]
 
         keyterm : typing.Optional[ListenV2KeytermParams]
+
+        language_hint : typing.Optional[ListenV2LanguageHintParams]
 
         mip_opt_out : typing.Optional[ListenV2MipOptOut]
 
@@ -102,6 +106,13 @@ class RawV2Client:
                                 object_=keyterm, annotation=ListenV2KeytermParams, direction="write"
                             ),
                             annotation=ListenV2KeytermParams,
+                            direction="write",
+                        ),
+                        "language_hint": convert_and_respect_annotation_metadata(
+                            object_=convert_and_respect_annotation_metadata(
+                                object_=language_hint, annotation=ListenV2LanguageHintParams, direction="write"
+                            ),
+                            annotation=ListenV2LanguageHintParams,
                             direction="write",
                         ),
                         "mip_opt_out": mip_opt_out,
@@ -155,6 +166,7 @@ class AsyncRawV2Client:
         eot_threshold: typing.Optional[ListenV2EotThreshold] = None,
         eot_timeout_ms: typing.Optional[ListenV2EotTimeoutMs] = None,
         keyterm: typing.Optional[ListenV2KeytermParams] = None,
+        language_hint: typing.Optional[ListenV2LanguageHintParams] = None,
         mip_opt_out: typing.Optional[ListenV2MipOptOut] = None,
         tag: typing.Optional[ListenV2Tag] = None,
         authorization: typing.Optional[str] = None,
@@ -179,6 +191,8 @@ class AsyncRawV2Client:
         eot_timeout_ms : typing.Optional[ListenV2EotTimeoutMs]
 
         keyterm : typing.Optional[ListenV2KeytermParams]
+
+        language_hint : typing.Optional[ListenV2LanguageHintParams]
 
         mip_opt_out : typing.Optional[ListenV2MipOptOut]
 
@@ -212,6 +226,13 @@ class AsyncRawV2Client:
                                 object_=keyterm, annotation=ListenV2KeytermParams, direction="write"
                             ),
                             annotation=ListenV2KeytermParams,
+                            direction="write",
+                        ),
+                        "language_hint": convert_and_respect_annotation_metadata(
+                            object_=convert_and_respect_annotation_metadata(
+                                object_=language_hint, annotation=ListenV2LanguageHintParams, direction="write"
+                            ),
+                            annotation=ListenV2LanguageHintParams,
                             direction="write",
                         ),
                         "mip_opt_out": mip_opt_out,

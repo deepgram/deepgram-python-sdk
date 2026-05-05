@@ -2,11 +2,7 @@
 
 import typing
 
-from .agent_v1settings_agent_context_messages_item_content import AgentV1SettingsAgentContextMessagesItemContent
-from .agent_v1settings_agent_context_messages_item_function_calls import (
-    AgentV1SettingsAgentContextMessagesItemFunctionCalls,
-)
+from .conversation_history_message import ConversationHistoryMessage
+from .function_call_history_message import FunctionCallHistoryMessage
 
-AgentV1SettingsAgentContextMessagesItem = typing.Union[
-    AgentV1SettingsAgentContextMessagesItemContent, AgentV1SettingsAgentContextMessagesItemFunctionCalls
-]
+AgentV1SettingsAgentContextMessagesItem = typing.Union[ConversationHistoryMessage, FunctionCallHistoryMessage]

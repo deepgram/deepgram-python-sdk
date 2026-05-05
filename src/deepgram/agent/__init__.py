@@ -33,6 +33,7 @@ if typing.TYPE_CHECKING:
         AgentV1HistoryFunctionCallsParams,
         AgentV1HistoryParams,
         AgentV1InjectAgentMessage,
+        AgentV1InjectAgentMessageBehavior,
         AgentV1InjectAgentMessageParams,
         AgentV1InjectUserMessage,
         AgentV1InjectUserMessageParams,
@@ -109,6 +110,10 @@ if typing.TYPE_CHECKING:
         AgentV1WarningParams,
         AgentV1Welcome,
         AgentV1WelcomeParams,
+        ConversationHistoryMessage,
+        ConversationHistoryMessageParams,
+        FunctionCallHistoryMessage,
+        FunctionCallHistoryMessageParams,
     )
 _dynamic_imports: typing.Dict[str, str] = {
     "AgentV1AgentAudioDone": ".v1",
@@ -136,6 +141,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AgentV1HistoryFunctionCallsParams": ".v1",
     "AgentV1HistoryParams": ".v1",
     "AgentV1InjectAgentMessage": ".v1",
+    "AgentV1InjectAgentMessageBehavior": ".v1",
     "AgentV1InjectAgentMessageParams": ".v1",
     "AgentV1InjectUserMessage": ".v1",
     "AgentV1InjectUserMessageParams": ".v1",
@@ -212,6 +218,10 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AgentV1WarningParams": ".v1",
     "AgentV1Welcome": ".v1",
     "AgentV1WelcomeParams": ".v1",
+    "ConversationHistoryMessage": ".v1",
+    "ConversationHistoryMessageParams": ".v1",
+    "FunctionCallHistoryMessage": ".v1",
+    "FunctionCallHistoryMessageParams": ".v1",
     "v1": ".v1",
 }
 
@@ -263,6 +273,7 @@ __all__ = [
     "AgentV1HistoryFunctionCallsParams",
     "AgentV1HistoryParams",
     "AgentV1InjectAgentMessage",
+    "AgentV1InjectAgentMessageBehavior",
     "AgentV1InjectAgentMessageParams",
     "AgentV1InjectUserMessage",
     "AgentV1InjectUserMessageParams",
@@ -339,5 +350,9 @@ __all__ = [
     "AgentV1WarningParams",
     "AgentV1Welcome",
     "AgentV1WelcomeParams",
+    "ConversationHistoryMessage",
+    "ConversationHistoryMessageParams",
+    "FunctionCallHistoryMessage",
+    "FunctionCallHistoryMessageParams",
     "v1",
 ]

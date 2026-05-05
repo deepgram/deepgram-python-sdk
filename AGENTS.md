@@ -24,9 +24,14 @@ How to identify:
 Current permanently frozen files:
 - `src/deepgram/client.py` — entirely custom (Bearer auth, session ID); no Fern equivalent
 - `src/deepgram/helpers/` — hand-written TextBuilder helpers
+- `src/deepgram/agent/v1/types/agent_v1history_content.py`, `src/deepgram/agent/v1/types/agent_v1history_function_calls.py`, `src/deepgram/agent/v1/types/agent_v1settings_agent_context_messages_item_content.py`, `src/deepgram/agent/v1/types/agent_v1settings_agent_context_messages_item_function_calls.py` — hand-written compatibility aliases preserving old public Agent History type imports after regen renames
+- `src/deepgram/agent/v1/requests/agent_v1history_content.py`, `src/deepgram/agent/v1/requests/agent_v1history_function_calls.py`, `src/deepgram/agent/v1/requests/agent_v1settings_agent_context_messages_item_content.py`, `src/deepgram/agent/v1/requests/agent_v1settings_agent_context_messages_item_function_calls.py` — hand-written compatibility aliases preserving old public Agent History request-param imports after regen renames
+- `src/deepgram/types/create_key_v1request_one.py`, `src/deepgram/requests/create_key_v1request_one.py` — hand-written compatibility aliases preserving the old public create-key request imports after the regen rename to `CreateKeyV1Request`
 - `src/deepgram/transport_interface.py`, `src/deepgram/transport.py`, `src/deepgram/transports/` — custom transport layer
 - `tests/custom/test_agent_history.py` — hand-written regression test for Agent History websocket payload parsing
+- `tests/custom/test_compat_aliases.py` — hand-written regression test for backward-compatible alias imports after regen renames
 - `tests/custom/test_text_builder.py`, `tests/custom/test_transport.py` — hand-written tests
+- `tests/typecheck/compat_aliases.py` — hand-written mypy `assert_type` coverage for backward-compatible alias TypedDicts
 - `tests/manual/` — manual standalone tests
 - `README.md`, `CHANGELOG.md`, `CONTRIBUTING.md`, `reference.md` — docs
 - `CLAUDE.md`, `AGENTS.md`, `.claude/` — agent files

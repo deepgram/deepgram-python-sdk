@@ -5,6 +5,7 @@ import typing
 import pydantic
 from ....core.pydantic_utilities import IS_PYDANTIC_V2
 from ....core.unchecked_base_model import UncheckedBaseModel
+from .agent_v1inject_agent_message_behavior import AgentV1InjectAgentMessageBehavior
 
 
 class AgentV1InjectAgentMessage(UncheckedBaseModel):
@@ -16,6 +17,14 @@ class AgentV1InjectAgentMessage(UncheckedBaseModel):
     message: str = pydantic.Field()
     """
     The statement that the agent should say
+    """
+
+    behavior: typing.Optional[AgentV1InjectAgentMessageBehavior] = pydantic.Field(default=None)
+    """
+    Controls how the injection interacts with any in-progress user or agent turn.
+    
+    * `default` — The agent speaks only if neither the user nor the agent is mid-turn. If a turn is in progress, the server replies with `InjectionRefused`.
+    * `queue` — The message is appended after any already-queued `ConversationText` without interrupting the current agent turn or think response. If nothing is queued, the message plays immediately.
     """
 
     if IS_PYDANTIC_V2:

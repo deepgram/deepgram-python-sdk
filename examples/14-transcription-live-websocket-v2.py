@@ -3,6 +3,9 @@ Example: Live Transcription with WebSocket V2 (Listen V2)
 
 This example shows how to use Listen V2 for advanced conversational speech recognition
 with contextual turn detection.
+
+It streams the bundled WAV fixture directly, so the example lets Deepgram infer the
+audio format from the container instead of forcing raw linear16 settings.
 """
 
 import os
@@ -31,8 +34,6 @@ client = DeepgramClient(api_key=os.environ.get("DEEPGRAM_API_KEY"))
 try:
     with client.listen.v2.connect(
         model="flux-general-en",
-        encoding="linear16",
-        sample_rate="16000",
     ) as connection:
 
         def on_message(message: ListenV2SocketClientResponse) -> None:

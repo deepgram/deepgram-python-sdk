@@ -2,10 +2,10 @@
 Example: Voice Agent (Agent V1)
 
 This example shows how to set up a voice agent that can listen, think, and speak.
-It streams a pre-recorded audio file to simulate user speech.
+To keep the example deterministic, it injects a user message after the settings are
+applied and then prints the agent's text and audio responses.
 """
 
-import os
 import threading
 import time
 from typing import Union
@@ -16,6 +16,7 @@ load_dotenv()
 
 from deepgram import DeepgramClient
 from deepgram.agent.v1.types import (
+    AgentV1InjectUserMessage,
     AgentV1Settings,
     AgentV1SettingsAgent,
     AgentV1SettingsAgentListen,
@@ -30,13 +31,15 @@ from deepgram.types.think_settings_v1 import ThinkSettingsV1
 from deepgram.types.think_settings_v1provider import ThinkSettingsV1Provider_OpenAi
 
 AgentV1SocketClientResponse = Union[str, bytes]
+USER_MESSAGE = "What does the first all-female spacewalk symbolize?"
 
 client = DeepgramClient()
 
-audio_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "fixtures", "audio.wav")
-
 try:
     with client.agent.v1.connect() as agent:
+        settings_applied_event = threading.Event()
+        assistant_response_event = threading.Event()
+
         # Configure the agent settings
         settings = AgentV1Settings(
             audio=AgentV1SettingsAudio(
@@ -69,18 +72,20 @@ try:
             ),
         )
 
-        print("Sending agent settings...")
-        agent.send_settings(settings)
-
         def on_message(message: AgentV1SocketClientResponse) -> None:
             if isinstance(message, bytes):
                 print(f"Received agent audio ({len(message)} bytes)")
             else:
                 msg_type = getattr(message, "type", "Unknown")
-                if msg_type == "ConversationText":
+                if msg_type == "SettingsApplied":
+                    print("Received SettingsApplied event")
+                    settings_applied_event.set()
+                elif msg_type == "ConversationText":
                     role = getattr(message, "role", "unknown")
                     content = getattr(message, "content", "")
                     print(f"[{role}] {content}")
+                    if role == "assistant":
+                        assistant_response_event.set()
                 elif msg_type == "UserStartedSpeaking":
                     print(">> User started speaking")
                 elif msg_type == "AgentThinking":
@@ -89,6 +94,11 @@ try:
                     print(">> Agent started speaking")
                 elif msg_type == "AgentAudioDone":
                     print(">> Agent finished speaking")
+                elif msg_type == "Error":
+                    print(
+                        f">> Agent error: {getattr(message, 'code', 'unknown')} - "
+                        f"{getattr(message, 'description', 'unknown error')}"
+                    )
                 else:
                     print(f"Received {msg_type} event")
 
@@ -97,26 +107,23 @@ try:
         agent.on(EventType.CLOSE, lambda _: print("Connection closed"))
         agent.on(EventType.ERROR, lambda error: print(f"Error: {error}"))
 
-        # Stream audio in a background thread
-        def send_audio():
-            with open(audio_path, "rb") as f:
-                audio_data = f.read()
+        listener = threading.Thread(target=agent.start_listening, daemon=True)
+        listener.start()
 
-            chunk_size = 8192
-            for i in range(0, len(audio_data), chunk_size):
-                chunk = audio_data[i : i + chunk_size]
-                if chunk:
-                    agent.send_media(chunk)
-                time.sleep(0.01)
+        print("Sending agent settings...")
+        agent.send_settings(settings)
 
-            print("Finished streaming audio, waiting for agent response...")
-            time.sleep(15)
+        if not settings_applied_event.wait(10):
+            raise TimeoutError("Timed out waiting for agent settings to apply")
 
-        sender = threading.Thread(target=send_audio, daemon=True)
-        sender.start()
+        print(f"Sending injected user message: {USER_MESSAGE}")
+        agent.send_inject_user_message(AgentV1InjectUserMessage(content=USER_MESSAGE))
 
-        # Start listening - blocks until connection closes
-        agent.start_listening()
+        if not assistant_response_event.wait(30):
+            raise TimeoutError("Timed out waiting for the agent to respond")
+
+        # Give the final audio callbacks a moment to flush before exiting the context.
+        time.sleep(2)
 
 except Exception as e:
     print(f"Error: {e}")

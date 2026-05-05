@@ -28,9 +28,7 @@ if typing.TYPE_CHECKING:
     from .agent_v1settings_agent import AgentV1SettingsAgentParams
     from .agent_v1settings_agent_context import AgentV1SettingsAgentContextParams
     from .agent_v1settings_agent_context_messages_item import AgentV1SettingsAgentContextMessagesItemParams
-    from .agent_v1settings_agent_context_messages_item_content import (
-        AgentV1SettingsAgentContextMessagesItemContentParams,
-    )
+    from .agent_v1settings_agent_context_messages_item_content import AgentV1SettingsAgentContextMessagesItemContentParams
     from .agent_v1settings_agent_context_messages_item_function_calls import (
         AgentV1SettingsAgentContextMessagesItemFunctionCallsParams,
     )
@@ -62,6 +60,8 @@ if typing.TYPE_CHECKING:
     from .agent_v1user_started_speaking import AgentV1UserStartedSpeakingParams
     from .agent_v1warning import AgentV1WarningParams
     from .agent_v1welcome import AgentV1WelcomeParams
+    from .conversation_history_message import ConversationHistoryMessageParams
+    from .function_call_history_message import FunctionCallHistoryMessageParams
 _dynamic_imports: typing.Dict[str, str] = {
     "AgentV1AgentAudioDoneParams": ".agent_v1agent_audio_done",
     "AgentV1AgentStartedSpeakingParams": ".agent_v1agent_started_speaking",
@@ -81,8 +81,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AgentV1PromptUpdatedParams": ".agent_v1prompt_updated",
     "AgentV1ReceiveFunctionCallResponseParams": ".agent_v1receive_function_call_response",
     "AgentV1SendFunctionCallResponseParams": ".agent_v1send_function_call_response",
-    "AgentV1SettingsAgentContextMessagesItemContentParams": ".agent_v1settings_agent_context_messages_item_content",
     "AgentV1SettingsAgentContextMessagesItemFunctionCallsFunctionCallsItemParams": ".agent_v1settings_agent_context_messages_item_function_calls_function_calls_item",
+    "AgentV1SettingsAgentContextMessagesItemContentParams": ".agent_v1settings_agent_context_messages_item_content",
     "AgentV1SettingsAgentContextMessagesItemFunctionCallsParams": ".agent_v1settings_agent_context_messages_item_function_calls",
     "AgentV1SettingsAgentContextMessagesItemParams": ".agent_v1settings_agent_context_messages_item",
     "AgentV1SettingsAgentContextParams": ".agent_v1settings_agent_context",
@@ -111,6 +111,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AgentV1UserStartedSpeakingParams": ".agent_v1user_started_speaking",
     "AgentV1WarningParams": ".agent_v1warning",
     "AgentV1WelcomeParams": ".agent_v1welcome",
+    "ConversationHistoryMessageParams": ".conversation_history_message",
+    "FunctionCallHistoryMessageParams": ".function_call_history_message",
 }
 
 
@@ -154,8 +156,8 @@ __all__ = [
     "AgentV1PromptUpdatedParams",
     "AgentV1ReceiveFunctionCallResponseParams",
     "AgentV1SendFunctionCallResponseParams",
-    "AgentV1SettingsAgentContextMessagesItemContentParams",
     "AgentV1SettingsAgentContextMessagesItemFunctionCallsFunctionCallsItemParams",
+    "AgentV1SettingsAgentContextMessagesItemContentParams",
     "AgentV1SettingsAgentContextMessagesItemFunctionCallsParams",
     "AgentV1SettingsAgentContextMessagesItemParams",
     "AgentV1SettingsAgentContextParams",
@@ -184,4 +186,6 @@ __all__ = [
     "AgentV1UserStartedSpeakingParams",
     "AgentV1WarningParams",
     "AgentV1WelcomeParams",
+    "ConversationHistoryMessageParams",
+    "FunctionCallHistoryMessageParams",
 ]

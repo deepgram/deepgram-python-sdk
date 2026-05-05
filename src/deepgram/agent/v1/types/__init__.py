@@ -20,6 +20,7 @@ if typing.TYPE_CHECKING:
     from .agent_v1history_function_calls import AgentV1HistoryFunctionCalls
     from .agent_v1history_function_calls_function_calls_item import AgentV1HistoryFunctionCallsFunctionCallsItem
     from .agent_v1inject_agent_message import AgentV1InjectAgentMessage
+    from .agent_v1inject_agent_message_behavior import AgentV1InjectAgentMessageBehavior
     from .agent_v1inject_user_message import AgentV1InjectUserMessage
     from .agent_v1injection_refused import AgentV1InjectionRefused
     from .agent_v1keep_alive import AgentV1KeepAlive
@@ -67,6 +68,8 @@ if typing.TYPE_CHECKING:
     from .agent_v1user_started_speaking import AgentV1UserStartedSpeaking
     from .agent_v1warning import AgentV1Warning
     from .agent_v1welcome import AgentV1Welcome
+    from .conversation_history_message import ConversationHistoryMessage
+    from .function_call_history_message import FunctionCallHistoryMessage
 _dynamic_imports: typing.Dict[str, str] = {
     "AgentV1AgentAudioDone": ".agent_v1agent_audio_done",
     "AgentV1AgentStartedSpeaking": ".agent_v1agent_started_speaking",
@@ -82,6 +85,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AgentV1HistoryFunctionCalls": ".agent_v1history_function_calls",
     "AgentV1HistoryFunctionCallsFunctionCallsItem": ".agent_v1history_function_calls_function_calls_item",
     "AgentV1InjectAgentMessage": ".agent_v1inject_agent_message",
+    "AgentV1InjectAgentMessageBehavior": ".agent_v1inject_agent_message_behavior",
     "AgentV1InjectUserMessage": ".agent_v1inject_user_message",
     "AgentV1InjectionRefused": ".agent_v1injection_refused",
     "AgentV1KeepAlive": ".agent_v1keep_alive",
@@ -121,6 +125,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AgentV1UserStartedSpeaking": ".agent_v1user_started_speaking",
     "AgentV1Warning": ".agent_v1warning",
     "AgentV1Welcome": ".agent_v1welcome",
+    "ConversationHistoryMessage": ".conversation_history_message",
+    "FunctionCallHistoryMessage": ".function_call_history_message",
 }
 
 
@@ -160,6 +166,7 @@ __all__ = [
     "AgentV1HistoryFunctionCalls",
     "AgentV1HistoryFunctionCallsFunctionCallsItem",
     "AgentV1InjectAgentMessage",
+    "AgentV1InjectAgentMessageBehavior",
     "AgentV1InjectUserMessage",
     "AgentV1InjectionRefused",
     "AgentV1KeepAlive",
@@ -199,4 +206,6 @@ __all__ = [
     "AgentV1UserStartedSpeaking",
     "AgentV1Warning",
     "AgentV1Welcome",
+    "ConversationHistoryMessage",
+    "FunctionCallHistoryMessage",
 ]

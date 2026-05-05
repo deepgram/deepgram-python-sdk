@@ -4,7 +4,7 @@ import typing
 
 from .....core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from .....core.request_options import RequestOptions
-from .....types.create_key_v1request_one import CreateKeyV1RequestOne
+from .....requests.create_key_v1request import CreateKeyV1RequestParams
 from .....types.create_key_v1response import CreateKeyV1Response
 from .....types.delete_project_key_v1response import DeleteProjectKeyV1Response
 from .....types.get_project_key_v1response import GetProjectKeyV1Response
@@ -76,7 +76,7 @@ class KeysClient:
         self,
         project_id: str,
         *,
-        request: CreateKeyV1RequestOne,
+        request: CreateKeyV1RequestParams,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> CreateKeyV1Response:
         """
@@ -87,7 +87,7 @@ class KeysClient:
         project_id : str
             The unique identifier of the project
 
-        request : CreateKeyV1RequestOne
+        request : CreateKeyV1RequestParams
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -255,7 +255,7 @@ class AsyncKeysClient:
         self,
         project_id: str,
         *,
-        request: CreateKeyV1RequestOne,
+        request: CreateKeyV1RequestParams,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> CreateKeyV1Response:
         """
@@ -266,7 +266,7 @@ class AsyncKeysClient:
         project_id : str
             The unique identifier of the project
 
-        request : CreateKeyV1RequestOne
+        request : CreateKeyV1RequestParams
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
