@@ -4,6 +4,7 @@ import typing
 
 import typing_extensions
 from ..types.open_ai_think_provider_model import OpenAiThinkProviderModel
+from ..types.open_ai_think_provider_reasoning_mode import OpenAiThinkProviderReasoningMode
 
 
 class OpenAiThinkProviderParams(typing_extensions.TypedDict):
@@ -21,4 +22,9 @@ class OpenAiThinkProviderParams(typing_extensions.TypedDict):
     temperature: typing_extensions.NotRequired[float]
     """
     OpenAI temperature (0-2)
+    """
+
+    reasoning_mode: typing_extensions.NotRequired[OpenAiThinkProviderReasoningMode]
+    """
+    OpenAI reasoning_effort
     """

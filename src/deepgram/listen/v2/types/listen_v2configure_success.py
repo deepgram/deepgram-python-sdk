@@ -27,6 +27,11 @@ class ListenV2ConfigureSuccess(UncheckedBaseModel):
     """
 
     keyterms: ListenV2Keyterm
+    language_hints: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
+    """
+    The currently active language hints. Only applicable to the flux-general-multi model.
+    """
+
     sequence_id: int = pydantic.Field()
     """
     Starts at `0` and increments for each message the server sends

@@ -12,7 +12,9 @@ from .anthropic_think_provider_model import AnthropicThinkProviderModel
 from .aws_bedrock_think_provider_credentials import AwsBedrockThinkProviderCredentials
 from .aws_bedrock_think_provider_model import AwsBedrockThinkProviderModel
 from .google_think_provider_model import GoogleThinkProviderModel
+from .groq_think_provider_reasoning_mode import GroqThinkProviderReasoningMode
 from .open_ai_think_provider_model import OpenAiThinkProviderModel
+from .open_ai_think_provider_reasoning_mode import OpenAiThinkProviderReasoningMode
 
 
 class ThinkSettingsV1Provider_OpenAi(UncheckedBaseModel):
@@ -20,6 +22,7 @@ class ThinkSettingsV1Provider_OpenAi(UncheckedBaseModel):
     version: typing.Optional[typing.Literal["v1"]] = None
     model: OpenAiThinkProviderModel
     temperature: typing.Optional[float] = None
+    reasoning_mode: typing.Optional[OpenAiThinkProviderReasoningMode] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
@@ -84,6 +87,7 @@ class ThinkSettingsV1Provider_Groq(UncheckedBaseModel):
     version: typing.Optional[typing.Literal["v1"]] = None
     model: typing.Literal["openai/gpt-oss-20b"] = "openai/gpt-oss-20b"
     temperature: typing.Optional[float] = None
+    reasoning_mode: typing.Optional[GroqThinkProviderReasoningMode] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

@@ -25,6 +25,11 @@ class ListenV2ConfigureSuccessParams(typing_extensions.TypedDict):
     """
 
     keyterms: ListenV2KeytermParams
+    language_hints: typing_extensions.NotRequired[typing.Sequence[str]]
+    """
+    The currently active language hints. Only applicable to the flux-general-multi model.
+    """
+
     sequence_id: int
     """
     Starts at `0` and increments for each message the server sends

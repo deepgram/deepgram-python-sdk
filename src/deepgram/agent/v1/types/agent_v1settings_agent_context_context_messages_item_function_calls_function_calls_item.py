@@ -7,7 +7,7 @@ from ....core.pydantic_utilities import IS_PYDANTIC_V2
 from ....core.unchecked_base_model import UncheckedBaseModel
 
 
-class AgentV1SettingsAgentContextMessagesItemFunctionCallsFunctionCallsItem(UncheckedBaseModel):
+class AgentV1SettingsAgentContextContextMessagesItemFunctionCallsFunctionCallsItem(UncheckedBaseModel):
     id: str = pydantic.Field()
     """
     Unique identifier for the function call

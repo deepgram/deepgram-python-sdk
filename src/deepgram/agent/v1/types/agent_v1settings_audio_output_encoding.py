@@ -2,4 +2,6 @@
 
 import typing
 
-AgentV1SettingsAudioOutputEncoding = typing.Union[typing.Literal["linear16", "mulaw", "alaw"], typing.Any]
+AgentV1SettingsAudioOutputEncoding = typing.Union[
+    typing.Literal["linear16", "mulaw", "alaw", "mp3", "opus", "flac", "aac"], typing.Any
+]

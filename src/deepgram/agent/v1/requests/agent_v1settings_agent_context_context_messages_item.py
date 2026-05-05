@@ -5,6 +5,6 @@ import typing
 from .conversation_history_message import ConversationHistoryMessageParams
 from .function_call_history_message import FunctionCallHistoryMessageParams
 
-AgentV1SettingsAgentContextMessagesItemParams = typing.Union[
+AgentV1SettingsAgentContextContextMessagesItemParams = typing.Union[
     ConversationHistoryMessageParams, FunctionCallHistoryMessageParams
 ]

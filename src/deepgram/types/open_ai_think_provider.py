@@ -6,6 +6,7 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .open_ai_think_provider_model import OpenAiThinkProviderModel
+from .open_ai_think_provider_reasoning_mode import OpenAiThinkProviderReasoningMode
 
 
 class OpenAiThinkProvider(UncheckedBaseModel):
@@ -23,6 +24,11 @@ class OpenAiThinkProvider(UncheckedBaseModel):
     temperature: typing.Optional[float] = pydantic.Field(default=None)
     """
     OpenAI temperature (0-2)
+    """
+
+    reasoning_mode: typing.Optional[OpenAiThinkProviderReasoningMode] = pydantic.Field(default=None)
+    """
+    OpenAI reasoning_effort
     """
 
     if IS_PYDANTIC_V2:

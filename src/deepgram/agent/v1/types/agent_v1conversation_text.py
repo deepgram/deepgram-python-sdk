@@ -24,6 +24,16 @@ class AgentV1ConversationText(UncheckedBaseModel):
     The actual statement that was spoken
     """
 
+    languages_hinted: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
+    """
+    The language hints that were active at the time of the turn. Only present on user-role messages when the listen model is flux-general-multi.
+    """
+
+    languages: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
+    """
+    Languages detected in the user's speech, sorted by word count (descending). Only present on user-role messages when the listen model is flux-general-multi.
+    """
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:

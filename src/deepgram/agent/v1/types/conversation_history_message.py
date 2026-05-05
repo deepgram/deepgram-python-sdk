@@ -5,8 +5,8 @@ import typing
 import pydantic
 from ....core.pydantic_utilities import IS_PYDANTIC_V2
 from ....core.unchecked_base_model import UncheckedBaseModel
-from .agent_v1settings_agent_context_messages_item_content_role import (
-    AgentV1SettingsAgentContextMessagesItemContentRole,
+from .agent_v1settings_agent_context_context_messages_item_content_role import (
+    AgentV1SettingsAgentContextContextMessagesItemContentRole,
 )
 
 
@@ -20,7 +20,7 @@ class ConversationHistoryMessage(UncheckedBaseModel):
     Message type identifier for conversation text
     """
 
-    role: AgentV1SettingsAgentContextMessagesItemContentRole = pydantic.Field()
+    role: AgentV1SettingsAgentContextContextMessagesItemContentRole = pydantic.Field()
     """
     Identifies who spoke the statement
     """

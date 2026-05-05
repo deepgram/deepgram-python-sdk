@@ -5,4 +5,4 @@ import typing
 from .conversation_history_message import ConversationHistoryMessage
 from .function_call_history_message import FunctionCallHistoryMessage
 
-AgentV1SettingsAgentContextMessagesItem = typing.Union[ConversationHistoryMessage, FunctionCallHistoryMessage]
+AgentV1SettingsAgentContextContextMessagesItem = typing.Union[ConversationHistoryMessage, FunctionCallHistoryMessage]
