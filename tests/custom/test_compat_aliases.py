@@ -143,3 +143,69 @@ def test_old_agent_history_type_aliases_can_be_instantiated() -> None:
     )
     assert isinstance(context_function_calls, FunctionCallHistoryMessage)
     assert context_function_calls.function_calls[0].response == "sunny"
+
+
+def test_legacy_settings_agent_context_messages_kwarg_remaps_to_context() -> None:
+    from deepgram.agent.v1.types import (
+        AgentV1SettingsAgentContext,
+        AgentV1SettingsAgentContextContext,
+    )
+
+    msg = ConversationHistoryMessage(type="History", role="user", content="hi")
+
+    legacy = AgentV1SettingsAgentContext(messages=[msg])
+    canonical = AgentV1SettingsAgentContext(context=AgentV1SettingsAgentContextContext(messages=[msg]))
+
+    assert legacy.dict() == canonical.dict()
+    assert legacy.context is not None
+    assert legacy.context.messages == [msg]
+
+
+def test_legacy_settings_agent_context_messages_kwarg_does_not_clobber_explicit_context() -> None:
+    from deepgram.agent.v1.types import (
+        AgentV1SettingsAgentContext,
+        AgentV1SettingsAgentContextContext,
+    )
+
+    msg_a = ConversationHistoryMessage(type="History", role="user", content="a")
+    msg_b = ConversationHistoryMessage(type="History", role="user", content="b")
+
+    explicit_context_wins = AgentV1SettingsAgentContext(
+        context=AgentV1SettingsAgentContextContext(messages=[msg_a]),
+        messages=[msg_b],
+    )
+    assert explicit_context_wins.context is not None
+    assert explicit_context_wins.context.messages == [msg_a]
+
+
+def test_renamed_settings_context_type_aliases_resolve() -> None:
+    from deepgram.agent.v1.types import (
+        AgentV1SettingsAgentContextContextMessagesItem,
+        AgentV1SettingsAgentContextContextMessagesItemContentRole,
+        AgentV1SettingsAgentContextContextMessagesItemFunctionCallsFunctionCallsItem,
+        AgentV1SettingsAgentContextMessagesItem,
+        AgentV1SettingsAgentContextMessagesItemContentRole,
+        AgentV1SettingsAgentContextMessagesItemFunctionCallsFunctionCallsItem,
+    )
+
+    assert AgentV1SettingsAgentContextMessagesItem is AgentV1SettingsAgentContextContextMessagesItem
+    assert AgentV1SettingsAgentContextMessagesItemContentRole is AgentV1SettingsAgentContextContextMessagesItemContentRole
+    assert (
+        AgentV1SettingsAgentContextMessagesItemFunctionCallsFunctionCallsItem
+        is AgentV1SettingsAgentContextContextMessagesItemFunctionCallsFunctionCallsItem
+    )
+
+
+def test_renamed_settings_context_request_aliases_resolve() -> None:
+    from deepgram.agent.v1.requests import (
+        AgentV1SettingsAgentContextContextMessagesItemFunctionCallsFunctionCallsItemParams,
+        AgentV1SettingsAgentContextContextMessagesItemParams,
+        AgentV1SettingsAgentContextMessagesItemFunctionCallsFunctionCallsItemParams,
+        AgentV1SettingsAgentContextMessagesItemParams,
+    )
+
+    assert AgentV1SettingsAgentContextMessagesItemParams is AgentV1SettingsAgentContextContextMessagesItemParams
+    assert (
+        AgentV1SettingsAgentContextMessagesItemFunctionCallsFunctionCallsItemParams
+        is AgentV1SettingsAgentContextContextMessagesItemFunctionCallsFunctionCallsItemParams
+    )

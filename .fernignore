@@ -17,16 +17,28 @@ src/deepgram/listen/v1/socket_client.py
 src/deepgram/listen/v2/socket_client.py
 src/deepgram/speak/v1/socket_client.py
 
+# Backward-compat patch: AgentV1SettingsAgentContext schema restructure as of
+# 2026-05-05. The new schema nests messages under .context.messages; this file
+# carries a model_validator(mode='before') that accepts the legacy `messages=`
+# kwarg and remaps it to `context={"messages": ...}` so existing callers keep
+# producing the correct wire payload.
+src/deepgram/agent/v1/types/agent_v1settings_agent_context.py
+
 # Backward-compatibility alias shims for renamed generated public types/params.
 # These are hand-written wrappers around the current generated names and must not be regenerated.
 src/deepgram/agent/v1/types/agent_v1history_content.py
 src/deepgram/agent/v1/types/agent_v1history_function_calls.py
+src/deepgram/agent/v1/types/agent_v1settings_agent_context_messages_item.py
 src/deepgram/agent/v1/types/agent_v1settings_agent_context_messages_item_content.py
+src/deepgram/agent/v1/types/agent_v1settings_agent_context_messages_item_content_role.py
 src/deepgram/agent/v1/types/agent_v1settings_agent_context_messages_item_function_calls.py
+src/deepgram/agent/v1/types/agent_v1settings_agent_context_messages_item_function_calls_function_calls_item.py
 src/deepgram/agent/v1/requests/agent_v1history_content.py
 src/deepgram/agent/v1/requests/agent_v1history_function_calls.py
+src/deepgram/agent/v1/requests/agent_v1settings_agent_context_messages_item.py
 src/deepgram/agent/v1/requests/agent_v1settings_agent_context_messages_item_content.py
 src/deepgram/agent/v1/requests/agent_v1settings_agent_context_messages_item_function_calls.py
+src/deepgram/agent/v1/requests/agent_v1settings_agent_context_messages_item_function_calls_function_calls_item.py
 src/deepgram/types/create_key_v1request_one.py
 src/deepgram/requests/create_key_v1request_one.py
 
