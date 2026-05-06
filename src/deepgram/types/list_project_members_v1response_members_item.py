@@ -13,7 +13,14 @@ class ListProjectMembersV1ResponseMembersItem(UncheckedBaseModel):
     The unique identifier of the member
     """
 
+    scopes: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
+    """
+    The API scopes of the member
+    """
+
     email: typing.Optional[str] = None
+    first_name: typing.Optional[str] = None
+    last_name: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

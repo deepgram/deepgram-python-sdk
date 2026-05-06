@@ -21,3 +21,13 @@ class AgentV1ConversationTextParams(typing_extensions.TypedDict):
     """
     The actual statement that was spoken
     """
+
+    languages_hinted: typing_extensions.NotRequired[typing.Sequence[str]]
+    """
+    The language hints that were active at the time of the turn. Only present on user-role messages when the listen model is flux-general-multi.
+    """
+
+    languages: typing_extensions.NotRequired[typing.Sequence[str]]
+    """
+    Languages detected in the user's speech, sorted by word count (descending). Only present on user-role messages when the listen model is flux-general-multi.
+    """

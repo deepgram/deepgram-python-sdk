@@ -4,37 +4,63 @@ import typing
 
 import pydantic
 from ....core.pydantic_utilities import IS_PYDANTIC_V2
-from ....core.unchecked_base_model import UncheckedBaseModel
 from .agent_v1settings_agent_context import AgentV1SettingsAgentContext
 from .agent_v1settings_agent_listen import AgentV1SettingsAgentListen
-from .agent_v1settings_agent_speak import AgentV1SettingsAgentSpeak
-from .agent_v1settings_agent_think import AgentV1SettingsAgentThink
 
 
-class AgentV1SettingsAgent(UncheckedBaseModel):
-    language: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    Deprecated. Use `listen.provider.language` and `speak.provider.language` fields instead.
-    """
-
-    context: typing.Optional[AgentV1SettingsAgentContext] = pydantic.Field(default=None)
-    """
-    Conversation context including the history of messages and function calls
-    """
-
-    listen: typing.Optional[AgentV1SettingsAgentListen] = None
-    think: typing.Optional[AgentV1SettingsAgentThink] = None
-    speak: typing.Optional[AgentV1SettingsAgentSpeak] = None
-    greeting: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    Optional message that agent will speak at the start
-    """
-
+class AgentV1SettingsAgent(AgentV1SettingsAgentContext):
+    # Backward-compat: before the 2026-05-05 schema restructure this public name
+    # was the top-level agent settings model. Keep it callable and translate the
+    # legacy nested `context=AgentV1SettingsAgentContext(messages=[...])` shape
+    # into the current `context={"messages": [...]}` payload.
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+
+        @pydantic.model_validator(mode="before")
+        @classmethod
+        def _migrate_legacy_nested_context(cls, values: typing.Any) -> typing.Any:
+            if not isinstance(values, dict):
+                return values
+
+            context = values.get("context")
+            if isinstance(context, AgentV1SettingsAgentContext) and (
+                context.context is not None
+                and context.language is None
+                and context.listen is None
+                and context.think is None
+                and context.speak is None
+                and context.greeting is None
+            ):
+                values = dict(values)
+                values["context"] = context.context
+
+            listen = values.get("listen")
+            if isinstance(listen, AgentV1SettingsAgentListen):
+                values = dict(values)
+                values["listen"] = listen.dict()
+
+            return values
     else:
 
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+        @pydantic.root_validator(pre=True)  # type: ignore[deprecated]
+        def _migrate_legacy_nested_context(cls, values: typing.Any) -> typing.Any:  # type: ignore[no-redef]
+            if not isinstance(values, dict):
+                return values
+
+            context = values.get("context")
+            if isinstance(context, AgentV1SettingsAgentContext) and (
+                context.context is not None
+                and context.language is None
+                and context.listen is None
+                and context.think is None
+                and context.speak is None
+                and context.greeting is None
+            ):
+                values = dict(values)
+                values["context"] = context.context
+
+            listen = values.get("listen")
+            if isinstance(listen, AgentV1SettingsAgentListen):
+                values = dict(values)
+                values["listen"] = listen.dict()
+
+            return values

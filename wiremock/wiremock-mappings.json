@@ -634,7 +634,7 @@
       },
       "response": {
         "status": 200,
-        "body": "{\n  \"members\": [\n    {\n      \"member_id\": \"member_id\",\n      \"email\": \"email\"\n    }\n  ]\n}",
+        "body": "{\n  \"members\": [\n    {\n      \"member_id\": \"member_id\",\n      \"scopes\": [\n        \"scopes\"\n      ],\n      \"email\": \"email\",\n      \"first_name\": \"first_name\",\n      \"last_name\": \"last_name\"\n    }\n  ]\n}",
         "headers": {
           "Content-Type": "application/json"
         }
