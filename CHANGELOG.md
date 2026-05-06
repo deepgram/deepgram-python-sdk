@@ -1,5 +1,17 @@
 # Changelog
 
+## [7.1.0](https://github.com/deepgram/deepgram-python-sdk/compare/v7.0.0...v7.1.0) (2026-05-06)
+
+
+### Features
+
+* update generated SDK models and restore agent settings compatibility ([#705](https://github.com/deepgram/deepgram-python-sdk/issues/705)) ([0b820c9](https://github.com/deepgram/deepgram-python-sdk/commit/0b820c900b886eb18da4cc88af7de6e10d1926a6))
+
+
+### Documentation
+
+* target Context7 benchmark gaps in Python skills [no-ci] ([#699](https://github.com/deepgram/deepgram-python-sdk/issues/699)) ([a232eb8](https://github.com/deepgram/deepgram-python-sdk/commit/a232eb8c62df2da98cef13c71e33f0b3b78f1095))
+
 ## [7.0.0](https://github.com/deepgram/deepgram-python-sdk/compare/v6.1.1...v7.0.0) (2026-04-27)
 
 
