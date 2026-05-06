@@ -25,5 +25,5 @@ class GroqParams(typing_extensions.TypedDict):
 
     reasoning_mode: typing_extensions.NotRequired[GroqThinkProviderReasoningMode]
     """
-    OpenAI reasoning_effort
+    Groq reasoning mode
     """

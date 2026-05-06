@@ -21,8 +21,15 @@ src/deepgram/speak/v1/socket_client.py
 # 2026-05-05. The new schema nests messages under .context.messages; this file
 # carries a model_validator(mode='before') that accepts the legacy `messages=`
 # kwarg and remaps it to `context={"messages": ...}` so existing callers keep
-# producing the correct wire payload.
+# producing the correct wire payload, plus a read-side `.messages` property so
+# existing attribute access keeps working.
 src/deepgram/agent/v1/types/agent_v1settings_agent_context.py
+src/deepgram/agent/v1/types/agent_v1settings_agent.py
+src/deepgram/agent/v1/types/agent_v1settings.py
+src/deepgram/agent/v1/types/agent_v1settings_audio_output.py
+src/deepgram/agent/v1/requests/agent_v1settings_agent_context.py
+src/deepgram/agent/v1/requests/agent_v1settings_agent.py
+src/deepgram/agent/v1/requests/agent_v1settings.py
 
 # Backward-compatibility alias shims for renamed generated public types/params.
 # These are hand-written wrappers around the current generated names and must not be regenerated.
@@ -60,6 +67,9 @@ tests/custom/test_compat_aliases.py
 tests/custom/test_text_builder.py
 tests/custom/test_transport.py
 tests/typecheck/compat_aliases.py
+
+# Wire test with restored compatibility coverage for legacy create-key request alias
+tests/wire/test_manage_v1_projects_keys.py
 
 # Manual standalone tests
 tests/manual
