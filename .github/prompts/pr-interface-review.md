@@ -14,7 +14,7 @@ This review is **strictly about the public surface** — types, classes, functio
    - Files under `types/`, `models/`, `schemas/`, `requests/`, `responses/`, `dto/`, `api/`, `proto/`, `openapi/`, `*.d.ts`.
    - Generated SDK files (Fern, OpenAPI Generator, protoc, etc.) — these are public surface even when auto-generated.
    - Any file whose path or name suggests it defines a contract (`*_request.py`, `*Params`, `*Response`, `I*.ts`, `*.proto`).
-3. **Ignore** lockfiles, vendored code, fixtures, internal helpers, and tests — except note when a test was *deleted* (see Step 5).
+3. **Ignore** lockfiles, vendored code, fixtures, internal helpers, and tests — except note when a test was *added*, *deleted*, or *modified to remove a case* (see Step 5).
 4. If the repo has compat-tracking docs (e.g. `AGENTS.md`, `CHANGELOG.md`, `MIGRATION.md`, `BREAKING.md`, `.fernignore`, codeowner files for "frozen" generated files), read them. They tell you what the maintainers consider stable, what shims already exist, and what's deliberately frozen.
 
 ## Step 2 — Extract every interface change
@@ -40,13 +40,13 @@ Assign each interface change to one of these tiers. Be strict; when in doubt, es
 | ✅ **3** | **Pure rename with full alias** | Identifier renamed, but the old name is preserved as an alias/re-export with identity preserved (`old is new` holds, or runtime type identity is preserved). |
 | 🔍 **4** | **Type tightening / silent risk** | A type was narrowed (e.g. `str` → enum), a default removed, a docstring contract changed, or behavior subtly shifted. Compiles fine; may surprise users. |
 | ➕ **5** | **Purely additive** | New optional field, new optional parameter with default, new method, new exported type. No existing caller can break. |
-| 🆕 **6** | **Brand-new public type** | Entirely new type/class/symbol with no predecessor. Only breaks callers who happened to define a same-named local symbol. |
+| 🆕 **6** | **Brand-new public type** | Entirely new type/class/symbol with no predecessor. Only breaks callers via name collision — same-named local symbol, glob imports (`from X import *`, `use X::*`), Go dot-imports, or TypeScript `import * as` destructuring. |
 
 ## Step 4 — For each change, document compat & gaps
 
 Use this template per interface:
 
-```
+```markdown
 ### N. <FullyQualifiedName>
 **File:** `path/to/file.ext`
 **Tier:** <emoji + number>
