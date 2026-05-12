@@ -1,5 +1,12 @@
 # Changelog
 
+## [7.1.1](https://github.com/deepgram/deepgram-python-sdk/compare/v7.1.0...v7.1.1) (2026-05-12)
+
+
+### Bug Fixes
+
+* lowercase bool query params on websocket connect ([#712](https://github.com/deepgram/deepgram-python-sdk/issues/712)) ([8899609](https://github.com/deepgram/deepgram-python-sdk/commit/88996096c6114e2f3a5d25ecf9e2128b11ca07f7))
+
 ## [7.1.0](https://github.com/deepgram/deepgram-python-sdk/compare/v7.0.0...v7.1.0) (2026-05-06)
 
 
