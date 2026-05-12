@@ -61,9 +61,17 @@ src/deepgram/agent/v1/requests/__init__.py
 src/deepgram/types/__init__.py
 src/deepgram/requests/__init__.py
 
+# Coerces Python bools to lowercase "true"/"false" before urlencode, which
+# otherwise stringifies via str() and produces "True"/"False" — rejected by
+# Deepgram's websocket query strings. HTTP raw_clients hand params to httpx
+# directly and are unaffected; httpx accepts the pre-stringified values fine.
+# [temporarily frozen — manual patches listed above]
+src/deepgram/core/query_encoder.py
+
 # Hand-written custom tests
 tests/custom/test_agent_history.py
 tests/custom/test_compat_aliases.py
+tests/custom/test_query_encoder.py
 tests/custom/test_text_builder.py
 tests/custom/test_transport.py
 tests/typecheck/compat_aliases.py
