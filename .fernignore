@@ -12,10 +12,10 @@ src/deepgram/client.py
 # - listen/v2 send_configure: typing.Any / raw _send shim (generator's ListenV2Configure model
 #   and ListenV2ConfigureSuccess not used)
 # [temporarily frozen — manual patches listed above]
-src/deepgram/agent/v1/socket_client.py
-src/deepgram/listen/v1/socket_client.py
-src/deepgram/listen/v2/socket_client.py
-src/deepgram/speak/v1/socket_client.py
+src/deepgram/agent/v1/socket_client.py.bak
+src/deepgram/listen/v1/socket_client.py.bak
+src/deepgram/listen/v2/socket_client.py.bak
+src/deepgram/speak/v1/socket_client.py.bak
 
 # Backward-compat patch: AgentV1SettingsAgentContext schema restructure as of
 # 2026-05-05. The new schema nests messages under .context.messages; this file
@@ -23,13 +23,13 @@ src/deepgram/speak/v1/socket_client.py
 # kwarg and remaps it to `context={"messages": ...}` so existing callers keep
 # producing the correct wire payload, plus a read-side `.messages` property so
 # existing attribute access keeps working.
-src/deepgram/agent/v1/types/agent_v1settings_agent_context.py
-src/deepgram/agent/v1/types/agent_v1settings_agent.py
-src/deepgram/agent/v1/types/agent_v1settings.py
-src/deepgram/agent/v1/types/agent_v1settings_audio_output.py
-src/deepgram/agent/v1/requests/agent_v1settings_agent_context.py
-src/deepgram/agent/v1/requests/agent_v1settings_agent.py
-src/deepgram/agent/v1/requests/agent_v1settings.py
+src/deepgram/agent/v1/types/agent_v1settings_agent_context.py.bak
+src/deepgram/agent/v1/types/agent_v1settings_agent.py.bak
+src/deepgram/agent/v1/types/agent_v1settings.py.bak
+src/deepgram/agent/v1/types/agent_v1settings_audio_output.py.bak
+src/deepgram/agent/v1/requests/agent_v1settings_agent_context.py.bak
+src/deepgram/agent/v1/requests/agent_v1settings_agent.py.bak
+src/deepgram/agent/v1/requests/agent_v1settings.py.bak
 
 # Backward-compatibility alias shims for renamed generated public types/params.
 # These are hand-written wrappers around the current generated names and must not be regenerated.
@@ -53,20 +53,20 @@ src/deepgram/requests/create_key_v1request_one.py
 # above shims. Fern would otherwise regenerate these and strip the legacy entries on
 # every regen. Frozen to preserve the public-import surface for renamed types/params.
 # Re-apply genuine new generator additions to these files manually after each regen.
-src/deepgram/__init__.py
-src/deepgram/agent/__init__.py
-src/deepgram/agent/v1/__init__.py
-src/deepgram/agent/v1/types/__init__.py
-src/deepgram/agent/v1/requests/__init__.py
-src/deepgram/types/__init__.py
-src/deepgram/requests/__init__.py
+src/deepgram/__init__.py.bak
+src/deepgram/agent/__init__.py.bak
+src/deepgram/agent/v1/__init__.py.bak
+src/deepgram/agent/v1/types/__init__.py.bak
+src/deepgram/agent/v1/requests/__init__.py.bak
+src/deepgram/types/__init__.py.bak
+src/deepgram/requests/__init__.py.bak
 
 # Coerces Python bools to lowercase "true"/"false" before urlencode, which
 # otherwise stringifies via str() and produces "True"/"False" — rejected by
 # Deepgram's websocket query strings. HTTP raw_clients hand params to httpx
 # directly and are unaffected; httpx accepts the pre-stringified values fine.
 # [temporarily frozen — manual patches listed above]
-src/deepgram/core/query_encoder.py
+src/deepgram/core/query_encoder.py.bak
 
 # Hand-written custom tests
 tests/custom/test_agent_history.py
@@ -77,7 +77,7 @@ tests/custom/test_transport.py
 tests/typecheck/compat_aliases.py
 
 # Wire test with restored compatibility coverage for legacy create-key request alias
-tests/wire/test_manage_v1_projects_keys.py
+tests/wire/test_manage_v1_projects_keys.py.bak
 
 # Manual standalone tests
 tests/manual
