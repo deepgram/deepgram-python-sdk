@@ -3,14 +3,19 @@
 import typing
 
 import pydantic
-from ....core.pydantic_utilities import IS_PYDANTIC_V2
-from ....core.unchecked_base_model import UncheckedBaseModel
+from ..core.pydantic_utilities import IS_PYDANTIC_V2
+from ..core.unchecked_base_model import UncheckedBaseModel
 
 
-class AgentV1SettingsAgentListenProviderV1(UncheckedBaseModel):
+class DeepgramListenProviderV1(UncheckedBaseModel):
     type: typing.Literal["deepgram"] = pydantic.Field(default="deepgram")
     """
     Provider type for speech-to-text
+    """
+
+    version: typing.Optional[typing.Literal["v1"]] = pydantic.Field(default=None)
+    """
+    Specifies usage of the V1 Deepgram speech-to-text API
     """
 
     model: typing.Optional[str] = pydantic.Field(default=None)

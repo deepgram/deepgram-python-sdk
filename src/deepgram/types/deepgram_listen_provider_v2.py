@@ -3,17 +3,20 @@
 import typing
 
 import pydantic
-from ....core.pydantic_utilities import IS_PYDANTIC_V2
-from ....core.unchecked_base_model import UncheckedBaseModel
-from .agent_v1settings_agent_context_listen_provider_v2language_hint import (
-    AgentV1SettingsAgentContextListenProviderV2LanguageHint,
-)
+from ..core.pydantic_utilities import IS_PYDANTIC_V2
+from ..core.unchecked_base_model import UncheckedBaseModel
+from .deepgram_listen_provider_v2language_hint import DeepgramListenProviderV2LanguageHint
 
 
-class AgentV1SettingsAgentContextListenProviderV2(UncheckedBaseModel):
+class DeepgramListenProviderV2(UncheckedBaseModel):
     type: typing.Literal["deepgram"] = pydantic.Field(default="deepgram")
     """
     Provider type for speech-to-text
+    """
+
+    version: typing.Optional[typing.Literal["v2"]] = pydantic.Field(default=None)
+    """
+    Specifies usage of the V2 Deepgram speech-to-text API (e.g. Flux)
     """
 
     model: str = pydantic.Field()
@@ -21,9 +24,7 @@ class AgentV1SettingsAgentContextListenProviderV2(UncheckedBaseModel):
     Model to use for speech to text using the V2 API (e.g. flux-general-en, flux-general-multi)
     """
 
-    language_hint: typing.Optional[AgentV1SettingsAgentContextListenProviderV2LanguageHint] = pydantic.Field(
-        default=None
-    )
+    language_hint: typing.Optional[DeepgramListenProviderV2LanguageHint] = pydantic.Field(default=None)
     """
     One or more BCP-47 language codes to bias the model toward specific languages. Only supported when model is flux-general-multi. Without hints, the model auto-detects the spoken language. See the Language Prompting guide for details.
     """

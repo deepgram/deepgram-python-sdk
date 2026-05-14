@@ -13,6 +13,7 @@ from ....errors.bad_request_error import BadRequestError
 from .types.media_transcribe_request_callback_method import MediaTranscribeRequestCallbackMethod
 from .types.media_transcribe_request_custom_intent_mode import MediaTranscribeRequestCustomIntentMode
 from .types.media_transcribe_request_custom_topic_mode import MediaTranscribeRequestCustomTopicMode
+from .types.media_transcribe_request_diarize_model import MediaTranscribeRequestDiarizeModel
 from .types.media_transcribe_request_encoding import MediaTranscribeRequestEncoding
 from .types.media_transcribe_request_model import MediaTranscribeRequestModel
 from .types.media_transcribe_request_summarize import MediaTranscribeRequestSummarize
@@ -47,6 +48,7 @@ class RawMediaClient:
         detect_entities: typing.Optional[bool] = None,
         detect_language: typing.Optional[bool] = None,
         diarize: typing.Optional[bool] = None,
+        diarize_model: typing.Optional[MediaTranscribeRequestDiarizeModel] = None,
         dictation: typing.Optional[bool] = None,
         encoding: typing.Optional[MediaTranscribeRequestEncoding] = None,
         filler_words: typing.Optional[bool] = None,
@@ -121,6 +123,9 @@ class RawMediaClient:
 
         diarize : typing.Optional[bool]
             Recognize speaker changes. Each word in the transcript will be assigned a speaker number starting at 0
+
+        diarize_model : typing.Optional[MediaTranscribeRequestDiarizeModel]
+            Select and enable a specific batch diarization model version. If specifying this parameter, you should not set the deprecated `diarize=true` parameter. Not accepted on streaming requests.
 
         dictation : typing.Optional[bool]
             Dictation mode for controlling formatting with dictated speech
@@ -213,6 +218,7 @@ class RawMediaClient:
                 "detect_entities": detect_entities,
                 "detect_language": detect_language,
                 "diarize": diarize,
+                "diarize_model": diarize_model,
                 "dictation": dictation,
                 "encoding": encoding,
                 "filler_words": filler_words,
@@ -293,6 +299,7 @@ class RawMediaClient:
         detect_entities: typing.Optional[bool] = None,
         detect_language: typing.Optional[bool] = None,
         diarize: typing.Optional[bool] = None,
+        diarize_model: typing.Optional[MediaTranscribeRequestDiarizeModel] = None,
         dictation: typing.Optional[bool] = None,
         encoding: typing.Optional[MediaTranscribeRequestEncoding] = None,
         filler_words: typing.Optional[bool] = None,
@@ -367,6 +374,9 @@ class RawMediaClient:
 
         diarize : typing.Optional[bool]
             Recognize speaker changes. Each word in the transcript will be assigned a speaker number starting at 0
+
+        diarize_model : typing.Optional[MediaTranscribeRequestDiarizeModel]
+            Select and enable a specific batch diarization model version. If specifying this parameter, you should not set the deprecated `diarize=true` parameter. Not accepted on streaming requests.
 
         dictation : typing.Optional[bool]
             Dictation mode for controlling formatting with dictated speech
@@ -459,6 +469,7 @@ class RawMediaClient:
                 "detect_entities": detect_entities,
                 "detect_language": detect_language,
                 "diarize": diarize,
+                "diarize_model": diarize_model,
                 "dictation": dictation,
                 "encoding": encoding,
                 "filler_words": filler_words,
@@ -542,6 +553,7 @@ class AsyncRawMediaClient:
         detect_entities: typing.Optional[bool] = None,
         detect_language: typing.Optional[bool] = None,
         diarize: typing.Optional[bool] = None,
+        diarize_model: typing.Optional[MediaTranscribeRequestDiarizeModel] = None,
         dictation: typing.Optional[bool] = None,
         encoding: typing.Optional[MediaTranscribeRequestEncoding] = None,
         filler_words: typing.Optional[bool] = None,
@@ -616,6 +628,9 @@ class AsyncRawMediaClient:
 
         diarize : typing.Optional[bool]
             Recognize speaker changes. Each word in the transcript will be assigned a speaker number starting at 0
+
+        diarize_model : typing.Optional[MediaTranscribeRequestDiarizeModel]
+            Select and enable a specific batch diarization model version. If specifying this parameter, you should not set the deprecated `diarize=true` parameter. Not accepted on streaming requests.
 
         dictation : typing.Optional[bool]
             Dictation mode for controlling formatting with dictated speech
@@ -708,6 +723,7 @@ class AsyncRawMediaClient:
                 "detect_entities": detect_entities,
                 "detect_language": detect_language,
                 "diarize": diarize,
+                "diarize_model": diarize_model,
                 "dictation": dictation,
                 "encoding": encoding,
                 "filler_words": filler_words,
@@ -788,6 +804,7 @@ class AsyncRawMediaClient:
         detect_entities: typing.Optional[bool] = None,
         detect_language: typing.Optional[bool] = None,
         diarize: typing.Optional[bool] = None,
+        diarize_model: typing.Optional[MediaTranscribeRequestDiarizeModel] = None,
         dictation: typing.Optional[bool] = None,
         encoding: typing.Optional[MediaTranscribeRequestEncoding] = None,
         filler_words: typing.Optional[bool] = None,
@@ -862,6 +879,9 @@ class AsyncRawMediaClient:
 
         diarize : typing.Optional[bool]
             Recognize speaker changes. Each word in the transcript will be assigned a speaker number starting at 0
+
+        diarize_model : typing.Optional[MediaTranscribeRequestDiarizeModel]
+            Select and enable a specific batch diarization model version. If specifying this parameter, you should not set the deprecated `diarize=true` parameter. Not accepted on streaming requests.
 
         dictation : typing.Optional[bool]
             Dictation mode for controlling formatting with dictated speech
@@ -954,6 +974,7 @@ class AsyncRawMediaClient:
                 "detect_entities": detect_entities,
                 "detect_language": detect_language,
                 "diarize": diarize,
+                "diarize_model": diarize_model,
                 "dictation": dictation,
                 "encoding": encoding,
                 "filler_words": filler_words,

@@ -27,7 +27,7 @@ class Groq(UncheckedBaseModel):
 
     reasoning_mode: typing.Optional[GroqThinkProviderReasoningMode] = pydantic.Field(default=None)
     """
-    Groq reasoning mode
+    OpenAI reasoning_effort
     """
 
     if IS_PYDANTIC_V2:

@@ -5,10 +5,15 @@ import typing
 import typing_extensions
 
 
-class AgentV1SettingsAgentListenProviderV1Params(typing_extensions.TypedDict):
+class DeepgramListenProviderV1Params(typing_extensions.TypedDict):
     type: typing.Literal["deepgram"]
     """
     Provider type for speech-to-text
+    """
+
+    version: typing_extensions.NotRequired[typing.Literal["v1"]]
+    """
+    Specifies usage of the V1 Deepgram speech-to-text API
     """
 
     model: typing_extensions.NotRequired[str]

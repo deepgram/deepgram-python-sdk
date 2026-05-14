@@ -3,15 +3,18 @@
 import typing
 
 import typing_extensions
-from .agent_v1settings_agent_context_listen_provider_v2language_hint import (
-    AgentV1SettingsAgentContextListenProviderV2LanguageHintParams,
-)
+from .deepgram_listen_provider_v2language_hint import DeepgramListenProviderV2LanguageHintParams
 
 
-class AgentV1SettingsAgentContextListenProviderV2Params(typing_extensions.TypedDict):
+class DeepgramListenProviderV2Params(typing_extensions.TypedDict):
     type: typing.Literal["deepgram"]
     """
     Provider type for speech-to-text
+    """
+
+    version: typing_extensions.NotRequired[typing.Literal["v2"]]
+    """
+    Specifies usage of the V2 Deepgram speech-to-text API (e.g. Flux)
     """
 
     model: str
@@ -19,7 +22,7 @@ class AgentV1SettingsAgentContextListenProviderV2Params(typing_extensions.TypedD
     Model to use for speech to text using the V2 API (e.g. flux-general-en, flux-general-multi)
     """
 
-    language_hint: typing_extensions.NotRequired[AgentV1SettingsAgentContextListenProviderV2LanguageHintParams]
+    language_hint: typing_extensions.NotRequired[DeepgramListenProviderV2LanguageHintParams]
     """
     One or more BCP-47 language codes to bias the model toward specific languages. Only supported when model is flux-general-multi. Without hints, the model auto-detects the spoken language. See the Language Prompting guide for details.
     """

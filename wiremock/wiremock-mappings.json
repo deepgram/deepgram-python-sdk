@@ -1,20 +1,20 @@
 {
   "mappings": [
     {
-      "id": "533b5d52-ab21-4763-aaae-87cf52f49aa5",
-      "name": "List Agent Think Models - default",
+      "id": "0fe59c56-e953-447e-9569-95754dccc9dd",
+      "name": "List Agent Think Models - List supported models",
       "request": {
         "urlPathTemplate": "/v1/agent/settings/think/models",
         "method": "GET"
       },
       "response": {
         "status": 200,
-        "body": "{\n  \"models\": [\n    {\n      \"id\": \"gpt-5\",\n      \"name\": \"name\",\n      \"provider\": \"open_ai\"\n    }\n  ]\n}",
+        "body": "{\n  \"models\": [\n    {\n      \"id\": \"gpt-5\",\n      \"name\": \"GPT-5\",\n      \"provider\": \"open_ai\"\n    }\n  ]\n}",
         "headers": {
           "Content-Type": "application/json"
         }
       },
-      "uuid": "533b5d52-ab21-4763-aaae-87cf52f49aa5",
+      "uuid": "0fe59c56-e953-447e-9569-95754dccc9dd",
       "persistent": true,
       "priority": 3,
       "metadata": {
@@ -114,6 +114,9 @@
           },
           "diarize": {
             "equalTo": "true"
+          },
+          "diarize_model": {
+            "equalTo": "latest"
           },
           "dictation": {
             "equalTo": "true"

@@ -6,7 +6,6 @@ import pydantic
 from ....core.pydantic_utilities import IS_PYDANTIC_V2
 from ....core.unchecked_base_model import UncheckedBaseModel
 from .agent_v1settings_agent_context_context import AgentV1SettingsAgentContextContext
-from .agent_v1settings_agent_context_messages_item import AgentV1SettingsAgentContextMessagesItem
 from .agent_v1settings_agent_context_listen import AgentV1SettingsAgentContextListen
 from .agent_v1settings_agent_context_speak import AgentV1SettingsAgentContextSpeak
 from .agent_v1settings_agent_context_think import AgentV1SettingsAgentContextThink
@@ -30,38 +29,6 @@ class AgentV1SettingsAgentContext(UncheckedBaseModel):
     """
     Optional message that agent will speak at the start
     """
-
-    # Backward-compat: pre-2026-05-05 callers passed `messages=[...]` directly on
-    # AgentV1SettingsAgentContext. The schema now nests that list under
-    # `context.messages`. Translate the legacy kwarg into the new shape so old
-    # call sites keep producing the correct wire payload.
-    if IS_PYDANTIC_V2:
-
-        @pydantic.model_validator(mode="before")
-        @classmethod
-        def _migrate_legacy_messages_to_context(cls, values: typing.Any) -> typing.Any:
-            if isinstance(values, dict) and "messages" in values and "context" not in values:
-                values = dict(values)
-                messages = values.pop("messages")
-                values["context"] = {"messages": messages}
-            return values
-    else:
-
-        @pydantic.root_validator(pre=True)  # type: ignore[deprecated]
-        def _migrate_legacy_messages_to_context(  # type: ignore[no-redef]
-            cls, values: typing.Any
-        ) -> typing.Any:
-            if isinstance(values, dict) and "messages" in values and "context" not in values:
-                values = dict(values)
-                messages = values.pop("messages")
-                values["context"] = {"messages": messages}
-            return values
-
-    @property
-    def messages(self) -> typing.Optional[typing.List[AgentV1SettingsAgentContextMessagesItem]]:
-        if self.context is None:
-            return None
-        return self.context.messages
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
