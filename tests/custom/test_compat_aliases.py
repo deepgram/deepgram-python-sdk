@@ -303,3 +303,45 @@ def test_agent_settings_audio_output_container_still_accepts_arbitrary_strings()
     output = AgentV1SettingsAudioOutput(container="webm")
 
     assert output.container == "webm"
+
+
+def test_listen_provider_type_aliases_resolve_to_deepgram_top_level() -> None:
+    from deepgram.agent.v1.types import (
+        AgentV1SettingsAgentContextListenProviderV1,
+        AgentV1SettingsAgentContextListenProviderV2,
+        AgentV1SettingsAgentContextListenProviderV2LanguageHint,
+        AgentV1SettingsAgentListenProviderV1,
+        AgentV1SettingsAgentListenProviderV2,
+    )
+    from deepgram.types import (
+        DeepgramListenProviderV1,
+        DeepgramListenProviderV2,
+        DeepgramListenProviderV2LanguageHint,
+    )
+
+    assert AgentV1SettingsAgentContextListenProviderV1 is DeepgramListenProviderV1
+    assert AgentV1SettingsAgentContextListenProviderV2 is DeepgramListenProviderV2
+    assert AgentV1SettingsAgentContextListenProviderV2LanguageHint is DeepgramListenProviderV2LanguageHint
+    assert AgentV1SettingsAgentListenProviderV1 is DeepgramListenProviderV1
+    assert AgentV1SettingsAgentListenProviderV2 is DeepgramListenProviderV2
+
+
+def test_listen_provider_request_aliases_resolve_to_deepgram_top_level() -> None:
+    from deepgram.agent.v1.requests import (
+        AgentV1SettingsAgentContextListenProviderV1Params,
+        AgentV1SettingsAgentContextListenProviderV2LanguageHintParams,
+        AgentV1SettingsAgentContextListenProviderV2Params,
+        AgentV1SettingsAgentListenProviderV1Params,
+        AgentV1SettingsAgentListenProviderV2Params,
+    )
+    from deepgram.requests import (
+        DeepgramListenProviderV1Params,
+        DeepgramListenProviderV2LanguageHintParams,
+        DeepgramListenProviderV2Params,
+    )
+
+    assert AgentV1SettingsAgentContextListenProviderV1Params is DeepgramListenProviderV1Params
+    assert AgentV1SettingsAgentContextListenProviderV2Params is DeepgramListenProviderV2Params
+    assert AgentV1SettingsAgentContextListenProviderV2LanguageHintParams is DeepgramListenProviderV2LanguageHintParams
+    assert AgentV1SettingsAgentListenProviderV1Params is DeepgramListenProviderV1Params
+    assert AgentV1SettingsAgentListenProviderV2Params is DeepgramListenProviderV2Params
