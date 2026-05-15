@@ -5,17 +5,17 @@ from __future__ import annotations
 
 class DeepgramClientEnvironment:
     PRODUCTION: DeepgramClientEnvironment
-    AGENT: DeepgramClientEnvironment
 
-    def __init__(self, *, base: str, production: str, agent: str):
+    def __init__(self, *, base: str, production: str, agent: str, agent_rest: str):
         self.base = base
         self.production = production
         self.agent = agent
+        self.agent_rest = agent_rest
 
 
 DeepgramClientEnvironment.PRODUCTION = DeepgramClientEnvironment(
-    base="https://api.deepgram.com", production="wss://api.deepgram.com", agent="wss://agent.deepgram.com"
-)
-DeepgramClientEnvironment.AGENT = DeepgramClientEnvironment(
-    base="https://agent.deepgram.com", production="wss://api.deepgram.com", agent="wss://agent.deepgram.com"
+    base="https://api.deepgram.com",
+    production="wss://api.deepgram.com",
+    agent="wss://agent.deepgram.com",
+    agent_rest="https://agent.deepgram.com",
 )
