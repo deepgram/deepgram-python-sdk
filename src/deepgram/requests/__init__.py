@@ -39,6 +39,9 @@ if typing.TYPE_CHECKING:
     )
     from .create_project_invite_v1response import CreateProjectInviteV1ResponseParams
     from .deepgram import DeepgramParams
+    from .deepgram_listen_provider_v1 import DeepgramListenProviderV1Params
+    from .deepgram_listen_provider_v2 import DeepgramListenProviderV2Params
+    from .deepgram_listen_provider_v2language_hint import DeepgramListenProviderV2LanguageHintParams
     from .delete_project_invite_v1response import DeleteProjectInviteV1ResponseParams
     from .delete_project_key_v1response import DeleteProjectKeyV1ResponseParams
     from .delete_project_member_v1response import DeleteProjectMemberV1ResponseParams
@@ -244,6 +247,9 @@ _dynamic_imports: typing.Dict[str, str] = {
     "CreateProjectDistributionCredentialsV1ResponseMemberParams": ".create_project_distribution_credentials_v1response_member",
     "CreateProjectDistributionCredentialsV1ResponseParams": ".create_project_distribution_credentials_v1response",
     "CreateProjectInviteV1ResponseParams": ".create_project_invite_v1response",
+    "DeepgramListenProviderV1Params": ".deepgram_listen_provider_v1",
+    "DeepgramListenProviderV2LanguageHintParams": ".deepgram_listen_provider_v2language_hint",
+    "DeepgramListenProviderV2Params": ".deepgram_listen_provider_v2",
     "DeepgramParams": ".deepgram",
     "DeleteProjectInviteV1ResponseParams": ".delete_project_invite_v1response",
     "DeleteProjectKeyV1ResponseParams": ".delete_project_key_v1response",
@@ -436,6 +442,9 @@ __all__ = [
     "CreateProjectDistributionCredentialsV1ResponseMemberParams",
     "CreateProjectDistributionCredentialsV1ResponseParams",
     "CreateProjectInviteV1ResponseParams",
+    "DeepgramListenProviderV1Params",
+    "DeepgramListenProviderV2LanguageHintParams",
+    "DeepgramListenProviderV2Params",
     "DeepgramParams",
     "DeleteProjectInviteV1ResponseParams",
     "DeleteProjectKeyV1ResponseParams",

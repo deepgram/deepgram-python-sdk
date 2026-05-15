@@ -6,8 +6,8 @@ import pydantic
 from ....core.pydantic_utilities import IS_PYDANTIC_V2
 from ....core.unchecked_base_model import UncheckedBaseModel
 from .agent_v1settings_agent_context_context import AgentV1SettingsAgentContextContext
-from .agent_v1settings_agent_context_messages_item import AgentV1SettingsAgentContextMessagesItem
 from .agent_v1settings_agent_context_listen import AgentV1SettingsAgentContextListen
+from .agent_v1settings_agent_context_messages_item import AgentV1SettingsAgentContextMessagesItem
 from .agent_v1settings_agent_context_speak import AgentV1SettingsAgentContextSpeak
 from .agent_v1settings_agent_context_think import AgentV1SettingsAgentContextThink
 

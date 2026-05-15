@@ -5,6 +5,7 @@ from __future__ import annotations
 import typing
 
 import typing_extensions
+from ....requests.deepgram_listen_provider_v2language_hint import DeepgramListenProviderV2LanguageHintParams
 
 
 class AgentV1SettingsAgentListenProvider_V1Params(typing_extensions.TypedDict):
@@ -20,6 +21,7 @@ class AgentV1SettingsAgentListenProvider_V2Params(typing_extensions.TypedDict):
     version: typing.Literal["v2"]
     type: typing.Literal["deepgram"]
     model: str
+    language_hint: typing_extensions.NotRequired[DeepgramListenProviderV2LanguageHintParams]
     keyterms: typing_extensions.NotRequired[typing.Sequence[str]]
 
 

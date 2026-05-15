@@ -49,6 +49,21 @@ src/deepgram/agent/v1/requests/agent_v1settings_agent_context_messages_item_func
 src/deepgram/types/create_key_v1request_one.py
 src/deepgram/requests/create_key_v1request_one.py
 
+# Backward-compatibility alias shims for the 2026-05-14 listen-provider rename.
+# The spec deduplicated AgentV1SettingsAgent[Context]ListenProviderV1/V2/V2LanguageHint
+# into a single top-level DeepgramListenProvider* type. These hand-written aliases
+# preserve the old public import paths so existing callers keep working.
+src/deepgram/agent/v1/types/agent_v1settings_agent_context_listen_provider_v1.py
+src/deepgram/agent/v1/types/agent_v1settings_agent_context_listen_provider_v2.py
+src/deepgram/agent/v1/types/agent_v1settings_agent_context_listen_provider_v2language_hint.py
+src/deepgram/agent/v1/types/agent_v1settings_agent_listen_provider_v1.py
+src/deepgram/agent/v1/types/agent_v1settings_agent_listen_provider_v2.py
+src/deepgram/agent/v1/requests/agent_v1settings_agent_context_listen_provider_v1.py
+src/deepgram/agent/v1/requests/agent_v1settings_agent_context_listen_provider_v2.py
+src/deepgram/agent/v1/requests/agent_v1settings_agent_context_listen_provider_v2language_hint.py
+src/deepgram/agent/v1/requests/agent_v1settings_agent_listen_provider_v1.py
+src/deepgram/agent/v1/requests/agent_v1settings_agent_listen_provider_v2.py
+
 # Package __init__.py files that carry hand-applied legacy alias re-exports for the
 # above shims. Fern would otherwise regenerate these and strip the legacy entries on
 # every regen. Frozen to preserve the public-import surface for renamed types/params.

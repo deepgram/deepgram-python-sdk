@@ -8,9 +8,7 @@ import pydantic
 import typing_extensions
 from ....core.pydantic_utilities import IS_PYDANTIC_V2
 from ....core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
-from .agent_v1settings_agent_context_listen_provider_v2language_hint import (
-    AgentV1SettingsAgentContextListenProviderV2LanguageHint,
-)
+from ....types.deepgram_listen_provider_v2language_hint import DeepgramListenProviderV2LanguageHint
 
 
 class AgentV1SettingsAgentContextListenProvider_V1(UncheckedBaseModel):
@@ -35,7 +33,7 @@ class AgentV1SettingsAgentContextListenProvider_V2(UncheckedBaseModel):
     version: typing.Literal["v2"] = "v2"
     type: typing.Literal["deepgram"] = "deepgram"
     model: str
-    language_hint: typing.Optional[AgentV1SettingsAgentContextListenProviderV2LanguageHint] = None
+    language_hint: typing.Optional[DeepgramListenProviderV2LanguageHint] = None
     keyterms: typing.Optional[typing.List[str]] = None
 
     if IS_PYDANTIC_V2:

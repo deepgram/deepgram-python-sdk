@@ -49,6 +49,9 @@ if typing.TYPE_CHECKING:
     )
     from .create_project_invite_v1response import CreateProjectInviteV1Response
     from .deepgram import Deepgram
+    from .deepgram_listen_provider_v1 import DeepgramListenProviderV1
+    from .deepgram_listen_provider_v2 import DeepgramListenProviderV2
+    from .deepgram_listen_provider_v2language_hint import DeepgramListenProviderV2LanguageHint
     from .deepgram_speak_provider_model import DeepgramSpeakProviderModel
     from .delete_agent_configuration_v1response import DeleteAgentConfigurationV1Response
     from .delete_agent_variable_v1response import DeleteAgentVariableV1Response
@@ -316,6 +319,9 @@ _dynamic_imports: typing.Dict[str, str] = {
     "CreateProjectDistributionCredentialsV1ResponseMember": ".create_project_distribution_credentials_v1response_member",
     "CreateProjectInviteV1Response": ".create_project_invite_v1response",
     "Deepgram": ".deepgram",
+    "DeepgramListenProviderV1": ".deepgram_listen_provider_v1",
+    "DeepgramListenProviderV2": ".deepgram_listen_provider_v2",
+    "DeepgramListenProviderV2LanguageHint": ".deepgram_listen_provider_v2language_hint",
     "DeepgramSpeakProviderModel": ".deepgram_speak_provider_model",
     "DeleteAgentConfigurationV1Response": ".delete_agent_configuration_v1response",
     "DeleteAgentVariableV1Response": ".delete_agent_variable_v1response",
@@ -573,6 +579,9 @@ __all__ = [
     "CreateProjectDistributionCredentialsV1ResponseMember",
     "CreateProjectInviteV1Response",
     "Deepgram",
+    "DeepgramListenProviderV1",
+    "DeepgramListenProviderV2",
+    "DeepgramListenProviderV2LanguageHint",
     "DeepgramSpeakProviderModel",
     "DeleteAgentConfigurationV1Response",
     "DeleteAgentVariableV1Response",

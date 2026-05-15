@@ -1,6 +1,6 @@
-from deepgram.requests import CreateKeyV1RequestOneParams
-
 from .conftest import get_client, verify_request_count
+
+from deepgram.requests import CreateKeyV1RequestOneParams
 
 
 def test_manage_v1_projects_keys_list_() -> None:
