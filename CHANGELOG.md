@@ -1,5 +1,19 @@
 # Changelog
 
+## [7.2.0](https://github.com/deepgram/deepgram-python-sdk/compare/v7.1.1...v7.2.0) (2026-05-18)
+
+
+### Features
+
+* **agent:** Diarization v2 is now GA for batch transcription via the listen REST API ([#714](https://github.com/deepgram/deepgram-python-sdk/issues/714)) ([9d9a43d](https://github.com/deepgram/deepgram-python-sdk/commit/9d9a43dbc2bd739068b05e5d136f487b56ef5b7c))
+* **agent:** rename listen-provider types to `DeepgramListenProviderV1`, `DeepgramListenProviderV2`, and `DeepgramListenProviderV2LanguageHint`. The old `AgentV1SettingsAgent[Context]ListenProvider*` names continue to work as backward-compatible aliases ([#714](https://github.com/deepgram/deepgram-python-sdk/issues/714)) ([9d9a43d](https://github.com/deepgram/deepgram-python-sdk/commit/9d9a43dbc2bd739068b05e5d136f487b56ef5b7c))
+
+
+### Bug Fixes
+
+* **agent:** route `agent.v1.settings.think.models.list()` to the correct REST host. Previously this endpoint resolved against the wrong base URL and was unusable ([#715](https://github.com/deepgram/deepgram-python-sdk/issues/715)) ([ffd2e7d](https://github.com/deepgram/deepgram-python-sdk/commit/ffd2e7d7e0e0ea2d72e13e1d4c91ac52e97a5ee8))
+* **environment:** replace `DeepgramClientEnvironment.AGENT` with a new `agent_rest` slot on `DeepgramClientEnvironment`. Callers constructing a custom environment should pass `agent_rest=` instead of `agent=` ([#715](https://github.com/deepgram/deepgram-python-sdk/issues/715)) ([ffd2e7d](https://github.com/deepgram/deepgram-python-sdk/commit/ffd2e7d7e0e0ea2d72e13e1d4c91ac52e97a5ee8))
+
 ## [7.1.1](https://github.com/deepgram/deepgram-python-sdk/compare/v7.1.0...v7.1.1) (2026-05-12)
 
 
