@@ -1,6 +1,11 @@
 # Custom client implementation extending BaseClient with additional features:
 # - access_token parameter support (Bearer token authentication)
 # - Automatic session ID generation and header injection (x-deepgram-session-id)
+# - transport_factory parameter for plugging in a custom WebSocket transport
+# - reconnect flag (default True) — declarative flag indicating whether the SDK
+#   is expected to manage WebSocket reconnects. Auto-disabled when a custom
+#   transport_factory is provided so transports that own their retry lifecycle
+#   (e.g. SageMaker) aren't double-stacked with future SDK-side reconnect logic.
 # This file is manually maintained and should not be regenerated
 src/deepgram/client.py
 
