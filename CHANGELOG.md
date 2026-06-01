@@ -1,5 +1,12 @@
 # Changelog
 
+## [7.3.0](https://github.com/deepgram/deepgram-python-sdk/compare/v7.2.0...v7.3.0) (2026-06-01)
+
+
+### Features
+
+* add declarative reconnect flag with transport-factory auto-disable ([#720](https://github.com/deepgram/deepgram-python-sdk/issues/720)) ([b5d5905](https://github.com/deepgram/deepgram-python-sdk/commit/b5d590577429adeacfe2068df4c33201a158c9de))
+
 ## [7.2.0](https://github.com/deepgram/deepgram-python-sdk/compare/v7.1.1...v7.2.0) (2026-05-18)
 
 
