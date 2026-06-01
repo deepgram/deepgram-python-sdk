@@ -22,7 +22,7 @@ How to identify:
 - The file lives **outside `src/deepgram/`** in a hand-maintained location (e.g., `.claude/`, `docs/`)
 
 Current permanently frozen files:
-- `src/deepgram/client.py` — entirely custom (Bearer auth, session ID); no Fern equivalent
+- `src/deepgram/client.py` — entirely custom (Bearer auth, session ID, `transport_factory`, `reconnect` parity flag); no Fern equivalent
 - `src/deepgram/helpers/` — hand-written TextBuilder helpers
 - `src/deepgram/agent/v1/types/agent_v1history_content.py`, `src/deepgram/agent/v1/types/agent_v1history_function_calls.py`, `src/deepgram/agent/v1/types/agent_v1settings_agent_context_messages_item.py`, `src/deepgram/agent/v1/types/agent_v1settings_agent_context_messages_item_content.py`, `src/deepgram/agent/v1/types/agent_v1settings_agent_context_messages_item_content_role.py`, `src/deepgram/agent/v1/types/agent_v1settings_agent_context_messages_item_function_calls.py`, `src/deepgram/agent/v1/types/agent_v1settings_agent_context_messages_item_function_calls_function_calls_item.py` — hand-written compatibility aliases preserving old public Agent History type imports after regen renames
 - `src/deepgram/agent/v1/requests/agent_v1history_content.py`, `src/deepgram/agent/v1/requests/agent_v1history_function_calls.py`, `src/deepgram/agent/v1/requests/agent_v1settings_agent_context_messages_item.py`, `src/deepgram/agent/v1/requests/agent_v1settings_agent_context_messages_item_content.py`, `src/deepgram/agent/v1/requests/agent_v1settings_agent_context_messages_item_function_calls.py`, `src/deepgram/agent/v1/requests/agent_v1settings_agent_context_messages_item_function_calls_function_calls_item.py` — hand-written compatibility aliases preserving old public Agent History request-param imports after regen renames

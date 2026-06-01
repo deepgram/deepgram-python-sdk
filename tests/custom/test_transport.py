@@ -479,3 +479,54 @@ class TestClientConstruction:
             mod = sys.modules[mod_path]
             if hasattr(mod, "websockets_client_connect"):
                 assert isinstance(mod.websockets_client_connect, _AsyncTransportShim)
+
+
+# ---------------------------------------------------------------------------
+# `reconnect` parity flag
+# ---------------------------------------------------------------------------
+
+class TestReconnectFlag:
+    """The `reconnect` flag is declarative in Python (no wrapper layer to disable
+    today), but is auto-disabled when a custom transport is in use so transports
+    that own their retry lifecycle aren't double-stacked with future SDK-side
+    reconnect logic."""
+
+    def test_default_reconnect_is_true(self):
+        from deepgram.client import DeepgramClient
+        client = DeepgramClient(api_key="test-key")
+        assert client.reconnect is True
+
+    def test_explicit_reconnect_false(self):
+        from deepgram.client import DeepgramClient
+        client = DeepgramClient(api_key="test-key", reconnect=False)
+        assert client.reconnect is False
+
+    def test_transport_factory_auto_disables_reconnect(self):
+        _ensure_modules_loaded()
+        factory = MagicMock()
+        from deepgram.client import DeepgramClient
+        client = DeepgramClient(api_key="test-key", transport_factory=factory)
+        assert client.reconnect is False
+
+    def test_transport_factory_overrides_explicit_true(self):
+        """Even when the caller passes reconnect=True, a custom transport_factory
+        wins -- the custom transport owns its retry lifecycle."""
+        _ensure_modules_loaded()
+        factory = MagicMock()
+        from deepgram.client import DeepgramClient
+        client = DeepgramClient(
+            api_key="test-key", transport_factory=factory, reconnect=True
+        )
+        assert client.reconnect is False
+
+    def test_async_default_reconnect_is_true(self):
+        from deepgram.client import AsyncDeepgramClient
+        client = AsyncDeepgramClient(api_key="test-key")
+        assert client.reconnect is True
+
+    def test_async_transport_factory_auto_disables_reconnect(self):
+        _ensure_modules_loaded()
+        factory = MagicMock()
+        from deepgram.client import AsyncDeepgramClient
+        client = AsyncDeepgramClient(api_key="test-key", transport_factory=factory)
+        assert client.reconnect is False

@@ -12,6 +12,14 @@ Adds support for:
 - `transport_factory` to replace the default `websockets` transport with a custom one:
   - A callable: ``factory(url, headers) -> transport`` returning an object with
     ``send()``, ``recv()``, iteration, and ``close()`` support.
+- `reconnect` flag (default `True`) declaring whether the SDK is expected to
+  manage WebSocket reconnects for this client. When a custom
+  ``transport_factory`` is set, ``reconnect`` is auto-disabled because the
+  custom transport owns its own retry/reconnect lifecycle; double-stacking
+  retries on top would cause storm-on-storm under burst load. The Python
+  SDK has no wrapper reconnect layer today, so this flag is declarative
+  only -- it documents intent and is reserved for any future SDK-side
+  reconnect logic.
 """
 
 import types
@@ -57,6 +65,12 @@ class DeepgramClient(BaseClient):
     - `transport_factory`: Custom sync WebSocket transport factory. A callable
                            ``factory(url, headers) -> transport`` whose return value must support
                            ``send()``, ``recv()``, iteration, and ``close()``.
+    - `reconnect`: Declarative flag (default ``True``) signalling whether the SDK is
+                    expected to manage WebSocket reconnects for this client. Auto-disabled
+                    when ``transport_factory`` is set, since the custom transport owns its
+                    retry/reconnect lifecycle. The Python SDK has no wrapper reconnect layer
+                    today, so this flag is declarative only -- it documents intent and is
+                    reserved for any future SDK-side reconnect logic.
     - `telemetry_opt_out`: Telemetry opt-out flag (maintained for backwards compatibility, no-op).
     - `telemetry_handler`: Telemetry handler (maintained for backwards compatibility, no-op).
     """
@@ -65,6 +79,7 @@ class DeepgramClient(BaseClient):
         access_token: Optional[str] = kwargs.pop("access_token", None)
         session_id: Optional[str] = kwargs.pop("session_id", None)
         transport_factory: Optional[Callable] = kwargs.pop("transport_factory", None)
+        reconnect: bool = bool(kwargs.pop("reconnect", True))
         telemetry_opt_out: bool = bool(kwargs.pop("telemetry_opt_out", True))
         telemetry_handler: Optional[Any] = kwargs.pop("telemetry_handler", None)
 
@@ -95,9 +110,13 @@ class DeepgramClient(BaseClient):
         if access_token is not None:
             _apply_bearer_authorization_override(self._client_wrapper, access_token)
 
-        # Install custom WebSocket transport if provided
+        # Install custom WebSocket transport if provided. Auto-disable
+        # `reconnect`: a custom transport owns its retry lifecycle, so flip
+        # the flag off even if the caller left it at the default.
         if transport_factory is not None:
             install_transport(sync_factory=transport_factory)
+            reconnect = False
+        self.reconnect = reconnect
 
         # Store telemetry handler for backwards compatibility (no-op, telemetry not implemented)
         self._telemetry_handler = None
@@ -114,6 +133,12 @@ class AsyncDeepgramClient(AsyncBaseClient):
     - `transport_factory`: Custom async WebSocket transport factory. A callable
                            ``factory(url, headers) -> transport`` whose return value must support
                            ``send()``, ``recv()``, async iteration, and ``close()``.
+    - `reconnect`: Declarative flag (default ``True``) signalling whether the SDK is
+                    expected to manage WebSocket reconnects for this client. Auto-disabled
+                    when ``transport_factory`` is set, since the custom transport owns its
+                    retry/reconnect lifecycle. The Python SDK has no wrapper reconnect layer
+                    today, so this flag is declarative only -- it documents intent and is
+                    reserved for any future SDK-side reconnect logic.
     - `telemetry_opt_out`: Telemetry opt-out flag (maintained for backwards compatibility, no-op).
     - `telemetry_handler`: Telemetry handler (maintained for backwards compatibility, no-op).
     """
@@ -122,6 +147,7 @@ class AsyncDeepgramClient(AsyncBaseClient):
         access_token: Optional[str] = kwargs.pop("access_token", None)
         session_id: Optional[str] = kwargs.pop("session_id", None)
         transport_factory: Optional[Callable] = kwargs.pop("transport_factory", None)
+        reconnect: bool = bool(kwargs.pop("reconnect", True))
         telemetry_opt_out: bool = bool(kwargs.pop("telemetry_opt_out", True))
         telemetry_handler: Optional[Any] = kwargs.pop("telemetry_handler", None)
 
@@ -152,9 +178,13 @@ class AsyncDeepgramClient(AsyncBaseClient):
         if access_token is not None:
             _apply_bearer_authorization_override(self._client_wrapper, access_token)
 
-        # Install custom WebSocket transport if provided
+        # Install custom WebSocket transport if provided. Auto-disable
+        # `reconnect`: a custom transport owns its retry lifecycle, so flip
+        # the flag off even if the caller left it at the default.
         if transport_factory is not None:
             install_transport(async_factory=transport_factory)
+            reconnect = False
+        self.reconnect = reconnect
 
         # Store telemetry handler for backwards compatibility (no-op, telemetry not implemented)
         self._telemetry_handler = None
