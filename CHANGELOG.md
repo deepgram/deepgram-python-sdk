@@ -1,5 +1,12 @@
 # Changelog
 
+## [7.3.0](https://github.com/deepgram/deepgram-python-sdk/compare/v7.2.0...v7.3.0) (2026-06-01)
+
+
+### Features
+
+* **client:** add a declarative `reconnect` flag with transport-factory auto-disable. `DeepgramClient` / `AsyncDeepgramClient` now accept `reconnect: bool = True` (exposed read-only as `client.reconnect`). When a custom `transport_factory` is supplied, `reconnect` auto-sets to `False` to signal that the transport owns its own retry/reconnect lifecycle — e.g. the SageMaker transport's jittered backoff + replay buffers — so SDK-level retries don't stack on top and cause storm-on-storm under burst load. Pass `reconnect=True` explicitly to opt back in. Declarative only for now (the Python SDK has no wrapper reconnect layer; `websockets` doesn't auto-reconnect), fully backwards-compatible, and parity with the same flag in the JS ([#492](https://github.com/deepgram/deepgram-js-sdk/issues/492)) and Java SDKs ([#720](https://github.com/deepgram/deepgram-python-sdk/issues/720)) ([b5d5905](https://github.com/deepgram/deepgram-python-sdk/commit/b5d590577429adeacfe2068df4c33201a158c9de))
+
 ## [7.2.0](https://github.com/deepgram/deepgram-python-sdk/compare/v7.1.1...v7.2.0) (2026-05-18)
 
 
