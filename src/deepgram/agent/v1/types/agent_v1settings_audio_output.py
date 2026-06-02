@@ -5,7 +5,6 @@ import typing
 import pydantic
 from ....core.pydantic_utilities import IS_PYDANTIC_V2
 from ....core.unchecked_base_model import UncheckedBaseModel
-from .agent_v1settings_audio_output_container import AgentV1SettingsAudioOutputContainer
 from .agent_v1settings_audio_output_encoding import AgentV1SettingsAudioOutputEncoding
 
 
@@ -29,9 +28,9 @@ class AgentV1SettingsAudioOutput(UncheckedBaseModel):
     Audio bitrate in bits per second
     """
 
-    container: typing.Optional[AgentV1SettingsAudioOutputContainer] = pydantic.Field(default=None)
+    container: typing.Optional[str] = pydantic.Field(default=None)
     """
-    Audio container format.
+    Audio container format. If omitted, defaults to 'none'
     """
 
     if IS_PYDANTIC_V2:
