@@ -2,6 +2,6 @@
 
 import typing
 
-from ..types.listen_v1response_results_channels_item import ListenV1ResponseResultsChannelsItem
+from .listen_v1response_results_channels_item import ListenV1ResponseResultsChannelsItemParams
 
-ListenV1ResponseResultsChannelsParams = typing.List[ListenV1ResponseResultsChannelsItem]
+ListenV1ResponseResultsChannelsParams = typing.Sequence[ListenV1ResponseResultsChannelsItemParams]

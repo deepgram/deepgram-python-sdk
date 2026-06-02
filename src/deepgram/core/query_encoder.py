@@ -5,14 +5,6 @@ from typing import Any, Dict, List, Optional, Tuple
 import pydantic
 
 
-def _coerce_query_value(value: Any) -> Any:
-    # urllib.parse.urlencode stringifies bools via str(), producing "True"/"False";
-    # APIs (including Deepgram's websocket endpoints) expect lowercase.
-    if isinstance(value, bool):
-        return "true" if value else "false"
-    return value
-
-
 # Flattens dicts to be of the form {"key[subkey][subkey2]": value} where value is not a dict
 def traverse_query_dict(dict_flat: Dict[str, Any], key_prefix: Optional[str] = None) -> List[Tuple[str, Any]]:
     result = []
@@ -25,9 +17,9 @@ def traverse_query_dict(dict_flat: Dict[str, Any], key_prefix: Optional[str] = N
                 if isinstance(arr_v, dict):
                     result.extend(traverse_query_dict(arr_v, key))
                 else:
-                    result.append((key, _coerce_query_value(arr_v)))
+                    result.append((key, arr_v))
         else:
-            result.append((key, _coerce_query_value(v)))
+            result.append((key, v))
     return result
 
 
@@ -49,11 +41,11 @@ def single_query_encoder(query_key: str, query_value: Any) -> List[Tuple[str, An
 
                 encoded_values.extend(single_query_encoder(query_key, obj_dict))
             else:
-                encoded_values.append((query_key, _coerce_query_value(value)))
+                encoded_values.append((query_key, value))
 
         return encoded_values
 
-    return [(query_key, _coerce_query_value(query_value))]
+    return [(query_key, query_value)]
 
 
 def encode_query(query: Optional[Dict[str, Any]]) -> Optional[List[Tuple[str, Any]]]:
