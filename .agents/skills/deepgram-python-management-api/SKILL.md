@@ -7,18 +7,9 @@ description: Use when writing or reviewing Python code in this repo that calls D
 
 Administrative REST endpoints at `api.deepgram.com/v1/projects`, `/v1/models`, and reusable agent configuration storage. Project-scoped resources live under `client.manage.v1.projects.*` (keys, members, members.invites, usage, billing, models, requests). Global models at `client.manage.v1.models`. Think-model discovery at `client.agent.v1.settings.think.models`. Reusable agent configs at `client.voice_agent.configurations.*`.
 
-## When to use this product
-
-- **Discover / pin models**: `client.manage.v1.models.list()` returns the active STT/TTS set.
-- **Project admin**: list/get/update/delete/leave projects.
-- **API key lifecycle**: list/create/delete project keys.
-- **Member + invite management**: add/remove members, manage roles, send/revoke invites.
-- **Usage + billing**: query request volume, balances.
-- **Reusable Voice Agent configs**: persist the **`agent` block** of a Settings message on the server, reference by `agent_id`. The stored blob is the `agent` object only (listen / think / speak providers + prompt), not the full `AgentV1Settings`.
-
 **Use a different skill when:**
-- You want to actually talk to an agent → `deepgram-python-voice-agent`.
-- You want to transcribe or synthesize → STT/TTS skills.
+- Running an agent interactively → `deepgram-python-voice-agent`.
+- Transcribing or synthesizing → STT/TTS skills.
 
 ## Authentication
 
@@ -85,33 +76,24 @@ See `examples/51-55` for each sub-module.
 
 ## Quick start — Voice Agent configurations
 
+**Important:** The stored config is the `agent` block only (listen/think/speak providers + prompt) as a JSON string, NOT the full `AgentV1Settings`. Top-level fields like `audio` go in the live Settings message at connect time. The returned `agent_id` replaces the inline `agent` object in future Settings messages. Configs are immutable -- create a new one to change behavior; only metadata is mutable.
+
 ```python
-# List reusable configs
+import json
 configs = client.voice_agent.configurations.list(project_id=pid)
 
-# Create: `config` is a JSON string of the `agent` BLOCK ONLY — not the full
-# Settings message. Do NOT include top-level Settings fields like `audio`;
-# those are sent at connect-time in the live Settings message. The stored
-# `agent_id` later replaces the inline `agent` object in a Settings message.
-import json
 config_json = json.dumps({
     "listen": {"provider": {"type": "deepgram", "model": "nova-3"}},
     "think":  {"provider": {"type": "open_ai", "model": "gpt-4o-mini"}, "prompt": "..."},
     "speak":  {"provider": {"type": "deepgram", "model": "aura-2-asteria-en"}},
 })
 created = client.voice_agent.configurations.create(
-    project_id=pid,
-    config=config_json,
-    metadata={"label": "support-en"},
+    project_id=pid, config=config_json, metadata={"label": "support-en"},
 )
 print(created.agent_id)
 
-# Update metadata (immutable config body — create a new one to change behavior)
 client.voice_agent.configurations.update(project_id=pid, agent_id=created.agent_id, metadata={"label": "v2"})
-
-# Get / delete
 one = client.voice_agent.configurations.get(project_id=pid, agent_id=created.agent_id)
-# client.voice_agent.configurations.delete(project_id=pid, agent_id=...)
 ```
 
 Think-provider model discovery (which LLMs Agent supports):
@@ -140,18 +122,28 @@ projects = await client.manage.v1.projects.list()
    - https://developers.deepgram.com/reference/voice-agent/agent-configurations/create-agent-configuration
    - https://developers.deepgram.com/reference/voice-agent/think-models
 
+## Destructive operation guard
+
+Delete operations (projects, keys, agent configs) are **irreversible**. Always verify the resource before deleting:
+
+```python
+# Confirm before deleting a key
+key = client.manage.v1.projects.keys.list(project_id=pid)
+target = next((k for k in key.api_keys if k.api_key_id == kid), None)
+assert target is not None, f"Key {kid} not found"
+print(f"Deleting key: {target.comment}")
+client.manage.v1.projects.keys.delete(project_id=pid, key_id=kid)
+```
+
 ## Gotchas
 
 1. **`Token` auth, not `Bearer`.**
-2. **Project-scoped resources are nested under `.projects.*`.** There is no top-level `client.manage.v1.keys` / `.members` / `.invites` / `.usage` / `.billing`. Use `client.manage.v1.projects.keys`, `...projects.members`, `...projects.members.invites`, `...projects.usage`, `...projects.billing.balances`, and `...projects.requests` for request logs. The only top-level `client.manage.v1.*` namespaces are `projects` and `models`.
-3. **Think-model discovery is on the Agent client**, not Manage: `client.agent.v1.settings.think.models.list()`. There is no `client.manage.v1.agent.*`.
-4. **Agent config body is a JSON STRING on create**, not a nested object. Pass `config=json.dumps(...)`.
-5. **Agent config is the `agent` block only**, not the full Settings message. Do not include top-level fields like `audio` — those go in the live Settings message at connect time.
-6. **Agent configs are immutable** — you cannot edit the config body. Create a new one to change behavior. Only metadata is mutable.
-7. **Use `include_outdated=True`** on `models.list()` when pinning older models.
-8. **Delete is irreversible.** Wire tests typically comment out destructive calls.
-9. **Project-scoped vs global models**: `client.manage.v1.models.list()` returns all; `client.manage.v1.projects.models.list(project_id=...)` returns what the project can access.
-10. **Returned agent configs are uninterpolated** — raw stored JSON string. Parse before use.
+2. **Project-scoped resources are nested under `.projects.*`.** No top-level `client.manage.v1.keys` etc. Use `client.manage.v1.projects.keys`, `...projects.members`, `...projects.members.invites`, `...projects.usage`, `...projects.billing.balances`, `...projects.requests`.
+3. **Think-model discovery is on the Agent client**, not Manage: `client.agent.v1.settings.think.models.list()`.
+4. **Agent config body is a JSON STRING on create**: pass `config=json.dumps(...)`. See the Voice Agent configurations section above for full details.
+5. **Use `include_outdated=True`** on `models.list()` when pinning older models.
+6. **Project-scoped vs global models**: `client.manage.v1.models.list()` returns all; `client.manage.v1.projects.models.list(project_id=...)` returns what the project can access.
+7. **Returned agent configs are uninterpolated** -- raw stored JSON string. Parse before use.
 
 ## Example files in this repo
 
@@ -170,12 +162,4 @@ projects = await client.manage.v1.projects.list()
 
 - `deepgram-python-voice-agent` — run an agent (use a config created here)
 
-## Central product skills
-
-For cross-language Deepgram product knowledge — the consolidated API reference, documentation finder, focused runnable recipes, third-party integration examples, and MCP setup — install the central skills:
-
-```bash
-npx skills add deepgram/skills
-```
-
-This SDK ships language-idiomatic code skills; `deepgram/skills` ships cross-language product knowledge (see `api`, `docs`, `recipes`, `examples`, `starters`, `setup-mcp`).
+For cross-language Deepgram product knowledge, install the central skills: `npx skills add deepgram/skills`.
