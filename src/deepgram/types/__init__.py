@@ -240,6 +240,22 @@ if typing.TYPE_CHECKING:
     from .shared_topics_results_topics import SharedTopicsResultsTopics
     from .shared_topics_results_topics_segments_item import SharedTopicsResultsTopicsSegmentsItem
     from .shared_topics_results_topics_segments_item_topics_item import SharedTopicsResultsTopicsSegmentsItemTopicsItem
+    from .sixty_db_audio_encoding import SixtyDbAudioEncoding
+    from .sixty_db_output_format import SixtyDbOutputFormat
+    from .sixty_db_sample_rate_hertz import SixtyDbSampleRateHertz
+    from .sixty_db_speak_provider import SixtyDbSpeakProvider
+    from .sixty_db_speak_provider_voice_id import SixtyDbSpeakProviderVoiceId
+    from .sixty_db_stream_chunk import SixtyDbStreamChunk, SixtyDbStreamChunkResult
+    from .sixty_db_synthesize_response import SixtyDbSynthesizeResponse
+    from .sixty_db_ws_event import (
+        SixtyDbWsAudioChunk,
+        SixtyDbWsConnectionEstablished,
+        SixtyDbWsContextClosed,
+        SixtyDbWsContextCreated,
+        SixtyDbWsError,
+        SixtyDbWsEvent,
+        SixtyDbWsFlushCompleted,
+    )
     from .speak_settings_v1 import SpeakSettingsV1
     from .speak_settings_v1endpoint import SpeakSettingsV1Endpoint
     from .speak_settings_v1provider import (
@@ -249,6 +265,7 @@ if typing.TYPE_CHECKING:
         SpeakSettingsV1Provider_Deepgram,
         SpeakSettingsV1Provider_ElevenLabs,
         SpeakSettingsV1Provider_OpenAi,
+        SpeakSettingsV1Provider_SixtyDb,
     )
     from .speak_v1encoding import SpeakV1Encoding
     from .speak_v1mip_opt_out import SpeakV1MipOptOut
@@ -482,12 +499,28 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SharedTopicsResultsTopicsSegmentsItemTopicsItem": ".shared_topics_results_topics_segments_item_topics_item",
     "SpeakSettingsV1": ".speak_settings_v1",
     "SpeakSettingsV1Endpoint": ".speak_settings_v1endpoint",
+    "SixtyDbAudioEncoding": ".sixty_db_audio_encoding",
+    "SixtyDbOutputFormat": ".sixty_db_output_format",
+    "SixtyDbSampleRateHertz": ".sixty_db_sample_rate_hertz",
+    "SixtyDbSpeakProvider": ".sixty_db_speak_provider",
+    "SixtyDbSpeakProviderVoiceId": ".sixty_db_speak_provider_voice_id",
+    "SixtyDbStreamChunk": ".sixty_db_stream_chunk",
+    "SixtyDbStreamChunkResult": ".sixty_db_stream_chunk",
+    "SixtyDbSynthesizeResponse": ".sixty_db_synthesize_response",
+    "SixtyDbWsAudioChunk": ".sixty_db_ws_event",
+    "SixtyDbWsConnectionEstablished": ".sixty_db_ws_event",
+    "SixtyDbWsContextClosed": ".sixty_db_ws_event",
+    "SixtyDbWsContextCreated": ".sixty_db_ws_event",
+    "SixtyDbWsError": ".sixty_db_ws_event",
+    "SixtyDbWsEvent": ".sixty_db_ws_event",
+    "SixtyDbWsFlushCompleted": ".sixty_db_ws_event",
     "SpeakSettingsV1Provider": ".speak_settings_v1provider",
     "SpeakSettingsV1Provider_AwsPolly": ".speak_settings_v1provider",
     "SpeakSettingsV1Provider_Cartesia": ".speak_settings_v1provider",
     "SpeakSettingsV1Provider_Deepgram": ".speak_settings_v1provider",
     "SpeakSettingsV1Provider_ElevenLabs": ".speak_settings_v1provider",
     "SpeakSettingsV1Provider_OpenAi": ".speak_settings_v1provider",
+    "SpeakSettingsV1Provider_SixtyDb": ".speak_settings_v1provider",
     "SpeakV1Encoding": ".speak_v1encoding",
     "SpeakV1MipOptOut": ".speak_v1mip_opt_out",
     "SpeakV1Model": ".speak_v1model",
@@ -742,12 +775,28 @@ __all__ = [
     "SharedTopicsResultsTopicsSegmentsItemTopicsItem",
     "SpeakSettingsV1",
     "SpeakSettingsV1Endpoint",
+    "SixtyDbAudioEncoding",
+    "SixtyDbOutputFormat",
+    "SixtyDbSampleRateHertz",
+    "SixtyDbSpeakProvider",
+    "SixtyDbSpeakProviderVoiceId",
+    "SixtyDbStreamChunk",
+    "SixtyDbStreamChunkResult",
+    "SixtyDbSynthesizeResponse",
+    "SixtyDbWsAudioChunk",
+    "SixtyDbWsConnectionEstablished",
+    "SixtyDbWsContextClosed",
+    "SixtyDbWsContextCreated",
+    "SixtyDbWsError",
+    "SixtyDbWsEvent",
+    "SixtyDbWsFlushCompleted",
     "SpeakSettingsV1Provider",
     "SpeakSettingsV1Provider_AwsPolly",
     "SpeakSettingsV1Provider_Cartesia",
     "SpeakSettingsV1Provider_Deepgram",
     "SpeakSettingsV1Provider_ElevenLabs",
     "SpeakSettingsV1Provider_OpenAi",
+    "SpeakSettingsV1Provider_SixtyDb",
     "SpeakV1Encoding",
     "SpeakV1MipOptOut",
     "SpeakV1Model",

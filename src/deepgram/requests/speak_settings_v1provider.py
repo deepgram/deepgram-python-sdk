@@ -12,6 +12,7 @@ from ..types.deepgram_speak_provider_model import DeepgramSpeakProviderModel
 from ..types.eleven_labs_speak_provider_model_id import ElevenLabsSpeakProviderModelId
 from ..types.open_ai_speak_provider_model import OpenAiSpeakProviderModel
 from ..types.open_ai_speak_provider_voice import OpenAiSpeakProviderVoice
+from ..types.sixty_db_speak_provider_voice_id import SixtyDbSpeakProviderVoiceId
 from .aws_polly_speak_provider_credentials import AwsPollySpeakProviderCredentialsParams
 from .cartesia_speak_provider_voice import CartesiaSpeakProviderVoiceParams
 
@@ -47,6 +48,15 @@ class SpeakSettingsV1Provider_OpenAiParams(typing_extensions.TypedDict):
     voice: OpenAiSpeakProviderVoice
 
 
+class SpeakSettingsV1Provider_SixtyDbParams(typing_extensions.TypedDict):
+    type: typing.Literal["sixty_db"]
+    voice_id: SixtyDbSpeakProviderVoiceId
+    speed: typing_extensions.NotRequired[float]
+    stability: typing_extensions.NotRequired[float]
+    similarity: typing_extensions.NotRequired[float]
+    language: typing_extensions.NotRequired[str]
+
+
 class SpeakSettingsV1Provider_AwsPollyParams(typing_extensions.TypedDict):
     type: typing.Literal["aws_polly"]
     voice: AwsPollySpeakProviderVoice
@@ -61,5 +71,6 @@ SpeakSettingsV1ProviderParams = typing.Union[
     SpeakSettingsV1Provider_ElevenLabsParams,
     SpeakSettingsV1Provider_CartesiaParams,
     SpeakSettingsV1Provider_OpenAiParams,
+    SpeakSettingsV1Provider_SixtyDbParams,
     SpeakSettingsV1Provider_AwsPollyParams,
 ]

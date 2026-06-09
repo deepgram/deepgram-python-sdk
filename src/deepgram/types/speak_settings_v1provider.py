@@ -17,6 +17,7 @@ from .deepgram_speak_provider_model import DeepgramSpeakProviderModel
 from .eleven_labs_speak_provider_model_id import ElevenLabsSpeakProviderModelId
 from .open_ai_speak_provider_model import OpenAiSpeakProviderModel
 from .open_ai_speak_provider_voice import OpenAiSpeakProviderVoice
+from .sixty_db_speak_provider_voice_id import SixtyDbSpeakProviderVoiceId
 
 
 class SpeakSettingsV1Provider_Deepgram(UncheckedBaseModel):
@@ -86,6 +87,24 @@ class SpeakSettingsV1Provider_OpenAi(UncheckedBaseModel):
             extra = pydantic.Extra.allow
 
 
+class SpeakSettingsV1Provider_SixtyDb(UncheckedBaseModel):
+    type: typing.Literal["sixty_db"] = "sixty_db"
+    voice_id: SixtyDbSpeakProviderVoiceId
+    speed: typing.Optional[float] = None
+    stability: typing.Optional[float] = None
+    similarity: typing.Optional[float] = None
+    language: typing.Optional[str] = None
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
+
+
 class SpeakSettingsV1Provider_AwsPolly(UncheckedBaseModel):
     type: typing.Literal["aws_polly"] = "aws_polly"
     voice: AwsPollySpeakProviderVoice
@@ -110,6 +129,7 @@ SpeakSettingsV1Provider = typing_extensions.Annotated[
         SpeakSettingsV1Provider_ElevenLabs,
         SpeakSettingsV1Provider_Cartesia,
         SpeakSettingsV1Provider_OpenAi,
+        SpeakSettingsV1Provider_SixtyDb,
         SpeakSettingsV1Provider_AwsPolly,
     ],
     UnionMetadata(discriminant="type"),

@@ -185,6 +185,12 @@ if typing.TYPE_CHECKING:
     from .shared_topics_results_topics_segments_item_topics_item import (
         SharedTopicsResultsTopicsSegmentsItemTopicsItemParams,
     )
+    from .sixty_db_speak_provider import SixtyDbSpeakProviderParams
+    from .sixty_db_stream_request import SixtyDbStreamRequestParams
+    from .sixty_db_synthesize_request import SixtyDbSynthesizeRequestParams
+    from .sixty_db_ws_audio_config import SixtyDbWsAudioConfigParams
+    from .sixty_db_ws_create_context import SixtyDbWsCreateContextParams
+    from .sixty_db_ws_send_text import SixtyDbWsSendTextParams
     from .speak_settings_v1 import SpeakSettingsV1Params
     from .speak_settings_v1endpoint import SpeakSettingsV1EndpointParams
     from .speak_settings_v1provider import (
@@ -194,6 +200,7 @@ if typing.TYPE_CHECKING:
         SpeakSettingsV1Provider_DeepgramParams,
         SpeakSettingsV1Provider_ElevenLabsParams,
         SpeakSettingsV1Provider_OpenAiParams,
+        SpeakSettingsV1Provider_SixtyDbParams,
     )
     from .think_settings_v1 import ThinkSettingsV1Params
     from .think_settings_v1context_length import ThinkSettingsV1ContextLengthParams
@@ -360,6 +367,12 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SharedTopicsResultsTopicsParams": ".shared_topics_results_topics",
     "SharedTopicsResultsTopicsSegmentsItemParams": ".shared_topics_results_topics_segments_item",
     "SharedTopicsResultsTopicsSegmentsItemTopicsItemParams": ".shared_topics_results_topics_segments_item_topics_item",
+    "SixtyDbSpeakProviderParams": ".sixty_db_speak_provider",
+    "SixtyDbStreamRequestParams": ".sixty_db_stream_request",
+    "SixtyDbSynthesizeRequestParams": ".sixty_db_synthesize_request",
+    "SixtyDbWsAudioConfigParams": ".sixty_db_ws_audio_config",
+    "SixtyDbWsCreateContextParams": ".sixty_db_ws_create_context",
+    "SixtyDbWsSendTextParams": ".sixty_db_ws_send_text",
     "SpeakSettingsV1EndpointParams": ".speak_settings_v1endpoint",
     "SpeakSettingsV1Params": ".speak_settings_v1",
     "SpeakSettingsV1ProviderParams": ".speak_settings_v1provider",
@@ -368,6 +381,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SpeakSettingsV1Provider_DeepgramParams": ".speak_settings_v1provider",
     "SpeakSettingsV1Provider_ElevenLabsParams": ".speak_settings_v1provider",
     "SpeakSettingsV1Provider_OpenAiParams": ".speak_settings_v1provider",
+    "SpeakSettingsV1Provider_SixtyDbParams": ".speak_settings_v1provider",
     "ThinkSettingsV1ContextLengthParams": ".think_settings_v1context_length",
     "ThinkSettingsV1EndpointParams": ".think_settings_v1endpoint",
     "ThinkSettingsV1FunctionsItemEndpointParams": ".think_settings_v1functions_item_endpoint",
@@ -556,6 +570,12 @@ __all__ = [
     "SharedTopicsResultsTopicsSegmentsItemParams",
     "SharedTopicsResultsTopicsSegmentsItemTopicsItemParams",
     "SpeakSettingsV1EndpointParams",
+    "SixtyDbSpeakProviderParams",
+    "SixtyDbStreamRequestParams",
+    "SixtyDbSynthesizeRequestParams",
+    "SixtyDbWsAudioConfigParams",
+    "SixtyDbWsCreateContextParams",
+    "SixtyDbWsSendTextParams",
     "SpeakSettingsV1Params",
     "SpeakSettingsV1ProviderParams",
     "SpeakSettingsV1Provider_AwsPollyParams",
@@ -563,6 +583,7 @@ __all__ = [
     "SpeakSettingsV1Provider_DeepgramParams",
     "SpeakSettingsV1Provider_ElevenLabsParams",
     "SpeakSettingsV1Provider_OpenAiParams",
+    "SpeakSettingsV1Provider_SixtyDbParams",
     "ThinkSettingsV1ContextLengthParams",
     "ThinkSettingsV1EndpointParams",
     "ThinkSettingsV1FunctionsItemEndpointParams",

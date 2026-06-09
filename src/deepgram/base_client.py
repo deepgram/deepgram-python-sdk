@@ -18,6 +18,7 @@ if typing.TYPE_CHECKING:
     from .manage.client import AsyncManageClient, ManageClient
     from .read.client import AsyncReadClient, ReadClient
     from .self_hosted.client import AsyncSelfHostedClient, SelfHostedClient
+    from .sixty_db.client import AsyncSixtyDbClient, SixtyDbClient
     from .speak.client import AsyncSpeakClient, SpeakClient
     from .voice_agent.client import AsyncVoiceAgentClient, VoiceAgentClient
 
@@ -70,6 +71,7 @@ class BaseClient:
         *,
         environment: DeepgramClientEnvironment = DeepgramClientEnvironment.PRODUCTION,
         api_key: typing.Optional[str] = os.getenv("DEEPGRAM_API_KEY"),
+        sixty_db_api_key: typing.Optional[str] = os.getenv("SIXTY_DB_API_KEY"),
         headers: typing.Optional[typing.Dict[str, str]] = None,
         timeout: typing.Optional[float] = None,
         max_retries: typing.Optional[int] = None,
@@ -85,6 +87,8 @@ class BaseClient:
             raise ApiError(
                 body="The client must be instantiated be either passing in api_key or setting DEEPGRAM_API_KEY"
             )
+        self._sixty_db_api_key = sixty_db_api_key
+        self._timeout = _defaulted_timeout
         self._client_wrapper = SyncClientWrapper(
             environment=environment,
             api_key=api_key,
@@ -104,8 +108,24 @@ class BaseClient:
         self._manage: typing.Optional[ManageClient] = None
         self._read: typing.Optional[ReadClient] = None
         self._self_hosted: typing.Optional[SelfHostedClient] = None
+        self._sixty_db: typing.Optional[SixtyDbClient] = None
         self._speak: typing.Optional[SpeakClient] = None
         self._voice_agent: typing.Optional[VoiceAgentClient] = None
+
+    @property
+    def sixty_db(self):
+        """60db TTS sub-client. Requires sixty_db_api_key= at construction
+        (or SIXTY_DB_API_KEY env var). Holds its own auth + base URL; does
+        not share the Deepgram client_wrapper authorization header."""
+        if self._sixty_db is None:
+            from .sixty_db.client import SixtyDbClient  # noqa: E402
+
+            self._sixty_db = SixtyDbClient(
+                api_key=self._sixty_db_api_key,
+                httpx_client=self._client_wrapper.httpx_client.httpx_client,
+                timeout=self._timeout,
+            )
+        return self._sixty_db
 
     @property
     def agent(self):
@@ -238,6 +258,7 @@ class AsyncBaseClient:
         *,
         environment: DeepgramClientEnvironment = DeepgramClientEnvironment.PRODUCTION,
         api_key: typing.Optional[str] = os.getenv("DEEPGRAM_API_KEY"),
+        sixty_db_api_key: typing.Optional[str] = os.getenv("SIXTY_DB_API_KEY"),
         headers: typing.Optional[typing.Dict[str, str]] = None,
         timeout: typing.Optional[float] = None,
         max_retries: typing.Optional[int] = None,
@@ -253,6 +274,8 @@ class AsyncBaseClient:
             raise ApiError(
                 body="The client must be instantiated be either passing in api_key or setting DEEPGRAM_API_KEY"
             )
+        self._sixty_db_api_key = sixty_db_api_key
+        self._timeout = _defaulted_timeout
         self._client_wrapper = AsyncClientWrapper(
             environment=environment,
             api_key=api_key,
@@ -270,8 +293,23 @@ class AsyncBaseClient:
         self._manage: typing.Optional[AsyncManageClient] = None
         self._read: typing.Optional[AsyncReadClient] = None
         self._self_hosted: typing.Optional[AsyncSelfHostedClient] = None
+        self._sixty_db: typing.Optional[AsyncSixtyDbClient] = None
         self._speak: typing.Optional[AsyncSpeakClient] = None
         self._voice_agent: typing.Optional[AsyncVoiceAgentClient] = None
+
+    @property
+    def sixty_db(self):
+        """60db TTS sub-client. Requires sixty_db_api_key= at construction
+        (or SIXTY_DB_API_KEY env var)."""
+        if self._sixty_db is None:
+            from .sixty_db.client import AsyncSixtyDbClient  # noqa: E402
+
+            self._sixty_db = AsyncSixtyDbClient(
+                api_key=self._sixty_db_api_key,
+                httpx_client=self._client_wrapper.httpx_client.httpx_client,
+                timeout=self._timeout,
+            )
+        return self._sixty_db
 
     @property
     def agent(self):
