@@ -1,5 +1,12 @@
 # Changelog
 
+## [7.3.2](https://github.com/deepgram/deepgram-python-sdk/compare/v7.3.1...v7.3.2) (2026-06-09)
+
+
+### Documentation
+
+* improve contributor onboarding and setup instructions ([#718](https://github.com/deepgram/deepgram-python-sdk/issues/718)) ([3f7398a](https://github.com/deepgram/deepgram-python-sdk/commit/3f7398a9782a1efcfd99408f1392907aa4e68cf3))
+
 ## [7.3.1](https://github.com/deepgram/deepgram-python-sdk/compare/v7.3.0...v7.3.1) (2026-06-03)
 
 
