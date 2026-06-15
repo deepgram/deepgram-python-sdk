@@ -9,6 +9,11 @@
 # This file is manually maintained and should not be regenerated
 src/deepgram/client.py
 
+# Hand-written security utility: installs a logging.Filter on the third-party
+# `websockets` client/server loggers that masks the Authorization header (API
+# key / access token) in DEBUG handshake logs. No Fern-generated counterpart.
+src/deepgram/_secure_logging.py
+
 # WebSocket socket clients:
 # - except Exception broad catch (supports custom transports, generator narrows to WebSocketException)
 # - _sanitize_numeric_types in agent socket client (float→int for API)
@@ -92,6 +97,7 @@ src/deepgram/core/query_encoder.py
 tests/custom/test_agent_history.py
 tests/custom/test_compat_aliases.py
 tests/custom/test_query_encoder.py
+tests/custom/test_secure_logging.py
 tests/custom/test_text_builder.py
 tests/custom/test_transport.py
 tests/typecheck/compat_aliases.py
