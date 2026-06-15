@@ -6,7 +6,6 @@ import pydantic
 from ....core.pydantic_utilities import IS_PYDANTIC_V2
 from ....core.unchecked_base_model import UncheckedBaseModel
 from .agent_v1settings_agent import AgentV1SettingsAgent
-from .agent_v1settings_agent_context import AgentV1SettingsAgentContext
 from .agent_v1settings_audio import AgentV1SettingsAudio
 from .agent_v1settings_flags import AgentV1SettingsFlags
 
@@ -30,7 +29,7 @@ class AgentV1Settings(UncheckedBaseModel):
     """
 
     audio: AgentV1SettingsAudio
-    agent: typing.Union[AgentV1SettingsAgent, AgentV1SettingsAgentContext, str]
+    agent: AgentV1SettingsAgent
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

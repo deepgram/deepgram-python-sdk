@@ -122,10 +122,10 @@ class RawMediaClient:
             Identifies the dominant language spoken in submitted audio
 
         diarize : typing.Optional[bool]
-            Recognize speaker changes. Each word in the transcript will be assigned a speaker number starting at 0
+            Deprecated: use `diarize_model` instead. Recognize speaker changes. Each word in the transcript will be assigned a speaker number starting at 0.
 
         diarize_model : typing.Optional[MediaTranscribeRequestDiarizeModel]
-            Select and enable a specific batch diarization model version. If specifying this parameter, you should not set the deprecated `diarize=true` parameter. Not accepted on streaming requests.
+            Select and enable a specific diarization model version. Specifying this parameter enables diarization and selects the model — you do not need to also set the deprecated `diarize=true` parameter. For batch, supported values are `latest` (currently v2), `v1`, and `v2`. For streaming, supported values are `latest` (currently v1) and `v1`; `v2` returns a validation error on streaming requests.
 
         dictation : typing.Optional[bool]
             Dictation mode for controlling formatting with dictated speech
@@ -373,10 +373,10 @@ class RawMediaClient:
             Identifies the dominant language spoken in submitted audio
 
         diarize : typing.Optional[bool]
-            Recognize speaker changes. Each word in the transcript will be assigned a speaker number starting at 0
+            Deprecated: use `diarize_model` instead. Recognize speaker changes. Each word in the transcript will be assigned a speaker number starting at 0.
 
         diarize_model : typing.Optional[MediaTranscribeRequestDiarizeModel]
-            Select and enable a specific batch diarization model version. If specifying this parameter, you should not set the deprecated `diarize=true` parameter. Not accepted on streaming requests.
+            Select and enable a specific diarization model version. Specifying this parameter enables diarization and selects the model — you do not need to also set the deprecated `diarize=true` parameter. For batch, supported values are `latest` (currently v2), `v1`, and `v2`. For streaming, supported values are `latest` (currently v1) and `v1`; `v2` returns a validation error on streaming requests.
 
         dictation : typing.Optional[bool]
             Dictation mode for controlling formatting with dictated speech
@@ -627,10 +627,10 @@ class AsyncRawMediaClient:
             Identifies the dominant language spoken in submitted audio
 
         diarize : typing.Optional[bool]
-            Recognize speaker changes. Each word in the transcript will be assigned a speaker number starting at 0
+            Deprecated: use `diarize_model` instead. Recognize speaker changes. Each word in the transcript will be assigned a speaker number starting at 0.
 
         diarize_model : typing.Optional[MediaTranscribeRequestDiarizeModel]
-            Select and enable a specific batch diarization model version. If specifying this parameter, you should not set the deprecated `diarize=true` parameter. Not accepted on streaming requests.
+            Select and enable a specific diarization model version. Specifying this parameter enables diarization and selects the model — you do not need to also set the deprecated `diarize=true` parameter. For batch, supported values are `latest` (currently v2), `v1`, and `v2`. For streaming, supported values are `latest` (currently v1) and `v1`; `v2` returns a validation error on streaming requests.
 
         dictation : typing.Optional[bool]
             Dictation mode for controlling formatting with dictated speech
@@ -878,10 +878,10 @@ class AsyncRawMediaClient:
             Identifies the dominant language spoken in submitted audio
 
         diarize : typing.Optional[bool]
-            Recognize speaker changes. Each word in the transcript will be assigned a speaker number starting at 0
+            Deprecated: use `diarize_model` instead. Recognize speaker changes. Each word in the transcript will be assigned a speaker number starting at 0.
 
         diarize_model : typing.Optional[MediaTranscribeRequestDiarizeModel]
-            Select and enable a specific batch diarization model version. If specifying this parameter, you should not set the deprecated `diarize=true` parameter. Not accepted on streaming requests.
+            Select and enable a specific diarization model version. Specifying this parameter enables diarization and selects the model — you do not need to also set the deprecated `diarize=true` parameter. For batch, supported values are `latest` (currently v2), `v1`, and `v2`. For streaming, supported values are `latest` (currently v1) and `v1`; `v2` returns a validation error on streaming requests.
 
         dictation : typing.Optional[bool]
             Dictation mode for controlling formatting with dictated speech

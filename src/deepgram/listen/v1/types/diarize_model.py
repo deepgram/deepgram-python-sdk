@@ -2,4 +2,4 @@
 
 import typing
 
-DeepgramListenProviderV2LanguageHint = typing.Union[str, typing.List[str]]
+DiarizeModel = typing.Union[typing.Literal["latest", "v1"], typing.Any]

@@ -3,7 +3,6 @@
 import typing
 
 import typing_extensions
-from .deepgram_listen_provider_v2language_hint import DeepgramListenProviderV2LanguageHintParams
 
 
 class DeepgramListenProviderV2Params(typing_extensions.TypedDict):
@@ -22,9 +21,9 @@ class DeepgramListenProviderV2Params(typing_extensions.TypedDict):
     Model to use for speech to text using the V2 API (e.g. flux-general-en, flux-general-multi)
     """
 
-    language_hint: typing_extensions.NotRequired[DeepgramListenProviderV2LanguageHintParams]
+    language_hints: typing_extensions.NotRequired[typing.Sequence[str]]
     """
-    One or more BCP-47 language codes to bias the model toward specific languages. Only supported when model is flux-general-multi. Without hints, the model auto-detects the spoken language. See the Language Prompting guide for details.
+    An array of one or more BCP-47 language codes to bias the model toward specific languages. Only supported when model is flux-general-multi. Without hints, the model auto-detects the spoken language. See the Language Prompting guide for details.
     """
 
     keyterms: typing_extensions.NotRequired[typing.Sequence[str]]

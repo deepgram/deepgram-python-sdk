@@ -41,6 +41,7 @@ from ...types.listen_v1utterance_end_ms import ListenV1UtteranceEndMs
 from ...types.listen_v1vad_events import ListenV1VadEvents
 from ...types.listen_v1version import ListenV1Version
 from .socket_client import AsyncV1SocketClient, V1SocketClient
+from .types.diarize_model import DiarizeModel
 
 try:
     from websockets.legacy.client import connect as websockets_client_connect  # type: ignore
@@ -61,6 +62,7 @@ class RawV1Client:
         channels: typing.Optional[ListenV1Channels] = None,
         detect_entities: typing.Optional[ListenV1DetectEntities] = None,
         diarize: typing.Optional[ListenV1Diarize] = None,
+        diarize_model: typing.Optional[DiarizeModel] = None,
         dictation: typing.Optional[ListenV1Dictation] = None,
         encoding: typing.Optional[ListenV1Encoding] = None,
         endpointing: typing.Optional[ListenV1Endpointing] = None,
@@ -101,6 +103,10 @@ class RawV1Client:
         detect_entities : typing.Optional[ListenV1DetectEntities]
 
         diarize : typing.Optional[ListenV1Diarize]
+            Deprecated: use `diarize_model` instead. Recognize speaker changes. Each word in the transcript will be assigned a speaker number starting at 0.
+
+        diarize_model : typing.Optional[DiarizeModel]
+            Select and enable a specific diarization model version. Specifying this parameter enables diarization and selects the model — you do not need to also set `diarize=true`. Supported values for streaming: `v1`, `latest`. The `v2` value is not supported on streaming and returns a validation error.
 
         dictation : typing.Optional[ListenV1Dictation]
 
@@ -171,6 +177,7 @@ class RawV1Client:
                         "channels": channels,
                         "detect_entities": detect_entities,
                         "diarize": diarize,
+                        "diarize_model": diarize_model,
                         "dictation": dictation,
                         "encoding": encoding,
                         "endpointing": endpointing,
@@ -241,6 +248,7 @@ class AsyncRawV1Client:
         channels: typing.Optional[ListenV1Channels] = None,
         detect_entities: typing.Optional[ListenV1DetectEntities] = None,
         diarize: typing.Optional[ListenV1Diarize] = None,
+        diarize_model: typing.Optional[DiarizeModel] = None,
         dictation: typing.Optional[ListenV1Dictation] = None,
         encoding: typing.Optional[ListenV1Encoding] = None,
         endpointing: typing.Optional[ListenV1Endpointing] = None,
@@ -281,6 +289,10 @@ class AsyncRawV1Client:
         detect_entities : typing.Optional[ListenV1DetectEntities]
 
         diarize : typing.Optional[ListenV1Diarize]
+            Deprecated: use `diarize_model` instead. Recognize speaker changes. Each word in the transcript will be assigned a speaker number starting at 0.
+
+        diarize_model : typing.Optional[DiarizeModel]
+            Select and enable a specific diarization model version. Specifying this parameter enables diarization and selects the model — you do not need to also set `diarize=true`. Supported values for streaming: `v1`, `latest`. The `v2` value is not supported on streaming and returns a validation error.
 
         dictation : typing.Optional[ListenV1Dictation]
 
@@ -351,6 +363,7 @@ class AsyncRawV1Client:
                         "channels": channels,
                         "detect_entities": detect_entities,
                         "diarize": diarize,
+                        "diarize_model": diarize_model,
                         "dictation": dictation,
                         "encoding": encoding,
                         "endpointing": endpointing,
