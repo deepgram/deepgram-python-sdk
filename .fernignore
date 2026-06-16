@@ -80,6 +80,14 @@ src/deepgram/agent/v1/requests/agent_v1settings_agent_listen_provider_v2.py
 src/deepgram/types/deepgram_listen_provider_v2language_hint.py
 src/deepgram/requests/deepgram_listen_provider_v2language_hint.py
 
+# Hand-written compat shim recreating ListenV2CloseStreamType, which Fern removed in the
+# 2026-06-15 regen (docs #946). The original generated type wrongly allowed
+# Union[Literal["Finalize","CloseStream","KeepAlive"], Any] — v2 copied v1's control-message
+# enum, but a CloseStream message's `type` can only ever be "CloseStream". Recreated as the
+# corrected single-value Literal["CloseStream"] to preserve the public import path without
+# resurrecting the invalid values. Frozen so Fern won't delete it again.
+src/deepgram/listen/v2/types/listen_v2close_stream_type.py
+
 # Package __init__.py files that carry hand-applied legacy alias re-exports for the
 # above shims. Fern would otherwise regenerate these and strip the legacy entries on
 # every regen. Frozen to preserve the public-import surface for renamed types/params.
@@ -91,6 +99,10 @@ src/deepgram/agent/v1/types/__init__.py
 src/deepgram/agent/v1/requests/__init__.py
 src/deepgram/types/__init__.py
 src/deepgram/requests/__init__.py
+# listen __init__.py files re-export the ListenV2CloseStreamType shim above.
+src/deepgram/listen/__init__.py
+src/deepgram/listen/v2/__init__.py
+src/deepgram/listen/v2/types/__init__.py
 
 # Coerces Python bools to lowercase "true"/"false" before urlencode, which
 # otherwise stringifies via str() and produces "True"/"False" — rejected by
