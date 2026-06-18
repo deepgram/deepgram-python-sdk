@@ -33,6 +33,7 @@ class AgentV1SettingsAgentContextListenProvider_V2(UncheckedBaseModel):
     type: typing.Literal["deepgram"] = "deepgram"
     model: str
     language_hints: typing.Optional[typing.List[str]] = None
+    language_hint: typing.Optional[typing.Union[str, typing.List[str]]] = pydantic.Field(default=None, exclude=True)
     keyterms: typing.Optional[typing.List[str]] = None
 
     # Backward-compat: the public field was historically named `language_hint`

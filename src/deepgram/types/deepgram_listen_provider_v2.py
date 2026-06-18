@@ -28,6 +28,13 @@ class DeepgramListenProviderV2(UncheckedBaseModel):
     An array of one or more BCP-47 language codes to bias the model toward specific languages. Only supported when model is flux-general-multi. Without hints, the model auto-detects the spoken language. See the Language Prompting guide for details.
     """
 
+    language_hint: typing.Optional[typing.Union[str, typing.List[str]]] = pydantic.Field(default=None, exclude=True)
+    """
+    Deprecated. Use `language_hints`. Accepted (str or list) for backward
+    compatibility and remapped to `language_hints` by the validator below;
+    `exclude=True` keeps it off the wire (the API rejects unknown fields).
+    """
+
     keyterms: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
     """
     Prompt keyterm recognition to improve Keyword Recall Rate
