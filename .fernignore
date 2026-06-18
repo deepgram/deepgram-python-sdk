@@ -126,6 +126,8 @@ src/deepgram/core/query_encoder.py
 # Hand-written custom tests
 tests/custom/test_agent_history.py
 tests/custom/test_compat_aliases.py
+tests/custom/test_language_hint_compat.py
+tests/custom/test_listen_v2_regen_constraints.py
 tests/custom/test_query_encoder.py
 tests/custom/test_secure_logging.py
 tests/custom/test_text_builder.py
