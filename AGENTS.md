@@ -23,6 +23,7 @@ How to identify:
 
 Current permanently frozen files:
 - `src/deepgram/client.py` — entirely custom (Bearer auth, session ID, `transport_factory`, `reconnect` parity flag); no Fern equivalent
+- `src/deepgram/_secure_logging.py` — hand-written security utility that installs a `logging.Filter` on the `websockets` client/server loggers to mask the `Authorization` header in DEBUG handshake logs; called from `client.py`; no Fern equivalent
 - `src/deepgram/helpers/` — hand-written TextBuilder helpers
 - `src/deepgram/agent/v1/types/agent_v1history_content.py`, `src/deepgram/agent/v1/types/agent_v1history_function_calls.py`, `src/deepgram/agent/v1/types/agent_v1settings_agent_context_messages_item.py`, `src/deepgram/agent/v1/types/agent_v1settings_agent_context_messages_item_content.py`, `src/deepgram/agent/v1/types/agent_v1settings_agent_context_messages_item_content_role.py`, `src/deepgram/agent/v1/types/agent_v1settings_agent_context_messages_item_function_calls.py`, `src/deepgram/agent/v1/types/agent_v1settings_agent_context_messages_item_function_calls_function_calls_item.py` — hand-written compatibility aliases preserving old public Agent History type imports after regen renames
 - `src/deepgram/agent/v1/requests/agent_v1history_content.py`, `src/deepgram/agent/v1/requests/agent_v1history_function_calls.py`, `src/deepgram/agent/v1/requests/agent_v1settings_agent_context_messages_item.py`, `src/deepgram/agent/v1/requests/agent_v1settings_agent_context_messages_item_content.py`, `src/deepgram/agent/v1/requests/agent_v1settings_agent_context_messages_item_function_calls.py`, `src/deepgram/agent/v1/requests/agent_v1settings_agent_context_messages_item_function_calls_function_calls_item.py` — hand-written compatibility aliases preserving old public Agent History request-param imports after regen renames
@@ -32,6 +33,7 @@ Current permanently frozen files:
 - `tests/custom/test_agent_history.py` — hand-written regression test for Agent History websocket payload parsing
 - `tests/custom/test_compat_aliases.py` — hand-written regression test for backward-compatible alias imports after regen renames
 - `tests/custom/test_query_encoder.py` — hand-written regression test that `core/query_encoder.py` coerces Python bools to lowercase `"true"`/`"false"` before `urlencode` so websocket query strings stay wire-correct
+- `tests/custom/test_secure_logging.py` — hand-written regression test that the `websockets` Authorization-header DEBUG logs are redacted (API key never logged in clear text)
 - `tests/custom/test_text_builder.py`, `tests/custom/test_transport.py` — hand-written tests
 - `tests/typecheck/compat_aliases.py` — hand-written mypy `assert_type` coverage for backward-compatible alias TypedDicts
 - `tests/manual/` — manual standalone tests

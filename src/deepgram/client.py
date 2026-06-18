@@ -26,6 +26,7 @@ import types
 import uuid
 from typing import Any, Callable, Dict, Optional
 
+from ._secure_logging import install_websocket_log_redaction
 from .base_client import AsyncBaseClient, BaseClient
 from .transport import install_transport
 
@@ -71,6 +72,9 @@ class DeepgramClient(BaseClient):
                     retry/reconnect lifecycle. The Python SDK has no wrapper reconnect layer
                     today, so this flag is declarative only -- it documents intent and is
                     reserved for any future SDK-side reconnect logic.
+    - `redact_credentials_in_logs`: Mask the `Authorization` header (API key / access token)
+                    in the `websockets` library's DEBUG handshake logs. Defaults to `True`; set
+                    to `False` to opt out and manage credential redaction yourself.
     - `telemetry_opt_out`: Telemetry opt-out flag (maintained for backwards compatibility, no-op).
     - `telemetry_handler`: Telemetry handler (maintained for backwards compatibility, no-op).
     """
@@ -80,8 +84,16 @@ class DeepgramClient(BaseClient):
         session_id: Optional[str] = kwargs.pop("session_id", None)
         transport_factory: Optional[Callable] = kwargs.pop("transport_factory", None)
         reconnect: bool = bool(kwargs.pop("reconnect", True))
+        redact_credentials_in_logs: bool = bool(kwargs.pop("redact_credentials_in_logs", True))
         telemetry_opt_out: bool = bool(kwargs.pop("telemetry_opt_out", True))
         telemetry_handler: Optional[Any] = kwargs.pop("telemetry_handler", None)
+
+        # Mask the Authorization header (API key / access token) in the
+        # third-party `websockets` library's DEBUG handshake logs so the
+        # credential is never written to application logs. On by default;
+        # pass `redact_credentials_in_logs=False` to manage redaction yourself.
+        if redact_credentials_in_logs:
+            install_websocket_log_redaction()
 
         # Use provided session_id or generate one
         final_session_id = session_id if session_id is not None else str(uuid.uuid4())
@@ -139,6 +151,9 @@ class AsyncDeepgramClient(AsyncBaseClient):
                     retry/reconnect lifecycle. The Python SDK has no wrapper reconnect layer
                     today, so this flag is declarative only -- it documents intent and is
                     reserved for any future SDK-side reconnect logic.
+    - `redact_credentials_in_logs`: Mask the `Authorization` header (API key / access token)
+                    in the `websockets` library's DEBUG handshake logs. Defaults to `True`; set
+                    to `False` to opt out and manage credential redaction yourself.
     - `telemetry_opt_out`: Telemetry opt-out flag (maintained for backwards compatibility, no-op).
     - `telemetry_handler`: Telemetry handler (maintained for backwards compatibility, no-op).
     """
@@ -148,8 +163,16 @@ class AsyncDeepgramClient(AsyncBaseClient):
         session_id: Optional[str] = kwargs.pop("session_id", None)
         transport_factory: Optional[Callable] = kwargs.pop("transport_factory", None)
         reconnect: bool = bool(kwargs.pop("reconnect", True))
+        redact_credentials_in_logs: bool = bool(kwargs.pop("redact_credentials_in_logs", True))
         telemetry_opt_out: bool = bool(kwargs.pop("telemetry_opt_out", True))
         telemetry_handler: Optional[Any] = kwargs.pop("telemetry_handler", None)
+
+        # Mask the Authorization header (API key / access token) in the
+        # third-party `websockets` library's DEBUG handshake logs so the
+        # credential is never written to application logs. On by default;
+        # pass `redact_credentials_in_logs=False` to manage redaction yourself.
+        if redact_credentials_in_logs:
+            install_websocket_log_redaction()
 
         # Use provided session_id or generate one
         final_session_id = session_id if session_id is not None else str(uuid.uuid4())
