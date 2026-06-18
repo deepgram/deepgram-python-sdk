@@ -80,6 +80,18 @@ src/deepgram/agent/v1/requests/agent_v1settings_agent_listen_provider_v2.py
 src/deepgram/types/deepgram_listen_provider_v2language_hint.py
 src/deepgram/requests/deepgram_listen_provider_v2language_hint.py
 
+# Behavioral back-compat shim for the language_hint -> language_hints rename (2026-06-15
+# regen). The public field was historically (incorrectly) named `language_hint`, accepting
+# a str or a list; the API field is `language_hints` (a list, and the server uses
+# deny_unknown_fields so the singular key is rejected on the wire). These three generated
+# models carry a hand-added model_validator(mode='before') / root_validator(pre=True) that
+# remaps a legacy `language_hint=` kwarg to `language_hints` and drops the dead singular
+# key. Frozen so Fern won't strip the validator on regen. Remove the shim and unfreeze when
+# the singular alias is intentionally retired in a future major release.
+src/deepgram/types/deepgram_listen_provider_v2.py
+src/deepgram/agent/v1/types/agent_v1settings_agent_listen_provider.py
+src/deepgram/agent/v1/types/agent_v1settings_agent_context_listen_provider.py
+
 # Hand-written compat shim recreating ListenV2CloseStreamType, which Fern removed in the
 # 2026-06-15 regen (docs #946). The original generated type wrongly allowed
 # Union[Literal["Finalize","CloseStream","KeepAlive"], Any] — v2 copied v1's control-message
