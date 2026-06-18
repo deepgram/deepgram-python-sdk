@@ -7,7 +7,6 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from .listen_v2close_stream import ListenV2CloseStream
-    from .listen_v2close_stream_type import ListenV2CloseStreamType
     from .listen_v2configure import ListenV2Configure
     from .listen_v2configure_failure import ListenV2ConfigureFailure
     from .listen_v2configure_success import ListenV2ConfigureSuccess
@@ -20,7 +19,6 @@ if typing.TYPE_CHECKING:
     from .listen_v2turn_info_words_item import ListenV2TurnInfoWordsItem
 _dynamic_imports: typing.Dict[str, str] = {
     "ListenV2CloseStream": ".listen_v2close_stream",
-    "ListenV2CloseStreamType": ".listen_v2close_stream_type",
     "ListenV2Configure": ".listen_v2configure",
     "ListenV2ConfigureFailure": ".listen_v2configure_failure",
     "ListenV2ConfigureSuccess": ".listen_v2configure_success",
@@ -57,7 +55,6 @@ def __dir__():
 
 __all__ = [
     "ListenV2CloseStream",
-    "ListenV2CloseStreamType",
     "ListenV2Configure",
     "ListenV2ConfigureFailure",
     "ListenV2ConfigureSuccess",

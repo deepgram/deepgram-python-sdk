@@ -35,37 +35,6 @@ class AgentV1SettingsAgentListenProvider_V2(UncheckedBaseModel):
     language_hints: typing.Optional[typing.List[str]] = None
     keyterms: typing.Optional[typing.List[str]] = None
 
-    # Backward-compat: the public field was historically named `language_hint`
-    # and accepted a string or a list. The API field is `language_hints` (a
-    # list). Translate the legacy kwarg so existing callers keep working, and
-    # drop the dead singular key so it is not rejected by the API
-    # (deny_unknown_fields). Hand-maintained.
-    if IS_PYDANTIC_V2:
-
-        @pydantic.model_validator(mode="before")
-        @classmethod
-        def _migrate_language_hint(cls, values: typing.Any) -> typing.Any:
-            if not isinstance(values, dict):
-                return values
-            if "language_hint" in values:
-                values = dict(values)
-                hint = values.pop("language_hint")
-                if hint is not None and values.get("language_hints") is None:
-                    values["language_hints"] = [hint] if isinstance(hint, str) else list(hint)
-            return values
-    else:
-
-        @pydantic.root_validator(pre=True)  # type: ignore[deprecated]
-        def _migrate_language_hint(cls, values: typing.Any) -> typing.Any:  # type: ignore[no-redef]
-            if not isinstance(values, dict):
-                return values
-            if "language_hint" in values:
-                values = dict(values)
-                hint = values.pop("language_hint")
-                if hint is not None and values.get("language_hints") is None:
-                    values["language_hints"] = [hint] if isinstance(hint, str) else list(hint)
-            return values
-
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:
