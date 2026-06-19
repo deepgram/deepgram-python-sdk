@@ -131,6 +131,7 @@ tests/custom/test_language_hints_feature.py
 tests/custom/test_listen_v2_regen_constraints.py
 tests/custom/test_query_encoder.py
 tests/custom/test_secure_logging.py
+tests/custom/test_socket_client_shims.py
 tests/custom/test_text_builder.py
 tests/custom/test_transport.py
 tests/typecheck/compat_aliases.py
