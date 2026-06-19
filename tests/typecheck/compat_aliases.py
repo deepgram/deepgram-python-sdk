@@ -1,4 +1,4 @@
-from typing import assert_type
+from typing_extensions import assert_type  # 3.10-compatible backport (typing.assert_type is 3.11+)
 
 from deepgram.agent.v1.requests import (
     AgentV1HistoryContentParams,
