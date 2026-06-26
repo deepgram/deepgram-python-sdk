@@ -1,6 +1,6 @@
 name: CI
 
-on: [push]
+on: [push, pull_request]
 
 jobs:
   compile:
@@ -27,6 +27,9 @@ jobs:
         run: poetry run mypy src/
   test:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
     strategy:
       matrix:
         python-version: ["3.10", "3.11", "3.12", "3.13"]
@@ -46,6 +49,8 @@ jobs:
           echo "$HOME/.local/bin" >> $GITHUB_PATH
       - name: Install dependencies
         run: poetry install
+      - name: Install coverage tool
+        run: poetry run pip install pytest-cov
 
       - name: Verify Docker is available
         run: |
@@ -53,7 +58,27 @@ jobs:
           docker compose version
 
       - name: Test
-        run: poetry run pytest -rP .
+        run: poetry run pytest -rP --cov=deepgram --cov-report=xml --cov-report=term .
+      - name: Generate code coverage summary
+        if: matrix.python-version == '3.13'
+        uses: irongut/CodeCoverageSummary@v1.3.0
+        with:
+          filename: coverage.xml
+          badge: true
+          format: markdown
+          hide_complexity: true
+          indicators: true
+          output: both
+      - name: Add coverage PR comment
+        if: matrix.python-version == '3.13' && github.event_name == 'pull_request'
+        uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          header: code-coverage
+          recreate: true
+          path: code-coverage-results.md
+      - name: Write coverage to job summary
+        if: matrix.python-version == '3.13'
+        run: cat code-coverage-results.md >> $GITHUB_STEP_SUMMARY
 
   publish:
     needs: [compile, test]
