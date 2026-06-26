@@ -18,6 +18,16 @@ class ListenV2TurnInfoWordsItem(UncheckedBaseModel):
     Confidence that this word was transcribed correctly
     """
 
+    start: typing.Optional[float] = pydantic.Field(default=None)
+    """
+    The start time of the word
+    """
+
+    end: typing.Optional[float] = pydantic.Field(default=None)
+    """
+    The end time of the word
+    """
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:

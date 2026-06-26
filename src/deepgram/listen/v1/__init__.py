@@ -7,6 +7,7 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from .types import (
+        DiarizeModel,
         ListenV1CloseStream,
         ListenV1CloseStreamType,
         ListenV1Finalize,
@@ -53,6 +54,7 @@ if typing.TYPE_CHECKING:
         ListenV1UtteranceEndParams,
     )
 _dynamic_imports: typing.Dict[str, str] = {
+    "DiarizeModel": ".types",
     "ListenV1CloseStream": ".types",
     "ListenV1CloseStreamParams": ".requests",
     "ListenV1CloseStreamType": ".types",
@@ -118,6 +120,7 @@ def __dir__():
 
 
 __all__ = [
+    "DiarizeModel",
     "ListenV1CloseStream",
     "ListenV1CloseStreamParams",
     "ListenV1CloseStreamType",

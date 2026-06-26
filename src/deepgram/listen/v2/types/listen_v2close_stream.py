@@ -5,11 +5,10 @@ import typing
 import pydantic
 from ....core.pydantic_utilities import IS_PYDANTIC_V2
 from ....core.unchecked_base_model import UncheckedBaseModel
-from .listen_v2close_stream_type import ListenV2CloseStreamType
 
 
 class ListenV2CloseStream(UncheckedBaseModel):
-    type: ListenV2CloseStreamType = pydantic.Field()
+    type: typing.Literal["CloseStream"] = pydantic.Field(default="CloseStream")
     """
     Message type identifier
     """
