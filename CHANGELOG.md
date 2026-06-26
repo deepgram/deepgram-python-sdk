@@ -1,5 +1,22 @@
 # Changelog
 
+## [7.4.0](https://github.com/deepgram/deepgram-python-sdk/compare/v7.3.1...v7.4.0) (2026-06-26)
+
+
+### Features
+
+* **regen:** v2 language_hints, profanity filter, word timings, diarize_model ([#730](https://github.com/deepgram/deepgram-python-sdk/issues/730)) ([da6b7ba](https://github.com/deepgram/deepgram-python-sdk/commit/da6b7ba8b5583a9dcddfd3950b4abd4d2645c9fa))
+
+
+### Bug Fixes
+
+* redact Authorization header from websockets DEBUG logs ([#731](https://github.com/deepgram/deepgram-python-sdk/issues/731)) ([029d877](https://github.com/deepgram/deepgram-python-sdk/commit/029d8771a2957fd5ffbc3c50fb40550098fcfad3))
+
+
+### Documentation
+
+* improve contributor onboarding and setup instructions ([#718](https://github.com/deepgram/deepgram-python-sdk/issues/718)) ([3f7398a](https://github.com/deepgram/deepgram-python-sdk/commit/3f7398a9782a1efcfd99408f1392907aa4e68cf3))
+
 ## [7.3.1](https://github.com/deepgram/deepgram-python-sdk/compare/v7.3.0...v7.3.1) (2026-06-03)
 
 
