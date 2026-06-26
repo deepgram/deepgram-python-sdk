@@ -19,7 +19,7 @@ class ListenV2TurnInfoEventWordsItem(UniversalBaseModel):
 
     class Config:
         frozen = True
-        extra = "forbid"
+        extra = "allow"
 
 
 class ListenV2TurnInfoEvent(UniversalBaseModel):
@@ -44,4 +44,4 @@ class ListenV2TurnInfoEvent(UniversalBaseModel):
 
     class Config:
         frozen = True
-        extra = "forbid"
+        extra = "allow"
