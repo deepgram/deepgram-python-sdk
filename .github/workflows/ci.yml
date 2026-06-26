@@ -58,7 +58,7 @@ jobs:
           docker compose version
 
       - name: Test
-        run: poetry run pytest -rP --cov=deepgram --cov-report=xml --cov-report=term .
+        run: poetry run pytest -rP --cov=deepgram --cov-branch --cov-report=xml --cov-report=term-missing .
       - name: Generate code coverage summary
         if: matrix.python-version == '3.13'
         uses: irongut/CodeCoverageSummary@v1.3.0
@@ -66,9 +66,11 @@ jobs:
           filename: coverage.xml
           badge: true
           format: markdown
-          hide_complexity: true
+          hide_branch_rate: false
+          hide_complexity: false
           indicators: true
           output: both
+          thresholds: "60 80"
       - name: Add coverage PR comment
         if: matrix.python-version == '3.13' && github.event_name == 'pull_request'
         uses: marocchino/sticky-pull-request-comment@v2
