@@ -1,5 +1,12 @@
 # Changelog
 
+## [5.3.4](https://github.com/deepgram/deepgram-python-sdk/compare/v5.3.3...v5.3.4) (2026-06-26)
+
+
+### Bug Fixes
+
+* **listen/v2:** allow extra fields on Flux TurnInfo models ([#736](https://github.com/deepgram/deepgram-python-sdk/issues/736)) ([be07aa6](https://github.com/deepgram/deepgram-python-sdk/commit/be07aa6))
+
 ## [5.3.3](https://github.com/deepgram/deepgram-python-sdk/compare/v5.3.2...v5.3.3) (2026-02-24)
 
 
