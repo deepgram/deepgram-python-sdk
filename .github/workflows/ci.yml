@@ -50,7 +50,7 @@ jobs:
       - name: Install dependencies
         run: poetry install
       - name: Install coverage tool
-        run: poetry run pip install pytest-cov
+        run: poetry run pip install pytest-cov respx
 
       - name: Verify Docker is available
         run: |
@@ -70,7 +70,7 @@ jobs:
           hide_complexity: false
           indicators: true
           output: both
-          thresholds: "60 80"
+          thresholds: "75 90"
       - name: Add coverage PR comment
         if: matrix.python-version == '3.13' && github.event_name == 'pull_request'
         uses: marocchino/sticky-pull-request-comment@v2
