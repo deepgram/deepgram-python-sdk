@@ -60,7 +60,7 @@ def _maybe_resolve_forward_ref(
 class UncheckedBaseModel(UniversalBaseModel):
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
-    else:
+    else:  # pragma: no cover
 
         class Config:
             extra = pydantic.Extra.allow
@@ -106,7 +106,7 @@ class UncheckedBaseModel(UniversalBaseModel):
             if key in values:
                 if IS_PYDANTIC_V2:
                     type_ = field.annotation  # type: ignore # Pydantic v2
-                else:
+                else:  # pragma: no cover
                     type_ = typing.cast(typing.Type, field.outer_type_)  # type: ignore # Pydantic < v1.10.15
 
                 fields_values[name] = (
@@ -132,7 +132,7 @@ class UncheckedBaseModel(UniversalBaseModel):
             if (key not in pydantic_alias_fields and key not in internal_alias_fields) and key not in fields:
                 if IS_PYDANTIC_V2:
                     extras[key] = value
-                else:
+                else:  # pragma: no cover
                     _fields_set.add(key)
                     fields_values[key] = value
 
@@ -142,7 +142,7 @@ class UncheckedBaseModel(UniversalBaseModel):
             object.__setattr__(m, "__pydantic_private__", None)
             object.__setattr__(m, "__pydantic_extra__", extras)
             object.__setattr__(m, "__pydantic_fields_set__", _fields_set)
-        else:
+        else:  # pragma: no cover
             object.__setattr__(m, "__fields_set__", _fields_set)
             m._init_private_attributes()  # type: ignore # Pydantic v1
         return m
@@ -202,7 +202,7 @@ def _literal_fields_match_strict(inner_type: typing.Type[typing.Any], object_: t
     for field_name, field in fields.items():
         if IS_PYDANTIC_V2:
             field_type = field.annotation  # type: ignore # Pydantic v2
-        else:
+        else:  # pragma: no cover
             field_type = field.outer_type_  # type: ignore # Pydantic v1
 
         if is_literal_type(field_type):  # type: ignore[arg-type]
@@ -275,7 +275,7 @@ def _convert_undiscriminated_union_type(
                 for field_name, field in fields.items():
                     if IS_PYDANTIC_V2:
                         field_type = field.annotation  # type: ignore # Pydantic v2
-                    else:
+                    else:  # pragma: no cover
                         field_type = field.outer_type_  # type: ignore # Pydantic v1
 
                     if is_literal_type(field_type):  # type: ignore[arg-type]
@@ -412,7 +412,7 @@ def construct_type(
     ):
         if IS_PYDANTIC_V2:
             return type_.model_construct(**object_)
-        else:
+        else:  # pragma: no cover
             return type_.construct(**object_)
 
     if base_type == dt.datetime:
@@ -461,7 +461,7 @@ def construct_type(
 def _get_is_populate_by_name(model: typing.Type["Model"]) -> bool:
     if IS_PYDANTIC_V2:
         return model.model_config.get("populate_by_name", False)  # type: ignore # Pydantic v2
-    return model.__config__.allow_population_by_field_name  # type: ignore # Pydantic v1
+    return model.__config__.allow_population_by_field_name  # type: ignore # Pydantic v1  # pragma: no cover
 
 
 from pydantic.fields import FieldInfo as _FieldInfo
@@ -476,7 +476,7 @@ def _get_model_fields(
 ) -> typing.Mapping[str, PydanticField]:
     if IS_PYDANTIC_V2:
         return model.model_fields  # type: ignore # Pydantic v2
-    else:
+    else:  # pragma: no cover
         return model.__fields__  # type: ignore # Pydantic v1
 
 
