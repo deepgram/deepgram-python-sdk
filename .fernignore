@@ -150,6 +150,7 @@ src/deepgram/core/query_encoder.py
 tests/custom/test_api_error_redaction.py
 tests/custom/test_agent_history.py
 tests/custom/test_agent_update_listen.py
+tests/custom/test_branch_coverage_95.py
 tests/custom/test_compat_aliases.py
 tests/custom/test_eot_thresholds_feature.py
 tests/custom/test_language_hint_compat.py
