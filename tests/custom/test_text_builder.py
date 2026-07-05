@@ -234,10 +234,18 @@ class TestSsmlToDeepgram:
         """Test converting basic phoneme tag"""
         ssml = '<phoneme alphabet="ipa" ph="ˌæzəˈθaɪəpriːn">azathioprine</phoneme>'
         result = ssml_to_deepgram(ssml)
-        
+
         assert '"word": "azathioprine"' in result
         assert '"pronounce": "ˌæzəˈθaɪəpriːn"' in result
-    
+
+    def test_phoneme_attribute_order_independent(self):
+        """ph before alphabet must work too (SSML attribute order is not significant)"""
+        ssml = '<phoneme ph="ˌæzəˈθaɪəpriːn" alphabet="ipa">azathioprine</phoneme>'
+        result = ssml_to_deepgram(ssml)
+
+        assert '"word": "azathioprine"' in result
+        assert '"pronounce": "ˌæzəˈθaɪəpriːn"' in result
+
     def test_basic_break(self):
         """Test converting break tag (milliseconds)"""
         ssml = '<break time="500ms"/>'
