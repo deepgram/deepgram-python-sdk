@@ -38,7 +38,6 @@ if typing.TYPE_CHECKING:
     from .cartesia_speak_provider_voice import CartesiaSpeakProviderVoice
     from .create_agent_configuration_v1response import CreateAgentConfigurationV1Response
     from .create_key_v1request import CreateKeyV1Request
-    from .create_key_v1request_one import CreateKeyV1RequestOne
     from .create_key_v1response import CreateKeyV1Response
     from .create_project_distribution_credentials_v1response import CreateProjectDistributionCredentialsV1Response
     from .create_project_distribution_credentials_v1response_distribution_credentials import (
@@ -51,7 +50,6 @@ if typing.TYPE_CHECKING:
     from .deepgram import Deepgram
     from .deepgram_listen_provider_v1 import DeepgramListenProviderV1
     from .deepgram_listen_provider_v2 import DeepgramListenProviderV2
-    from .deepgram_listen_provider_v2language_hint import DeepgramListenProviderV2LanguageHint
     from .deepgram_speak_provider_model import DeepgramSpeakProviderModel
     from .delete_agent_configuration_v1response import DeleteAgentConfigurationV1Response
     from .delete_agent_variable_v1response import DeleteAgentVariableV1Response
@@ -257,6 +255,11 @@ if typing.TYPE_CHECKING:
     from .speak_v1response import SpeakV1Response
     from .speak_v1sample_rate import SpeakV1SampleRate
     from .speak_v1speed import SpeakV1Speed
+    from .speak_v2encoding import SpeakV2Encoding
+    from .speak_v2mip_opt_out import SpeakV2MipOptOut
+    from .speak_v2model import SpeakV2Model
+    from .speak_v2sample_rate import SpeakV2SampleRate
+    from .speak_v2tag import SpeakV2Tag
     from .think_settings_v1 import ThinkSettingsV1
     from .think_settings_v1context_length import ThinkSettingsV1ContextLength
     from .think_settings_v1endpoint import ThinkSettingsV1Endpoint
@@ -313,7 +316,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "CartesiaSpeakProviderVoice": ".cartesia_speak_provider_voice",
     "CreateAgentConfigurationV1Response": ".create_agent_configuration_v1response",
     "CreateKeyV1Request": ".create_key_v1request",
-    "CreateKeyV1RequestOne": ".create_key_v1request_one",
     "CreateKeyV1Response": ".create_key_v1response",
     "CreateProjectDistributionCredentialsV1Response": ".create_project_distribution_credentials_v1response",
     "CreateProjectDistributionCredentialsV1ResponseDistributionCredentials": ".create_project_distribution_credentials_v1response_distribution_credentials",
@@ -322,7 +324,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "Deepgram": ".deepgram",
     "DeepgramListenProviderV1": ".deepgram_listen_provider_v1",
     "DeepgramListenProviderV2": ".deepgram_listen_provider_v2",
-    "DeepgramListenProviderV2LanguageHint": ".deepgram_listen_provider_v2language_hint",
     "DeepgramSpeakProviderModel": ".deepgram_speak_provider_model",
     "DeleteAgentConfigurationV1Response": ".delete_agent_configuration_v1response",
     "DeleteAgentVariableV1Response": ".delete_agent_variable_v1response",
@@ -496,6 +497,11 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SpeakV1Response": ".speak_v1response",
     "SpeakV1SampleRate": ".speak_v1sample_rate",
     "SpeakV1Speed": ".speak_v1speed",
+    "SpeakV2Encoding": ".speak_v2encoding",
+    "SpeakV2MipOptOut": ".speak_v2mip_opt_out",
+    "SpeakV2Model": ".speak_v2model",
+    "SpeakV2SampleRate": ".speak_v2sample_rate",
+    "SpeakV2Tag": ".speak_v2tag",
     "ThinkSettingsV1": ".think_settings_v1",
     "ThinkSettingsV1ContextLength": ".think_settings_v1context_length",
     "ThinkSettingsV1Endpoint": ".think_settings_v1endpoint",
@@ -574,7 +580,6 @@ __all__ = [
     "CartesiaSpeakProviderVoice",
     "CreateAgentConfigurationV1Response",
     "CreateKeyV1Request",
-    "CreateKeyV1RequestOne",
     "CreateKeyV1Response",
     "CreateProjectDistributionCredentialsV1Response",
     "CreateProjectDistributionCredentialsV1ResponseDistributionCredentials",
@@ -583,7 +588,6 @@ __all__ = [
     "Deepgram",
     "DeepgramListenProviderV1",
     "DeepgramListenProviderV2",
-    "DeepgramListenProviderV2LanguageHint",
     "DeepgramSpeakProviderModel",
     "DeleteAgentConfigurationV1Response",
     "DeleteAgentVariableV1Response",
@@ -757,6 +761,11 @@ __all__ = [
     "SpeakV1Response",
     "SpeakV1SampleRate",
     "SpeakV1Speed",
+    "SpeakV2Encoding",
+    "SpeakV2MipOptOut",
+    "SpeakV2Model",
+    "SpeakV2SampleRate",
+    "SpeakV2Tag",
     "ThinkSettingsV1",
     "ThinkSettingsV1ContextLength",
     "ThinkSettingsV1Endpoint",
