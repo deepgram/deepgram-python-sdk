@@ -117,7 +117,7 @@ if IS_PYDANTIC_V2:
         set: list,
         _UUID: str,
     }
-else:  # pragma: no cover
+else:
     from pydantic.datetime_parse import parse_date as parse_date  # type: ignore[no-redef]
     from pydantic.datetime_parse import parse_datetime as parse_datetime  # type: ignore[no-redef]
     from pydantic.fields import ModelField as ModelField  # type: ignore[attr-defined, no-redef, assignment]
@@ -200,7 +200,7 @@ def parse_obj_as(type_: Type[T], object_: Any) -> T:
                 if alias is not None and alias != field_name:
                     has_pydantic_aliases = True
                     break
-        else:  # pragma: no cover
+        else:
             for field in getattr(type_, "__fields__", {}).values():
                 alias = getattr(field, "alias", None)
                 name = getattr(field, "name", None)
@@ -218,7 +218,7 @@ def parse_obj_as(type_: Type[T], object_: Any) -> T:
     if IS_PYDANTIC_V2:
         adapter = _get_type_adapter(type_)
         return adapter.validate_python(dealiased_object)  # type: ignore[no-any-return]
-    return pydantic.parse_obj_as(type_, dealiased_object)  # pragma: no cover
+    return pydantic.parse_obj_as(type_, dealiased_object)
 
 
 def to_jsonable_with_fallback(obj: Any, fallback_serializer: Callable[[Any], Any]) -> Any:
@@ -226,7 +226,7 @@ def to_jsonable_with_fallback(obj: Any, fallback_serializer: Callable[[Any], Any
         from pydantic_core import to_jsonable_python
 
         return to_jsonable_python(obj, fallback=fallback_serializer)
-    return fallback_serializer(obj)  # pragma: no cover
+    return fallback_serializer(obj)
 
 
 class UniversalBaseModel(pydantic.BaseModel):
@@ -279,7 +279,7 @@ class UniversalBaseModel(pydantic.BaseModel):
             data = {k: serialize_datetime(v) if isinstance(v, dt.datetime) else v for k, v in serialized.items()}
             return data
 
-    else:  # pragma: no cover
+    else:
 
         class Config:
             smart_union = True
@@ -329,7 +329,7 @@ class UniversalBaseModel(pydantic.BaseModel):
         dealiased_object = convert_and_respect_annotation_metadata(object_=values, annotation=cls, direction="read")
         if IS_PYDANTIC_V2:
             return super().model_construct(_fields_set, **dealiased_object)  # type: ignore[misc]
-        return super().construct(_fields_set, **dealiased_object)  # pragma: no cover
+        return super().construct(_fields_set, **dealiased_object)
 
     def json(self, **kwargs: Any) -> str:
         kwargs_with_defaults = {
@@ -339,7 +339,7 @@ class UniversalBaseModel(pydantic.BaseModel):
         }
         if IS_PYDANTIC_V2:
             return super().model_dump_json(**kwargs_with_defaults)  # type: ignore[misc]
-        return super().json(**kwargs_with_defaults)  # pragma: no cover
+        return super().json(**kwargs_with_defaults)
 
     def dict(self, **kwargs: Any) -> Dict[str, Any]:
         """
@@ -369,7 +369,7 @@ class UniversalBaseModel(pydantic.BaseModel):
                 super().model_dump(**kwargs_with_defaults_exclude_none),  # type: ignore[misc]
             )
 
-        else:  # pragma: no cover
+        else:
             _fields_set = self.__fields_set__.copy()
 
             fields = _get_model_fields(self.__class__)
@@ -436,7 +436,7 @@ if IS_PYDANTIC_V2:
         pass
 
     UniversalRootModel: TypeAlias = V2RootModel  # type: ignore[misc]
-else:  # pragma: no cover
+else:
     UniversalRootModel: TypeAlias = UniversalBaseModel  # type: ignore[misc, no-redef]
 
 
@@ -455,7 +455,7 @@ def encode_by_type(o: Any) -> Any:
 def update_forward_refs(model: Type["Model"], **localns: Any) -> None:
     if IS_PYDANTIC_V2:
         model.model_rebuild(raise_errors=False)  # type: ignore[attr-defined]
-    else:  # pragma: no cover
+    else:
         model.update_forward_refs(**localns)
 
 
@@ -471,7 +471,7 @@ def universal_root_validator(
             # In Pydantic v2, for RootModel we always use "before" mode
             # The custom validators transform the input value before the model is created
             return cast(AnyCallable, pydantic.model_validator(mode="before")(func))  # type: ignore[attr-defined]
-        return cast(AnyCallable, pydantic.root_validator(pre=pre)(func))  # type: ignore[call-overload]  # pragma: no cover
+        return cast(AnyCallable, pydantic.root_validator(pre=pre)(func))  # type: ignore[call-overload]
 
     return decorator
 
@@ -480,7 +480,7 @@ def universal_field_validator(field_name: str, pre: bool = False) -> Callable[[A
     def decorator(func: AnyCallable) -> AnyCallable:
         if IS_PYDANTIC_V2:
             return cast(AnyCallable, pydantic.field_validator(field_name, mode="before" if pre else "after")(func))  # type: ignore[attr-defined]
-        return cast(AnyCallable, pydantic.validator(field_name, pre=pre)(func))  # pragma: no cover
+        return cast(AnyCallable, pydantic.validator(field_name, pre=pre)(func))
 
     return decorator
 
@@ -491,7 +491,7 @@ PydanticField = Union[ModelField, _FieldInfo]
 def _get_model_fields(model: Type["Model"]) -> Mapping[str, PydanticField]:
     if IS_PYDANTIC_V2:
         return cast(Mapping[str, PydanticField], model.model_fields)  # type: ignore[attr-defined]
-    return cast(Mapping[str, PydanticField], model.__fields__)  # pragma: no cover
+    return cast(Mapping[str, PydanticField], model.__fields__)
 
 
 def _get_field_default(field: PydanticField) -> Any:
