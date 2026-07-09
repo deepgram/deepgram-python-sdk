@@ -53,6 +53,7 @@ How to identify:
 
 Current temporarily frozen files:
 - `src/deepgram/speak/v1/socket_client.py` — optional message param defaults, broad exception catch
+- `src/deepgram/speak/v2/socket_client.py` — same (optional `send_flush`/`send_close` defaults, broad exception catch); new websocket TTS client added in the 2026-07-08 regen
 - `src/deepgram/listen/v1/socket_client.py` — same
 - `src/deepgram/listen/v2/socket_client.py` — same + `send_configure` typing.Any/raw shim, response Union uses typing.Any instead of `ListenV2ConfigureSuccess`
 - `src/deepgram/agent/v1/socket_client.py` — same + `_sanitize_numeric_types`

@@ -21,6 +21,7 @@ import json
 from deepgram.agent.v1.socket_client import V1SocketClient, _sanitize_numeric_types
 from deepgram.listen.v2.socket_client import V2SocketClient
 from deepgram.listen.v2.types.listen_v2close_stream import ListenV2CloseStream
+from deepgram.speak.v2.socket_client import V2SocketClient as SpeakV2SocketClient
 
 
 class _FakeWebSocket:
@@ -85,6 +86,16 @@ class TestOptionalMessageControlSends:
         ws = _FakeWebSocket()
         V1SocketClient(websocket=ws).send_keep_alive()
         assert _sent_json(ws)["type"] == "KeepAlive"
+
+    def test_speak_v2_flush_no_arg(self):
+        ws = _FakeWebSocket()
+        SpeakV2SocketClient(websocket=ws).send_flush()
+        assert _sent_json(ws)["type"] == "Flush"
+
+    def test_speak_v2_close_no_arg(self):
+        ws = _FakeWebSocket()
+        SpeakV2SocketClient(websocket=ws).send_close()
+        assert _sent_json(ws)["type"] == "Close"
 
 
 class TestSendConfigureRawShim:
