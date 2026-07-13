@@ -32,8 +32,23 @@ SpeakV2SocketClientResponse = Union[
     SpeakV2Error,
 ]
 
+import os
+
+from deepgram.environment import DeepgramClientEnvironment
+
+
+def _client_environment() -> DeepgramClientEnvironment:
+    """TEST ONLY: target a non-prod host (e.g. staging) by exporting
+    DEEPGRAM_BASE_URL=wss://api.staging.deepgram.com. Defaults to production."""
+    base = os.environ.get("DEEPGRAM_BASE_URL")
+    if not base:
+        return DeepgramClientEnvironment.PRODUCTION
+    https = base.replace("wss://", "https://").replace("ws://", "http://")
+    return DeepgramClientEnvironment(base=https, production=base, agent=base, agent_rest=https)
+
+
 print("Initializing AsyncDeepgramClient")
-client = AsyncDeepgramClient()
+client = AsyncDeepgramClient(environment=_client_environment())
 print("AsyncDeepgramClient initialized")
 
 

@@ -9,6 +9,10 @@ coverage; this pins the behavior a future regen must not silently change:
     frozen in .fernignore).
   * response parsing — inbound JSON resolves to the right ``SpeakV2*`` type via
     the ``type`` discriminant, and binary frames pass through as ``bytes``.
+  * forward compatibility — an unknown/future message type passes through
+    untouched on every receive path (sync + async, ``recv()`` and the
+    ``start_listening`` loop) rather than raising. Python was named specifically
+    in the Mar 2026 breakage, so this is pinned end-to-end here.
   * broad ``except`` — the listen loop surfaces *any* exception as an ERROR event
     (the generator narrows to ``websockets.WebSocketException``; the patch keeps
     the custom-transport error contract, which can raise arbitrary types).
@@ -19,11 +23,16 @@ Driven with a fake websocket — no network.
 import json
 
 from deepgram.core.events import EventType
-from deepgram.speak.v2.socket_client import V2SocketClient
+from deepgram.speak.v2.socket_client import AsyncV2SocketClient, V2SocketClient
 from deepgram.speak.v2.types.speak_v2connected import SpeakV2Connected
 from deepgram.speak.v2.types.speak_v2error import SpeakV2Error
 from deepgram.speak.v2.types.speak_v2flushed import SpeakV2Flushed
 from deepgram.speak.v2.types.speak_v2speak import SpeakV2Speak
+
+# A message type this SDK version has never heard of. construct_type must pass
+# it through as a raw dict rather than raise, so newer servers never break an
+# older client.
+_UNKNOWN_MESSAGE = {"type": "FutureMessage", "brand_new_field": 123}
 
 
 class _FakeWebSocket:
@@ -46,10 +55,41 @@ class _FakeWebSocket:
         yield from self._incoming
 
 
+class _FakeAsyncWebSocket:
+    """Async analogue of ``_FakeWebSocket`` for the ``AsyncV2SocketClient`` paths."""
+
+    def __init__(self, incoming=None):
+        self.sent = []
+        self._incoming = list(incoming or [])
+
+    async def send(self, data):
+        self.sent.append(data)
+
+    async def recv(self):
+        return self._incoming.pop(0)
+
+    def __aiter__(self):
+        incoming = self._incoming
+
+        async def _gen():
+            for message in incoming:
+                yield message
+
+        return _gen()
+
+
 def _sent_json(ws):
     assert len(ws.sent) == 1
     payload = ws.sent[0]
     return json.loads(payload) if isinstance(payload, str) else payload
+
+
+def _collect(client):
+    """Register MESSAGE/ERROR handlers and return the (messages, errors) sinks."""
+    messages, errors = [], []
+    client.on(EventType.MESSAGE, messages.append)
+    client.on(EventType.ERROR, errors.append)
+    return messages, errors
 
 
 class TestSpeakV2Send:
@@ -121,3 +161,44 @@ class TestSpeakV2Broadexcept:
 
         assert ("error", boom) in events
         assert events[-1] == ("close", None)
+
+
+class TestSpeakV2ForwardCompat:
+    """An unknown/future message type must survive every receive path untouched
+    (sync + async, ``recv()`` and the ``start_listening`` loop) — no exception,
+    no dropped connection, payload preserved. Regression guard for the Mar 2026
+    breakage where a newly added server message broke older Python clients."""
+
+    def test_sync_recv_passes_unknown_through(self):
+        ws = _FakeWebSocket(incoming=[json.dumps(_UNKNOWN_MESSAGE)])
+        assert V2SocketClient(websocket=ws).recv() == _UNKNOWN_MESSAGE
+
+    def test_sync_listen_loop_emits_unknown_without_error(self):
+        ws = _FakeWebSocket(
+            incoming=[json.dumps(_UNKNOWN_MESSAGE), json.dumps({"type": "Flushed", "speech_id": "s-1"})]
+        )
+        client = V2SocketClient(websocket=ws)
+        messages, errors = _collect(client)
+
+        client.start_listening()
+
+        assert errors == []
+        assert messages[0] == _UNKNOWN_MESSAGE
+        assert isinstance(messages[1], SpeakV2Flushed)
+
+    async def test_async_recv_passes_unknown_through(self):
+        ws = _FakeAsyncWebSocket(incoming=[json.dumps(_UNKNOWN_MESSAGE)])
+        assert await AsyncV2SocketClient(websocket=ws).recv() == _UNKNOWN_MESSAGE
+
+    async def test_async_listen_loop_emits_unknown_without_error(self):
+        ws = _FakeAsyncWebSocket(
+            incoming=[json.dumps(_UNKNOWN_MESSAGE), json.dumps({"type": "Flushed", "speech_id": "s-1"})]
+        )
+        client = AsyncV2SocketClient(websocket=ws)
+        messages, errors = _collect(client)
+
+        await client.start_listening()
+
+        assert errors == []
+        assert messages[0] == _UNKNOWN_MESSAGE
+        assert isinstance(messages[1], SpeakV2Flushed)
