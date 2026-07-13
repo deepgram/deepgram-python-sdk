@@ -34,6 +34,9 @@ class AgentV1SettingsAgentContextListenProvider_V2(UncheckedBaseModel):
     model: str
     language_hints: typing.Optional[typing.List[str]] = None
     language_hint: typing.Optional[typing.Union[str, typing.List[str]]] = pydantic.Field(default=None, exclude=True)
+    eot_threshold: typing.Optional[float] = None
+    eager_eot_threshold: typing.Optional[float] = None
+    eot_timeout_ms: typing.Optional[int] = None
     keyterms: typing.Optional[typing.List[str]] = None
 
     # Backward-compat: the public field was historically named `language_hint`

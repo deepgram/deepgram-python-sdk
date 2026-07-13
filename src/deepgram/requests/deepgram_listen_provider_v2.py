@@ -26,6 +26,21 @@ class DeepgramListenProviderV2Params(typing_extensions.TypedDict):
     An array of one or more BCP-47 language codes to bias the model toward specific languages. Only supported when model is flux-general-multi. Without hints, the model auto-detects the spoken language. See the Language Prompting guide for details.
     """
 
+    eot_threshold: typing_extensions.NotRequired[float]
+    """
+    End-of-turn confidence required to finish a turn. Valid range: 0.5 - 0.9. Defaults to 0.7.
+    """
+
+    eager_eot_threshold: typing_extensions.NotRequired[float]
+    """
+    End-of-turn confidence required to fire an eager end-of-turn event. When set, enables EagerEndOfTurn and TurnResumed events. Valid range: 0.3 - 0.9.
+    """
+
+    eot_timeout_ms: typing_extensions.NotRequired[int]
+    """
+    A turn will be finished when this much time in milliseconds has passed after speech, regardless of EOT confidence. Defaults to 5000.
+    """
+
     keyterms: typing_extensions.NotRequired[typing.Sequence[str]]
     """
     Prompt keyterm recognition to improve Keyword Recall Rate

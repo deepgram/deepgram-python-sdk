@@ -24,6 +24,7 @@ if typing.TYPE_CHECKING:
     from .agent_v1inject_user_message import AgentV1InjectUserMessage
     from .agent_v1injection_refused import AgentV1InjectionRefused
     from .agent_v1keep_alive import AgentV1KeepAlive
+    from .agent_v1listen_updated import AgentV1ListenUpdated
     from .agent_v1prompt_updated import AgentV1PromptUpdated
     from .agent_v1receive_function_call_response import AgentV1ReceiveFunctionCallResponse
     from .agent_v1send_function_call_response import AgentV1SendFunctionCallResponse
@@ -82,6 +83,8 @@ if typing.TYPE_CHECKING:
     from .agent_v1settings_flags import AgentV1SettingsFlags
     from .agent_v1speak_updated import AgentV1SpeakUpdated
     from .agent_v1think_updated import AgentV1ThinkUpdated
+    from .agent_v1update_listen import AgentV1UpdateListen
+    from .agent_v1update_listen_listen import AgentV1UpdateListenListen
     from .agent_v1update_prompt import AgentV1UpdatePrompt
     from .agent_v1update_speak import AgentV1UpdateSpeak
     from .agent_v1update_speak_speak import AgentV1UpdateSpeakSpeak
@@ -111,6 +114,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AgentV1InjectUserMessage": ".agent_v1inject_user_message",
     "AgentV1InjectionRefused": ".agent_v1injection_refused",
     "AgentV1KeepAlive": ".agent_v1keep_alive",
+    "AgentV1ListenUpdated": ".agent_v1listen_updated",
     "AgentV1PromptUpdated": ".agent_v1prompt_updated",
     "AgentV1ReceiveFunctionCallResponse": ".agent_v1receive_function_call_response",
     "AgentV1SendFunctionCallResponse": ".agent_v1send_function_call_response",
@@ -153,6 +157,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AgentV1SettingsFlags": ".agent_v1settings_flags",
     "AgentV1SpeakUpdated": ".agent_v1speak_updated",
     "AgentV1ThinkUpdated": ".agent_v1think_updated",
+    "AgentV1UpdateListen": ".agent_v1update_listen",
+    "AgentV1UpdateListenListen": ".agent_v1update_listen_listen",
     "AgentV1UpdatePrompt": ".agent_v1update_prompt",
     "AgentV1UpdateSpeak": ".agent_v1update_speak",
     "AgentV1UpdateSpeakSpeak": ".agent_v1update_speak_speak",
@@ -206,6 +212,7 @@ __all__ = [
     "AgentV1InjectUserMessage",
     "AgentV1InjectionRefused",
     "AgentV1KeepAlive",
+    "AgentV1ListenUpdated",
     "AgentV1PromptUpdated",
     "AgentV1ReceiveFunctionCallResponse",
     "AgentV1SendFunctionCallResponse",
@@ -248,6 +255,8 @@ __all__ = [
     "AgentV1SettingsFlags",
     "AgentV1SpeakUpdated",
     "AgentV1ThinkUpdated",
+    "AgentV1UpdateListen",
+    "AgentV1UpdateListenListen",
     "AgentV1UpdatePrompt",
     "AgentV1UpdateSpeak",
     "AgentV1UpdateSpeakSpeak",

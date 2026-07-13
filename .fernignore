@@ -26,6 +26,7 @@ src/deepgram/agent/v1/socket_client.py
 src/deepgram/listen/v1/socket_client.py
 src/deepgram/listen/v2/socket_client.py
 src/deepgram/speak/v1/socket_client.py
+src/deepgram/speak/v2/socket_client.py
 
 # Backward-compat patch: AgentV1SettingsAgentContext schema restructure as of
 # 2026-05-05. The new schema nests messages under .context.messages; this file
@@ -123,15 +124,27 @@ src/deepgram/listen/v2/types/__init__.py
 # [temporarily frozen — manual patches listed above]
 src/deepgram/core/query_encoder.py
 
+# Carries `# x-release-please-version` annotations on the User-Agent and
+# X-Fern-SDK-Version header lines so release-please bumps the wire telemetry
+# version in lockstep with the published package version (it is a `generic`
+# extra-file in .github/release-please-config.json). Fern regenerates this file
+# from scratch and would strip the annotations, so it is frozen to protect them.
+# [temporarily frozen — manual patches listed above]
+src/deepgram/core/client_wrapper.py
+
 # Hand-written custom tests
 tests/custom/test_agent_history.py
+tests/custom/test_agent_update_listen.py
 tests/custom/test_compat_aliases.py
+tests/custom/test_eot_thresholds_feature.py
 tests/custom/test_language_hint_compat.py
 tests/custom/test_language_hints_feature.py
 tests/custom/test_listen_v2_regen_constraints.py
 tests/custom/test_query_encoder.py
 tests/custom/test_secure_logging.py
 tests/custom/test_socket_client_shims.py
+tests/custom/test_speak_v2_connect_wire.py
+tests/custom/test_speak_v2_socket.py
 tests/custom/test_text_builder.py
 tests/custom/test_transport.py
 tests/typecheck/compat_aliases.py

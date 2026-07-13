@@ -21,6 +21,9 @@ class AgentV1SettingsAgentListenProvider_V2Params(typing_extensions.TypedDict):
     type: typing.Literal["deepgram"]
     model: str
     language_hints: typing_extensions.NotRequired[typing.Sequence[str]]
+    eot_threshold: typing_extensions.NotRequired[float]
+    eager_eot_threshold: typing_extensions.NotRequired[float]
+    eot_timeout_ms: typing_extensions.NotRequired[int]
     keyterms: typing_extensions.NotRequired[typing.Sequence[str]]
 
 

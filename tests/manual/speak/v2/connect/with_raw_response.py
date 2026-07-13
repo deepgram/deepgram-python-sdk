@@ -1,0 +1,118 @@
+from dotenv import load_dotenv
+
+print("Starting speak v2 connect with raw response example script")
+load_dotenv()
+print("Environment variables loaded")
+
+import threading
+import time
+from typing import Union
+
+from deepgram import DeepgramClient
+from deepgram.core.events import EventType
+from deepgram.speak.v2.types import (
+    SpeakV2Connected,
+    SpeakV2Error,
+    SpeakV2Flushed,
+    SpeakV2SessionMetadata,
+    SpeakV2Speak,
+    SpeakV2SpeechMetadata,
+    SpeakV2SpeechStarted,
+    SpeakV2Warning,
+)
+
+SpeakV2SocketClientResponse = Union[
+    bytes,
+    SpeakV2Connected,
+    SpeakV2SpeechStarted,
+    SpeakV2SpeechMetadata,
+    SpeakV2Flushed,
+    SpeakV2SessionMetadata,
+    SpeakV2Warning,
+    SpeakV2Error,
+]
+
+import os
+
+from deepgram.environment import DeepgramClientEnvironment
+
+
+def _client_environment() -> DeepgramClientEnvironment:
+    """TEST ONLY: target a non-prod host (e.g. staging) by exporting
+    DEEPGRAM_BASE_URL=wss://api.staging.deepgram.com. Defaults to production."""
+    base = os.environ.get("DEEPGRAM_BASE_URL")
+    if not base:
+        return DeepgramClientEnvironment.PRODUCTION
+    https = base.replace("wss://", "https://").replace("ws://", "http://")
+    return DeepgramClientEnvironment(base=https, production=base, agent=base, agent_rest=https)
+
+
+print("Initializing DeepgramClient")
+client = DeepgramClient(environment=_client_environment())
+print("DeepgramClient initialized")
+
+try:
+    model = "flux-alexis-en"
+    encoding = "linear16"
+    sample_rate = "24000"
+    print(
+        f"Establishing connection with raw response - Model: {model}, Encoding: {encoding}, Sample Rate: {sample_rate}"
+    )
+    with client.speak.v2.with_raw_response.connect(
+        model=model, encoding=encoding, sample_rate=sample_rate
+    ) as connection:
+        print("Connection context entered")
+
+        def on_message(message: SpeakV2SocketClientResponse) -> None:
+            if isinstance(message, bytes):
+                print("Received audio event")
+                print(f"Event body (audio data length): {len(message)} bytes")
+            else:
+                msg_type = getattr(message, "type", "Unknown")
+                print(f"Received {msg_type} event")
+                print(f"Event body: {message}")
+
+        print("Registering event handlers")
+        connection.on(EventType.OPEN, lambda _: print("Connection opened"))
+        connection.on(EventType.MESSAGE, on_message)
+        connection.on(EventType.CLOSE, lambda _: print("Connection closed"))
+        connection.on(EventType.ERROR, lambda error: print(f"Connection error: {error}"))
+        print("Event handlers registered")
+
+        # EXAMPLE ONLY: Start listening in a background thread for demo purposes
+        # In production, you would typically call connection.start_listening() directly
+        # which blocks until the connection closes, or integrate into your async event loop
+        print("Starting listening thread")
+        threading.Thread(target=connection.start_listening, daemon=True).start()
+
+        # Send text to be converted to speech
+        print("Sending Speak message")
+        connection.send_speak(SpeakV2Speak(text="Hello, world!"))
+
+        # Send control messages
+        print("Sending Flush control message")
+        connection.send_flush()
+        print("Sending Close control message")
+        connection.send_close()
+
+        print("Waiting 3 seconds for events...")
+        time.sleep(3)  # EXAMPLE ONLY: Wait briefly to see some events before exiting
+        print("Exiting connection context")
+except Exception as e:
+    print(f"Error occurred: {type(e).__name__}")
+    # Log request headers if available
+    if hasattr(e, "request_headers"):
+        print(f"Request headers: {e.request_headers}")
+    elif hasattr(e, "request") and hasattr(e.request, "headers"):
+        print(f"Request headers: {e.request.headers}")
+    # Log response headers if available
+    if hasattr(e, "headers"):
+        print(f"Response headers: {e.headers}")
+    # Log status code if available
+    if hasattr(e, "status_code"):
+        print(f"Status code: {e.status_code}")
+    # Log body if available
+    if hasattr(e, "body"):
+        print(f"Response body: {e.body}")
+    print(f"Caught: {e}")
+print("Script completed")

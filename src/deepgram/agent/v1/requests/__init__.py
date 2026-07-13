@@ -21,6 +21,7 @@ if typing.TYPE_CHECKING:
     from .agent_v1inject_user_message import AgentV1InjectUserMessageParams
     from .agent_v1injection_refused import AgentV1InjectionRefusedParams
     from .agent_v1keep_alive import AgentV1KeepAliveParams
+    from .agent_v1listen_updated import AgentV1ListenUpdatedParams
     from .agent_v1prompt_updated import AgentV1PromptUpdatedParams
     from .agent_v1receive_function_call_response import AgentV1ReceiveFunctionCallResponseParams
     from .agent_v1send_function_call_response import AgentV1SendFunctionCallResponseParams
@@ -74,6 +75,8 @@ if typing.TYPE_CHECKING:
     from .agent_v1settings_flags import AgentV1SettingsFlagsParams
     from .agent_v1speak_updated import AgentV1SpeakUpdatedParams
     from .agent_v1think_updated import AgentV1ThinkUpdatedParams
+    from .agent_v1update_listen import AgentV1UpdateListenParams
+    from .agent_v1update_listen_listen import AgentV1UpdateListenListenParams
     from .agent_v1update_prompt import AgentV1UpdatePromptParams
     from .agent_v1update_speak import AgentV1UpdateSpeakParams
     from .agent_v1update_speak_speak import AgentV1UpdateSpeakSpeakParams
@@ -100,6 +103,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AgentV1InjectUserMessageParams": ".agent_v1inject_user_message",
     "AgentV1InjectionRefusedParams": ".agent_v1injection_refused",
     "AgentV1KeepAliveParams": ".agent_v1keep_alive",
+    "AgentV1ListenUpdatedParams": ".agent_v1listen_updated",
     "AgentV1PromptUpdatedParams": ".agent_v1prompt_updated",
     "AgentV1ReceiveFunctionCallResponseParams": ".agent_v1receive_function_call_response",
     "AgentV1SendFunctionCallResponseParams": ".agent_v1send_function_call_response",
@@ -137,6 +141,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AgentV1SettingsParams": ".agent_v1settings",
     "AgentV1SpeakUpdatedParams": ".agent_v1speak_updated",
     "AgentV1ThinkUpdatedParams": ".agent_v1think_updated",
+    "AgentV1UpdateListenListenParams": ".agent_v1update_listen_listen",
+    "AgentV1UpdateListenParams": ".agent_v1update_listen",
     "AgentV1UpdatePromptParams": ".agent_v1update_prompt",
     "AgentV1UpdateSpeakParams": ".agent_v1update_speak",
     "AgentV1UpdateSpeakSpeakParams": ".agent_v1update_speak_speak",
@@ -187,6 +193,7 @@ __all__ = [
     "AgentV1InjectUserMessageParams",
     "AgentV1InjectionRefusedParams",
     "AgentV1KeepAliveParams",
+    "AgentV1ListenUpdatedParams",
     "AgentV1PromptUpdatedParams",
     "AgentV1ReceiveFunctionCallResponseParams",
     "AgentV1SendFunctionCallResponseParams",
@@ -224,6 +231,8 @@ __all__ = [
     "AgentV1SettingsParams",
     "AgentV1SpeakUpdatedParams",
     "AgentV1ThinkUpdatedParams",
+    "AgentV1UpdateListenListenParams",
+    "AgentV1UpdateListenParams",
     "AgentV1UpdatePromptParams",
     "AgentV1UpdateSpeakParams",
     "AgentV1UpdateSpeakSpeakParams",

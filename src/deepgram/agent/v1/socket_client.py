@@ -18,6 +18,7 @@ from .types.agent_v1inject_agent_message import AgentV1InjectAgentMessage
 from .types.agent_v1inject_user_message import AgentV1InjectUserMessage
 from .types.agent_v1injection_refused import AgentV1InjectionRefused
 from .types.agent_v1keep_alive import AgentV1KeepAlive
+from .types.agent_v1listen_updated import AgentV1ListenUpdated
 from .types.agent_v1prompt_updated import AgentV1PromptUpdated
 from .types.agent_v1receive_function_call_response import AgentV1ReceiveFunctionCallResponse
 from .types.agent_v1send_function_call_response import AgentV1SendFunctionCallResponse
@@ -25,6 +26,7 @@ from .types.agent_v1settings import AgentV1Settings
 from .types.agent_v1settings_applied import AgentV1SettingsApplied
 from .types.agent_v1speak_updated import AgentV1SpeakUpdated
 from .types.agent_v1think_updated import AgentV1ThinkUpdated
+from .types.agent_v1update_listen import AgentV1UpdateListen
 from .types.agent_v1update_prompt import AgentV1UpdatePrompt
 from .types.agent_v1update_speak import AgentV1UpdateSpeak
 from .types.agent_v1update_think import AgentV1UpdateThink
@@ -36,8 +38,6 @@ try:
     from websockets.legacy.client import WebSocketClientProtocol  # type: ignore
 except ImportError:
     from websockets import WebSocketClientProtocol  # type: ignore
-
-_logger = logging.getLogger(__name__)
 
 
 def _sanitize_numeric_types(obj: typing.Any) -> typing.Any:
@@ -60,11 +60,13 @@ def _sanitize_numeric_types(obj: typing.Any) -> typing.Any:
     return obj
 
 
+_logger = logging.getLogger(__name__)
 V1SocketClientResponse = typing.Union[
+    AgentV1ListenUpdated,
+    AgentV1ThinkUpdated,
     AgentV1ReceiveFunctionCallResponse,
     AgentV1PromptUpdated,
     AgentV1SpeakUpdated,
-    AgentV1ThinkUpdated,
     AgentV1InjectionRefused,
     AgentV1Welcome,
     AgentV1SettingsApplied,
@@ -136,6 +138,20 @@ class AsyncV1SocketClient(EventEmitterMixin):
         """
         await self._send_model(message)
 
+    async def send_update_listen(self, message: AgentV1UpdateListen) -> None:
+        """
+        Send a message to the websocket connection.
+        The message will be sent as a AgentV1UpdateListen.
+        """
+        await self._send_model(message)
+
+    async def send_update_think(self, message: AgentV1UpdateThink) -> None:
+        """
+        Send a message to the websocket connection.
+        The message will be sent as a AgentV1UpdateThink.
+        """
+        await self._send_model(message)
+
     async def send_update_speak(self, message: AgentV1UpdateSpeak) -> None:
         """
         Send a message to the websocket connection.
@@ -175,13 +191,6 @@ class AsyncV1SocketClient(EventEmitterMixin):
         """
         Send a message to the websocket connection.
         The message will be sent as a AgentV1UpdatePrompt.
-        """
-        await self._send_model(message)
-
-    async def send_update_think(self, message: AgentV1UpdateThink) -> None:
-        """
-        Send a message to the websocket connection.
-        The message will be sent as a AgentV1UpdateThink.
         """
         await self._send_model(message)
 
@@ -276,6 +285,20 @@ class V1SocketClient(EventEmitterMixin):
         """
         self._send_model(message)
 
+    def send_update_listen(self, message: AgentV1UpdateListen) -> None:
+        """
+        Send a message to the websocket connection.
+        The message will be sent as a AgentV1UpdateListen.
+        """
+        self._send_model(message)
+
+    def send_update_think(self, message: AgentV1UpdateThink) -> None:
+        """
+        Send a message to the websocket connection.
+        The message will be sent as a AgentV1UpdateThink.
+        """
+        self._send_model(message)
+
     def send_update_speak(self, message: AgentV1UpdateSpeak) -> None:
         """
         Send a message to the websocket connection.
@@ -315,13 +338,6 @@ class V1SocketClient(EventEmitterMixin):
         """
         Send a message to the websocket connection.
         The message will be sent as a AgentV1UpdatePrompt.
-        """
-        self._send_model(message)
-
-    def send_update_think(self, message: AgentV1UpdateThink) -> None:
-        """
-        Send a message to the websocket connection.
-        The message will be sent as a AgentV1UpdateThink.
         """
         self._send_model(message)
 

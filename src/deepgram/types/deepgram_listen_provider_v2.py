@@ -35,6 +35,21 @@ class DeepgramListenProviderV2(UncheckedBaseModel):
     `exclude=True` keeps it off the wire (the API rejects unknown fields).
     """
 
+    eot_threshold: typing.Optional[float] = pydantic.Field(default=None)
+    """
+    End-of-turn confidence required to finish a turn. Valid range: 0.5 - 0.9. Defaults to 0.7.
+    """
+
+    eager_eot_threshold: typing.Optional[float] = pydantic.Field(default=None)
+    """
+    End-of-turn confidence required to fire an eager end-of-turn event. When set, enables EagerEndOfTurn and TurnResumed events. Valid range: 0.3 - 0.9.
+    """
+
+    eot_timeout_ms: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    A turn will be finished when this much time in milliseconds has passed after speech, regardless of EOT confidence. Defaults to 5000.
+    """
+
     keyterms: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
     """
     Prompt keyterm recognition to improve Keyword Recall Rate
