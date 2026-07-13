@@ -124,6 +124,14 @@ src/deepgram/listen/v2/types/__init__.py
 # [temporarily frozen — manual patches listed above]
 src/deepgram/core/query_encoder.py
 
+# Carries `# x-release-please-version` annotations on the User-Agent and
+# X-Fern-SDK-Version header lines so release-please bumps the wire telemetry
+# version in lockstep with the published package version (it is a `generic`
+# extra-file in .github/release-please-config.json). Fern regenerates this file
+# from scratch and would strip the annotations, so it is frozen to protect them.
+# [temporarily frozen — manual patches listed above]
+src/deepgram/core/client_wrapper.py
+
 # Hand-written custom tests
 tests/custom/test_agent_history.py
 tests/custom/test_agent_update_listen.py
