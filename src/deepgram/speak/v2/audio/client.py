@@ -88,7 +88,7 @@ class AudioClient:
         Returns
         -------
         typing.Iterator[bytes]
-            Returns the synthesized audio in the requested encoding, or a request_id when using a callback.
+            Returns the synthesized audio in the requested encoding as a binary stream. When a `callback` URL is supplied, the request is processed asynchronously and the response body is instead a JSON acknowledgement (Content-Type `application/json`) of the form {"request_id": "..."}, with the audio delivered to the callback URL. Because this endpoint is typed as a binary audio stream, SDK callers that set `callback` receive this JSON acknowledgement through the audio byte iterator as raw bytes and must join the chunks and parse `request_id` themselves.
 
         Examples
         --------
@@ -194,7 +194,7 @@ class AsyncAudioClient:
         Returns
         -------
         typing.AsyncIterator[bytes]
-            Returns the synthesized audio in the requested encoding, or a request_id when using a callback.
+            Returns the synthesized audio in the requested encoding as a binary stream. When a `callback` URL is supplied, the request is processed asynchronously and the response body is instead a JSON acknowledgement (Content-Type `application/json`) of the form {"request_id": "..."}, with the audio delivered to the callback URL. Because this endpoint is typed as a binary audio stream, SDK callers that set `callback` receive this JSON acknowledgement through the audio byte iterator as raw bytes and must join the chunks and parse `request_id` themselves.
 
         Examples
         --------
