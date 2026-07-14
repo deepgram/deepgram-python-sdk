@@ -18,6 +18,7 @@ from .types.agent_v1inject_agent_message import AgentV1InjectAgentMessage
 from .types.agent_v1inject_user_message import AgentV1InjectUserMessage
 from .types.agent_v1injection_refused import AgentV1InjectionRefused
 from .types.agent_v1keep_alive import AgentV1KeepAlive
+from .types.agent_v1latency_report import AgentV1LatencyReport
 from .types.agent_v1listen_updated import AgentV1ListenUpdated
 from .types.agent_v1prompt_updated import AgentV1PromptUpdated
 from .types.agent_v1receive_function_call_response import AgentV1ReceiveFunctionCallResponse
@@ -73,6 +74,7 @@ V1SocketClientResponse = typing.Union[
     AgentV1ConversationText,
     AgentV1UserStartedSpeaking,
     AgentV1AgentThinking,
+    AgentV1LatencyReport,
     AgentV1FunctionCallRequest,
     AgentV1AgentStartedSpeaking,
     AgentV1AgentAudioDone,

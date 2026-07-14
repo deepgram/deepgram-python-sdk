@@ -20,6 +20,8 @@ if typing.TYPE_CHECKING:
         SpeakV2SpeechStarted,
         SpeakV2Warning,
     )
+    from . import audio
+    from .audio import AudioGenerateRequestCallbackMethod, AudioGenerateRequestContainer, AudioGenerateRequestEncoding
     from .requests import (
         SpeakV2CloseParams,
         SpeakV2ConnectedParams,
@@ -34,6 +36,9 @@ if typing.TYPE_CHECKING:
         SpeakV2WarningParams,
     )
 _dynamic_imports: typing.Dict[str, str] = {
+    "AudioGenerateRequestCallbackMethod": ".audio",
+    "AudioGenerateRequestContainer": ".audio",
+    "AudioGenerateRequestEncoding": ".audio",
     "SpeakV2Close": ".types",
     "SpeakV2CloseParams": ".requests",
     "SpeakV2Connected": ".types",
@@ -57,6 +62,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SpeakV2SpeechStartedParams": ".requests",
     "SpeakV2Warning": ".types",
     "SpeakV2WarningParams": ".requests",
+    "audio": ".audio",
 }
 
 
@@ -82,6 +88,9 @@ def __dir__():
 
 
 __all__ = [
+    "AudioGenerateRequestCallbackMethod",
+    "AudioGenerateRequestContainer",
+    "AudioGenerateRequestEncoding",
     "SpeakV2Close",
     "SpeakV2CloseParams",
     "SpeakV2Connected",
@@ -105,4 +114,5 @@ __all__ = [
     "SpeakV2SpeechStartedParams",
     "SpeakV2Warning",
     "SpeakV2WarningParams",
+    "audio",
 ]

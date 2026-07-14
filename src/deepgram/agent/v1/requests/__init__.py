@@ -21,6 +21,7 @@ if typing.TYPE_CHECKING:
     from .agent_v1inject_user_message import AgentV1InjectUserMessageParams
     from .agent_v1injection_refused import AgentV1InjectionRefusedParams
     from .agent_v1keep_alive import AgentV1KeepAliveParams
+    from .agent_v1latency_report import AgentV1LatencyReportParams
     from .agent_v1listen_updated import AgentV1ListenUpdatedParams
     from .agent_v1prompt_updated import AgentV1PromptUpdatedParams
     from .agent_v1receive_function_call_response import AgentV1ReceiveFunctionCallResponseParams
@@ -103,6 +104,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AgentV1InjectUserMessageParams": ".agent_v1inject_user_message",
     "AgentV1InjectionRefusedParams": ".agent_v1injection_refused",
     "AgentV1KeepAliveParams": ".agent_v1keep_alive",
+    "AgentV1LatencyReportParams": ".agent_v1latency_report",
     "AgentV1ListenUpdatedParams": ".agent_v1listen_updated",
     "AgentV1PromptUpdatedParams": ".agent_v1prompt_updated",
     "AgentV1ReceiveFunctionCallResponseParams": ".agent_v1receive_function_call_response",
@@ -193,6 +195,7 @@ __all__ = [
     "AgentV1InjectUserMessageParams",
     "AgentV1InjectionRefusedParams",
     "AgentV1KeepAliveParams",
+    "AgentV1LatencyReportParams",
     "AgentV1ListenUpdatedParams",
     "AgentV1PromptUpdatedParams",
     "AgentV1ReceiveFunctionCallResponseParams",

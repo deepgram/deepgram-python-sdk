@@ -24,6 +24,7 @@ if typing.TYPE_CHECKING:
     from .agent_v1inject_user_message import AgentV1InjectUserMessage
     from .agent_v1injection_refused import AgentV1InjectionRefused
     from .agent_v1keep_alive import AgentV1KeepAlive
+    from .agent_v1latency_report import AgentV1LatencyReport
     from .agent_v1listen_updated import AgentV1ListenUpdated
     from .agent_v1prompt_updated import AgentV1PromptUpdated
     from .agent_v1receive_function_call_response import AgentV1ReceiveFunctionCallResponse
@@ -114,6 +115,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AgentV1InjectUserMessage": ".agent_v1inject_user_message",
     "AgentV1InjectionRefused": ".agent_v1injection_refused",
     "AgentV1KeepAlive": ".agent_v1keep_alive",
+    "AgentV1LatencyReport": ".agent_v1latency_report",
     "AgentV1ListenUpdated": ".agent_v1listen_updated",
     "AgentV1PromptUpdated": ".agent_v1prompt_updated",
     "AgentV1ReceiveFunctionCallResponse": ".agent_v1receive_function_call_response",
@@ -212,6 +214,7 @@ __all__ = [
     "AgentV1InjectUserMessage",
     "AgentV1InjectionRefused",
     "AgentV1KeepAlive",
+    "AgentV1LatencyReport",
     "AgentV1ListenUpdated",
     "AgentV1PromptUpdated",
     "AgentV1ReceiveFunctionCallResponse",

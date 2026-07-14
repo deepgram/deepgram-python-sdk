@@ -195,6 +195,7 @@ if typing.TYPE_CHECKING:
         SpeakSettingsV1Provider_ElevenLabsParams,
         SpeakSettingsV1Provider_OpenAiParams,
     )
+    from .speak_v2accepted_response import SpeakV2AcceptedResponseParams
     from .think_settings_v1 import ThinkSettingsV1Params
     from .think_settings_v1context_length import ThinkSettingsV1ContextLengthParams
     from .think_settings_v1endpoint import ThinkSettingsV1EndpointParams
@@ -368,6 +369,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SpeakSettingsV1Provider_DeepgramParams": ".speak_settings_v1provider",
     "SpeakSettingsV1Provider_ElevenLabsParams": ".speak_settings_v1provider",
     "SpeakSettingsV1Provider_OpenAiParams": ".speak_settings_v1provider",
+    "SpeakV2AcceptedResponseParams": ".speak_v2accepted_response",
     "ThinkSettingsV1ContextLengthParams": ".think_settings_v1context_length",
     "ThinkSettingsV1EndpointParams": ".think_settings_v1endpoint",
     "ThinkSettingsV1FunctionsItemEndpointParams": ".think_settings_v1functions_item_endpoint",
@@ -563,6 +565,7 @@ __all__ = [
     "SpeakSettingsV1Provider_DeepgramParams",
     "SpeakSettingsV1Provider_ElevenLabsParams",
     "SpeakSettingsV1Provider_OpenAiParams",
+    "SpeakV2AcceptedResponseParams",
     "ThinkSettingsV1ContextLengthParams",
     "ThinkSettingsV1EndpointParams",
     "ThinkSettingsV1FunctionsItemEndpointParams",

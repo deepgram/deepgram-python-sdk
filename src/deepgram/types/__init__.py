@@ -257,9 +257,11 @@ if typing.TYPE_CHECKING:
     from .speak_v1response import SpeakV1Response
     from .speak_v1sample_rate import SpeakV1SampleRate
     from .speak_v1speed import SpeakV1Speed
+    from .speak_v2accepted_response import SpeakV2AcceptedResponse
     from .speak_v2encoding import SpeakV2Encoding
     from .speak_v2mip_opt_out import SpeakV2MipOptOut
     from .speak_v2model import SpeakV2Model
+    from .speak_v2response import SpeakV2Response
     from .speak_v2sample_rate import SpeakV2SampleRate
     from .speak_v2tag import SpeakV2Tag
     from .think_settings_v1 import ThinkSettingsV1
@@ -501,9 +503,11 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SpeakV1Response": ".speak_v1response",
     "SpeakV1SampleRate": ".speak_v1sample_rate",
     "SpeakV1Speed": ".speak_v1speed",
+    "SpeakV2AcceptedResponse": ".speak_v2accepted_response",
     "SpeakV2Encoding": ".speak_v2encoding",
     "SpeakV2MipOptOut": ".speak_v2mip_opt_out",
     "SpeakV2Model": ".speak_v2model",
+    "SpeakV2Response": ".speak_v2response",
     "SpeakV2SampleRate": ".speak_v2sample_rate",
     "SpeakV2Tag": ".speak_v2tag",
     "ThinkSettingsV1": ".think_settings_v1",
@@ -767,9 +771,11 @@ __all__ = [
     "SpeakV1Response",
     "SpeakV1SampleRate",
     "SpeakV1Speed",
+    "SpeakV2AcceptedResponse",
     "SpeakV2Encoding",
     "SpeakV2MipOptOut",
     "SpeakV2Model",
+    "SpeakV2Response",
     "SpeakV2SampleRate",
     "SpeakV2Tag",
     "ThinkSettingsV1",

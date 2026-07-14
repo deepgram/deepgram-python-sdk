@@ -2,4 +2,4 @@
 
 import typing
 
-AgentV1InjectAgentMessageBehavior = typing.Union[typing.Literal["default", "queue"], typing.Any]
+AgentV1InjectAgentMessageBehavior = typing.Union[typing.Literal["default", "queue", "interrupt"], typing.Any]
