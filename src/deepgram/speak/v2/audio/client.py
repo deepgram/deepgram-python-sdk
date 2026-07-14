@@ -37,10 +37,10 @@ class AudioClient:
         callback_method: typing.Optional[AudioGenerateRequestCallbackMethod] = None,
         mip_opt_out: typing.Optional[bool] = None,
         tag: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
-        bit_rate: typing.Optional[float] = None,
+        bit_rate: typing.Optional[int] = None,
         container: typing.Optional[AudioGenerateRequestContainer] = None,
         encoding: typing.Optional[AudioGenerateRequestEncoding] = None,
-        sample_rate: typing.Optional[float] = None,
+        sample_rate: typing.Optional[int] = None,
         priority: typing.Optional[typing.Literal["low"]] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Iterator[bytes]:
@@ -67,7 +67,7 @@ class AudioClient:
         tag : typing.Optional[typing.Union[str, typing.Sequence[str]]]
             Label your requests for the purpose of identification during usage reporting
 
-        bit_rate : typing.Optional[float]
+        bit_rate : typing.Optional[int]
             The bitrate of the audio in bits per second. Choose from predefined ranges or specific values based on the encoding type.
 
         container : typing.Optional[AudioGenerateRequestContainer]
@@ -76,7 +76,7 @@ class AudioClient:
         encoding : typing.Optional[AudioGenerateRequestEncoding]
             Encoding allows you to specify the expected encoding of your audio output
 
-        sample_rate : typing.Optional[float]
+        sample_rate : typing.Optional[int]
             Sample Rate specifies the sample rate for the output audio. Based on the encoding, different sample rates are supported. For some encodings, the sample rate is not configurable
 
         priority : typing.Optional[typing.Literal["low"]]
@@ -143,10 +143,10 @@ class AsyncAudioClient:
         callback_method: typing.Optional[AudioGenerateRequestCallbackMethod] = None,
         mip_opt_out: typing.Optional[bool] = None,
         tag: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
-        bit_rate: typing.Optional[float] = None,
+        bit_rate: typing.Optional[int] = None,
         container: typing.Optional[AudioGenerateRequestContainer] = None,
         encoding: typing.Optional[AudioGenerateRequestEncoding] = None,
-        sample_rate: typing.Optional[float] = None,
+        sample_rate: typing.Optional[int] = None,
         priority: typing.Optional[typing.Literal["low"]] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.AsyncIterator[bytes]:
@@ -173,7 +173,7 @@ class AsyncAudioClient:
         tag : typing.Optional[typing.Union[str, typing.Sequence[str]]]
             Label your requests for the purpose of identification during usage reporting
 
-        bit_rate : typing.Optional[float]
+        bit_rate : typing.Optional[int]
             The bitrate of the audio in bits per second. Choose from predefined ranges or specific values based on the encoding type.
 
         container : typing.Optional[AudioGenerateRequestContainer]
@@ -182,7 +182,7 @@ class AsyncAudioClient:
         encoding : typing.Optional[AudioGenerateRequestEncoding]
             Encoding allows you to specify the expected encoding of your audio output
 
-        sample_rate : typing.Optional[float]
+        sample_rate : typing.Optional[int]
             Sample Rate specifies the sample rate for the output audio. Based on the encoding, different sample rates are supported. For some encodings, the sample rate is not configurable
 
         priority : typing.Optional[typing.Literal["low"]]
