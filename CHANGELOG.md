@@ -5,8 +5,8 @@
 
 ### Features
 
-* **regen:** add Flux TTS batch (REST) endpoint and agent latency report ([#744](https://github.com/deepgram/deepgram-python-sdk/issues/744)) ([6ca71c4](https://github.com/deepgram/deepgram-python-sdk/commit/6ca71c40e158f5bdf084e6b55572deca1532c465))
-* **regen:** add Speak V2 streaming, agent update-listen, and Flux EOT tuning ([#742](https://github.com/deepgram/deepgram-python-sdk/issues/742)) ([69a2445](https://github.com/deepgram/deepgram-python-sdk/commit/69a2445c7c0c5ce1726566331f13030df64062e5))
+* **Streaming text-to-speech (Flux) via `speak.v2`** — new WebSocket TTS: `client.speak.v2.connect(...)` streams `Speak`/`Flush`/`Close` and returns audio frames plus control messages. Also adds **agent `UpdateListen`/`ListenUpdated`** (swap the listen provider mid-session) and **Flux end-of-turn tuning** (`eot_threshold`, `eager_eot_threshold`, `eot_timeout_ms`). ([#742](https://github.com/deepgram/deepgram-python-sdk/issues/742)) ([69a2445](https://github.com/deepgram/deepgram-python-sdk/commit/69a2445c7c0c5ce1726566331f13030df64062e5))
+* **Flux text-to-speech batch (REST)** endpoint and agent latency report. ([#744](https://github.com/deepgram/deepgram-python-sdk/issues/744)) ([6ca71c4](https://github.com/deepgram/deepgram-python-sdk/commit/6ca71c40e158f5bdf084e6b55572deca1532c465))
 
 ## [7.4.0](https://github.com/deepgram/deepgram-python-sdk/compare/v7.3.1...v7.4.0) (2026-06-26)
 
