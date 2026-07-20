@@ -5465,6 +5465,30 @@ asyncio.run(main())
 <dl>
 <dd>
 
+**language_hint:** `typing.Optional[str]` — Language hint(s) to constrain and prioritize language detection (flux-general-multi)
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**profanity_filter:** `typing.Optional[str]` — Remove profanity from transcripts
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**numerals:** `typing.Optional[str]` — Convert numbers from written format to numerical format
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **mip_opt_out:** `typing.Optional[str]` — Opts out requests from the Deepgram Model Improvement Program
 
 </dd>
