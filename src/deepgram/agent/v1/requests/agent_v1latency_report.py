@@ -11,6 +11,15 @@ class AgentV1LatencyReportParams(typing_extensions.TypedDict):
     Message type identifier for the latency report
     """
 
+    # Backward-compat: mirrors the read-side shim in types/agent_v1latency_report.py.
+    # The API spec removed `stt_latency` (deepgram-docs #1006); kept here so the
+    # public request TypedDict shape is unchanged. No wire impact — the client never
+    # sends a LatencyReport. Remove and unfreeze in a future major.
+    stt_latency: typing_extensions.NotRequired[float]
+    """
+    Deprecated. Speech-to-text latency, no longer reported by the server.
+    """
+
     ttt_token_latency: typing_extensions.NotRequired[float]
     """
     Time to first token of any type (text, tool call, or thinking), in seconds
