@@ -11,11 +11,6 @@ class AgentV1LatencyReportParams(typing_extensions.TypedDict):
     Message type identifier for the latency report
     """
 
-    stt_latency: typing_extensions.NotRequired[float]
-    """
-    Speech-to-text: time from audio received to transcript produced, in seconds
-    """
-
     ttt_token_latency: typing_extensions.NotRequired[float]
     """
     Time to first token of any type (text, tool call, or thinking), in seconds

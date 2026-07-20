@@ -13,11 +13,6 @@ class AgentV1LatencyReport(UncheckedBaseModel):
     Message type identifier for the latency report
     """
 
-    stt_latency: typing.Optional[float] = pydantic.Field(default=None)
-    """
-    Speech-to-text: time from audio received to transcript produced, in seconds
-    """
-
     ttt_token_latency: typing.Optional[float] = pydantic.Field(default=None)
     """
     Time to first token of any type (text, tool call, or thinking), in seconds

@@ -21,6 +21,7 @@ from ...types.listen_v2eot_threshold import ListenV2EotThreshold
 from ...types.listen_v2eot_timeout_ms import ListenV2EotTimeoutMs
 from ...types.listen_v2mip_opt_out import ListenV2MipOptOut
 from ...types.listen_v2model import ListenV2Model
+from ...types.listen_v2numerals import ListenV2Numerals
 from ...types.listen_v2profanity_filter import ListenV2ProfanityFilter
 from ...types.listen_v2sample_rate import ListenV2SampleRate
 from ...types.listen_v2tag import ListenV2Tag
@@ -49,6 +50,7 @@ class RawV2Client:
         keyterm: typing.Optional[ListenV2KeytermParams] = None,
         language_hint: typing.Optional[ListenV2LanguageHintParams] = None,
         profanity_filter: typing.Optional[ListenV2ProfanityFilter] = None,
+        numerals: typing.Optional[ListenV2Numerals] = None,
         mip_opt_out: typing.Optional[ListenV2MipOptOut] = None,
         tag: typing.Optional[ListenV2Tag] = None,
         authorization: typing.Optional[str] = None,
@@ -77,6 +79,8 @@ class RawV2Client:
         language_hint : typing.Optional[ListenV2LanguageHintParams]
 
         profanity_filter : typing.Optional[ListenV2ProfanityFilter]
+
+        numerals : typing.Optional[ListenV2Numerals]
 
         mip_opt_out : typing.Optional[ListenV2MipOptOut]
 
@@ -120,6 +124,7 @@ class RawV2Client:
                             direction="write",
                         ),
                         "profanity_filter": profanity_filter,
+                        "numerals": numerals,
                         "mip_opt_out": mip_opt_out,
                         "tag": tag,
                         **(
@@ -173,6 +178,7 @@ class AsyncRawV2Client:
         keyterm: typing.Optional[ListenV2KeytermParams] = None,
         language_hint: typing.Optional[ListenV2LanguageHintParams] = None,
         profanity_filter: typing.Optional[ListenV2ProfanityFilter] = None,
+        numerals: typing.Optional[ListenV2Numerals] = None,
         mip_opt_out: typing.Optional[ListenV2MipOptOut] = None,
         tag: typing.Optional[ListenV2Tag] = None,
         authorization: typing.Optional[str] = None,
@@ -201,6 +207,8 @@ class AsyncRawV2Client:
         language_hint : typing.Optional[ListenV2LanguageHintParams]
 
         profanity_filter : typing.Optional[ListenV2ProfanityFilter]
+
+        numerals : typing.Optional[ListenV2Numerals]
 
         mip_opt_out : typing.Optional[ListenV2MipOptOut]
 
@@ -244,6 +252,7 @@ class AsyncRawV2Client:
                             direction="write",
                         ),
                         "profanity_filter": profanity_filter,
+                        "numerals": numerals,
                         "mip_opt_out": mip_opt_out,
                         "tag": tag,
                         **(

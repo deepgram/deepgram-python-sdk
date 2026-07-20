@@ -50,7 +50,7 @@ class AudioClient:
         Parameters
         ----------
         model : str
-            Flux TTS model used to synthesize the submitted text, in the form `flux-{voice}-{language}` (for example, `flux-alexis-en`). Required; unlike the v1 (Aura) endpoint there is no default and only flux models are accepted. English-only at launch. The voice catalog is not yet finalized, so this is typed as a free-form string rather than a closed enum; it can be locked to an enum (matching STT Flux `ListenV2Model`) once the GA catalog is confirmed.
+            Flux TTS model used to synthesize the submitted text, in the form `flux-{voice}-{language}` (for example, `flux-alexis-en`). Required; unlike the v1 (Aura) endpoint there is no default and only flux models are accepted. English-only at launch.
 
         text : str
             The text content to be converted to speech. The server normalizes and preprocesses the text (e.g. stripping inline controls) before synthesis.
@@ -156,7 +156,7 @@ class AsyncAudioClient:
         Parameters
         ----------
         model : str
-            Flux TTS model used to synthesize the submitted text, in the form `flux-{voice}-{language}` (for example, `flux-alexis-en`). Required; unlike the v1 (Aura) endpoint there is no default and only flux models are accepted. English-only at launch. The voice catalog is not yet finalized, so this is typed as a free-form string rather than a closed enum; it can be locked to an enum (matching STT Flux `ListenV2Model`) once the GA catalog is confirmed.
+            Flux TTS model used to synthesize the submitted text, in the form `flux-{voice}-{language}` (for example, `flux-alexis-en`). Required; unlike the v1 (Aura) endpoint there is no default and only flux models are accepted. English-only at launch.
 
         text : str
             The text content to be converted to speech. The server normalizes and preprocesses the text (e.g. stripping inline controls) before synthesis.
