@@ -5,7 +5,6 @@ from __future__ import annotations
 import typing
 
 import typing_extensions
-from ....requests.deepgram_listen_provider_v2language_hint import DeepgramListenProviderV2LanguageHintParams
 
 
 class AgentV1SettingsAgentContextListenProvider_V1Params(typing_extensions.TypedDict):
@@ -21,7 +20,10 @@ class AgentV1SettingsAgentContextListenProvider_V2Params(typing_extensions.Typed
     version: typing.Literal["v2"]
     type: typing.Literal["deepgram"]
     model: str
-    language_hint: typing_extensions.NotRequired[DeepgramListenProviderV2LanguageHintParams]
+    language_hints: typing_extensions.NotRequired[typing.Sequence[str]]
+    eot_threshold: typing_extensions.NotRequired[float]
+    eager_eot_threshold: typing_extensions.NotRequired[float]
+    eot_timeout_ms: typing_extensions.NotRequired[int]
     keyterms: typing_extensions.NotRequired[typing.Sequence[str]]
 
 

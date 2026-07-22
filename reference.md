@@ -5465,6 +5465,30 @@ asyncio.run(main())
 <dl>
 <dd>
 
+**language_hint:** `typing.Optional[str]` — Language hint(s) to constrain and prioritize language detection (flux-general-multi)
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**profanity_filter:** `typing.Optional[str]` — Remove profanity from transcripts
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**numerals:** `typing.Optional[str]` — Convert numbers from written format to numerical format
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **mip_opt_out:** `typing.Optional[str]` — Opts out requests from the Deepgram Model Improvement Program
 
 </dd>
@@ -5729,6 +5753,283 @@ asyncio.run(main())
 <dd>
 
 **sample_rate:** `typing.Optional[str]` — Sample rate for the output audio
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**authorization:** `typing.Optional[str]` — Use your API key for authentication, or alternatively generate a temporary token and pass it via the token query parameter.
+
+**Example:** `token %DEEPGRAM_API_KEY%` or `bearer %DEEPGRAM_TOKEN%`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+## Speak V2 Connect
+
+<details><summary><code>client.speak.v2.<a href="src/deepgram/speak/v2/client.py">connect</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Convert text into natural-sounding speech using Deepgram's Flux TTS WebSocket
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from typing import Union
+
+from deepgram import DeepgramClient
+from deepgram.core.events import EventType
+from deepgram.speak.v2.types import (
+    SpeakV2Speak,
+    SpeakV2Connected,
+    SpeakV2SpeechStarted,
+    SpeakV2SpeechMetadata,
+    SpeakV2Flushed,
+    SpeakV2SessionMetadata,
+    SpeakV2Warning,
+    SpeakV2Error,
+)
+
+SpeakV2Response = Union[
+    bytes,
+    SpeakV2Connected,
+    SpeakV2SpeechStarted,
+    SpeakV2SpeechMetadata,
+    SpeakV2Flushed,
+    SpeakV2SessionMetadata,
+    SpeakV2Warning,
+    SpeakV2Error,
+]
+
+client = DeepgramClient(
+    api_key="YOUR_API_KEY",
+)
+
+with client.speak.v2.connect(
+    model="flux-alexis-en",
+    encoding="linear16",
+    sample_rate="24000"
+) as connection:
+    def on_message(message: SpeakV2Response) -> None:
+        if isinstance(message, bytes):
+            print("Received audio event")
+        else:
+            msg_type = getattr(message, "type", "Unknown")
+            print(f"Received {msg_type} event")
+
+    connection.on(EventType.OPEN, lambda _: print("Connection opened"))
+    connection.on(EventType.MESSAGE, on_message)
+    connection.on(EventType.CLOSE, lambda _: print("Connection closed"))
+    connection.on(EventType.ERROR, lambda error: print(f"Caught: {error}"))
+
+    # Start listening
+    connection.start_listening()
+
+    # Send text to be converted to speech
+    connection.send_speak(SpeakV2Speak(text="Hello, world!"))
+
+    # Send control messages
+    connection.send_flush()
+    connection.send_close()
+
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Async Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+import asyncio
+from typing import Union
+
+from deepgram import AsyncDeepgramClient
+from deepgram.core.events import EventType
+from deepgram.speak.v2.types import (
+    SpeakV2Speak,
+    SpeakV2Connected,
+    SpeakV2SpeechStarted,
+    SpeakV2SpeechMetadata,
+    SpeakV2Flushed,
+    SpeakV2SessionMetadata,
+    SpeakV2Warning,
+    SpeakV2Error,
+)
+
+SpeakV2Response = Union[
+    bytes,
+    SpeakV2Connected,
+    SpeakV2SpeechStarted,
+    SpeakV2SpeechMetadata,
+    SpeakV2Flushed,
+    SpeakV2SessionMetadata,
+    SpeakV2Warning,
+    SpeakV2Error,
+]
+
+client = AsyncDeepgramClient(
+    api_key="YOUR_API_KEY",
+)
+
+async def main():
+    async with client.speak.v2.connect(
+        model="flux-alexis-en",
+        encoding="linear16",
+        sample_rate="24000"
+    ) as connection:
+        def on_message(message: SpeakV2Response) -> None:
+            if isinstance(message, bytes):
+                print("Received audio event")
+            else:
+                msg_type = getattr(message, "type", "Unknown")
+                print(f"Received {msg_type} event")
+
+        connection.on(EventType.OPEN, lambda _: print("Connection opened"))
+        connection.on(EventType.MESSAGE, on_message)
+        connection.on(EventType.CLOSE, lambda _: print("Connection closed"))
+        connection.on(EventType.ERROR, lambda error: print(f"Caught: {error}"))
+
+        # Start listening
+        await connection.start_listening()
+
+        # Send text to be converted to speech
+        await connection.send_speak(SpeakV2Speak(text="Hello, world!"))
+
+        # Send control messages
+        await connection.send_flush()
+        await connection.send_close()
+
+asyncio.run(main())
+
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 📤 Send Methods
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**`send_speak(message: SpeakV2Speak)`** — Send text to be converted to speech
+
+- `connection.send_speak(SpeakV2Speak(text="Hello, world!"))`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**`send_flush()`** — Process all queued text immediately
+
+- `connection.send_flush()`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**`send_close()`** — Close the connection
+
+- `connection.send_close()`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**model:** `SpeakV2Model` — The Flux TTS model used to synthesize speech. Required on every connection. Model strings follow the format `flux-{voice}-{language}` (e.g. `flux-alexis-en`). Aura model strings are rejected on `/v2/speak`; use Speak V1 for Aura voices.
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**encoding:** `typing.Optional[SpeakV2Encoding]` — Specify the expected encoding of your output audio (`linear16`, `mulaw`, `alaw`)
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sample_rate:** `typing.Optional[SpeakV2SampleRate]` — Sample rate for the output audio (`8000`, `16000`, `24000`, `32000`, `44100`, `48000`)
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**mip_opt_out:** `typing.Optional[SpeakV2MipOptOut]` — Opts out requests from the Deepgram Model Improvement Program
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**tag:** `typing.Optional[SpeakV2Tag]` — Label your requests for the purpose of identification during usage reporting. Repeatable.
 
 </dd>
 </dl>
@@ -6056,6 +6357,16 @@ asyncio.run(main())
 **`send_update_speak(message: AgentV1UpdateSpeak)`** — Update the agent's speech synthesis settings
 
 - `AgentV1UpdateSpeak(speak=SpeakSettingsV1(...))` — Modify TTS configuration during conversation
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**`send_update_listen(message: AgentV1UpdateListen)`** — Update the agent's speech-to-text settings
+
+- `AgentV1UpdateListen(listen=AgentV1UpdateListenListen(provider=DeepgramListenProviderV2(...)))` — Modify STT configuration during conversation. The provider identity (type, version, model) must match the current session.
 
 </dd>
 </dl>

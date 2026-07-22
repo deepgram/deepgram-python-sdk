@@ -202,6 +202,8 @@ if typing.TYPE_CHECKING:
     from .listen_v2language_hint import ListenV2LanguageHint
     from .listen_v2mip_opt_out import ListenV2MipOptOut
     from .listen_v2model import ListenV2Model
+    from .listen_v2numerals import ListenV2Numerals
+    from .listen_v2profanity_filter import ListenV2ProfanityFilter
     from .listen_v2sample_rate import ListenV2SampleRate
     from .listen_v2tag import ListenV2Tag
     from .open_ai_speak_provider import OpenAiSpeakProvider
@@ -256,6 +258,13 @@ if typing.TYPE_CHECKING:
     from .speak_v1response import SpeakV1Response
     from .speak_v1sample_rate import SpeakV1SampleRate
     from .speak_v1speed import SpeakV1Speed
+    from .speak_v2accepted_response import SpeakV2AcceptedResponse
+    from .speak_v2encoding import SpeakV2Encoding
+    from .speak_v2mip_opt_out import SpeakV2MipOptOut
+    from .speak_v2model import SpeakV2Model
+    from .speak_v2response import SpeakV2Response
+    from .speak_v2sample_rate import SpeakV2SampleRate
+    from .speak_v2tag import SpeakV2Tag
     from .think_settings_v1 import ThinkSettingsV1
     from .think_settings_v1context_length import ThinkSettingsV1ContextLength
     from .think_settings_v1endpoint import ThinkSettingsV1Endpoint
@@ -444,6 +453,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ListenV2LanguageHint": ".listen_v2language_hint",
     "ListenV2MipOptOut": ".listen_v2mip_opt_out",
     "ListenV2Model": ".listen_v2model",
+    "ListenV2Numerals": ".listen_v2numerals",
+    "ListenV2ProfanityFilter": ".listen_v2profanity_filter",
     "ListenV2SampleRate": ".listen_v2sample_rate",
     "ListenV2Tag": ".listen_v2tag",
     "OpenAiSpeakProvider": ".open_ai_speak_provider",
@@ -494,6 +505,13 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SpeakV1Response": ".speak_v1response",
     "SpeakV1SampleRate": ".speak_v1sample_rate",
     "SpeakV1Speed": ".speak_v1speed",
+    "SpeakV2AcceptedResponse": ".speak_v2accepted_response",
+    "SpeakV2Encoding": ".speak_v2encoding",
+    "SpeakV2MipOptOut": ".speak_v2mip_opt_out",
+    "SpeakV2Model": ".speak_v2model",
+    "SpeakV2Response": ".speak_v2response",
+    "SpeakV2SampleRate": ".speak_v2sample_rate",
+    "SpeakV2Tag": ".speak_v2tag",
     "ThinkSettingsV1": ".think_settings_v1",
     "ThinkSettingsV1ContextLength": ".think_settings_v1context_length",
     "ThinkSettingsV1Endpoint": ".think_settings_v1endpoint",
@@ -704,6 +722,8 @@ __all__ = [
     "ListenV2LanguageHint",
     "ListenV2MipOptOut",
     "ListenV2Model",
+    "ListenV2Numerals",
+    "ListenV2ProfanityFilter",
     "ListenV2SampleRate",
     "ListenV2Tag",
     "OpenAiSpeakProvider",
@@ -754,6 +774,13 @@ __all__ = [
     "SpeakV1Response",
     "SpeakV1SampleRate",
     "SpeakV1Speed",
+    "SpeakV2AcceptedResponse",
+    "SpeakV2Encoding",
+    "SpeakV2MipOptOut",
+    "SpeakV2Model",
+    "SpeakV2Response",
+    "SpeakV2SampleRate",
+    "SpeakV2Tag",
     "ThinkSettingsV1",
     "ThinkSettingsV1ContextLength",
     "ThinkSettingsV1Endpoint",

@@ -1945,6 +1945,42 @@
       }
     },
     {
+      "id": "03be31ca-f645-45f5-80a1-a0b4fb7de41a",
+      "name": "Flux Text to Speech (batch) - default",
+      "request": {
+        "urlPathTemplate": "/v2/speak",
+        "method": "POST",
+        "headers": {
+          "Authorization": {
+            "matches": ".+"
+          }
+        },
+        "queryParameters": {
+          "model": {
+            "equalTo": "model"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"key\": \"value\"\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "03be31ca-f645-45f5-80a1-a0b4fb7de41a",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
       "id": "61883f62-09ec-4be9-b477-13a89b9677cf",
       "name": "List Agent Configurations - default",
       "request": {
@@ -2324,6 +2360,6 @@
     }
   ],
   "meta": {
-    "total": 49
+    "total": 50
   }
 }

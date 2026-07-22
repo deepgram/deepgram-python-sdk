@@ -1,5 +1,37 @@
 # Changelog
 
+## [7.6.0](https://github.com/deepgram/deepgram-python-sdk/compare/v7.5.0...v7.6.0) (2026-07-22)
+
+
+### Features
+
+* **regen:** flux stt numerals and aura-2 multilingual tts voices ([#746](https://github.com/deepgram/deepgram-python-sdk/issues/746)) ([17a1deb](https://github.com/deepgram/deepgram-python-sdk/commit/17a1deb43705f0d9c667f12c72a585159a71ad8f))
+
+## [7.5.0](https://github.com/deepgram/deepgram-python-sdk/compare/v7.4.0...v7.5.0) (2026-07-14)
+
+
+### Features
+
+* **Streaming text-to-speech (Flux) via `speak.v2`** — new WebSocket TTS: `client.speak.v2.connect(...)` streams `Speak`/`Flush`/`Close` and returns audio frames plus control messages. Also adds **agent `UpdateListen`/`ListenUpdated`** (swap the listen provider mid-session) and **Flux end-of-turn tuning** (`eot_threshold`, `eager_eot_threshold`, `eot_timeout_ms`). ([#742](https://github.com/deepgram/deepgram-python-sdk/issues/742)) ([69a2445](https://github.com/deepgram/deepgram-python-sdk/commit/69a2445c7c0c5ce1726566331f13030df64062e5))
+* **Flux text-to-speech batch (REST)** endpoint and agent latency report. ([#744](https://github.com/deepgram/deepgram-python-sdk/issues/744)) ([6ca71c4](https://github.com/deepgram/deepgram-python-sdk/commit/6ca71c40e158f5bdf084e6b55572deca1532c465))
+
+## [7.4.0](https://github.com/deepgram/deepgram-python-sdk/compare/v7.3.1...v7.4.0) (2026-06-26)
+
+
+### Features
+
+* **regen:** v2 language_hints, profanity filter, word timings, diarize_model ([#730](https://github.com/deepgram/deepgram-python-sdk/issues/730)) ([da6b7ba](https://github.com/deepgram/deepgram-python-sdk/commit/da6b7ba8b5583a9dcddfd3950b4abd4d2645c9fa))
+
+
+### Bug Fixes
+
+* redact Authorization header from websockets DEBUG logs ([#731](https://github.com/deepgram/deepgram-python-sdk/issues/731)) ([029d877](https://github.com/deepgram/deepgram-python-sdk/commit/029d8771a2957fd5ffbc3c50fb40550098fcfad3))
+
+
+### Documentation
+
+* improve contributor onboarding and setup instructions ([#718](https://github.com/deepgram/deepgram-python-sdk/issues/718)) ([3f7398a](https://github.com/deepgram/deepgram-python-sdk/commit/3f7398a9782a1efcfd99408f1392907aa4e68cf3))
+
 ## [7.3.1](https://github.com/deepgram/deepgram-python-sdk/compare/v7.3.0...v7.3.1) (2026-06-03)
 
 

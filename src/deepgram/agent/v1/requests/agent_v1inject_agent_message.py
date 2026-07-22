@@ -23,4 +23,5 @@ class AgentV1InjectAgentMessageParams(typing_extensions.TypedDict):
     
     * `default` — The agent speaks only if neither the user nor the agent is mid-turn. If a turn is in progress, the server replies with `InjectionRefused`.
     * `queue` — The message is appended after any already-queued `ConversationText` without interrupting the current agent turn or think response. If nothing is queued, the message plays immediately.
+    * `interrupt` — The agent immediately speaks. If the agent was already speaking, it interrupts the current speech and replaces it with the new message. If the user is speaking, the agent interrupts with the new message, but the user's continued speech triggers `UserStartedSpeaking`, which quickly interrupts the agent.
     """

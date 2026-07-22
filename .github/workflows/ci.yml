@@ -25,6 +25,8 @@ jobs:
         run: poetry install
       - name: Compile
         run: poetry run mypy src/
+      - name: Typecheck tests
+        run: poetry run mypy tests/typecheck
   test:
     runs-on: ubuntu-latest
     permissions:

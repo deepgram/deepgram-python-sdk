@@ -26,6 +26,7 @@ src/deepgram/agent/v1/socket_client.py
 src/deepgram/listen/v1/socket_client.py
 src/deepgram/listen/v2/socket_client.py
 src/deepgram/speak/v1/socket_client.py
+src/deepgram/speak/v2/socket_client.py
 
 # Backward-compat patch: AgentV1SettingsAgentContext schema restructure as of
 # 2026-05-05. The new schema nests messages under .context.messages; this file
@@ -36,7 +37,6 @@ src/deepgram/speak/v1/socket_client.py
 src/deepgram/agent/v1/types/agent_v1settings_agent_context.py
 src/deepgram/agent/v1/types/agent_v1settings_agent.py
 src/deepgram/agent/v1/types/agent_v1settings.py
-src/deepgram/agent/v1/types/agent_v1settings_audio_output.py
 src/deepgram/agent/v1/requests/agent_v1settings_agent_context.py
 src/deepgram/agent/v1/requests/agent_v1settings_agent.py
 src/deepgram/agent/v1/requests/agent_v1settings.py
@@ -74,6 +74,43 @@ src/deepgram/agent/v1/requests/agent_v1settings_agent_context_listen_provider_v2
 src/deepgram/agent/v1/requests/agent_v1settings_agent_listen_provider_v1.py
 src/deepgram/agent/v1/requests/agent_v1settings_agent_listen_provider_v2.py
 
+# Hand-written compat shims recreating the top-level DeepgramListenProviderV2LanguageHint
+# type/param that Fern removed in the 2026-06-15 regen (Union[str, List[str]]). The
+# *V2LanguageHint listen-provider aliases above import these, and they remain part of the
+# public import surface, so they are recreated by hand and frozen so Fern won't delete them.
+src/deepgram/types/deepgram_listen_provider_v2language_hint.py
+src/deepgram/requests/deepgram_listen_provider_v2language_hint.py
+
+# Behavioral back-compat shim for the language_hint -> language_hints rename (2026-06-15
+# regen). The public field was historically (incorrectly) named `language_hint`, accepting
+# a str or a list; the API field is `language_hints` (a list, and the server uses
+# deny_unknown_fields so the singular key is rejected on the wire). These three generated
+# models carry a hand-added model_validator(mode='before') / root_validator(pre=True) that
+# remaps a legacy `language_hint=` kwarg to `language_hints` and drops the dead singular
+# key. Frozen so Fern won't strip the validator on regen. Remove the shim and unfreeze when
+# the singular alias is intentionally retired in a future major release.
+src/deepgram/types/deepgram_listen_provider_v2.py
+src/deepgram/agent/v1/types/agent_v1settings_agent_listen_provider.py
+src/deepgram/agent/v1/types/agent_v1settings_agent_context_listen_provider.py
+
+# Hand-written compat shim recreating ListenV2CloseStreamType, which Fern removed in the
+# 2026-06-15 regen (docs #946). The original generated type wrongly allowed
+# Union[Literal["Finalize","CloseStream","KeepAlive"], Any] — v2 copied v1's control-message
+# enum, but a CloseStream message's `type` can only ever be "CloseStream". Recreated as the
+# corrected single-value Literal["CloseStream"] to preserve the public import path without
+# resurrecting the invalid values. Frozen so Fern won't delete it again.
+src/deepgram/listen/v2/types/listen_v2close_stream_type.py
+
+# Backward-compat shim for the `stt_latency` removal from AgentV1LatencyReport (the
+# 2026-07-20 regen; API change in deepgram-docs #1006). LatencyReport is a
+# server-emitted (read-only) message, so re-adding the optional `stt_latency` field
+# has no request/wire impact — it keeps `report.stt_latency` resolving (to None, since
+# the server no longer emits it) instead of raising AttributeError, so the removal
+# stays a minor release rather than a major break. Remove the field and unfreeze when
+# it is intentionally retired in a future major release.
+src/deepgram/agent/v1/types/agent_v1latency_report.py
+src/deepgram/agent/v1/requests/agent_v1latency_report.py
+
 # Package __init__.py files that carry hand-applied legacy alias re-exports for the
 # above shims. Fern would otherwise regenerate these and strip the legacy entries on
 # every regen. Frozen to preserve the public-import surface for renamed types/params.
@@ -85,6 +122,10 @@ src/deepgram/agent/v1/types/__init__.py
 src/deepgram/agent/v1/requests/__init__.py
 src/deepgram/types/__init__.py
 src/deepgram/requests/__init__.py
+# listen __init__.py files re-export the ListenV2CloseStreamType shim above.
+src/deepgram/listen/__init__.py
+src/deepgram/listen/v2/__init__.py
+src/deepgram/listen/v2/types/__init__.py
 
 # Coerces Python bools to lowercase "true"/"false" before urlencode, which
 # otherwise stringifies via str() and produces "True"/"False" — rejected by
@@ -93,14 +134,47 @@ src/deepgram/requests/__init__.py
 # [temporarily frozen — manual patches listed above]
 src/deepgram/core/query_encoder.py
 
+# Carries `# x-release-please-version` annotations on the User-Agent and
+# X-Fern-SDK-Version header lines so release-please bumps the wire telemetry
+# version in lockstep with the published package version (it is a `generic`
+# extra-file in .github/release-please-config.json). Fern regenerates this file
+# from scratch and would strip the annotations, so it is frozen to protect them.
+# [temporarily frozen — manual patches listed above]
+src/deepgram/core/client_wrapper.py
+
+# Fern generates pyproject.toml (regenerated on every SDK regen — see the
+# regen commits in git log). We add hand-maintained [tool.coverage.run] /
+# [tool.coverage.report] config that scopes coverage to hand-written logic and
+# excludes pure-generated models. Frozen so Fern won't strip it on regen.
+# [temporarily frozen — unfreeze + re-diff before each regen so Fern's own
+# dependency/version updates are picked up, then re-apply the coverage config]
+pyproject.toml
+
 # Hand-written custom tests
 tests/custom/test_agent_history.py
 tests/custom/test_branch_coverage_95.py
+tests/custom/test_agent_update_listen.py
+tests/custom/test_client.py
 tests/custom/test_compat_aliases.py
+tests/custom/test_core_utilities_coverage.py
+tests/custom/test_eot_thresholds_feature.py
+tests/custom/test_http_endpoints_coverage.py
+tests/custom/test_http_retry_coverage.py
+tests/custom/test_language_hint_compat.py
+tests/custom/test_language_hints_feature.py
+tests/custom/test_latency_report_stt_compat.py
+tests/custom/test_listen_v2_connect_wire.py
+tests/custom/test_listen_v2_regen_constraints.py
+tests/custom/test_misc_coverage.py
+tests/custom/test_more_branches_coverage.py
 tests/custom/test_query_encoder.py
 tests/custom/test_secure_logging.py
+tests/custom/test_socket_client_shims.py
+tests/custom/test_speak_v2_connect_wire.py
+tests/custom/test_speak_v2_socket.py
 tests/custom/test_text_builder.py
 tests/custom/test_transport.py
+tests/custom/test_websocket_streaming_coverage.py
 tests/typecheck/compat_aliases.py
 
 # Wire test with restored compatibility coverage for legacy create-key request alias

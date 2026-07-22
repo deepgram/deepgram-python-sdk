@@ -13,3 +13,13 @@ class ListenV2TurnInfoWordsItemParams(typing_extensions.TypedDict):
     """
     Confidence that this word was transcribed correctly
     """
+
+    start: typing_extensions.NotRequired[float]
+    """
+    The start time of the word
+    """
+
+    end: typing_extensions.NotRequired[float]
+    """
+    The end time of the word
+    """

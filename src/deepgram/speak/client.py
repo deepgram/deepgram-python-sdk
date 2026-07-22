@@ -9,6 +9,7 @@ from .raw_client import AsyncRawSpeakClient, RawSpeakClient
 
 if typing.TYPE_CHECKING:
     from .v1.client import AsyncV1Client, V1Client
+    from .v2.client import AsyncV2Client, V2Client
 
 
 class SpeakClient:
@@ -16,6 +17,7 @@ class SpeakClient:
         self._raw_client = RawSpeakClient(client_wrapper=client_wrapper)
         self._client_wrapper = client_wrapper
         self._v1: typing.Optional[V1Client] = None
+        self._v2: typing.Optional[V2Client] = None
 
     @property
     def with_raw_response(self) -> RawSpeakClient:
@@ -36,12 +38,21 @@ class SpeakClient:
             self._v1 = V1Client(client_wrapper=self._client_wrapper)
         return self._v1
 
+    @property
+    def v2(self):
+        if self._v2 is None:
+            from .v2.client import V2Client  # noqa: E402
+
+            self._v2 = V2Client(client_wrapper=self._client_wrapper)
+        return self._v2
+
 
 class AsyncSpeakClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._raw_client = AsyncRawSpeakClient(client_wrapper=client_wrapper)
         self._client_wrapper = client_wrapper
         self._v1: typing.Optional[AsyncV1Client] = None
+        self._v2: typing.Optional[AsyncV2Client] = None
 
     @property
     def with_raw_response(self) -> AsyncRawSpeakClient:
@@ -61,3 +72,11 @@ class AsyncSpeakClient:
 
             self._v1 = AsyncV1Client(client_wrapper=self._client_wrapper)
         return self._v1
+
+    @property
+    def v2(self):
+        if self._v2 is None:
+            from .v2.client import AsyncV2Client  # noqa: E402
+
+            self._v2 = AsyncV2Client(client_wrapper=self._client_wrapper)
+        return self._v2
