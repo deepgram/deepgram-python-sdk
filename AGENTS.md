@@ -52,6 +52,7 @@ How to identify:
 - Our version is a **modified copy** of what Fern generates (e.g., changed `float` to `int`, added optional defaults, broadened a Union type)
 
 Current temporarily frozen files:
+- `pyproject.toml` — Fern regenerates this on every SDK regen (it manages package metadata, the version, and dependencies). We add hand-maintained `[tool.coverage.run]` / `[tool.coverage.report]` config that scopes coverage to hand-written logic and excludes pure-generated models (`types/`, `requests/`, `__init__.py`, `version.py`, unused `core/http_sse/`). Frozen so Fern won't strip the coverage config. Before each regen, unfreeze and re-diff so Fern's own dependency/version updates are picked up, then re-apply the coverage blocks.
 - `src/deepgram/speak/v1/socket_client.py` — optional message param defaults, broad exception catch
 - `src/deepgram/speak/v2/socket_client.py` — same (optional `send_flush`/`send_close` defaults, broad exception catch); new websocket TTS client added in the 2026-07-08 regen
 - `src/deepgram/listen/v1/socket_client.py` — same

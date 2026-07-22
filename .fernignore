@@ -142,23 +142,40 @@ src/deepgram/core/query_encoder.py
 # [temporarily frozen — manual patches listed above]
 src/deepgram/core/client_wrapper.py
 
+# Fern generates pyproject.toml (regenerated on every SDK regen — see the
+# regen commits in git log). We add hand-maintained [tool.coverage.run] /
+# [tool.coverage.report] config that scopes coverage to hand-written logic and
+# excludes pure-generated models. Frozen so Fern won't strip it on regen.
+# [temporarily frozen — unfreeze + re-diff before each regen so Fern's own
+# dependency/version updates are picked up, then re-apply the coverage config]
+pyproject.toml
+
 # Hand-written custom tests
 tests/custom/test_agent_history.py
+tests/custom/test_branch_coverage_95.py
 tests/custom/test_agent_update_listen.py
+tests/custom/test_client.py
 tests/custom/test_compat_aliases.py
+tests/custom/test_core_utilities_coverage.py
 tests/custom/test_eot_thresholds_feature.py
+tests/custom/test_http_endpoints_coverage.py
+tests/custom/test_http_retry_coverage.py
 tests/custom/test_language_hint_compat.py
 tests/custom/test_language_hints_feature.py
 tests/custom/test_latency_report_stt_compat.py
 tests/custom/test_listen_v2_connect_wire.py
 tests/custom/test_listen_v2_regen_constraints.py
+tests/custom/test_misc_coverage.py
+tests/custom/test_more_branches_coverage.py
 tests/custom/test_query_encoder.py
 tests/custom/test_secure_logging.py
 tests/custom/test_socket_client_shims.py
 tests/custom/test_speak_v2_connect_wire.py
+tests/custom/test_speak_v2_coverage.py
 tests/custom/test_speak_v2_socket.py
 tests/custom/test_text_builder.py
 tests/custom/test_transport.py
+tests/custom/test_websocket_streaming_coverage.py
 tests/typecheck/compat_aliases.py
 
 # Wire test with restored compatibility coverage for legacy create-key request alias
