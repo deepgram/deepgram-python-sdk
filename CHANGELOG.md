@@ -1,5 +1,12 @@
 # Changelog
 
+## [7.6.0](https://github.com/deepgram/deepgram-python-sdk/compare/v7.5.0...v7.6.0) (2026-07-22)
+
+
+### Features
+
+* **regen:** flux stt numerals and aura-2 multilingual tts voices ([#746](https://github.com/deepgram/deepgram-python-sdk/issues/746)) ([17a1deb](https://github.com/deepgram/deepgram-python-sdk/commit/17a1deb43705f0d9c667f12c72a585159a71ad8f))
+
 ## [7.5.0](https://github.com/deepgram/deepgram-python-sdk/compare/v7.4.0...v7.5.0) (2026-07-14)
 
 
