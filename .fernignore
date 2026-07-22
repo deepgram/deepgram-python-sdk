@@ -101,6 +101,16 @@ src/deepgram/agent/v1/types/agent_v1settings_agent_context_listen_provider.py
 # resurrecting the invalid values. Frozen so Fern won't delete it again.
 src/deepgram/listen/v2/types/listen_v2close_stream_type.py
 
+# Backward-compat shim for the `stt_latency` removal from AgentV1LatencyReport (the
+# 2026-07-20 regen; API change in deepgram-docs #1006). LatencyReport is a
+# server-emitted (read-only) message, so re-adding the optional `stt_latency` field
+# has no request/wire impact — it keeps `report.stt_latency` resolving (to None, since
+# the server no longer emits it) instead of raising AttributeError, so the removal
+# stays a minor release rather than a major break. Remove the field and unfreeze when
+# it is intentionally retired in a future major release.
+src/deepgram/agent/v1/types/agent_v1latency_report.py
+src/deepgram/agent/v1/requests/agent_v1latency_report.py
+
 # Package __init__.py files that carry hand-applied legacy alias re-exports for the
 # above shims. Fern would otherwise regenerate these and strip the legacy entries on
 # every regen. Frozen to preserve the public-import surface for renamed types/params.
@@ -139,6 +149,8 @@ tests/custom/test_compat_aliases.py
 tests/custom/test_eot_thresholds_feature.py
 tests/custom/test_language_hint_compat.py
 tests/custom/test_language_hints_feature.py
+tests/custom/test_latency_report_stt_compat.py
+tests/custom/test_listen_v2_connect_wire.py
 tests/custom/test_listen_v2_regen_constraints.py
 tests/custom/test_query_encoder.py
 tests/custom/test_secure_logging.py

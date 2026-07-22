@@ -202,6 +202,7 @@ if typing.TYPE_CHECKING:
     from .listen_v2language_hint import ListenV2LanguageHint
     from .listen_v2mip_opt_out import ListenV2MipOptOut
     from .listen_v2model import ListenV2Model
+    from .listen_v2numerals import ListenV2Numerals
     from .listen_v2profanity_filter import ListenV2ProfanityFilter
     from .listen_v2sample_rate import ListenV2SampleRate
     from .listen_v2tag import ListenV2Tag
@@ -452,6 +453,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ListenV2LanguageHint": ".listen_v2language_hint",
     "ListenV2MipOptOut": ".listen_v2mip_opt_out",
     "ListenV2Model": ".listen_v2model",
+    "ListenV2Numerals": ".listen_v2numerals",
     "ListenV2ProfanityFilter": ".listen_v2profanity_filter",
     "ListenV2SampleRate": ".listen_v2sample_rate",
     "ListenV2Tag": ".listen_v2tag",
@@ -720,6 +722,7 @@ __all__ = [
     "ListenV2LanguageHint",
     "ListenV2MipOptOut",
     "ListenV2Model",
+    "ListenV2Numerals",
     "ListenV2ProfanityFilter",
     "ListenV2SampleRate",
     "ListenV2Tag",

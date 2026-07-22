@@ -34,6 +34,9 @@ client = DeepgramClient(api_key=os.environ.get("DEEPGRAM_API_KEY"))
 try:
     with client.listen.v2.connect(
         model="flux-general-en",
+        # Flux STT numerals: format spoken numbers as digits (e.g. "one twenty" -> "120").
+        # Connection-time only — it cannot be toggled mid-stream via Configure.
+        numerals="true",
     ) as connection:
 
         def on_message(message: ListenV2SocketClientResponse) -> None:
@@ -46,7 +49,7 @@ try:
                     print(f"  event: {message.get('event', '')}")
                     print(f"  turn_index: {message.get('turn_index', '')}")
             elif isinstance(message, ListenV2TurnInfo):
-                print(f"Received TurnInfo event")
+                print("Received TurnInfo event")
                 print(f"  transcript: {message.transcript}")
                 print(f"  event: {message.event}")
                 print(f"  turn_index: {message.turn_index}")
