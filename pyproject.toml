@@ -4,7 +4,7 @@ dynamic = ["version"]
 
 [tool.poetry]
 name = "deepgram-sdk"
-version = "7.5.1"
+version = "7.6.0"
 description = ""
 readme = "README.md"
 authors = []
