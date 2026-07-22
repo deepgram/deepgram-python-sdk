@@ -239,12 +239,18 @@ def ssml_to_deepgram(ssml_text: str) -> str:
     # Parse XML fragments manually to handle mixed content
     # Use regex to find and replace SSML elements
 
-    # Handle <phoneme> tags
-    phoneme_pattern = r'<phoneme\s+alphabet=["\']ipa["\']\s+ph=["\'](.*?)["\']\s*>(.*?)</phoneme>'
+    # Handle <phoneme> tags. Attribute order is not significant in SSML, so match
+    # the attributes as a group and pull `ph` out of it rather than requiring
+    # `alphabet` before `ph` (which silently dropped the pronunciation otherwise).
+    phoneme_pattern = r"<phoneme\s+([^>]*?)\s*>(.*?)</phoneme>"
 
     def replace_phoneme(match):
-        ipa = match.group(1)
+        attributes = match.group(1)
         word = match.group(2)
+        ph_match = re.search(r'ph=["\'](.*?)["\']', attributes)
+        if ph_match is None:
+            return word
+        ipa = ph_match.group(1)
         return json.dumps({"word": word, "pronounce": ipa}, ensure_ascii=False)
 
     ssml_text = re.sub(phoneme_pattern, replace_phoneme, ssml_text)
