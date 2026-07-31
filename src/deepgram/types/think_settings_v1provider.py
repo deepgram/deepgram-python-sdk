@@ -8,11 +8,11 @@ import pydantic
 import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
-from .anthropic_think_provider_model import AnthropicThinkProviderModel
+from .anthropic_model import AnthropicModel
 from .aws_bedrock_think_provider_credentials import AwsBedrockThinkProviderCredentials
 from .aws_bedrock_think_provider_model import AwsBedrockThinkProviderModel
-from .google_think_provider_model import GoogleThinkProviderModel
-from .groq_think_provider_reasoning_mode import GroqThinkProviderReasoningMode
+from .google_model import GoogleModel
+from .groq_reasoning_mode import GroqReasoningMode
 from .open_ai_think_provider_model import OpenAiThinkProviderModel
 from .open_ai_think_provider_reasoning_mode import OpenAiThinkProviderReasoningMode
 
@@ -53,7 +53,7 @@ class ThinkSettingsV1Provider_AwsBedrock(UncheckedBaseModel):
 class ThinkSettingsV1Provider_Anthropic(UncheckedBaseModel):
     type: typing.Literal["anthropic"] = "anthropic"
     version: typing.Optional[typing.Literal["v1"]] = None
-    model: AnthropicThinkProviderModel
+    model: AnthropicModel
     temperature: typing.Optional[float] = None
 
     if IS_PYDANTIC_V2:
@@ -69,7 +69,7 @@ class ThinkSettingsV1Provider_Anthropic(UncheckedBaseModel):
 class ThinkSettingsV1Provider_Google(UncheckedBaseModel):
     type: typing.Literal["google"] = "google"
     version: typing.Optional[typing.Literal["v1beta"]] = None
-    model: GoogleThinkProviderModel
+    model: GoogleModel
     temperature: typing.Optional[float] = None
 
     if IS_PYDANTIC_V2:
@@ -87,7 +87,7 @@ class ThinkSettingsV1Provider_Groq(UncheckedBaseModel):
     version: typing.Optional[typing.Literal["v1"]] = None
     model: typing.Literal["openai/gpt-oss-20b"] = "openai/gpt-oss-20b"
     temperature: typing.Optional[float] = None
-    reasoning_mode: typing.Optional[GroqThinkProviderReasoningMode] = None
+    reasoning_mode: typing.Optional[GroqReasoningMode] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

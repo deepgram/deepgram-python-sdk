@@ -6,6 +6,7 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .listen_v1response_metadata_diarize_info import ListenV1ResponseMetadataDiarizeInfo
 from .listen_v1response_metadata_intents_info import ListenV1ResponseMetadataIntentsInfo
 from .listen_v1response_metadata_sentiment_info import ListenV1ResponseMetadataSentimentInfo
 from .listen_v1response_metadata_summary_info import ListenV1ResponseMetadataSummaryInfo
@@ -21,6 +22,11 @@ class ListenV1ResponseMetadata(UncheckedBaseModel):
     channels: int
     models: typing.List[str]
     model_info: typing.Dict[str, typing.Any]
+    diarize_info: typing.Optional[ListenV1ResponseMetadataDiarizeInfo] = pydantic.Field(default=None)
+    """
+    The diarizer that produced the speaker labels. Present only when a diarizer ran.
+    """
+
     summary_info: typing.Optional[ListenV1ResponseMetadataSummaryInfo] = None
     sentiment_info: typing.Optional[ListenV1ResponseMetadataSentimentInfo] = None
     topics_info: typing.Optional[ListenV1ResponseMetadataTopicsInfo] = None

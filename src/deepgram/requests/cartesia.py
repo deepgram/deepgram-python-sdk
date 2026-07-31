@@ -3,8 +3,8 @@
 import typing
 
 import typing_extensions
-from ..types.cartesia_speak_provider_model_id import CartesiaSpeakProviderModelId
-from .cartesia_speak_provider_voice import CartesiaSpeakProviderVoiceParams
+from ..types.cartesia_model_id import CartesiaModelId
+from .cartesia_voice import CartesiaVoiceParams
 
 
 class CartesiaParams(typing_extensions.TypedDict):
@@ -14,12 +14,12 @@ class CartesiaParams(typing_extensions.TypedDict):
     The API version header for the Cartesia text-to-speech API
     """
 
-    model_id: CartesiaSpeakProviderModelId
+    model_id: CartesiaModelId
     """
     Cartesia model ID
     """
 
-    voice: CartesiaSpeakProviderVoiceParams
+    voice: CartesiaVoiceParams
     language: typing_extensions.NotRequired[str]
     """
     Cartesia language code

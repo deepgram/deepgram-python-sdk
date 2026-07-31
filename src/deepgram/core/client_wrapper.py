@@ -17,6 +17,8 @@ class BaseClientWrapper:
         environment: DeepgramClientEnvironment,
         timeout: typing.Optional[float] = None,
         max_retries: int = 2,
+        stream_reconnection_enabled: typing.Optional[bool] = None,
+        max_stream_reconnection_attempts: typing.Optional[int] = None,
         logging: typing.Optional[typing.Union[LogConfig, Logger]] = None,
     ):
         self.api_key = api_key
@@ -24,18 +26,26 @@ class BaseClientWrapper:
         self._environment = environment
         self._timeout = timeout
         self._max_retries = max_retries
+        self._stream_reconnection_enabled = stream_reconnection_enabled
+        self._max_stream_reconnection_attempts = max_stream_reconnection_attempts
         self._logging = logging
 
     def get_headers(self) -> typing.Dict[str, str]:
         import platform
+        from importlib import metadata as _fern_importlib_metadata
+
+        try:
+            _sdk_version = _fern_importlib_metadata.version("deepgram-sdk")
+        except _fern_importlib_metadata.PackageNotFoundError:
+            _sdk_version = "7.6.1"
 
         headers: typing.Dict[str, str] = {
-            "User-Agent": "deepgram-sdk/7.6.0",  # x-release-please-version
+            "User-Agent": "deepgram-sdk/" + _sdk_version,
             "X-Fern-Language": "Python",
             "X-Fern-Runtime": f"python/{platform.python_version()}",
             "X-Fern-Platform": f"{platform.system().lower()}/{platform.release()}",
             "X-Fern-SDK-Name": "deepgram-sdk",
-            "X-Fern-SDK-Version": "7.6.0",  # x-release-please-version
+            "X-Fern-SDK-Version": _sdk_version,
             **(self.get_custom_headers() or {}),
         }
         headers["Authorization"] = f"Token {self.api_key}"
@@ -53,6 +63,12 @@ class BaseClientWrapper:
     def get_max_retries(self) -> int:
         return self._max_retries
 
+    def get_stream_reconnection_enabled(self) -> bool:
+        return self._stream_reconnection_enabled if self._stream_reconnection_enabled is not None else True
+
+    def get_max_stream_reconnection_attempts(self) -> typing.Optional[int]:
+        return self._max_stream_reconnection_attempts
+
 
 class SyncClientWrapper(BaseClientWrapper):
     def __init__(
@@ -63,6 +79,8 @@ class SyncClientWrapper(BaseClientWrapper):
         environment: DeepgramClientEnvironment,
         timeout: typing.Optional[float] = None,
         max_retries: int = 2,
+        stream_reconnection_enabled: typing.Optional[bool] = None,
+        max_stream_reconnection_attempts: typing.Optional[int] = None,
         logging: typing.Optional[typing.Union[LogConfig, Logger]] = None,
         httpx_client: httpx.Client,
     ):
@@ -72,6 +90,8 @@ class SyncClientWrapper(BaseClientWrapper):
             environment=environment,
             timeout=timeout,
             max_retries=max_retries,
+            stream_reconnection_enabled=stream_reconnection_enabled,
+            max_stream_reconnection_attempts=max_stream_reconnection_attempts,
             logging=logging,
         )
         self.httpx_client = HttpClient(
@@ -92,6 +112,8 @@ class AsyncClientWrapper(BaseClientWrapper):
         environment: DeepgramClientEnvironment,
         timeout: typing.Optional[float] = None,
         max_retries: int = 2,
+        stream_reconnection_enabled: typing.Optional[bool] = None,
+        max_stream_reconnection_attempts: typing.Optional[int] = None,
         logging: typing.Optional[typing.Union[LogConfig, Logger]] = None,
         async_token: typing.Optional[typing.Callable[[], typing.Awaitable[str]]] = None,
         httpx_client: httpx.AsyncClient,
@@ -102,6 +124,8 @@ class AsyncClientWrapper(BaseClientWrapper):
             environment=environment,
             timeout=timeout,
             max_retries=max_retries,
+            stream_reconnection_enabled=stream_reconnection_enabled,
+            max_stream_reconnection_attempts=max_stream_reconnection_attempts,
             logging=logging,
         )
         self._async_token = async_token

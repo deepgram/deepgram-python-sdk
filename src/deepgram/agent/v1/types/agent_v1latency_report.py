@@ -13,15 +13,9 @@ class AgentV1LatencyReport(UncheckedBaseModel):
     Message type identifier for the latency report
     """
 
-    # Backward-compat: the API spec removed `stt_latency` from the LatencyReport
-    # schema (deepgram-docs #1006). LatencyReport is a server-emitted (read-only)
-    # message, so re-adding the field has no request/wire impact — it simply keeps
-    # `report.stt_latency` resolving (to None, since the server no longer emits it)
-    # instead of raising AttributeError, avoiding a major-version break. Remove this
-    # shim and unfreeze when the field is intentionally retired in a future major.
     stt_latency: typing.Optional[float] = pydantic.Field(default=None)
     """
-    Deprecated. Speech-to-text latency, no longer reported by the server.
+    Speech-to-text: time from audio received to transcript produced, in seconds
     """
 
     ttt_token_latency: typing.Optional[float] = pydantic.Field(default=None)

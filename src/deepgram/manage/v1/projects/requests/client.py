@@ -93,29 +93,13 @@ class RequestsClient:
 
         Examples
         --------
-        import datetime
-
         from deepgram import DeepgramClient
 
         client = DeepgramClient(
             api_key="YOUR_API_KEY",
         )
         client.manage.v1.projects.requests.list(
-            project_id="123456-7890-1234-5678-901234",
-            start=datetime.datetime.fromisoformat(
-                "2024-01-15 09:30:00+00:00",
-            ),
-            end=datetime.datetime.fromisoformat(
-                "2024-01-15 09:30:00+00:00",
-            ),
-            limit=1.1,
-            page=1.1,
-            accessor="12345678-1234-1234-1234-123456789012",
-            request_id="12345678-1234-1234-1234-123456789012",
-            deployment="hosted",
-            endpoint="listen",
-            method="sync",
-            status="succeeded",
+            project_id="12345678-90ab-cdef-1234-567890abcdef",
         )
         """
         _response = self._raw_client.list(
@@ -164,8 +148,8 @@ class RequestsClient:
             api_key="YOUR_API_KEY",
         )
         client.manage.v1.projects.requests.get(
-            project_id="123456-7890-1234-5678-901234",
-            request_id="123456-7890-1234-5678-901234",
+            project_id="12345678-90ab-cdef-1234-567890abcdef",
+            request_id="a3f1c9d2-4b7e-4f9a-8c3d-2e5f7b9a1c0d",
         )
         """
         _response = self._raw_client.get(project_id, request_id, request_options=request_options)
@@ -252,7 +236,6 @@ class AsyncRequestsClient:
         Examples
         --------
         import asyncio
-        import datetime
 
         from deepgram import AsyncDeepgramClient
 
@@ -263,21 +246,7 @@ class AsyncRequestsClient:
 
         async def main() -> None:
             await client.manage.v1.projects.requests.list(
-                project_id="123456-7890-1234-5678-901234",
-                start=datetime.datetime.fromisoformat(
-                    "2024-01-15 09:30:00+00:00",
-                ),
-                end=datetime.datetime.fromisoformat(
-                    "2024-01-15 09:30:00+00:00",
-                ),
-                limit=1.1,
-                page=1.1,
-                accessor="12345678-1234-1234-1234-123456789012",
-                request_id="12345678-1234-1234-1234-123456789012",
-                deployment="hosted",
-                endpoint="listen",
-                method="sync",
-                status="succeeded",
+                project_id="12345678-90ab-cdef-1234-567890abcdef",
             )
 
 
@@ -334,8 +303,8 @@ class AsyncRequestsClient:
 
         async def main() -> None:
             await client.manage.v1.projects.requests.get(
-                project_id="123456-7890-1234-5678-901234",
-                request_id="123456-7890-1234-5678-901234",
+                project_id="12345678-90ab-cdef-1234-567890abcdef",
+                request_id="a3f1c9d2-4b7e-4f9a-8c3d-2e5f7b9a1c0d",
             )
 
 
