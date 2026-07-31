@@ -7,7 +7,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 
 
-class CartesiaSpeakProviderVoice(UncheckedBaseModel):
+class CartesiaVoice(UncheckedBaseModel):
     mode: str = pydantic.Field()
     """
     Cartesia voice mode

@@ -4,6 +4,7 @@ import datetime as dt
 import typing
 
 import typing_extensions
+from .listen_v1response_metadata_diarize_info import ListenV1ResponseMetadataDiarizeInfoParams
 from .listen_v1response_metadata_intents_info import ListenV1ResponseMetadataIntentsInfoParams
 from .listen_v1response_metadata_sentiment_info import ListenV1ResponseMetadataSentimentInfoParams
 from .listen_v1response_metadata_summary_info import ListenV1ResponseMetadataSummaryInfoParams
@@ -19,6 +20,11 @@ class ListenV1ResponseMetadataParams(typing_extensions.TypedDict):
     channels: int
     models: typing.Sequence[str]
     model_info: typing.Dict[str, typing.Any]
+    diarize_info: typing_extensions.NotRequired[ListenV1ResponseMetadataDiarizeInfoParams]
+    """
+    The diarizer that produced the speaker labels. Present only when a diarizer ran.
+    """
+
     summary_info: typing_extensions.NotRequired[ListenV1ResponseMetadataSummaryInfoParams]
     sentiment_info: typing_extensions.NotRequired[ListenV1ResponseMetadataSentimentInfoParams]
     topics_info: typing_extensions.NotRequired[ListenV1ResponseMetadataTopicsInfoParams]

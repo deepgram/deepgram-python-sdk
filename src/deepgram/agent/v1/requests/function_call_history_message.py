@@ -3,9 +3,7 @@
 import typing
 
 import typing_extensions
-from .agent_v1settings_agent_context_context_messages_item_function_calls_function_calls_item import (
-    AgentV1SettingsAgentContextContextMessagesItemFunctionCallsFunctionCallsItemParams,
-)
+from .function_call_history_message_function_calls_item import FunctionCallHistoryMessageFunctionCallsItemParams
 
 
 class FunctionCallHistoryMessageParams(typing_extensions.TypedDict):
@@ -14,7 +12,7 @@ class FunctionCallHistoryMessageParams(typing_extensions.TypedDict):
     """
 
     type: typing.Literal["History"]
-    function_calls: typing.Sequence[AgentV1SettingsAgentContextContextMessagesItemFunctionCallsFunctionCallsItemParams]
+    function_calls: typing.Sequence[FunctionCallHistoryMessageFunctionCallsItemParams]
     """
     List of function call objects
     """

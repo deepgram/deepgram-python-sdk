@@ -8,7 +8,6 @@ from importlib import import_module
 if typing.TYPE_CHECKING:
     from .types import (
         ListenV2CloseStream,
-        ListenV2CloseStreamType,
         ListenV2Configure,
         ListenV2ConfigureFailure,
         ListenV2ConfigureSuccess,
@@ -16,6 +15,7 @@ if typing.TYPE_CHECKING:
         ListenV2ConfigureThresholds,
         ListenV2Connected,
         ListenV2FatalError,
+        ListenV2ForceEndTurn,
         ListenV2TurnInfo,
         ListenV2TurnInfoEvent,
         ListenV2TurnInfoWordsItem,
@@ -29,13 +29,13 @@ if typing.TYPE_CHECKING:
         ListenV2ConfigureThresholdsParams,
         ListenV2ConnectedParams,
         ListenV2FatalErrorParams,
+        ListenV2ForceEndTurnParams,
         ListenV2TurnInfoParams,
         ListenV2TurnInfoWordsItemParams,
     )
 _dynamic_imports: typing.Dict[str, str] = {
     "ListenV2CloseStream": ".types",
     "ListenV2CloseStreamParams": ".requests",
-    "ListenV2CloseStreamType": ".types",
     "ListenV2Configure": ".types",
     "ListenV2ConfigureFailure": ".types",
     "ListenV2ConfigureFailureParams": ".requests",
@@ -50,6 +50,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ListenV2ConnectedParams": ".requests",
     "ListenV2FatalError": ".types",
     "ListenV2FatalErrorParams": ".requests",
+    "ListenV2ForceEndTurn": ".types",
+    "ListenV2ForceEndTurnParams": ".requests",
     "ListenV2TurnInfo": ".types",
     "ListenV2TurnInfoEvent": ".types",
     "ListenV2TurnInfoParams": ".requests",
@@ -82,7 +84,6 @@ def __dir__():
 __all__ = [
     "ListenV2CloseStream",
     "ListenV2CloseStreamParams",
-    "ListenV2CloseStreamType",
     "ListenV2Configure",
     "ListenV2ConfigureFailure",
     "ListenV2ConfigureFailureParams",
@@ -97,6 +98,8 @@ __all__ = [
     "ListenV2ConnectedParams",
     "ListenV2FatalError",
     "ListenV2FatalErrorParams",
+    "ListenV2ForceEndTurn",
+    "ListenV2ForceEndTurnParams",
     "ListenV2TurnInfo",
     "ListenV2TurnInfoEvent",
     "ListenV2TurnInfoParams",

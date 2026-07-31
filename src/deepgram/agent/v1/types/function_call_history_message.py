@@ -5,9 +5,7 @@ import typing
 import pydantic
 from ....core.pydantic_utilities import IS_PYDANTIC_V2
 from ....core.unchecked_base_model import UncheckedBaseModel
-from .agent_v1settings_agent_context_context_messages_item_function_calls_function_calls_item import (
-    AgentV1SettingsAgentContextContextMessagesItemFunctionCallsFunctionCallsItem,
-)
+from .function_call_history_message_function_calls_item import FunctionCallHistoryMessageFunctionCallsItem
 
 
 class FunctionCallHistoryMessage(UncheckedBaseModel):
@@ -16,9 +14,7 @@ class FunctionCallHistoryMessage(UncheckedBaseModel):
     """
 
     type: typing.Literal["History"] = "History"
-    function_calls: typing.List[AgentV1SettingsAgentContextContextMessagesItemFunctionCallsFunctionCallsItem] = (
-        pydantic.Field()
-    )
+    function_calls: typing.List[FunctionCallHistoryMessageFunctionCallsItem] = pydantic.Field()
     """
     List of function call objects
     """

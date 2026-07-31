@@ -36,5 +36,5 @@ class ListenV1ResultsChannelAlternativesItemWordsItemParams(typing_extensions.Ty
 
     speaker: typing_extensions.NotRequired[int]
     """
-    The speaker of the word
+    The speaker of the word, present when diarization is enabled
     """

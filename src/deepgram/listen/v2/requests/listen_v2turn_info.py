@@ -64,6 +64,19 @@ class ListenV2TurnInfoParams(typing_extensions.TypedDict):
     Confidence that no more speech is coming in this turn
     """
 
+    trigger: typing_extensions.NotRequired[str]
+    """
+    The cause of the turn ending. Present on every `EndOfTurn` event and only there.
+    
+    - **model** - the turn ended by Flux's native end-of-turn detection
+    
+    - **manual** - the turn ended because a `ForceEndTurn` message was sent
+    
+    - **timeout** - the turn ended because `eot_timeout_ms` elapsed
+    
+    This is an open enum. New values may be added over time, so clients must tolerate values they do not recognize.
+    """
+
     languages: typing_extensions.NotRequired[typing.Sequence[str]]
     """
     Detected languages sorted by descending frequency in the

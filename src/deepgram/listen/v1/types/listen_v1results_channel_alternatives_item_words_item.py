@@ -40,7 +40,7 @@ class ListenV1ResultsChannelAlternativesItemWordsItem(UncheckedBaseModel):
 
     speaker: typing.Optional[int] = pydantic.Field(default=None)
     """
-    The speaker of the word
+    The speaker of the word, present when diarization is enabled
     """
 
     if IS_PYDANTIC_V2:
