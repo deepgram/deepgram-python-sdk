@@ -88,6 +88,11 @@ if typing.TYPE_CHECKING:
     from .agent_v1settings_agent_listen_provider_v1 import AgentV1SettingsAgentListenProviderV1
     from .agent_v1settings_agent_listen_provider_v2 import AgentV1SettingsAgentListenProviderV2
 
+    from .agent_v1history_content_role import AgentV1HistoryContentRole
+    from .agent_v1history_function_calls_function_calls_item import AgentV1HistoryFunctionCallsFunctionCallsItem
+    from .agent_v1settings_agent_context_context_messages_item_content_role import AgentV1SettingsAgentContextContextMessagesItemContentRole
+    from .agent_v1settings_agent_context_context_messages_item_function_calls_function_calls_item import AgentV1SettingsAgentContextContextMessagesItemFunctionCallsFunctionCallsItem
+
 _dynamic_imports: typing.Dict[str, str] = {
     "AgentV1AgentAudioDone": ".agent_v1agent_audio_done",
     "AgentV1AgentStartedSpeaking": ".agent_v1agent_started_speaking",
@@ -164,6 +169,10 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AgentV1SettingsAgentContextMessagesItemFunctionCallsFunctionCallsItem": ".agent_v1settings_agent_context_messages_item_function_calls_function_calls_item",
     "AgentV1SettingsAgentListenProviderV1": ".agent_v1settings_agent_listen_provider_v1",
     "AgentV1SettingsAgentListenProviderV2": ".agent_v1settings_agent_listen_provider_v2",
+    "AgentV1HistoryContentRole": ".agent_v1history_content_role",
+    "AgentV1HistoryFunctionCallsFunctionCallsItem": ".agent_v1history_function_calls_function_calls_item",
+    "AgentV1SettingsAgentContextContextMessagesItemContentRole": ".agent_v1settings_agent_context_context_messages_item_content_role",
+    "AgentV1SettingsAgentContextContextMessagesItemFunctionCallsFunctionCallsItem": ".agent_v1settings_agent_context_context_messages_item_function_calls_function_calls_item",
 }
 
 
@@ -264,4 +273,8 @@ __all__ = [
     "AgentV1SettingsAgentContextMessagesItemFunctionCallsFunctionCallsItem",
     "AgentV1SettingsAgentListenProviderV1",
     "AgentV1SettingsAgentListenProviderV2",
+    "AgentV1HistoryContentRole",
+    "AgentV1HistoryFunctionCallsFunctionCallsItem",
+    "AgentV1SettingsAgentContextContextMessagesItemContentRole",
+    "AgentV1SettingsAgentContextContextMessagesItemFunctionCallsFunctionCallsItem",
 ]

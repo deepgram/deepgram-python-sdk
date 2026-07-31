@@ -83,6 +83,9 @@ if typing.TYPE_CHECKING:
     from .agent_v1settings_agent_listen_provider_v1 import AgentV1SettingsAgentListenProviderV1Params
     from .agent_v1settings_agent_listen_provider_v2 import AgentV1SettingsAgentListenProviderV2Params
 
+    from .agent_v1history_function_calls_function_calls_item import AgentV1HistoryFunctionCallsFunctionCallsItemParams
+    from .agent_v1settings_agent_context_context_messages_item_function_calls_function_calls_item import AgentV1SettingsAgentContextContextMessagesItemFunctionCallsFunctionCallsItemParams
+
 _dynamic_imports: typing.Dict[str, str] = {
     "AgentV1AgentAudioDoneParams": ".agent_v1agent_audio_done",
     "AgentV1AgentStartedSpeakingParams": ".agent_v1agent_started_speaking",
@@ -152,6 +155,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AgentV1SettingsAgentContextMessagesItemParams": ".agent_v1settings_agent_context_messages_item",
     "AgentV1SettingsAgentListenProviderV1Params": ".agent_v1settings_agent_listen_provider_v1",
     "AgentV1SettingsAgentListenProviderV2Params": ".agent_v1settings_agent_listen_provider_v2",
+    "AgentV1HistoryFunctionCallsFunctionCallsItemParams": ".agent_v1history_function_calls_function_calls_item",
+    "AgentV1SettingsAgentContextContextMessagesItemFunctionCallsFunctionCallsItemParams": ".agent_v1settings_agent_context_context_messages_item_function_calls_function_calls_item",
 }
 
 
@@ -245,4 +250,6 @@ __all__ = [
     "AgentV1SettingsAgentContextMessagesItemParams",
     "AgentV1SettingsAgentListenProviderV1Params",
     "AgentV1SettingsAgentListenProviderV2Params",
+    "AgentV1HistoryFunctionCallsFunctionCallsItemParams",
+    "AgentV1SettingsAgentContextContextMessagesItemFunctionCallsFunctionCallsItemParams",
 ]

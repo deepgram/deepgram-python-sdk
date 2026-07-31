@@ -194,46 +194,35 @@ def test_legacy_settings_agent_context_messages_property_reads_nested_context() 
 
 
 def test_renamed_settings_context_type_aliases_resolve() -> None:
-    # The 2026-07-31 regen removed the transitional double-`Context` intermediate
-    # type names (...ContextContextMessagesItemContentRole /
-    # ...FunctionCallsFunctionCallsItem) and consolidated them into the canonical
-    # ConversationHistoryMessageRole / FunctionCallHistoryMessageFunctionCallsItem.
-    # The historically public single-`Context` aliases must keep resolving to the
-    # new canonical types.
     from deepgram.agent.v1.types import (
         AgentV1SettingsAgentContextContextMessagesItem,
+        AgentV1SettingsAgentContextContextMessagesItemContentRole,
+        AgentV1SettingsAgentContextContextMessagesItemFunctionCallsFunctionCallsItem,
         AgentV1SettingsAgentContextMessagesItem,
         AgentV1SettingsAgentContextMessagesItemContentRole,
         AgentV1SettingsAgentContextMessagesItemFunctionCallsFunctionCallsItem,
-        ConversationHistoryMessageRole,
-        FunctionCallHistoryMessageFunctionCallsItem,
     )
 
     assert AgentV1SettingsAgentContextMessagesItem is AgentV1SettingsAgentContextContextMessagesItem
-    assert AgentV1SettingsAgentContextMessagesItemContentRole is ConversationHistoryMessageRole
+    assert AgentV1SettingsAgentContextMessagesItemContentRole is AgentV1SettingsAgentContextContextMessagesItemContentRole
     assert (
         AgentV1SettingsAgentContextMessagesItemFunctionCallsFunctionCallsItem
-        is FunctionCallHistoryMessageFunctionCallsItem
+        is AgentV1SettingsAgentContextContextMessagesItemFunctionCallsFunctionCallsItem
     )
 
 
 def test_renamed_settings_context_request_aliases_resolve() -> None:
-    # See the type-side note above: the double-`Context` request param
-    # ...FunctionCallsFunctionCallsItemParams was removed in the 2026-07-31 regen;
-    # the single-`Context` public alias now resolves to the canonical
-    # FunctionCallHistoryMessageFunctionCallsItemParams. The ...MessagesItemParams
-    # double-`Context` name still exists (a Union) and is asserted below.
     from deepgram.agent.v1.requests import (
+        AgentV1SettingsAgentContextContextMessagesItemFunctionCallsFunctionCallsItemParams,
         AgentV1SettingsAgentContextContextMessagesItemParams,
         AgentV1SettingsAgentContextMessagesItemFunctionCallsFunctionCallsItemParams,
         AgentV1SettingsAgentContextMessagesItemParams,
-        FunctionCallHistoryMessageFunctionCallsItemParams,
     )
 
     assert AgentV1SettingsAgentContextMessagesItemParams is AgentV1SettingsAgentContextContextMessagesItemParams
     assert (
         AgentV1SettingsAgentContextMessagesItemFunctionCallsFunctionCallsItemParams
-        is FunctionCallHistoryMessageFunctionCallsItemParams
+        is AgentV1SettingsAgentContextContextMessagesItemFunctionCallsFunctionCallsItemParams
     )
 
 

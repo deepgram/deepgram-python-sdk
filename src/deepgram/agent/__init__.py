@@ -153,6 +153,13 @@ if typing.TYPE_CHECKING:
     from .v1 import AgentV1SettingsAgentListenProviderV2
     from .v1 import AgentV1SettingsAgentListenProviderV2Params
 
+    from .v1 import AgentV1HistoryContentRole
+    from .v1 import AgentV1HistoryFunctionCallsFunctionCallsItem
+    from .v1 import AgentV1SettingsAgentContextContextMessagesItemContentRole
+    from .v1 import AgentV1SettingsAgentContextContextMessagesItemFunctionCallsFunctionCallsItem
+    from .v1 import AgentV1HistoryFunctionCallsFunctionCallsItemParams
+    from .v1 import AgentV1SettingsAgentContextContextMessagesItemFunctionCallsFunctionCallsItemParams
+
 _dynamic_imports: typing.Dict[str, str] = {
     "AgentV1AgentAudioDone": ".v1",
     "AgentV1AgentAudioDoneParams": ".v1",
@@ -298,6 +305,12 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AgentV1SettingsAgentListenProviderV1Params": ".v1",
     "AgentV1SettingsAgentListenProviderV2": ".v1",
     "AgentV1SettingsAgentListenProviderV2Params": ".v1",
+    "AgentV1HistoryContentRole": ".v1",
+    "AgentV1HistoryFunctionCallsFunctionCallsItem": ".v1",
+    "AgentV1SettingsAgentContextContextMessagesItemContentRole": ".v1",
+    "AgentV1SettingsAgentContextContextMessagesItemFunctionCallsFunctionCallsItem": ".v1",
+    "AgentV1HistoryFunctionCallsFunctionCallsItemParams": ".v1",
+    "AgentV1SettingsAgentContextContextMessagesItemFunctionCallsFunctionCallsItemParams": ".v1",
 }
 
 
@@ -467,4 +480,10 @@ __all__ = [
     "AgentV1SettingsAgentListenProviderV1Params",
     "AgentV1SettingsAgentListenProviderV2",
     "AgentV1SettingsAgentListenProviderV2Params",
+    "AgentV1HistoryContentRole",
+    "AgentV1HistoryFunctionCallsFunctionCallsItem",
+    "AgentV1SettingsAgentContextContextMessagesItemContentRole",
+    "AgentV1SettingsAgentContextContextMessagesItemFunctionCallsFunctionCallsItem",
+    "AgentV1HistoryFunctionCallsFunctionCallsItemParams",
+    "AgentV1SettingsAgentContextContextMessagesItemFunctionCallsFunctionCallsItemParams",
 ]

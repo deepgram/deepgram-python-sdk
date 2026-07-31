@@ -155,6 +155,13 @@ if typing.TYPE_CHECKING:
     from .types import AgentV1SettingsAgentListenProviderV2
     from .requests import AgentV1SettingsAgentListenProviderV2Params
 
+    from .types import AgentV1HistoryContentRole
+    from .types import AgentV1HistoryFunctionCallsFunctionCallsItem
+    from .types import AgentV1SettingsAgentContextContextMessagesItemContentRole
+    from .types import AgentV1SettingsAgentContextContextMessagesItemFunctionCallsFunctionCallsItem
+    from .requests import AgentV1HistoryFunctionCallsFunctionCallsItemParams
+    from .requests import AgentV1SettingsAgentContextContextMessagesItemFunctionCallsFunctionCallsItemParams
+
 _dynamic_imports: typing.Dict[str, str] = {
     "AgentV1AgentAudioDone": ".types",
     "AgentV1AgentAudioDoneParams": ".requests",
@@ -300,6 +307,12 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AgentV1SettingsAgentListenProviderV1Params": ".requests",
     "AgentV1SettingsAgentListenProviderV2": ".types",
     "AgentV1SettingsAgentListenProviderV2Params": ".requests",
+    "AgentV1HistoryContentRole": ".types",
+    "AgentV1HistoryFunctionCallsFunctionCallsItem": ".types",
+    "AgentV1SettingsAgentContextContextMessagesItemContentRole": ".types",
+    "AgentV1SettingsAgentContextContextMessagesItemFunctionCallsFunctionCallsItem": ".types",
+    "AgentV1HistoryFunctionCallsFunctionCallsItemParams": ".requests",
+    "AgentV1SettingsAgentContextContextMessagesItemFunctionCallsFunctionCallsItemParams": ".requests",
 }
 
 
@@ -469,4 +482,10 @@ __all__ = [
     "AgentV1SettingsAgentListenProviderV1Params",
     "AgentV1SettingsAgentListenProviderV2",
     "AgentV1SettingsAgentListenProviderV2Params",
+    "AgentV1HistoryContentRole",
+    "AgentV1HistoryFunctionCallsFunctionCallsItem",
+    "AgentV1SettingsAgentContextContextMessagesItemContentRole",
+    "AgentV1SettingsAgentContextContextMessagesItemFunctionCallsFunctionCallsItem",
+    "AgentV1HistoryFunctionCallsFunctionCallsItemParams",
+    "AgentV1SettingsAgentContextContextMessagesItemFunctionCallsFunctionCallsItemParams",
 ]

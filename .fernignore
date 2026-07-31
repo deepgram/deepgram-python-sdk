@@ -43,8 +43,16 @@ src/deepgram/agent/v1/requests/agent_v1settings.py
 
 # Backward-compatibility alias shims for renamed generated public types/params.
 # These are hand-written wrappers around the current generated names and must not be regenerated.
+# The *_content_role / *_function_calls_function_calls_item shims (and the double-`Context`
+# variants below) were recreated by hand after the 2026-07-31 regen deleted the underlying
+# generated modules; they now re-export the canonical ConversationHistoryMessageRole /
+# FunctionCallHistoryMessageFunctionCallsItem types so the old public import paths keep working.
 src/deepgram/agent/v1/types/agent_v1history_content.py
+src/deepgram/agent/v1/types/agent_v1history_content_role.py
 src/deepgram/agent/v1/types/agent_v1history_function_calls.py
+src/deepgram/agent/v1/types/agent_v1history_function_calls_function_calls_item.py
+src/deepgram/agent/v1/types/agent_v1settings_agent_context_context_messages_item_content_role.py
+src/deepgram/agent/v1/types/agent_v1settings_agent_context_context_messages_item_function_calls_function_calls_item.py
 src/deepgram/agent/v1/types/agent_v1settings_agent_context_messages_item.py
 src/deepgram/agent/v1/types/agent_v1settings_agent_context_messages_item_content.py
 src/deepgram/agent/v1/types/agent_v1settings_agent_context_messages_item_content_role.py
@@ -52,6 +60,8 @@ src/deepgram/agent/v1/types/agent_v1settings_agent_context_messages_item_functio
 src/deepgram/agent/v1/types/agent_v1settings_agent_context_messages_item_function_calls_function_calls_item.py
 src/deepgram/agent/v1/requests/agent_v1history_content.py
 src/deepgram/agent/v1/requests/agent_v1history_function_calls.py
+src/deepgram/agent/v1/requests/agent_v1history_function_calls_function_calls_item.py
+src/deepgram/agent/v1/requests/agent_v1settings_agent_context_context_messages_item_function_calls_function_calls_item.py
 src/deepgram/agent/v1/requests/agent_v1settings_agent_context_messages_item.py
 src/deepgram/agent/v1/requests/agent_v1settings_agent_context_messages_item_content.py
 src/deepgram/agent/v1/requests/agent_v1settings_agent_context_messages_item_function_calls.py
