@@ -28,7 +28,9 @@ from typing import Any, Callable, Dict, Optional
 
 from ._secure_logging import install_websocket_log_redaction
 from .base_client import AsyncBaseClient, BaseClient
+from .telemetry import init_telemetry, install_response_capture
 from .transport import install_transport
+from .version import __version__
 
 from deepgram.core.client_wrapper import BaseClientWrapper
 
@@ -130,8 +132,19 @@ class DeepgramClient(BaseClient):
             reconnect = False
         self.reconnect = reconnect
 
-        # Store telemetry handler for backwards compatibility (no-op, telemetry not implemented)
-        self._telemetry_handler = None
+        # Wire opt-out telemetry. `telemetry_opt_out` and `telemetry_handler`
+        # are resolved above; a custom handler takes precedence over Sentry,
+        # and with no opt-out + a resolvable DSN this arms isolated phone-home.
+        # When active, attach a response hook (HTTP 5xx reporting, tagged with
+        # session id + request id) to the httpx client the wrapper already
+        # built — no generated files are touched.
+        self._telemetry_handler = telemetry_handler
+        if init_telemetry(
+            opt_out=telemetry_opt_out,
+            handler=telemetry_handler,
+            version=__version__,
+        ):
+            install_response_capture(self._client_wrapper, final_session_id)
 
 
 class AsyncDeepgramClient(AsyncBaseClient):
@@ -209,5 +222,16 @@ class AsyncDeepgramClient(AsyncBaseClient):
             reconnect = False
         self.reconnect = reconnect
 
-        # Store telemetry handler for backwards compatibility (no-op, telemetry not implemented)
-        self._telemetry_handler = None
+        # Wire opt-out telemetry. `telemetry_opt_out` and `telemetry_handler`
+        # are resolved above; a custom handler takes precedence over Sentry,
+        # and with no opt-out + a resolvable DSN this arms isolated phone-home.
+        # When active, attach a response hook (HTTP 5xx reporting, tagged with
+        # session id + request id) to the httpx client the wrapper already
+        # built — no generated files are touched.
+        self._telemetry_handler = telemetry_handler
+        if init_telemetry(
+            opt_out=telemetry_opt_out,
+            handler=telemetry_handler,
+            version=__version__,
+        ):
+            install_response_capture(self._client_wrapper, final_session_id)
