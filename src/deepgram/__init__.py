@@ -431,6 +431,17 @@ if typing.TYPE_CHECKING:
         UsageV1ResponseResolutionParams,
     )
     from .version import __version__
+    from .types import AnthropicThinkProviderModel
+    from .types import CartesiaSpeakProviderModelId
+    from .types import CartesiaSpeakProviderVoice
+    from .requests import CartesiaSpeakProviderVoiceParams
+    from .types import CreateKeyV1RequestOne
+    from .types import DeepgramListenProviderV2LanguageHint
+    from .requests import DeepgramListenProviderV2LanguageHintParams
+    from .types import DeepgramSpeakProviderModel
+    from .types import GoogleThinkProviderModel
+    from .types import GroqThinkProviderReasoningMode
+
 _dynamic_imports: typing.Dict[str, str] = {
     "AgentConfigurationV1": ".types",
     "AgentConfigurationV1Params": ".requests",
@@ -862,6 +873,16 @@ _dynamic_imports: typing.Dict[str, str] = {
     "self_hosted": ".self_hosted",
     "speak": ".speak",
     "voice_agent": ".voice_agent",
+    "AnthropicThinkProviderModel": ".types",
+    "CartesiaSpeakProviderModelId": ".types",
+    "CartesiaSpeakProviderVoice": ".types",
+    "CartesiaSpeakProviderVoiceParams": ".requests",
+    "CreateKeyV1RequestOne": ".types",
+    "DeepgramListenProviderV2LanguageHint": ".types",
+    "DeepgramListenProviderV2LanguageHintParams": ".requests",
+    "DeepgramSpeakProviderModel": ".types",
+    "GoogleThinkProviderModel": ".types",
+    "GroqThinkProviderReasoningMode": ".types",
 }
 
 
@@ -1317,4 +1338,14 @@ __all__ = [
     "self_hosted",
     "speak",
     "voice_agent",
+    "AnthropicThinkProviderModel",
+    "CartesiaSpeakProviderModelId",
+    "CartesiaSpeakProviderVoice",
+    "CartesiaSpeakProviderVoiceParams",
+    "CreateKeyV1RequestOne",
+    "DeepgramListenProviderV2LanguageHint",
+    "DeepgramListenProviderV2LanguageHintParams",
+    "DeepgramSpeakProviderModel",
+    "GoogleThinkProviderModel",
+    "GroqThinkProviderReasoningMode",
 ]

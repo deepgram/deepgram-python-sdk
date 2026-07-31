@@ -3,9 +3,7 @@
 import json
 import logging
 import typing
-from json.decoder import JSONDecodeError
 
-import websockets
 import websockets.sync.connection as websockets_sync_connection
 from ...core.events import EventEmitterMixin, EventType
 from ...core.unchecked_base_model import construct_type
@@ -72,7 +70,7 @@ class AsyncV2SocketClient(EventEmitterMixin):
                         )
                         continue
                 await self._emit_async(EventType.MESSAGE, parsed)
-        except (websockets.WebSocketException, JSONDecodeError) as exc:
+        except Exception as exc:
             await self._emit_async(EventType.ERROR, exc)
         finally:
             await self._emit_async(EventType.CLOSE, None)
@@ -84,12 +82,12 @@ class AsyncV2SocketClient(EventEmitterMixin):
         """
         await self._send(message)
 
-    async def send_close_stream(self, message: ListenV2CloseStream) -> None:
+    async def send_close_stream(self, message: typing.Optional[ListenV2CloseStream] = None) -> None:
         """
         Send a message to the websocket connection.
         The message will be sent as a ListenV2CloseStream.
         """
-        await self._send_model(message)
+        await self._send_model(message or ListenV2CloseStream(type="CloseStream"))
 
     async def send_force_end_turn(self, message: ListenV2ForceEndTurn) -> None:
         """
@@ -98,12 +96,17 @@ class AsyncV2SocketClient(EventEmitterMixin):
         """
         await self._send_model(message)
 
-    async def send_configure(self, message: ListenV2Configure) -> None:
+    async def send_configure(self, message: typing.Union[ListenV2Configure, typing.Dict[str, typing.Any]]) -> None:
         """
         Send a message to the websocket connection.
         The message will be sent as a ListenV2Configure.
+
+        Back-compat: a raw dict is accepted and sent verbatim (the pre-typed-model behavior).
         """
-        await self._send_model(message)
+        if hasattr(message, "dict"):
+            await self._send_model(message)
+        else:
+            await self._send(message)
 
     async def recv(self) -> V2SocketClientResponse:
         """
@@ -177,7 +180,7 @@ class V2SocketClient(EventEmitterMixin):
                         )
                         continue
                 self._emit(EventType.MESSAGE, parsed)
-        except (websockets.WebSocketException, JSONDecodeError) as exc:
+        except Exception as exc:
             self._emit(EventType.ERROR, exc)
         finally:
             self._emit(EventType.CLOSE, None)
@@ -189,12 +192,12 @@ class V2SocketClient(EventEmitterMixin):
         """
         self._send(message)
 
-    def send_close_stream(self, message: ListenV2CloseStream) -> None:
+    def send_close_stream(self, message: typing.Optional[ListenV2CloseStream] = None) -> None:
         """
         Send a message to the websocket connection.
         The message will be sent as a ListenV2CloseStream.
         """
-        self._send_model(message)
+        self._send_model(message or ListenV2CloseStream(type="CloseStream"))
 
     def send_force_end_turn(self, message: ListenV2ForceEndTurn) -> None:
         """
@@ -203,12 +206,17 @@ class V2SocketClient(EventEmitterMixin):
         """
         self._send_model(message)
 
-    def send_configure(self, message: ListenV2Configure) -> None:
+    def send_configure(self, message: typing.Union[ListenV2Configure, typing.Dict[str, typing.Any]]) -> None:
         """
         Send a message to the websocket connection.
         The message will be sent as a ListenV2Configure.
+
+        Back-compat: a raw dict is accepted and sent verbatim (the pre-typed-model behavior).
         """
-        self._send_model(message)
+        if hasattr(message, "dict"):
+            self._send_model(message)
+        else:
+            self._send(message)
 
     def recv(self) -> V2SocketClientResponse:
         """

@@ -18,6 +18,8 @@ if typing.TYPE_CHECKING:
     from .listen_v2turn_info import ListenV2TurnInfo
     from .listen_v2turn_info_event import ListenV2TurnInfoEvent
     from .listen_v2turn_info_words_item import ListenV2TurnInfoWordsItem
+    from .listen_v2close_stream_type import ListenV2CloseStreamType
+
 _dynamic_imports: typing.Dict[str, str] = {
     "ListenV2CloseStream": ".listen_v2close_stream",
     "ListenV2Configure": ".listen_v2configure",
@@ -31,6 +33,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ListenV2TurnInfo": ".listen_v2turn_info",
     "ListenV2TurnInfoEvent": ".listen_v2turn_info_event",
     "ListenV2TurnInfoWordsItem": ".listen_v2turn_info_words_item",
+    "ListenV2CloseStreamType": ".listen_v2close_stream_type",
 }
 
 
@@ -68,4 +71,5 @@ __all__ = [
     "ListenV2TurnInfo",
     "ListenV2TurnInfoEvent",
     "ListenV2TurnInfoWordsItem",
+    "ListenV2CloseStreamType",
 ]

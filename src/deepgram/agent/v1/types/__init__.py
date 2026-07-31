@@ -75,6 +75,19 @@ if typing.TYPE_CHECKING:
     from .conversation_history_message_role import ConversationHistoryMessageRole
     from .function_call_history_message import FunctionCallHistoryMessage
     from .function_call_history_message_function_calls_item import FunctionCallHistoryMessageFunctionCallsItem
+    from .agent_v1history_content import AgentV1HistoryContent
+    from .agent_v1history_function_calls import AgentV1HistoryFunctionCalls
+    from .agent_v1settings_agent_context_listen_provider_v1 import AgentV1SettingsAgentContextListenProviderV1
+    from .agent_v1settings_agent_context_listen_provider_v2 import AgentV1SettingsAgentContextListenProviderV2
+    from .agent_v1settings_agent_context_listen_provider_v2language_hint import AgentV1SettingsAgentContextListenProviderV2LanguageHint
+    from .agent_v1settings_agent_context_messages_item import AgentV1SettingsAgentContextMessagesItem
+    from .agent_v1settings_agent_context_messages_item_content import AgentV1SettingsAgentContextMessagesItemContent
+    from .agent_v1settings_agent_context_messages_item_content_role import AgentV1SettingsAgentContextMessagesItemContentRole
+    from .agent_v1settings_agent_context_messages_item_function_calls import AgentV1SettingsAgentContextMessagesItemFunctionCalls
+    from .agent_v1settings_agent_context_messages_item_function_calls_function_calls_item import AgentV1SettingsAgentContextMessagesItemFunctionCallsFunctionCallsItem
+    from .agent_v1settings_agent_listen_provider_v1 import AgentV1SettingsAgentListenProviderV1
+    from .agent_v1settings_agent_listen_provider_v2 import AgentV1SettingsAgentListenProviderV2
+
 _dynamic_imports: typing.Dict[str, str] = {
     "AgentV1AgentAudioDone": ".agent_v1agent_audio_done",
     "AgentV1AgentStartedSpeaking": ".agent_v1agent_started_speaking",
@@ -139,6 +152,18 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ConversationHistoryMessageRole": ".conversation_history_message_role",
     "FunctionCallHistoryMessage": ".function_call_history_message",
     "FunctionCallHistoryMessageFunctionCallsItem": ".function_call_history_message_function_calls_item",
+    "AgentV1HistoryContent": ".agent_v1history_content",
+    "AgentV1HistoryFunctionCalls": ".agent_v1history_function_calls",
+    "AgentV1SettingsAgentContextListenProviderV1": ".agent_v1settings_agent_context_listen_provider_v1",
+    "AgentV1SettingsAgentContextListenProviderV2": ".agent_v1settings_agent_context_listen_provider_v2",
+    "AgentV1SettingsAgentContextListenProviderV2LanguageHint": ".agent_v1settings_agent_context_listen_provider_v2language_hint",
+    "AgentV1SettingsAgentContextMessagesItem": ".agent_v1settings_agent_context_messages_item",
+    "AgentV1SettingsAgentContextMessagesItemContent": ".agent_v1settings_agent_context_messages_item_content",
+    "AgentV1SettingsAgentContextMessagesItemContentRole": ".agent_v1settings_agent_context_messages_item_content_role",
+    "AgentV1SettingsAgentContextMessagesItemFunctionCalls": ".agent_v1settings_agent_context_messages_item_function_calls",
+    "AgentV1SettingsAgentContextMessagesItemFunctionCallsFunctionCallsItem": ".agent_v1settings_agent_context_messages_item_function_calls_function_calls_item",
+    "AgentV1SettingsAgentListenProviderV1": ".agent_v1settings_agent_listen_provider_v1",
+    "AgentV1SettingsAgentListenProviderV2": ".agent_v1settings_agent_listen_provider_v2",
 }
 
 
@@ -227,4 +252,16 @@ __all__ = [
     "ConversationHistoryMessageRole",
     "FunctionCallHistoryMessage",
     "FunctionCallHistoryMessageFunctionCallsItem",
+    "AgentV1HistoryContent",
+    "AgentV1HistoryFunctionCalls",
+    "AgentV1SettingsAgentContextListenProviderV1",
+    "AgentV1SettingsAgentContextListenProviderV2",
+    "AgentV1SettingsAgentContextListenProviderV2LanguageHint",
+    "AgentV1SettingsAgentContextMessagesItem",
+    "AgentV1SettingsAgentContextMessagesItemContent",
+    "AgentV1SettingsAgentContextMessagesItemContentRole",
+    "AgentV1SettingsAgentContextMessagesItemFunctionCalls",
+    "AgentV1SettingsAgentContextMessagesItemFunctionCallsFunctionCallsItem",
+    "AgentV1SettingsAgentListenProviderV1",
+    "AgentV1SettingsAgentListenProviderV2",
 ]
