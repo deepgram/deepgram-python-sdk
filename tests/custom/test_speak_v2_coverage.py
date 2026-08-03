@@ -28,6 +28,7 @@ import json
 from unittest.mock import patch
 
 import httpx
+import pydantic
 import pytest
 import respx
 
@@ -36,6 +37,7 @@ import deepgram.speak.v2.raw_client as speak_v2_raw_client
 from deepgram import AsyncDeepgramClient, DeepgramClient
 from deepgram.core.api_error import ApiError
 from deepgram.core.events import EventType
+from deepgram.core.parse_error import ParsingError
 from deepgram.environment import DeepgramClientEnvironment
 from deepgram.speak.v2.audio.client import AsyncAudioClient, AudioClient
 from deepgram.speak.v2.socket_client import AsyncV2SocketClient, V2SocketClient
@@ -44,6 +46,21 @@ from deepgram.speak.v2.types.speak_v2speak import SpeakV2Speak
 
 HOST = "test.deepgram.local"
 BASE = f"https://{HOST}"
+
+
+def _real_validation_error() -> pydantic.ValidationError:
+    """Produce a genuine ``pydantic.ValidationError`` — the ``except ValidationError``
+    arm in ``audio/raw_client.py`` catches this specific type, so a plain
+    ``ValueError`` stand-in would not exercise it."""
+
+    class _M(pydantic.BaseModel):
+        x: int
+
+    try:
+        _M(x="not-an-int")  # type: ignore[arg-type]
+    except pydantic.ValidationError as exc:
+        return exc
+    raise AssertionError("expected a ValidationError")  # pragma: no cover
 
 
 def _environment() -> DeepgramClientEnvironment:
@@ -122,6 +139,36 @@ class TestAudioGenerateErrors:
             with pytest.raises(ApiError):
                 async for _ in _async_client().speak.v2.audio.generate(model="m", text="t"):
                     pass
+
+    def test_sync_validation_error_raises_parsing_error(self) -> None:
+        # A 400 body that parses as JSON but fails schema validation: construct_type
+        # raises a pydantic ValidationError while building the BadRequestError body,
+        # which the except-ValidationError arm turns into a ParsingError (with cause).
+        err = _real_validation_error()
+        with respx.mock:
+            respx.route(host=HOST).mock(return_value=httpx.Response(400, json={"unexpected": "shape"}))
+            with patch(
+                "deepgram.speak.v2.audio.raw_client.construct_type",
+                side_effect=err,
+            ):
+                with pytest.raises(ParsingError) as excinfo:
+                    list(_sync_client().speak.v2.audio.generate(model="m", text="t"))
+        assert excinfo.value.status_code == 400
+        assert excinfo.value.cause is err
+
+    async def test_async_validation_error_raises_parsing_error(self) -> None:
+        err = _real_validation_error()
+        with respx.mock:
+            respx.route(host=HOST).mock(return_value=httpx.Response(400, json={"unexpected": "shape"}))
+            with patch(
+                "deepgram.speak.v2.audio.raw_client.construct_type",
+                side_effect=err,
+            ):
+                with pytest.raises(ParsingError) as excinfo:
+                    async for _ in _async_client().speak.v2.audio.generate(model="m", text="t"):
+                        pass
+        assert excinfo.value.status_code == 400
+        assert excinfo.value.cause is err
 
 
 # --------------------------------------------------------------------------- #
