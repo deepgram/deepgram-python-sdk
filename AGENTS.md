@@ -40,6 +40,7 @@ Current permanently frozen files:
 - `tests/custom/test_text_builder.py`, `tests/custom/test_transport.py` — hand-written tests
 - `tests/typecheck/compat_aliases.py` — hand-written mypy `assert_type` coverage for backward-compatible alias TypedDicts
 - `tests/manual/` — manual standalone tests
+- `.coveragerc` — hand-written coverage configuration (branch coverage on, scoped to `deepgram`, generated data models and package plumbing excluded, `fail_under` gate). Deliberately kept out of `pyproject.toml`, which Fern regenerates: freezing `pyproject.toml` would also block generator dependency updates (see `5c1e845`, where a `pydantic-core` bound fix for issue #701 shipped as a `pyproject.toml`-only regen change). No Fern counterpart, so it never needs unfreezing.
 - `README.md`, `CHANGELOG.md`, `CONTRIBUTING.md`, `reference.md` — docs
 - `CLAUDE.md`, `AGENTS.md`, `.claude/` — agent files
 - `.github/`, `docs/`, `examples/` — folders
@@ -53,6 +54,7 @@ How to identify:
 - Our version is a **modified copy** of what Fern generates (e.g., changed `float` to `int`, added optional defaults, broadened a Union type)
 
 Current temporarily frozen files:
+- `.gitignore` — Fern generates a baseline version and has regenerated it before (`fdcce88`, `ad93815`, `4bee463`). We hand-add the local coverage artifact ignores (`.coverage`, `htmlcov/`, `coverage.xml`). Before each regen, unfreeze and re-diff so Fern's own additions are picked up, then re-apply the three coverage lines.
 - `src/deepgram/speak/v1/socket_client.py` — optional message param defaults, broad exception catch
 - `src/deepgram/speak/v2/socket_client.py` — same (optional `send_flush`/`send_close`/`send_interrupt` defaults, broad exception catch); new websocket TTS client added in the 2026-07-08 regen. `send_interrupt` carries no required payload so it takes the same optional-default treatment as the other control sends; `send_configure` deliberately keeps its required argument (a Configure with no settings is meaningless)
 - `src/deepgram/listen/v1/socket_client.py` — same

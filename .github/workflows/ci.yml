@@ -1,6 +1,10 @@
 name: CI
 
-on: [push, pull_request]
+on:
+  push:
+    branches: [main]
+    tags: ["**"]
+  pull_request:
 
 jobs:
   compile:
@@ -51,8 +55,6 @@ jobs:
           echo "$HOME/.local/bin" >> $GITHUB_PATH
       - name: Install dependencies
         run: poetry install
-      - name: Install coverage tool
-        run: poetry run pip install pytest-cov respx
 
       - name: Verify Docker is available
         run: |
@@ -73,12 +75,22 @@ jobs:
           indicators: true
           output: both
           thresholds: "75 90"
+      - name: Annotate coverage scope
+        if: matrix.python-version == '3.13'
+        run: |
+          {
+            echo ""
+            echo "> Scope: hand-maintained SDK logic. Fern-generated data models (\`types/\`, \`requests/\`), package \`__init__.py\` files, \`version.py\`, and the unused \`core/http_sse/\` scaffolding are excluded — see \`.coveragerc\`. Unscoped whole-package coverage is ~70%."
+          } >> code-coverage-results.md
+      # Fork PRs get a read-only GITHUB_TOKEN, so the Issues API returns 403 and
+      # no `permissions:` block can grant it back. Skip on forks and stay
+      # best-effort; the job summary below carries the same table with no token.
       - name: Add coverage PR comment
-        if: matrix.python-version == '3.13' && github.event_name == 'pull_request'
+        if: matrix.python-version == '3.13' && github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
+        continue-on-error: true
         uses: marocchino/sticky-pull-request-comment@v2
         with:
           header: code-coverage
-          recreate: true
           path: code-coverage-results.md
       - name: Write coverage to job summary
         if: matrix.python-version == '3.13'

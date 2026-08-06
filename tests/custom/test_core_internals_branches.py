@@ -16,6 +16,7 @@ import base64
 import dataclasses
 import datetime as dt
 import enum
+import logging
 import pathlib
 import typing
 
@@ -532,10 +533,13 @@ from deepgram.core.events import EventType  # noqa: E402
 
 _SOCKET_MODULES = [
     ("deepgram.speak.v1.socket_client", "V1SocketClient", "AsyncV1SocketClient"),
+    ("deepgram.speak.v2.socket_client", "V2SocketClient", "AsyncV2SocketClient"),
     ("deepgram.agent.v1.socket_client", "V1SocketClient", "AsyncV1SocketClient"),
     ("deepgram.listen.v1.socket_client", "V1SocketClient", "AsyncV1SocketClient"),
     ("deepgram.listen.v2.socket_client", "V2SocketClient", "AsyncV2SocketClient"),
 ]
+
+_UNKNOWN_MESSAGE_WARNING = "Skipping unknown WebSocket message"
 
 
 def _raise(**_kwargs: typing.Any) -> typing.Any:
@@ -569,32 +573,50 @@ class _AsyncWSJson:
 
 @pytest.mark.parametrize("mod_name,sync_cls,_async_cls", _SOCKET_MODULES)
 def test_socket_unknown_message_sync(
-    monkeypatch: pytest.MonkeyPatch, mod_name: str, sync_cls: str, _async_cls: str
+    monkeypatch: pytest.MonkeyPatch, caplog: pytest.LogCaptureFixture, mod_name: str, sync_cls: str, _async_cls: str
 ) -> None:
+    """An unparseable frame warns and is skipped -- it never raises, and never
+    surfaces as an ERROR event. ``recv`` is the one exception: it falls back to
+    returning the raw payload so a caller still sees the frame."""
     mod = importlib.import_module(mod_name)
     monkeypatch.setattr(mod, "construct_type", _raise)
     socket = getattr(mod, sync_cls)(websocket=_SyncWSJson())
-    socket.on(EventType.MESSAGE, lambda _d: None)
-    socket.on(EventType.ERROR, lambda _d: None)
+    messages: typing.List[typing.Any] = []
+    errors: typing.List[typing.Any] = []
+    socket.on(EventType.MESSAGE, messages.append)
+    socket.on(EventType.ERROR, errors.append)
+
     # recv, __iter__ and start_listening all hit the construct_type -> warning path
-    socket.recv()
-    list(socket)
-    socket.start_listening()
+    with caplog.at_level(logging.WARNING):
+        assert socket.recv() == {"type": "X"}  # raw payload, not an exception
+        assert list(socket) == []  # __iter__ skips the frame
+        socket.start_listening()
+
+    assert messages == []  # start_listening skips it too
+    assert errors == []  # unparseable payloads warn, they do not raise ERROR
+    assert sum(_UNKNOWN_MESSAGE_WARNING in r.message for r in caplog.records) == 3
 
 
 @pytest.mark.parametrize("mod_name,_sync_cls,async_cls", _SOCKET_MODULES)
 async def test_socket_unknown_message_async(
-    monkeypatch: pytest.MonkeyPatch, mod_name: str, _sync_cls: str, async_cls: str
+    monkeypatch: pytest.MonkeyPatch, caplog: pytest.LogCaptureFixture, mod_name: str, _sync_cls: str, async_cls: str
 ) -> None:
     mod = importlib.import_module(mod_name)
     monkeypatch.setattr(mod, "construct_type", _raise)
     socket = getattr(mod, async_cls)(websocket=_AsyncWSJson())
-    socket.on(EventType.MESSAGE, lambda _d: None)
-    socket.on(EventType.ERROR, lambda _d: None)
-    await socket.recv()
-    async for _ in socket:
-        pass
-    await socket.start_listening()
+    messages: typing.List[typing.Any] = []
+    errors: typing.List[typing.Any] = []
+    socket.on(EventType.MESSAGE, messages.append)
+    socket.on(EventType.ERROR, errors.append)
+
+    with caplog.at_level(logging.WARNING):
+        assert await socket.recv() == {"type": "X"}
+        assert [item async for item in socket] == []
+        await socket.start_listening()
+
+    assert messages == []
+    assert errors == []
+    assert sum(_UNKNOWN_MESSAGE_WARNING in r.message for r in caplog.records) == 3
 
 
 # --------------------------------------------------------------------------- #
