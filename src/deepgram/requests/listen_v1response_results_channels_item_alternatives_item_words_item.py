@@ -8,3 +8,12 @@ class ListenV1ResponseResultsChannelsItemAlternativesItemWordsItemParams(typing_
     start: typing_extensions.NotRequired[float]
     end: typing_extensions.NotRequired[float]
     confidence: typing_extensions.NotRequired[float]
+    speaker: typing_extensions.NotRequired[int]
+    """
+    The speaker of the word, present when diarization is enabled
+    """
+
+    speaker_confidence: typing_extensions.NotRequired[float]
+    """
+    Confidence in the speaker assignment. Returned only for pre-recorded diarization; not available for streaming
+    """

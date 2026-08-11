@@ -3,7 +3,7 @@
 import typing
 
 import typing_extensions
-from ..types.google_think_provider_model import GoogleThinkProviderModel
+from ..types.google_model import GoogleModel
 
 
 class GoogleParams(typing_extensions.TypedDict):
@@ -13,7 +13,7 @@ class GoogleParams(typing_extensions.TypedDict):
     The REST API version for the Google generative language API
     """
 
-    model: GoogleThinkProviderModel
+    model: GoogleModel
     """
     Google model to use
     """

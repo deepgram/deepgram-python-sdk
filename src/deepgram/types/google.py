@@ -5,7 +5,7 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .google_think_provider_model import GoogleThinkProviderModel
+from .google_model import GoogleModel
 
 
 class Google(UncheckedBaseModel):
@@ -15,7 +15,7 @@ class Google(UncheckedBaseModel):
     The REST API version for the Google generative language API
     """
 
-    model: GoogleThinkProviderModel = pydantic.Field()
+    model: GoogleModel = pydantic.Field()
     """
     Google model to use
     """

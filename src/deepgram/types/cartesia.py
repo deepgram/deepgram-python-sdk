@@ -5,8 +5,8 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .cartesia_speak_provider_model_id import CartesiaSpeakProviderModelId
-from .cartesia_speak_provider_voice import CartesiaSpeakProviderVoice
+from .cartesia_model_id import CartesiaModelId
+from .cartesia_voice import CartesiaVoice
 
 
 class Cartesia(UncheckedBaseModel):
@@ -16,12 +16,12 @@ class Cartesia(UncheckedBaseModel):
     The API version header for the Cartesia text-to-speech API
     """
 
-    model_id: CartesiaSpeakProviderModelId = pydantic.Field()
+    model_id: CartesiaModelId = pydantic.Field()
     """
     Cartesia model ID
     """
 
-    voice: CartesiaSpeakProviderVoice
+    voice: CartesiaVoice
     language: typing.Optional[str] = pydantic.Field(default=None)
     """
     Cartesia language code
