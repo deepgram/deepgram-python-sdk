@@ -106,12 +106,12 @@ class AsyncV2SocketClient(EventEmitterMixin):
         """
         await self._send_model(message or SpeakV2Flush(type="Flush"))
 
-    async def send_interrupt(self, message: SpeakV2Interrupt) -> None:
+    async def send_interrupt(self, message: typing.Optional[SpeakV2Interrupt] = None) -> None:
         """
         Send a message to the websocket connection.
         The message will be sent as a SpeakV2Interrupt.
         """
-        await self._send_model(message)
+        await self._send_model(message or SpeakV2Interrupt(type="Interrupt"))
 
     async def send_configure(self, message: SpeakV2Configure) -> None:
         """
@@ -218,12 +218,12 @@ class V2SocketClient(EventEmitterMixin):
         """
         self._send_model(message or SpeakV2Flush(type="Flush"))
 
-    def send_interrupt(self, message: SpeakV2Interrupt) -> None:
+    def send_interrupt(self, message: typing.Optional[SpeakV2Interrupt] = None) -> None:
         """
         Send a message to the websocket connection.
         The message will be sent as a SpeakV2Interrupt.
         """
-        self._send_model(message)
+        self._send_model(message or SpeakV2Interrupt(type="Interrupt"))
 
     def send_configure(self, message: SpeakV2Configure) -> None:
         """

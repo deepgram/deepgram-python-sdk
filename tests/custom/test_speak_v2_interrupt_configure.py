@@ -111,6 +111,19 @@ class TestSpeakV2Interrupt:
         V2SocketClient(websocket=ws).send_interrupt(SpeakV2Interrupt())
         assert _sent_json(ws) == {"type": "Interrupt"}
 
+    def test_send_interrupt_no_arg_emits_default(self):
+        # Interrupt carries no required payload, so it is callable with no
+        # argument like the sibling send_flush()/send_close() controls
+        # (hand-applied shim, frozen in .fernignore).
+        ws = _FakeWebSocket()
+        V2SocketClient(websocket=ws).send_interrupt()
+        assert _sent_json(ws) == {"type": "Interrupt"}
+
+    async def test_async_send_interrupt_no_arg_emits_default(self):
+        ws = _FakeAsyncWebSocket()
+        await AsyncV2SocketClient(websocket=ws).send_interrupt()
+        assert _sent_json(ws) == {"type": "Interrupt"}
+
     def test_send_interrupt_serializes_playback_offset(self):
         ws = _FakeWebSocket()
         V2SocketClient(websocket=ws).send_interrupt(
