@@ -5,7 +5,7 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .anthropic_model import AnthropicModel
+from .anthropic_think_provider_model import AnthropicThinkProviderModel
 
 
 class Anthropic(UncheckedBaseModel):
@@ -15,7 +15,7 @@ class Anthropic(UncheckedBaseModel):
     The REST API version for the Anthropic Messages API
     """
 
-    model: AnthropicModel = pydantic.Field()
+    model: AnthropicThinkProviderModel = pydantic.Field()
     """
     Anthropic model to use
     """

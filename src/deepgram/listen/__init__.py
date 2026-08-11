@@ -30,9 +30,6 @@ if typing.TYPE_CHECKING:
         ListenV1ResultsEntitiesItem,
         ListenV1ResultsEntitiesItemParams,
         ListenV1ResultsMetadata,
-        ListenV1ResultsMetadataDiarizeInfo,
-        ListenV1ResultsMetadataDiarizeInfoArch,
-        ListenV1ResultsMetadataDiarizeInfoParams,
         ListenV1ResultsMetadataModelInfo,
         ListenV1ResultsMetadataModelInfoParams,
         ListenV1ResultsMetadataParams,
@@ -45,6 +42,7 @@ if typing.TYPE_CHECKING:
     from .v2 import (
         ListenV2CloseStream,
         ListenV2CloseStreamParams,
+        ListenV2CloseStreamType,
         ListenV2Configure,
         ListenV2ConfigureFailure,
         ListenV2ConfigureFailureParams,
@@ -59,16 +57,12 @@ if typing.TYPE_CHECKING:
         ListenV2ConnectedParams,
         ListenV2FatalError,
         ListenV2FatalErrorParams,
-        ListenV2ForceEndTurn,
-        ListenV2ForceEndTurnParams,
         ListenV2TurnInfo,
         ListenV2TurnInfoEvent,
         ListenV2TurnInfoParams,
         ListenV2TurnInfoWordsItem,
         ListenV2TurnInfoWordsItemParams,
     )
-    from .v2 import ListenV2CloseStreamType
-
 _dynamic_imports: typing.Dict[str, str] = {
     "DiarizeModel": ".v1",
     "ListenV1CloseStream": ".v1",
@@ -92,9 +86,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ListenV1ResultsEntitiesItem": ".v1",
     "ListenV1ResultsEntitiesItemParams": ".v1",
     "ListenV1ResultsMetadata": ".v1",
-    "ListenV1ResultsMetadataDiarizeInfo": ".v1",
-    "ListenV1ResultsMetadataDiarizeInfoArch": ".v1",
-    "ListenV1ResultsMetadataDiarizeInfoParams": ".v1",
     "ListenV1ResultsMetadataModelInfo": ".v1",
     "ListenV1ResultsMetadataModelInfoParams": ".v1",
     "ListenV1ResultsMetadataParams": ".v1",
@@ -105,6 +96,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ListenV1UtteranceEndParams": ".v1",
     "ListenV2CloseStream": ".v2",
     "ListenV2CloseStreamParams": ".v2",
+    "ListenV2CloseStreamType": ".v2",
     "ListenV2Configure": ".v2",
     "ListenV2ConfigureFailure": ".v2",
     "ListenV2ConfigureFailureParams": ".v2",
@@ -119,8 +111,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ListenV2ConnectedParams": ".v2",
     "ListenV2FatalError": ".v2",
     "ListenV2FatalErrorParams": ".v2",
-    "ListenV2ForceEndTurn": ".v2",
-    "ListenV2ForceEndTurnParams": ".v2",
     "ListenV2TurnInfo": ".v2",
     "ListenV2TurnInfoEvent": ".v2",
     "ListenV2TurnInfoParams": ".v2",
@@ -128,7 +118,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ListenV2TurnInfoWordsItemParams": ".v2",
     "v1": ".v1",
     "v2": ".v2",
-    "ListenV2CloseStreamType": ".v2",
 }
 
 
@@ -176,9 +165,6 @@ __all__ = [
     "ListenV1ResultsEntitiesItem",
     "ListenV1ResultsEntitiesItemParams",
     "ListenV1ResultsMetadata",
-    "ListenV1ResultsMetadataDiarizeInfo",
-    "ListenV1ResultsMetadataDiarizeInfoArch",
-    "ListenV1ResultsMetadataDiarizeInfoParams",
     "ListenV1ResultsMetadataModelInfo",
     "ListenV1ResultsMetadataModelInfoParams",
     "ListenV1ResultsMetadataParams",
@@ -189,6 +175,7 @@ __all__ = [
     "ListenV1UtteranceEndParams",
     "ListenV2CloseStream",
     "ListenV2CloseStreamParams",
+    "ListenV2CloseStreamType",
     "ListenV2Configure",
     "ListenV2ConfigureFailure",
     "ListenV2ConfigureFailureParams",
@@ -203,8 +190,6 @@ __all__ = [
     "ListenV2ConnectedParams",
     "ListenV2FatalError",
     "ListenV2FatalErrorParams",
-    "ListenV2ForceEndTurn",
-    "ListenV2ForceEndTurnParams",
     "ListenV2TurnInfo",
     "ListenV2TurnInfoEvent",
     "ListenV2TurnInfoParams",
@@ -212,5 +197,4 @@ __all__ = [
     "ListenV2TurnInfoWordsItemParams",
     "v1",
     "v2",
-    "ListenV2CloseStreamType",
 ]

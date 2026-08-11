@@ -5398,26 +5398,6 @@ asyncio.run(main())
 
 </dd>
 </dl>
-
-<dl>
-<dd>
-
-**`send_force_end_turn(message: ListenV2ForceEndTurn)`** — Force an immediate end-of-turn, prompting the model to finalize the current turn
-
-- `connection.send_force_end_turn(ListenV2ForceEndTurn(type="ForceEndTurn"))`
-
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**`send_configure(message: ListenV2Configure)`** — Update recognition settings mid-stream (a raw `dict` is also accepted and sent verbatim for back-compat)
-
-- `connection.send_configure(ListenV2Configure(...))`
-
-</dd>
-</dl>
 </dd>
 </dl>
 
@@ -5502,14 +5482,6 @@ asyncio.run(main())
 <dd>
 
 **numerals:** `typing.Optional[str]` — Convert numbers from written format to numerical format
-
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**redact:** `typing.Optional[str]` — Redaction removes sensitive information from your transcripts (`numbers` or `aggressive_numbers`)
 
 </dd>
 </dl>

@@ -3,7 +3,7 @@
 import typing
 
 import typing_extensions
-from ..types.anthropic_model import AnthropicModel
+from ..types.anthropic_think_provider_model import AnthropicThinkProviderModel
 
 
 class AnthropicParams(typing_extensions.TypedDict):
@@ -13,7 +13,7 @@ class AnthropicParams(typing_extensions.TypedDict):
     The REST API version for the Anthropic Messages API
     """
 
-    model: AnthropicModel
+    model: AnthropicThinkProviderModel
     """
     Anthropic model to use
     """
