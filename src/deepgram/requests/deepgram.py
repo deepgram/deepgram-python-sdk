@@ -8,18 +8,18 @@ from ..types.deepgram_speak_provider_model import DeepgramSpeakProviderModel
 
 class DeepgramParams(typing_extensions.TypedDict):
     """
-    Deepgram text-to-speech provider. Aura models use version v1 (default); Flux TTS uses version v2 and a flux-* model. Flux TTS is in Early Access — the Flux TTS-specific API surface and voice catalog may change before general availability.
+    Deepgram text-to-speech provider. Aura models use version v1 (default); Flux TTS uses version v2 and a flux-* model.
     """
 
     type: typing.Literal["deepgram"]
     version: typing_extensions.NotRequired[str]
     """
-    The Deepgram text-to-speech model family. Accepted values: `v1` (Aura, the default) and `v2` (Flux TTS, Early Access). Use `v1` with an aura-* model and `v2` with a flux-* model. Defaults to `v1` when omitted.
+    The Deepgram text-to-speech model family. Accepted values: `v1` (Aura, the default) and `v2` (Flux TTS). Use `v1` with an aura-* model and `v2` with a flux-* model. Defaults to `v1` when omitted.
     """
 
     model: DeepgramSpeakProviderModel
     """
-    Deepgram TTS model. Aura models (version v1) use the aura-* voices; Flux TTS (version v2, Early Access) uses the flux-{voice}-{language} voices (e.g. flux-alexis-en).
+    Deepgram TTS model. Aura models (version v1) use the aura-* voices; Flux TTS (version v2) uses the flux-{voice}-{language} voices (e.g. flux-alexis-en).
     """
 
     speed: typing_extensions.NotRequired[float]

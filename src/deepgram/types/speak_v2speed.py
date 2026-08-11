@@ -2,5 +2,5 @@
 
 SpeakV2Speed = float
 """
-Speech-rate multiplier. `1.0` is the model's nominal rate; lower is slower. Only the multipliers listed here are accepted — the range is `0.85` to `1.15` in `0.05` increments.
+Speech-rate multiplier. `1.0` is the model's nominal rate; lower is slower. Accepted values: `0.85`, `0.90`, `0.95`, `1.00`, `1.05`, `1.10`, `1.15`. Any other value is rejected with `SPEED_OUT_OF_RANGE`, and a value off the `0.05` increment with `SPEED_INCREMENT_INVALID`.
 """

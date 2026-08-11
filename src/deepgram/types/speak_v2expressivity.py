@@ -2,5 +2,5 @@
 
 SpeakV2Expressivity = int
 """
-Expressive range of the generated speech. `0` is the voice's nominal delivery; negative values are flatter and more restrained, positive values more animated.
+Expressive range of the generated speech. Accepted values: `-2`, `-1`, `0`, `1`, `2`. `0` is the voice's nominal delivery; negative values are flatter and more restrained, positive values more animated.
 """

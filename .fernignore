@@ -140,6 +140,22 @@ src/deepgram/listen/v2/types/__init__.py
 # (dg-request-id) for debugging. Same threat _secure_logging.py already covers for
 # the websockets DEBUG handshake logs; this is the other path to it. Unfreeze if the
 # generator starts redacting credentials itself.
+# Copy fixes mirrored by hand from deepgram-docs#1094 so they ship in this release
+# without waiting for a regen. All four are spec `description` fields:
+#   - types/deepgram.py + requests/deepgram.py: the Flux TTS "Early Access" caveats
+#     are removed (Flux is GA; the direct Speak V2 path had already been updated, so
+#     the Agent path was the only surface still saying EA).
+#   - types/speak_v2speed.py: "Only the multipliers listed here are accepted" listed
+#     nothing -- the spec enum is real but Fern drops numeric enums, so the reference
+#     dangled. Now spells out the accepted values and the two failure codes.
+#   - types/speak_v2expressivity.py: never stated its bounds. Now does.
+# TEMPORARY: unfreeze all four at the next regen, which will pick the same text up
+# from the spec directly. They are frozen only so this launch does not ship stale copy.
+src/deepgram/types/deepgram.py
+src/deepgram/requests/deepgram.py
+src/deepgram/types/speak_v2speed.py
+src/deepgram/types/speak_v2expressivity.py
+
 src/deepgram/core/api_error.py
 src/deepgram/core/parse_error.py
 
