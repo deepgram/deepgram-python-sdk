@@ -33,10 +33,42 @@ class AgentV1SettingsAgentContextListenProvider_V2(UncheckedBaseModel):
     type: typing.Literal["deepgram"] = "deepgram"
     model: str
     language_hints: typing.Optional[typing.List[str]] = None
+    language_hint: typing.Optional[typing.Union[str, typing.List[str]]] = pydantic.Field(default=None, exclude=True)
     eot_threshold: typing.Optional[float] = None
     eager_eot_threshold: typing.Optional[float] = None
     eot_timeout_ms: typing.Optional[int] = None
     keyterms: typing.Optional[typing.List[str]] = None
+
+    # Backward-compat: the public field was historically named `language_hint`
+    # and accepted a string or a list. The API field is `language_hints` (a
+    # list). Translate the legacy kwarg so existing callers keep working, and
+    # drop the dead singular key so it is not rejected by the API
+    # (deny_unknown_fields). Hand-maintained.
+    if IS_PYDANTIC_V2:
+
+        @pydantic.model_validator(mode="before")
+        @classmethod
+        def _migrate_language_hint(cls, values: typing.Any) -> typing.Any:
+            if not isinstance(values, dict):
+                return values
+            if "language_hint" in values:
+                values = dict(values)
+                hint = values.pop("language_hint")
+                if hint is not None and values.get("language_hints") is None:
+                    values["language_hints"] = [hint] if isinstance(hint, str) else list(hint)
+            return values
+    else:
+
+        @pydantic.root_validator(pre=True)  # type: ignore[deprecated]
+        def _migrate_language_hint(cls, values: typing.Any) -> typing.Any:  # type: ignore[no-redef]
+            if not isinstance(values, dict):
+                return values
+            if "language_hint" in values:
+                values = dict(values)
+                hint = values.pop("language_hint")
+                if hint is not None and values.get("language_hints") is None:
+                    values["language_hints"] = [hint] if isinstance(hint, str) else list(hint)
+            return values
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

@@ -6,6 +6,10 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
+    from .google_think_provider_version import GoogleThinkProviderVersion
+    from .listen_v2redact import ListenV2Redact
+    from .speak_v2expressivity import SpeakV2Expressivity
+    from .speak_v2speed import SpeakV2Speed
     from .agent_configuration_v1 import AgentConfigurationV1
     from .agent_think_models_v1response import AgentThinkModelsV1Response
     from .agent_think_models_v1response_models_item import AgentThinkModelsV1ResponseModelsItem
@@ -38,6 +42,7 @@ if typing.TYPE_CHECKING:
     from .cartesia_speak_provider_voice import CartesiaSpeakProviderVoice
     from .create_agent_configuration_v1response import CreateAgentConfigurationV1Response
     from .create_key_v1request import CreateKeyV1Request
+    from .create_key_v1request_one import CreateKeyV1RequestOne
     from .create_key_v1response import CreateKeyV1Response
     from .create_project_distribution_credentials_v1response import CreateProjectDistributionCredentialsV1Response
     from .create_project_distribution_credentials_v1response_distribution_credentials import (
@@ -50,6 +55,7 @@ if typing.TYPE_CHECKING:
     from .deepgram import Deepgram
     from .deepgram_listen_provider_v1 import DeepgramListenProviderV1
     from .deepgram_listen_provider_v2 import DeepgramListenProviderV2
+    from .deepgram_listen_provider_v2language_hint import DeepgramListenProviderV2LanguageHint
     from .deepgram_speak_provider_model import DeepgramSpeakProviderModel
     from .delete_agent_configuration_v1response import DeleteAgentConfigurationV1Response
     from .delete_agent_variable_v1response import DeleteAgentVariableV1Response
@@ -83,7 +89,6 @@ if typing.TYPE_CHECKING:
     from .get_project_v1response import GetProjectV1Response
     from .google import Google
     from .google_think_provider_model import GoogleThinkProviderModel
-    from .google_think_provider_version import GoogleThinkProviderVersion
     from .grant_v1response import GrantV1Response
     from .groq import Groq
     from .groq_think_provider_reasoning_mode import GroqThinkProviderReasoningMode
@@ -203,7 +208,6 @@ if typing.TYPE_CHECKING:
     from .listen_v2model import ListenV2Model
     from .listen_v2numerals import ListenV2Numerals
     from .listen_v2profanity_filter import ListenV2ProfanityFilter
-    from .listen_v2redact import ListenV2Redact
     from .listen_v2sample_rate import ListenV2SampleRate
     from .listen_v2tag import ListenV2Tag
     from .open_ai_speak_provider import OpenAiSpeakProvider
@@ -260,12 +264,10 @@ if typing.TYPE_CHECKING:
     from .speak_v1speed import SpeakV1Speed
     from .speak_v2accepted_response import SpeakV2AcceptedResponse
     from .speak_v2encoding import SpeakV2Encoding
-    from .speak_v2expressivity import SpeakV2Expressivity
     from .speak_v2mip_opt_out import SpeakV2MipOptOut
     from .speak_v2model import SpeakV2Model
     from .speak_v2response import SpeakV2Response
     from .speak_v2sample_rate import SpeakV2SampleRate
-    from .speak_v2speed import SpeakV2Speed
     from .speak_v2tag import SpeakV2Tag
     from .think_settings_v1 import ThinkSettingsV1
     from .think_settings_v1context_length import ThinkSettingsV1ContextLength
@@ -291,6 +293,10 @@ if typing.TYPE_CHECKING:
     from .usage_v1response import UsageV1Response
     from .usage_v1response_resolution import UsageV1ResponseResolution
 _dynamic_imports: typing.Dict[str, str] = {
+    "GoogleThinkProviderVersion": ".google_think_provider_version",
+    "ListenV2Redact": ".listen_v2redact",
+    "SpeakV2Expressivity": ".speak_v2expressivity",
+    "SpeakV2Speed": ".speak_v2speed",
     "AgentConfigurationV1": ".agent_configuration_v1",
     "AgentThinkModelsV1Response": ".agent_think_models_v1response",
     "AgentThinkModelsV1ResponseModelsItem": ".agent_think_models_v1response_models_item",
@@ -323,6 +329,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "CartesiaSpeakProviderVoice": ".cartesia_speak_provider_voice",
     "CreateAgentConfigurationV1Response": ".create_agent_configuration_v1response",
     "CreateKeyV1Request": ".create_key_v1request",
+    "CreateKeyV1RequestOne": ".create_key_v1request_one",
     "CreateKeyV1Response": ".create_key_v1response",
     "CreateProjectDistributionCredentialsV1Response": ".create_project_distribution_credentials_v1response",
     "CreateProjectDistributionCredentialsV1ResponseDistributionCredentials": ".create_project_distribution_credentials_v1response_distribution_credentials",
@@ -331,6 +338,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "Deepgram": ".deepgram",
     "DeepgramListenProviderV1": ".deepgram_listen_provider_v1",
     "DeepgramListenProviderV2": ".deepgram_listen_provider_v2",
+    "DeepgramListenProviderV2LanguageHint": ".deepgram_listen_provider_v2language_hint",
     "DeepgramSpeakProviderModel": ".deepgram_speak_provider_model",
     "DeleteAgentConfigurationV1Response": ".delete_agent_configuration_v1response",
     "DeleteAgentVariableV1Response": ".delete_agent_variable_v1response",
@@ -360,7 +368,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "GetProjectV1Response": ".get_project_v1response",
     "Google": ".google",
     "GoogleThinkProviderModel": ".google_think_provider_model",
-    "GoogleThinkProviderVersion": ".google_think_provider_version",
     "GrantV1Response": ".grant_v1response",
     "Groq": ".groq",
     "GroqThinkProviderReasoningMode": ".groq_think_provider_reasoning_mode",
@@ -456,7 +463,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ListenV2Model": ".listen_v2model",
     "ListenV2Numerals": ".listen_v2numerals",
     "ListenV2ProfanityFilter": ".listen_v2profanity_filter",
-    "ListenV2Redact": ".listen_v2redact",
     "ListenV2SampleRate": ".listen_v2sample_rate",
     "ListenV2Tag": ".listen_v2tag",
     "OpenAiSpeakProvider": ".open_ai_speak_provider",
@@ -509,12 +515,10 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SpeakV1Speed": ".speak_v1speed",
     "SpeakV2AcceptedResponse": ".speak_v2accepted_response",
     "SpeakV2Encoding": ".speak_v2encoding",
-    "SpeakV2Expressivity": ".speak_v2expressivity",
     "SpeakV2MipOptOut": ".speak_v2mip_opt_out",
     "SpeakV2Model": ".speak_v2model",
     "SpeakV2Response": ".speak_v2response",
     "SpeakV2SampleRate": ".speak_v2sample_rate",
-    "SpeakV2Speed": ".speak_v2speed",
     "SpeakV2Tag": ".speak_v2tag",
     "ThinkSettingsV1": ".think_settings_v1",
     "ThinkSettingsV1ContextLength": ".think_settings_v1context_length",
@@ -562,6 +566,10 @@ def __dir__():
 
 
 __all__ = [
+    "GoogleThinkProviderVersion",
+    "ListenV2Redact",
+    "SpeakV2Expressivity",
+    "SpeakV2Speed",
     "AgentConfigurationV1",
     "AgentThinkModelsV1Response",
     "AgentThinkModelsV1ResponseModelsItem",
@@ -594,6 +602,7 @@ __all__ = [
     "CartesiaSpeakProviderVoice",
     "CreateAgentConfigurationV1Response",
     "CreateKeyV1Request",
+    "CreateKeyV1RequestOne",
     "CreateKeyV1Response",
     "CreateProjectDistributionCredentialsV1Response",
     "CreateProjectDistributionCredentialsV1ResponseDistributionCredentials",
@@ -602,6 +611,7 @@ __all__ = [
     "Deepgram",
     "DeepgramListenProviderV1",
     "DeepgramListenProviderV2",
+    "DeepgramListenProviderV2LanguageHint",
     "DeepgramSpeakProviderModel",
     "DeleteAgentConfigurationV1Response",
     "DeleteAgentVariableV1Response",
@@ -631,7 +641,6 @@ __all__ = [
     "GetProjectV1Response",
     "Google",
     "GoogleThinkProviderModel",
-    "GoogleThinkProviderVersion",
     "GrantV1Response",
     "Groq",
     "GroqThinkProviderReasoningMode",
@@ -727,7 +736,6 @@ __all__ = [
     "ListenV2Model",
     "ListenV2Numerals",
     "ListenV2ProfanityFilter",
-    "ListenV2Redact",
     "ListenV2SampleRate",
     "ListenV2Tag",
     "OpenAiSpeakProvider",
@@ -780,12 +788,10 @@ __all__ = [
     "SpeakV1Speed",
     "SpeakV2AcceptedResponse",
     "SpeakV2Encoding",
-    "SpeakV2Expressivity",
     "SpeakV2MipOptOut",
     "SpeakV2Model",
     "SpeakV2Response",
     "SpeakV2SampleRate",
-    "SpeakV2Speed",
     "SpeakV2Tag",
     "ThinkSettingsV1",
     "ThinkSettingsV1ContextLength",

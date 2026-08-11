@@ -28,6 +28,7 @@ if typing.TYPE_CHECKING:
     from .cartesia_speak_provider_voice import CartesiaSpeakProviderVoiceParams
     from .create_agent_configuration_v1response import CreateAgentConfigurationV1ResponseParams
     from .create_key_v1request import CreateKeyV1RequestParams
+    from .create_key_v1request_one import CreateKeyV1RequestOneParams
     from .create_key_v1response import CreateKeyV1ResponseParams
     from .create_project_distribution_credentials_v1response import CreateProjectDistributionCredentialsV1ResponseParams
     from .create_project_distribution_credentials_v1response_distribution_credentials import (
@@ -40,6 +41,7 @@ if typing.TYPE_CHECKING:
     from .deepgram import DeepgramParams
     from .deepgram_listen_provider_v1 import DeepgramListenProviderV1Params
     from .deepgram_listen_provider_v2 import DeepgramListenProviderV2Params
+    from .deepgram_listen_provider_v2language_hint import DeepgramListenProviderV2LanguageHintParams
     from .delete_project_invite_v1response import DeleteProjectInviteV1ResponseParams
     from .delete_project_key_v1response import DeleteProjectKeyV1ResponseParams
     from .delete_project_member_v1response import DeleteProjectMemberV1ResponseParams
@@ -240,12 +242,14 @@ _dynamic_imports: typing.Dict[str, str] = {
     "CartesiaSpeakProviderVoiceParams": ".cartesia_speak_provider_voice",
     "CreateAgentConfigurationV1ResponseParams": ".create_agent_configuration_v1response",
     "CreateKeyV1RequestParams": ".create_key_v1request",
+    "CreateKeyV1RequestOneParams": ".create_key_v1request_one",
     "CreateKeyV1ResponseParams": ".create_key_v1response",
     "CreateProjectDistributionCredentialsV1ResponseDistributionCredentialsParams": ".create_project_distribution_credentials_v1response_distribution_credentials",
     "CreateProjectDistributionCredentialsV1ResponseMemberParams": ".create_project_distribution_credentials_v1response_member",
     "CreateProjectDistributionCredentialsV1ResponseParams": ".create_project_distribution_credentials_v1response",
     "CreateProjectInviteV1ResponseParams": ".create_project_invite_v1response",
     "DeepgramListenProviderV1Params": ".deepgram_listen_provider_v1",
+    "DeepgramListenProviderV2LanguageHintParams": ".deepgram_listen_provider_v2language_hint",
     "DeepgramListenProviderV2Params": ".deepgram_listen_provider_v2",
     "DeepgramParams": ".deepgram",
     "DeleteProjectInviteV1ResponseParams": ".delete_project_invite_v1response",
@@ -434,12 +438,14 @@ __all__ = [
     "CartesiaSpeakProviderVoiceParams",
     "CreateAgentConfigurationV1ResponseParams",
     "CreateKeyV1RequestParams",
+    "CreateKeyV1RequestOneParams",
     "CreateKeyV1ResponseParams",
     "CreateProjectDistributionCredentialsV1ResponseDistributionCredentialsParams",
     "CreateProjectDistributionCredentialsV1ResponseMemberParams",
     "CreateProjectDistributionCredentialsV1ResponseParams",
     "CreateProjectInviteV1ResponseParams",
     "DeepgramListenProviderV1Params",
+    "DeepgramListenProviderV2LanguageHintParams",
     "DeepgramListenProviderV2Params",
     "DeepgramParams",
     "DeleteProjectInviteV1ResponseParams",
