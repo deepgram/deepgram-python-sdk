@@ -77,8 +77,14 @@ class DeepgramClient(BaseClient):
     - `redact_credentials_in_logs`: Mask the `Authorization` header (API key / access token)
                     in the `websockets` library's DEBUG handshake logs. Defaults to `True`; set
                     to `False` to opt out and manage credential redaction yourself.
-    - `telemetry_opt_out`: Telemetry opt-out flag (maintained for backwards compatibility, no-op).
-    - `telemetry_handler`: Telemetry handler (maintained for backwards compatibility, no-op).
+    - `telemetry_opt_out`: Opt out of isolated, error-only SDK telemetry. Defaults to
+                    ``True`` (telemetry off). When ``False`` and a telemetry DSN is
+                    configured, the SDK reports its *own* errors (never host-app errors,
+                    never audio/keys/transcripts/PII) to an isolated Sentry client. Also
+                    forced off by the ``DEEPGRAM_TELEMETRY_DISABLED`` env kill-switch.
+    - `telemetry_handler`: Receive the SDK's own errors in-process instead of phoning home.
+                    A callable ``(exc, tags)`` invoked for SDK-originated exceptions; when
+                    set it fully replaces Sentry and no data leaves the process.
     """
 
     def __init__(self, *args, **kwargs) -> None:
@@ -139,12 +145,15 @@ class DeepgramClient(BaseClient):
         # session id + request id) to the httpx client the wrapper already
         # built — no generated files are touched.
         self._telemetry_handler = telemetry_handler
-        if init_telemetry(
+        self._telemetry = init_telemetry(
             opt_out=telemetry_opt_out,
             handler=telemetry_handler,
             version=__version__,
-        ):
-            install_response_capture(self._client_wrapper, final_session_id)
+        )
+        if self._telemetry is not None:
+            install_response_capture(
+                self._telemetry, self._client_wrapper, final_session_id
+            )
 
 
 class AsyncDeepgramClient(AsyncBaseClient):
@@ -167,8 +176,14 @@ class AsyncDeepgramClient(AsyncBaseClient):
     - `redact_credentials_in_logs`: Mask the `Authorization` header (API key / access token)
                     in the `websockets` library's DEBUG handshake logs. Defaults to `True`; set
                     to `False` to opt out and manage credential redaction yourself.
-    - `telemetry_opt_out`: Telemetry opt-out flag (maintained for backwards compatibility, no-op).
-    - `telemetry_handler`: Telemetry handler (maintained for backwards compatibility, no-op).
+    - `telemetry_opt_out`: Opt out of isolated, error-only SDK telemetry. Defaults to
+                    ``True`` (telemetry off). When ``False`` and a telemetry DSN is
+                    configured, the SDK reports its *own* errors (never host-app errors,
+                    never audio/keys/transcripts/PII) to an isolated Sentry client. Also
+                    forced off by the ``DEEPGRAM_TELEMETRY_DISABLED`` env kill-switch.
+    - `telemetry_handler`: Receive the SDK's own errors in-process instead of phoning home.
+                    A callable ``(exc, tags)`` invoked for SDK-originated exceptions; when
+                    set it fully replaces Sentry and no data leaves the process.
     """
 
     def __init__(self, *args, **kwargs) -> None:
@@ -229,9 +244,12 @@ class AsyncDeepgramClient(AsyncBaseClient):
         # session id + request id) to the httpx client the wrapper already
         # built — no generated files are touched.
         self._telemetry_handler = telemetry_handler
-        if init_telemetry(
+        self._telemetry = init_telemetry(
             opt_out=telemetry_opt_out,
             handler=telemetry_handler,
             version=__version__,
-        ):
-            install_response_capture(self._client_wrapper, final_session_id)
+        )
+        if self._telemetry is not None:
+            install_response_capture(
+                self._telemetry, self._client_wrapper, final_session_id
+            )

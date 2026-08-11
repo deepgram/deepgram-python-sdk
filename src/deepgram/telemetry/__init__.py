@@ -7,8 +7,7 @@ constructor parameters.
 
 from .client import (
     TelemetryHandler,
-    capture_exception,
-    capture_message,
+    TelemetrySink,
     init_telemetry,
     is_enabled,
 )
@@ -16,8 +15,7 @@ from .http_hooks import install_response_capture
 
 __all__ = [
     "TelemetryHandler",
-    "capture_exception",
-    "capture_message",
+    "TelemetrySink",
     "init_telemetry",
     "install_response_capture",
     "is_enabled",

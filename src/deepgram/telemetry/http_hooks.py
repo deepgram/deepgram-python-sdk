@@ -4,7 +4,8 @@ The Fern-generated wrapper builds its own httpx client and stores it at
 ``client_wrapper.httpx_client.httpx_client``. Rather than replace that client
 (which would risk changing timeout/pool/proxy behaviour), we append a
 ``response`` event hook to the instance the wrapper already built. The hook
-reports server-side failures (HTTP 5xx) with the request id and session id.
+reports server-side failures (HTTP 5xx) with the request id and session id, via
+the caller's :class:`~deepgram.telemetry.client.TelemetrySink`.
 
 Transport-level exceptions (connection resets, timeouts) are not visible to a
 response hook and are a deliberate follow-up (they need a transport/send wrap).
@@ -15,7 +16,6 @@ from __future__ import annotations
 from typing import Any, Callable, Mapping, Optional
 
 import httpx
-from .client import capture_message
 
 # Server-side / SDK-actionable failures. 4xx (bad key, bad params) are user
 # errors and are intentionally not reported to avoid noise.
@@ -23,6 +23,10 @@ HTTP_CAPTURE_MIN_STATUS = 500
 
 # Deepgram returns a request id under one of these response headers.
 _REQUEST_ID_HEADERS = ("dg-request-id", "x-dg-request-id", "request-id", "x-request-id")
+
+# Marker set on a raw httpx client once instrumented, so repeat installs are a
+# no-op instead of stacking duplicate hooks (see ``install_response_capture``).
+_INSTALLED_FLAG = "_dg_telemetry_installed"
 
 
 def _extract_request_id(headers: Mapping[str, str]) -> Optional[str]:
@@ -33,7 +37,7 @@ def _extract_request_id(headers: Mapping[str, str]) -> Optional[str]:
     return None
 
 
-def _make_recorder(session_id: str) -> Callable[[httpx.Response], None]:
+def _make_recorder(sink: Any, session_id: str) -> Callable[[httpx.Response], None]:
     def record(response: httpx.Response) -> None:
         status = response.status_code
         if status < HTTP_CAPTURE_MIN_STATUS:
@@ -47,16 +51,17 @@ def _make_recorder(session_id: str) -> Callable[[httpx.Response], None]:
             tags["http.path"] = response.request.url.path
         except Exception:
             pass
-        capture_message(f"HTTP {status} from Deepgram API", tags=tags)
+        sink.capture_message(f"HTTP {status} from Deepgram API", tags=tags)
 
     return record
 
 
-def install_response_capture(client_wrapper: Any, session_id: str) -> bool:
+def install_response_capture(sink: Any, client_wrapper: Any, session_id: str) -> bool:
     """Append the response hook to the wrapper's raw httpx client.
 
-    Sync vs async is detected from the client type. Idempotent and total:
-    returns whether a hook was installed, and never raises.
+    Sync vs async is detected from the client type. Truly idempotent (a second
+    call on an already-instrumented client is a no-op, not a duplicate hook) and
+    total: returns whether a hook is now in place, and never raises.
     """
     try:
         wrapper = getattr(client_wrapper, "httpx_client", None)
@@ -64,7 +69,11 @@ def install_response_capture(client_wrapper: Any, session_id: str) -> bool:
         if not isinstance(raw, (httpx.Client, httpx.AsyncClient)):
             return False
 
-        record = _make_recorder(session_id)
+        # Idempotency guard: never stack a second hook on the same client.
+        if getattr(raw, _INSTALLED_FLAG, False):
+            return True
+
+        record = _make_recorder(sink, session_id)
 
         if isinstance(raw, httpx.AsyncClient):
 
@@ -84,6 +93,12 @@ def install_response_capture(client_wrapper: Any, session_id: str) -> bool:
         hooks = raw.event_hooks
         hooks.setdefault("response", [])
         hooks["response"].append(hook)
+        try:
+            setattr(raw, _INSTALLED_FLAG, True)
+        except Exception:
+            # If the client rejects the marker attribute we still installed the
+            # hook; worst case a later call adds a second one. Don't fail here.
+            pass
         return True
     except Exception:
         return False
