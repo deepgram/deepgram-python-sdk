@@ -22,7 +22,10 @@ import logging
 import typing
 
 # Header names (lower-cased) whose values must never be logged in clear text.
-_SENSITIVE_HEADERS = frozenset({"authorization", "proxy-authorization"})
+# ``sec-websocket-protocol`` carries the API key in the "custom headers not supported"
+# auth pattern the connect() docstrings recommend (value is ``"token, <key>"``), so its
+# value is a credential too. ``_mask_value`` renders that as ``"token, [REDACTED]"``.
+_SENSITIVE_HEADERS = frozenset({"authorization", "proxy-authorization", "sec-websocket-protocol"})
 
 # Replacement for the credential portion of a sensitive header value.
 _REDACTED = "[REDACTED]"
