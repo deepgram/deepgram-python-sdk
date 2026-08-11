@@ -15,9 +15,11 @@ from ...core.remove_none_from_dict import remove_none_from_dict
 from ...core.request_options import RequestOptions
 from ...core.websocket_compat import InvalidWebSocketStatus, get_status_code
 from ...types.speak_v2encoding import SpeakV2Encoding
+from ...types.speak_v2expressivity import SpeakV2Expressivity
 from ...types.speak_v2mip_opt_out import SpeakV2MipOptOut
 from ...types.speak_v2model import SpeakV2Model
 from ...types.speak_v2sample_rate import SpeakV2SampleRate
+from ...types.speak_v2speed import SpeakV2Speed
 from ...types.speak_v2tag import SpeakV2Tag
 from .raw_client import AsyncRawV2Client, RawV2Client
 from .socket_client import AsyncV2SocketClient, V2SocketClient
@@ -55,6 +57,8 @@ class V2Client:
         model: SpeakV2Model,
         encoding: typing.Optional[SpeakV2Encoding] = None,
         sample_rate: typing.Optional[SpeakV2SampleRate] = None,
+        speed: typing.Optional[SpeakV2Speed] = None,
+        expressivity: typing.Optional[SpeakV2Expressivity] = None,
         mip_opt_out: typing.Optional[SpeakV2MipOptOut] = None,
         tag: typing.Optional[SpeakV2Tag] = None,
         authorization: typing.Optional[str] = None,
@@ -72,6 +76,10 @@ class V2Client:
         encoding : typing.Optional[SpeakV2Encoding]
 
         sample_rate : typing.Optional[SpeakV2SampleRate]
+
+        speed : typing.Optional[SpeakV2Speed]
+
+        expressivity : typing.Optional[SpeakV2Expressivity]
 
         mip_opt_out : typing.Optional[SpeakV2MipOptOut]
 
@@ -97,6 +105,8 @@ class V2Client:
                         "model": model,
                         "encoding": encoding,
                         "sample_rate": sample_rate,
+                        "speed": speed,
+                        "expressivity": expressivity,
                         "mip_opt_out": mip_opt_out,
                         "tag": tag,
                         **(
@@ -165,6 +175,8 @@ class AsyncV2Client:
         model: SpeakV2Model,
         encoding: typing.Optional[SpeakV2Encoding] = None,
         sample_rate: typing.Optional[SpeakV2SampleRate] = None,
+        speed: typing.Optional[SpeakV2Speed] = None,
+        expressivity: typing.Optional[SpeakV2Expressivity] = None,
         mip_opt_out: typing.Optional[SpeakV2MipOptOut] = None,
         tag: typing.Optional[SpeakV2Tag] = None,
         authorization: typing.Optional[str] = None,
@@ -182,6 +194,10 @@ class AsyncV2Client:
         encoding : typing.Optional[SpeakV2Encoding]
 
         sample_rate : typing.Optional[SpeakV2SampleRate]
+
+        speed : typing.Optional[SpeakV2Speed]
+
+        expressivity : typing.Optional[SpeakV2Expressivity]
 
         mip_opt_out : typing.Optional[SpeakV2MipOptOut]
 
@@ -207,6 +223,8 @@ class AsyncV2Client:
                         "model": model,
                         "encoding": encoding,
                         "sample_rate": sample_rate,
+                        "speed": speed,
+                        "expressivity": expressivity,
                         "mip_opt_out": mip_opt_out,
                         "tag": tag,
                         **(

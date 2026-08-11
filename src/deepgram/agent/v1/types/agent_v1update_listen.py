@@ -16,7 +16,7 @@ class AgentV1UpdateListen(UncheckedBaseModel):
 
     listen: AgentV1UpdateListenListen = pydantic.Field()
     """
-    Listen configuration to update. Contains a provider object with the same schema as Settings. The provider identity (type, version, model) is required and must match the current session.
+    Listen configuration to update. Contains a provider object with the same schema as Settings. The model and language can be changed mid-session. Keyterms can only be updated mid-session for Flux models.
     """
 
     if IS_PYDANTIC_V2:

@@ -5,15 +5,15 @@ import typing
 import pydantic
 from ....core.pydantic_utilities import IS_PYDANTIC_V2
 from ....core.unchecked_base_model import UncheckedBaseModel
-from ....types.deepgram_listen_provider_v2 import DeepgramListenProviderV2
+from .agent_v1update_listen_listen_provider import AgentV1UpdateListenListenProvider
 
 
 class AgentV1UpdateListenListen(UncheckedBaseModel):
     """
-    Listen configuration to update. Contains a provider object with the same schema as Settings. The provider identity (type, version, model) is required and must match the current session.
+    Listen configuration to update. Contains a provider object with the same schema as Settings. The model and language can be changed mid-session. Keyterms can only be updated mid-session for Flux models.
     """
 
-    provider: DeepgramListenProviderV2
+    provider: AgentV1UpdateListenListenProvider
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

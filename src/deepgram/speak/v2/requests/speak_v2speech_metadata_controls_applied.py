@@ -5,15 +5,20 @@ import typing_extensions
 
 class SpeakV2SpeechMetadataControlsAppliedParams(typing_extensions.TypedDict):
     """
-    Controls applied during the turn. Inline pronunciation and pause controls are not available during Early Access, so every count is currently `0`.
+    Counts of the inline controls the server acted on during the turn. A control that was rejected or ignored is reported through a `Warning` and does not count here.
     """
 
     pronunciations_applied: int
     """
-    Pronunciation overrides successfully applied. Mirrors the Aura-2 `dg-pronunciations-applied` REST header. Always `0` during Early Access.
+    Pronunciation overrides successfully applied. Mirrors the Aura-2 `dg-pronunciations-applied` REST header.
+    """
+
+    breaks_applied: int
+    """
+    Pause (break) controls successfully applied. Mirrors the Aura-2 `dg-breaks-applied` REST header. A pause whose duration was out of range or off the supported increment is stripped rather than applied, so it is excluded from this count.
     """
 
     pronunciation_warnings: int
     """
-    Pronunciation entries that triggered a warning (invalid IPA, word too long). Mirrors the Aura-2 `dg-pronunciation-warnings` REST header. Always `0` during Early Access.
+    Pronunciation entries that triggered a warning (invalid IPA, word too long). Mirrors the Aura-2 `dg-pronunciation-warnings` REST header.
     """

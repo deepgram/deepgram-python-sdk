@@ -7,24 +7,44 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from .speak_v2close import SpeakV2CloseParams
+    from .speak_v2configure import SpeakV2ConfigureParams
+    from .speak_v2configure_failure import SpeakV2ConfigureFailureParams
+    from .speak_v2configure_success import SpeakV2ConfigureSuccessParams
+    from .speak_v2configure_success_applied import SpeakV2ConfigureSuccessAppliedParams
     from .speak_v2connected import SpeakV2ConnectedParams
     from .speak_v2error import SpeakV2ErrorParams
     from .speak_v2flush import SpeakV2FlushParams
     from .speak_v2flushed import SpeakV2FlushedParams
+    from .speak_v2interrupt import SpeakV2InterruptParams
+    from .speak_v2interrupt_playback_offset import SpeakV2InterruptPlaybackOffsetParams
     from .speak_v2session_metadata import SpeakV2SessionMetadataParams
     from .speak_v2speak import SpeakV2SpeakParams
+    from .speak_v2speech_interrupted import SpeakV2SpeechInterruptedParams
+    from .speak_v2speech_interrupted_metadata import SpeakV2SpeechInterruptedMetadataParams
+    from .speak_v2speech_interrupted_metadata_controls_applied import (
+        SpeakV2SpeechInterruptedMetadataControlsAppliedParams,
+    )
     from .speak_v2speech_metadata import SpeakV2SpeechMetadataParams
     from .speak_v2speech_metadata_controls_applied import SpeakV2SpeechMetadataControlsAppliedParams
     from .speak_v2speech_started import SpeakV2SpeechStartedParams
     from .speak_v2warning import SpeakV2WarningParams
 _dynamic_imports: typing.Dict[str, str] = {
     "SpeakV2CloseParams": ".speak_v2close",
+    "SpeakV2ConfigureFailureParams": ".speak_v2configure_failure",
+    "SpeakV2ConfigureParams": ".speak_v2configure",
+    "SpeakV2ConfigureSuccessAppliedParams": ".speak_v2configure_success_applied",
+    "SpeakV2ConfigureSuccessParams": ".speak_v2configure_success",
     "SpeakV2ConnectedParams": ".speak_v2connected",
     "SpeakV2ErrorParams": ".speak_v2error",
     "SpeakV2FlushParams": ".speak_v2flush",
     "SpeakV2FlushedParams": ".speak_v2flushed",
+    "SpeakV2InterruptParams": ".speak_v2interrupt",
+    "SpeakV2InterruptPlaybackOffsetParams": ".speak_v2interrupt_playback_offset",
     "SpeakV2SessionMetadataParams": ".speak_v2session_metadata",
     "SpeakV2SpeakParams": ".speak_v2speak",
+    "SpeakV2SpeechInterruptedMetadataControlsAppliedParams": ".speak_v2speech_interrupted_metadata_controls_applied",
+    "SpeakV2SpeechInterruptedMetadataParams": ".speak_v2speech_interrupted_metadata",
+    "SpeakV2SpeechInterruptedParams": ".speak_v2speech_interrupted",
     "SpeakV2SpeechMetadataControlsAppliedParams": ".speak_v2speech_metadata_controls_applied",
     "SpeakV2SpeechMetadataParams": ".speak_v2speech_metadata",
     "SpeakV2SpeechStartedParams": ".speak_v2speech_started",
@@ -55,12 +75,21 @@ def __dir__():
 
 __all__ = [
     "SpeakV2CloseParams",
+    "SpeakV2ConfigureFailureParams",
+    "SpeakV2ConfigureParams",
+    "SpeakV2ConfigureSuccessAppliedParams",
+    "SpeakV2ConfigureSuccessParams",
     "SpeakV2ConnectedParams",
     "SpeakV2ErrorParams",
     "SpeakV2FlushParams",
     "SpeakV2FlushedParams",
+    "SpeakV2InterruptParams",
+    "SpeakV2InterruptPlaybackOffsetParams",
     "SpeakV2SessionMetadataParams",
     "SpeakV2SpeakParams",
+    "SpeakV2SpeechInterruptedMetadataControlsAppliedParams",
+    "SpeakV2SpeechInterruptedMetadataParams",
+    "SpeakV2SpeechInterruptedParams",
     "SpeakV2SpeechMetadataControlsAppliedParams",
     "SpeakV2SpeechMetadataParams",
     "SpeakV2SpeechStartedParams",

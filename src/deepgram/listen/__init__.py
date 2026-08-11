@@ -42,7 +42,6 @@ if typing.TYPE_CHECKING:
     from .v2 import (
         ListenV2CloseStream,
         ListenV2CloseStreamParams,
-        ListenV2CloseStreamType,
         ListenV2Configure,
         ListenV2ConfigureFailure,
         ListenV2ConfigureFailureParams,
@@ -96,7 +95,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ListenV1UtteranceEndParams": ".v1",
     "ListenV2CloseStream": ".v2",
     "ListenV2CloseStreamParams": ".v2",
-    "ListenV2CloseStreamType": ".v2",
     "ListenV2Configure": ".v2",
     "ListenV2ConfigureFailure": ".v2",
     "ListenV2ConfigureFailureParams": ".v2",
@@ -175,7 +173,6 @@ __all__ = [
     "ListenV1UtteranceEndParams",
     "ListenV2CloseStream",
     "ListenV2CloseStreamParams",
-    "ListenV2CloseStreamType",
     "ListenV2Configure",
     "ListenV2ConfigureFailure",
     "ListenV2ConfigureFailureParams",

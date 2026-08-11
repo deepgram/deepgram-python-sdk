@@ -15,7 +15,7 @@ class SpeakV2SessionMetadata(UncheckedBaseModel):
 
     total_audio_duration_ms: int = pydantic.Field()
     """
-    Cumulative audio duration produced across the session, in milliseconds
+    Cumulative audio duration produced across the session, in milliseconds. An `Interrupt` rebases this onto the audio the client actually played.
     """
 
     total_input_character_count: int = pydantic.Field()

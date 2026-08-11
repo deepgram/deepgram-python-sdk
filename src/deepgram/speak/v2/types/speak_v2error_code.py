@@ -3,6 +3,8 @@
 import typing
 
 SpeakV2ErrorCode = typing.Union[
-    typing.Literal["MESSAGE-0000", "DATA-0000", "BIG-0000", "NET-0000", "NET-0001", "NET-0002", "NET-0003", "NET-0004"],
+    typing.Literal[
+        "MESSAGE-0000", "DATA-0000", "DATA-0002", "BIG-0000", "NET-0000", "NET-0001", "NET-0002", "NET-0003", "NET-0004"
+    ],
     typing.Any,
 ]

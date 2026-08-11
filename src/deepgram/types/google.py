@@ -6,13 +6,14 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
 from .google_think_provider_model import GoogleThinkProviderModel
+from .google_think_provider_version import GoogleThinkProviderVersion
 
 
 class Google(UncheckedBaseModel):
     type: typing.Literal["google"] = "google"
-    version: typing.Optional[typing.Literal["v1beta"]] = pydantic.Field(default=None)
+    version: typing.Optional[GoogleThinkProviderVersion] = pydantic.Field(default=None)
     """
-    The REST API version for the Google generative language API
+    The Google API used for the request: ai-studio-v1beta for the AI Studio API, or gemini-enterprise-agent-v1 for the Gemini Enterprise Agent (GEA) API. v1beta is accepted as an alias for ai-studio-v1beta. Defaults based on the Deepgram Voice Agent endpoint you connect to.
     """
 
     model: GoogleThinkProviderModel = pydantic.Field()

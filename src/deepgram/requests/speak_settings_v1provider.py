@@ -18,7 +18,7 @@ from .cartesia_speak_provider_voice import CartesiaSpeakProviderVoiceParams
 
 class SpeakSettingsV1Provider_DeepgramParams(typing_extensions.TypedDict):
     type: typing.Literal["deepgram"]
-    version: typing_extensions.NotRequired[typing.Literal["v1"]]
+    version: typing_extensions.NotRequired[str]
     model: DeepgramSpeakProviderModel
     speed: typing_extensions.NotRequired[float]
 

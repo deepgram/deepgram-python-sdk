@@ -774,8 +774,8 @@
       }
     },
     {
-      "id": "d6a14959-05fa-4aec-9f0c-ba2a817c66e5",
-      "name": "List Project Requests - default",
+      "id": "1aa49f93-05d3-41e6-a9b6-b87abe58f653",
+      "name": "List Project Requests - List Project Requests",
       "request": {
         "urlPathTemplate": "/v1/projects/{project_id}/requests",
         "method": "GET",
@@ -786,50 +786,18 @@
         },
         "pathParameters": {
           "project_id": {
-            "equalTo": "123456-7890-1234-5678-901234"
-          }
-        },
-        "queryParameters": {
-          "start": {
-            "equalTo": "2024-01-15T09:30:00Z"
-          },
-          "end": {
-            "equalTo": "2024-01-15T09:30:00Z"
-          },
-          "limit": {
-            "equalTo": "1.1"
-          },
-          "page": {
-            "equalTo": "1.1"
-          },
-          "accessor": {
-            "equalTo": "12345678-1234-1234-1234-123456789012"
-          },
-          "request_id": {
-            "equalTo": "12345678-1234-1234-1234-123456789012"
-          },
-          "deployment": {
-            "equalTo": "hosted"
-          },
-          "endpoint": {
-            "equalTo": "listen"
-          },
-          "method": {
-            "equalTo": "sync"
-          },
-          "status": {
-            "equalTo": "succeeded"
+            "equalTo": "12345678-90ab-cdef-1234-567890abcdef"
           }
         }
       },
       "response": {
         "status": 200,
-        "body": "{\n  \"page\": 1.1,\n  \"limit\": 1.1,\n  \"requests\": [\n    {\n      \"request_id\": \"request_id\",\n      \"project_uuid\": \"project_uuid\",\n      \"created\": \"2024-01-15T09:30:00Z\",\n      \"path\": \"path\",\n      \"api_key_id\": \"api_key_id\",\n      \"response\": {\n        \"key\": \"value\"\n      },\n      \"code\": 1.1,\n      \"deployment\": \"deployment\",\n      \"callback\": \"callback\"\n    }\n  ]\n}",
+        "body": "{\n  \"page\": 0,\n  \"limit\": 10,\n  \"requests\": [\n    {\n      \"request_id\": \"a3f1c9d2-4b7e-4f9a-8c3d-2e5f7b9a1c0d\",\n      \"project_uuid\": \"12345678-90ab-cdef-1234-567890abcdef\",\n      \"created\": \"2024-01-15T09:48:20.000Z\",\n      \"path\": \"/v1/listen?\",\n      \"api_key_id\": \"b1e2c3d4-5678-90ab-cdef-1234567890ab\",\n      \"response\": {\n        \"details\": {\n          \"usd\": 0.0075,\n          \"duration\": 30,\n          \"total_audio\": 30,\n          \"channels\": 1,\n          \"streams\": 1,\n          \"tier\": \"base\",\n          \"metadata\": {},\n          \"models\": [\n            \"1a2b3c4d-5e6f-4a8b-9c0d-1e2f3a4b5c6d\"\n          ],\n          \"method\": \"sync\",\n          \"tags\": [],\n          \"features\": [],\n          \"config\": {}\n        },\n        \"token_details\": [],\n        \"code\": 200,\n        \"completed\": \"2024-01-15T09:48:21.000Z\",\n        \"deployment\": \"hosted:us\"\n      },\n      \"callback\": null\n    }\n  ]\n}",
         "headers": {
           "Content-Type": "application/json"
         }
       },
-      "uuid": "d6a14959-05fa-4aec-9f0c-ba2a817c66e5",
+      "uuid": "1aa49f93-05d3-41e6-a9b6-b87abe58f653",
       "persistent": true,
       "priority": 3,
       "metadata": {
@@ -842,8 +810,8 @@
       }
     },
     {
-      "id": "733e39aa-d3ef-4ea7-8062-af080c6288c4",
-      "name": "Get a Project Request - default",
+      "id": "0c5ca54d-c4a7-42fd-b595-b0c6d34b82f9",
+      "name": "Get a Project Request - Get a Project Request",
       "request": {
         "urlPathTemplate": "/v1/projects/{project_id}/requests/{request_id}",
         "method": "GET",
@@ -854,21 +822,21 @@
         },
         "pathParameters": {
           "project_id": {
-            "equalTo": "123456-7890-1234-5678-901234"
+            "equalTo": "12345678-90ab-cdef-1234-567890abcdef"
           },
           "request_id": {
-            "equalTo": "123456-7890-1234-5678-901234"
+            "equalTo": "a3f1c9d2-4b7e-4f9a-8c3d-2e5f7b9a1c0d"
           }
         }
       },
       "response": {
         "status": 200,
-        "body": "{\n  \"request\": {\n    \"request_id\": \"request_id\",\n    \"project_uuid\": \"project_uuid\",\n    \"created\": \"2024-01-15T09:30:00Z\",\n    \"path\": \"path\",\n    \"api_key_id\": \"api_key_id\",\n    \"response\": {\n      \"key\": \"value\"\n    },\n    \"code\": 1.1,\n    \"deployment\": \"deployment\",\n    \"callback\": \"callback\"\n  }\n}",
+        "body": "{\n  \"request\": {\n    \"request_id\": \"a3f1c9d2-4b7e-4f9a-8c3d-2e5f7b9a1c0d\",\n    \"project_uuid\": \"12345678-90ab-cdef-1234-567890abcdef\",\n    \"created\": \"2024-01-15T09:48:20.000Z\",\n    \"path\": \"/v1/listen?\",\n    \"api_key_id\": \"b1e2c3d4-5678-90ab-cdef-1234567890ab\",\n    \"response\": {\n      \"details\": {\n        \"usd\": 0.0075,\n        \"duration\": 30,\n        \"total_audio\": 30,\n        \"channels\": 1,\n        \"streams\": 1,\n        \"tier\": \"base\",\n        \"metadata\": {},\n        \"models\": [\n          \"1a2b3c4d-5e6f-4a8b-9c0d-1e2f3a4b5c6d\"\n        ],\n        \"method\": \"sync\",\n        \"tags\": [],\n        \"features\": [],\n        \"config\": {}\n      },\n      \"token_details\": [],\n      \"code\": 200,\n      \"completed\": \"2024-01-15T09:48:21.000Z\",\n      \"deployment\": \"hosted:us\"\n    },\n    \"callback\": null\n  }\n}",
         "headers": {
           "Content-Type": "application/json"
         }
       },
-      "uuid": "733e39aa-d3ef-4ea7-8062-af080c6288c4",
+      "uuid": "0c5ca54d-c4a7-42fd-b595-b0c6d34b82f9",
       "persistent": true,
       "priority": 3,
       "metadata": {
