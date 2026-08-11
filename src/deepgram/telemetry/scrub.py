@@ -16,7 +16,7 @@ import re
 from typing import TYPE_CHECKING, Any, Dict
 
 if TYPE_CHECKING:
-    from sentry_sdk.types import Event, Hint
+    from sentry_sdk.types import Event, Hint  # type: ignore[import-not-found]
 
 # Header names that may carry credentials or identifying data. Compared
 # case-insensitively.
