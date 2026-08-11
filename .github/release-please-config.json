@@ -17,6 +17,10 @@
           "jsonpath": "$.tool.poetry.version"
         },
         {
+          "type": "generic",
+          "path": "src/deepgram/core/client_wrapper.py"
+        },
+        {
           "type": "json",
           "path": ".fern/metadata.json",
           "jsonpath": "$.sdkVersion"

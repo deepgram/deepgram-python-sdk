@@ -5,10 +5,10 @@ from __future__ import annotations
 import typing
 
 import typing_extensions
-from ..types.anthropic_model import AnthropicModel
+from ..types.anthropic_think_provider_model import AnthropicThinkProviderModel
 from ..types.aws_bedrock_think_provider_model import AwsBedrockThinkProviderModel
-from ..types.google_model import GoogleModel
-from ..types.groq_reasoning_mode import GroqReasoningMode
+from ..types.google_think_provider_model import GoogleThinkProviderModel
+from ..types.groq_think_provider_reasoning_mode import GroqThinkProviderReasoningMode
 from ..types.open_ai_think_provider_model import OpenAiThinkProviderModel
 from ..types.open_ai_think_provider_reasoning_mode import OpenAiThinkProviderReasoningMode
 from .aws_bedrock_think_provider_credentials import AwsBedrockThinkProviderCredentialsParams
@@ -32,14 +32,14 @@ class ThinkSettingsV1Provider_AwsBedrockParams(typing_extensions.TypedDict):
 class ThinkSettingsV1Provider_AnthropicParams(typing_extensions.TypedDict):
     type: typing.Literal["anthropic"]
     version: typing_extensions.NotRequired[typing.Literal["v1"]]
-    model: AnthropicModel
+    model: AnthropicThinkProviderModel
     temperature: typing_extensions.NotRequired[float]
 
 
 class ThinkSettingsV1Provider_GoogleParams(typing_extensions.TypedDict):
     type: typing.Literal["google"]
     version: typing_extensions.NotRequired[typing.Literal["v1beta"]]
-    model: GoogleModel
+    model: GoogleThinkProviderModel
     temperature: typing_extensions.NotRequired[float]
 
 
@@ -48,7 +48,7 @@ class ThinkSettingsV1Provider_GroqParams(typing_extensions.TypedDict):
     version: typing_extensions.NotRequired[typing.Literal["v1"]]
     model: typing.Literal["openai/gpt-oss-20b"]
     temperature: typing_extensions.NotRequired[float]
-    reasoning_mode: typing_extensions.NotRequired[GroqReasoningMode]
+    reasoning_mode: typing_extensions.NotRequired[GroqThinkProviderReasoningMode]
 
 
 ThinkSettingsV1ProviderParams = typing.Union[

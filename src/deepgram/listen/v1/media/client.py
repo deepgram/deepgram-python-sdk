@@ -142,11 +142,7 @@ class MediaClient:
             Filler Words can help transcribe interruptions in your audio, like "uh" and "um"
 
         keyterm : typing.Optional[typing.Union[str, typing.Sequence[str]]]
-            Key term prompting improves recognition of specialized terminology and brands. Only compatible with Nova-3.
-
-            `keyterm` accepts plain terms only. Unlike the legacy `keywords` feature, it does not support weights or intensifiers. Appending one (for example, `keyterm=term:0.15`) is not rejected—the weight is silently ignored and the entire value is treated as a literal keyterm.
-
-            To boost multiple separate keyterms, repeat the `keyterm` parameter (for example, `keyterm=term1&keyterm=term2`). To boost one multi-word phrase as a single keyterm, join the words with `%20` or `+` (for example, `keyterm=customer%20service`). Do not separate keyterms with commas, semicolons, or line breaks.
+            Key term prompting can boost or suppress specialized terminology and brands. Only compatible with Nova-3
 
         keywords : typing.Optional[typing.Union[str, typing.Sequence[str]]]
             Keywords can boost or suppress specialized terminology and brands
@@ -215,6 +211,43 @@ class MediaClient:
             api_key="YOUR_API_KEY",
         )
         client.listen.v1.media.transcribe_url(
+            callback="callback",
+            callback_method="POST",
+            extra="extra",
+            sentiment=True,
+            summarize="v2",
+            tag="tag",
+            topics=True,
+            custom_topic="custom_topic",
+            custom_topic_mode="extended",
+            intents=True,
+            custom_intent="custom_intent",
+            custom_intent_mode="extended",
+            detect_entities=True,
+            detect_language=True,
+            diarize=True,
+            diarize_model="latest",
+            dictation=True,
+            encoding="linear16",
+            filler_words=True,
+            keyterm=["keyterm"],
+            keywords="keywords",
+            language="language",
+            measurements=True,
+            model="nova-3",
+            multichannel=True,
+            numerals=True,
+            paragraphs=True,
+            profanity_filter=True,
+            punctuate=True,
+            redact="redact",
+            replace="replace",
+            search="search",
+            smart_format=True,
+            utterances=True,
+            utt_split=1.1,
+            version="latest",
+            mip_opt_out=True,
             url="https://dpgr.am/spacewalk.wav",
         )
         """
@@ -369,11 +402,7 @@ class MediaClient:
             Filler Words can help transcribe interruptions in your audio, like "uh" and "um"
 
         keyterm : typing.Optional[typing.Union[str, typing.Sequence[str]]]
-            Key term prompting improves recognition of specialized terminology and brands. Only compatible with Nova-3.
-
-            `keyterm` accepts plain terms only. Unlike the legacy `keywords` feature, it does not support weights or intensifiers. Appending one (for example, `keyterm=term:0.15`) is not rejected—the weight is silently ignored and the entire value is treated as a literal keyterm.
-
-            To boost multiple separate keyterms, repeat the `keyterm` parameter (for example, `keyterm=term1&keyterm=term2`). To boost one multi-word phrase as a single keyterm, join the words with `%20` or `+` (for example, `keyterm=customer%20service`). Do not separate keyterms with commas, semicolons, or line breaks.
+            Key term prompting can boost or suppress specialized terminology and brands. Only compatible with Nova-3
 
         keywords : typing.Optional[typing.Union[str, typing.Sequence[str]]]
             Keywords can boost or suppress specialized terminology and brands
@@ -610,11 +639,7 @@ class AsyncMediaClient:
             Filler Words can help transcribe interruptions in your audio, like "uh" and "um"
 
         keyterm : typing.Optional[typing.Union[str, typing.Sequence[str]]]
-            Key term prompting improves recognition of specialized terminology and brands. Only compatible with Nova-3.
-
-            `keyterm` accepts plain terms only. Unlike the legacy `keywords` feature, it does not support weights or intensifiers. Appending one (for example, `keyterm=term:0.15`) is not rejected—the weight is silently ignored and the entire value is treated as a literal keyterm.
-
-            To boost multiple separate keyterms, repeat the `keyterm` parameter (for example, `keyterm=term1&keyterm=term2`). To boost one multi-word phrase as a single keyterm, join the words with `%20` or `+` (for example, `keyterm=customer%20service`). Do not separate keyterms with commas, semicolons, or line breaks.
+            Key term prompting can boost or suppress specialized terminology and brands. Only compatible with Nova-3
 
         keywords : typing.Optional[typing.Union[str, typing.Sequence[str]]]
             Keywords can boost or suppress specialized terminology and brands
@@ -688,6 +713,43 @@ class AsyncMediaClient:
 
         async def main() -> None:
             await client.listen.v1.media.transcribe_url(
+                callback="callback",
+                callback_method="POST",
+                extra="extra",
+                sentiment=True,
+                summarize="v2",
+                tag="tag",
+                topics=True,
+                custom_topic="custom_topic",
+                custom_topic_mode="extended",
+                intents=True,
+                custom_intent="custom_intent",
+                custom_intent_mode="extended",
+                detect_entities=True,
+                detect_language=True,
+                diarize=True,
+                diarize_model="latest",
+                dictation=True,
+                encoding="linear16",
+                filler_words=True,
+                keyterm=["keyterm"],
+                keywords="keywords",
+                language="language",
+                measurements=True,
+                model="nova-3",
+                multichannel=True,
+                numerals=True,
+                paragraphs=True,
+                profanity_filter=True,
+                punctuate=True,
+                redact="redact",
+                replace="replace",
+                search="search",
+                smart_format=True,
+                utterances=True,
+                utt_split=1.1,
+                version="latest",
+                mip_opt_out=True,
                 url="https://dpgr.am/spacewalk.wav",
             )
 
@@ -845,11 +907,7 @@ class AsyncMediaClient:
             Filler Words can help transcribe interruptions in your audio, like "uh" and "um"
 
         keyterm : typing.Optional[typing.Union[str, typing.Sequence[str]]]
-            Key term prompting improves recognition of specialized terminology and brands. Only compatible with Nova-3.
-
-            `keyterm` accepts plain terms only. Unlike the legacy `keywords` feature, it does not support weights or intensifiers. Appending one (for example, `keyterm=term:0.15`) is not rejected—the weight is silently ignored and the entire value is treated as a literal keyterm.
-
-            To boost multiple separate keyterms, repeat the `keyterm` parameter (for example, `keyterm=term1&keyterm=term2`). To boost one multi-word phrase as a single keyterm, join the words with `%20` or `+` (for example, `keyterm=customer%20service`). Do not separate keyterms with commas, semicolons, or line breaks.
+            Key term prompting can boost or suppress specialized terminology and brands. Only compatible with Nova-3
 
         keywords : typing.Optional[typing.Union[str, typing.Sequence[str]]]
             Keywords can boost or suppress specialized terminology and brands
