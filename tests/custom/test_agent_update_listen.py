@@ -79,6 +79,56 @@ class TestSendUpdateListen:
         assert provider["version"] == "v2"
         assert provider["model"] == "flux-general-en"
 
+    def test_legacy_dict_language_hint_is_remapped(self):
+        # The API uses deny_unknown_fields, so the deprecated singular
+        # `language_hint` must be remapped to `language_hints` and dropped --
+        # on the raw-dict path as well as the model-instance path. Before this
+        # was fixed the dict path shipped the dead singular key and the server
+        # rejected the whole UpdateListen with no client-side signal.
+        ws = _FakeWebSocket()
+        message = AgentV1UpdateListen(
+            listen=AgentV1UpdateListenListen(
+                provider={"type": "deepgram", "model": "flux-general-multi", "language_hint": "en"}
+            )
+        )
+        V1SocketClient(websocket=ws).send_update_listen(message)
+
+        provider = _sent_json(ws)["listen"]["provider"]
+        assert provider["language_hints"] == ["en"]
+        assert "language_hint" not in provider
+        assert provider["version"] == "v2"
+
+    def test_legacy_dict_version_is_inferred_from_shape(self):
+        # A dict carrying V1-only fields must not be stamped "v2": that would
+        # declare a Flux/v2 provider while carrying v1-only keys.
+        ws = _FakeWebSocket()
+        V1SocketClient(websocket=ws).send_update_listen(
+            AgentV1UpdateListen(
+                listen=AgentV1UpdateListenListen(
+                    provider={
+                        "type": "deepgram",
+                        "model": "nova-3",
+                        "language": "en",
+                        "smart_format": True,
+                    }
+                )
+            )
+        )
+        provider = _sent_json(ws)["listen"]["provider"]
+        assert provider["version"] == "v1"
+        assert provider["language"] == "en"
+        assert provider["smart_format"] is True
+
+    def test_coercion_never_raises_on_a_malformed_dict(self):
+        # The coercion is a compat shim; it must not become a new source of
+        # exceptions for input the pre-regen code passed through untouched.
+        from deepgram.agent.v1.types.agent_v1update_listen_listen import (
+            _coerce_legacy_update_listen_provider,
+        )
+
+        out = _coerce_legacy_update_listen_provider({"provider": {"type": "deepgram"}})
+        assert out["provider"]["version"] == "v2"
+
     def test_native_union_v2_provider_round_trips(self):
         # The generator-native form must keep working alongside the legacy shim.
         ws = _FakeWebSocket()
