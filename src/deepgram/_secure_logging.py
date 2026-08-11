@@ -46,6 +46,31 @@ def _mask_value(value: typing.Any) -> str:
     return _REDACTED
 
 
+def redact_sensitive_headers(
+    headers: typing.Optional[typing.Mapping[str, str]],
+) -> typing.Optional[typing.Dict[str, str]]:
+    """Return a copy of ``headers`` with credential values masked.
+
+    Used by the error types in ``core/`` so a failed request can never carry the
+    API key into an exception message. Non-sensitive headers are preserved intact
+    because they carry real debugging value (``dg-request-id`` in particular).
+
+    ``None`` in, ``None`` out, so callers can pass an optional header mapping
+    straight through.
+    """
+    if headers is None:
+        return None
+    try:
+        return {
+            name: (_mask_value(value) if isinstance(name, str) and name.lower() in _SENSITIVE_HEADERS else value)
+            for name, value in headers.items()
+        }
+    except Exception:
+        # Redaction must never be the reason an error path fails. If the mapping
+        # is not iterable as expected, drop it entirely rather than risk leaking.
+        return None
+
+
 class RedactCredentialsFilter(logging.Filter):
     """Masks sensitive header values in ``websockets`` handshake debug records.
 
