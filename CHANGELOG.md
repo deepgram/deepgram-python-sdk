@@ -2,16 +2,21 @@
 
 ## [7.7.0](https://github.com/deepgram/deepgram-python-sdk/compare/v7.6.0...v7.7.0) (2026-08-12)
 
+Flux TTS streaming controls and Listen v2 redaction.
+
 
 ### Features
 
-* **regen:** listen v2 force-end-turn and redaction, listen v1 diarize metadata ([#750](https://github.com/deepgram/deepgram-python-sdk/issues/750)) ([4678f0e](https://github.com/deepgram/deepgram-python-sdk/commit/4678f0e230d590e1ad473ae2f3452619d21d3d6b))
-* **regen:** speak v2 barge-in and speed/expressivity controls, listen v2 redaction ([#758](https://github.com/deepgram/deepgram-python-sdk/issues/758)) ([aab1eae](https://github.com/deepgram/deepgram-python-sdk/commit/aab1eae8704d50aba5d8823ef09b7278ff03580c))
+* **Speak v2 (Flux TTS streaming):** barge-in via `send_interrupt()` (optional `playback_offset`, `{type: "time_ms", value: N}`), answered by a `SpeechInterrupted` server message whose metadata carries the new `controls_applied.breaks_applied` counter; mid-stream `send_configure()` to change `speed`, acknowledged by `ConfigureSuccess` / `ConfigureFailure`; new `speed` and `expressivity` connect query parameters. Inline pause and pronunciation controls are not applied at launch — they are stripped before synthesis and support is coming soon. ([#758](https://github.com/deepgram/deepgram-python-sdk/issues/758)) ([aab1eae](https://github.com/deepgram/deepgram-python-sdk/commit/aab1eae8704d50aba5d8823ef09b7278ff03580c))
+* **Listen v2:** `redact` connect parameter (`ListenV2Redact`: `numbers`, `aggressive_numbers`); `send_configure()` is now properly typed (`ListenV2Configure` + `ListenV2ConfigureSuccess` in the response union), replacing the previous `typing.Any` shim. ([#758](https://github.com/deepgram/deepgram-python-sdk/issues/758)) ([aab1eae](https://github.com/deepgram/deepgram-python-sdk/commit/aab1eae8704d50aba5d8823ef09b7278ff03580c))
+* **Other:** `GoogleThinkProviderVersion` adds `ai-studio-v1beta` and `gemini-enterprise-agent-v1`; `AgentV1UpdateListenListenProvider` discriminated union (`_V1` / `_V2`, discriminant `version`); `client_wrapper` now derives its version from `importlib.metadata` rather than a hardcoded string. ([#758](https://github.com/deepgram/deepgram-python-sdk/issues/758)) ([aab1eae](https://github.com/deepgram/deepgram-python-sdk/commit/aab1eae8704d50aba5d8823ef09b7278ff03580c))
 
 
-### Reverts
+### Compatibility
 
-* listen v2 force-end-turn/redaction + diarize regen ([#750](https://github.com/deepgram/deepgram-python-sdk/issues/750)) ([#757](https://github.com/deepgram/deepgram-python-sdk/issues/757)) ([48c88fc](https://github.com/deepgram/deepgram-python-sdk/commit/48c88fcd7a319fb57c579201fc392936d7c8d97e))
+* No breaking changes against v7.6.0: 0 removed public exports, 0 deleted modules, baseline socket-client signatures intact, and enum changes are widenings only.
+* The `deepgram` speak provider `version` widens from `Literal["v1"]` to `str`.
+* `AgentV1UpdateListenListen.provider` moves from a bare `DeepgramListenProviderV2` to a required discriminated union; a compatibility validator coerces a legacy provider instance or bare dict into the new shape (both serialize to `version: "v2"`), so existing callers are unaffected.
 
 ## [7.6.0](https://github.com/deepgram/deepgram-python-sdk/compare/v7.5.0...v7.6.0) (2026-07-22)
 
