@@ -1,5 +1,18 @@
 # Changelog
 
+## [7.7.0](https://github.com/deepgram/deepgram-python-sdk/compare/v7.6.0...v7.7.0) (2026-08-12)
+
+
+### Features
+
+* **regen:** listen v2 force-end-turn and redaction, listen v1 diarize metadata ([#750](https://github.com/deepgram/deepgram-python-sdk/issues/750)) ([4678f0e](https://github.com/deepgram/deepgram-python-sdk/commit/4678f0e230d590e1ad473ae2f3452619d21d3d6b))
+* **regen:** speak v2 barge-in and speed/expressivity controls, listen v2 redaction ([#758](https://github.com/deepgram/deepgram-python-sdk/issues/758)) ([aab1eae](https://github.com/deepgram/deepgram-python-sdk/commit/aab1eae8704d50aba5d8823ef09b7278ff03580c))
+
+
+### Reverts
+
+* listen v2 force-end-turn/redaction + diarize regen ([#750](https://github.com/deepgram/deepgram-python-sdk/issues/750)) ([#757](https://github.com/deepgram/deepgram-python-sdk/issues/757)) ([48c88fc](https://github.com/deepgram/deepgram-python-sdk/commit/48c88fcd7a319fb57c579201fc392936d7c8d97e))
+
 ## [7.6.0](https://github.com/deepgram/deepgram-python-sdk/compare/v7.5.0...v7.6.0) (2026-07-22)
 
 
