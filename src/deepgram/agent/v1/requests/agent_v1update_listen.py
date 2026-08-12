@@ -14,5 +14,5 @@ class AgentV1UpdateListenParams(typing_extensions.TypedDict):
 
     listen: AgentV1UpdateListenListenParams
     """
-    Listen configuration to update. Contains a provider object with the same schema as Settings. The provider identity (type, version, model) is required and must match the current session.
+    Listen configuration to update. Contains a provider object with the same schema as Settings. The model and language can be changed mid-session. Keyterms can only be updated mid-session for Flux models.
     """

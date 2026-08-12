@@ -34,5 +34,5 @@ class SpeakV2SpeechMetadataParams(typing_extensions.TypedDict):
 
     controls_applied: SpeakV2SpeechMetadataControlsAppliedParams
     """
-    Controls applied during the turn. Inline pronunciation and pause controls are not available during Early Access, so every count is currently `0`.
+    Counts of the inline controls the server acted on during the turn. Inline pause and pronunciation controls are not applied at launch — support is coming soon — so every count is currently `0`.
     """

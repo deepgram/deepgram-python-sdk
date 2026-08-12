@@ -93,6 +93,15 @@ src/deepgram/types/deepgram_listen_provider_v2.py
 src/deepgram/agent/v1/types/agent_v1settings_agent_listen_provider.py
 src/deepgram/agent/v1/types/agent_v1settings_agent_context_listen_provider.py
 
+# Backward-compat patch for the 2026-07-31 AgentV1UpdateListen provider retype. The
+# generated `provider` field is now the required discriminated union
+# AgentV1UpdateListenListenProvider (_V1/_V2, discriminant `version`). This generated
+# model carries a hand-added model_validator(mode='before') / root_validator(pre=True)
+# that coerces a legacy DeepgramListenProviderV1/V2 (or a dict lacking the version
+# discriminant) into the new shape so existing callers keep working. Remove and unfreeze
+# when the old provider payloads are retired in a future major.
+src/deepgram/agent/v1/types/agent_v1update_listen_listen.py
+
 # Hand-written compat shim recreating ListenV2CloseStreamType, which Fern removed in the
 # 2026-06-15 regen (docs #946). The original generated type wrongly allowed
 # Union[Literal["Finalize","CloseStream","KeepAlive"], Any] — v2 copied v1's control-message
@@ -100,16 +109,6 @@ src/deepgram/agent/v1/types/agent_v1settings_agent_context_listen_provider.py
 # corrected single-value Literal["CloseStream"] to preserve the public import path without
 # resurrecting the invalid values. Frozen so Fern won't delete it again.
 src/deepgram/listen/v2/types/listen_v2close_stream_type.py
-
-# Backward-compat shim for the `stt_latency` removal from AgentV1LatencyReport (the
-# 2026-07-20 regen; API change in deepgram-docs #1006). LatencyReport is a
-# server-emitted (read-only) message, so re-adding the optional `stt_latency` field
-# has no request/wire impact — it keeps `report.stt_latency` resolving (to None, since
-# the server no longer emits it) instead of raising AttributeError, so the removal
-# stays a minor release rather than a major break. Remove the field and unfreeze when
-# it is intentionally retired in a future major release.
-src/deepgram/agent/v1/types/agent_v1latency_report.py
-src/deepgram/agent/v1/requests/agent_v1latency_report.py
 
 # Package __init__.py files that carry hand-applied legacy alias re-exports for the
 # above shims. Fern would otherwise regenerate these and strip the legacy entries on
@@ -132,17 +131,23 @@ src/deepgram/listen/v2/types/__init__.py
 # Deepgram's websocket query strings. HTTP raw_clients hand params to httpx
 # directly and are unaffected; httpx accepts the pre-stringified values fine.
 # [temporarily frozen — manual patches listed above]
+# Credential redaction in the error types. Every websocket `connect()` path raises
+# ApiError(headers=dict(headers), ...) with the FULL request headers, and both error
+# types stringify their headers dict -- so an unredacted `Authorization` reached
+# str(e), tracebacks, log aggregators and error trackers (which serialise attributes
+# as well as the message). Both now mask credential values at construction via
+# _secure_logging.redact_sensitive_headers, keeping non-sensitive headers
+# (dg-request-id) for debugging. Same threat _secure_logging.py already covers for
+# the websockets DEBUG handshake logs; this is the other path to it. Unfreeze if the
+# generator starts redacting credentials itself.
+
+src/deepgram/core/api_error.py
+src/deepgram/core/parse_error.py
+
 src/deepgram/core/query_encoder.py
 
-# Carries `# x-release-please-version` annotations on the User-Agent and
-# X-Fern-SDK-Version header lines so release-please bumps the wire telemetry
-# version in lockstep with the published package version (it is a `generic`
-# extra-file in .github/release-please-config.json). Fern regenerates this file
-# from scratch and would strip the annotations, so it is frozen to protect them.
-# [temporarily frozen — manual patches listed above]
-src/deepgram/core/client_wrapper.py
-
 # Hand-written custom tests
+tests/custom/test_api_error_redaction.py
 tests/custom/test_agent_history.py
 tests/custom/test_agent_update_listen.py
 tests/custom/test_compat_aliases.py
@@ -156,6 +161,7 @@ tests/custom/test_query_encoder.py
 tests/custom/test_secure_logging.py
 tests/custom/test_socket_client_shims.py
 tests/custom/test_speak_v2_connect_wire.py
+tests/custom/test_speak_v2_interrupt_configure.py
 tests/custom/test_speak_v2_socket.py
 tests/custom/test_text_builder.py
 tests/custom/test_transport.py
@@ -163,6 +169,13 @@ tests/typecheck/compat_aliases.py
 
 # Wire test with restored compatibility coverage for legacy create-key request alias
 tests/wire/test_manage_v1_projects_keys.py
+
+# Wire test with restored query-parameter coverage for manage.v1.projects.requests.list.
+# The 2026-08-11 regen simplified the upstream spec *example* for this endpoint, and Fern
+# derives the wire test from the example, so the generated test dropped all ten optional
+# query params (including the datetime -> ISO-8601 Z encoding) while the client signature
+# still forwards them. Frozen so future regens do not silently drop that check again.
+tests/wire/test_manage_v1_projects_requests.py
 
 # Manual standalone tests
 tests/manual

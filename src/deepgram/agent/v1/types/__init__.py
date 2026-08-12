@@ -6,6 +6,11 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
+    from .agent_v1update_listen_listen_provider import (
+        AgentV1UpdateListenListenProvider,
+        AgentV1UpdateListenListenProvider_V1,
+        AgentV1UpdateListenListenProvider_V2,
+    )
     from .agent_v1agent_audio_done import AgentV1AgentAudioDone
     from .agent_v1agent_started_speaking import AgentV1AgentStartedSpeaking
     from .agent_v1agent_thinking import AgentV1AgentThinking
@@ -97,6 +102,9 @@ if typing.TYPE_CHECKING:
     from .conversation_history_message import ConversationHistoryMessage
     from .function_call_history_message import FunctionCallHistoryMessage
 _dynamic_imports: typing.Dict[str, str] = {
+    "AgentV1UpdateListenListenProvider": ".agent_v1update_listen_listen_provider",
+    "AgentV1UpdateListenListenProvider_V1": ".agent_v1update_listen_listen_provider",
+    "AgentV1UpdateListenListenProvider_V2": ".agent_v1update_listen_listen_provider",
     "AgentV1AgentAudioDone": ".agent_v1agent_audio_done",
     "AgentV1AgentStartedSpeaking": ".agent_v1agent_started_speaking",
     "AgentV1AgentThinking": ".agent_v1agent_thinking",
@@ -196,6 +204,9 @@ def __dir__():
 
 
 __all__ = [
+    "AgentV1UpdateListenListenProvider",
+    "AgentV1UpdateListenListenProvider_V1",
+    "AgentV1UpdateListenListenProvider_V2",
     "AgentV1AgentAudioDone",
     "AgentV1AgentStartedSpeaking",
     "AgentV1AgentThinking",

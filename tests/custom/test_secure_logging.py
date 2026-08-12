@@ -15,6 +15,7 @@ from deepgram._secure_logging import (
     RedactCredentialsFilter,
     _mask_value,
     install_websocket_log_redaction,
+    redact_sensitive_headers,
     uninstall_websocket_log_redaction,
 )
 
@@ -64,6 +65,34 @@ def test_non_sensitive_headers_are_untouched(caplog):
     install_websocket_log_redaction()
     msg = _emit_header(caplog, "websockets.client", "Sec-WebSocket-Version", "13")
     assert msg == "> Sec-WebSocket-Version: 13"
+
+
+def test_sec_websocket_protocol_is_redacted(caplog):
+    """The Sec-WebSocket-Protocol header carries the API key in the browser auth
+    pattern the connect() docstrings recommend (``"token, <key>"``)."""
+    install_websocket_log_redaction()
+    msg = _emit_header(caplog, "websockets.client", "Sec-WebSocket-Protocol", "token, sk_live_SECRET123")
+    assert "sk_live_SECRET123" not in msg
+    assert "token, [REDACTED]" in msg  # protocol marker kept, key masked
+
+
+def test_redact_sensitive_headers_masks_sec_websocket_protocol():
+    """redact_sensitive_headers (used by ApiError/ParsingError) must mask the key
+    carried in Sec-WebSocket-Protocol, not just Authorization."""
+    masked = redact_sensitive_headers(
+        {"Sec-WebSocket-Protocol": "token, sk_live_SECRET123", "dg-request-id": "abc"}
+    )
+    assert masked is not None
+    assert "sk_live_SECRET123" not in str(masked)
+    assert masked["Sec-WebSocket-Protocol"] == "token, [REDACTED]"
+    assert masked["dg-request-id"] == "abc"  # non-sensitive header preserved
+
+
+def test_redact_sensitive_headers_masks_authorization():
+    masked = redact_sensitive_headers({"Authorization": "Token sk_live_SECRET123"})
+    assert masked is not None
+    assert "sk_live_SECRET123" not in str(masked)
+    assert masked["Authorization"] == "Token [REDACTED]"
 
 
 def test_redaction_is_case_insensitive_on_header_name(caplog):

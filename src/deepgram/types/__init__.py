@@ -6,6 +6,10 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
+    from .google_think_provider_version import GoogleThinkProviderVersion
+    from .listen_v2redact import ListenV2Redact
+    from .speak_v2expressivity import SpeakV2Expressivity
+    from .speak_v2speed import SpeakV2Speed
     from .agent_configuration_v1 import AgentConfigurationV1
     from .agent_think_models_v1response import AgentThinkModelsV1Response
     from .agent_think_models_v1response_models_item import AgentThinkModelsV1ResponseModelsItem
@@ -289,6 +293,10 @@ if typing.TYPE_CHECKING:
     from .usage_v1response import UsageV1Response
     from .usage_v1response_resolution import UsageV1ResponseResolution
 _dynamic_imports: typing.Dict[str, str] = {
+    "GoogleThinkProviderVersion": ".google_think_provider_version",
+    "ListenV2Redact": ".listen_v2redact",
+    "SpeakV2Expressivity": ".speak_v2expressivity",
+    "SpeakV2Speed": ".speak_v2speed",
     "AgentConfigurationV1": ".agent_configuration_v1",
     "AgentThinkModelsV1Response": ".agent_think_models_v1response",
     "AgentThinkModelsV1ResponseModelsItem": ".agent_think_models_v1response_models_item",
@@ -558,6 +566,10 @@ def __dir__():
 
 
 __all__ = [
+    "GoogleThinkProviderVersion",
+    "ListenV2Redact",
+    "SpeakV2Expressivity",
+    "SpeakV2Speed",
     "AgentConfigurationV1",
     "AgentThinkModelsV1Response",
     "AgentThinkModelsV1ResponseModelsItem",

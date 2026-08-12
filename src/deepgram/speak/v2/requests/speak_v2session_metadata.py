@@ -13,7 +13,7 @@ class SpeakV2SessionMetadataParams(typing_extensions.TypedDict):
 
     total_audio_duration_ms: int
     """
-    Cumulative audio duration produced across the session, in milliseconds
+    Cumulative audio duration produced across the session, in milliseconds. An `Interrupt` rebases this onto the audio the client actually played.
     """
 
     total_input_character_count: int

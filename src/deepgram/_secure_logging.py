@@ -22,7 +22,10 @@ import logging
 import typing
 
 # Header names (lower-cased) whose values must never be logged in clear text.
-_SENSITIVE_HEADERS = frozenset({"authorization", "proxy-authorization"})
+# ``sec-websocket-protocol`` carries the API key in the "custom headers not supported"
+# auth pattern the connect() docstrings recommend (value is ``"token, <key>"``), so its
+# value is a credential too. ``_mask_value`` renders that as ``"token, [REDACTED]"``.
+_SENSITIVE_HEADERS = frozenset({"authorization", "proxy-authorization", "sec-websocket-protocol"})
 
 # Replacement for the credential portion of a sensitive header value.
 _REDACTED = "[REDACTED]"
@@ -44,6 +47,31 @@ def _mask_value(value: typing.Any) -> str:
     if sep and scheme:
         return f"{scheme} {_REDACTED}"
     return _REDACTED
+
+
+def redact_sensitive_headers(
+    headers: typing.Optional[typing.Mapping[str, str]],
+) -> typing.Optional[typing.Dict[str, str]]:
+    """Return a copy of ``headers`` with credential values masked.
+
+    Used by the error types in ``core/`` so a failed request can never carry the
+    API key into an exception message. Non-sensitive headers are preserved intact
+    because they carry real debugging value (``dg-request-id`` in particular).
+
+    ``None`` in, ``None`` out, so callers can pass an optional header mapping
+    straight through.
+    """
+    if headers is None:
+        return None
+    try:
+        return {
+            name: (_mask_value(value) if isinstance(name, str) and name.lower() in _SENSITIVE_HEADERS else value)
+            for name, value in headers.items()
+        }
+    except Exception:
+        # Redaction must never be the reason an error path fails. If the mapping
+        # is not iterable as expected, drop it entirely rather than risk leaking.
+        return None
 
 
 class RedactCredentialsFilter(logging.Filter):

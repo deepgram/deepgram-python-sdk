@@ -7,6 +7,12 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from .types import (
+        GoogleThinkProviderVersion,
+        ListenV2Redact,
+        SpeakV2Expressivity,
+        SpeakV2Speed,
+    )
+    from .types import (
         AgentConfigurationV1,
         AgentThinkModelsV1Response,
         AgentThinkModelsV1ResponseModelsItem,
@@ -431,6 +437,10 @@ if typing.TYPE_CHECKING:
     )
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
+    "GoogleThinkProviderVersion": ".types",
+    "ListenV2Redact": ".types",
+    "SpeakV2Expressivity": ".types",
+    "SpeakV2Speed": ".types",
     "AgentConfigurationV1": ".types",
     "AgentConfigurationV1Params": ".requests",
     "AgentThinkModelsV1Response": ".types",
@@ -885,6 +895,10 @@ def __dir__():
 
 
 __all__ = [
+    "GoogleThinkProviderVersion",
+    "ListenV2Redact",
+    "SpeakV2Expressivity",
+    "SpeakV2Speed",
     "AgentConfigurationV1",
     "AgentConfigurationV1Params",
     "AgentThinkModelsV1Response",

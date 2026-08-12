@@ -6,6 +6,11 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
+    from .agent_v1update_listen_listen_provider import (
+        AgentV1UpdateListenListenProviderParams,
+        AgentV1UpdateListenListenProvider_V1Params,
+        AgentV1UpdateListenListenProvider_V2Params,
+    )
     from .agent_v1agent_audio_done import AgentV1AgentAudioDoneParams
     from .agent_v1agent_started_speaking import AgentV1AgentStartedSpeakingParams
     from .agent_v1agent_thinking import AgentV1AgentThinkingParams
@@ -89,6 +94,9 @@ if typing.TYPE_CHECKING:
     from .conversation_history_message import ConversationHistoryMessageParams
     from .function_call_history_message import FunctionCallHistoryMessageParams
 _dynamic_imports: typing.Dict[str, str] = {
+    "AgentV1UpdateListenListenProviderParams": ".agent_v1update_listen_listen_provider",
+    "AgentV1UpdateListenListenProvider_V1Params": ".agent_v1update_listen_listen_provider",
+    "AgentV1UpdateListenListenProvider_V2Params": ".agent_v1update_listen_listen_provider",
     "AgentV1AgentAudioDoneParams": ".agent_v1agent_audio_done",
     "AgentV1AgentStartedSpeakingParams": ".agent_v1agent_started_speaking",
     "AgentV1AgentThinkingParams": ".agent_v1agent_thinking",
@@ -180,6 +188,9 @@ def __dir__():
 
 
 __all__ = [
+    "AgentV1UpdateListenListenProviderParams",
+    "AgentV1UpdateListenListenProvider_V1Params",
+    "AgentV1UpdateListenListenProvider_V2Params",
     "AgentV1AgentAudioDoneParams",
     "AgentV1AgentStartedSpeakingParams",
     "AgentV1AgentThinkingParams",

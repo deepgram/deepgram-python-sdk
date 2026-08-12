@@ -21,7 +21,7 @@ from .open_ai_speak_provider_voice import OpenAiSpeakProviderVoice
 
 class SpeakSettingsV1Provider_Deepgram(UncheckedBaseModel):
     type: typing.Literal["deepgram"] = "deepgram"
-    version: typing.Optional[typing.Literal["v1"]] = None
+    version: typing.Optional[str] = None
     model: DeepgramSpeakProviderModel
     speed: typing.Optional[float] = None
 

@@ -15,7 +15,7 @@ class SpeakV2Speak(UncheckedBaseModel):
 
     text: str = pydantic.Field()
     """
-    The input text to synthesize
+    The input text to synthesize. Inline pause and pronunciation controls are not yet applied; they are stripped from the text before synthesis.
     """
 
     if IS_PYDANTIC_V2:

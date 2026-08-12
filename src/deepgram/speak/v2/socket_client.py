@@ -8,12 +8,17 @@ import websockets.sync.connection as websockets_sync_connection
 from ...core.events import EventEmitterMixin, EventType
 from ...core.unchecked_base_model import construct_type
 from .types.speak_v2close import SpeakV2Close
+from .types.speak_v2configure import SpeakV2Configure
+from .types.speak_v2configure_failure import SpeakV2ConfigureFailure
+from .types.speak_v2configure_success import SpeakV2ConfigureSuccess
 from .types.speak_v2connected import SpeakV2Connected
 from .types.speak_v2error import SpeakV2Error
 from .types.speak_v2flush import SpeakV2Flush
 from .types.speak_v2flushed import SpeakV2Flushed
+from .types.speak_v2interrupt import SpeakV2Interrupt
 from .types.speak_v2session_metadata import SpeakV2SessionMetadata
 from .types.speak_v2speak import SpeakV2Speak
+from .types.speak_v2speech_interrupted import SpeakV2SpeechInterrupted
 from .types.speak_v2speech_metadata import SpeakV2SpeechMetadata
 from .types.speak_v2speech_started import SpeakV2SpeechStarted
 from .types.speak_v2warning import SpeakV2Warning
@@ -29,8 +34,11 @@ V2SocketClientResponse = typing.Union[
     SpeakV2Connected,
     SpeakV2SpeechStarted,
     SpeakV2SpeechMetadata,
+    SpeakV2SpeechInterrupted,
     SpeakV2Flushed,
     SpeakV2SessionMetadata,
+    SpeakV2ConfigureSuccess,
+    SpeakV2ConfigureFailure,
     SpeakV2Warning,
     SpeakV2Error,
 ]
@@ -97,6 +105,20 @@ class AsyncV2SocketClient(EventEmitterMixin):
         The message will be sent as a SpeakV2Flush.
         """
         await self._send_model(message or SpeakV2Flush(type="Flush"))
+
+    async def send_interrupt(self, message: typing.Optional[SpeakV2Interrupt] = None) -> None:
+        """
+        Send a message to the websocket connection.
+        The message will be sent as a SpeakV2Interrupt.
+        """
+        await self._send_model(message or SpeakV2Interrupt(type="Interrupt"))
+
+    async def send_configure(self, message: SpeakV2Configure) -> None:
+        """
+        Send a message to the websocket connection.
+        The message will be sent as a SpeakV2Configure.
+        """
+        await self._send_model(message)
 
     async def send_close(self, message: typing.Optional[SpeakV2Close] = None) -> None:
         """
@@ -195,6 +217,20 @@ class V2SocketClient(EventEmitterMixin):
         The message will be sent as a SpeakV2Flush.
         """
         self._send_model(message or SpeakV2Flush(type="Flush"))
+
+    def send_interrupt(self, message: typing.Optional[SpeakV2Interrupt] = None) -> None:
+        """
+        Send a message to the websocket connection.
+        The message will be sent as a SpeakV2Interrupt.
+        """
+        self._send_model(message or SpeakV2Interrupt(type="Interrupt"))
+
+    def send_configure(self, message: SpeakV2Configure) -> None:
+        """
+        Send a message to the websocket connection.
+        The message will be sent as a SpeakV2Configure.
+        """
+        self._send_model(message)
 
     def send_close(self, message: typing.Optional[SpeakV2Close] = None) -> None:
         """

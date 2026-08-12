@@ -8,7 +8,9 @@ import websockets.sync.connection as websockets_sync_connection
 from ...core.events import EventEmitterMixin, EventType
 from ...core.unchecked_base_model import construct_type
 from .types.listen_v2close_stream import ListenV2CloseStream
+from .types.listen_v2configure import ListenV2Configure
 from .types.listen_v2configure_failure import ListenV2ConfigureFailure
+from .types.listen_v2configure_success import ListenV2ConfigureSuccess
 from .types.listen_v2connected import ListenV2Connected
 from .types.listen_v2fatal_error import ListenV2FatalError
 from .types.listen_v2turn_info import ListenV2TurnInfo
@@ -20,7 +22,7 @@ except ImportError:
 
 _logger = logging.getLogger(__name__)
 V2SocketClientResponse = typing.Union[
-    ListenV2Connected, ListenV2TurnInfo, typing.Any, ListenV2ConfigureFailure, ListenV2FatalError
+    ListenV2Connected, ListenV2TurnInfo, ListenV2ConfigureSuccess, ListenV2ConfigureFailure, ListenV2FatalError
 ]
 
 
@@ -86,12 +88,18 @@ class AsyncV2SocketClient(EventEmitterMixin):
         """
         await self._send_model(message or ListenV2CloseStream(type="CloseStream"))
 
-    async def send_configure(self, message: typing.Any) -> None:
+    async def send_configure(
+        self, message: typing.Union[ListenV2Configure, typing.Dict[str, typing.Any]]
+    ) -> None:
         """
         Send a message to the websocket connection.
-        The message will be sent as a typing.Any.
+        The message will be sent as a ListenV2Configure. A raw dict is also
+        accepted and sent verbatim for back-compat with pre-typed-model callers.
         """
-        await self._send(message)
+        if isinstance(message, dict):
+            await self._send(message)
+        else:
+            await self._send_model(message)
 
     async def recv(self) -> V2SocketClientResponse:
         """
@@ -184,12 +192,16 @@ class V2SocketClient(EventEmitterMixin):
         """
         self._send_model(message or ListenV2CloseStream(type="CloseStream"))
 
-    def send_configure(self, message: typing.Any) -> None:
+    def send_configure(self, message: typing.Union[ListenV2Configure, typing.Dict[str, typing.Any]]) -> None:
         """
         Send a message to the websocket connection.
-        The message will be sent as a typing.Any.
+        The message will be sent as a ListenV2Configure. A raw dict is also
+        accepted and sent verbatim for back-compat with pre-typed-model callers.
         """
-        self._send(message)
+        if isinstance(message, dict):
+            self._send(message)
+        else:
+            self._send_model(message)
 
     def recv(self) -> V2SocketClientResponse:
         """

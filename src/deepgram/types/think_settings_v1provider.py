@@ -12,6 +12,7 @@ from .anthropic_think_provider_model import AnthropicThinkProviderModel
 from .aws_bedrock_think_provider_credentials import AwsBedrockThinkProviderCredentials
 from .aws_bedrock_think_provider_model import AwsBedrockThinkProviderModel
 from .google_think_provider_model import GoogleThinkProviderModel
+from .google_think_provider_version import GoogleThinkProviderVersion
 from .groq_think_provider_reasoning_mode import GroqThinkProviderReasoningMode
 from .open_ai_think_provider_model import OpenAiThinkProviderModel
 from .open_ai_think_provider_reasoning_mode import OpenAiThinkProviderReasoningMode
@@ -68,7 +69,7 @@ class ThinkSettingsV1Provider_Anthropic(UncheckedBaseModel):
 
 class ThinkSettingsV1Provider_Google(UncheckedBaseModel):
     type: typing.Literal["google"] = "google"
-    version: typing.Optional[typing.Literal["v1beta"]] = None
+    version: typing.Optional[GoogleThinkProviderVersion] = None
     model: GoogleThinkProviderModel
     temperature: typing.Optional[float] = None
 

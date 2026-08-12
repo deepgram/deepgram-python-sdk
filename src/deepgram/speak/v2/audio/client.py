@@ -40,7 +40,9 @@ class AudioClient:
         bit_rate: typing.Optional[int] = None,
         container: typing.Optional[AudioGenerateRequestContainer] = None,
         encoding: typing.Optional[AudioGenerateRequestEncoding] = None,
+        expressivity: typing.Optional[int] = None,
         sample_rate: typing.Optional[int] = None,
+        speed: typing.Optional[float] = None,
         priority: typing.Optional[typing.Literal["low"]] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Iterator[bytes]:
@@ -53,7 +55,7 @@ class AudioClient:
             Flux TTS model used to synthesize the submitted text, in the form `flux-{voice}-{language}` (for example, `flux-alexis-en`). Required; unlike the v1 (Aura) endpoint there is no default and only flux models are accepted. English-only at launch.
 
         text : str
-            The text content to be converted to speech. The server normalizes and preprocesses the text (e.g. stripping inline controls) before synthesis.
+            The text content to be converted to speech. The server normalizes and preprocesses the text before synthesis. Inline pause and pronunciation controls are not yet applied; they are stripped from the text before synthesis.
 
         callback : typing.Optional[str]
             URL to which we'll make the callback request
@@ -76,8 +78,14 @@ class AudioClient:
         encoding : typing.Optional[AudioGenerateRequestEncoding]
             Encoding allows you to specify the expected encoding of your audio output
 
+        expressivity : typing.Optional[int]
+            Expressive range of the generated speech. `0` is the voice's nominal delivery; negative values are flatter and more restrained, positive values more animated.
+
         sample_rate : typing.Optional[int]
             Sample Rate specifies the sample rate for the output audio. Based on the encoding, different sample rates are supported. For some encodings, the sample rate is not configurable
+
+        speed : typing.Optional[float]
+            Speaking rate multiplier that adjusts the pace of generated speech while preserving natural prosody and voice quality. Only the multipliers listed here are accepted — the range is 0.85 to 1.15 in 0.05 increments. Not yet supported in all languages.
 
         priority : typing.Optional[typing.Literal["low"]]
             Processing priority for asynchronous (callback) requests. The only supported value is low.
@@ -112,7 +120,9 @@ class AudioClient:
             bit_rate=bit_rate,
             container=container,
             encoding=encoding,
+            expressivity=expressivity,
             sample_rate=sample_rate,
+            speed=speed,
             priority=priority,
             request_options=request_options,
         ) as r:
@@ -146,7 +156,9 @@ class AsyncAudioClient:
         bit_rate: typing.Optional[int] = None,
         container: typing.Optional[AudioGenerateRequestContainer] = None,
         encoding: typing.Optional[AudioGenerateRequestEncoding] = None,
+        expressivity: typing.Optional[int] = None,
         sample_rate: typing.Optional[int] = None,
+        speed: typing.Optional[float] = None,
         priority: typing.Optional[typing.Literal["low"]] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.AsyncIterator[bytes]:
@@ -159,7 +171,7 @@ class AsyncAudioClient:
             Flux TTS model used to synthesize the submitted text, in the form `flux-{voice}-{language}` (for example, `flux-alexis-en`). Required; unlike the v1 (Aura) endpoint there is no default and only flux models are accepted. English-only at launch.
 
         text : str
-            The text content to be converted to speech. The server normalizes and preprocesses the text (e.g. stripping inline controls) before synthesis.
+            The text content to be converted to speech. The server normalizes and preprocesses the text before synthesis. Inline pause and pronunciation controls are not yet applied; they are stripped from the text before synthesis.
 
         callback : typing.Optional[str]
             URL to which we'll make the callback request
@@ -182,8 +194,14 @@ class AsyncAudioClient:
         encoding : typing.Optional[AudioGenerateRequestEncoding]
             Encoding allows you to specify the expected encoding of your audio output
 
+        expressivity : typing.Optional[int]
+            Expressive range of the generated speech. `0` is the voice's nominal delivery; negative values are flatter and more restrained, positive values more animated.
+
         sample_rate : typing.Optional[int]
             Sample Rate specifies the sample rate for the output audio. Based on the encoding, different sample rates are supported. For some encodings, the sample rate is not configurable
+
+        speed : typing.Optional[float]
+            Speaking rate multiplier that adjusts the pace of generated speech while preserving natural prosody and voice quality. Only the multipliers listed here are accepted — the range is 0.85 to 1.15 in 0.05 increments. Not yet supported in all languages.
 
         priority : typing.Optional[typing.Literal["low"]]
             Processing priority for asynchronous (callback) requests. The only supported value is low.
@@ -226,7 +244,9 @@ class AsyncAudioClient:
             bit_rate=bit_rate,
             container=container,
             encoding=encoding,
+            expressivity=expressivity,
             sample_rate=sample_rate,
+            speed=speed,
             priority=priority,
             request_options=request_options,
         ) as r:

@@ -5398,6 +5398,17 @@ asyncio.run(main())
 
 </dd>
 </dl>
+<dl>
+<dd>
+
+**`send_configure(message: ListenV2Configure)`** — Update the transcription configuration mid-stream
+
+- `connection.send_configure(ListenV2Configure(...))` — Acknowledged by a `ListenV2ConfigureSuccess` (or `ListenV2ConfigureFailure`) on the response stream
+- A raw `dict` is also accepted and sent verbatim, for back-compat with callers written before this message was typed
+
+</dd>
+</dl>
+
 </dd>
 </dl>
 
@@ -5485,6 +5496,14 @@ asyncio.run(main())
 
 </dd>
 </dl>
+<dl>
+<dd>
+
+**redact:** `typing.Optional[ListenV2Redact]` — Redact sensitive information from transcripts (`numbers`, `aggressive_numbers`)
+
+</dd>
+</dl>
+
 
 <dl>
 <dd>
@@ -5976,6 +5995,27 @@ asyncio.run(main())
 
 </dd>
 </dl>
+<dl>
+<dd>
+
+**`send_interrupt(message: SpeakV2Interrupt = None)`** — Stop the current turn (barge-in)
+
+- `connection.send_interrupt()` — Stop immediately
+- `connection.send_interrupt(SpeakV2Interrupt(playback_offset=SpeakV2InterruptPlaybackOffset(type="time_ms", value=1500)))` — Report how much audio the listener actually heard, so the returned `SpeakV2SpeechInterrupted` reports which words were spoken (`text_spoken`) and which were not (`text_remaining`). The offset is cumulative from the start of the session, and each interrupt must advance past the previous one.
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**`send_configure(message: SpeakV2Configure)`** — Change the speech rate mid-stream
+
+- `connection.send_configure(SpeakV2Configure(speed=1.05))` — Acknowledged by a `SpeakV2ConfigureSuccess` echoing what was applied, or a `SpeakV2ConfigureFailure` carrying a typed code such as `SPEED_OUT_OF_RANGE`
+
+</dd>
+</dl>
+
 
 <dl>
 <dd>
@@ -6017,6 +6057,22 @@ asyncio.run(main())
 
 </dd>
 </dl>
+<dl>
+<dd>
+
+**speed:** `typing.Optional[SpeakV2Speed]` — Speech-rate multiplier. `1.0` is the model's nominal rate. Accepted values: `0.85`, `0.90`, `0.95`, `1.00`, `1.05`, `1.10`, `1.15` — any other value is rejected with `SPEED_OUT_OF_RANGE` or `SPEED_INCREMENT_INVALID`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**expressivity:** `typing.Optional[SpeakV2Expressivity]` — Expressive range of the generated speech. Accepted values: `-2`, `-1`, `0`, `1`, `2` — `0` is the voice's nominal delivery, negative is flatter and more restrained, positive is more animated
+
+</dd>
+</dl>
+
 
 <dl>
 <dd>

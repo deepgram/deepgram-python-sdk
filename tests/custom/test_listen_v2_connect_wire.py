@@ -74,6 +74,34 @@ def test_sync_connect_targets_v2_listen_and_serializes_numerals():
     assert query["numerals"] == ["true"]
 
 
+def test_sync_connect_serializes_redact():
+    # `redact` (ListenV2Redact) was added in the 2026-08-11 regen; pin its
+    # query-string shape so a future regen cannot silently drop it.
+    capture = _CaptureConnect()
+    with patch.object(listen_v2_client.websockets_sync_client, "connect", capture):
+        with DeepgramClient(api_key="test_api_key").listen.v2.connect(
+            model="flux-general-en",
+            redact="aggressive_numbers",
+        ):
+            pass
+
+    _, query = _path_and_query(capture.url)
+    assert query["redact"] == ["aggressive_numbers"]
+
+
+async def test_async_connect_serializes_redact():
+    capture = _CaptureConnect()
+    with patch.object(listen_v2_client, "websockets_client_connect", capture):
+        async with AsyncDeepgramClient(api_key="test_api_key").listen.v2.connect(
+            model="flux-general-en",
+            redact="numbers",
+        ):
+            pass
+
+    _, query = _path_and_query(capture.url)
+    assert query["redact"] == ["numbers"]
+
+
 def test_sync_connect_omits_numerals_when_absent():
     capture = _CaptureConnect()
     with patch.object(listen_v2_client.websockets_sync_client, "connect", capture):

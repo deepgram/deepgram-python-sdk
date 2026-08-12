@@ -9,15 +9,19 @@ from .deepgram_speak_provider_model import DeepgramSpeakProviderModel
 
 
 class Deepgram(UncheckedBaseModel):
-    type: typing.Literal["deepgram"] = "deepgram"
-    version: typing.Optional[typing.Literal["v1"]] = pydantic.Field(default=None)
     """
-    The REST API version for the Deepgram text-to-speech API
+    Deepgram text-to-speech provider. Aura models use version v1 (default); Flux TTS uses version v2 and a flux-* model.
+    """
+
+    type: typing.Literal["deepgram"] = "deepgram"
+    version: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    The Deepgram text-to-speech model family. Accepted values: `v1` (Aura, the default) and `v2` (Flux TTS). Use `v1` with an aura-* model and `v2` with a flux-* model. Defaults to `v1` when omitted.
     """
 
     model: DeepgramSpeakProviderModel = pydantic.Field()
     """
-    Deepgram TTS model
+    Deepgram TTS model. Aura models (version v1) use the aura-* voices; Flux TTS (version v2) uses the flux-{voice}-{language} voices (e.g. flux-alexis-en).
     """
 
     speed: typing.Optional[float] = pydantic.Field(default=None)

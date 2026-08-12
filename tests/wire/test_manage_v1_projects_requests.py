@@ -8,7 +8,24 @@ def test_manage_v1_projects_requests_list_() -> None:
     test_id = "manage.v1.projects.requests.list_.0"
     client = get_client(test_id)
     client.manage.v1.projects.requests.list(
-        project_id="123456-7890-1234-5678-901234",
+        project_id="12345678-90ab-cdef-1234-567890abcdef",
+    )
+    verify_request_count(test_id, "GET", "/v1/projects/12345678-90ab-cdef-1234-567890abcdef/requests", None, 1)
+
+
+def test_manage_v1_projects_requests_list_serializes_all_query_params() -> None:
+    """All ten optional query params must reach the wire, with datetime encoded as ISO-8601 Z.
+
+    The 2026-08-11 regen simplified the upstream spec *example* for this endpoint,
+    and Fern derives the wire test from that example -- so the generated test
+    dropped every query parameter, leaving their serialization unverified while
+    the client signature still forwards all ten. This restores that coverage; the
+    file is frozen in .fernignore so a future regen cannot silently drop it again.
+    """
+    test_id = "manage.v1.projects.requests.list_.query_params"
+    client = get_client(test_id)
+    client.manage.v1.projects.requests.list(
+        project_id="12345678-90ab-cdef-1234-567890abcdef",
         start=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
         end=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
         limit=1.1,
@@ -23,7 +40,7 @@ def test_manage_v1_projects_requests_list_() -> None:
     verify_request_count(
         test_id,
         "GET",
-        "/v1/projects/123456-7890-1234-5678-901234/requests",
+        "/v1/projects/12345678-90ab-cdef-1234-567890abcdef/requests",
         {
             "start": "2024-01-15T09:30:00Z",
             "end": "2024-01-15T09:30:00Z",
@@ -45,9 +62,13 @@ def test_manage_v1_projects_requests_get() -> None:
     test_id = "manage.v1.projects.requests.get.0"
     client = get_client(test_id)
     client.manage.v1.projects.requests.get(
-        project_id="123456-7890-1234-5678-901234",
-        request_id="123456-7890-1234-5678-901234",
+        project_id="12345678-90ab-cdef-1234-567890abcdef",
+        request_id="a3f1c9d2-4b7e-4f9a-8c3d-2e5f7b9a1c0d",
     )
     verify_request_count(
-        test_id, "GET", "/v1/projects/123456-7890-1234-5678-901234/requests/123456-7890-1234-5678-901234", None, 1
+        test_id,
+        "GET",
+        "/v1/projects/12345678-90ab-cdef-1234-567890abcdef/requests/a3f1c9d2-4b7e-4f9a-8c3d-2e5f7b9a1c0d",
+        None,
+        1,
     )

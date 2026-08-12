@@ -5,5 +5,5 @@ import typing
 ListenV2EotTimeoutMs = typing.Any
 """
 A turn will be finished when this much time has passed after speech,
-regardless of EOT confidence.
+regardless of EOT confidence. Valid Values 500 - 60000.
 """

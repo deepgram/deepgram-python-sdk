@@ -9,17 +9,22 @@ from ....core.unchecked_base_model import UncheckedBaseModel
 
 class SpeakV2SpeechMetadataControlsApplied(UncheckedBaseModel):
     """
-    Controls applied during the turn. Inline pronunciation and pause controls are not available during Early Access, so every count is currently `0`.
+    Counts of the inline controls the server acted on during the turn. Inline pause and pronunciation controls are not applied at launch — support is coming soon — so every count is currently `0`.
     """
 
     pronunciations_applied: int = pydantic.Field()
     """
-    Pronunciation overrides successfully applied. Mirrors the Aura-2 `dg-pronunciations-applied` REST header. Always `0` during Early Access.
+    Pronunciation overrides successfully applied. Mirrors the Aura-2 `dg-pronunciations-applied` REST header. Currently always `0`.
+    """
+
+    breaks_applied: int = pydantic.Field()
+    """
+    Pause (break) controls successfully applied. Mirrors the Aura-2 `dg-breaks-applied` REST header. Currently always `0`.
     """
 
     pronunciation_warnings: int = pydantic.Field()
     """
-    Pronunciation entries that triggered a warning (invalid IPA, word too long). Mirrors the Aura-2 `dg-pronunciation-warnings` REST header. Always `0` during Early Access.
+    Pronunciation entries that triggered a warning (invalid IPA, word too long). Mirrors the Aura-2 `dg-pronunciation-warnings` REST header. Currently always `0`.
     """
 
     if IS_PYDANTIC_V2:
