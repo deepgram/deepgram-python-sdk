@@ -15,7 +15,7 @@ class SpeakV2Speak(UncheckedBaseModel):
 
     text: str = pydantic.Field()
     """
-    The input text to synthesize. May carry inline pause and pronunciation controls; see the TTS Voice Controls guide for their syntax and limits. A control that is rejected or ignored raises a `Warning`, while a malformed one is fatal (`DATA-0002`).
+    The input text to synthesize. Inline pause and pronunciation controls are not yet applied; they are stripped from the text before synthesis.
     """
 
     if IS_PYDANTIC_V2:

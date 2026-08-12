@@ -52,7 +52,7 @@ class RawAudioClient:
             Flux TTS model used to synthesize the submitted text, in the form `flux-{voice}-{language}` (for example, `flux-alexis-en`). Required; unlike the v1 (Aura) endpoint there is no default and only flux models are accepted. English-only at launch.
 
         text : str
-            The text content to be converted to speech. The server normalizes and preprocesses the text before synthesis. May carry inline pause and pronunciation controls; see the TTS Voice Controls guide for their syntax and limits. Unlike the streaming transport, which drops an unusable pause control and warns, batch rejects the whole request with a 400.
+            The text content to be converted to speech. The server normalizes and preprocesses the text before synthesis. Inline pause and pronunciation controls are not yet applied; they are stripped from the text before synthesis.
 
         callback : typing.Optional[str]
             URL to which we'll make the callback request
@@ -191,7 +191,7 @@ class AsyncRawAudioClient:
             Flux TTS model used to synthesize the submitted text, in the form `flux-{voice}-{language}` (for example, `flux-alexis-en`). Required; unlike the v1 (Aura) endpoint there is no default and only flux models are accepted. English-only at launch.
 
         text : str
-            The text content to be converted to speech. The server normalizes and preprocesses the text before synthesis. May carry inline pause and pronunciation controls; see the TTS Voice Controls guide for their syntax and limits. Unlike the streaming transport, which drops an unusable pause control and warns, batch rejects the whole request with a 400.
+            The text content to be converted to speech. The server normalizes and preprocesses the text before synthesis. Inline pause and pronunciation controls are not yet applied; they are stripped from the text before synthesis.
 
         callback : typing.Optional[str]
             URL to which we'll make the callback request

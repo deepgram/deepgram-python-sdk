@@ -35,7 +35,7 @@ class SpeakV2SpeechInterruptedMetadata(UncheckedBaseModel):
 
     controls_applied: SpeakV2SpeechInterruptedMetadataControlsApplied = pydantic.Field()
     """
-    Counts of the inline controls the server acted on during the turn. A control that was rejected or ignored is reported through a `Warning` and does not count here.
+    Counts of the inline controls the server acted on during the turn. Inline pause and pronunciation controls are not applied at launch — support is coming soon — so every count is currently `0`.
     """
 
     if IS_PYDANTIC_V2:
