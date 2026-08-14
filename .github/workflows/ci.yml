@@ -1,6 +1,10 @@
 name: CI
 
-on: [push]
+on:
+  push:
+    branches: [main]
+    tags: ["**"]
+  pull_request:
 
 jobs:
   compile:
@@ -29,6 +33,9 @@ jobs:
         run: poetry run mypy tests/typecheck
   test:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
     strategy:
       matrix:
         python-version: ["3.10", "3.11", "3.12", "3.13"]
@@ -55,7 +62,42 @@ jobs:
           docker compose version
 
       - name: Test
-        run: poetry run pytest -rP .
+        run: poetry run pytest -rP --cov=deepgram --cov-branch --cov-report=xml --cov-report=term-missing .
+      - name: Generate code coverage summary
+        if: matrix.python-version == '3.13'
+        uses: irongut/CodeCoverageSummary@51cc3a756ddcd398d447c044c02cb6aa83fdae95 # v1.3.0
+        with:
+          filename: coverage.xml
+          badge: true
+          format: markdown
+          hide_branch_rate: false
+          hide_complexity: false
+          indicators: true
+          output: both
+          thresholds: "75 90"
+      - name: Annotate coverage scope
+        if: matrix.python-version == '3.13'
+        # CodeCoverageSummary runs as a Docker container action and writes
+        # code-coverage-results.md as root, so a plain `>>` append from the
+        # runner user fails with "Permission denied". Append as root via sudo.
+        run: |
+          {
+            echo ""
+            echo "> Scope: hand-maintained SDK logic. Fern-generated data models (\`types/\`, \`requests/\`), package \`__init__.py\` files, \`version.py\`, and the unused \`core/http_sse/\` scaffolding are excluded — see \`.coveragerc\`. Unscoped whole-package coverage is ~70%."
+          } | sudo tee -a code-coverage-results.md > /dev/null
+      # Fork PRs get a read-only GITHUB_TOKEN, so the Issues API returns 403 and
+      # no `permissions:` block can grant it back. Skip on forks and stay
+      # best-effort; the job summary below carries the same table with no token.
+      - name: Add coverage PR comment
+        if: matrix.python-version == '3.13' && github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
+        continue-on-error: true
+        uses: marocchino/sticky-pull-request-comment@773744901bac0e8cbb5a0dc842800d45e9b2b405 # v2.9.4
+        with:
+          header: code-coverage
+          path: code-coverage-results.md
+      - name: Write coverage to job summary
+        if: matrix.python-version == '3.13'
+        run: cat code-coverage-results.md >> $GITHUB_STEP_SUMMARY
 
   publish:
     needs: [compile, test]
