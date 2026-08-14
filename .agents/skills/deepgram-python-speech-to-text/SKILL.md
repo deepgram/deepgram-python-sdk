@@ -7,15 +7,10 @@ description: Use when writing or reviewing Python code in this repo that calls D
 
 Basic transcription (ASR) for prerecorded audio (REST) or live audio (WebSocket) via `/v1/listen`.
 
-## When to use this product
-
-- **REST (`transcribe_url` / `transcribe_file`)** — one-shot transcription of a complete file or URL. Use for batch jobs, captioning pipelines, offline analysis.
-- **WebSocket (`listen.v1.connect`)** — continuous streaming transcription. Use for live captions, real-time microphone input, phone audio.
-
 **Use a different skill when:**
-- You want summaries, sentiment, topics, intents, diarization, or redaction on the audio → `deepgram-python-audio-intelligence` (same endpoint, different params).
-- You need turn-taking / end-of-turn events → `deepgram-python-conversational-stt` (v2 / Flux).
-- You need a full-duplex interactive assistant (STT + LLM + TTS + function calls) → `deepgram-python-voice-agent`.
+- Summaries, sentiment, topics, intents, diarization, or redaction on audio → `deepgram-python-audio-intelligence` (same endpoint, different params).
+- Turn-taking / end-of-turn events → `deepgram-python-conversational-stt` (v2 / Flux).
+- Full-duplex interactive assistant (STT + LLM + TTS + function calls) → `deepgram-python-voice-agent`.
 
 ## Authentication
 
@@ -60,8 +55,6 @@ response = client.listen.v1.media.transcribe_file(
 
 ## Quick start — WebSocket (live streaming with interim results)
 
-Live transcription emits **interim** (partial) and **final** results. Pass `interim_results=True` and switch on `is_final` to display partial text in real time, then overwrite it with the final transcript when the speaker pauses.
-
 ```python
 import threading
 from deepgram.core.events import EventType
@@ -72,12 +65,11 @@ from deepgram.listen.v1.types import (
 
 with client.listen.v1.connect(
     model="nova-3",
-    interim_results=True,    # ← emit partial results while user is still speaking
-    utterance_end_ms=1000,   # silence (ms) before server emits UtteranceEnd
-    vad_events=True,         # SpeechStarted events
+    interim_results=True,
+    utterance_end_ms=1000,
+    vad_events=True,
     smart_format=True,
 ) as conn:
-    # Mutable container so the on_message closure can update state without `global`
     state = {"last_interim_len": 0}
 
     def on_message(m):
@@ -86,19 +78,17 @@ with client.listen.v1.connect(
             if not transcript:
                 return
             if m.is_final:
-                # Final segment: overwrite the running interim line, newline if utterance ended
                 pad = " " * max(0, state["last_interim_len"] - len(transcript))
                 end = "\n" if m.speech_final else ""
                 print(f"\r{transcript}{pad}", end=end, flush=True)
                 state["last_interim_len"] = 0
             else:
-                # Interim: keep overwriting the same console line as the user speaks
                 print(f"\r{transcript}", end="", flush=True)
                 state["last_interim_len"] = len(transcript)
         elif isinstance(m, ListenV1UtteranceEnd):
-            print()  # newline; UtteranceEnd fires after final results when audio goes silent
+            print()
         elif isinstance(m, ListenV1SpeechStarted):
-            pass  # optional: reset UI when a new utterance begins
+            pass
 
     conn.on(EventType.OPEN,    lambda _: print("connected"))
     conn.on(EventType.MESSAGE, on_message)
@@ -116,14 +106,15 @@ with client.listen.v1.connect(
 
 ### Interim vs. final flag semantics
 
-- **`is_final = False`** — interim hypothesis. Will be revised. Display in a non-committal style (lighter colour, italic) and overwrite when the next message arrives.
-- **`is_final = True`, `speech_final = False`** — confirmed segment, but the speaker is still talking. Append to the transcript; another final will follow.
-- **`is_final = True`, `speech_final = True`** — confirmed segment AND the utterance ended (silence detected). Commit the line and start a new one.
-- **`from_finalize = True`** — this final was triggered by your explicit `send_finalize()` call (vs natural endpointing). Useful to distinguish "I asked for a flush" from "the speaker paused".
+| `is_final` | `speech_final` | Meaning |
+|---|---|---|
+| `False` | -- | Interim hypothesis; will be revised |
+| `True` | `False` | Confirmed segment; speaker still talking |
+| `True` | `True` | Confirmed segment; utterance ended (silence) |
 
-Send `send_finalize()` to force the server to emit final results immediately (e.g. user clicks "stop"). Send `send_close_stream()` after `send_finalize` to terminate cleanly.
+`from_finalize=True` means the final was triggered by `send_finalize()` (vs natural endpointing). Call `send_finalize()` to flush, then `send_close_stream()` to terminate. Types: `deepgram.listen.v1.types`.
 
-WSS message types live under `deepgram.listen.v1.types`.
+**WebSocket error recovery:** If connection fails with 401, verify auth scheme (Gotcha #1). If transcript is empty, verify `encoding`/`sample_rate` match the audio (Gotcha #2). On unexpected close, check `EventType.ERROR` payload and reconnect with exponential backoff.
 
 ## Async equivalents
 
@@ -140,56 +131,14 @@ async with client.listen.v1.connect(model="nova-3") as conn:
 
 ## Async / deferred result patterns
 
-There are **two distinct** notions of "async" — don't confuse them.
-
-### 1. Python `async/await` (sync-style, immediate result)
-
-`AsyncDeepgramClient` returns `Awaitable[<full response>]`. The result is delivered when you `await`, not later. Use this when integrating with FastAPI, aiohttp, or any asyncio app.
-
-```python
-import asyncio
-from deepgram import AsyncDeepgramClient
-
-client = AsyncDeepgramClient()
-
-async def transcribe(url: str) -> str:
-    response = await client.listen.v1.media.transcribe_url(
-        url=url,
-        model="nova-3",
-        smart_format=True,
-    )
-    # `response` is the FULL transcription — no polling, no callback, just await.
-    return response.results.channels[0].alternatives[0].transcript
-
-text = asyncio.run(transcribe("https://dpgr.am/spacewalk.wav"))
-```
-
-### 2. Deferred via callback URL (webhook, results posted later)
-
-Pass `callback="https://your.app/webhook"` and the request **returns immediately** with a `request_id`. Deepgram processes the audio in the background and POSTs the final result to your webhook URL. There is **no polling endpoint** — your server must be reachable to receive the result.
-
-```python
-response = client.listen.v1.media.transcribe_url(
-    url="https://dpgr.am/spacewalk.wav",
-    callback="https://your.app/deepgram-webhook",
-    callback_method="POST",         # or "PUT"
-    model="nova-3",
-    smart_format=True,
-)
-print(f"Accepted; tracking id: {response.request_id}")
-# response is a "listen accepted" — NOT the transcript. Wait for your webhook.
-```
-
-The webhook receives the same JSON body you would have received from a synchronous `transcribe_url` call. Use this for very long files or when you don't want the request hanging open.
-
 | Pattern | Returns | When to use |
 |---|---|---|
-| `client.listen.v1.media.transcribe_url(...)` | full transcription synchronously | files up to ~10 min; HTTP timeout-bound |
-| `await AsyncDeepgramClient().listen.v1.media.transcribe_url(...)` | full transcription, non-blocking | inside asyncio apps |
-| `transcribe_url(..., callback="https://...")` | `{request_id}` immediately, transcription POSTs to webhook later | very long files; no long-lived HTTP connection |
+| `client.listen.v1.media.transcribe_url(...)` | full transcription synchronously | files up to ~10 min |
+| `await AsyncDeepgramClient().listen.v1.media.transcribe_url(...)` | full transcription, non-blocking | asyncio apps (FastAPI, aiohttp) |
+| `transcribe_url(..., callback="https://...")` | `{request_id}` immediately; result POSTs to webhook | very long files; no polling endpoint exists |
 | `client.listen.v1.connect(...)` (WebSocket) | streaming events as audio is sent | live audio (mic, telephony) |
 
-See `examples/12-transcription-prerecorded-callback.py` for a working callback example.
+For the callback pattern, pass `callback="https://your.app/webhook"` and optionally `callback_method="POST"`. The response contains only `request_id` -- the full transcription JSON is POSTed to your webhook. See `examples/12-transcription-prerecorded-callback.py`.
 
 ## Key parameters
 
@@ -225,12 +174,4 @@ See `examples/12-transcription-prerecorded-callback.py` for a working callback e
 - `tests/wire/test_listen_v1_media.py` — wire-level fixtures
 - `tests/manual/listen/v1/connect/main.py` — live WSS connection test
 
-## Central product skills
-
-For cross-language Deepgram product knowledge — the consolidated API reference, documentation finder, focused runnable recipes, third-party integration examples, and MCP setup — install the central skills:
-
-```bash
-npx skills add deepgram/skills
-```
-
-This SDK ships language-idiomatic code skills; `deepgram/skills` ships cross-language product knowledge (see `api`, `docs`, `recipes`, `examples`, `starters`, `setup-mcp`).
+For cross-language Deepgram product knowledge, install the central skills: `npx skills add deepgram/skills`.

@@ -7,16 +7,10 @@ description: Use when writing or reviewing Python code in this repo that calls D
 
 Turn-aware streaming STT at `/v2/listen` — optimized for conversational audio (end-of-turn detection, eager EOT, barge-in scenarios).
 
-## When to use this product
-
-- You're building a **conversational UI** and need explicit turn boundaries.
-- You want **Flux models** (optimized for human-to-human or human-to-agent conversation).
-- You want lower latency turn signals than v1 utterance_end.
-
 **Use a different skill when:**
-- You want general-purpose transcription (captions, batch, non-conversational) → `deepgram-python-speech-to-text`.
-- You want a full interactive agent (STT + LLM + TTS) → `deepgram-python-voice-agent`.
-- You want analytics (summarize/sentiment) → `deepgram-python-audio-intelligence`.
+- General-purpose transcription (captions, batch, non-conversational) → `deepgram-python-speech-to-text`.
+- Full interactive agent (STT + LLM + TTS) → `deepgram-python-voice-agent`.
+- Analytics (summarize/sentiment) → `deepgram-python-audio-intelligence`.
 
 ## Authentication
 
@@ -72,6 +66,26 @@ with client.listen.v2.connect(
 
     threading.Thread(target=send_audio, daemon=True).start()
     conn.start_listening()
+```
+
+## Error recovery
+
+On `ListenV2FatalError`, the connection is terminal -- open a new one. For transient disconnects (`EventType.CLOSE` without a prior fatal), reconnect with exponential backoff:
+
+```python
+import time
+
+def run_with_reconnect(max_retries=5):
+    for attempt in range(max_retries):
+        try:
+            with client.listen.v2.connect(model="flux-general-en", encoding="linear16", sample_rate="16000") as conn:
+                # ... register handlers, send audio ...
+                conn.start_listening()
+                break  # clean exit
+        except Exception as e:
+            wait = min(2 ** attempt, 30)
+            print(f"Disconnected ({e}), retrying in {wait}s...")
+            time.sleep(wait)
 ```
 
 ## Key parameters
@@ -143,12 +157,4 @@ async with client.listen.v2.connect(model="flux-general-en", ...) as conn:
 - `deepgram-python-speech-to-text` — v1 general-purpose STT (REST + WSS)
 - `deepgram-python-voice-agent` — full interactive assistant
 
-## Central product skills
-
-For cross-language Deepgram product knowledge — the consolidated API reference, documentation finder, focused runnable recipes, third-party integration examples, and MCP setup — install the central skills:
-
-```bash
-npx skills add deepgram/skills
-```
-
-This SDK ships language-idiomatic code skills; `deepgram/skills` ships cross-language product knowledge (see `api`, `docs`, `recipes`, `examples`, `starters`, `setup-mcp`).
+For cross-language Deepgram product knowledge, install the central skills: `npx skills add deepgram/skills`.

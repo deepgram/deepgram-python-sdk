@@ -7,16 +7,11 @@ description: Use when writing or reviewing Python code in this repo that calls D
 
 Analytics overlays applied to `/v1/listen` transcription: summarize, topics, intents, sentiment, language detection, diarization, redaction, entities. Same endpoint / same client methods as STT — enable features via params.
 
-## When to use this product
-
-- You have **audio** (file, URL, or live stream) and want analytics alongside the transcript.
-- REST is the primary path — most analytics are REST-only.
-
 **Use a different skill when:**
-- You want a pure transcript with no analytics → `deepgram-python-speech-to-text`.
-- Your input is already transcribed text → `deepgram-python-text-intelligence` (`/v1/read`).
-- You need conversational turn-taking → `deepgram-python-conversational-stt`.
-- You need a full interactive agent → `deepgram-python-voice-agent`.
+- Pure transcript with no analytics → `deepgram-python-speech-to-text`.
+- Input is already transcribed text → `deepgram-python-text-intelligence` (`/v1/read`).
+- Conversational turn-taking → `deepgram-python-conversational-stt`.
+- Full interactive agent → `deepgram-python-voice-agent`.
 
 ## Feature availability: REST vs WSS
 
@@ -55,13 +50,13 @@ response = client.listen.v1.media.transcribe_url(
     model="nova-3",
     smart_format=True,
     punctuate=True,
-    diarize=True,              # speaker separation
-    summarize="v2",            # "v2" for the current model; True also accepted on /v1/listen
+    diarize=True,
+    summarize="v2",
     topics=True,
     intents=True,
     sentiment=True,
     detect_language=True,
-    redact=["pci", "pii"],     # or Sequence[str]
+    redact=["pci", "pii"],
     language="en-US",
 )
 
@@ -98,44 +93,23 @@ response = client.listen.v1.media.transcribe_file(
 
 ## Quick start — diarization with word-level timings
 
-Enable speaker separation and word-level timestamps in a single request, then iterate the per-word objects to build a speaker-labelled transcript with timing.
-
 ```python
 response = client.listen.v1.media.transcribe_url(
     url="https://dpgr.am/spacewalk.wav",
     model="nova-3",
-    diarize=True,        # tag each word with a speaker id
-    smart_format=True,   # punctuated_word for cleaner output
+    diarize=True,
+    smart_format=True,
     punctuate=True,
 )
 
 words = response.results.channels[0].alternatives[0].words or []
-
-# Per-word: speaker, timestamps, confidence
-for w in words:
-    speaker = getattr(w, "speaker", None)
-    text = w.punctuated_word or w.word
-    print(f"[speaker {speaker}] {text}  ({w.start:.2f}s–{w.end:.2f}s, conf={w.confidence:.2f})")
-
-# Group consecutive words by speaker into utterances
 from itertools import groupby
 for speaker, group in groupby(words, key=lambda w: getattr(w, "speaker", None)):
     text = " ".join((w.punctuated_word or w.word) for w in group)
     print(f"Speaker {speaker}: {text}")
 ```
 
-Per-word fields available on each entry:
-
-| Field | Type | Description |
-|---|---|---|
-| `word` | `str` | Lowercase token |
-| `punctuated_word` | `str \| None` | Token with smart-formatted casing/punctuation (when `smart_format=True`) |
-| `start`, `end` | `float` | Audio timestamps in seconds |
-| `confidence` | `float` | 0.0–1.0 confidence |
-| `speaker` | `int \| None` | Speaker id (when `diarize=True`); `None` if diarization disabled |
-| `speaker_confidence` | `float \| None` | Speaker-id confidence |
-
-For a higher-level breakdown, set `utterances=True` to get pre-grouped speaker turns at `response.results.utterances`. Set `paragraphs=True` for a `paragraphs` view organised by speaker turn boundaries.
+Each word object has: `word`, `punctuated_word`, `start`/`end` (float seconds), `confidence`, `speaker` (int, when `diarize=True`), `speaker_confidence`. For pre-grouped speaker turns use `utterances=True` (`response.results.utterances`) or `paragraphs=True`.
 
 ## Quick start — WSS subset (diarize / redact / entities only)
 
@@ -151,27 +125,32 @@ with client.listen.v1.connect(model="nova-3", diarize=True, redact=["pii"]) as c
     conn.send_finalize()
 ```
 
+## Validation & recovery
+
+After transcription, verify analytics fields are populated:
+
+```python
+r = response.results
+if r.summary is None and summarize_was_requested:
+    # Feature silently ignored -- likely passed on WSS (REST-only).
+    # Recovery: re-run via REST instead of WSS.
+    response = client.listen.v1.media.transcribe_url(url=..., summarize="v2", ...)
+```
+
+For `redact`, confirm redacted markers appear in the transcript (e.g., search for `[REDACTED]`). A missing marker means encoding mismatch or unsupported redact value.
+
 ## Key parameters
 
 `summarize`, `topics`, `intents`, `sentiment`, `detect_language`, `diarize`, `redact`, `custom_topic`, `custom_topic_mode`, `custom_intent`, `custom_intent_mode`, `detect_entities`, plus all the standard STT params (`model`, `language`, `encoding`, `sample_rate`, ...).
 
-`redact` is typed as `Optional[str]` in the current generated SDK (`src/deepgram/listen/v1/media/client.py`). Pass a single redaction mode such as `"pci"`, `"pii"`, `"numbers"`, or `"phi"`. Multi-mode redaction at the transport level is supported by sending `redact` as a repeated query parameter — check `src/deepgram/types/listen_v1redact.py` for the current type and fall back to raw query-param construction (or multiple calls) if you need several modes. The earlier `Union[str, Sequence[str]]` override is no longer carried in `.fernignore`.
+`redact` is typed as `Optional[str]` in the generated SDK. Pass a single mode (`"pci"`, `"pii"`, `"numbers"`, `"phi"`). For multi-mode, use repeated query params or multiple calls -- see `src/deepgram/types/listen_v1redact.py`.
 
 ## API reference (layered)
 
-1. **In-repo reference**: `reference.md` — "Listen V1 Media" (REST params include all analytics flags), "Listen V1 Connect" (WSS-supported subset).
-2. **OpenAPI (REST)**: https://developers.deepgram.com/openapi.yaml
-3. **AsyncAPI (WSS)**: https://developers.deepgram.com/asyncapi.yaml
-4. **Context7**: library ID `/llmstxt/developers_deepgram_llms_txt`.
-5. **Product docs**:
-   - https://developers.deepgram.com/docs/stt-intelligence-feature-overview
-   - https://developers.deepgram.com/docs/summarization
-   - https://developers.deepgram.com/docs/topic-detection
-   - https://developers.deepgram.com/docs/intent-recognition
-   - https://developers.deepgram.com/docs/sentiment-analysis
-   - https://developers.deepgram.com/docs/language-detection
-   - https://developers.deepgram.com/docs/redaction
-   - https://developers.deepgram.com/docs/diarization
+1. **In-repo reference**: `reference.md` -- "Listen V1 Media" (REST), "Listen V1 Connect" (WSS subset).
+2. **OpenAPI / AsyncAPI**: https://developers.deepgram.com/openapi.yaml, https://developers.deepgram.com/asyncapi.yaml
+3. **Context7**: library ID `/llmstxt/developers_deepgram_llms_txt`.
+4. **Product docs**: https://developers.deepgram.com/docs/stt-intelligence-feature-overview (overview); per-feature pages at `/docs/summarization`, `/docs/topic-detection`, `/docs/intent-recognition`, `/docs/sentiment-analysis`, `/docs/language-detection`, `/docs/redaction`, `/docs/diarization`.
 
 ## Gotchas
 
@@ -195,12 +174,4 @@ with client.listen.v1.connect(model="nova-3", diarize=True, redact=["pii"]) as c
 - `deepgram-python-conversational-stt` — Flux for turn-taking
 - `deepgram-python-voice-agent` — interactive assistants
 
-## Central product skills
-
-For cross-language Deepgram product knowledge — the consolidated API reference, documentation finder, focused runnable recipes, third-party integration examples, and MCP setup — install the central skills:
-
-```bash
-npx skills add deepgram/skills
-```
-
-This SDK ships language-idiomatic code skills; `deepgram/skills` ships cross-language product knowledge (see `api`, `docs`, `recipes`, `examples`, `starters`, `setup-mcp`).
+For cross-language Deepgram product knowledge, install the central skills: `npx skills add deepgram/skills`.
