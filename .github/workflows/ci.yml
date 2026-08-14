@@ -65,7 +65,7 @@ jobs:
         run: poetry run pytest -rP --cov=deepgram --cov-branch --cov-report=xml --cov-report=term-missing .
       - name: Generate code coverage summary
         if: matrix.python-version == '3.13'
-        uses: irongut/CodeCoverageSummary@v1.3.0
+        uses: irongut/CodeCoverageSummary@51cc3a756ddcd398d447c044c02cb6aa83fdae95 # v1.3.0
         with:
           filename: coverage.xml
           badge: true
@@ -88,7 +88,7 @@ jobs:
       - name: Add coverage PR comment
         if: matrix.python-version == '3.13' && github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
         continue-on-error: true
-        uses: marocchino/sticky-pull-request-comment@v2
+        uses: marocchino/sticky-pull-request-comment@773744901bac0e8cbb5a0dc842800d45e9b2b405 # v2.9.4
         with:
           header: code-coverage
           path: code-coverage-results.md
