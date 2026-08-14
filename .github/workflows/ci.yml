@@ -77,11 +77,14 @@ jobs:
           thresholds: "75 90"
       - name: Annotate coverage scope
         if: matrix.python-version == '3.13'
+        # CodeCoverageSummary runs as a Docker container action and writes
+        # code-coverage-results.md as root, so a plain `>>` append from the
+        # runner user fails with "Permission denied". Append as root via sudo.
         run: |
           {
             echo ""
             echo "> Scope: hand-maintained SDK logic. Fern-generated data models (\`types/\`, \`requests/\`), package \`__init__.py\` files, \`version.py\`, and the unused \`core/http_sse/\` scaffolding are excluded — see \`.coveragerc\`. Unscoped whole-package coverage is ~70%."
-          } >> code-coverage-results.md
+          } | sudo tee -a code-coverage-results.md > /dev/null
       # Fork PRs get a read-only GITHUB_TOKEN, so the Issues API returns 403 and
       # no `permissions:` block can grant it back. Skip on forks and stay
       # best-effort; the job summary below carries the same table with no token.
