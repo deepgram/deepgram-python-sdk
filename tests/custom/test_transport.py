@@ -530,3 +530,67 @@ class TestReconnectFlag:
         from deepgram.client import AsyncDeepgramClient
         client = AsyncDeepgramClient(api_key="test-key", transport_factory=factory)
         assert client.reconnect is False
+
+
+# ---------------------------------------------------------------------------
+# _TARGET_MODULES coverage
+# ---------------------------------------------------------------------------
+
+class TestTargetModuleCoverage:
+    """_TARGET_MODULES must list every generated module with a websocket connect().
+
+    A surface missing from the list fails silently: `transport_factory` is
+    accepted, nothing raises, and the client connects to Deepgram Cloud
+    instead of the custom transport. `speak.v2` (Flux TTS) shipped that way
+    until this was caught -- the tests above all iterate _TARGET_MODULES, so
+    they can't detect an omission from it.
+    """
+
+    @staticmethod
+    def _modules_with_websockets():
+        """Scan the installed package for modules importing the websocket names."""
+        import pathlib
+
+        import deepgram
+
+        root = pathlib.Path(deepgram.__file__).parent
+        found = set()
+        for path in root.rglob("*.py"):
+            # The shim module itself references these names by design.
+            if path.name in ("transport.py", "transport_interface.py"):
+                continue
+            source = path.read_text(encoding="utf-8")
+            if (
+                "import websockets.sync.client as websockets_sync_client" in source
+                or "as websockets_client_connect" in source
+            ):
+                rel = path.relative_to(root).with_suffix("")
+                found.add("deepgram." + ".".join(rel.parts))
+        return found
+
+    def test_every_websocket_module_is_targeted(self):
+        missing = self._modules_with_websockets() - set(_TARGET_MODULES)
+        assert not missing, (
+            "These generated modules have a websocket connect() but are absent "
+            f"from _TARGET_MODULES, so transport_factory silently ignores them: "
+            f"{sorted(missing)}"
+        )
+
+    def test_no_stale_entries(self):
+        stale = set(_TARGET_MODULES) - self._modules_with_websockets()
+        assert not stale, f"_TARGET_MODULES lists modules with no websocket connect(): {sorted(stale)}"
+
+    @pytest.mark.parametrize(
+        "mod_path",
+        [
+            "deepgram.listen.v1.client",
+            "deepgram.listen.v2.client",
+            "deepgram.speak.v1.client",
+            "deepgram.speak.v2.client",
+            "deepgram.agent.v1.client",
+        ],
+    )
+    def test_known_surfaces_are_targeted(self, mod_path):
+        """Explicit list so a regen that drops a surface fails loudly."""
+        assert mod_path in _TARGET_MODULES
+        assert mod_path.replace(".client", ".raw_client") in _TARGET_MODULES
