@@ -5,7 +5,7 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .groq_think_provider_reasoning_mode import GroqThinkProviderReasoningMode
+from .groq_reasoning_mode import GroqReasoningMode
 
 
 class Groq(UncheckedBaseModel):
@@ -25,7 +25,7 @@ class Groq(UncheckedBaseModel):
     Groq temperature (0-2)
     """
 
-    reasoning_mode: typing.Optional[GroqThinkProviderReasoningMode] = pydantic.Field(default=None)
+    reasoning_mode: typing.Optional[GroqReasoningMode] = pydantic.Field(default=None)
     """
     OpenAI reasoning_effort
     """

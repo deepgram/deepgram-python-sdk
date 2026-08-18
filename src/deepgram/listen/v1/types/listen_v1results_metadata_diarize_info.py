@@ -3,19 +3,23 @@
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
-from ..core.unchecked_base_model import UncheckedBaseModel
+from ....core.pydantic_utilities import IS_PYDANTIC_V2
+from ....core.unchecked_base_model import UncheckedBaseModel
 
 
-class CartesiaSpeakProviderVoice(UncheckedBaseModel):
-    mode: str = pydantic.Field()
+class ListenV1ResultsMetadataDiarizeInfo(UncheckedBaseModel):
     """
-    Cartesia voice mode
+    The diarizer that produced the speaker labels. Present only when a diarizer ran.
     """
 
-    id: str = pydantic.Field()
+    model_uuid: str = pydantic.Field()
     """
-    Cartesia voice ID
+    The diarizer model UUID
+    """
+
+    arch: str = pydantic.Field()
+    """
+    The diarizer arch, such as `v1` or `v2`
     """
 
     if IS_PYDANTIC_V2:

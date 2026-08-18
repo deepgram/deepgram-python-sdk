@@ -3,7 +3,7 @@
 import typing_extensions
 
 
-class CartesiaSpeakProviderVoiceParams(typing_extensions.TypedDict):
+class CartesiaVoiceParams(typing_extensions.TypedDict):
     mode: str
     """
     Cartesia voice mode

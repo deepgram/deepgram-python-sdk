@@ -3,7 +3,7 @@
 import typing_extensions
 
 
-class AgentV1HistoryFunctionCallsFunctionCallsItemParams(typing_extensions.TypedDict):
+class FunctionCallHistoryMessageFunctionCallsItemParams(typing_extensions.TypedDict):
     id: str
     """
     Unique identifier for the function call

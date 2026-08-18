@@ -5,7 +5,7 @@ import typing
 import pydantic
 from ....core.pydantic_utilities import IS_PYDANTIC_V2
 from ....core.unchecked_base_model import UncheckedBaseModel
-from ....types.speak_v2speed import SpeakV2Speed
+from ....types.speak_v2speed_value import SpeakV2SpeedValue
 
 
 class SpeakV2Configure(UncheckedBaseModel):
@@ -14,7 +14,7 @@ class SpeakV2Configure(UncheckedBaseModel):
     Message type identifier
     """
 
-    speed: typing.Optional[SpeakV2Speed] = None
+    speed: typing.Optional[SpeakV2SpeedValue] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

@@ -79,13 +79,13 @@ class AudioClient:
             Encoding allows you to specify the expected encoding of your audio output
 
         expressivity : typing.Optional[int]
-            Expressive range of the generated speech. `0` is the voice's nominal delivery; negative values are flatter and more restrained, positive values more animated.
+            Expressive range of the generated speech, on a calm-to-animated axis. Accepted values: `-2`, `-1`, `0`, `1`, `2`. `0` (the default) is the voice's tuned delivery and the production-validated setting, with `-2` the calm end of the range and `2` the animated end. Supported on all Flux voices; applies to the whole request. Beta: behavior may change in future model versions, and non-default values increase the risk of hallucinations and pronunciation errors; audition before shipping. An invalid value is rejected with a `400` — `EXPRESSIVITY_OUT_OF_RANGE` for a value outside the range, `EXPRESSIVITY_INCREMENT_INVALID` for a fractional value. See [Expressivity](/docs/tts-expressivity).
 
         sample_rate : typing.Optional[int]
             Sample Rate specifies the sample rate for the output audio. Based on the encoding, different sample rates are supported. For some encodings, the sample rate is not configurable
 
         speed : typing.Optional[float]
-            Speaking rate multiplier that adjusts the pace of generated speech while preserving natural prosody and voice quality. Only the multipliers listed here are accepted — the range is 0.85 to 1.15 in 0.05 increments. Not yet supported in all languages.
+            Speaking rate multiplier that adjusts the pace of generated speech while preserving natural prosody and voice quality. Accepted values run `0.85` to `1.15` in `0.05` increments. Not yet supported in all languages.
 
         priority : typing.Optional[typing.Literal["low"]]
             Processing priority for asynchronous (callback) requests. The only supported value is low.
@@ -195,13 +195,13 @@ class AsyncAudioClient:
             Encoding allows you to specify the expected encoding of your audio output
 
         expressivity : typing.Optional[int]
-            Expressive range of the generated speech. `0` is the voice's nominal delivery; negative values are flatter and more restrained, positive values more animated.
+            Expressive range of the generated speech, on a calm-to-animated axis. Accepted values: `-2`, `-1`, `0`, `1`, `2`. `0` (the default) is the voice's tuned delivery and the production-validated setting, with `-2` the calm end of the range and `2` the animated end. Supported on all Flux voices; applies to the whole request. Beta: behavior may change in future model versions, and non-default values increase the risk of hallucinations and pronunciation errors; audition before shipping. An invalid value is rejected with a `400` — `EXPRESSIVITY_OUT_OF_RANGE` for a value outside the range, `EXPRESSIVITY_INCREMENT_INVALID` for a fractional value. See [Expressivity](/docs/tts-expressivity).
 
         sample_rate : typing.Optional[int]
             Sample Rate specifies the sample rate for the output audio. Based on the encoding, different sample rates are supported. For some encodings, the sample rate is not configurable
 
         speed : typing.Optional[float]
-            Speaking rate multiplier that adjusts the pace of generated speech while preserving natural prosody and voice quality. Only the multipliers listed here are accepted — the range is 0.85 to 1.15 in 0.05 increments. Not yet supported in all languages.
+            Speaking rate multiplier that adjusts the pace of generated speech while preserving natural prosody and voice quality. Accepted values run `0.85` to `1.15` in `0.05` increments. Not yet supported in all languages.
 
         priority : typing.Optional[typing.Literal["low"]]
             Processing priority for asynchronous (callback) requests. The only supported value is low.

@@ -3,18 +3,18 @@
 import typing
 
 import typing_extensions
-from ..types.google_think_provider_model import GoogleThinkProviderModel
-from ..types.google_think_provider_version import GoogleThinkProviderVersion
+from ..types.google_model import GoogleModel
+from ..types.google_version import GoogleVersion
 
 
 class GoogleParams(typing_extensions.TypedDict):
     type: typing.Literal["google"]
-    version: typing_extensions.NotRequired[GoogleThinkProviderVersion]
+    version: typing_extensions.NotRequired[GoogleVersion]
     """
     The Google API used for the request: ai-studio-v1beta for the AI Studio API, or gemini-enterprise-agent-v1 for the Gemini Enterprise Agent (GEA) API. v1beta is accepted as an alias for ai-studio-v1beta. Defaults based on the Deepgram Voice Agent endpoint you connect to.
     """
 
-    model: GoogleThinkProviderModel
+    model: GoogleModel
     """
     Google model to use
     """

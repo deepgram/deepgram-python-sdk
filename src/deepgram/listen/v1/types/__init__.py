@@ -20,6 +20,7 @@ if typing.TYPE_CHECKING:
     from .listen_v1results_channel_alternatives_item_words_item import ListenV1ResultsChannelAlternativesItemWordsItem
     from .listen_v1results_entities_item import ListenV1ResultsEntitiesItem
     from .listen_v1results_metadata import ListenV1ResultsMetadata
+    from .listen_v1results_metadata_diarize_info import ListenV1ResultsMetadataDiarizeInfo
     from .listen_v1results_metadata_model_info import ListenV1ResultsMetadataModelInfo
     from .listen_v1speech_started import ListenV1SpeechStarted
     from .listen_v1utterance_end import ListenV1UtteranceEnd
@@ -38,6 +39,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ListenV1ResultsChannelAlternativesItemWordsItem": ".listen_v1results_channel_alternatives_item_words_item",
     "ListenV1ResultsEntitiesItem": ".listen_v1results_entities_item",
     "ListenV1ResultsMetadata": ".listen_v1results_metadata",
+    "ListenV1ResultsMetadataDiarizeInfo": ".listen_v1results_metadata_diarize_info",
     "ListenV1ResultsMetadataModelInfo": ".listen_v1results_metadata_model_info",
     "ListenV1SpeechStarted": ".listen_v1speech_started",
     "ListenV1UtteranceEnd": ".listen_v1utterance_end",
@@ -80,6 +82,7 @@ __all__ = [
     "ListenV1ResultsChannelAlternativesItemWordsItem",
     "ListenV1ResultsEntitiesItem",
     "ListenV1ResultsMetadata",
+    "ListenV1ResultsMetadataDiarizeInfo",
     "ListenV1ResultsMetadataModelInfo",
     "ListenV1SpeechStarted",
     "ListenV1UtteranceEnd",

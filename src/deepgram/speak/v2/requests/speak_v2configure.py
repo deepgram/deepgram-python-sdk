@@ -3,7 +3,7 @@
 import typing
 
 import typing_extensions
-from ....types.speak_v2speed import SpeakV2Speed
+from ....types.speak_v2speed_value import SpeakV2SpeedValue
 
 
 class SpeakV2ConfigureParams(typing_extensions.TypedDict):
@@ -12,4 +12,4 @@ class SpeakV2ConfigureParams(typing_extensions.TypedDict):
     Message type identifier
     """
 
-    speed: typing_extensions.NotRequired[SpeakV2Speed]
+    speed: typing_extensions.NotRequired[SpeakV2SpeedValue]

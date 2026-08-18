@@ -5,6 +5,7 @@ import typing
 import pydantic
 from ....core.pydantic_utilities import IS_PYDANTIC_V2
 from ....core.unchecked_base_model import UncheckedBaseModel
+from .listen_v1results_metadata_diarize_info import ListenV1ResultsMetadataDiarizeInfo
 from .listen_v1results_metadata_model_info import ListenV1ResultsMetadataModelInfo
 
 
@@ -18,6 +19,11 @@ class ListenV1ResultsMetadata(UncheckedBaseModel):
     model_uuid: str = pydantic.Field()
     """
     The model UUID
+    """
+
+    diarize_info: typing.Optional[ListenV1ResultsMetadataDiarizeInfo] = pydantic.Field(default=None)
+    """
+    The diarizer that produced the speaker labels. Present only when a diarizer ran.
     """
 
     if IS_PYDANTIC_V2:

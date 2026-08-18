@@ -3,7 +3,7 @@
 import typing
 
 import typing_extensions
-from ..types.groq_think_provider_reasoning_mode import GroqThinkProviderReasoningMode
+from ..types.groq_reasoning_mode import GroqReasoningMode
 
 
 class GroqParams(typing_extensions.TypedDict):
@@ -23,7 +23,7 @@ class GroqParams(typing_extensions.TypedDict):
     Groq temperature (0-2)
     """
 
-    reasoning_mode: typing_extensions.NotRequired[GroqThinkProviderReasoningMode]
+    reasoning_mode: typing_extensions.NotRequired[GroqReasoningMode]
     """
     OpenAI reasoning_effort
     """
