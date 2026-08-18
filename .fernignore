@@ -127,6 +127,15 @@ src/deepgram/agent/v1/types/agent_v1settings_agent_context_listen_provider.py
 # when the old provider payloads are retired in a future major.
 src/deepgram/agent/v1/types/agent_v1update_listen_listen.py
 
+# Backward-compat patch for the 2026-08-18 regen SpeakV2Speed retype. The generator
+# changed this from `float` to `Union[Literal["0.85"..."1.15"], Any]` -- a string-literal
+# enum that contradicts the API contract (a numeric multiplier; cf. SpeakV2SpeedValue =
+# float, used by the Configure message) and silently changed the documented domain of the
+# `speak.v2.connect(speed=...)` param from numeric to string. Restored to `float` so the
+# connect param stays exactly what it was on main and consistent with Configure. Unfreeze
+# when the spec types the connect `speed` as a number.
+src/deepgram/types/speak_v2speed.py
+
 # Hand-written compat shim recreating ListenV2CloseStreamType, which Fern removed in the
 # 2026-06-15 regen (docs #946). The original generated type wrongly allowed
 # Union[Literal["Finalize","CloseStream","KeepAlive"], Any] — v2 copied v1's control-message
