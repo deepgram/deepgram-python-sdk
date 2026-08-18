@@ -2,6 +2,8 @@
 
 from typing import Any, Dict, Optional
 
+from .._secure_logging import redact_sensitive_headers
+
 
 class ApiError(Exception):
     headers: Optional[Dict[str, str]]
@@ -15,7 +17,13 @@ class ApiError(Exception):
         status_code: Optional[int] = None,
         body: Any = None,
     ) -> None:
-        self.headers = headers
+        # Mask credential headers at construction, not just in __str__. The
+        # websocket connect paths raise with the full request headers, so an
+        # unredacted Authorization would otherwise reach anywhere this exception
+        # goes: str(e), a traceback, a log aggregator, or an error tracker (which
+        # serialises attributes as well as the message). Non-sensitive headers are
+        # kept -- dg-request-id is the main reason to look at them at all.
+        self.headers = redact_sensitive_headers(headers)
         self.status_code = status_code
         self.body = body
 

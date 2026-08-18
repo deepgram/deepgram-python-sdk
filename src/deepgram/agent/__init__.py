@@ -129,6 +129,35 @@ if typing.TYPE_CHECKING:
         FunctionCallHistoryMessageFunctionCallsItemParams,
         FunctionCallHistoryMessageParams,
     )
+    from .v1 import AgentV1HistoryContent
+    from .v1 import AgentV1HistoryContentParams
+    from .v1 import AgentV1HistoryContentRole
+    from .v1 import AgentV1HistoryFunctionCalls
+    from .v1 import AgentV1HistoryFunctionCallsFunctionCallsItem
+    from .v1 import AgentV1HistoryFunctionCallsFunctionCallsItemParams
+    from .v1 import AgentV1HistoryFunctionCallsParams
+    from .v1 import AgentV1SettingsAgentContextContextMessagesItemContentRole
+    from .v1 import AgentV1SettingsAgentContextContextMessagesItemFunctionCallsFunctionCallsItem
+    from .v1 import AgentV1SettingsAgentContextContextMessagesItemFunctionCallsFunctionCallsItemParams
+    from .v1 import AgentV1SettingsAgentContextListenProviderV1
+    from .v1 import AgentV1SettingsAgentContextListenProviderV1Params
+    from .v1 import AgentV1SettingsAgentContextListenProviderV2
+    from .v1 import AgentV1SettingsAgentContextListenProviderV2LanguageHint
+    from .v1 import AgentV1SettingsAgentContextListenProviderV2LanguageHintParams
+    from .v1 import AgentV1SettingsAgentContextListenProviderV2Params
+    from .v1 import AgentV1SettingsAgentContextMessagesItem
+    from .v1 import AgentV1SettingsAgentContextMessagesItemContent
+    from .v1 import AgentV1SettingsAgentContextMessagesItemContentParams
+    from .v1 import AgentV1SettingsAgentContextMessagesItemContentRole
+    from .v1 import AgentV1SettingsAgentContextMessagesItemFunctionCalls
+    from .v1 import AgentV1SettingsAgentContextMessagesItemFunctionCallsFunctionCallsItem
+    from .v1 import AgentV1SettingsAgentContextMessagesItemFunctionCallsFunctionCallsItemParams
+    from .v1 import AgentV1SettingsAgentContextMessagesItemFunctionCallsParams
+    from .v1 import AgentV1SettingsAgentContextMessagesItemParams
+    from .v1 import AgentV1SettingsAgentListenProviderV1
+    from .v1 import AgentV1SettingsAgentListenProviderV1Params
+    from .v1 import AgentV1SettingsAgentListenProviderV2
+    from .v1 import AgentV1SettingsAgentListenProviderV2Params
 _dynamic_imports: typing.Dict[str, str] = {
     "AgentV1AgentAudioDone": ".v1",
     "AgentV1AgentAudioDoneParams": ".v1",
@@ -146,6 +175,13 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AgentV1FunctionCallRequestFunctionsItemParams": ".v1",
     "AgentV1FunctionCallRequestParams": ".v1",
     "AgentV1History": ".v1",
+    "AgentV1HistoryContent": ".v1",
+    "AgentV1HistoryContentParams": ".v1",
+    "AgentV1HistoryContentRole": ".v1",
+    "AgentV1HistoryFunctionCalls": ".v1",
+    "AgentV1HistoryFunctionCallsFunctionCallsItem": ".v1",
+    "AgentV1HistoryFunctionCallsFunctionCallsItemParams": ".v1",
+    "AgentV1HistoryFunctionCallsParams": ".v1",
     "AgentV1HistoryParams": ".v1",
     "AgentV1InjectAgentMessage": ".v1",
     "AgentV1InjectAgentMessageBehavior": ".v1",
@@ -171,16 +207,34 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AgentV1SettingsAgentContext": ".v1",
     "AgentV1SettingsAgentContextContext": ".v1",
     "AgentV1SettingsAgentContextContextMessagesItem": ".v1",
+    "AgentV1SettingsAgentContextContextMessagesItemContentRole": ".v1",
+    "AgentV1SettingsAgentContextContextMessagesItemFunctionCallsFunctionCallsItem": ".v1",
+    "AgentV1SettingsAgentContextContextMessagesItemFunctionCallsFunctionCallsItemParams": ".v1",
     "AgentV1SettingsAgentContextContextMessagesItemParams": ".v1",
     "AgentV1SettingsAgentContextContextParams": ".v1",
     "AgentV1SettingsAgentContextListen": ".v1",
     "AgentV1SettingsAgentContextListenParams": ".v1",
     "AgentV1SettingsAgentContextListenProvider": ".v1",
     "AgentV1SettingsAgentContextListenProviderParams": ".v1",
+    "AgentV1SettingsAgentContextListenProviderV1": ".v1",
+    "AgentV1SettingsAgentContextListenProviderV1Params": ".v1",
+    "AgentV1SettingsAgentContextListenProviderV2": ".v1",
+    "AgentV1SettingsAgentContextListenProviderV2LanguageHint": ".v1",
+    "AgentV1SettingsAgentContextListenProviderV2LanguageHintParams": ".v1",
+    "AgentV1SettingsAgentContextListenProviderV2Params": ".v1",
     "AgentV1SettingsAgentContextListenProvider_V1": ".v1",
     "AgentV1SettingsAgentContextListenProvider_V1Params": ".v1",
     "AgentV1SettingsAgentContextListenProvider_V2": ".v1",
     "AgentV1SettingsAgentContextListenProvider_V2Params": ".v1",
+    "AgentV1SettingsAgentContextMessagesItem": ".v1",
+    "AgentV1SettingsAgentContextMessagesItemContent": ".v1",
+    "AgentV1SettingsAgentContextMessagesItemContentParams": ".v1",
+    "AgentV1SettingsAgentContextMessagesItemContentRole": ".v1",
+    "AgentV1SettingsAgentContextMessagesItemFunctionCalls": ".v1",
+    "AgentV1SettingsAgentContextMessagesItemFunctionCallsFunctionCallsItem": ".v1",
+    "AgentV1SettingsAgentContextMessagesItemFunctionCallsFunctionCallsItemParams": ".v1",
+    "AgentV1SettingsAgentContextMessagesItemFunctionCallsParams": ".v1",
+    "AgentV1SettingsAgentContextMessagesItemParams": ".v1",
     "AgentV1SettingsAgentContextParams": ".v1",
     "AgentV1SettingsAgentContextSpeak": ".v1",
     "AgentV1SettingsAgentContextSpeakParams": ".v1",
@@ -190,6 +244,10 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AgentV1SettingsAgentListenParams": ".v1",
     "AgentV1SettingsAgentListenProvider": ".v1",
     "AgentV1SettingsAgentListenProviderParams": ".v1",
+    "AgentV1SettingsAgentListenProviderV1": ".v1",
+    "AgentV1SettingsAgentListenProviderV1Params": ".v1",
+    "AgentV1SettingsAgentListenProviderV2": ".v1",
+    "AgentV1SettingsAgentListenProviderV2Params": ".v1",
     "AgentV1SettingsAgentListenProvider_V1": ".v1",
     "AgentV1SettingsAgentListenProvider_V1Params": ".v1",
     "AgentV1SettingsAgentListenProvider_V2": ".v1",
@@ -292,6 +350,13 @@ __all__ = [
     "AgentV1FunctionCallRequestFunctionsItemParams",
     "AgentV1FunctionCallRequestParams",
     "AgentV1History",
+    "AgentV1HistoryContent",
+    "AgentV1HistoryContentParams",
+    "AgentV1HistoryContentRole",
+    "AgentV1HistoryFunctionCalls",
+    "AgentV1HistoryFunctionCallsFunctionCallsItem",
+    "AgentV1HistoryFunctionCallsFunctionCallsItemParams",
+    "AgentV1HistoryFunctionCallsParams",
     "AgentV1HistoryParams",
     "AgentV1InjectAgentMessage",
     "AgentV1InjectAgentMessageBehavior",
@@ -317,16 +382,34 @@ __all__ = [
     "AgentV1SettingsAgentContext",
     "AgentV1SettingsAgentContextContext",
     "AgentV1SettingsAgentContextContextMessagesItem",
+    "AgentV1SettingsAgentContextContextMessagesItemContentRole",
+    "AgentV1SettingsAgentContextContextMessagesItemFunctionCallsFunctionCallsItem",
+    "AgentV1SettingsAgentContextContextMessagesItemFunctionCallsFunctionCallsItemParams",
     "AgentV1SettingsAgentContextContextMessagesItemParams",
     "AgentV1SettingsAgentContextContextParams",
     "AgentV1SettingsAgentContextListen",
     "AgentV1SettingsAgentContextListenParams",
     "AgentV1SettingsAgentContextListenProvider",
     "AgentV1SettingsAgentContextListenProviderParams",
+    "AgentV1SettingsAgentContextListenProviderV1",
+    "AgentV1SettingsAgentContextListenProviderV1Params",
+    "AgentV1SettingsAgentContextListenProviderV2",
+    "AgentV1SettingsAgentContextListenProviderV2LanguageHint",
+    "AgentV1SettingsAgentContextListenProviderV2LanguageHintParams",
+    "AgentV1SettingsAgentContextListenProviderV2Params",
     "AgentV1SettingsAgentContextListenProvider_V1",
     "AgentV1SettingsAgentContextListenProvider_V1Params",
     "AgentV1SettingsAgentContextListenProvider_V2",
     "AgentV1SettingsAgentContextListenProvider_V2Params",
+    "AgentV1SettingsAgentContextMessagesItem",
+    "AgentV1SettingsAgentContextMessagesItemContent",
+    "AgentV1SettingsAgentContextMessagesItemContentParams",
+    "AgentV1SettingsAgentContextMessagesItemContentRole",
+    "AgentV1SettingsAgentContextMessagesItemFunctionCalls",
+    "AgentV1SettingsAgentContextMessagesItemFunctionCallsFunctionCallsItem",
+    "AgentV1SettingsAgentContextMessagesItemFunctionCallsFunctionCallsItemParams",
+    "AgentV1SettingsAgentContextMessagesItemFunctionCallsParams",
+    "AgentV1SettingsAgentContextMessagesItemParams",
     "AgentV1SettingsAgentContextParams",
     "AgentV1SettingsAgentContextSpeak",
     "AgentV1SettingsAgentContextSpeakParams",
@@ -336,6 +419,10 @@ __all__ = [
     "AgentV1SettingsAgentListenParams",
     "AgentV1SettingsAgentListenProvider",
     "AgentV1SettingsAgentListenProviderParams",
+    "AgentV1SettingsAgentListenProviderV1",
+    "AgentV1SettingsAgentListenProviderV1Params",
+    "AgentV1SettingsAgentListenProviderV2",
+    "AgentV1SettingsAgentListenProviderV2Params",
     "AgentV1SettingsAgentListenProvider_V1",
     "AgentV1SettingsAgentListenProvider_V1Params",
     "AgentV1SettingsAgentListenProvider_V2",

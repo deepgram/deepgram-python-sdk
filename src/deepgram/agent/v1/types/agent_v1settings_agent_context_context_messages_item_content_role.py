@@ -2,4 +2,4 @@
 
 from .conversation_history_message_role import ConversationHistoryMessageRole
 
-AgentV1SettingsAgentContextMessagesItemContentRole = ConversationHistoryMessageRole
+AgentV1SettingsAgentContextContextMessagesItemContentRole = ConversationHistoryMessageRole

@@ -345,3 +345,62 @@ def test_listen_provider_request_aliases_resolve_to_deepgram_top_level() -> None
     assert AgentV1SettingsAgentContextListenProviderV2LanguageHintParams is DeepgramListenProviderV2LanguageHintParams
     assert AgentV1SettingsAgentListenProviderV1Params is DeepgramListenProviderV1Params
     assert AgentV1SettingsAgentListenProviderV2Params is DeepgramListenProviderV2Params
+
+
+def test_renamed_provider_model_type_aliases_resolve() -> None:
+    # 2026-08-18 regen dropped the *ThinkProvider*/*SpeakProvider* prefixes from these
+    # public model/voice/version types. The old names stay importable as aliases.
+    from deepgram.types import (
+        AnthropicModel,
+        AnthropicThinkProviderModel,
+        CartesiaModelId,
+        CartesiaSpeakProviderModelId,
+        CartesiaSpeakProviderVoice,
+        CartesiaVoice,
+        DeepgramModel,
+        DeepgramSpeakProviderModel,
+        GoogleModel,
+        GoogleThinkProviderModel,
+        GoogleThinkProviderVersion,
+        GoogleVersion,
+        GroqReasoningMode,
+        GroqThinkProviderReasoningMode,
+    )
+    from deepgram.types.anthropic_think_provider_model import (
+        AnthropicThinkProviderModel as ModuleAnthropicThinkProviderModel,
+    )
+
+    assert AnthropicThinkProviderModel is AnthropicModel
+    assert ModuleAnthropicThinkProviderModel is AnthropicModel
+    assert CartesiaSpeakProviderModelId is CartesiaModelId
+    assert CartesiaSpeakProviderVoice is CartesiaVoice
+    assert DeepgramSpeakProviderModel is DeepgramModel
+    assert GoogleThinkProviderModel is GoogleModel
+    assert GoogleThinkProviderVersion is GoogleVersion
+    assert GroqThinkProviderReasoningMode is GroqReasoningMode
+
+
+def test_renamed_provider_model_request_aliases_resolve() -> None:
+    from deepgram.requests import CartesiaSpeakProviderVoiceParams, CartesiaVoiceParams
+
+    assert CartesiaSpeakProviderVoiceParams is CartesiaVoiceParams
+
+
+def test_renamed_agent_history_subtype_aliases_resolve() -> None:
+    # 2026-08-18 regen renamed the underlying history role / function-call-item types
+    # (ConversationHistoryMessageRole, FunctionCallHistoryMessageFunctionCallsItem).
+    # The old AgentV1History* public names stay importable as aliases.
+    from deepgram.agent.v1.requests import (
+        AgentV1HistoryFunctionCallsFunctionCallsItemParams,
+        FunctionCallHistoryMessageFunctionCallsItemParams,
+    )
+    from deepgram.agent.v1.types import (
+        AgentV1HistoryContentRole,
+        AgentV1HistoryFunctionCallsFunctionCallsItem,
+        ConversationHistoryMessageRole,
+        FunctionCallHistoryMessageFunctionCallsItem,
+    )
+
+    assert AgentV1HistoryContentRole is ConversationHistoryMessageRole
+    assert AgentV1HistoryFunctionCallsFunctionCallsItem is FunctionCallHistoryMessageFunctionCallsItem
+    assert AgentV1HistoryFunctionCallsFunctionCallsItemParams is FunctionCallHistoryMessageFunctionCallsItemParams
