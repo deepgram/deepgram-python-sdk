@@ -21,6 +21,7 @@ import json
 from deepgram.agent.v1.socket_client import V1SocketClient, _sanitize_numeric_types
 from deepgram.listen.v2.socket_client import AsyncV2SocketClient, V2SocketClient
 from deepgram.listen.v2.types.listen_v2close_stream import ListenV2CloseStream
+from deepgram.listen.v2.types.listen_v2configure import ListenV2Configure
 from deepgram.listen.v2.types.listen_v2force_end_turn import ListenV2ForceEndTurn
 from deepgram.speak.v2.socket_client import V2SocketClient as SpeakV2SocketClient
 
@@ -132,4 +133,26 @@ class TestSendConfigureRawShim:
         ws = _FakeWebSocket()
         body = {"type": "Configure", "language_hints": ["en", "es"]}
         V2SocketClient(websocket=ws).send_configure(body)
+        assert _sent_json(ws) == body
+
+    def test_typed_model_is_serialized_and_sent(self):
+        # The other branch of the Union[ListenV2Configure, dict] shim: a typed
+        # model goes through _send_model (.dict()) rather than the raw dict path.
+        ws = _FakeWebSocket()
+        V2SocketClient(websocket=ws).send_configure(ListenV2Configure(language_hints=["en"]))
+        sent = _sent_json(ws)
+        assert sent["type"] == "Configure"
+        assert sent["language_hints"] == ["en"]
+
+    async def test_typed_model_is_serialized_and_sent_async(self):
+        ws = _FakeAsyncWebSocket()
+        await AsyncV2SocketClient(websocket=ws).send_configure(ListenV2Configure(language_hints=["en"]))
+        sent = _sent_json(ws)
+        assert sent["type"] == "Configure"
+        assert sent["language_hints"] == ["en"]
+
+    async def test_passthrough_dict_is_sent_verbatim_async(self):
+        ws = _FakeAsyncWebSocket()
+        body = {"type": "Configure", "language_hints": ["en", "es"]}
+        await AsyncV2SocketClient(websocket=ws).send_configure(body)
         assert _sent_json(ws) == body
