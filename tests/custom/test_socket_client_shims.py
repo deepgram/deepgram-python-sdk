@@ -19,8 +19,9 @@ is handed to ``.send()`` — the same payload that goes on the wire.
 import json
 
 from deepgram.agent.v1.socket_client import V1SocketClient, _sanitize_numeric_types
-from deepgram.listen.v2.socket_client import V2SocketClient
+from deepgram.listen.v2.socket_client import AsyncV2SocketClient, V2SocketClient
 from deepgram.listen.v2.types.listen_v2close_stream import ListenV2CloseStream
+from deepgram.listen.v2.types.listen_v2force_end_turn import ListenV2ForceEndTurn
 from deepgram.speak.v2.socket_client import V2SocketClient as SpeakV2SocketClient
 
 
@@ -31,6 +32,16 @@ class _FakeWebSocket:
         self.sent = []
 
     def send(self, data):
+        self.sent.append(data)
+
+
+class _FakeAsyncWebSocket:
+    """Async counterpart of _FakeWebSocket for the async socket clients."""
+
+    def __init__(self):
+        self.sent = []
+
+    async def send(self, data):
         self.sent.append(data)
 
 
@@ -96,6 +107,24 @@ class TestOptionalMessageControlSends:
         ws = _FakeWebSocket()
         SpeakV2SocketClient(websocket=ws).send_close()
         assert _sent_json(ws)["type"] == "Close"
+
+    def test_listen_v2_force_end_turn_no_arg(self):
+        # send_force_end_turn was added in the 2026-08-18 regen and given the same
+        # optional-no-payload default treatment as the sibling control sends.
+        ws = _FakeWebSocket()
+        V2SocketClient(websocket=ws).send_force_end_turn()
+        assert _sent_json(ws) == {"type": "ForceEndTurn"}
+
+    def test_listen_v2_force_end_turn_explicit_message(self):
+        ws = _FakeWebSocket()
+        V2SocketClient(websocket=ws).send_force_end_turn(ListenV2ForceEndTurn(type="ForceEndTurn"))
+        assert _sent_json(ws)["type"] == "ForceEndTurn"
+
+    async def test_listen_v2_force_end_turn_async_no_arg(self):
+        # Cover the async client's send_force_end_turn too (asyncio_mode="auto").
+        ws = _FakeAsyncWebSocket()
+        await AsyncV2SocketClient(websocket=ws).send_force_end_turn()
+        assert _sent_json(ws) == {"type": "ForceEndTurn"}
 
 
 class TestSendConfigureRawShim:
