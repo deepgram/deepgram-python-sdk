@@ -93,6 +93,15 @@ class AsyncV2SocketClient(EventEmitterMixin):
         """
         Send a message to the websocket connection.
         The message will be sent as a ListenV2ForceEndTurn.
+
+        Ends the current turn immediately, whatever the end-of-turn confidence. The
+        resulting ``TurnInfo`` carries ``trigger="manual"``, and the connection stays open
+        for the next turn.
+
+        Requires server-side enablement. On a deployment without it the server replies
+        ``UNPARSABLE_CLIENT_MESSAGE`` ("The ForceEndTurn message is not enabled on this
+        deployment.") and **closes the connection**, so guard against that path until the
+        feature is confirmed live for the deployment you target.
         """
         await self._send_model(message or ListenV2ForceEndTurn(type="ForceEndTurn"))
 
@@ -204,6 +213,15 @@ class V2SocketClient(EventEmitterMixin):
         """
         Send a message to the websocket connection.
         The message will be sent as a ListenV2ForceEndTurn.
+
+        Ends the current turn immediately, whatever the end-of-turn confidence. The
+        resulting ``TurnInfo`` carries ``trigger="manual"``, and the connection stays open
+        for the next turn.
+
+        Requires server-side enablement. On a deployment without it the server replies
+        ``UNPARSABLE_CLIENT_MESSAGE`` ("The ForceEndTurn message is not enabled on this
+        deployment.") and **closes the connection**, so guard against that path until the
+        feature is confirmed live for the deployment you target.
         """
         self._send_model(message or ListenV2ForceEndTurn(type="ForceEndTurn"))
 
