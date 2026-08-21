@@ -3,14 +3,12 @@
 Listen V2 responses were raw dictionaries through SDK 7.6 because the response
 union contained ``typing.Any``. SDK 7.7 fixed deserialization to return typed
 models, which broke callers using the observed dictionary interface. Listen V2
-response models now support both attribute and deprecated subscript access
-during that transition.
+response models now support both attribute and subscript access during that
+transition.
 """
 
 import json
 import typing
-import warnings
-from collections.abc import Mapping
 
 import pytest
 
@@ -54,14 +52,12 @@ def _assert_attribute_and_subscript_access(message: object) -> None:
     assert message.transcript == "hello"
     assert message.words[0].confidence == 0.96
 
-    with warnings.catch_warnings():
-        warnings.simplefilter("ignore", DeprecationWarning)
-        assert message["transcript"] == "hello"
-        assert message.words[0]["confidence"] == 0.96
-        assert message["words"][0]["confidence"] == 0.96
-        assert message["future_field"] == "preserved"
-        with pytest.raises(KeyError):
-            message["trigger"]
+    assert message["transcript"] == "hello"
+    assert message.words[0]["confidence"] == 0.96
+    assert message["words"][0]["confidence"] == 0.96
+    assert message["future_field"] == "preserved"
+    with pytest.raises(KeyError):
+        message["languages"]
 
 
 def test_sync_listen_v2_response_supports_both_access_styles() -> None:
@@ -89,53 +85,9 @@ def test_all_listen_v2_response_models_support_subscript_access() -> None:
         ListenV2FatalError(type="Error", sequence_id=3, code="ERROR", description="failure"),
     ]
 
-    with warnings.catch_warnings():
-        warnings.simplefilter("ignore", DeprecationWarning)
-        for response in responses:
-            assert response["type"] == response.type
-        assert configure_success.thresholds["eot_threshold"] == 0.7
-
-
-def test_subscript_access_warns_once_per_callsite() -> None:
-    message = V2SocketClient(websocket=typing.cast(typing.Any, _FakeWebSocket())).recv()
-    assert isinstance(message, ListenV2TurnInfo)
-
-    with warnings.catch_warnings(record=True) as caught:
-        warnings.simplefilter("default", DeprecationWarning)
-        for _ in range(3):
-            assert message["transcript"] == "hello"
-
-    assert len(caught) == 1
-    assert "will be removed in SDK 8" in str(caught[0].message)
-
-
-def test_read_only_mapping_helpers_match_dict_behavior() -> None:
-    message = V2SocketClient(websocket=typing.cast(typing.Any, _FakeWebSocket())).recv()
-    assert isinstance(message, ListenV2TurnInfo)
-    turn_info = typing.cast(ListenV2TurnInfo, message)
-    assert isinstance(turn_info, Mapping)
-
-    with warnings.catch_warnings():
-        warnings.simplefilter("ignore", DeprecationWarning)
-        assert "transcript" in turn_info
-        assert "future_field" in turn_info
-        assert "trigger" not in turn_info
-        assert turn_info.get("transcript") == "hello"
-        assert turn_info.get("trigger", "missing") == "missing"
-        assert "transcript" in turn_info.keys()
-        assert dict(turn_info)["transcript"] == "hello"
-        assert isinstance(turn_info.words[0], Mapping)
-
-
-def test_subscript_access_emits_no_unrelated_warnings() -> None:
-    message = V2SocketClient(websocket=typing.cast(typing.Any, _FakeWebSocket())).recv()
-    assert isinstance(message, ListenV2TurnInfo)
-
-    with warnings.catch_warnings(record=True) as caught:
-        warnings.simplefilter("always")
-        assert message["transcript"] == "hello"
-
-    assert [warning.category for warning in caught] == [DeprecationWarning]
+    for response in responses:
+        assert response["type"] == response.type
+    assert configure_success.thresholds["eot_threshold"] == 0.7
 
 
 def test_unrelated_models_do_not_gain_subscript_access() -> None:

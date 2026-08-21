@@ -15,7 +15,7 @@ src/deepgram/client.py
 src/deepgram/_secure_logging.py
 
 # Hand-written read-side compatibility base for Listen V2 response models.
-# Provides deprecated, read-only Mapping access during the SDK 7.x
+# Provides read-only wire-key subscript access during the SDK 7.x
 # transition from raw dict responses to typed models. No Fern counterpart.
 src/deepgram/listen/v2/types/_dict_compat.py
 
@@ -24,8 +24,8 @@ src/deepgram/listen/v2/types/_dict_compat.py
 # - _sanitize_numeric_types in agent socket client (float→int for API)
 # - optional message param on control send_ methods (send_keep_alive, send_close_stream, etc.)
 #   so users don't need to instantiate the type themselves for no-payload control messages
-# - listen/v2 send_configure: typing.Any / raw _send shim (generator's ListenV2Configure model
-#   and ListenV2ConfigureSuccess not used)
+# - listen/v2 send_configure: runtime tolerance for a raw dict alongside the
+#   generated ListenV2Configure model
 # [temporarily frozen — manual patches listed above]
 src/deepgram/agent/v1/socket_client.py
 src/deepgram/listen/v1/socket_client.py
@@ -153,7 +153,7 @@ src/deepgram/core/query_encoder.py
 
 # Read-side compatibility for the SDK 7.7 Listen V2 response retype. These
 # generated response models inherit the hand-written base above so callers can
-# temporarily use both attribute and read-only mapping access. Remove the custom
+# temporarily use both attribute and read-only subscript access. Remove the custom
 # inheritance and unfreeze these files in the next major release.
 # [temporarily frozen -- manual patch described above]
 src/deepgram/listen/v2/types/listen_v2connected.py
