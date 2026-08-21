@@ -1,5 +1,16 @@
 # Changelog
 
+## [7.7.1](https://github.com/deepgram/deepgram-python-sdk/compare/v7.7.0...v7.7.1) (2026-08-21)
+
+
+### Bug Fixes
+
+* **listen/v2:** restore subscript access on typed responses ([c4d2580](https://github.com/deepgram/deepgram-python-sdk/commit/c4d2580951edac24c08c4ade1c79930a91bee9a9))
+* narrow listen v2 compatibility to subscript access ([aac5e0a](https://github.com/deepgram/deepgram-python-sdk/commit/aac5e0a5ad84665bc8c46e1ee829320c52553801))
+* preserve dict access on typed response models ([b9f544a](https://github.com/deepgram/deepgram-python-sdk/commit/b9f544a1e6c1fb0db38fefb1b31da425fd476c9f))
+* restore listen v2 mapping behavior ([8a18e3b](https://github.com/deepgram/deepgram-python-sdk/commit/8a18e3bbea68f649772f2bf3b6aa993e2c596661))
+* scope dict compatibility to listen v2 responses ([0c67f00](https://github.com/deepgram/deepgram-python-sdk/commit/0c67f0038ea7de4829212afa2e550d64eb9847ec))
+
 ## [7.7.0](https://github.com/deepgram/deepgram-python-sdk/compare/v7.6.0...v7.7.0) (2026-08-12)
 
 Flux TTS streaming controls and Listen v2 redaction.
