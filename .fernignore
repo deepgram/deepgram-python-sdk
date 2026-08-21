@@ -146,6 +146,14 @@ src/deepgram/core/parse_error.py
 
 src/deepgram/core/query_encoder.py
 
+# Read-side compatibility for the SDK 7.7 Listen V2 response retype. Responses
+# were raw dicts through 7.6 because V2SocketClientResponse contained typing.Any;
+# after the union was fixed, callers using the observed response["field"] API
+# broke. UncheckedBaseModel carries a read-only __getitem__ shim so typed models
+# support both attribute and wire-key subscript access. Remove in the next major.
+# [temporarily frozen -- manual patch described above]
+src/deepgram/core/unchecked_base_model.py
+
 # Hand-written custom tests
 tests/custom/test_api_error_redaction.py
 tests/custom/test_agent_history.py
@@ -164,6 +172,7 @@ tests/custom/test_latency_report_stt_compat.py
 tests/custom/test_listen_v2_connect_wire.py
 tests/custom/test_listen_v2_regen_constraints.py
 tests/custom/test_logging_and_retry_branches.py
+tests/custom/test_model_dict_compat.py
 tests/custom/test_query_encoder.py
 tests/custom/test_secure_logging.py
 tests/custom/test_socket_client_shims.py
