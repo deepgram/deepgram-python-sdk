@@ -4,12 +4,12 @@ import typing
 
 import pydantic
 from ....core.pydantic_utilities import IS_PYDANTIC_V2
-from ....core.unchecked_base_model import UncheckedBaseModel
 from ....types.listen_v2keyterm import ListenV2Keyterm
+from ._dict_compat import ListenV2ResponseDictCompatModel
 from .listen_v2configure_success_thresholds import ListenV2ConfigureSuccessThresholds
 
 
-class ListenV2ConfigureSuccess(UncheckedBaseModel):
+class ListenV2ConfigureSuccess(ListenV2ResponseDictCompatModel):
     type: typing.Literal["ConfigureSuccess"] = pydantic.Field(default="ConfigureSuccess")
     """
     Message type identifier

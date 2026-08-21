@@ -14,13 +14,18 @@ src/deepgram/client.py
 # key / access token) in DEBUG handshake logs. No Fern-generated counterpart.
 src/deepgram/_secure_logging.py
 
+# Hand-written read-side compatibility base for Listen V2 response models.
+# Provides read-only wire-key subscript access during the SDK 7.x
+# transition from raw dict responses to typed models. No Fern counterpart.
+src/deepgram/listen/v2/types/_dict_compat.py
+
 # WebSocket socket clients:
 # - except Exception broad catch (supports custom transports, generator narrows to WebSocketException)
 # - _sanitize_numeric_types in agent socket client (float→int for API)
 # - optional message param on control send_ methods (send_keep_alive, send_close_stream, etc.)
 #   so users don't need to instantiate the type themselves for no-payload control messages
-# - listen/v2 send_configure: typing.Any / raw _send shim (generator's ListenV2Configure model
-#   and ListenV2ConfigureSuccess not used)
+# - listen/v2 send_configure: runtime tolerance for a raw dict alongside the
+#   generated ListenV2Configure model
 # [temporarily frozen — manual patches listed above]
 src/deepgram/agent/v1/socket_client.py
 src/deepgram/listen/v1/socket_client.py
@@ -146,6 +151,19 @@ src/deepgram/core/parse_error.py
 
 src/deepgram/core/query_encoder.py
 
+# Read-side compatibility for the SDK 7.7 Listen V2 response retype. These
+# generated response models inherit the hand-written base above so callers can
+# temporarily use both attribute and read-only subscript access. Remove the custom
+# inheritance and unfreeze these files in the next major release.
+# [temporarily frozen -- manual patch described above]
+src/deepgram/listen/v2/types/listen_v2connected.py
+src/deepgram/listen/v2/types/listen_v2turn_info.py
+src/deepgram/listen/v2/types/listen_v2turn_info_words_item.py
+src/deepgram/listen/v2/types/listen_v2configure_success.py
+src/deepgram/listen/v2/types/listen_v2configure_success_thresholds.py
+src/deepgram/listen/v2/types/listen_v2configure_failure.py
+src/deepgram/listen/v2/types/listen_v2fatal_error.py
+
 # Hand-written custom tests
 tests/custom/test_api_error_redaction.py
 tests/custom/test_agent_history.py
@@ -164,6 +182,7 @@ tests/custom/test_latency_report_stt_compat.py
 tests/custom/test_listen_v2_connect_wire.py
 tests/custom/test_listen_v2_regen_constraints.py
 tests/custom/test_logging_and_retry_branches.py
+tests/custom/test_model_dict_compat.py
 tests/custom/test_query_encoder.py
 tests/custom/test_secure_logging.py
 tests/custom/test_socket_client_shims.py
