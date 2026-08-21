@@ -65,14 +65,6 @@ class UncheckedBaseModel(UniversalBaseModel):
         class Config:
             extra = pydantic.Extra.allow
 
-    def __getitem__(self, key: str) -> typing.Any:
-        """Provide read-only dict-style access using the original wire keys."""
-        if IS_PYDANTIC_V2:
-            values = self.model_dump(by_alias=True, exclude_unset=True)
-        else:
-            values = self.dict(by_alias=True, exclude_unset=True)
-        return values[key]
-
     @classmethod
     def model_construct(
         cls: typing.Type["Model"],

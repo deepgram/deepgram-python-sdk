@@ -2,15 +2,23 @@
 
 Listen V2 responses were raw dictionaries through SDK 7.6 because the response
 union contained ``typing.Any``. SDK 7.7 fixed deserialization to return typed
-models, which broke callers using the observed dictionary interface. Typed
-models now support both attribute and subscript access during that transition.
+models, which broke callers using the observed dictionary interface. Listen V2
+response models now support both attribute and deprecated subscript access
+during that transition.
 """
 
 import json
+import typing
+import warnings
 
 import pytest
 
 from deepgram.listen.v2.socket_client import AsyncV2SocketClient, V2SocketClient
+from deepgram.listen.v2.types.listen_v2configure_failure import ListenV2ConfigureFailure
+from deepgram.listen.v2.types.listen_v2configure_success import ListenV2ConfigureSuccess
+from deepgram.listen.v2.types.listen_v2configure_success_thresholds import ListenV2ConfigureSuccessThresholds
+from deepgram.listen.v2.types.listen_v2connected import ListenV2Connected
+from deepgram.listen.v2.types.listen_v2fatal_error import ListenV2FatalError
 from deepgram.listen.v2.types.listen_v2turn_info import ListenV2TurnInfo
 from deepgram.types.get_model_v1response_metadata import GetModelV1ResponseMetadata
 
@@ -43,31 +51,66 @@ def _assert_attribute_and_subscript_access(message: object) -> None:
     assert isinstance(message, ListenV2TurnInfo)
 
     assert message.transcript == "hello"
-    assert message["transcript"] == "hello"
-
     assert message.words[0].confidence == 0.96
-    assert message.words[0]["confidence"] == 0.96
-    assert message["words"][0]["confidence"] == 0.96
 
-    assert message["future_field"] == "preserved"
-    with pytest.raises(KeyError):
-        message["trigger"]
+    with warnings.catch_warnings():
+        warnings.simplefilter("ignore", DeprecationWarning)
+        assert message["transcript"] == "hello"
+        assert message.words[0]["confidence"] == 0.96
+        assert message["words"][0]["confidence"] == 0.96
+        assert message["future_field"] == "preserved"
+        with pytest.raises(KeyError):
+            message["trigger"]
 
 
 def test_sync_listen_v2_response_supports_both_access_styles() -> None:
-    message = V2SocketClient(websocket=_FakeWebSocket()).recv()
+    message = V2SocketClient(websocket=typing.cast(typing.Any, _FakeWebSocket())).recv()
     _assert_attribute_and_subscript_access(message)
 
 
 async def test_async_listen_v2_response_supports_both_access_styles() -> None:
-    message = await AsyncV2SocketClient(websocket=_FakeAsyncWebSocket()).recv()
+    message = await AsyncV2SocketClient(websocket=typing.cast(typing.Any, _FakeAsyncWebSocket())).recv()
     _assert_attribute_and_subscript_access(message)
 
 
-def test_subscript_access_uses_wire_aliases() -> None:
+def test_all_listen_v2_response_models_support_subscript_access() -> None:
+    configure_success = ListenV2ConfigureSuccess(
+        type="ConfigureSuccess",
+        request_id="request-id",
+        thresholds=ListenV2ConfigureSuccessThresholds(eot_threshold=0.7),
+        keyterms=[],
+        sequence_id=2,
+    )
+    responses: typing.List[typing.Any] = [
+        ListenV2Connected(type="Connected", request_id="request-id", sequence_id=0),
+        ListenV2ConfigureFailure(type="ConfigureFailure", request_id="request-id", sequence_id=1),
+        configure_success,
+        ListenV2FatalError(type="Error", sequence_id=3, code="ERROR", description="failure"),
+    ]
+
+    with warnings.catch_warnings():
+        warnings.simplefilter("ignore", DeprecationWarning)
+        for response in responses:
+            assert response["type"] == response.type
+        assert configure_success.thresholds["eot_threshold"] == 0.7
+
+
+def test_subscript_access_warns_once_per_callsite() -> None:
+    message = V2SocketClient(websocket=typing.cast(typing.Any, _FakeWebSocket())).recv()
+    assert isinstance(message, ListenV2TurnInfo)
+
+    with warnings.catch_warnings(record=True) as caught:
+        warnings.simplefilter("default", DeprecationWarning)
+        for _ in range(3):
+            assert message["transcript"] == "hello"
+
+    assert len(caught) == 1
+    assert "will be removed in SDK 8" in str(caught[0].message)
+
+
+def test_unrelated_models_do_not_gain_subscript_access() -> None:
     metadata = GetModelV1ResponseMetadata(uuid="model-id")
 
     assert metadata.uuid_ == "model-id"
-    assert metadata["uuid"] == "model-id"
-    with pytest.raises(KeyError):
-        metadata["uuid_"]
+    with pytest.raises(TypeError, match="not subscriptable"):
+        metadata["uuid"]  # type: ignore[index]

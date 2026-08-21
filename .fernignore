@@ -14,6 +14,11 @@ src/deepgram/client.py
 # key / access token) in DEBUG handshake logs. No Fern-generated counterpart.
 src/deepgram/_secure_logging.py
 
+# Hand-written read-side compatibility mixin for Listen V2 response models.
+# Provides deprecated, read-only wire-key subscript access during the SDK 7.x
+# transition from raw dict responses to typed models. No Fern counterpart.
+src/deepgram/listen/v2/types/_dict_compat.py
+
 # WebSocket socket clients:
 # - except Exception broad catch (supports custom transports, generator narrows to WebSocketException)
 # - _sanitize_numeric_types in agent socket client (float→int for API)
@@ -146,13 +151,18 @@ src/deepgram/core/parse_error.py
 
 src/deepgram/core/query_encoder.py
 
-# Read-side compatibility for the SDK 7.7 Listen V2 response retype. Responses
-# were raw dicts through 7.6 because V2SocketClientResponse contained typing.Any;
-# after the union was fixed, callers using the observed response["field"] API
-# broke. UncheckedBaseModel carries a read-only __getitem__ shim so typed models
-# support both attribute and wire-key subscript access. Remove in the next major.
+# Read-side compatibility for the SDK 7.7 Listen V2 response retype. These
+# generated response models inherit the hand-written mixin above so callers can
+# temporarily use both attribute and wire-key subscript access. Remove the mixin
+# inheritance and unfreeze these files in the next major release.
 # [temporarily frozen -- manual patch described above]
-src/deepgram/core/unchecked_base_model.py
+src/deepgram/listen/v2/types/listen_v2connected.py
+src/deepgram/listen/v2/types/listen_v2turn_info.py
+src/deepgram/listen/v2/types/listen_v2turn_info_words_item.py
+src/deepgram/listen/v2/types/listen_v2configure_success.py
+src/deepgram/listen/v2/types/listen_v2configure_success_thresholds.py
+src/deepgram/listen/v2/types/listen_v2configure_failure.py
+src/deepgram/listen/v2/types/listen_v2fatal_error.py
 
 # Hand-written custom tests
 tests/custom/test_api_error_redaction.py
