@@ -14,8 +14,8 @@ src/deepgram/client.py
 # key / access token) in DEBUG handshake logs. No Fern-generated counterpart.
 src/deepgram/_secure_logging.py
 
-# Hand-written read-side compatibility mixin for Listen V2 response models.
-# Provides deprecated, read-only wire-key subscript access during the SDK 7.x
+# Hand-written read-side compatibility base for Listen V2 response models.
+# Provides deprecated, read-only Mapping access during the SDK 7.x
 # transition from raw dict responses to typed models. No Fern counterpart.
 src/deepgram/listen/v2/types/_dict_compat.py
 
@@ -152,8 +152,8 @@ src/deepgram/core/parse_error.py
 src/deepgram/core/query_encoder.py
 
 # Read-side compatibility for the SDK 7.7 Listen V2 response retype. These
-# generated response models inherit the hand-written mixin above so callers can
-# temporarily use both attribute and wire-key subscript access. Remove the mixin
+# generated response models inherit the hand-written base above so callers can
+# temporarily use both attribute and read-only mapping access. Remove the custom
 # inheritance and unfreeze these files in the next major release.
 # [temporarily frozen -- manual patch described above]
 src/deepgram/listen/v2/types/listen_v2connected.py

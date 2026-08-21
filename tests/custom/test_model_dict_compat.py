@@ -10,6 +10,7 @@ during that transition.
 import json
 import typing
 import warnings
+from collections.abc import Mapping
 
 import pytest
 
@@ -106,6 +107,35 @@ def test_subscript_access_warns_once_per_callsite() -> None:
 
     assert len(caught) == 1
     assert "will be removed in SDK 8" in str(caught[0].message)
+
+
+def test_read_only_mapping_helpers_match_dict_behavior() -> None:
+    message = V2SocketClient(websocket=typing.cast(typing.Any, _FakeWebSocket())).recv()
+    assert isinstance(message, ListenV2TurnInfo)
+    turn_info = typing.cast(ListenV2TurnInfo, message)
+    assert isinstance(turn_info, Mapping)
+
+    with warnings.catch_warnings():
+        warnings.simplefilter("ignore", DeprecationWarning)
+        assert "transcript" in turn_info
+        assert "future_field" in turn_info
+        assert "trigger" not in turn_info
+        assert turn_info.get("transcript") == "hello"
+        assert turn_info.get("trigger", "missing") == "missing"
+        assert "transcript" in turn_info.keys()
+        assert dict(turn_info)["transcript"] == "hello"
+        assert isinstance(turn_info.words[0], Mapping)
+
+
+def test_subscript_access_emits_no_unrelated_warnings() -> None:
+    message = V2SocketClient(websocket=typing.cast(typing.Any, _FakeWebSocket())).recv()
+    assert isinstance(message, ListenV2TurnInfo)
+
+    with warnings.catch_warnings(record=True) as caught:
+        warnings.simplefilter("always")
+        assert message["transcript"] == "hello"
+
+    assert [warning.category for warning in caught] == [DeprecationWarning]
 
 
 def test_unrelated_models_do_not_gain_subscript_access() -> None:
