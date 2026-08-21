@@ -199,6 +199,7 @@ tests/custom/test_listen_v2_connect_wire.py
 tests/custom/test_listen_v2_regen_constraints.py
 tests/custom/test_logging_and_retry_branches.py
 tests/custom/test_query_encoder.py
+tests/custom/test_regen_response_fields.py
 tests/custom/test_secure_logging.py
 tests/custom/test_socket_client_shims.py
 tests/custom/test_speak_v2_connect_wire.py
@@ -219,6 +220,15 @@ tests/wire/test_manage_v1_projects_keys.py
 # query params (including the datetime -> ISO-8601 Z encoding) while the client signature
 # still forwards them. Frozen so future regens do not silently drop that check again.
 tests/wire/test_manage_v1_projects_requests.py
+
+# Wire test with restored query-parameter coverage for listen.v1.media.transcribe_url.
+# Third instance of the same mechanism as the two entries above: the 2026-08-18 regen
+# simplified the upstream /v1/listen spec *example* (mapping renamed "default" ->
+# "Remote File"), and Fern derives the wire test from the example, so the generated test
+# dropped all 37 optional query params -- including the bool -> lowercase "true"/"false"
+# assertions -- while the client signature still forwards every one of them. Frozen so
+# future regens cannot silently drop that check again.
+tests/wire/test_listen_v1_media.py
 
 # Manual standalone tests
 tests/manual
