@@ -1,5 +1,12 @@
 # Changelog
 
+## [7.8.0](https://github.com/deepgram/deepgram-python-sdk/compare/v7.7.1...v7.8.0) (2026-08-28)
+
+
+### Features
+
+* **regen:** listen v2 force-end-turn and listen v1 diarize metadata ([#768](https://github.com/deepgram/deepgram-python-sdk/issues/768)) ([bacd1b5](https://github.com/deepgram/deepgram-python-sdk/commit/bacd1b5e573f1b892b81f2e25081ba9b240cfd76))
+
 ## [7.7.1](https://github.com/deepgram/deepgram-python-sdk/compare/v7.7.0...v7.7.1) (2026-08-21)
 
 
