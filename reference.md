@@ -5408,6 +5408,16 @@ asyncio.run(main())
 
 </dd>
 </dl>
+<dl>
+<dd>
+
+**`send_force_end_turn()`** — Force the current turn to end immediately
+
+- `connection.send_force_end_turn()` — The resulting `EndOfTurn` event reports `trigger="manual"` (turns ended by end-of-turn detection report `"model"`, and turns ended by `eot_timeout_ms` report `"timeout"`)
+- Requires server-side enablement; deployments without the feature reject the message and close the connection
+
+</dd>
+</dl>
 
 </dd>
 </dl>
