@@ -7,19 +7,19 @@ import typing
 import typing_extensions
 from ..types.aws_polly_speak_provider_engine import AwsPollySpeakProviderEngine
 from ..types.aws_polly_speak_provider_voice import AwsPollySpeakProviderVoice
-from ..types.cartesia_speak_provider_model_id import CartesiaSpeakProviderModelId
-from ..types.deepgram_speak_provider_model import DeepgramSpeakProviderModel
+from ..types.cartesia_model_id import CartesiaModelId
+from ..types.deepgram_model import DeepgramModel
 from ..types.eleven_labs_speak_provider_model_id import ElevenLabsSpeakProviderModelId
 from ..types.open_ai_speak_provider_model import OpenAiSpeakProviderModel
 from ..types.open_ai_speak_provider_voice import OpenAiSpeakProviderVoice
 from .aws_polly_speak_provider_credentials import AwsPollySpeakProviderCredentialsParams
-from .cartesia_speak_provider_voice import CartesiaSpeakProviderVoiceParams
+from .cartesia_voice import CartesiaVoiceParams
 
 
 class SpeakSettingsV1Provider_DeepgramParams(typing_extensions.TypedDict):
     type: typing.Literal["deepgram"]
     version: typing_extensions.NotRequired[str]
-    model: DeepgramSpeakProviderModel
+    model: DeepgramModel
     speed: typing_extensions.NotRequired[float]
 
 
@@ -34,8 +34,8 @@ class SpeakSettingsV1Provider_ElevenLabsParams(typing_extensions.TypedDict):
 class SpeakSettingsV1Provider_CartesiaParams(typing_extensions.TypedDict):
     type: typing.Literal["cartesia"]
     version: typing_extensions.NotRequired[typing.Literal["2025-03-17"]]
-    model_id: CartesiaSpeakProviderModelId
-    voice: CartesiaSpeakProviderVoiceParams
+    model_id: CartesiaModelId
+    voice: CartesiaVoiceParams
     language: typing_extensions.NotRequired[str]
     volume: typing_extensions.NotRequired[float]
 

@@ -13,6 +13,7 @@ from .types.listen_v2configure_failure import ListenV2ConfigureFailure
 from .types.listen_v2configure_success import ListenV2ConfigureSuccess
 from .types.listen_v2connected import ListenV2Connected
 from .types.listen_v2fatal_error import ListenV2FatalError
+from .types.listen_v2force_end_turn import ListenV2ForceEndTurn
 from .types.listen_v2turn_info import ListenV2TurnInfo
 
 try:
@@ -87,6 +88,22 @@ class AsyncV2SocketClient(EventEmitterMixin):
         The message will be sent as a ListenV2CloseStream.
         """
         await self._send_model(message or ListenV2CloseStream(type="CloseStream"))
+
+    async def send_force_end_turn(self, message: typing.Optional[ListenV2ForceEndTurn] = None) -> None:
+        """
+        Send a message to the websocket connection.
+        The message will be sent as a ListenV2ForceEndTurn.
+
+        Ends the current turn immediately, whatever the end-of-turn confidence. The
+        resulting ``TurnInfo`` carries ``trigger="manual"``, and the connection stays open
+        for the next turn.
+
+        Requires server-side enablement. On a deployment without it the server replies
+        ``UNPARSABLE_CLIENT_MESSAGE`` ("The ForceEndTurn message is not enabled on this
+        deployment.") and **closes the connection**, so guard against that path until the
+        feature is confirmed live for the deployment you target.
+        """
+        await self._send_model(message or ListenV2ForceEndTurn(type="ForceEndTurn"))
 
     async def send_configure(
         self, message: typing.Union[ListenV2Configure, typing.Dict[str, typing.Any]]
@@ -191,6 +208,22 @@ class V2SocketClient(EventEmitterMixin):
         The message will be sent as a ListenV2CloseStream.
         """
         self._send_model(message or ListenV2CloseStream(type="CloseStream"))
+
+    def send_force_end_turn(self, message: typing.Optional[ListenV2ForceEndTurn] = None) -> None:
+        """
+        Send a message to the websocket connection.
+        The message will be sent as a ListenV2ForceEndTurn.
+
+        Ends the current turn immediately, whatever the end-of-turn confidence. The
+        resulting ``TurnInfo`` carries ``trigger="manual"``, and the connection stays open
+        for the next turn.
+
+        Requires server-side enablement. On a deployment without it the server replies
+        ``UNPARSABLE_CLIENT_MESSAGE`` ("The ForceEndTurn message is not enabled on this
+        deployment.") and **closes the connection**, so guard against that path until the
+        feature is confirmed live for the deployment you target.
+        """
+        self._send_model(message or ListenV2ForceEndTurn(type="ForceEndTurn"))
 
     def send_configure(self, message: typing.Union[ListenV2Configure, typing.Dict[str, typing.Any]]) -> None:
         """

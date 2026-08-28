@@ -64,6 +64,31 @@ src/deepgram/agent/v1/requests/agent_v1settings_agent_context_messages_item_func
 src/deepgram/types/create_key_v1request_one.py
 src/deepgram/requests/create_key_v1request_one.py
 
+# Backward-compatibility alias shims for the 2026-08-18 regen renames. The generator
+# dropped the *ThinkProvider*/*SpeakProvider* prefixes from these public model/voice/
+# version types (AnthropicThinkProviderModel -> AnthropicModel, CartesiaSpeakProvider* ->
+# Cartesia*, DeepgramSpeakProviderModel -> DeepgramModel, GoogleThinkProvider* -> Google*,
+# GroqThinkProviderReasoningMode -> GroqReasoningMode). Same regen renamed the agent
+# conversation-history subtypes (AgentV1HistoryContentRole -> ConversationHistoryMessageRole,
+# AgentV1HistoryFunctionCallsFunctionCallsItem -> FunctionCallHistoryMessageFunctionCallsItem)
+# and deleted the doubled AgentV1SettingsAgentContextContextMessagesItem* leaf modules. These
+# hand-written aliases preserve every old public import path. Regression coverage in
+# tests/custom/test_compat_aliases.py. Remove and unfreeze when a future major retires them.
+src/deepgram/types/anthropic_think_provider_model.py
+src/deepgram/types/cartesia_speak_provider_model_id.py
+src/deepgram/types/cartesia_speak_provider_voice.py
+src/deepgram/types/deepgram_speak_provider_model.py
+src/deepgram/types/google_think_provider_model.py
+src/deepgram/types/google_think_provider_version.py
+src/deepgram/types/groq_think_provider_reasoning_mode.py
+src/deepgram/requests/cartesia_speak_provider_voice.py
+src/deepgram/agent/v1/types/agent_v1history_content_role.py
+src/deepgram/agent/v1/types/agent_v1history_function_calls_function_calls_item.py
+src/deepgram/agent/v1/types/agent_v1settings_agent_context_context_messages_item_content_role.py
+src/deepgram/agent/v1/types/agent_v1settings_agent_context_context_messages_item_function_calls_function_calls_item.py
+src/deepgram/agent/v1/requests/agent_v1history_function_calls_function_calls_item.py
+src/deepgram/agent/v1/requests/agent_v1settings_agent_context_context_messages_item_function_calls_function_calls_item.py
+
 # Backward-compatibility alias shims for the 2026-05-14 listen-provider rename.
 # The spec deduplicated AgentV1SettingsAgent[Context]ListenProviderV1/V2/V2LanguageHint
 # into a single top-level DeepgramListenProvider* type. These hand-written aliases
@@ -106,6 +131,15 @@ src/deepgram/agent/v1/types/agent_v1settings_agent_context_listen_provider.py
 # discriminant) into the new shape so existing callers keep working. Remove and unfreeze
 # when the old provider payloads are retired in a future major.
 src/deepgram/agent/v1/types/agent_v1update_listen_listen.py
+
+# Backward-compat patch for the 2026-08-18 regen SpeakV2Speed retype. The generator
+# changed this from `float` to `Union[Literal["0.85"..."1.15"], Any]` -- a string-literal
+# enum that contradicts the API contract (a numeric multiplier; cf. SpeakV2SpeedValue =
+# float, used by the Configure message) and silently changed the documented domain of the
+# `speak.v2.connect(speed=...)` param from numeric to string. Restored to `float` so the
+# connect param stays exactly what it was on main and consistent with Configure. Unfreeze
+# when the spec types the connect `speed` as a number.
+src/deepgram/types/speak_v2speed.py
 
 # Hand-written compat shim recreating ListenV2CloseStreamType, which Fern removed in the
 # 2026-06-15 regen (docs #946). The original generated type wrongly allowed
@@ -184,6 +218,7 @@ tests/custom/test_listen_v2_regen_constraints.py
 tests/custom/test_logging_and_retry_branches.py
 tests/custom/test_model_dict_compat.py
 tests/custom/test_query_encoder.py
+tests/custom/test_regen_response_fields.py
 tests/custom/test_secure_logging.py
 tests/custom/test_socket_client_shims.py
 tests/custom/test_speak_v2_connect_wire.py
@@ -204,6 +239,15 @@ tests/wire/test_manage_v1_projects_keys.py
 # query params (including the datetime -> ISO-8601 Z encoding) while the client signature
 # still forwards them. Frozen so future regens do not silently drop that check again.
 tests/wire/test_manage_v1_projects_requests.py
+
+# Wire test with restored query-parameter coverage for listen.v1.media.transcribe_url.
+# Third instance of the same mechanism as the two entries above: the 2026-08-18 regen
+# simplified the upstream /v1/listen spec *example* (mapping renamed "default" ->
+# "Remote File"), and Fern derives the wire test from the example, so the generated test
+# dropped all 37 optional query params -- including the bool -> lowercase "true"/"false"
+# assertions -- while the client signature still forwards every one of them. Frozen so
+# future regens cannot silently drop that check again.
+tests/wire/test_listen_v1_media.py
 
 # Manual standalone tests
 tests/manual

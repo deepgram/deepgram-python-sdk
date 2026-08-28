@@ -12,6 +12,15 @@ class ListenV1ResponseResultsChannelsItemAlternativesItemWordsItem(UncheckedBase
     start: typing.Optional[float] = None
     end: typing.Optional[float] = None
     confidence: typing.Optional[float] = None
+    speaker: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    The speaker of the word, present when diarization is enabled
+    """
+
+    speaker_confidence: typing.Optional[float] = pydantic.Field(default=None)
+    """
+    Confidence in the speaker assignment. Returned only for pre-recorded diarization; not available for streaming
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

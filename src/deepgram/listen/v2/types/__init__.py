@@ -7,7 +7,6 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from .listen_v2close_stream import ListenV2CloseStream
-    from .listen_v2close_stream_type import ListenV2CloseStreamType
     from .listen_v2configure import ListenV2Configure
     from .listen_v2configure_failure import ListenV2ConfigureFailure
     from .listen_v2configure_success import ListenV2ConfigureSuccess
@@ -15,9 +14,11 @@ if typing.TYPE_CHECKING:
     from .listen_v2configure_thresholds import ListenV2ConfigureThresholds
     from .listen_v2connected import ListenV2Connected
     from .listen_v2fatal_error import ListenV2FatalError
+    from .listen_v2force_end_turn import ListenV2ForceEndTurn
     from .listen_v2turn_info import ListenV2TurnInfo
     from .listen_v2turn_info_event import ListenV2TurnInfoEvent
     from .listen_v2turn_info_words_item import ListenV2TurnInfoWordsItem
+    from .listen_v2close_stream_type import ListenV2CloseStreamType
 _dynamic_imports: typing.Dict[str, str] = {
     "ListenV2CloseStream": ".listen_v2close_stream",
     "ListenV2CloseStreamType": ".listen_v2close_stream_type",
@@ -28,6 +29,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ListenV2ConfigureThresholds": ".listen_v2configure_thresholds",
     "ListenV2Connected": ".listen_v2connected",
     "ListenV2FatalError": ".listen_v2fatal_error",
+    "ListenV2ForceEndTurn": ".listen_v2force_end_turn",
     "ListenV2TurnInfo": ".listen_v2turn_info",
     "ListenV2TurnInfoEvent": ".listen_v2turn_info_event",
     "ListenV2TurnInfoWordsItem": ".listen_v2turn_info_words_item",
@@ -65,6 +67,7 @@ __all__ = [
     "ListenV2ConfigureThresholds",
     "ListenV2Connected",
     "ListenV2FatalError",
+    "ListenV2ForceEndTurn",
     "ListenV2TurnInfo",
     "ListenV2TurnInfoEvent",
     "ListenV2TurnInfoWordsItem",

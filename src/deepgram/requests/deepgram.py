@@ -3,12 +3,12 @@
 import typing
 
 import typing_extensions
-from ..types.deepgram_speak_provider_model import DeepgramSpeakProviderModel
+from ..types.deepgram_model import DeepgramModel
 
 
 class DeepgramParams(typing_extensions.TypedDict):
     """
-    Deepgram text-to-speech provider. Aura models use version v1 (default); Flux TTS uses version v2 and a flux-* model.
+    Deepgram text-to-speech provider. Aura models use version v1 (default); Flux TTS uses version v2 and a flux-* model. Flux TTS is the default when agent.speak is omitted, using the flux-kit-en voice.
     """
 
     type: typing.Literal["deepgram"]
@@ -17,12 +17,12 @@ class DeepgramParams(typing_extensions.TypedDict):
     The Deepgram text-to-speech model family. Accepted values: `v1` (Aura, the default) and `v2` (Flux TTS). Use `v1` with an aura-* model and `v2` with a flux-* model. Defaults to `v1` when omitted.
     """
 
-    model: DeepgramSpeakProviderModel
+    model: DeepgramModel
     """
-    Deepgram TTS model. Aura models (version v1) use the aura-* voices; Flux TTS (version v2) uses the flux-{voice}-{language} voices (e.g. flux-alexis-en).
+    Deepgram TTS model. Aura models (version v1) use the aura-* voices; Flux TTS (version v2) uses the flux-{voice}-{language} voices (e.g. flux-alexis-en). Defaults to flux-kit-en when agent.speak is omitted.
     """
 
     speed: typing_extensions.NotRequired[float]
     """
-    Speaking rate multiplier that adjusts the pace of generated speech while preserving natural prosody and voice quality. Not yet supported in all languages.
+    Speaking rate multiplier that adjusts the pace of generated speech while preserving natural prosody and voice quality. Aura (version v1) accepts any value from 0.7 to 1.5. Flux TTS (version v2) accepts only 0.85, 0.9, 0.95, 1.0, 1.05, 1.1 and 1.15; another value ends the session with FAILED_TO_SPEAK. Not yet supported in all languages.
     """

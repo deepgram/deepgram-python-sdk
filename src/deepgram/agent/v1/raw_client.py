@@ -34,7 +34,7 @@ class RawV1Client:
         Parameters
         ----------
         authorization : typing.Optional[str]
-            Use your API key or a [temporary token](/guides/fundamentals/token-based-authentication) for authentication via the `Authorization` header. In client-side environments where custom headers are not supported, use the [`Sec-WebSocket-Protocol`](/guides/deep-dives/using-the-sec-websocket-protocol) header instead.
+            Use your API key or a [temporary token](/guides/fundamentals/token-based-authentication) for authentication via the `Authorization` header. In client-side environments where custom headers are not supported, use the [`Sec-WebSocket-Protocol`](/docs/using-the-sec-websocket-protocol) header instead.
 
             **Example:** `Authorization: Token %DEEPGRAM_API_KEY%` or `Authorization: Bearer %DEEPGRAM_TOKEN%`
 
@@ -98,7 +98,7 @@ class AsyncRawV1Client:
         Parameters
         ----------
         authorization : typing.Optional[str]
-            Use your API key or a [temporary token](/guides/fundamentals/token-based-authentication) for authentication via the `Authorization` header. In client-side environments where custom headers are not supported, use the [`Sec-WebSocket-Protocol`](/guides/deep-dives/using-the-sec-websocket-protocol) header instead.
+            Use your API key or a [temporary token](/guides/fundamentals/token-based-authentication) for authentication via the `Authorization` header. In client-side environments where custom headers are not supported, use the [`Sec-WebSocket-Protocol`](/docs/using-the-sec-websocket-protocol) header instead.
 
             **Example:** `Authorization: Token %DEEPGRAM_API_KEY%` or `Authorization: Bearer %DEEPGRAM_TOKEN%`
 

@@ -519,3 +519,27 @@ class TestSocketConstructTypeGuard:
             await client.start_listening()
         assert messages == []
         assert errors == []
+
+
+class TestSpeakV2SpeedTypeIsFloat:
+    """Regression guard for the 2026-08-18 regen SpeakV2Speed retype (frozen patch).
+
+    The generator changed SpeakV2Speed from ``float`` to
+    ``Union[Literal["0.85"..."1.15"], Any]`` -- a string-literal enum that
+    silently changed the ``speak.v2.connect(speed=...)`` parameter's documented
+    domain from numeric to string and contradicted the API contract
+    (``SpeakV2SpeedValue = float`` on the Configure message). We restored it to
+    ``float``; this test fails loudly if a future regen reverts the patch.
+    """
+
+    def test_connect_speed_type_is_plain_float(self) -> None:
+        from deepgram.types.speak_v2speed import SpeakV2Speed
+
+        assert SpeakV2Speed is float
+
+    def test_consistent_with_configure_speed_value(self) -> None:
+        from deepgram.types.speak_v2speed import SpeakV2Speed
+        from deepgram.types.speak_v2speed_value import SpeakV2SpeedValue
+
+        # connect-time speed and mid-stream Configure speed must agree.
+        assert SpeakV2Speed is SpeakV2SpeedValue

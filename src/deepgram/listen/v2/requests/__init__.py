@@ -14,6 +14,7 @@ if typing.TYPE_CHECKING:
     from .listen_v2configure_thresholds import ListenV2ConfigureThresholdsParams
     from .listen_v2connected import ListenV2ConnectedParams
     from .listen_v2fatal_error import ListenV2FatalErrorParams
+    from .listen_v2force_end_turn import ListenV2ForceEndTurnParams
     from .listen_v2turn_info import ListenV2TurnInfoParams
     from .listen_v2turn_info_words_item import ListenV2TurnInfoWordsItemParams
 _dynamic_imports: typing.Dict[str, str] = {
@@ -25,6 +26,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ListenV2ConfigureThresholdsParams": ".listen_v2configure_thresholds",
     "ListenV2ConnectedParams": ".listen_v2connected",
     "ListenV2FatalErrorParams": ".listen_v2fatal_error",
+    "ListenV2ForceEndTurnParams": ".listen_v2force_end_turn",
     "ListenV2TurnInfoParams": ".listen_v2turn_info",
     "ListenV2TurnInfoWordsItemParams": ".listen_v2turn_info_words_item",
 }
@@ -60,6 +62,7 @@ __all__ = [
     "ListenV2ConfigureThresholdsParams",
     "ListenV2ConnectedParams",
     "ListenV2FatalErrorParams",
+    "ListenV2ForceEndTurnParams",
     "ListenV2TurnInfoParams",
     "ListenV2TurnInfoWordsItemParams",
 ]

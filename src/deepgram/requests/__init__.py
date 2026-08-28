@@ -25,10 +25,9 @@ if typing.TYPE_CHECKING:
     from .billing_breakdown_v1response_results_item import BillingBreakdownV1ResponseResultsItemParams
     from .billing_breakdown_v1response_results_item_grouping import BillingBreakdownV1ResponseResultsItemGroupingParams
     from .cartesia import CartesiaParams
-    from .cartesia_speak_provider_voice import CartesiaSpeakProviderVoiceParams
+    from .cartesia_voice import CartesiaVoiceParams
     from .create_agent_configuration_v1response import CreateAgentConfigurationV1ResponseParams
     from .create_key_v1request import CreateKeyV1RequestParams
-    from .create_key_v1request_one import CreateKeyV1RequestOneParams
     from .create_key_v1response import CreateKeyV1ResponseParams
     from .create_project_distribution_credentials_v1response import CreateProjectDistributionCredentialsV1ResponseParams
     from .create_project_distribution_credentials_v1response_distribution_credentials import (
@@ -41,7 +40,6 @@ if typing.TYPE_CHECKING:
     from .deepgram import DeepgramParams
     from .deepgram_listen_provider_v1 import DeepgramListenProviderV1Params
     from .deepgram_listen_provider_v2 import DeepgramListenProviderV2Params
-    from .deepgram_listen_provider_v2language_hint import DeepgramListenProviderV2LanguageHintParams
     from .delete_project_invite_v1response import DeleteProjectInviteV1ResponseParams
     from .delete_project_key_v1response import DeleteProjectKeyV1ResponseParams
     from .delete_project_member_v1response import DeleteProjectMemberV1ResponseParams
@@ -108,6 +106,7 @@ if typing.TYPE_CHECKING:
     from .listen_v1accepted_response import ListenV1AcceptedResponseParams
     from .listen_v1response import ListenV1ResponseParams
     from .listen_v1response_metadata import ListenV1ResponseMetadataParams
+    from .listen_v1response_metadata_diarize_info import ListenV1ResponseMetadataDiarizeInfoParams
     from .listen_v1response_metadata_intents_info import ListenV1ResponseMetadataIntentsInfoParams
     from .listen_v1response_metadata_sentiment_info import ListenV1ResponseMetadataSentimentInfoParams
     from .listen_v1response_metadata_summary_info import ListenV1ResponseMetadataSummaryInfoParams
@@ -219,6 +218,9 @@ if typing.TYPE_CHECKING:
     from .usage_fields_v1response_models_item import UsageFieldsV1ResponseModelsItemParams
     from .usage_v1response import UsageV1ResponseParams
     from .usage_v1response_resolution import UsageV1ResponseResolutionParams
+    from .cartesia_speak_provider_voice import CartesiaSpeakProviderVoiceParams
+    from .create_key_v1request_one import CreateKeyV1RequestOneParams
+    from .deepgram_listen_provider_v2language_hint import DeepgramListenProviderV2LanguageHintParams
 _dynamic_imports: typing.Dict[str, str] = {
     "AgentConfigurationV1Params": ".agent_configuration_v1",
     "AgentThinkModelsV1ResponseModelsItemIdParams": ".agent_think_models_v1response_models_item_id",
@@ -240,9 +242,10 @@ _dynamic_imports: typing.Dict[str, str] = {
     "BillingBreakdownV1ResponseResultsItemParams": ".billing_breakdown_v1response_results_item",
     "CartesiaParams": ".cartesia",
     "CartesiaSpeakProviderVoiceParams": ".cartesia_speak_provider_voice",
+    "CartesiaVoiceParams": ".cartesia_voice",
     "CreateAgentConfigurationV1ResponseParams": ".create_agent_configuration_v1response",
-    "CreateKeyV1RequestParams": ".create_key_v1request",
     "CreateKeyV1RequestOneParams": ".create_key_v1request_one",
+    "CreateKeyV1RequestParams": ".create_key_v1request",
     "CreateKeyV1ResponseParams": ".create_key_v1response",
     "CreateProjectDistributionCredentialsV1ResponseDistributionCredentialsParams": ".create_project_distribution_credentials_v1response_distribution_credentials",
     "CreateProjectDistributionCredentialsV1ResponseMemberParams": ".create_project_distribution_credentials_v1response_member",
@@ -306,6 +309,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ListProjectsV1ResponseParams": ".list_projects_v1response",
     "ListProjectsV1ResponseProjectsItemParams": ".list_projects_v1response_projects_item",
     "ListenV1AcceptedResponseParams": ".listen_v1accepted_response",
+    "ListenV1ResponseMetadataDiarizeInfoParams": ".listen_v1response_metadata_diarize_info",
     "ListenV1ResponseMetadataIntentsInfoParams": ".listen_v1response_metadata_intents_info",
     "ListenV1ResponseMetadataParams": ".listen_v1response_metadata",
     "ListenV1ResponseMetadataSentimentInfoParams": ".listen_v1response_metadata_sentiment_info",
@@ -436,9 +440,10 @@ __all__ = [
     "BillingBreakdownV1ResponseResultsItemParams",
     "CartesiaParams",
     "CartesiaSpeakProviderVoiceParams",
+    "CartesiaVoiceParams",
     "CreateAgentConfigurationV1ResponseParams",
-    "CreateKeyV1RequestParams",
     "CreateKeyV1RequestOneParams",
+    "CreateKeyV1RequestParams",
     "CreateKeyV1ResponseParams",
     "CreateProjectDistributionCredentialsV1ResponseDistributionCredentialsParams",
     "CreateProjectDistributionCredentialsV1ResponseMemberParams",
@@ -502,6 +507,7 @@ __all__ = [
     "ListProjectsV1ResponseParams",
     "ListProjectsV1ResponseProjectsItemParams",
     "ListenV1AcceptedResponseParams",
+    "ListenV1ResponseMetadataDiarizeInfoParams",
     "ListenV1ResponseMetadataIntentsInfoParams",
     "ListenV1ResponseMetadataParams",
     "ListenV1ResponseMetadataSentimentInfoParams",

@@ -11,9 +11,9 @@ from ..core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
 from .aws_polly_speak_provider_credentials import AwsPollySpeakProviderCredentials
 from .aws_polly_speak_provider_engine import AwsPollySpeakProviderEngine
 from .aws_polly_speak_provider_voice import AwsPollySpeakProviderVoice
-from .cartesia_speak_provider_model_id import CartesiaSpeakProviderModelId
-from .cartesia_speak_provider_voice import CartesiaSpeakProviderVoice
-from .deepgram_speak_provider_model import DeepgramSpeakProviderModel
+from .cartesia_model_id import CartesiaModelId
+from .cartesia_voice import CartesiaVoice
+from .deepgram_model import DeepgramModel
 from .eleven_labs_speak_provider_model_id import ElevenLabsSpeakProviderModelId
 from .open_ai_speak_provider_model import OpenAiSpeakProviderModel
 from .open_ai_speak_provider_voice import OpenAiSpeakProviderVoice
@@ -22,7 +22,7 @@ from .open_ai_speak_provider_voice import OpenAiSpeakProviderVoice
 class SpeakSettingsV1Provider_Deepgram(UncheckedBaseModel):
     type: typing.Literal["deepgram"] = "deepgram"
     version: typing.Optional[str] = None
-    model: DeepgramSpeakProviderModel
+    model: DeepgramModel
     speed: typing.Optional[float] = None
 
     if IS_PYDANTIC_V2:
@@ -55,8 +55,8 @@ class SpeakSettingsV1Provider_ElevenLabs(UncheckedBaseModel):
 class SpeakSettingsV1Provider_Cartesia(UncheckedBaseModel):
     type: typing.Literal["cartesia"] = "cartesia"
     version: typing.Optional[typing.Literal["2025-03-17"]] = None
-    model_id: CartesiaSpeakProviderModelId
-    voice: CartesiaSpeakProviderVoice
+    model_id: CartesiaModelId
+    voice: CartesiaVoice
     language: typing.Optional[str] = None
     volume: typing.Optional[float] = None
 

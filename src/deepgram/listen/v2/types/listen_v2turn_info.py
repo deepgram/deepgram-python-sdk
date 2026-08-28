@@ -66,6 +66,19 @@ class ListenV2TurnInfo(ListenV2ResponseDictCompatModel):
     Confidence that no more speech is coming in this turn
     """
 
+    trigger: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    The cause of the turn ending. Present on every `EndOfTurn` event and only there.
+    
+    - **model** - the turn ended by Flux's native end-of-turn detection
+    
+    - **manual** - the turn ended because a `ForceEndTurn` message was sent
+    
+    - **timeout** - the turn ended because `eot_timeout_ms` elapsed
+    
+    This is an open enum. New values may be added over time, so clients must tolerate values they do not recognize.
+    """
+
     languages: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
     """
     Detected languages sorted by descending frequency in the

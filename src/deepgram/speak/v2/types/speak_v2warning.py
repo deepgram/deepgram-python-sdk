@@ -17,7 +17,7 @@ class SpeakV2Warning(UncheckedBaseModel):
     """
     Warning code identifying the condition, in `SCREAMING_SNAKE_CASE`.
     
-    Turn-scoped codes: `NO_ACTIVE_SPEECH` (a speech-scoped message arrived with no active turn), `NO_SYNTHESIZABLE_TEXT` (the turn's text was entirely whitespace or punctuation, so it produced no audio and is completed with a zero-duration `SpeechMetadata`).`SYNTHESIS_RETRYING` (a synthesis request failed and is being retried).
+    Turn-scoped codes: `NO_ACTIVE_SPEECH` (a speech-scoped message arrived with no active turn), `NO_SYNTHESIZABLE_TEXT` (the turn's text was entirely whitespace or punctuation, so it produced no audio and is completed with a zero-duration `SpeechMetadata`), and `SYNTHESIS_RETRYING` (a synthesis request failed and is being retried).
     
     Inline-control codes are reserved and not currently emitted, because inline pause and pronunciation controls are not yet applied: `BREAKS_LIMIT_EXCEEDED` (too many pause controls, or two pauses with no intervening text), `BREAK_TOKENS_OUT_OF_RANGE` (pause durations outside the range the model supports), `BREAK_TOKENS_WITH_INVALID_INCREMENTS` (pause durations off the model's supported increment), `PRONUNCIATION_WARNINGS` (a pronunciation override contained invalid IPA), `PRONUNCIATION_TOO_LONG` (an IPA string exceeded the length limit), `PRONUNCIATIONS_LIMIT_EXCEEDED` (too many pronunciation controls in one turn).
     

@@ -5,5 +5,6 @@ import typing
 ListenV2EotThreshold = typing.Any
 """
 End-of-turn confidence required to finish a turn. Valid Values 0.5 -
-0.9.
+1.0. Set to 1.0 to fully suppress natural end-of-turn detection and
+drive turn endings yourself with the `ForceEndTurn` message.
 """
