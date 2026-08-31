@@ -17,6 +17,8 @@ This directory contains comprehensive examples demonstrating how to use the Deep
 - **13-transcription-live-websocket.py** - Live transcription via WebSocket (Listen V1)
 - **14-transcription-live-websocket-v2.py** - Live transcription via WebSocket (Listen V2)
 - **15-transcription-advanced-options.py** - Advanced transcription options
+- **16-transcription-force-end-turn.py** - Manual turn-ending control (Listen V2 / Flux)
+- **17-transcription-live-reconnect.py** - Production-grade reconnection: backoff with jitter, close-code handling, audio buffering across gaps, clean shutdown
 
 ### 20-29: Text-to-Speech (Speak)
 
