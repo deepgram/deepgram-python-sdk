@@ -2,21 +2,22 @@
 
 import json
 import sys
-from typing import Any, Dict, Iterator, List
+from pathlib import Path
+from typing import Any, Dict, Iterator, List, Set
 from unittest.mock import MagicMock
 
 import pytest
 
+import deepgram
 from deepgram.transport import (
+    _TARGET_MODULES,
     AsyncTransport,
     SyncTransport,
     _AsyncTransportShim,
     _SyncTransportShim,
-    _TARGET_MODULES,
     install_transport,
     restore_transport,
 )
-
 
 # ---------------------------------------------------------------------------
 # Mock transport implementations
@@ -530,3 +531,50 @@ class TestReconnectFlag:
         from deepgram.client import AsyncDeepgramClient
         client = AsyncDeepgramClient(api_key="test-key", transport_factory=factory)
         assert client.reconnect is False
+
+
+# ---------------------------------------------------------------------------
+# _TARGET_MODULES completeness
+# ---------------------------------------------------------------------------
+
+_PATCHED_SYMBOLS = ("websockets_sync_client", "websockets_client_connect")
+
+
+def _discover_websocket_modules() -> Set[str]:
+    """Return every `deepgram` module that references a patchable websocket symbol.
+
+    Derived from the package source, deliberately not from `_TARGET_MODULES`. A
+    check that iterates `_TARGET_MODULES` can only confirm the list is internally
+    consistent; it cannot detect a websocket client missing from the list,
+    because the missing entry is never iterated.
+    """
+    package_root = Path(deepgram.__file__).parent
+    discovered: Set[str] = set()
+
+    for path in sorted(package_root.rglob("*.py")):
+        # transport.py names both symbols as its patch targets, so including it
+        # here would make the scan match itself.
+        if path.name == "transport.py":
+            continue
+
+        source = path.read_text(encoding="utf-8")
+        if any(symbol in source for symbol in _PATCHED_SYMBOLS):
+            relative = path.relative_to(package_root).with_suffix("")
+            discovered.add(".".join(("deepgram",) + relative.parts))
+
+    return discovered
+
+
+class TestTargetModuleCompleteness:
+    def test_every_websocket_module_is_registered_for_patching(self):
+        missing = sorted(_discover_websocket_modules() - set(_TARGET_MODULES))
+
+        assert not missing, (
+            "websocket client module(s) absent from _TARGET_MODULES, so a custom "
+            "transport_factory is silently not applied to them: " + ", ".join(missing)
+        )
+
+    def test_discovery_locates_a_known_websocket_module(self):
+        # Guards the guard: if the scan silently found nothing, the completeness
+        # check above would pass vacuously.
+        assert "deepgram.listen.v1.raw_client" in _discover_websocket_modules()
