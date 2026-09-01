@@ -22,6 +22,7 @@ Adds support for:
   reconnect logic.
 """
 
+import os
 import types
 import uuid
 from typing import Any, Callable, Dict, Optional
@@ -114,6 +115,11 @@ class DeepgramClient(BaseClient):
             # Set a placeholder api_key if none provided (base client requires it)
             if kwargs.get("api_key") is None:
                 kwargs["api_key"] = "token"
+        elif kwargs.get("api_key") is None:
+            # The generated base client takes os.getenv("DEEPGRAM_API_KEY") as a default
+            # argument, so it is read once at import. Re-read it here so a key set after
+            # import (load_dotenv below the imports) is still picked up.
+            kwargs["api_key"] = os.getenv("DEEPGRAM_API_KEY")
 
         super().__init__(*args, **kwargs)
         self.session_id = final_session_id
@@ -193,6 +199,11 @@ class AsyncDeepgramClient(AsyncBaseClient):
             # Set a placeholder api_key if none provided (base client requires it)
             if kwargs.get("api_key") is None:
                 kwargs["api_key"] = "token"
+        elif kwargs.get("api_key") is None:
+            # The generated base client takes os.getenv("DEEPGRAM_API_KEY") as a default
+            # argument, so it is read once at import. Re-read it here so a key set after
+            # import (load_dotenv below the imports) is still picked up.
+            kwargs["api_key"] = os.getenv("DEEPGRAM_API_KEY")
 
         super().__init__(*args, **kwargs)
         self.session_id = final_session_id

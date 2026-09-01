@@ -202,6 +202,7 @@ src/deepgram/listen/v2/types/listen_v2fatal_error.py
 tests/custom/test_api_error_redaction.py
 tests/custom/test_agent_history.py
 tests/custom/test_agent_update_listen.py
+tests/custom/test_api_key_env_resolution.py
 tests/custom/test_client.py
 tests/custom/test_client_construction_and_helpers.py
 tests/custom/test_compat_aliases.py
