@@ -234,10 +234,52 @@ class TestSsmlToDeepgram:
         """Test converting basic phoneme tag"""
         ssml = '<phoneme alphabet="ipa" ph="ˌæzəˈθaɪəpriːn">azathioprine</phoneme>'
         result = ssml_to_deepgram(ssml)
-        
+
         assert '"word": "azathioprine"' in result
         assert '"pronounce": "ˌæzəˈθaɪəpriːn"' in result
-    
+
+    def test_phoneme_attribute_order_independent(self):
+        """ph before alphabet must work too (SSML attribute order is not significant)"""
+        ssml = '<phoneme ph="ˌæzəˈθaɪəpriːn" alphabet="ipa">azathioprine</phoneme>'
+        result = ssml_to_deepgram(ssml)
+
+        assert '"word": "azathioprine"' in result
+        assert '"pronounce": "ˌæzəˈθaɪəpriːn"' in result
+
+    def test_phoneme_attributes_allow_whitespace_around_equals(self):
+        """Valid XML whitespace around attribute equals signs must be accepted"""
+        ssml = "<phoneme ph = 'ˌæzəˈθaɪəpriːn' alphabet = \"ipa\">azathioprine</phoneme>"
+        result = ssml_to_deepgram(ssml)
+
+        assert '"word": "azathioprine"' in result
+        assert '"pronounce": "ˌæzəˈθaɪəpriːn"' in result
+
+    @pytest.mark.parametrize(
+        "attributes",
+        [
+            'ph="test"',
+            'alphabet="x-sampa" ph="test"',
+            'alphabet="ipa" data-ph="test"',
+        ],
+    )
+    def test_phoneme_requires_ipa_alphabet_and_ph_attribute(self, attributes):
+        """Unsupported or lookalike attributes must degrade to plain text"""
+        ssml = f"<phoneme {attributes}>medicine</phoneme>"
+
+        assert ssml_to_deepgram(ssml) == "medicine"
+
+    def test_unclosed_phoneme_does_not_consume_following_phoneme(self):
+        """Malformed input must not capture a later valid phoneme tag"""
+        ssml = (
+            '<phoneme alphabet="ipa" ph="bad">'
+            '<phoneme ph="good" alphabet="ipa">medicine</phoneme>'
+        )
+        result = ssml_to_deepgram(ssml)
+
+        assert '"word": "medicine"' in result
+        assert '"pronounce": "good"' in result
+        assert '"pronounce": "bad"' not in result
+
     def test_basic_break(self):
         """Test converting break tag (milliseconds)"""
         ssml = '<break time="500ms"/>'
@@ -497,4 +539,3 @@ class TestIntegration:
         assert '"pronounce": "ˌæzəˈθaɪəpriːn"' in text
         assert '"word": "dupilumab"' in text
         assert '"pronounce": "duːˈpɪljuːmæb"' in text
-
