@@ -10,15 +10,14 @@ import pytest
 
 import deepgram
 from deepgram.transport import (
+    _TARGET_MODULES,
     AsyncTransport,
     SyncTransport,
     _AsyncTransportShim,
     _SyncTransportShim,
-    _TARGET_MODULES,
     install_transport,
     restore_transport,
 )
-
 
 # ---------------------------------------------------------------------------
 # Mock transport implementations

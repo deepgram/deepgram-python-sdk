@@ -104,7 +104,7 @@ def install_transport(
     sync_factory: Optional[Callable] = None,
     async_factory: Optional[Callable] = None,
 ) -> None:
-    """Monkey-patch the 8 auto-generated modules to use custom transports.
+    """Monkey-patch the 10 auto-generated modules to use custom transports.
 
     Parameters
     ----------
