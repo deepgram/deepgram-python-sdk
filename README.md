@@ -95,7 +95,8 @@ response = client.speak.v1.audio.generate(
 
 # Save the audio file
 with open("output.mp3", "wb") as audio_file:
-    audio_file.write(response.stream.getvalue())
+    for chunk in response:
+        audio_file.write(chunk)
 ```
 
 #### Text Analysis
