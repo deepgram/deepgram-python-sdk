@@ -37,7 +37,7 @@ MAX_QUEUED_CHUNKS = 20
 
 def load_sounddevice() -> Any:
     try:
-        import sounddevice  # type: ignore[import-not-found]
+        import sounddevice  # type: ignore[import-not-found,import-untyped]
     except ImportError as exc:
         raise RuntimeError(
             "Microphone capture requires sounddevice. Install it with: pip install sounddevice"
@@ -183,7 +183,7 @@ def main() -> int:
             if sender_errors:
                 raise sender_errors[0]
     except Exception as exc:
-        print(f"Microphone transcription failed: {type(exc).__name__}", file=sys.stderr)
+        print(f"Microphone transcription failed: {type(exc).__name__}: {exc}", file=sys.stderr)
         return 1
 
     if input_status:
