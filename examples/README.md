@@ -19,6 +19,7 @@ This directory contains comprehensive examples demonstrating how to use the Deep
 - **15-transcription-advanced-options.py** - Advanced transcription options
 - **16-transcription-force-end-turn.py** - Manual turn-ending control (Listen V2 / Flux)
 - **17-transcription-live-reconnect.py** - Production-grade reconnection: backoff with jitter, close-code handling, audio buffering across gaps, clean shutdown
+- **18-transcription-live-microphone.py** - Microphone transcription with the optional sounddevice dependency
 
 ### 20-29: Text-to-Speech (Speak)
 
