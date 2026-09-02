@@ -67,6 +67,11 @@ with client.listen.v2.connect(
 
 Transcribe pre-recorded audio files ([API Reference](./reference.md#listen-v1-media-transcribe-file)):
 
+`nova-3` uses English when `language` is omitted. For non-English audio, pass a
+supported language explicitly, such as `language="fr"`. Use `detect_language=True`
+when one dominant language is unknown, or `language="multi"` when the audio may
+contain multiple supported languages.
+
 ```python
 from deepgram import DeepgramClient
 
@@ -75,7 +80,8 @@ client = DeepgramClient()
 with open("audio.wav", "rb") as audio_file:
     response = client.listen.v1.media.transcribe_file(
         request=audio_file.read(),
-        model="nova-3"
+        model="nova-3",
+        language="en",
     )
     print(response.results.channels[0].alternatives[0].transcript)
 ```
