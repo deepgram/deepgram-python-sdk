@@ -13,10 +13,11 @@ shows the production patterns Deepgram recommends for resilient streaming:
 - Clean shutdown via CloseStream
 
 It streams a pre-recorded audio file in real-time chunks to simulate a live
-microphone feed, and deliberately severs the TCP connection mid-stream to
-demonstrate recovery. Run it with DEEPGRAM_API_KEY set:
+microphone feed. Set SIMULATE_DROP=1 to deliberately sever the TCP connection
+mid-stream and demonstrate recovery. Run it with DEEPGRAM_API_KEY set:
 
     python examples/17-transcription-live-reconnect.py
+    SIMULATE_DROP=1 python examples/17-transcription-live-reconnect.py
 
 See also: https://developers.deepgram.com/docs/recovering-from-connection-errors-and-timeouts-when-live-streaming-audio
 """
@@ -78,8 +79,9 @@ NORMAL_CLOSE_CODES = {1000, 1001}
 
 CHUNK_SECONDS = 0.25  # size of each audio chunk sent to Deepgram
 MAX_BUFFER_SECONDS = 60.0  # cap on audio held while disconnected
+MAX_CATCH_UP_SPEED = 1.25
 
-# Deepgram accepts audio at up to 1.25x real-time, so a large backlog drains
+# Deepgram accepts audio at up to MAX_CATCH_UP_SPEED real-time, so a large backlog drains
 # slowly. Capping the buffer bounds memory and catch-up delay; when the cap is
 # hit we drop the oldest audio and accept a gap in the transcript.
 
@@ -201,6 +203,7 @@ class ResilientTranscriber:
             # so it runs in a thread while this thread sends audio.
             listener = threading.Thread(target=connection.start_listening, daemon=True)
             listener.start()
+            next_send_at = time.monotonic()
 
             try:
                 while not self._stop.is_set():
@@ -214,7 +217,16 @@ class ResilientTranscriber:
                         continue
                     chunk = self._buffer.popleft()
                     try:
+                        # The producer naturally paces a healthy stream. On reconnect,
+                        # this caps buffered-audio catch-up at Deepgram's 1.25x limit.
+                        delay = next_send_at - time.monotonic()
+                        if delay > 0:
+                            time.sleep(delay)
                         connection.send_media(chunk)
+                        next_send_at = max(
+                            next_send_at + CHUNK_SECONDS / MAX_CATCH_UP_SPEED,
+                            time.monotonic(),
+                        )
                     except Exception:
                         # The send failed, so this chunk never made it out.
                         # Put it back so the next session resends it. (Audio
@@ -265,46 +277,50 @@ class ResilientTranscriber:
         producer = threading.Thread(target=self._produce_audio, daemon=True)
         producer.start()
 
-        attempt = 0
-        while True:
-            had_results = len(self.transcripts)
-            try:
-                outcome, detail = self._run_session()
-            except (ApiError, InvalidStatus) as err:
-                # A rejected handshake surfaces as ApiError, or as the
-                # websockets library's InvalidStatus depending on the
-                # installed websockets version.
-                status = err.status_code if isinstance(err, ApiError) else err.response.status_code
-                if status in (401, 403):
-                    # Bad credentials never fix themselves — do not retry.
-                    raise RuntimeError(f"Handshake rejected with HTTP {status}: check DEEPGRAM_API_KEY") from err
-                outcome, detail = "retry", f"handshake failed (status {status})"
-            except OSError as err:
-                outcome, detail = "retry", f"network error: {err}"
+        try:
+            attempt = 0
+            while True:
+                had_results = len(self.transcripts)
+                try:
+                    outcome, detail = self._run_session()
+                except (ApiError, InvalidStatus) as err:
+                    # A rejected handshake surfaces as ApiError, or as the
+                    # websockets library's InvalidStatus depending on the
+                    # installed websockets version.
+                    status = err.status_code if isinstance(err, ApiError) else err.response.status_code
+                    if status in (401, 403):
+                        # Bad credentials never fix themselves — do not retry.
+                        raise RuntimeError(f"Handshake rejected with HTTP {status}: check DEEPGRAM_API_KEY") from err
+                    outcome, detail = "retry", f"handshake failed (status {status})"
+                except OSError as err:
+                    outcome, detail = "retry", f"network error: {err}"
 
-            if outcome == "finished":
-                print(f"Done: {detail}")
-                return
-            if outcome == "fatal":
-                raise RuntimeError(f"Connection closed with a non-retryable error: {detail}")
+                if outcome == "finished":
+                    print(f"Done: {detail}")
+                    return
+                if outcome == "fatal":
+                    raise RuntimeError(f"Connection closed with a non-retryable error: {detail}")
 
-            # A session that produced results was healthy, so its failure is
-            # a fresh incident: reset the backoff schedule.
-            if len(self.transcripts) > had_results:
-                attempt = 0
-            attempt += 1
-            if attempt > MAX_RETRIES:
-                raise RuntimeError(f"Giving up after {MAX_RETRIES} reconnect attempts")
+                # A session that produced results was healthy, so its failure is
+                # a fresh incident: reset the backoff schedule.
+                if len(self.transcripts) > had_results:
+                    attempt = 0
+                attempt += 1
+                if attempt > MAX_RETRIES:
+                    raise RuntimeError(f"Giving up after {MAX_RETRIES} reconnect attempts")
 
-            delay = random.uniform(0.0, min(MAX_DELAY_SECONDS, BASE_DELAY_SECONDS * 2 ** (attempt - 1)))
-            print(f"Connection lost: {detail}")
-            print(f"Backing off {delay:.1f}s before reconnect attempt {attempt}/{MAX_RETRIES}...")
-            time.sleep(delay)
-            self.reconnects += 1
-            print(f"Reconnecting with {self._buffered_seconds():.1f}s of audio buffered during the gap")
-            # Deepgram closes new connections that stay silent for ~10s, so
-            # the buffered audio must start flowing promptly — which the
-            # session loop does as soon as the socket opens.
+                delay = random.uniform(0.0, min(MAX_DELAY_SECONDS, BASE_DELAY_SECONDS * 2 ** (attempt - 1)))
+                print(f"Connection lost: {detail}")
+                print(f"Backing off {delay:.1f}s before reconnect attempt {attempt}/{MAX_RETRIES}...")
+                time.sleep(delay)
+                self.reconnects += 1
+                print(f"Reconnecting with {self._buffered_seconds():.1f}s of audio buffered during the gap")
+                # Deepgram closes new connections that stay silent for ~10s, so
+                # the buffered audio must start flowing promptly — which the
+                # session loop does as soon as the socket opens.
+        finally:
+            self._stop.set()
+            producer.join(timeout=5)
 
 
 def force_network_drop(transcriber: ResilientTranscriber, after_seconds: float) -> None:
@@ -330,9 +346,8 @@ def main() -> int:
     client = DeepgramClient()  # reads DEEPGRAM_API_KEY from the environment
     transcriber = ResilientTranscriber(client, audio_path)
 
-    # Simulate one network failure 8 seconds in. Set SIMULATE_DROP=0 to
-    # stream without it.
-    if os.getenv("SIMULATE_DROP", "1") != "0":
+    # Set SIMULATE_DROP=1 to demonstrate a recoverable network failure.
+    if os.getenv("SIMULATE_DROP", "0") == "1":
         threading.Thread(target=force_network_drop, args=(transcriber, 8.0), daemon=True).start()
 
     try:
