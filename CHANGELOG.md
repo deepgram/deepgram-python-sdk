@@ -1,5 +1,24 @@
 # Changelog
 
+## [7.8.1](https://github.com/deepgram/deepgram-python-sdk/compare/v7.8.0...v7.8.1) (2026-09-03)
+
+
+### Bug Fixes
+
+* handle SSML phoneme attribute order in ssml_to_deepgram ([#741](https://github.com/deepgram/deepgram-python-sdk/issues/741)) ([7fd4b63](https://github.com/deepgram/deepgram-python-sdk/commit/7fd4b63b9f15ac4a7f854f00a85101490cb01f4d))
+* preserve explicit API key semantics ([#778](https://github.com/deepgram/deepgram-python-sdk/issues/778)) ([e675990](https://github.com/deepgram/deepgram-python-sdk/commit/e6759904ec732d3d4189d30d202517b68c4ffd7b))
+* resolve DEEPGRAM_API_KEY when the client is constructed (closes [#734](https://github.com/deepgram/deepgram-python-sdk/issues/734)) ([#767](https://github.com/deepgram/deepgram-python-sdk/issues/767)) ([ec362ec](https://github.com/deepgram/deepgram-python-sdk/commit/ec362ecef6540d5c6d147b54f55fc8d952bd0e0d))
+* route Speak V2 websocket through custom transport_factory ([#766](https://github.com/deepgram/deepgram-python-sdk/issues/766)) ([0980663](https://github.com/deepgram/deepgram-python-sdk/commit/0980663320d9fd36efea6e82581e55e1899694e4))
+
+
+### Documentation
+
+* clarify nova-3 transcription language defaults ([#771](https://github.com/deepgram/deepgram-python-sdk/issues/771)) ([4574337](https://github.com/deepgram/deepgram-python-sdk/commit/45743375d717e23c6e4109bb581bed6d9f220637))
+* **examples:** add microphone live transcription example ([#780](https://github.com/deepgram/deepgram-python-sdk/issues/780)) ([08f0471](https://github.com/deepgram/deepgram-python-sdk/commit/08f0471dfc4b9e814f4d00a2cdba0890870e9f6a))
+* **examples:** add resilient live transcription reconnection example ([#776](https://github.com/deepgram/deepgram-python-sdk/issues/776)) ([96b2d11](https://github.com/deepgram/deepgram-python-sdk/commit/96b2d11fc2fde5c0155e9afb39d44f211370712f))
+* **examples:** add Voice Agent session recorder ([#781](https://github.com/deepgram/deepgram-python-sdk/issues/781)) ([30ad152](https://github.com/deepgram/deepgram-python-sdk/commit/30ad15208e67e12637a207981f8245cfc3cb0b29)), closes [#775](https://github.com/deepgram/deepgram-python-sdk/issues/775)
+* iterate audio chunks in text-to-speech snippets ([#749](https://github.com/deepgram/deepgram-python-sdk/issues/749)) ([178724e](https://github.com/deepgram/deepgram-python-sdk/commit/178724e1f63148779afc66fc9c07039f38a05d7e))
+
 ## [7.8.0](https://github.com/deepgram/deepgram-python-sdk/compare/v7.7.1...v7.8.0) (2026-08-28)
 
 
