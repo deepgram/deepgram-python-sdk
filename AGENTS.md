@@ -87,7 +87,7 @@ Files Fern now owns outright, but that carry a caveat worth knowing before the n
 
 ### Prepare repo for regeneration
 
-1. **Create a new branch** off `main` named `lo/sdk-gen-<YYYY-MM-DD>`.
+1. **Create a new branch** off `main` named `gh/sdk-gen-<YYYY-MM-DD>`.
 2. **Push the branch** and create a PR titled `chore: SDK regeneration <YYYY-MM-DD>` (empty commit if needed).
 3. **Read `.fernignore`** and classify each entry using the rules above.
 4. **For each temporarily frozen file only:**
