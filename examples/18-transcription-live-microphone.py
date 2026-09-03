@@ -38,9 +38,11 @@ MAX_QUEUED_CHUNKS = 20
 def load_sounddevice() -> Any:
     try:
         import sounddevice  # type: ignore[import-not-found,import-untyped]
-    except ImportError as exc:
+    except (ImportError, OSError) as exc:
         raise RuntimeError(
-            "Microphone capture requires sounddevice. Install it with: pip install sounddevice"
+            "Microphone capture requires sounddevice and the PortAudio library. "
+            "Install them with: pip install sounddevice "
+            "(on Debian/Ubuntu also: sudo apt install libportaudio2)"
         ) from exc
     return sounddevice
 
