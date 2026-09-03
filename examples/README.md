@@ -32,6 +32,7 @@ This directory contains comprehensive examples demonstrating how to use the Deep
 ### 30-39: Voice Agent
 
 - **30-voice-agent.py** - Voice Agent configuration and usage
+- **31-voice-agent-session-recording.py** - Record selected Voice Agent events as JSON
 
 ### 40-49: Text Intelligence (Read)
 
