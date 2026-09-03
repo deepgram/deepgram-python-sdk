@@ -1,5 +1,24 @@
 # Changelog
 
+## [7.8.1](https://github.com/deepgram/deepgram-python-sdk/compare/v7.8.0...v7.8.1) (2026-09-03)
+
+
+### Bug Fixes
+
+* **TextBuilder:** `ssml_to_deepgram()` now preserves a `<phoneme>` pronunciation when its valid `ph` and `alphabet` attributes appear in either order. ([#741](https://github.com/deepgram/deepgram-python-sdk/issues/741)) ([7fd4b63](https://github.com/deepgram/deepgram-python-sdk/commit/7fd4b63b9f15ac4a7f854f00a85101490cb01f4d))
+* **Credentials:** Explicitly passing `api_key=None` continues to disable ambient `DEEPGRAM_API_KEY` lookup, which is important for multi-tenant and test environments. ([#778](https://github.com/deepgram/deepgram-python-sdk/issues/778)) ([e675990](https://github.com/deepgram/deepgram-python-sdk/commit/e6759904ec732d3d4189d30d202517b68c4ffd7b))
+* **Credentials:** `DeepgramClient()` and `AsyncDeepgramClient()` now resolve `DEEPGRAM_API_KEY` when constructed, so `load_dotenv()` can run after importing the SDK. Closes [#734](https://github.com/deepgram/deepgram-python-sdk/issues/734). ([#767](https://github.com/deepgram/deepgram-python-sdk/issues/767)) ([ec362ec](https://github.com/deepgram/deepgram-python-sdk/commit/ec362ecef6540d5c6d147b54f55fc8d952bd0e0d))
+* **Custom transports:** Speak V2 WebSocket connections now honor `transport_factory`, matching the routing behavior of other WebSocket APIs for proxies, test doubles, and custom-hosted transports. ([#766](https://github.com/deepgram/deepgram-python-sdk/issues/766)) ([0980663](https://github.com/deepgram/deepgram-python-sdk/commit/0980663320d9fd36efea6e82581e55e1899694e4))
+
+
+### Documentation
+
+* **Transcription:** Clarified that Nova-3 assumes English when `language` is omitted; non-English and multilingual audio require an explicit language such as `fr` or `multi`. ([#771](https://github.com/deepgram/deepgram-python-sdk/issues/771)) ([4574337](https://github.com/deepgram/deepgram-python-sdk/commit/45743375d717e23c6e4109bb581bed6d9f220637))
+* **Examples:** Added Listen V1 live microphone transcription with optional `sounddevice`, device selection, bounded audio buffering, transcript output, and clean Ctrl-C shutdown. ([#780](https://github.com/deepgram/deepgram-python-sdk/issues/780)) ([08f0471](https://github.com/deepgram/deepgram-python-sdk/commit/08f0471dfc4b9e814f4d00a2cdba0890870e9f6a))
+* **Examples:** Added a resilient Listen V1 live transcription pattern with exponential backoff, reconnect-aware audio buffering, timestamp continuity, and clean shutdown. ([#776](https://github.com/deepgram/deepgram-python-sdk/issues/776)) ([96b2d11](https://github.com/deepgram/deepgram-python-sdk/commit/96b2d11fc2fde5c0155e9afb39d44f211370712f))
+* **Examples:** Added an application-owned Voice Agent session recorder that serializes received transcripts, function calls, and latency reports as JSON while leaving consent, redaction, retention, and storage policy to the application. Closes [#775](https://github.com/deepgram/deepgram-python-sdk/issues/775). ([#781](https://github.com/deepgram/deepgram-python-sdk/issues/781)) ([30ad152](https://github.com/deepgram/deepgram-python-sdk/commit/30ad15208e67e12637a207981f8245cfc3cb0b29))
+* **Text-to-Speech:** Corrected streaming synthesis snippets to iterate the response byte chunks instead of accessing a nonexistent `.stream` attribute. ([#749](https://github.com/deepgram/deepgram-python-sdk/issues/749)) ([178724e](https://github.com/deepgram/deepgram-python-sdk/commit/178724e1f63148779afc66fc9c07039f38a05d7e))
+
 ## [7.8.0](https://github.com/deepgram/deepgram-python-sdk/compare/v7.7.1...v7.8.0) (2026-08-28)
 
 
