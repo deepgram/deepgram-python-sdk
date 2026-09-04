@@ -5462,7 +5462,7 @@ asyncio.run(main())
 <dl>
 <dd>
 
-**eot_threshold:** `typing.Optional[str]` — Threshold for end-of-turn detection
+**eot_threshold:** `typing.Optional[str]` — Threshold for Flux end-of-turn detection. Set `1.0` to suppress confidence-based turn endings when the application uses `send_force_end_turn()`; `eot_timeout_ms` still ends idle turns independently.
 
 </dd>
 </dl>
@@ -5470,7 +5470,7 @@ asyncio.run(main())
 <dl>
 <dd>
 
-**eot_timeout_ms:** `typing.Optional[str]` — Timeout in milliseconds for end-of-turn detection
+**eot_timeout_ms:** `typing.Optional[str]` — Idle timeout in milliseconds for end-of-turn detection. Increase it with `eot_threshold=1.0` when the application needs full manual turn control through `send_force_end_turn()`.
 
 </dd>
 </dl>
@@ -6484,6 +6484,8 @@ asyncio.run(main())
 **`send_force_end_turn()`** — Send the `ForceEndTurn` control message to the agent
 
 - `agent.send_force_end_turn()`
+
+- Requires a Deepgram V2 (Flux) listen provider. With a V1 provider, the server emits `FORCE_END_TURN_UNSUPPORTED` and leaves the current turn open.
 
 </dd>
 </dl>

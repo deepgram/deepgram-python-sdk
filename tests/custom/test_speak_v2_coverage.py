@@ -543,14 +543,11 @@ class TestSocketConstructTypeGuard:
 
 
 class TestSpeakV2SpeedTypeIsFloat:
-    """Regression guard for the 2026-08-18 regen SpeakV2Speed retype (frozen patch).
+    """Regression guard for the SpeakV2Speed numeric contract.
 
-    The generator changed SpeakV2Speed from ``float`` to
-    ``Union[Literal["0.85"..."1.15"], Any]`` -- a string-literal enum that
-    silently changed the ``speak.v2.connect(speed=...)`` parameter's documented
-    domain from numeric to string and contradicted the API contract
-    (``SpeakV2SpeedValue = float`` on the Configure message). We restored it to
-    ``float``; this test fails loudly if a future regen reverts the patch.
+    Fern now emits ``float``. Keep this test so a future regeneration cannot
+    silently reintroduce a string-literal speed type that contradicts
+    ``SpeakV2SpeedValue = float`` on the Configure message.
     """
 
     def test_connect_speed_type_is_plain_float(self) -> None:
