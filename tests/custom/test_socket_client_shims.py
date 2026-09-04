@@ -18,12 +18,23 @@ is handed to ``.send()`` — the same payload that goes on the wire.
 
 import json
 
-from deepgram.agent.v1.socket_client import V1SocketClient, _sanitize_numeric_types
+from deepgram.agent.v1.socket_client import AsyncV1SocketClient, V1SocketClient, _sanitize_numeric_types
+from deepgram.agent.v1.types.agent_v1force_end_turn import AgentV1ForceEndTurn
+from deepgram.agent.v1.types.agent_v1settings import AgentV1Settings
+from deepgram.agent.v1.types.agent_v1settings_agent import AgentV1SettingsAgent
+from deepgram.agent.v1.types.agent_v1settings_agent_listen import AgentV1SettingsAgentListen
+from deepgram.agent.v1.types.agent_v1settings_agent_listen_provider import AgentV1SettingsAgentListenProvider_V1
+from deepgram.agent.v1.types.agent_v1settings_audio import AgentV1SettingsAudio
+from deepgram.agent.v1.types.agent_v1settings_audio_input import AgentV1SettingsAudioInput
 from deepgram.listen.v2.socket_client import AsyncV2SocketClient, V2SocketClient
 from deepgram.listen.v2.types.listen_v2close_stream import ListenV2CloseStream
 from deepgram.listen.v2.types.listen_v2configure import ListenV2Configure
 from deepgram.listen.v2.types.listen_v2force_end_turn import ListenV2ForceEndTurn
 from deepgram.speak.v2.socket_client import V2SocketClient as SpeakV2SocketClient
+from deepgram.types.speak_settings_v1 import SpeakSettingsV1
+from deepgram.types.speak_settings_v1provider import SpeakSettingsV1Provider_Deepgram
+from deepgram.types.think_settings_v1 import ThinkSettingsV1
+from deepgram.types.think_settings_v1provider import ThinkSettingsV1Provider_OpenAi
 
 
 class _FakeWebSocket:
@@ -50,6 +61,26 @@ def _sent_json(ws):
     assert len(ws.sent) == 1
     payload = ws.sent[0]
     return json.loads(payload) if isinstance(payload, str) else payload
+
+
+def _agent_settings_with_expressivity() -> AgentV1Settings:
+    return AgentV1Settings(
+        audio=AgentV1SettingsAudio(input=AgentV1SettingsAudioInput(encoding="linear16", sample_rate=24000)),
+        agent=AgentV1SettingsAgent(
+            listen=AgentV1SettingsAgentListen(
+                provider=AgentV1SettingsAgentListenProvider_V1(type="deepgram", model="nova-3")
+            ),
+            think=ThinkSettingsV1(
+                provider=ThinkSettingsV1Provider_OpenAi(type="open_ai", model="gpt-4o-mini"),
+                prompt="Be concise.",
+            ),
+            speak=SpeakSettingsV1(
+                provider=SpeakSettingsV1Provider_Deepgram(
+                    type="deepgram", version="v2", model="flux-alexis-en", expressivity=2
+                )
+            ),
+        ),
+    )
 
 
 class TestSanitizeNumericTypes:
@@ -121,11 +152,38 @@ class TestOptionalMessageControlSends:
         V2SocketClient(websocket=ws).send_force_end_turn(ListenV2ForceEndTurn(type="ForceEndTurn"))
         assert _sent_json(ws)["type"] == "ForceEndTurn"
 
+    def test_agent_force_end_turn_no_arg(self):
+        ws = _FakeWebSocket()
+        V1SocketClient(websocket=ws).send_force_end_turn()
+        assert _sent_json(ws) == {"type": "ForceEndTurn"}
+
+    def test_agent_force_end_turn_explicit_message(self):
+        ws = _FakeWebSocket()
+        V1SocketClient(websocket=ws).send_force_end_turn(AgentV1ForceEndTurn(type="ForceEndTurn"))
+        assert _sent_json(ws) == {"type": "ForceEndTurn"}
+
     async def test_listen_v2_force_end_turn_async_no_arg(self):
         # Cover the async client's send_force_end_turn too (asyncio_mode="auto").
         ws = _FakeAsyncWebSocket()
         await AsyncV2SocketClient(websocket=ws).send_force_end_turn()
         assert _sent_json(ws) == {"type": "ForceEndTurn"}
+
+    async def test_agent_force_end_turn_async_no_arg(self):
+        ws = _FakeAsyncWebSocket()
+        await AsyncV1SocketClient(websocket=ws).send_force_end_turn()
+        assert _sent_json(ws) == {"type": "ForceEndTurn"}
+
+
+class TestAgentSettingsSerialization:
+    def test_sync_send_settings_serializes_expressivity(self):
+        ws = _FakeWebSocket()
+        V1SocketClient(websocket=ws).send_settings(_agent_settings_with_expressivity())
+        assert _sent_json(ws)["agent"]["speak"]["provider"]["expressivity"] == 2
+
+    async def test_async_send_settings_serializes_expressivity(self):
+        ws = _FakeAsyncWebSocket()
+        await AsyncV1SocketClient(websocket=ws).send_settings(_agent_settings_with_expressivity())
+        assert _sent_json(ws)["agent"]["speak"]["provider"]["expressivity"] == 2
 
 
 class TestSendConfigureRawShim:

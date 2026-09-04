@@ -127,3 +127,37 @@ async def test_async_connect_targets_v2_listen_and_serializes_numerals():
     assert path == "/v2/listen"
     assert query["model"] == ["flux-general-en"]
     assert query["numerals"] == ["true"]
+
+
+def test_sync_connect_serializes_eot_controls():
+    capture = _CaptureConnect()
+    with patch.object(listen_v2_client.websockets_sync_client, "connect", capture):
+        with DeepgramClient(api_key="test_api_key").listen.v2.connect(
+            model="flux-general-en",
+            eager_eot_threshold="0.5",
+            eot_threshold="1.0",
+            eot_timeout_ms="1000",
+        ):
+            pass
+
+    _, query = _path_and_query(capture.url)
+    assert query["eager_eot_threshold"] == ["0.5"]
+    assert query["eot_threshold"] == ["1.0"]
+    assert query["eot_timeout_ms"] == ["1000"]
+
+
+async def test_async_connect_serializes_eot_controls():
+    capture = _CaptureConnect()
+    with patch.object(listen_v2_client, "websockets_client_connect", capture):
+        async with AsyncDeepgramClient(api_key="test_api_key").listen.v2.connect(
+            model="flux-general-en",
+            eager_eot_threshold="0.5",
+            eot_threshold="1.0",
+            eot_timeout_ms="1000",
+        ):
+            pass
+
+    _, query = _path_and_query(capture.url)
+    assert query["eager_eot_threshold"] == ["0.5"]
+    assert query["eot_threshold"] == ["1.0"]
+    assert query["eot_timeout_ms"] == ["1000"]

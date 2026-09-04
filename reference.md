@@ -375,7 +375,7 @@ client.listen.v1.media.transcribe_url(
 <dl>
 <dd>
 
-**keywords:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Keywords can boost or suppress specialized terminology and brands
+**keywords:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Keywords can boost or suppress specialized terminology and brands. Not compatible with Nova-3; use `keyterm` instead.
     
 </dd>
 </dl>
@@ -733,7 +733,7 @@ with open("audio.wav", "rb") as f:
 <dl>
 <dd>
 
-**keywords:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Keywords can boost or suppress specialized terminology and brands
+**keywords:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Keywords can boost or suppress specialized terminology and brands. Not compatible with Nova-3; use `keyterm` instead.
     
 </dd>
 </dl>
@@ -6070,7 +6070,7 @@ asyncio.run(main())
 <dl>
 <dd>
 
-**speed:** `typing.Optional[SpeakV2Speed]` — Speech-rate multiplier. `1.0` is the model's nominal rate. Accepted values: `0.85`, `0.90`, `0.95`, `1.00`, `1.05`, `1.10`, `1.15` — any other value is rejected with `SPEED_OUT_OF_RANGE` or `SPEED_INCREMENT_INVALID`
+**speed:** `typing.Optional[SpeakV2Speed]` — Speech-rate multiplier. `1.0` is the model's nominal rate; accepted values run from `0.5` to `1.5` in `0.05` increments. Values outside that range are rejected with `SPEED_OUT_OF_RANGE`, and values off the increment are rejected with `SPEED_INCREMENT_INVALID`. Models and languages without runtime speed control reject any value with `SPEED_NOT_SUPPORTED`.
 
 </dd>
 </dl>
@@ -6243,6 +6243,8 @@ with client.agent.v1.connect() as agent:
     agent.send_keep_alive()
 
 ```
+
+For Flux TTS, set the Deepgram provider `version="v2"` and a `flux-*` model. The optional `expressivity` setting accepts whole numbers from `-2` (calmer) to `2` (more animated); `0` is the default. It applies for the session and is beta, so audition non-default values before shipping.
 
 </dd>
 </dl>
@@ -6476,10 +6478,18 @@ asyncio.run(main())
 
 </dd>
 </dl>
+<dl>
+<dd>
+
+**`send_force_end_turn()`** — Send the `ForceEndTurn` control message to the agent
+
+- `agent.send_force_end_turn()`
+
+</dd>
+</dl>
 </dd>
 </dl>
 
 </dd>
 </dl>
 </details>
-

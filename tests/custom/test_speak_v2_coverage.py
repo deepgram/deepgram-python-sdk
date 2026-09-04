@@ -99,6 +99,27 @@ class TestAudioGenerateSuccess:
                 chunks += chunk
         assert chunks == b"audio-bytes"
 
+    def test_sync_serializes_speed_and_expressivity(self) -> None:
+        with respx.mock:
+            route = respx.route(host=HOST).mock(return_value=httpx.Response(200, content=b"audio-bytes"))
+            list(
+                _sync_client().speak.v2.audio.generate(model="flux-alexis-en", text="hello", speed=1.05, expressivity=2)
+            )
+        assert route.called
+        assert route.calls.last.request.url.params["speed"] == "1.05"
+        assert route.calls.last.request.url.params["expressivity"] == "2"
+
+    async def test_async_serializes_speed_and_expressivity(self) -> None:
+        with respx.mock:
+            route = respx.route(host=HOST).mock(return_value=httpx.Response(200, content=b"audio-bytes"))
+            async for _ in _async_client().speak.v2.audio.generate(
+                model="flux-alexis-en", text="hello", speed=1.05, expressivity=2
+            ):
+                pass
+        assert route.called
+        assert route.calls.last.request.url.params["speed"] == "1.05"
+        assert route.calls.last.request.url.params["expressivity"] == "2"
+
     def test_with_raw_response_accessor(self) -> None:
         assert isinstance(
             _sync_client().speak.v2.audio.with_raw_response,
