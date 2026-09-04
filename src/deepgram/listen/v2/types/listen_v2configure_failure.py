@@ -4,10 +4,10 @@ import typing
 
 import pydantic
 from ....core.pydantic_utilities import IS_PYDANTIC_V2
-from ....core.unchecked_base_model import UncheckedBaseModel
+from ._dict_compat import ListenV2ResponseDictCompatModel
 
 
-class ListenV2ConfigureFailure(UncheckedBaseModel):
+class ListenV2ConfigureFailure(ListenV2ResponseDictCompatModel):
     type: typing.Literal["ConfigureFailure"] = pydantic.Field(default="ConfigureFailure")
     """
     Message type identifier

@@ -27,11 +27,11 @@ src/deepgram/listen/v2/types/_dict_compat.py
 # - listen/v2 send_configure: runtime tolerance for a raw dict alongside the
 #   generated ListenV2Configure model
 # [temporarily frozen — manual patches listed above]
-src/deepgram/agent/v1/socket_client.py.bak
-src/deepgram/listen/v1/socket_client.py.bak
-src/deepgram/listen/v2/socket_client.py.bak
-src/deepgram/speak/v1/socket_client.py.bak
-src/deepgram/speak/v2/socket_client.py.bak
+src/deepgram/agent/v1/socket_client.py
+src/deepgram/listen/v1/socket_client.py
+src/deepgram/listen/v2/socket_client.py
+src/deepgram/speak/v1/socket_client.py
+src/deepgram/speak/v2/socket_client.py
 
 # Backward-compat patch: AgentV1SettingsAgentContext schema restructure as of
 # 2026-05-05. The new schema nests messages under .context.messages; this file
@@ -39,12 +39,12 @@ src/deepgram/speak/v2/socket_client.py.bak
 # kwarg and remaps it to `context={"messages": ...}` so existing callers keep
 # producing the correct wire payload, plus a read-side `.messages` property so
 # existing attribute access keeps working.
-src/deepgram/agent/v1/types/agent_v1settings_agent_context.py.bak
-src/deepgram/agent/v1/types/agent_v1settings_agent.py.bak
-src/deepgram/agent/v1/types/agent_v1settings.py.bak
-src/deepgram/agent/v1/requests/agent_v1settings_agent_context.py.bak
-src/deepgram/agent/v1/requests/agent_v1settings_agent.py.bak
-src/deepgram/agent/v1/requests/agent_v1settings.py.bak
+src/deepgram/agent/v1/types/agent_v1settings_agent_context.py
+src/deepgram/agent/v1/types/agent_v1settings_agent.py
+src/deepgram/agent/v1/types/agent_v1settings.py
+src/deepgram/agent/v1/requests/agent_v1settings_agent_context.py
+src/deepgram/agent/v1/requests/agent_v1settings_agent.py
+src/deepgram/agent/v1/requests/agent_v1settings.py
 
 # Backward-compatibility alias shims for renamed generated public types/params.
 # These are hand-written wrappers around the current generated names and must not be regenerated.
@@ -119,9 +119,9 @@ src/deepgram/requests/deepgram_listen_provider_v2language_hint.py
 # remaps a legacy `language_hint=` kwarg to `language_hints` and drops the dead singular
 # key. Frozen so Fern won't strip the validator on regen. Remove the shim and unfreeze when
 # the singular alias is intentionally retired in a future major release.
-src/deepgram/types/deepgram_listen_provider_v2.py.bak
-src/deepgram/agent/v1/types/agent_v1settings_agent_listen_provider.py.bak
-src/deepgram/agent/v1/types/agent_v1settings_agent_context_listen_provider.py.bak
+src/deepgram/types/deepgram_listen_provider_v2.py
+src/deepgram/agent/v1/types/agent_v1settings_agent_listen_provider.py
+src/deepgram/agent/v1/types/agent_v1settings_agent_context_listen_provider.py
 
 # Backward-compat patch for the 2026-07-31 AgentV1UpdateListen provider retype. The
 # generated `provider` field is now the required discriminated union
@@ -130,16 +130,7 @@ src/deepgram/agent/v1/types/agent_v1settings_agent_context_listen_provider.py.ba
 # that coerces a legacy DeepgramListenProviderV1/V2 (or a dict lacking the version
 # discriminant) into the new shape so existing callers keep working. Remove and unfreeze
 # when the old provider payloads are retired in a future major.
-src/deepgram/agent/v1/types/agent_v1update_listen_listen.py.bak
-
-# Backward-compat patch for the 2026-08-18 regen SpeakV2Speed retype. The generator
-# changed this from `float` to `Union[Literal["0.85"..."1.15"], Any]` -- a string-literal
-# enum that contradicts the API contract (a numeric multiplier; cf. SpeakV2SpeedValue =
-# float, used by the Configure message) and silently changed the documented domain of the
-# `speak.v2.connect(speed=...)` param from numeric to string. Restored to `float` so the
-# connect param stays exactly what it was on main and consistent with Configure. Unfreeze
-# when the spec types the connect `speed` as a number.
-src/deepgram/types/speak_v2speed.py.bak
+src/deepgram/agent/v1/types/agent_v1update_listen_listen.py
 
 # Hand-written compat shim recreating ListenV2CloseStreamType, which Fern removed in the
 # 2026-06-15 regen (docs #946). The original generated type wrongly allowed
@@ -153,17 +144,17 @@ src/deepgram/listen/v2/types/listen_v2close_stream_type.py
 # above shims. Fern would otherwise regenerate these and strip the legacy entries on
 # every regen. Frozen to preserve the public-import surface for renamed types/params.
 # Re-apply genuine new generator additions to these files manually after each regen.
-src/deepgram/__init__.py.bak
-src/deepgram/agent/__init__.py.bak
-src/deepgram/agent/v1/__init__.py.bak
-src/deepgram/agent/v1/types/__init__.py.bak
-src/deepgram/agent/v1/requests/__init__.py.bak
-src/deepgram/types/__init__.py.bak
-src/deepgram/requests/__init__.py.bak
+src/deepgram/__init__.py
+src/deepgram/agent/__init__.py
+src/deepgram/agent/v1/__init__.py
+src/deepgram/agent/v1/types/__init__.py
+src/deepgram/agent/v1/requests/__init__.py
+src/deepgram/types/__init__.py
+src/deepgram/requests/__init__.py
 # listen __init__.py files re-export the ListenV2CloseStreamType shim above.
-src/deepgram/listen/__init__.py.bak
-src/deepgram/listen/v2/__init__.py.bak
-src/deepgram/listen/v2/types/__init__.py.bak
+src/deepgram/listen/__init__.py
+src/deepgram/listen/v2/__init__.py
+src/deepgram/listen/v2/types/__init__.py
 
 # Coerces Python bools to lowercase "true"/"false" before urlencode, which
 # otherwise stringifies via str() and produces "True"/"False" — rejected by
@@ -180,23 +171,23 @@ src/deepgram/listen/v2/types/__init__.py.bak
 # the websockets DEBUG handshake logs; this is the other path to it. Unfreeze if the
 # generator starts redacting credentials itself.
 
-src/deepgram/core/api_error.py.bak
-src/deepgram/core/parse_error.py.bak
+src/deepgram/core/api_error.py
+src/deepgram/core/parse_error.py
 
-src/deepgram/core/query_encoder.py.bak
+src/deepgram/core/query_encoder.py
 
 # Read-side compatibility for the SDK 7.7 Listen V2 response retype. These
 # generated response models inherit the hand-written base above so callers can
 # temporarily use both attribute and read-only subscript access. Remove the custom
 # inheritance and unfreeze these files in the next major release.
 # [temporarily frozen -- manual patch described above]
-src/deepgram/listen/v2/types/listen_v2connected.py.bak
-src/deepgram/listen/v2/types/listen_v2turn_info.py.bak
-src/deepgram/listen/v2/types/listen_v2turn_info_words_item.py.bak
-src/deepgram/listen/v2/types/listen_v2configure_success.py.bak
-src/deepgram/listen/v2/types/listen_v2configure_success_thresholds.py.bak
-src/deepgram/listen/v2/types/listen_v2configure_failure.py.bak
-src/deepgram/listen/v2/types/listen_v2fatal_error.py.bak
+src/deepgram/listen/v2/types/listen_v2connected.py
+src/deepgram/listen/v2/types/listen_v2turn_info.py
+src/deepgram/listen/v2/types/listen_v2turn_info_words_item.py
+src/deepgram/listen/v2/types/listen_v2configure_success.py
+src/deepgram/listen/v2/types/listen_v2configure_success_thresholds.py
+src/deepgram/listen/v2/types/listen_v2configure_failure.py
+src/deepgram/listen/v2/types/listen_v2fatal_error.py
 
 # Hand-written custom tests
 tests/custom/test_api_error_redaction.py
@@ -232,14 +223,14 @@ tests/custom/test_websocket_streaming_coverage.py
 tests/typecheck/compat_aliases.py
 
 # Wire test with restored compatibility coverage for legacy create-key request alias
-tests/wire/test_manage_v1_projects_keys.py.bak
+tests/wire/test_manage_v1_projects_keys.py
 
 # Wire test with restored query-parameter coverage for manage.v1.projects.requests.list.
 # The 2026-08-11 regen simplified the upstream spec *example* for this endpoint, and Fern
 # derives the wire test from the example, so the generated test dropped all ten optional
 # query params (including the datetime -> ISO-8601 Z encoding) while the client signature
 # still forwards them. Frozen so future regens do not silently drop that check again.
-tests/wire/test_manage_v1_projects_requests.py.bak
+tests/wire/test_manage_v1_projects_requests.py
 
 # Wire test with restored query-parameter coverage for listen.v1.media.transcribe_url.
 # Third instance of the same mechanism as the two entries above: the 2026-08-18 regen
@@ -248,7 +239,7 @@ tests/wire/test_manage_v1_projects_requests.py.bak
 # dropped all 37 optional query params -- including the bool -> lowercase "true"/"false"
 # assertions -- while the client signature still forwards every one of them. Frozen so
 # future regens cannot silently drop that check again.
-tests/wire/test_listen_v1_media.py.bak
+tests/wire/test_listen_v1_media.py
 
 # Manual standalone tests
 tests/manual
@@ -298,7 +289,7 @@ AGENTS.md
 # file before (fdcce88, ad93815, 4bee463) and would strip them.
 # [temporarily frozen — unfreeze + re-diff before each regen, then re-apply the
 # three coverage lines]
-.gitignore.bak
+.gitignore
 
 # Folders to ignore
 .github
