@@ -218,9 +218,6 @@ if typing.TYPE_CHECKING:
     from .usage_fields_v1response_models_item import UsageFieldsV1ResponseModelsItemParams
     from .usage_v1response import UsageV1ResponseParams
     from .usage_v1response_resolution import UsageV1ResponseResolutionParams
-    from .cartesia_speak_provider_voice import CartesiaSpeakProviderVoiceParams
-    from .create_key_v1request_one import CreateKeyV1RequestOneParams
-    from .deepgram_listen_provider_v2language_hint import DeepgramListenProviderV2LanguageHintParams
 _dynamic_imports: typing.Dict[str, str] = {
     "AgentConfigurationV1Params": ".agent_configuration_v1",
     "AgentThinkModelsV1ResponseModelsItemIdParams": ".agent_think_models_v1response_models_item_id",
@@ -241,10 +238,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "BillingBreakdownV1ResponseResultsItemGroupingParams": ".billing_breakdown_v1response_results_item_grouping",
     "BillingBreakdownV1ResponseResultsItemParams": ".billing_breakdown_v1response_results_item",
     "CartesiaParams": ".cartesia",
-    "CartesiaSpeakProviderVoiceParams": ".cartesia_speak_provider_voice",
     "CartesiaVoiceParams": ".cartesia_voice",
     "CreateAgentConfigurationV1ResponseParams": ".create_agent_configuration_v1response",
-    "CreateKeyV1RequestOneParams": ".create_key_v1request_one",
     "CreateKeyV1RequestParams": ".create_key_v1request",
     "CreateKeyV1ResponseParams": ".create_key_v1response",
     "CreateProjectDistributionCredentialsV1ResponseDistributionCredentialsParams": ".create_project_distribution_credentials_v1response_distribution_credentials",
@@ -252,7 +247,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "CreateProjectDistributionCredentialsV1ResponseParams": ".create_project_distribution_credentials_v1response",
     "CreateProjectInviteV1ResponseParams": ".create_project_invite_v1response",
     "DeepgramListenProviderV1Params": ".deepgram_listen_provider_v1",
-    "DeepgramListenProviderV2LanguageHintParams": ".deepgram_listen_provider_v2language_hint",
     "DeepgramListenProviderV2Params": ".deepgram_listen_provider_v2",
     "DeepgramParams": ".deepgram",
     "DeleteProjectInviteV1ResponseParams": ".delete_project_invite_v1response",
@@ -439,10 +433,8 @@ __all__ = [
     "BillingBreakdownV1ResponseResultsItemGroupingParams",
     "BillingBreakdownV1ResponseResultsItemParams",
     "CartesiaParams",
-    "CartesiaSpeakProviderVoiceParams",
     "CartesiaVoiceParams",
     "CreateAgentConfigurationV1ResponseParams",
-    "CreateKeyV1RequestOneParams",
     "CreateKeyV1RequestParams",
     "CreateKeyV1ResponseParams",
     "CreateProjectDistributionCredentialsV1ResponseDistributionCredentialsParams",
@@ -450,7 +442,6 @@ __all__ = [
     "CreateProjectDistributionCredentialsV1ResponseParams",
     "CreateProjectInviteV1ResponseParams",
     "DeepgramListenProviderV1Params",
-    "DeepgramListenProviderV2LanguageHintParams",
     "DeepgramListenProviderV2Params",
     "DeepgramParams",
     "DeleteProjectInviteV1ResponseParams",

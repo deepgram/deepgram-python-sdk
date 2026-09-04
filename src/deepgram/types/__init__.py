@@ -292,15 +292,6 @@ if typing.TYPE_CHECKING:
     from .usage_fields_v1response_models_item import UsageFieldsV1ResponseModelsItem
     from .usage_v1response import UsageV1Response
     from .usage_v1response_resolution import UsageV1ResponseResolution
-    from .anthropic_think_provider_model import AnthropicThinkProviderModel
-    from .cartesia_speak_provider_model_id import CartesiaSpeakProviderModelId
-    from .cartesia_speak_provider_voice import CartesiaSpeakProviderVoice
-    from .create_key_v1request_one import CreateKeyV1RequestOne
-    from .deepgram_listen_provider_v2language_hint import DeepgramListenProviderV2LanguageHint
-    from .deepgram_speak_provider_model import DeepgramSpeakProviderModel
-    from .google_think_provider_model import GoogleThinkProviderModel
-    from .google_think_provider_version import GoogleThinkProviderVersion
-    from .groq_think_provider_reasoning_mode import GroqThinkProviderReasoningMode
 _dynamic_imports: typing.Dict[str, str] = {
     "AgentConfigurationV1": ".agent_configuration_v1",
     "AgentThinkModelsV1Response": ".agent_think_models_v1response",
@@ -316,7 +307,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AgentVariableV1": ".agent_variable_v1",
     "Anthropic": ".anthropic",
     "AnthropicModel": ".anthropic_model",
-    "AnthropicThinkProviderModel": ".anthropic_think_provider_model",
     "AwsBedrockThinkProvider": ".aws_bedrock_think_provider",
     "AwsBedrockThinkProviderCredentials": ".aws_bedrock_think_provider_credentials",
     "AwsBedrockThinkProviderCredentialsType": ".aws_bedrock_think_provider_credentials_type",
@@ -332,12 +322,9 @@ _dynamic_imports: typing.Dict[str, str] = {
     "BillingBreakdownV1ResponseResultsItemGrouping": ".billing_breakdown_v1response_results_item_grouping",
     "Cartesia": ".cartesia",
     "CartesiaModelId": ".cartesia_model_id",
-    "CartesiaSpeakProviderModelId": ".cartesia_speak_provider_model_id",
-    "CartesiaSpeakProviderVoice": ".cartesia_speak_provider_voice",
     "CartesiaVoice": ".cartesia_voice",
     "CreateAgentConfigurationV1Response": ".create_agent_configuration_v1response",
     "CreateKeyV1Request": ".create_key_v1request",
-    "CreateKeyV1RequestOne": ".create_key_v1request_one",
     "CreateKeyV1Response": ".create_key_v1response",
     "CreateProjectDistributionCredentialsV1Response": ".create_project_distribution_credentials_v1response",
     "CreateProjectDistributionCredentialsV1ResponseDistributionCredentials": ".create_project_distribution_credentials_v1response_distribution_credentials",
@@ -346,9 +333,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "Deepgram": ".deepgram",
     "DeepgramListenProviderV1": ".deepgram_listen_provider_v1",
     "DeepgramListenProviderV2": ".deepgram_listen_provider_v2",
-    "DeepgramListenProviderV2LanguageHint": ".deepgram_listen_provider_v2language_hint",
     "DeepgramModel": ".deepgram_model",
-    "DeepgramSpeakProviderModel": ".deepgram_speak_provider_model",
     "DeleteAgentConfigurationV1Response": ".delete_agent_configuration_v1response",
     "DeleteAgentVariableV1Response": ".delete_agent_variable_v1response",
     "DeleteProjectInviteV1Response": ".delete_project_invite_v1response",
@@ -377,13 +362,10 @@ _dynamic_imports: typing.Dict[str, str] = {
     "GetProjectV1Response": ".get_project_v1response",
     "Google": ".google",
     "GoogleModel": ".google_model",
-    "GoogleThinkProviderModel": ".google_think_provider_model",
-    "GoogleThinkProviderVersion": ".google_think_provider_version",
     "GoogleVersion": ".google_version",
     "GrantV1Response": ".grant_v1response",
     "Groq": ".groq",
     "GroqReasoningMode": ".groq_reasoning_mode",
-    "GroqThinkProviderReasoningMode": ".groq_think_provider_reasoning_mode",
     "LeaveProjectV1Response": ".leave_project_v1response",
     "ListAgentConfigurationsV1Response": ".list_agent_configurations_v1response",
     "ListAgentVariablesV1Response": ".list_agent_variables_v1response",
@@ -598,7 +580,6 @@ __all__ = [
     "AgentVariableV1",
     "Anthropic",
     "AnthropicModel",
-    "AnthropicThinkProviderModel",
     "AwsBedrockThinkProvider",
     "AwsBedrockThinkProviderCredentials",
     "AwsBedrockThinkProviderCredentialsType",
@@ -614,12 +595,9 @@ __all__ = [
     "BillingBreakdownV1ResponseResultsItemGrouping",
     "Cartesia",
     "CartesiaModelId",
-    "CartesiaSpeakProviderModelId",
-    "CartesiaSpeakProviderVoice",
     "CartesiaVoice",
     "CreateAgentConfigurationV1Response",
     "CreateKeyV1Request",
-    "CreateKeyV1RequestOne",
     "CreateKeyV1Response",
     "CreateProjectDistributionCredentialsV1Response",
     "CreateProjectDistributionCredentialsV1ResponseDistributionCredentials",
@@ -628,9 +606,7 @@ __all__ = [
     "Deepgram",
     "DeepgramListenProviderV1",
     "DeepgramListenProviderV2",
-    "DeepgramListenProviderV2LanguageHint",
     "DeepgramModel",
-    "DeepgramSpeakProviderModel",
     "DeleteAgentConfigurationV1Response",
     "DeleteAgentVariableV1Response",
     "DeleteProjectInviteV1Response",
@@ -659,13 +635,10 @@ __all__ = [
     "GetProjectV1Response",
     "Google",
     "GoogleModel",
-    "GoogleThinkProviderModel",
-    "GoogleThinkProviderVersion",
     "GoogleVersion",
     "GrantV1Response",
     "Groq",
     "GroqReasoningMode",
-    "GroqThinkProviderReasoningMode",
     "LeaveProjectV1Response",
     "ListAgentConfigurationsV1Response",
     "ListAgentVariablesV1Response",

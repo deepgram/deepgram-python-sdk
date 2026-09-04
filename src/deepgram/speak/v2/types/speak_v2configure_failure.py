@@ -16,7 +16,7 @@ class SpeakV2ConfigureFailure(UncheckedBaseModel):
 
     code: SpeakV2ConfigureFailureCode = pydantic.Field()
     """
-    Failure code, in `SCREAMING_SNAKE_CASE`. `SPEED_OUT_OF_RANGE`: outside the multipliers the model publishes. `SPEED_INCREMENT_INVALID`: inside the published range but not one of the multipliers. `SPEED_NOT_SUPPORTED`: this model or language has no runtime speed control at all. `INTERNAL_ERROR`: the configuration was acceptable but the server could not apply it — unlike the others, a server-side failure rather than a statement about the request.
+    Failure code, in `SCREAMING_SNAKE_CASE`. `SPEED_OUT_OF_RANGE`: outside the range the model publishes. `SPEED_INCREMENT_INVALID`: inside the published range but off the `0.05` increment. `SPEED_NOT_SUPPORTED`: this model or language has no runtime speed control at all. `INTERNAL_ERROR`: the configuration was acceptable but the server could not apply it — unlike the others, a server-side failure rather than a statement about the request.
     """
 
     field: typing.Optional[typing.Literal["speed"]] = pydantic.Field(default=None)

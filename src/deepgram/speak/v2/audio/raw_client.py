@@ -82,7 +82,7 @@ class RawAudioClient:
             Sample Rate specifies the sample rate for the output audio. Based on the encoding, different sample rates are supported. For some encodings, the sample rate is not configurable
 
         speed : typing.Optional[float]
-            Speaking rate multiplier that adjusts the pace of generated speech while preserving natural prosody and voice quality. Accepted values run `0.85` to `1.15` in `0.05` increments. Not yet supported in all languages.
+            Speaking rate multiplier that adjusts the pace of generated speech while preserving natural prosody and voice quality. Accepted values run `0.5` to `1.5` in `0.05` increments. Not yet supported in all languages.
 
         priority : typing.Optional[typing.Literal["low"]]
             Processing priority for asynchronous (callback) requests. The only supported value is low.
@@ -221,7 +221,7 @@ class AsyncRawAudioClient:
             Sample Rate specifies the sample rate for the output audio. Based on the encoding, different sample rates are supported. For some encodings, the sample rate is not configurable
 
         speed : typing.Optional[float]
-            Speaking rate multiplier that adjusts the pace of generated speech while preserving natural prosody and voice quality. Accepted values run `0.85` to `1.15` in `0.05` increments. Not yet supported in all languages.
+            Speaking rate multiplier that adjusts the pace of generated speech while preserving natural prosody and voice quality. Accepted values run `0.5` to `1.5` in `0.05` increments. Not yet supported in all languages.
 
         priority : typing.Optional[typing.Literal["low"]]
             Processing priority for asynchronous (callback) requests. The only supported value is low.

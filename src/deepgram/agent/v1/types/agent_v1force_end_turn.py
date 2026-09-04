@@ -7,25 +7,10 @@ from ....core.pydantic_utilities import IS_PYDANTIC_V2
 from ....core.unchecked_base_model import UncheckedBaseModel
 
 
-class ListenV2TurnInfoWordsItem(UncheckedBaseModel):
-    word: str = pydantic.Field()
+class AgentV1ForceEndTurn(UncheckedBaseModel):
+    type: typing.Literal["ForceEndTurn"] = pydantic.Field(default="ForceEndTurn")
     """
-    The individual punctuated, properly-cased word from the transcript
-    """
-
-    confidence: float = pydantic.Field()
-    """
-    Confidence that this word was transcribed correctly
-    """
-
-    start: typing.Optional[float] = pydantic.Field(default=None)
-    """
-    The start time of the word
-    """
-
-    end: typing.Optional[float] = pydantic.Field(default=None)
-    """
-    The end time of the word
+    Message type identifier for forcing the end of the current turn
     """
 
     if IS_PYDANTIC_V2:
