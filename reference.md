@@ -6485,7 +6485,7 @@ asyncio.run(main())
 
 - `agent.send_force_end_turn()`
 
-- Requires a Deepgram V2 (Flux) listen provider. With a V1 provider, the server emits `FORCE_END_TURN_UNSUPPORTED` and leaves the current turn open.
+- Requires a Deepgram V2 (Flux) listen provider. With a V1 provider, the server emits `FORCE_END_TURN_UNSUPPORTED`.
 
 </dd>
 </dl>
