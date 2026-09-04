@@ -5090,7 +5090,7 @@ asyncio.run(main())
 <dl>
 <dd>
 
-**keywords:** `typing.Optional[str]` — Keywords can boost or suppress specialized terminology and brands
+**keywords:** `typing.Optional[str]` — Keywords can boost or suppress specialized terminology and brands. Not compatible with Nova-3; use `keyterm` instead.
 
 </dd>
 </dl>
