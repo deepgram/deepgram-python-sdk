@@ -161,3 +161,31 @@ async def test_async_connect_serializes_eot_controls():
     assert query["eager_eot_threshold"] == ["0.5"]
     assert query["eot_threshold"] == ["1.0"]
     assert query["eot_timeout_ms"] == ["1000"]
+
+
+def test_sync_connect_serializes_additional_query_parameters():
+    capture = _CaptureConnect()
+    with patch.object(listen_v2_client.websockets_sync_client, "connect", capture):
+        with DeepgramClient(api_key="test_api_key").listen.v2.connect(
+            model="flux-general-en",
+            request_options={"additional_query_parameters": {"no_delay": True, "tag": ["a", "b"]}},
+        ):
+            pass
+
+    _, query = _path_and_query(capture.url)
+    assert query["no_delay"] == ["true"]
+    assert query["tag"] == ["a", "b"]
+
+
+async def test_async_connect_serializes_additional_query_parameters():
+    capture = _CaptureConnect()
+    with patch.object(listen_v2_client, "websockets_client_connect", capture):
+        async with AsyncDeepgramClient(api_key="test_api_key").listen.v2.connect(
+            model="flux-general-en",
+            request_options={"additional_query_parameters": {"no_delay": True, "tag": ["a", "b"]}},
+        ):
+            pass
+
+    _, query = _path_and_query(capture.url)
+    assert query["no_delay"] == ["true"]
+    assert query["tag"] == ["a", "b"]

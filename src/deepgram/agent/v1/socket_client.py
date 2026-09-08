@@ -43,7 +43,10 @@ except ImportError:
 
 
 def _sanitize_numeric_types(obj: typing.Any) -> typing.Any:
-    """Convert whole-number floats to integers for wire-compatible JSON."""
+    """Convert whole-number floats to integers for wire-compatible JSON.
+
+    See: internal-api-specs/issues/205
+    """
     if isinstance(obj, dict):
         return {key: _sanitize_numeric_types(value) for key, value in obj.items()}
     if isinstance(obj, list):

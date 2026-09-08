@@ -6070,7 +6070,7 @@ asyncio.run(main())
 <dl>
 <dd>
 
-**speed:** `typing.Optional[SpeakV2Speed]` — Speech-rate multiplier. `1.0` is the model's nominal rate; accepted values run from `0.5` to `1.5` in `0.05` increments. Values outside that range are rejected with `SPEED_OUT_OF_RANGE`, and values off the increment are rejected with `SPEED_INCREMENT_INVALID`. Models and languages without runtime speed control reject any value with `SPEED_NOT_SUPPORTED`.
+**speed:** `typing.Optional[SpeakV2Speed]` — Speech-rate multiplier. `1.0` is the model's nominal rate; the spec documents values from `0.5` to `1.5` in `0.05` increments. As of 2026-09-07, production accepts values outside `0.85` to `1.15` only intermittently; stay inside `0.85` to `1.15` until the wider range is announced live. Values outside the supported range are rejected with `SPEED_OUT_OF_RANGE`, and values off the increment are rejected with `SPEED_INCREMENT_INVALID`. Models and languages without runtime speed control reject any value with `SPEED_NOT_SUPPORTED`.
 
 </dd>
 </dl>
