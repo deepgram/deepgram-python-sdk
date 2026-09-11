@@ -40,10 +40,11 @@ src/deepgram/speak/v2/socket_client.py
 src/deepgram/types/listen_v2eot_threshold.py
 src/deepgram/requests/deepgram_listen_provider_v2.py
 
-# Agent TTS expressivity must reject fractional values rather than allowing
-# Pydantic v1 to truncate them before the API sees the request.
+# Agent TTS provider expressivity must reject fractional values rather than
+# allowing Pydantic v1 to truncate them before the API sees the request.
 # [temporarily frozen — remove when Fern emits a strict integer]
 src/deepgram/types/speak_settings_v1provider.py
+src/deepgram/types/deepgram.py
 
 # Backward-compat patch: AgentV1SettingsAgentContext schema restructure as of
 # 2026-05-05. The new schema nests messages under .context.messages; this file

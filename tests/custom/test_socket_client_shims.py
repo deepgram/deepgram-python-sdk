@@ -34,6 +34,7 @@ from deepgram.listen.v2.types.listen_v2close_stream import ListenV2CloseStream
 from deepgram.listen.v2.types.listen_v2configure import ListenV2Configure
 from deepgram.listen.v2.types.listen_v2force_end_turn import ListenV2ForceEndTurn
 from deepgram.speak.v2.socket_client import V2SocketClient as SpeakV2SocketClient
+from deepgram.types.deepgram import Deepgram
 from deepgram.types.speak_settings_v1 import SpeakSettingsV1
 from deepgram.types.speak_settings_v1provider import SpeakSettingsV1Provider_Deepgram
 from deepgram.types.think_settings_v1 import ThinkSettingsV1
@@ -184,6 +185,11 @@ class TestAgentSettingsSerialization:
             SpeakSettingsV1Provider_Deepgram(
                 type="deepgram", version="v2", model="flux-alexis-en", expressivity=expressivity
             )
+
+    @pytest.mark.parametrize("expressivity", [1.5, True, "2"])
+    def test_deepgram_expressivity_requires_a_plain_integer(self, expressivity):
+        with pytest.raises(pydantic.ValidationError):
+            Deepgram(model="flux-alexis-en", expressivity=expressivity)
 
     def test_sync_send_settings_serializes_expressivity(self):
         ws = _FakeWebSocket()
