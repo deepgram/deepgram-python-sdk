@@ -9,15 +9,17 @@ what makes the end-of-turn controls legible:
     timeout  eot_timeout_ms elapsed after speech
 
 The unit tests mock the websocket, so they pin the frame the SDK sends and nothing about
-what the server does with it. This script covers the rest, in three steps:
+what the server does with it. This script covers the rest, in four steps:
 
     1. ForceEndTurn ends an in-progress turn -> trigger="manual", connection survives
-    2. eot_threshold=0.7 with trailing silence -> record the observed trigger
-    3. eot_threshold=1.0 with trailing silence -> record the observed trigger
-
-`eot_threshold=1.0` does not guarantee that Flux will suppress natural end-of-turn
-detection, so the final two checks report server behavior instead of asserting a
-manual-only outcome.
+    2. eot_threshold=0.7 with trailing silence -> trigger="model"
+    3. eot_threshold=1.0 with trailing silence -> trigger="timeout", NOT "model".
+       1.0 suppresses Flux's confidence-based detection, but eot_timeout_ms is a
+       separate mechanism and still ends the turn. Reading only the event, step 3 looks
+       identical to step 2 — `trigger` is the sole thing that distinguishes them.
+    4. eot_threshold=1.0 plus a long eot_timeout_ms -> no EndOfTurn at all, so
+       ForceEndTurn becomes the only way to close a turn. This is the combination to
+       reach for when the application owns turn boundaries.
 
 ForceEndTurn is gated per deployment. Where it is not enabled the server replies
 UNPARSABLE_CLIENT_MESSAGE ("not enabled on this deployment") and closes the connection;
@@ -88,6 +90,7 @@ def run(
     *,
     force: bool = False,
     eot_threshold: Optional[str] = None,
+    eot_timeout_ms: Optional[str] = None,
 ) -> Tuple[List[Any], List[str], bool]:
     """Stream audio, optionally forcing the turn to end, and collect every EndOfTurn."""
     end_of_turns: List[Any] = []
@@ -117,6 +120,8 @@ def run(
     }
     if eot_threshold is not None:
         kwargs["eot_threshold"] = eot_threshold
+    if eot_timeout_ms is not None:
+        kwargs["eot_timeout_ms"] = eot_timeout_ms
 
     try:
         with client.listen.v2.connect(**kwargs) as connection:
@@ -163,7 +168,7 @@ def main() -> None:
     speech_only = load_audio(speech_seconds=6, silence_seconds=0)
     speech_then_silence = load_audio(speech_seconds=5, silence_seconds=14)
 
-    print("\n[1/3] ForceEndTurn ends an in-progress turn with trigger='manual'")
+    print("\n[1/4] ForceEndTurn ends an in-progress turn with trigger='manual'")
     end_of_turns, errors, gated = run(client, speech_only, force=True)
     if gated:
         print("  SKIP: ForceEndTurn is not enabled on this deployment")
@@ -178,13 +183,32 @@ def main() -> None:
     print(f"  PASS: trigger='manual' (end_of_turn_confidence={forced_turn.end_of_turn_confidence})")
     print(f"        transcript: {forced_turn.transcript!r}")
 
-    for step, threshold in enumerate(("0.7", "1.0"), start=2):
-        print(f"\n[{step}/3] eot_threshold={threshold} with trailing silence")
-        end_of_turns, errors, _ = run(client, speech_then_silence, eot_threshold=threshold)
-        if errors:
-            raise AssertionError(errors[0])
-        triggers = [getattr(turn, "trigger", None) for turn in end_of_turns]
-        print(f"  OBSERVED: EndOfTurn triggers={triggers}")
+    print("\n[2/4] eot_threshold=0.7 with trailing silence -> trigger='model'")
+    end_of_turns, errors, _ = run(client, speech_then_silence, eot_threshold="0.7")
+    if errors:
+        raise AssertionError(errors[0])
+    triggers = [getattr(t, "trigger", None) for t in end_of_turns]
+    assert triggers == ["model"], f"expected ['model'], saw {triggers}"
+    print("  PASS: trigger='model' — Flux's own detection ended the turn")
+
+    print("\n[3/4] eot_threshold=1.0 with trailing silence -> trigger='timeout', not 'model'")
+    end_of_turns, errors, _ = run(client, speech_then_silence, eot_threshold="1.0")
+    if errors:
+        raise AssertionError(errors[0])
+    triggers = [getattr(t, "trigger", None) for t in end_of_turns]
+    assert "model" not in triggers, f"eot_threshold=1.0 should suppress model detection, saw {triggers}"
+    assert triggers == ["timeout"], f"expected ['timeout'], saw {triggers}"
+    print("  PASS: trigger='timeout' — confidence-based detection suppressed, but")
+    print("        eot_timeout_ms is a separate mechanism and still closed the turn")
+
+    print("\n[4/4] eot_threshold=1.0 + long eot_timeout_ms -> nothing ends the turn on its own")
+    end_of_turns, errors, _ = run(
+        client, speech_then_silence, eot_threshold="1.0", eot_timeout_ms="60000"
+    )
+    if errors:
+        raise AssertionError(errors[0])
+    assert not end_of_turns, f"expected no EndOfTurn, saw {[getattr(t, 'trigger', None) for t in end_of_turns]}"
+    print("  PASS: 0 EndOfTurn — ForceEndTurn is now the only way to close a turn")
 
     print("\nForce-end-turn manual test completed.")
 

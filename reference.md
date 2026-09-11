@@ -5462,7 +5462,7 @@ asyncio.run(main())
 <dl>
 <dd>
 
-**eot_threshold:** `typing.Optional[str]` — Threshold for Flux end-of-turn detection. Valid values are `0.5` to `1.0`; the default is `0.7`. Setting `1.0` does not disable server-driven turn endings. Use `send_force_end_turn()` only to request an active turn end on deployments where it is enabled.
+**eot_threshold:** `typing.Optional[str]` — Threshold for Flux end-of-turn detection. Set `1.0` to suppress confidence-based turn endings when the application uses `send_force_end_turn()`; `eot_timeout_ms` still ends idle turns independently.
 
 </dd>
 </dl>
@@ -5470,7 +5470,7 @@ asyncio.run(main())
 <dl>
 <dd>
 
-**eot_timeout_ms:** `typing.Optional[str]` — Idle timeout in milliseconds for end-of-turn detection. It remains independently server-controlled regardless of `eot_threshold`; do not rely on it for manual-only turn control.
+**eot_timeout_ms:** `typing.Optional[str]` — Idle timeout in milliseconds for end-of-turn detection. Increase it with `eot_threshold=1.0` when the application needs full manual turn control through `send_force_end_turn()`.
 
 </dd>
 </dl>

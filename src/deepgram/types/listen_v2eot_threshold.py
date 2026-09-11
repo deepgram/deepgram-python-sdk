@@ -4,7 +4,7 @@ import typing
 
 ListenV2EotThreshold = typing.Any
 """
-End-of-turn confidence required to finish a turn. Valid values are 0.5 -
-1.0. The default is 0.7. Setting 1.0 does not disable server-driven
-end-of-turn detection; use `ForceEndTurn` only to request an active turn end.
+End-of-turn confidence required to finish a turn. Valid Values 0.5 -
+1.0. Set to 1.0 to fully suppress natural end-of-turn detection and
+drive turn endings yourself with the `ForceEndTurn` message.
 """

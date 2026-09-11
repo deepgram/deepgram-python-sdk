@@ -36,7 +36,7 @@ class DeepgramListenProviderV2(UncheckedBaseModel):
 
     eot_threshold: typing.Optional[float] = pydantic.Field(default=None)
     """
-    End-of-turn confidence required to finish a turn. Valid range: 0.5 - 1.0. Defaults to 0.7. Setting 1.0 does not disable server-driven end-of-turn detection; use ForceEndTurn only to request an active turn end.
+    End-of-turn confidence required to finish a turn. Valid range: 0.5 - 1.0. Defaults to 0.7. Set to 1.0 to fully suppress natural end-of-turn detection and end turns with the ForceEndTurn message.
     """
 
     eager_eot_threshold: typing.Optional[float] = pydantic.Field(default=None)
