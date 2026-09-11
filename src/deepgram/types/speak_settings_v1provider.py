@@ -24,7 +24,7 @@ class SpeakSettingsV1Provider_Deepgram(UncheckedBaseModel):
     version: typing.Optional[str] = None
     model: DeepgramModel
     speed: typing.Optional[float] = None
-    expressivity: typing.Optional[int] = None
+    expressivity: typing.Optional[pydantic.StrictInt] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

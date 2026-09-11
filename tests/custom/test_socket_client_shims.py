@@ -18,6 +18,9 @@ is handed to ``.send()`` — the same payload that goes on the wire.
 
 import json
 
+import pydantic
+import pytest
+
 from deepgram.agent.v1.socket_client import AsyncV1SocketClient, V1SocketClient, _sanitize_numeric_types
 from deepgram.agent.v1.types.agent_v1force_end_turn import AgentV1ForceEndTurn
 from deepgram.agent.v1.types.agent_v1settings import AgentV1Settings
@@ -175,6 +178,13 @@ class TestOptionalMessageControlSends:
 
 
 class TestAgentSettingsSerialization:
+    @pytest.mark.parametrize("expressivity", [1.5, True, "2"])
+    def test_expressivity_requires_a_plain_integer(self, expressivity):
+        with pytest.raises(pydantic.ValidationError):
+            SpeakSettingsV1Provider_Deepgram(
+                type="deepgram", version="v2", model="flux-alexis-en", expressivity=expressivity
+            )
+
     def test_sync_send_settings_serializes_expressivity(self):
         ws = _FakeWebSocket()
         V1SocketClient(websocket=ws).send_settings(_agent_settings_with_expressivity())
