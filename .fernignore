@@ -33,6 +33,13 @@ src/deepgram/listen/v2/socket_client.py
 src/deepgram/speak/v1/socket_client.py
 src/deepgram/speak/v2/socket_client.py
 
+# The generated eot_threshold descriptions omit that eot_timeout_ms still ends
+# idle turns. Remove these temporary patches after the API definition includes
+# the timeout requirement and Fern regenerates the descriptions.
+# [temporarily frozen]
+src/deepgram/types/listen_v2eot_threshold.py
+src/deepgram/requests/deepgram_listen_provider_v2.py
+
 # Agent TTS provider expressivity must reject fractional values rather than
 # allowing Pydantic v1 to truncate them before the API sees the request.
 # [temporarily frozen — remove when Fern emits a strict integer]
