@@ -34,8 +34,9 @@ src/deepgram/speak/v1/socket_client.py
 src/deepgram/speak/v2/socket_client.py
 
 # The generated eot_threshold descriptions omit that eot_timeout_ms still ends
-# idle turns. Remove these temporary patches after the API definition includes
-# the timeout requirement and Fern regenerates the descriptions.
+# idle turns. The DeepgramListenProviderV2 model below shares this patch with
+# its language_hint compatibility shim. Remove these patches after the API
+# definition includes the timeout requirement and Fern regenerates them.
 # [temporarily frozen]
 src/deepgram/types/listen_v2eot_threshold.py
 src/deepgram/requests/deepgram_listen_provider_v2.py
