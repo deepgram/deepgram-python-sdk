@@ -6078,7 +6078,7 @@ asyncio.run(main())
 <dl>
 <dd>
 
-**expressivity:** `typing.Optional[SpeakV2Expressivity]` — Expressive range of the generated speech. Accepted values: `-2`, `-1`, `0`, `1`, `2` — `0` is the voice's nominal delivery, negative is flatter and more restrained, positive is more animated
+**expressivity:** `typing.Optional[SpeakV2Expressivity]` — Expressive range of the generated speech, on a calm-to-animated axis. Accepted values: `-2`, `-1`, `0`, `1`, `2`. `0` (the default) is the voice's tuned delivery and the production-validated setting, with `-2` the calm end of the range and `2` the animated end. Supported on all Flux voices. Fixed for the connection — not settable via `Configure`. Beta: behavior may change in future model versions, and non-default values increase the risk of hallucinations and pronunciation errors; audition before shipping. An invalid value fails the connection with a `400` — `EXPRESSIVITY_OUT_OF_RANGE` for a value outside the range, `EXPRESSIVITY_INCREMENT_INVALID` for a fractional value. See [Expressivity](/docs/tts-expressivity).
 
 </dd>
 </dl>
@@ -6244,7 +6244,7 @@ with client.agent.v1.connect() as agent:
 
 ```
 
-For Flux TTS, set the Deepgram provider `version="v2"` and a `flux-*` model. The optional `expressivity` setting accepts whole numbers from `-2` (calmer) to `2` (more animated); `0` is the default. It applies for the session and is beta, so audition non-default values before shipping.
+The Deepgram provider `expressivity` setting applies only to Flux TTS (`version="v2"`) on every Flux voice. It accepts whole numbers from `-2` to `2`, where `0` (the default) is the voice's tuned delivery and the only value validated for production, `-2` is the calm end of the range, and `2` is the animated end. It is fixed for the session. Beta: behavior may change in future model versions, and non-default values increase the risk of hallucinations and pronunciation errors. See [Expressivity](/docs/tts-expressivity).
 
 </dd>
 </dl>
