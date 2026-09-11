@@ -26,7 +26,12 @@ class Deepgram(UncheckedBaseModel):
 
     speed: typing.Optional[float] = pydantic.Field(default=None)
     """
-    Speaking rate multiplier that adjusts the pace of generated speech while preserving natural prosody and voice quality. Aura (version v1) accepts any value from 0.7 to 1.5. Flux TTS (version v2) accepts only 0.85, 0.9, 0.95, 1.0, 1.05, 1.1 and 1.15; another value ends the session with FAILED_TO_SPEAK. Not yet supported in all languages.
+    Speaking rate multiplier that adjusts the pace of generated speech while preserving natural prosody and voice quality. Aura (version v1) accepts any value from 0.7 to 1.5. Flux TTS (version v2) accepts values from 0.5 to 1.5 in 0.05 increments; a value the family does not accept ends the session with FAILED_TO_SPEAK. Not yet supported in all languages.
+    """
+
+    expressivity: typing.Optional[pydantic.StrictInt] = pydantic.Field(default=None)
+    """
+    Delivery register of the generated speech, on a calm-to-animated axis. Flux TTS (version v2) only, on every Flux voice. Accepts the whole numbers -2 to 2, where 0 (the default) is the voice's tuned delivery and the only value validated for production, -2 the calm end of the range and 2 the animated end. Fixed for the session. Beta: behavior may change in future model versions, and non-default values increase the risk of hallucinations and pronunciation errors. See [Expressivity](/docs/tts-expressivity).
     """
 
     if IS_PYDANTIC_V2:

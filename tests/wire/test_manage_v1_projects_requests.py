@@ -14,14 +14,7 @@ def test_manage_v1_projects_requests_list_() -> None:
 
 
 def test_manage_v1_projects_requests_list_serializes_all_query_params() -> None:
-    """All ten optional query params must reach the wire, with datetime encoded as ISO-8601 Z.
-
-    The 2026-08-11 regen simplified the upstream spec *example* for this endpoint,
-    and Fern derives the wire test from that example -- so the generated test
-    dropped every query parameter, leaving their serialization unverified while
-    the client signature still forwards all ten. This restores that coverage; the
-    file is frozen in .fernignore so a future regen cannot silently drop it again.
-    """
+    """All optional request-list query parameters reach the wire."""
     test_id = "manage.v1.projects.requests.list_.query_params"
     client = get_client(test_id)
     client.manage.v1.projects.requests.list(

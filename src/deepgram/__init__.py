@@ -434,17 +434,10 @@ if typing.TYPE_CHECKING:
         UsageV1ResponseResolutionParams,
     )
     from .version import __version__
-    from .types import AnthropicThinkProviderModel
-    from .types import CartesiaSpeakProviderModelId
-    from .types import CartesiaSpeakProviderVoice
-    from .requests import CartesiaSpeakProviderVoiceParams
-    from .types import CreateKeyV1RequestOne
-    from .types import DeepgramListenProviderV2LanguageHint
-    from .requests import DeepgramListenProviderV2LanguageHintParams
-    from .types import DeepgramSpeakProviderModel
-    from .types import GoogleThinkProviderModel
-    from .types import GoogleThinkProviderVersion
-    from .types import GroqThinkProviderReasoningMode
+    from .types import AnthropicThinkProviderModel, CartesiaSpeakProviderModelId, CartesiaSpeakProviderVoice
+    from .requests import CartesiaSpeakProviderVoiceParams, DeepgramListenProviderV2LanguageHintParams
+    from .types import CreateKeyV1RequestOne, DeepgramListenProviderV2LanguageHint, DeepgramSpeakProviderModel
+    from .types import GoogleThinkProviderModel, GoogleThinkProviderVersion, GroqThinkProviderReasoningMode
 _dynamic_imports: typing.Dict[str, str] = {
     "AgentConfigurationV1": ".types",
     "AgentConfigurationV1Params": ".requests",
@@ -470,7 +463,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "Anthropic": ".types",
     "AnthropicModel": ".types",
     "AnthropicParams": ".requests",
-    "AnthropicThinkProviderModel": ".types",
     "AsyncDeepgramClient": ".client",
     "AwsBedrockThinkProvider": ".types",
     "AwsBedrockThinkProviderCredentials": ".types",
@@ -497,15 +489,11 @@ _dynamic_imports: typing.Dict[str, str] = {
     "Cartesia": ".types",
     "CartesiaModelId": ".types",
     "CartesiaParams": ".requests",
-    "CartesiaSpeakProviderModelId": ".types",
-    "CartesiaSpeakProviderVoice": ".types",
-    "CartesiaSpeakProviderVoiceParams": ".requests",
     "CartesiaVoice": ".types",
     "CartesiaVoiceParams": ".requests",
     "CreateAgentConfigurationV1Response": ".types",
     "CreateAgentConfigurationV1ResponseParams": ".requests",
     "CreateKeyV1Request": ".types",
-    "CreateKeyV1RequestOne": ".types",
     "CreateKeyV1RequestParams": ".requests",
     "CreateKeyV1Response": ".types",
     "CreateKeyV1ResponseParams": ".requests",
@@ -523,12 +511,9 @@ _dynamic_imports: typing.Dict[str, str] = {
     "DeepgramListenProviderV1": ".types",
     "DeepgramListenProviderV1Params": ".requests",
     "DeepgramListenProviderV2": ".types",
-    "DeepgramListenProviderV2LanguageHint": ".types",
-    "DeepgramListenProviderV2LanguageHintParams": ".requests",
     "DeepgramListenProviderV2Params": ".requests",
     "DeepgramModel": ".types",
     "DeepgramParams": ".requests",
-    "DeepgramSpeakProviderModel": ".types",
     "DefaultAioHttpClient": "._default_clients",
     "DefaultAsyncHttpxClient": "._default_clients",
     "DeleteAgentConfigurationV1Response": ".types",
@@ -582,15 +567,12 @@ _dynamic_imports: typing.Dict[str, str] = {
     "Google": ".types",
     "GoogleModel": ".types",
     "GoogleParams": ".requests",
-    "GoogleThinkProviderModel": ".types",
-    "GoogleThinkProviderVersion": ".types",
     "GoogleVersion": ".types",
     "GrantV1Response": ".types",
     "GrantV1ResponseParams": ".requests",
     "Groq": ".types",
     "GroqParams": ".requests",
     "GroqReasoningMode": ".types",
-    "GroqThinkProviderReasoningMode": ".types",
     "LeaveProjectV1Response": ".types",
     "LeaveProjectV1ResponseParams": ".requests",
     "ListAgentConfigurationsV1Response": ".types",
@@ -890,6 +872,17 @@ _dynamic_imports: typing.Dict[str, str] = {
     "self_hosted": ".self_hosted",
     "speak": ".speak",
     "voice_agent": ".voice_agent",
+    "AnthropicThinkProviderModel": ".types",
+    "CartesiaSpeakProviderModelId": ".types",
+    "CartesiaSpeakProviderVoice": ".types",
+    "CartesiaSpeakProviderVoiceParams": ".requests",
+    "CreateKeyV1RequestOne": ".types",
+    "DeepgramListenProviderV2LanguageHint": ".types",
+    "DeepgramListenProviderV2LanguageHintParams": ".requests",
+    "DeepgramSpeakProviderModel": ".types",
+    "GoogleThinkProviderModel": ".types",
+    "GoogleThinkProviderVersion": ".types",
+    "GroqThinkProviderReasoningMode": ".types",
 }
 
 
@@ -939,7 +932,6 @@ __all__ = [
     "Anthropic",
     "AnthropicModel",
     "AnthropicParams",
-    "AnthropicThinkProviderModel",
     "AsyncDeepgramClient",
     "AwsBedrockThinkProvider",
     "AwsBedrockThinkProviderCredentials",
@@ -966,15 +958,11 @@ __all__ = [
     "Cartesia",
     "CartesiaModelId",
     "CartesiaParams",
-    "CartesiaSpeakProviderModelId",
-    "CartesiaSpeakProviderVoice",
-    "CartesiaSpeakProviderVoiceParams",
     "CartesiaVoice",
     "CartesiaVoiceParams",
     "CreateAgentConfigurationV1Response",
     "CreateAgentConfigurationV1ResponseParams",
     "CreateKeyV1Request",
-    "CreateKeyV1RequestOne",
     "CreateKeyV1RequestParams",
     "CreateKeyV1Response",
     "CreateKeyV1ResponseParams",
@@ -992,12 +980,9 @@ __all__ = [
     "DeepgramListenProviderV1",
     "DeepgramListenProviderV1Params",
     "DeepgramListenProviderV2",
-    "DeepgramListenProviderV2LanguageHint",
-    "DeepgramListenProviderV2LanguageHintParams",
     "DeepgramListenProviderV2Params",
     "DeepgramModel",
     "DeepgramParams",
-    "DeepgramSpeakProviderModel",
     "DefaultAioHttpClient",
     "DefaultAsyncHttpxClient",
     "DeleteAgentConfigurationV1Response",
@@ -1051,15 +1036,12 @@ __all__ = [
     "Google",
     "GoogleModel",
     "GoogleParams",
-    "GoogleThinkProviderModel",
-    "GoogleThinkProviderVersion",
     "GoogleVersion",
     "GrantV1Response",
     "GrantV1ResponseParams",
     "Groq",
     "GroqParams",
     "GroqReasoningMode",
-    "GroqThinkProviderReasoningMode",
     "LeaveProjectV1Response",
     "LeaveProjectV1ResponseParams",
     "ListAgentConfigurationsV1Response",
@@ -1359,4 +1341,15 @@ __all__ = [
     "self_hosted",
     "speak",
     "voice_agent",
+    "AnthropicThinkProviderModel",
+    "CartesiaSpeakProviderModelId",
+    "CartesiaSpeakProviderVoice",
+    "CartesiaSpeakProviderVoiceParams",
+    "CreateKeyV1RequestOne",
+    "DeepgramListenProviderV2LanguageHint",
+    "DeepgramListenProviderV2LanguageHintParams",
+    "DeepgramSpeakProviderModel",
+    "GoogleThinkProviderModel",
+    "GoogleThinkProviderVersion",
+    "GroqThinkProviderReasoningMode",
 ]

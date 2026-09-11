@@ -12,17 +12,7 @@ def test_listen_v1_media_transcribe_url() -> None:
 
 
 def test_listen_v1_media_transcribe_url_serializes_all_query_params() -> None:
-    """All 37 optional query params must reach the wire, with bools lowercased.
-
-    The 2026-08-18 regen simplified the upstream spec *example* for this endpoint,
-    and Fern derives the wire test from that example -- so the generated test
-    dropped every query parameter, leaving their serialization unverified while
-    the client signature still forwards all 37. This restores that coverage; the
-    file is frozen in .fernignore so a future regen cannot silently drop it again.
-
-    Same failure mode as tests/wire/test_manage_v1_projects_keys.py and
-    tests/wire/test_manage_v1_projects_requests.py, which are frozen for this reason.
-    """
+    """All optional transcribe-url query parameters reach the wire."""
     test_id = "listen.v1.media.transcribe_url.query_params"
     client = get_client(test_id)
     client.listen.v1.media.transcribe_url(

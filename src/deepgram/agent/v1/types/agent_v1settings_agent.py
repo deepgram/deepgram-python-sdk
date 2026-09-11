@@ -9,10 +9,8 @@ from .agent_v1settings_agent_listen import AgentV1SettingsAgentListen
 
 
 class AgentV1SettingsAgent(AgentV1SettingsAgentContext):
-    # Backward-compat: before the 2026-05-05 schema restructure this public name
-    # was the top-level agent settings model. Keep it callable and translate the
-    # legacy nested `context=AgentV1SettingsAgentContext(messages=[...])` shape
-    # into the current `context={"messages": [...]}` payload.
+    # Keep the formerly callable public model name working with the schema's
+    # current nested context format.
     if IS_PYDANTIC_V2:
 
         @pydantic.model_validator(mode="before")
@@ -37,7 +35,6 @@ class AgentV1SettingsAgent(AgentV1SettingsAgentContext):
             if isinstance(listen, AgentV1SettingsAgentListen):
                 values = dict(values)
                 values["listen"] = listen.dict()
-
             return values
     else:
 
@@ -62,5 +59,4 @@ class AgentV1SettingsAgent(AgentV1SettingsAgentContext):
             if isinstance(listen, AgentV1SettingsAgentListen):
                 values = dict(values)
                 values["listen"] = listen.dict()
-
             return values

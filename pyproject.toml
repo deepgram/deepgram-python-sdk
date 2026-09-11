@@ -59,6 +59,7 @@ types-requests = "^2.33.0"
 pytest-cov = "^7.0.0"
 respx = ">=0.22.0,<1.0.0"
 ruff = "==0.11.5"
+python-dotenv = "^1.1.0"
 
 [tool.pytest.ini_options]
 testpaths = [ "tests" ]

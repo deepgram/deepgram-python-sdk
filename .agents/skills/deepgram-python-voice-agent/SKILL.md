@@ -119,6 +119,7 @@ with client.agent.v1.connect() as agent:
 - Prompt / think / speak update messages (change mid-session)
 - User / assistant text injection
 - Function call response (reply to `FunctionCallRequest`)
+- `ForceEndTurn` (end an active user turn; requires a Deepgram V2/Flux listen provider)
 
 ## Reusable agent configurations
 
@@ -190,6 +191,10 @@ agent.send_inject_user_message(
 # 6. Idle-period keep-alive (no payload required; the SDK fills in the type literal)
 agent.send_keep_alive(AgentV1KeepAlive())
 # Or simply: agent.send_keep_alive()  — the message arg is optional.
+
+# 7. End an active user turn immediately (for example, on push-to-talk release).
+# Requires a Deepgram V2/Flux listen provider; V1 returns FORCE_END_TURN_UNSUPPORTED.
+agent.send_force_end_turn()
 ```
 
 Async client equivalents are identical but `await`-prefixed:
@@ -197,6 +202,7 @@ Async client equivalents are identical but `await`-prefixed:
 ```python
 await agent.send_update_prompt(AgentV1UpdatePrompt(prompt="..."))
 await agent.send_inject_agent_message(AgentV1InjectAgentMessage(message="..."))
+await agent.send_force_end_turn()
 ```
 
 ## Stream lifecycle & recovery
@@ -288,6 +294,7 @@ The server emits a `History` message on connect when the SDK has captured prior 
 ## Example files in this repo
 
 - `examples/30-voice-agent.py`
+- `examples/32-voice-agent-force-end-turn.py` — Force an active turn to end with a Flux listen provider
 - `tests/manual/agent/v1/connect/main.py` — live connection test
 
 ## Central product skills

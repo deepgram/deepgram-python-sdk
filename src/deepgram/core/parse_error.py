@@ -25,8 +25,6 @@ class ParsingError(Exception):
         body: Any = None,
         cause: Optional[Exception] = None,
     ) -> None:
-        # See the note in core/api_error.py: credential headers are masked at
-        # construction so they cannot reach a log, traceback, or error tracker.
         self.headers = redact_sensitive_headers(headers)
         self.status_code = status_code
         self.body = body

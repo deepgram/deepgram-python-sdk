@@ -375,7 +375,7 @@ client.listen.v1.media.transcribe_url(
 <dl>
 <dd>
 
-**keywords:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Keywords can boost or suppress specialized terminology and brands
+**keywords:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Keywords can boost or suppress specialized terminology and brands. Not compatible with Nova-3; use `keyterm` instead.
     
 </dd>
 </dl>
@@ -733,7 +733,7 @@ with open("audio.wav", "rb") as f:
 <dl>
 <dd>
 
-**keywords:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Keywords can boost or suppress specialized terminology and brands
+**keywords:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Keywords can boost or suppress specialized terminology and brands. Not compatible with Nova-3; use `keyterm` instead.
     
 </dd>
 </dl>
@@ -5090,7 +5090,7 @@ asyncio.run(main())
 <dl>
 <dd>
 
-**keywords:** `typing.Optional[str]` — Keywords can boost or suppress specialized terminology and brands
+**keywords:** `typing.Optional[str]` — Keywords can boost or suppress specialized terminology and brands. Not compatible with Nova-3; use `keyterm` instead.
 
 </dd>
 </dl>
@@ -5462,7 +5462,7 @@ asyncio.run(main())
 <dl>
 <dd>
 
-**eot_threshold:** `typing.Optional[str]` — Threshold for end-of-turn detection
+**eot_threshold:** `typing.Optional[str]` — Threshold for Flux end-of-turn detection. Set `1.0` to suppress confidence-based turn endings when the application uses `send_force_end_turn()`; `eot_timeout_ms` still ends idle turns independently.
 
 </dd>
 </dl>
@@ -5470,7 +5470,7 @@ asyncio.run(main())
 <dl>
 <dd>
 
-**eot_timeout_ms:** `typing.Optional[str]` — Timeout in milliseconds for end-of-turn detection
+**eot_timeout_ms:** `typing.Optional[str]` — Idle timeout in milliseconds for end-of-turn detection. Increase it with `eot_threshold=1.0` when the application needs full manual turn control through `send_force_end_turn()`.
 
 </dd>
 </dl>
@@ -6070,7 +6070,7 @@ asyncio.run(main())
 <dl>
 <dd>
 
-**speed:** `typing.Optional[SpeakV2Speed]` — Speech-rate multiplier. `1.0` is the model's nominal rate. Accepted values: `0.85`, `0.90`, `0.95`, `1.00`, `1.05`, `1.10`, `1.15` — any other value is rejected with `SPEED_OUT_OF_RANGE` or `SPEED_INCREMENT_INVALID`
+**speed:** `typing.Optional[SpeakV2Speed]` — Speech-rate multiplier. `1.0` is the model's nominal rate; lower is slower. Accepted values run `0.5` to `1.5` in `0.05` increments. A value outside that range is rejected with `SPEED_OUT_OF_RANGE`; a value inside it but off the `0.05` increment with `SPEED_INCREMENT_INVALID`. Models and languages without runtime speed control reject any value with `SPEED_NOT_SUPPORTED`.
 
 </dd>
 </dl>
@@ -6078,7 +6078,7 @@ asyncio.run(main())
 <dl>
 <dd>
 
-**expressivity:** `typing.Optional[SpeakV2Expressivity]` — Expressive range of the generated speech. Accepted values: `-2`, `-1`, `0`, `1`, `2` — `0` is the voice's nominal delivery, negative is flatter and more restrained, positive is more animated
+**expressivity:** `typing.Optional[SpeakV2Expressivity]` — Expressive range of the generated speech, on a calm-to-animated axis. Accepted values: `-2`, `-1`, `0`, `1`, `2`. `0` (the default) is the voice's tuned delivery and the production-validated setting, with `-2` the calm end of the range and `2` the animated end. Supported on all Flux voices. Fixed for the connection — not settable via `Configure`. Beta: behavior may change in future model versions, and non-default values increase the risk of hallucinations and pronunciation errors; audition before shipping. An invalid value fails the connection with a `400` — `EXPRESSIVITY_OUT_OF_RANGE` for a value outside the range, `EXPRESSIVITY_INCREMENT_INVALID` for a fractional value. See [Expressivity](/docs/tts-expressivity).
 
 </dd>
 </dl>
@@ -6243,6 +6243,8 @@ with client.agent.v1.connect() as agent:
     agent.send_keep_alive()
 
 ```
+
+The Deepgram provider `expressivity` setting applies only to Flux TTS (`version="v2"`) on every Flux voice. It accepts whole numbers from `-2` to `2`, where `0` (the default) is the voice's tuned delivery and the only value validated for production, `-2` is the calm end of the range, and `2` is the animated end. It is fixed for the session. Beta: behavior may change in future model versions, and non-default values increase the risk of hallucinations and pronunciation errors. See [Expressivity](/docs/tts-expressivity).
 
 </dd>
 </dl>
@@ -6476,10 +6478,20 @@ asyncio.run(main())
 
 </dd>
 </dl>
+<dl>
+<dd>
+
+**`send_force_end_turn()`** — Send the `ForceEndTurn` control message to the agent
+
+- `agent.send_force_end_turn()`
+
+- Requires a Deepgram V2 (Flux) listen provider. With a V1 provider, the server emits `FORCE_END_TURN_UNSUPPORTED`.
+
+</dd>
+</dl>
 </dd>
 </dl>
 
 </dd>
 </dl>
 </details>
-

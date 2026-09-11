@@ -9,18 +9,11 @@ from ....types.deepgram_listen_provider_v1 import DeepgramListenProviderV1
 from ....types.deepgram_listen_provider_v2 import DeepgramListenProviderV2
 from .agent_v1update_listen_listen_provider import AgentV1UpdateListenListenProvider
 
-# Fields that exist only on the v1 (Listen V1) provider shape. Used to infer the
-# intended version of a legacy unversioned dict from its own keys, rather than
-# blanket-stamping "v2" onto a dict that is clearly describing a v1 provider.
 _V1_ONLY_KEYS = frozenset({"language", "smart_format"})
 
 
 def _coerce_legacy_update_listen_provider(values: typing.Any) -> typing.Any:
-    # Backward-compat: before the 2026-07-31 regen the provider field was a bare
-    # DeepgramListenProviderV2. The regen replaced it with the versioned
-    # AgentV1UpdateListenListenProvider union (discriminant="version"). Coerce a
-    # legacy Deepgram provider (or a dict lacking the version discriminant) into
-    # the new shape so existing callers keep producing the correct wire payload.
+    """Add the discriminator required by the versioned provider union."""
     if not isinstance(values, dict):
         return values
     provider = values.get("provider")
@@ -35,18 +28,8 @@ def _coerce_legacy_update_listen_provider(values: typing.Any) -> typing.Any:
         version = "v1" if _V1_ONLY_KEYS & provider.keys() else "v2"
         provider_cls = DeepgramListenProviderV1 if version == "v1" else DeepgramListenProviderV2
         try:
-            # Route the dict through the same shim model the instance branches
-            # use, so its own `model_validator(mode="before")` runs. That is what
-            # remaps a deprecated `language_hint=` to `language_hints` and drops
-            # the singular key -- the API uses deny_unknown_fields, so leaving it
-            # in is a hard rejection. Going through the model keeps ONE remap
-            # implementation instead of duplicating it here.
             coerced = provider_cls(**provider).dict()
         except Exception:
-            # A malformed dict (e.g. missing the required `model`) makes the
-            # model constructor raise. Pre-regen this path passed the dict
-            # through untouched, so fall back to that rather than turning a
-            # compat shim into a new source of exceptions.
             coerced = dict(provider)
         values["provider"] = {**coerced, "version": version}
     return values
