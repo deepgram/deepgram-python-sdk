@@ -295,3 +295,6 @@ AGENTS.md
 .github
 docs
 examples
+
+# Manual live tests have no Fern-generated counterpart.
+tests/manual
