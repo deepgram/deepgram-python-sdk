@@ -1,17 +1,16 @@
 """
-Example: Taking manual control of turn endings (Listen V2 / Flux)
+Example: Requesting an active turn end (Listen V2 / Flux)
 
-By default Flux decides when a turn is over. Two connection options plus one control
-message let the application decide instead:
+Flux decides when a turn is over. Connection options tune that behavior, and one
+control message lets the application request that an active turn end:
 
-    eot_threshold=1.0     suppresses Flux's confidence-based end-of-turn detection
-    eot_timeout_ms=60000  pushes out the separate inactivity timeout, which would
-                          otherwise still end the turn after a pause
+    eot_threshold=1.0     configures the highest supported confidence threshold;
+                          it does not disable Flux's natural end-of-turn detection
+    eot_timeout_ms=60000  increases the separate inactivity timeout
     send_force_end_turn() ends the current turn immediately, whatever the confidence
 
-Both options are needed for full manual control. Setting eot_threshold=1.0 alone still
-leaves eot_timeout_ms (default 5000) able to close a turn — a distinction visible only
-through TurnInfo.trigger, which reports what actually ended the turn:
+Neither threshold setting guarantees manual-only control: Flux can still emit an
+end-of-turn event. `TurnInfo.trigger` reports what actually ended the turn:
 
     model    Flux's own end-of-turn detection
     manual   a ForceEndTurn message
@@ -74,9 +73,10 @@ try:
         model="flux-general-en",
         encoding="linear16",
         sample_rate="44100",
-        # Never end a turn on Flux's own judgement...
+        # Use the highest supported confidence threshold. Flux can still end a turn
+        # independently, so this is not a manual-only mode.
         eot_threshold="1.0",
-        # ...and do not let the inactivity timeout end it either.
+        # Increase the inactivity timeout while waiting to request a manual end.
         eot_timeout_ms="60000",
     ) as connection:
 

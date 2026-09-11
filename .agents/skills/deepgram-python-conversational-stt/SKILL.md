@@ -82,8 +82,8 @@ with client.listen.v2.connect(
 | `encoding` | `linear16`, `mulaw`, etc. Omit for containerized audio |
 | `sample_rate` | String in the SDK signature, e.g. `"16000"` |
 | `eager_eot_threshold` | Fire end-of-turn early at this confidence |
-| `eot_threshold` | Primary end-of-turn confidence; set to `"1.0"` to suppress confidence-based endings |
-| `eot_timeout_ms` | Time-based fallback turn end; still applies when `eot_threshold="1.0"` |
+| `eot_threshold` | Primary end-of-turn confidence (`0.5` to `1.0`; default `0.7`). `"1.0"` does not disable server-driven turn endings. |
+| `eot_timeout_ms` | Time-based fallback turn end, independently controlled by the server |
 | `keyterm` | Bias for domain keywords |
 | `mip_opt_out`, `tag` | Metadata / privacy flags |
 | `language_hint` | **ONLY for `flux-general-multi`** |
@@ -91,7 +91,7 @@ with client.listen.v2.connect(
 
 **No `language` parameter** on v2 — language is implied by model (`flux-general-en`) or hinted via `language_hint` on multi.
 
-For application-controlled turns, use `eot_threshold="1.0"` with a sufficiently large `eot_timeout_ms`, then call `conn.send_force_end_turn()` for the active turn. ForceEndTurn requires deployment enablement; see `examples/16-transcription-force-end-turn.py`.
+Use `conn.send_force_end_turn()` only to request the end of an active turn on an enabled deployment; it does not disable automatic detection. ForceEndTurn requires deployment enablement; see `examples/16-transcription-force-end-turn.py`.
 
 ## Events (server → client)
 
