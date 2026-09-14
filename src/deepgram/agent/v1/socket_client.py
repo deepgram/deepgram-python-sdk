@@ -207,6 +207,18 @@ class AsyncV1SocketClient(EventEmitterMixin):
         """
         await self._send_model(message)
 
+    async def send_raw(self, message: typing.Union[typing.Dict[str, typing.Any], str]) -> None:
+        """Send a JSON control frame without model validation.
+
+        Dictionaries are serialized to JSON. Serialized JSON strings are sent
+        unchanged, allowing protocol-transparent bridges to forward unknown
+        control frames.
+
+        Values are sent as given; whole-number floats are not converted to
+        integers, so pass ints where the API expects them.
+        """
+        await self._send(message)
+
     async def send_media(self, message: bytes) -> None:
         """
         Send a message to the websocket connection.
@@ -367,6 +379,18 @@ class V1SocketClient(EventEmitterMixin):
         The message will be sent as a AgentV1CustomToThinkProvider.
         """
         self._send_model(message)
+
+    def send_raw(self, message: typing.Union[typing.Dict[str, typing.Any], str]) -> None:
+        """Send a JSON control frame without model validation.
+
+        Dictionaries are serialized to JSON. Serialized JSON strings are sent
+        unchanged, allowing protocol-transparent bridges to forward unknown
+        control frames.
+
+        Values are sent as given; whole-number floats are not converted to
+        integers, so pass ints where the API expects them.
+        """
+        self._send(message)
 
     def send_media(self, message: bytes) -> None:
         """
