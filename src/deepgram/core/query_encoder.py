@@ -6,8 +6,7 @@ import pydantic
 
 
 def _coerce_query_value(value: Any) -> Any:
-    # urllib.parse.urlencode stringifies bools via str(), producing "True"/"False";
-    # APIs (including Deepgram's websocket endpoints) expect lowercase.
+    # urllib.parse.urlencode would otherwise turn bools into "True"/"False".
     if isinstance(value, bool):
         return "true" if value else "false"
     return value

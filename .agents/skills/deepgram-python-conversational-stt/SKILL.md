@@ -82,14 +82,16 @@ with client.listen.v2.connect(
 | `encoding` | `linear16`, `mulaw`, etc. Omit for containerized audio |
 | `sample_rate` | String in the SDK signature, e.g. `"16000"` |
 | `eager_eot_threshold` | Fire end-of-turn early at this confidence |
-| `eot_threshold` | Primary end-of-turn confidence |
-| `eot_timeout_ms` | Time-based fallback turn end |
+| `eot_threshold` | Primary end-of-turn confidence; set to `"1.0"` to suppress confidence-based endings |
+| `eot_timeout_ms` | Time-based fallback turn end; still applies when `eot_threshold="1.0"` |
 | `keyterm` | Bias for domain keywords |
 | `mip_opt_out`, `tag` | Metadata / privacy flags |
 | `language_hint` | **ONLY for `flux-general-multi`** |
 | `authorization`, `request_options` | Override auth or request options |
 
 **No `language` parameter** on v2 — language is implied by model (`flux-general-en`) or hinted via `language_hint` on multi.
+
+For application-controlled turns, use `eot_threshold="1.0"` with a sufficiently large `eot_timeout_ms`, then call `conn.send_force_end_turn()` for the active turn. ForceEndTurn requires deployment enablement; see `examples/16-transcription-force-end-turn.py`.
 
 ## Events (server → client)
 
@@ -98,7 +100,7 @@ with client.listen.v2.connect(
 - `ListenV2TurnInfo` — per-turn transcript + event (`Update`, `EndOfTurn`, `EagerEndOfTurn`, ...) + `turn_index`
 - `ListenV2FatalError` — terminal error
 
-Client messages: `ListenV2Media`, `ListenV2Configure`, `ListenV2CloseStream`.
+Client messages: `ListenV2Media`, `ListenV2Configure`, `ListenV2ForceEndTurn`, `ListenV2CloseStream`.
 
 ## Async equivalent
 

@@ -93,25 +93,15 @@ class AsyncV2SocketClient(EventEmitterMixin):
         """
         Send a message to the websocket connection.
         The message will be sent as a ListenV2ForceEndTurn.
-
-        Ends the current turn immediately, whatever the end-of-turn confidence. The
-        resulting ``TurnInfo`` carries ``trigger="manual"``, and the connection stays open
-        for the next turn.
-
-        Requires server-side enablement. On a deployment without it the server replies
-        ``UNPARSABLE_CLIENT_MESSAGE`` ("The ForceEndTurn message is not enabled on this
-        deployment.") and **closes the connection**, so guard against that path until the
-        feature is confirmed live for the deployment you target.
+        Requires server-side enablement. On deployments without the feature, the
+        server returns UNPARSABLE_CLIENT_MESSAGE and closes the connection.
         """
         await self._send_model(message or ListenV2ForceEndTurn(type="ForceEndTurn"))
 
-    async def send_configure(
-        self, message: typing.Union[ListenV2Configure, typing.Dict[str, typing.Any]]
-    ) -> None:
+    async def send_configure(self, message: typing.Union[ListenV2Configure, typing.Dict[str, typing.Any]]) -> None:
         """
         Send a message to the websocket connection.
-        The message will be sent as a ListenV2Configure. A raw dict is also
-        accepted and sent verbatim for back-compat with pre-typed-model callers.
+        The message will be sent as a ListenV2Configure.
         """
         if isinstance(message, dict):
             await self._send(message)
@@ -213,23 +203,15 @@ class V2SocketClient(EventEmitterMixin):
         """
         Send a message to the websocket connection.
         The message will be sent as a ListenV2ForceEndTurn.
-
-        Ends the current turn immediately, whatever the end-of-turn confidence. The
-        resulting ``TurnInfo`` carries ``trigger="manual"``, and the connection stays open
-        for the next turn.
-
-        Requires server-side enablement. On a deployment without it the server replies
-        ``UNPARSABLE_CLIENT_MESSAGE`` ("The ForceEndTurn message is not enabled on this
-        deployment.") and **closes the connection**, so guard against that path until the
-        feature is confirmed live for the deployment you target.
+        Requires server-side enablement. On deployments without the feature, the
+        server returns UNPARSABLE_CLIENT_MESSAGE and closes the connection.
         """
         self._send_model(message or ListenV2ForceEndTurn(type="ForceEndTurn"))
 
     def send_configure(self, message: typing.Union[ListenV2Configure, typing.Dict[str, typing.Any]]) -> None:
         """
         Send a message to the websocket connection.
-        The message will be sent as a ListenV2Configure. A raw dict is also
-        accepted and sent verbatim for back-compat with pre-typed-model callers.
+        The message will be sent as a ListenV2Configure.
         """
         if isinstance(message, dict):
             self._send(message)

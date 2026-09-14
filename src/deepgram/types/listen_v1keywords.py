@@ -4,5 +4,5 @@ import typing
 
 ListenV1Keywords = typing.Any
 """
-Keywords can boost or suppress specialized terminology and brands
+Keywords can boost or suppress specialized terminology and brands. `keywords` is not supported with Nova-3 models; use `keyterm` instead.
 """

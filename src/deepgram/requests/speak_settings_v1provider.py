@@ -21,6 +21,7 @@ class SpeakSettingsV1Provider_DeepgramParams(typing_extensions.TypedDict):
     version: typing_extensions.NotRequired[str]
     model: DeepgramModel
     speed: typing_extensions.NotRequired[float]
+    expressivity: typing_extensions.NotRequired[int]
 
 
 class SpeakSettingsV1Provider_ElevenLabsParams(typing_extensions.TypedDict):

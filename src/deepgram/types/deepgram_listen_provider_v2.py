@@ -30,14 +30,13 @@ class DeepgramListenProviderV2(UncheckedBaseModel):
 
     language_hint: typing.Optional[typing.Union[str, typing.List[str]]] = pydantic.Field(default=None, exclude=True)
     """
-    Deprecated. Use `language_hints`. Accepted (str or list) for backward
-    compatibility and remapped to `language_hints` by the validator below;
-    `exclude=True` keeps it off the wire (the API rejects unknown fields).
+    Deprecated. Use `language_hints`. Accepted for backward compatibility and
+    remapped before serialization so the singular field never reaches the API.
     """
 
     eot_threshold: typing.Optional[float] = pydantic.Field(default=None)
     """
-    End-of-turn confidence required to finish a turn. Valid range: 0.5 - 0.9. Defaults to 0.7.
+    End-of-turn confidence required to finish a turn. Valid range: 0.5 - 1.0. Defaults to 0.7. Set to 1.0 to fully suppress confidence-based end-of-turn detection. `eot_timeout_ms` still ends idle turns; increase it for full manual turn control with the ForceEndTurn message.
     """
 
     eager_eot_threshold: typing.Optional[float] = pydantic.Field(default=None)
@@ -55,35 +54,28 @@ class DeepgramListenProviderV2(UncheckedBaseModel):
     Prompt keyterm recognition to improve Keyword Recall Rate
     """
 
-    # Backward-compat: the public field was historically named `language_hint`
-    # and accepted a string or a list. The API field is `language_hints` (a
-    # list). Translate the legacy kwarg so existing callers keep working, and
-    # drop the dead singular key so it is not rejected by the API
-    # (deny_unknown_fields). Hand-maintained.
     if IS_PYDANTIC_V2:
 
         @pydantic.model_validator(mode="before")
         @classmethod
         def _migrate_language_hint(cls, values: typing.Any) -> typing.Any:
-            if not isinstance(values, dict):
+            if not isinstance(values, dict) or "language_hint" not in values:
                 return values
-            if "language_hint" in values:
-                values = dict(values)
-                hint = values.pop("language_hint")
-                if hint is not None and values.get("language_hints") is None:
-                    values["language_hints"] = [hint] if isinstance(hint, str) else list(hint)
+            values = dict(values)
+            hint = values.pop("language_hint")
+            if hint is not None and values.get("language_hints") is None:
+                values["language_hints"] = [hint] if isinstance(hint, str) else list(hint)
             return values
     else:
 
         @pydantic.root_validator(pre=True)  # type: ignore[deprecated]
         def _migrate_language_hint(cls, values: typing.Any) -> typing.Any:  # type: ignore[no-redef]
-            if not isinstance(values, dict):
+            if not isinstance(values, dict) or "language_hint" not in values:
                 return values
-            if "language_hint" in values:
-                values = dict(values)
-                hint = values.pop("language_hint")
-                if hint is not None and values.get("language_hints") is None:
-                    values["language_hints"] = [hint] if isinstance(hint, str) else list(hint)
+            values = dict(values)
+            hint = values.pop("language_hint")
+            if hint is not None and values.get("language_hints") is None:
+                values["language_hints"] = [hint] if isinstance(hint, str) else list(hint)
             return values
 
     if IS_PYDANTIC_V2:

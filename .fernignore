@@ -33,6 +33,20 @@ src/deepgram/listen/v2/socket_client.py
 src/deepgram/speak/v1/socket_client.py
 src/deepgram/speak/v2/socket_client.py
 
+# The generated eot_threshold descriptions omit that eot_timeout_ms still ends
+# idle turns. The DeepgramListenProviderV2 model below shares this patch with
+# its language_hint compatibility shim. Remove these patches after the API
+# definition includes the timeout requirement and Fern regenerates them.
+# [temporarily frozen]
+src/deepgram/types/listen_v2eot_threshold.py
+src/deepgram/requests/deepgram_listen_provider_v2.py
+
+# Agent TTS provider expressivity must reject fractional values rather than
+# allowing Pydantic v1 to truncate them before the API sees the request.
+# [temporarily frozen — remove when Fern emits a strict integer]
+src/deepgram/types/speak_settings_v1provider.py
+src/deepgram/types/deepgram.py
+
 # Backward-compat patch: AgentV1SettingsAgentContext schema restructure as of
 # 2026-05-05. The new schema nests messages under .context.messages; this file
 # carries a model_validator(mode='before') that accepts the legacy `messages=`
@@ -117,8 +131,11 @@ src/deepgram/requests/deepgram_listen_provider_v2language_hint.py
 # deny_unknown_fields so the singular key is rejected on the wire). These three generated
 # models carry a hand-added model_validator(mode='before') / root_validator(pre=True) that
 # remaps a legacy `language_hint=` kwarg to `language_hints` and drops the dead singular
-# key. Frozen so Fern won't strip the validator on regen. Remove the shim and unfreeze when
-# the singular alias is intentionally retired in a future major release.
+# key. This DeepgramListenProviderV2 model also carries the EOT description correction:
+# eot_threshold=1.0 suppresses confidence-based detection only; eot_timeout_ms still ends
+# idle turns and must be increased for manual ForceEndTurn control. Remove that correction
+# when the API definition provides it; remove the shim and unfreeze when the singular alias
+# is intentionally retired in a future major release.
 src/deepgram/types/deepgram_listen_provider_v2.py
 src/deepgram/agent/v1/types/agent_v1settings_agent_listen_provider.py
 src/deepgram/agent/v1/types/agent_v1settings_agent_context_listen_provider.py
@@ -131,15 +148,6 @@ src/deepgram/agent/v1/types/agent_v1settings_agent_context_listen_provider.py
 # discriminant) into the new shape so existing callers keep working. Remove and unfreeze
 # when the old provider payloads are retired in a future major.
 src/deepgram/agent/v1/types/agent_v1update_listen_listen.py
-
-# Backward-compat patch for the 2026-08-18 regen SpeakV2Speed retype. The generator
-# changed this from `float` to `Union[Literal["0.85"..."1.15"], Any]` -- a string-literal
-# enum that contradicts the API contract (a numeric multiplier; cf. SpeakV2SpeedValue =
-# float, used by the Configure message) and silently changed the documented domain of the
-# `speak.v2.connect(speed=...)` param from numeric to string. Restored to `float` so the
-# connect param stays exactly what it was on main and consistent with Configure. Unfreeze
-# when the spec types the connect `speed` as a number.
-src/deepgram/types/speak_v2speed.py
 
 # Hand-written compat shim recreating ListenV2CloseStreamType, which Fern removed in the
 # 2026-06-15 regen (docs #946). The original generated type wrongly allowed

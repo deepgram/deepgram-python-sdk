@@ -12,6 +12,7 @@ from .types.agent_v1agent_started_speaking import AgentV1AgentStartedSpeaking
 from .types.agent_v1agent_thinking import AgentV1AgentThinking
 from .types.agent_v1conversation_text import AgentV1ConversationText
 from .types.agent_v1error import AgentV1Error
+from .types.agent_v1force_end_turn import AgentV1ForceEndTurn
 from .types.agent_v1function_call_request import AgentV1FunctionCallRequest
 from .types.agent_v1history import AgentV1History
 from .types.agent_v1inject_agent_message import AgentV1InjectAgentMessage
@@ -42,21 +43,15 @@ except ImportError:
 
 
 def _sanitize_numeric_types(obj: typing.Any) -> typing.Any:
-    """
-    Recursively convert float values that are whole numbers to int.
+    """Convert whole-number floats to integers for wire-compatible JSON.
 
-    Workaround for Fern-generated models that type integer API fields
-    (like sample_rate) as float, causing JSON serialization to produce
-    values like 44100.0 instead of 44100. The Deepgram API rejects
-    float representations of integer fields.
-
-    See: https://github.com/deepgram/internal-api-specs/issues/205
+    See: internal-api-specs/issues/205
     """
     if isinstance(obj, dict):
-        return {k: _sanitize_numeric_types(v) for k, v in obj.items()}
-    elif isinstance(obj, list):
+        return {key: _sanitize_numeric_types(value) for key, value in obj.items()}
+    if isinstance(obj, list):
         return [_sanitize_numeric_types(item) for item in obj]
-    elif isinstance(obj, float) and obj.is_integer():
+    if isinstance(obj, float) and obj.is_integer():
         return int(obj)
     return obj
 
@@ -195,6 +190,13 @@ class AsyncV1SocketClient(EventEmitterMixin):
         The message will be sent as a AgentV1UpdatePrompt.
         """
         await self._send_model(message)
+
+    async def send_force_end_turn(self, message: typing.Optional[AgentV1ForceEndTurn] = None) -> None:
+        """
+        Send a message to the websocket connection.
+        The message will be sent as a AgentV1ForceEndTurn.
+        """
+        await self._send_model(message or AgentV1ForceEndTurn(type="ForceEndTurn"))
 
     async def send_media(self, message: bytes) -> None:
         """
@@ -342,6 +344,13 @@ class V1SocketClient(EventEmitterMixin):
         The message will be sent as a AgentV1UpdatePrompt.
         """
         self._send_model(message)
+
+    def send_force_end_turn(self, message: typing.Optional[AgentV1ForceEndTurn] = None) -> None:
+        """
+        Send a message to the websocket connection.
+        The message will be sent as a AgentV1ForceEndTurn.
+        """
+        self._send_model(message or AgentV1ForceEndTurn(type="ForceEndTurn"))
 
     def send_media(self, message: bytes) -> None:
         """
