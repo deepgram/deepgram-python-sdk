@@ -197,6 +197,8 @@ agent.send_keep_alive(AgentV1KeepAlive())
 agent.send_force_end_turn()
 ```
 
+For an unmodeled Agent control frame, protocol-transparent bridges can call `agent.send_raw(message)`; dictionaries are JSON-serialized without validation and serialized JSON strings pass through unchanged.
+
 Async client equivalents are identical but `await`-prefixed:
 
 ```python
