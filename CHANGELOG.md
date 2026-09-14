@@ -1,5 +1,18 @@
 # Changelog
 
+## [7.9.0](https://github.com/deepgram/deepgram-python-sdk/compare/v7.8.1...v7.9.0) (2026-09-14)
+
+
+### Features
+
+* **Voice Agent:** Adds `send_force_end_turn()` and typed ForceEndTurn messages for V2 Flux listen providers. ([#783](https://github.com/deepgram/deepgram-python-sdk/issues/783)) ([ff49864](https://github.com/deepgram/deepgram-python-sdk/commit/ff49864c680d6fd32199364603b1eeb200b942fe))
+* **Voice Agent:** Adds integer `expressivity` from `-2` through `2` for Deepgram Flux TTS providers. ([#783](https://github.com/deepgram/deepgram-python-sdk/issues/783)) ([ff49864](https://github.com/deepgram/deepgram-python-sdk/commit/ff49864c680d6fd32199364603b1eeb200b942fe))
+* **Flux TTS:** `speed` accepts `0.5` through `1.5` in `0.05` increments, replacing the previously documented `0.85` through `1.15` range. ([#783](https://github.com/deepgram/deepgram-python-sdk/issues/783)) ([ff49864](https://github.com/deepgram/deepgram-python-sdk/commit/ff49864c680d6fd32199364603b1eeb200b942fe))
+
+### Model Catalog
+
+* **Speak V1:** Removes `aura-2-perseo-it` from model literals. The API never served the model and returns 400 `No such model/version combination found` for it. ([#783](https://github.com/deepgram/deepgram-python-sdk/issues/783)) ([ff49864](https://github.com/deepgram/deepgram-python-sdk/commit/ff49864c680d6fd32199364603b1eeb200b942fe))
+
 ## [7.8.1](https://github.com/deepgram/deepgram-python-sdk/compare/v7.8.0...v7.8.1) (2026-09-03)
 
 
