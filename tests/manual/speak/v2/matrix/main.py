@@ -6,9 +6,9 @@ Requires `DEEPGRAM_API_KEY`. Run with:
     DEEPGRAM_BASE_URL=wss://<host> python tests/manual/speak/v2/matrix/main.py
 
 The generated speed documentation permits values from 0.5 through 1.5 in 0.05
-increments. This matrix verifies the server's typed reconfiguration responses
-for representative endpoints, a valid historical value, and invalid
-out-of-range and off-increment values.
+increments. This matrix verifies speed at connection time, during a streaming
+session, and through batch synthesis for two voices. It covers representative
+valid values plus invalid out-of-range and off-increment values.
 """
 
 import asyncio
@@ -17,12 +17,17 @@ import os
 from dotenv import load_dotenv
 
 from deepgram import AsyncDeepgramClient
+from deepgram.core.api_error import ApiError
 from deepgram.environment import DeepgramClientEnvironment
-from deepgram.speak.v2.types import SpeakV2Configure, SpeakV2ConfigureFailure, SpeakV2ConfigureSuccess
+from deepgram.speak.v2.types import (
+    SpeakV2Configure,
+    SpeakV2ConfigureFailure,
+    SpeakV2ConfigureSuccess,
+)
 
 ACCEPTED_SPEEDS = (0.5, 0.85, 1.15, 1.5)
 REJECTED_SPEEDS = ((0.45, "SPEED_OUT_OF_RANGE"), (1.55, "SPEED_OUT_OF_RANGE"), (1.03, "SPEED_INCREMENT_INVALID"))
-MODEL = "flux-alexis-en"
+MODELS = ("flux-alexis-en", "flux-rufus-en")
 
 
 def _client_environment() -> DeepgramClientEnvironment:
@@ -36,9 +41,9 @@ def _client_environment() -> DeepgramClientEnvironment:
 
 
 async def _configure_speed(
-    client: AsyncDeepgramClient, speed: float
+    client: AsyncDeepgramClient, model: str, speed: float
 ) -> SpeakV2ConfigureSuccess | SpeakV2ConfigureFailure:
-    async with client.speak.v2.connect(model=MODEL) as connection:
+    async with client.speak.v2.connect(model=model) as connection:
         await connection.send_configure(SpeakV2Configure(speed=speed))
         while True:
             try:
@@ -51,6 +56,43 @@ async def _configure_speed(
                 raise AssertionError(f"speed={speed} returned an unexpected error: {message}")
 
 
+async def _connect_with_speed(client: AsyncDeepgramClient, model: str, speed: float) -> None:
+    """Open and close a connection to validate the connect-time query parameter."""
+    async with client.speak.v2.connect(model=model, speed=speed):
+        pass
+
+
+async def _generate_audio(client: AsyncDeepgramClient, model: str, speed: float) -> bytes:
+    return b"".join(
+        [
+            chunk
+            async for chunk in client.speak.v2.audio.generate(
+                model=model,
+                text="Testing the Flux speed boundary matrix.",
+                speed=speed,
+            )
+        ]
+    )
+
+
+async def _expect_connect_rejection(client: AsyncDeepgramClient, model: str, speed: float) -> None:
+    try:
+        await _connect_with_speed(client, model, speed)
+    except ApiError as exc:
+        assert exc.status_code == 400, f"connect speed={speed} returned status={exc.status_code}"
+        return
+    raise AssertionError(f"connect speed={speed} should be rejected")
+
+
+async def _expect_batch_rejection(client: AsyncDeepgramClient, model: str, speed: float) -> None:
+    try:
+        await _generate_audio(client, model, speed)
+    except ApiError as exc:
+        assert exc.status_code == 400, f"batch speed={speed} returned status={exc.status_code}"
+        return
+    raise AssertionError(f"batch speed={speed} should be rejected")
+
+
 async def main() -> None:
     load_dotenv()
     if not os.environ.get("DEEPGRAM_API_KEY"):
@@ -58,21 +100,27 @@ async def main() -> None:
         return
 
     environment = _client_environment()
-    print(f"Testing {environment.production}/v2/speak with model={MODEL}")
+    print(f"Testing {environment.production}/v2/speak")
     client = AsyncDeepgramClient(environment=environment)
 
-    for speed in ACCEPTED_SPEEDS:
-        response = await _configure_speed(client, speed)
-        assert isinstance(response, SpeakV2ConfigureSuccess), f"speed={speed} should be accepted: {response}"
-        assert response.applied.speed == speed, f"speed={speed} was applied as {response.applied.speed}"
-        print(f"  PASS: speed={speed} accepted")
-    for speed, expected_code in REJECTED_SPEEDS:
-        response = await _configure_speed(client, speed)
-        assert isinstance(response, SpeakV2ConfigureFailure), f"speed={speed} should be rejected: {response}"
-        assert response.code == expected_code, f"speed={speed} returned {response.code}, expected {expected_code}"
-        assert response.field == "speed", f"speed={speed} failure named field={response.field!r}"
-        assert response.value == speed, f"speed={speed} failure echoed value={response.value}"
-        print(f"  PASS: speed={speed} rejected with {expected_code}")
+    for model in MODELS:
+        print(f"Testing model={model}")
+        for speed in ACCEPTED_SPEEDS:
+            response = await _configure_speed(client, model, speed)
+            assert isinstance(response, SpeakV2ConfigureSuccess), f"speed={speed} should be accepted: {response}"
+            assert response.applied.speed == speed, f"speed={speed} was applied as {response.applied.speed}"
+            await _connect_with_speed(client, model, speed)
+            assert await _generate_audio(client, model, speed), f"batch speed={speed} returned no audio"
+            print(f"  PASS: speed={speed} accepted by configure, connect, and batch")
+        for speed, expected_code in REJECTED_SPEEDS:
+            response = await _configure_speed(client, model, speed)
+            assert isinstance(response, SpeakV2ConfigureFailure), f"speed={speed} should be rejected: {response}"
+            assert response.code == expected_code, f"speed={speed} returned {response.code}, expected {expected_code}"
+            assert response.field == "speed", f"speed={speed} failure named field={response.field!r}"
+            assert response.value == speed, f"speed={speed} failure echoed value={response.value}"
+            await _expect_connect_rejection(client, model, speed)
+            await _expect_batch_rejection(client, model, speed)
+            print(f"  PASS: speed={speed} rejected by configure, connect, and batch")
 
     print("Speed boundary matrix completed.")
 
