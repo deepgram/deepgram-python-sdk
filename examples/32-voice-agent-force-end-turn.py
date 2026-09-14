@@ -36,6 +36,8 @@ AUDIO_PATH = Path(__file__).parent / "fixtures" / "audio.wav"
 def main() -> None:
     user_started = threading.Event()
     agent_finished = threading.Event()
+    force_end_turn_rejected = threading.Event()
+    force_end_turn_error: str | None = None
 
     settings = AgentV1Settings(
         audio=AgentV1SettingsAudio(input=AgentV1SettingsAudioInput(encoding="linear16", sample_rate=44100)),
@@ -56,6 +58,7 @@ def main() -> None:
     with DeepgramClient().agent.v1.connect() as agent:
 
         def on_message(message: object) -> None:
+            nonlocal force_end_turn_error
             message_type = getattr(message, "type", None)
             if message_type == "UserStartedSpeaking":
                 user_started.set()
@@ -67,6 +70,9 @@ def main() -> None:
                 print("AgentAudioDone received")
             elif message_type in {"Warning", "Error"}:
                 print(f"{message_type}: {message.code} - {message.description}")
+                if message.code == "FORCE_END_TURN_UNSUPPORTED":
+                    force_end_turn_error = f"{message.code}: {message.description}"
+                    force_end_turn_rejected.set()
 
         agent.on(EventType.MESSAGE, on_message)
         agent.on(EventType.ERROR, lambda error: print(f"Connection error: {error}"))
@@ -88,8 +94,14 @@ def main() -> None:
 
         print("Sending ForceEndTurn")
         agent.send_force_end_turn()
-        if not agent_finished.wait(15):
-            raise TimeoutError("Timed out waiting for the agent response")
+        deadline = time.monotonic() + 15
+        while not agent_finished.wait(0.1):
+            if force_end_turn_rejected.is_set():
+                raise RuntimeError(f"ForceEndTurn failed: {force_end_turn_error}")
+            if time.monotonic() >= deadline:
+                raise TimeoutError("Timed out waiting for the agent response")
+        if force_end_turn_rejected.is_set():
+            raise RuntimeError(f"ForceEndTurn failed: {force_end_turn_error}")
 
 
 if __name__ == "__main__":
