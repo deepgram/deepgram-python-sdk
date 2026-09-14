@@ -178,6 +178,30 @@ class TestOptionalMessageControlSends:
         assert _sent_json(ws) == {"type": "ForceEndTurn"}
 
 
+class TestAgentRawControlSender:
+    def test_sync_send_raw_serializes_an_unknown_control_frame(self):
+        ws = _FakeWebSocket()
+        V1SocketClient(websocket=ws).send_raw({"type": "FutureControl", "sample_rate": 44100.0})
+        assert ws.sent == ['{"type": "FutureControl", "sample_rate": 44100.0}']
+
+    def test_sync_send_raw_preserves_serialized_json(self):
+        ws = _FakeWebSocket()
+        message = '{"type":"FutureControl","option":true}'
+        V1SocketClient(websocket=ws).send_raw(message)
+        assert ws.sent == [message]
+
+    async def test_async_send_raw_serializes_an_unknown_control_frame(self):
+        ws = _FakeAsyncWebSocket()
+        await AsyncV1SocketClient(websocket=ws).send_raw({"type": "FutureControl", "sample_rate": 44100.0})
+        assert ws.sent == ['{"type": "FutureControl", "sample_rate": 44100.0}']
+
+    async def test_async_send_raw_preserves_serialized_json(self):
+        ws = _FakeAsyncWebSocket()
+        message = '{"type":"FutureControl","option":true}'
+        await AsyncV1SocketClient(websocket=ws).send_raw(message)
+        assert ws.sent == [message]
+
+
 class TestAgentSettingsSerialization:
     @pytest.mark.parametrize("expressivity", [1.5, True, "2"])
     def test_expressivity_requires_a_plain_integer(self, expressivity):
