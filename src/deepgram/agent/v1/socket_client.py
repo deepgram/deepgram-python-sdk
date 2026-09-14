@@ -198,6 +198,15 @@ class AsyncV1SocketClient(EventEmitterMixin):
         """
         await self._send_model(message or AgentV1ForceEndTurn(type="ForceEndTurn"))
 
+    async def send_raw(self, message: typing.Union[typing.Dict[str, typing.Any], str]) -> None:
+        """Send a JSON control frame without model validation.
+
+        Dictionaries are serialized to JSON. Serialized JSON strings are sent
+        unchanged, allowing protocol-transparent bridges to forward unknown
+        control frames.
+        """
+        await self._send(message)
+
     async def send_media(self, message: bytes) -> None:
         """
         Send a message to the websocket connection.
@@ -351,6 +360,15 @@ class V1SocketClient(EventEmitterMixin):
         The message will be sent as a AgentV1ForceEndTurn.
         """
         self._send_model(message or AgentV1ForceEndTurn(type="ForceEndTurn"))
+
+    def send_raw(self, message: typing.Union[typing.Dict[str, typing.Any], str]) -> None:
+        """Send a JSON control frame without model validation.
+
+        Dictionaries are serialized to JSON. Serialized JSON strings are sent
+        unchanged, allowing protocol-transparent bridges to forward unknown
+        control frames.
+        """
+        self._send(message)
 
     def send_media(self, message: bytes) -> None:
         """
