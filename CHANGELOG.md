@@ -1,5 +1,12 @@
 # Changelog
 
+## [7.9.0](https://github.com/deepgram/deepgram-python-sdk/compare/v7.8.1...v7.9.0) (2026-09-14)
+
+
+### Features
+
+* **regen:** agent force-end-turn and Flux expressivity controls ([#783](https://github.com/deepgram/deepgram-python-sdk/issues/783)) ([ff49864](https://github.com/deepgram/deepgram-python-sdk/commit/ff49864c680d6fd32199364603b1eeb200b942fe))
+
 ## [7.8.1](https://github.com/deepgram/deepgram-python-sdk/compare/v7.8.0...v7.8.1) (2026-09-03)
 
 
