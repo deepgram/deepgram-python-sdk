@@ -7,25 +7,15 @@ from ....core.pydantic_utilities import IS_PYDANTIC_V2
 from ....core.unchecked_base_model import UncheckedBaseModel
 
 
-class ListenV2TurnInfoWordsItem(UncheckedBaseModel):
-    word: str = pydantic.Field()
+class AgentV1FunctionCallCancelledFunctionsItem(UncheckedBaseModel):
+    id: str = pydantic.Field()
     """
-    The individual punctuated, properly-cased word from the transcript
-    """
-
-    confidence: float = pydantic.Field()
-    """
-    Confidence that this word was transcribed correctly
+    The id from the FunctionCallRequest that is now cancelled. Send no FunctionCallResponse for this id
     """
 
-    start: typing.Optional[float] = pydantic.Field(default=None)
+    name: str = pydantic.Field()
     """
-    The start time of the word
-    """
-
-    end: typing.Optional[float] = pydantic.Field(default=None)
-    """
-    The end time of the word
+    The name of the cancelled function
     """
 
     if IS_PYDANTIC_V2:

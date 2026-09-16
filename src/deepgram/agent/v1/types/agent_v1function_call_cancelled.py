@@ -5,27 +5,18 @@ import typing
 import pydantic
 from ....core.pydantic_utilities import IS_PYDANTIC_V2
 from ....core.unchecked_base_model import UncheckedBaseModel
+from .agent_v1function_call_cancelled_functions_item import AgentV1FunctionCallCancelledFunctionsItem
 
 
-class ListenV2TurnInfoWordsItem(UncheckedBaseModel):
-    word: str = pydantic.Field()
+class AgentV1FunctionCallCancelled(UncheckedBaseModel):
+    type: typing.Literal["FunctionCallCancelled"] = pydantic.Field(default="FunctionCallCancelled")
     """
-    The individual punctuated, properly-cased word from the transcript
-    """
-
-    confidence: float = pydantic.Field()
-    """
-    Confidence that this word was transcribed correctly
+    Message type identifier for cancelled function calls
     """
 
-    start: typing.Optional[float] = pydantic.Field(default=None)
+    functions: typing.List[AgentV1FunctionCallCancelledFunctionsItem] = pydantic.Field()
     """
-    The start time of the word
-    """
-
-    end: typing.Optional[float] = pydantic.Field(default=None)
-    """
-    The end time of the word
+    The function calls that are no longer valid
     """
 
     if IS_PYDANTIC_V2:

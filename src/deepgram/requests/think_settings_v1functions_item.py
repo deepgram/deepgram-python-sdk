@@ -22,6 +22,11 @@ class ThinkSettingsV1FunctionsItemParams(typing_extensions.TypedDict):
     Function parameters
     """
 
+    defer_until_eot: typing_extensions.NotRequired[bool]
+    """
+    Hold this function call until the user's turn is confirmed instead of dispatching it speculatively. Set it to true for actions that cannot be undone. If the turn resumes, a deferred call is discarded before it runs. Defaults to false
+    """
+
     endpoint: typing_extensions.NotRequired[ThinkSettingsV1FunctionsItemEndpointParams]
     """
     The Function endpoint to call. if not passed, function is called client-side
