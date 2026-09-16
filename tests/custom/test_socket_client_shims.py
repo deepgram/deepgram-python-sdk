@@ -42,6 +42,7 @@ from deepgram.types.deepgram import Deepgram
 from deepgram.types.speak_settings_v1 import SpeakSettingsV1
 from deepgram.types.speak_settings_v1provider import SpeakSettingsV1Provider_Deepgram
 from deepgram.types.think_settings_v1 import ThinkSettingsV1
+from deepgram.types.think_settings_v1functions_item import ThinkSettingsV1FunctionsItem
 from deepgram.types.think_settings_v1provider import ThinkSettingsV1Provider_OpenAi
 
 
@@ -81,6 +82,7 @@ def _agent_settings_with_expressivity() -> AgentV1Settings:
             think=ThinkSettingsV1(
                 provider=ThinkSettingsV1Provider_OpenAi(type="open_ai", model="gpt-4o-mini"),
                 prompt="Be concise.",
+                functions=[ThinkSettingsV1FunctionsItem(name="transfer_call", defer_until_eot=True)],
             ),
             speak=SpeakSettingsV1(
                 provider=SpeakSettingsV1Provider_Deepgram(
@@ -242,11 +244,13 @@ class TestAgentSettingsSerialization:
         ws = _FakeWebSocket()
         V1SocketClient(websocket=ws).send_settings(_agent_settings_with_expressivity())
         assert _sent_json(ws)["agent"]["speak"]["provider"]["expressivity"] == 2
+        assert _sent_json(ws)["agent"]["think"]["functions"][0]["defer_until_eot"] is True
 
     async def test_async_send_settings_serializes_expressivity(self):
         ws = _FakeAsyncWebSocket()
         await AsyncV1SocketClient(websocket=ws).send_settings(_agent_settings_with_expressivity())
         assert _sent_json(ws)["agent"]["speak"]["provider"]["expressivity"] == 2
+        assert _sent_json(ws)["agent"]["think"]["functions"][0]["defer_until_eot"] is True
 
 
 class TestSendConfigureRawShim:
