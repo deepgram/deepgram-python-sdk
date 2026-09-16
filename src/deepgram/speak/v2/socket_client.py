@@ -91,6 +91,8 @@ class AsyncV2SocketClient(EventEmitterMixin):
                 await self._emit_async(EventType.MESSAGE, parsed)
         except (websockets.WebSocketException, JSONDecodeError) as exc:
             await self._emit_async(EventType.ERROR, exc)
+        except Exception as exc:
+            await self._emit_async(EventType.ERROR, exc)
         finally:
             await self._emit_async(EventType.CLOSE, None)
 
@@ -101,19 +103,19 @@ class AsyncV2SocketClient(EventEmitterMixin):
         """
         await self._send_model(message)
 
-    async def send_flush(self, message: SpeakV2Flush) -> None:
+    async def send_flush(self, message: typing.Optional[SpeakV2Flush] = None) -> None:
         """
         Send a message to the websocket connection.
         The message will be sent as a SpeakV2Flush.
         """
-        await self._send_model(message)
+        await self._send_model(message or SpeakV2Flush(type="Flush"))
 
-    async def send_interrupt(self, message: SpeakV2Interrupt) -> None:
+    async def send_interrupt(self, message: typing.Optional[SpeakV2Interrupt] = None) -> None:
         """
         Send a message to the websocket connection.
         The message will be sent as a SpeakV2Interrupt.
         """
-        await self._send_model(message)
+        await self._send_model(message or SpeakV2Interrupt(type="Interrupt"))
 
     async def send_configure(self, message: SpeakV2Configure) -> None:
         """
@@ -122,12 +124,12 @@ class AsyncV2SocketClient(EventEmitterMixin):
         """
         await self._send_model(message)
 
-    async def send_close(self, message: SpeakV2Close) -> None:
+    async def send_close(self, message: typing.Optional[SpeakV2Close] = None) -> None:
         """
         Send a message to the websocket connection.
         The message will be sent as a SpeakV2Close.
         """
-        await self._send_model(message)
+        await self._send_model(message or SpeakV2Close(type="Close"))
 
     async def recv(self) -> V2SocketClientResponse:
         """
@@ -203,6 +205,8 @@ class V2SocketClient(EventEmitterMixin):
                 self._emit(EventType.MESSAGE, parsed)
         except (websockets.WebSocketException, JSONDecodeError) as exc:
             self._emit(EventType.ERROR, exc)
+        except Exception as exc:
+            self._emit(EventType.ERROR, exc)
         finally:
             self._emit(EventType.CLOSE, None)
 
@@ -213,19 +217,19 @@ class V2SocketClient(EventEmitterMixin):
         """
         self._send_model(message)
 
-    def send_flush(self, message: SpeakV2Flush) -> None:
+    def send_flush(self, message: typing.Optional[SpeakV2Flush] = None) -> None:
         """
         Send a message to the websocket connection.
         The message will be sent as a SpeakV2Flush.
         """
-        self._send_model(message)
+        self._send_model(message or SpeakV2Flush(type="Flush"))
 
-    def send_interrupt(self, message: SpeakV2Interrupt) -> None:
+    def send_interrupt(self, message: typing.Optional[SpeakV2Interrupt] = None) -> None:
         """
         Send a message to the websocket connection.
         The message will be sent as a SpeakV2Interrupt.
         """
-        self._send_model(message)
+        self._send_model(message or SpeakV2Interrupt(type="Interrupt"))
 
     def send_configure(self, message: SpeakV2Configure) -> None:
         """
@@ -234,12 +238,12 @@ class V2SocketClient(EventEmitterMixin):
         """
         self._send_model(message)
 
-    def send_close(self, message: SpeakV2Close) -> None:
+    def send_close(self, message: typing.Optional[SpeakV2Close] = None) -> None:
         """
         Send a message to the websocket connection.
         The message will be sent as a SpeakV2Close.
         """
-        self._send_model(message)
+        self._send_model(message or SpeakV2Close(type="Close"))
 
     def recv(self) -> V2SocketClientResponse:
         """

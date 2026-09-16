@@ -218,6 +218,9 @@ if typing.TYPE_CHECKING:
     from .usage_fields_v1response_models_item import UsageFieldsV1ResponseModelsItemParams
     from .usage_v1response import UsageV1ResponseParams
     from .usage_v1response_resolution import UsageV1ResponseResolutionParams
+    from .cartesia_speak_provider_voice import CartesiaSpeakProviderVoiceParams
+    from .create_key_v1request_one import CreateKeyV1RequestOneParams
+    from .deepgram_listen_provider_v2language_hint import DeepgramListenProviderV2LanguageHintParams
 _dynamic_imports: typing.Dict[str, str] = {
     "AgentConfigurationV1Params": ".agent_configuration_v1",
     "AgentThinkModelsV1ResponseModelsItemIdParams": ".agent_think_models_v1response_models_item_id",
@@ -389,6 +392,9 @@ _dynamic_imports: typing.Dict[str, str] = {
     "UsageFieldsV1ResponseParams": ".usage_fields_v1response",
     "UsageV1ResponseParams": ".usage_v1response",
     "UsageV1ResponseResolutionParams": ".usage_v1response_resolution",
+    "CartesiaSpeakProviderVoiceParams": ".cartesia_speak_provider_voice",
+    "CreateKeyV1RequestOneParams": ".create_key_v1request_one",
+    "DeepgramListenProviderV2LanguageHintParams": ".deepgram_listen_provider_v2language_hint",
 }
 
 
@@ -584,4 +590,7 @@ __all__ = [
     "UsageFieldsV1ResponseParams",
     "UsageV1ResponseParams",
     "UsageV1ResponseResolutionParams",
+    "CartesiaSpeakProviderVoiceParams",
+    "CreateKeyV1RequestOneParams",
+    "DeepgramListenProviderV2LanguageHintParams",
 ]

@@ -5,7 +5,34 @@ import typing
 import pydantic
 from ....core.pydantic_utilities import IS_PYDANTIC_V2
 from ....core.unchecked_base_model import UncheckedBaseModel
+from ....types.deepgram_listen_provider_v1 import DeepgramListenProviderV1
+from ....types.deepgram_listen_provider_v2 import DeepgramListenProviderV2
 from .agent_v1update_listen_listen_provider import AgentV1UpdateListenListenProvider
+
+_V1_ONLY_KEYS = frozenset({"language", "smart_format"})
+
+
+def _coerce_legacy_update_listen_provider(values: typing.Any) -> typing.Any:
+    """Add the discriminator required by the versioned provider union."""
+    if not isinstance(values, dict):
+        return values
+    provider = values.get("provider")
+    if isinstance(provider, DeepgramListenProviderV2):
+        values = dict(values)
+        values["provider"] = {**provider.dict(), "version": "v2"}
+    elif isinstance(provider, DeepgramListenProviderV1):
+        values = dict(values)
+        values["provider"] = {**provider.dict(), "version": "v1"}
+    elif isinstance(provider, dict) and "version" not in provider:
+        values = dict(values)
+        version = "v1" if _V1_ONLY_KEYS & provider.keys() else "v2"
+        provider_cls = DeepgramListenProviderV1 if version == "v1" else DeepgramListenProviderV2
+        try:
+            coerced = provider_cls(**provider).dict()
+        except Exception:
+            coerced = dict(provider)
+        values["provider"] = {**coerced, "version": version}
+    return values
 
 
 class AgentV1UpdateListenListen(UncheckedBaseModel):
@@ -14,6 +41,18 @@ class AgentV1UpdateListenListen(UncheckedBaseModel):
     """
 
     provider: AgentV1UpdateListenListenProvider
+
+    if IS_PYDANTIC_V2:
+
+        @pydantic.model_validator(mode="before")
+        @classmethod
+        def _migrate_legacy_provider(cls, values: typing.Any) -> typing.Any:
+            return _coerce_legacy_update_listen_provider(values)
+    else:
+
+        @pydantic.root_validator(pre=True)  # type: ignore[deprecated]
+        def _migrate_legacy_provider(cls, values: typing.Any) -> typing.Any:  # type: ignore[no-redef]
+            return _coerce_legacy_update_listen_provider(values)
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

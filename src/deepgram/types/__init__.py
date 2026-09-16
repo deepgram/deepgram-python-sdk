@@ -292,6 +292,15 @@ if typing.TYPE_CHECKING:
     from .usage_fields_v1response_models_item import UsageFieldsV1ResponseModelsItem
     from .usage_v1response import UsageV1Response
     from .usage_v1response_resolution import UsageV1ResponseResolution
+    from .anthropic_think_provider_model import AnthropicThinkProviderModel
+    from .cartesia_speak_provider_model_id import CartesiaSpeakProviderModelId
+    from .cartesia_speak_provider_voice import CartesiaSpeakProviderVoice
+    from .create_key_v1request_one import CreateKeyV1RequestOne
+    from .deepgram_listen_provider_v2language_hint import DeepgramListenProviderV2LanguageHint
+    from .deepgram_speak_provider_model import DeepgramSpeakProviderModel
+    from .google_think_provider_model import GoogleThinkProviderModel
+    from .google_think_provider_version import GoogleThinkProviderVersion
+    from .groq_think_provider_reasoning_mode import GroqThinkProviderReasoningMode
 _dynamic_imports: typing.Dict[str, str] = {
     "AgentConfigurationV1": ".agent_configuration_v1",
     "AgentThinkModelsV1Response": ".agent_think_models_v1response",
@@ -541,6 +550,15 @@ _dynamic_imports: typing.Dict[str, str] = {
     "UsageFieldsV1ResponseModelsItem": ".usage_fields_v1response_models_item",
     "UsageV1Response": ".usage_v1response",
     "UsageV1ResponseResolution": ".usage_v1response_resolution",
+    "AnthropicThinkProviderModel": ".anthropic_think_provider_model",
+    "CartesiaSpeakProviderModelId": ".cartesia_speak_provider_model_id",
+    "CartesiaSpeakProviderVoice": ".cartesia_speak_provider_voice",
+    "CreateKeyV1RequestOne": ".create_key_v1request_one",
+    "DeepgramListenProviderV2LanguageHint": ".deepgram_listen_provider_v2language_hint",
+    "DeepgramSpeakProviderModel": ".deepgram_speak_provider_model",
+    "GoogleThinkProviderModel": ".google_think_provider_model",
+    "GoogleThinkProviderVersion": ".google_think_provider_version",
+    "GroqThinkProviderReasoningMode": ".groq_think_provider_reasoning_mode",
 }
 
 
@@ -814,4 +832,13 @@ __all__ = [
     "UsageFieldsV1ResponseModelsItem",
     "UsageV1Response",
     "UsageV1ResponseResolution",
+    "AnthropicThinkProviderModel",
+    "CartesiaSpeakProviderModelId",
+    "CartesiaSpeakProviderVoice",
+    "CreateKeyV1RequestOne",
+    "DeepgramListenProviderV2LanguageHint",
+    "DeepgramSpeakProviderModel",
+    "GoogleThinkProviderModel",
+    "GoogleThinkProviderVersion",
+    "GroqThinkProviderReasoningMode",
 ]

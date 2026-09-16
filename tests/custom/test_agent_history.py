@@ -1,5 +1,9 @@
 from deepgram.agent.v1.socket_client import V1SocketClientResponse
-from deepgram.agent.v1.types import ConversationHistoryMessage, FunctionCallHistoryMessage
+from deepgram.agent.v1.types import (
+    AgentV1FunctionCallCancelled,
+    ConversationHistoryMessage,
+    FunctionCallHistoryMessage,
+)
 from deepgram.core.unchecked_base_model import construct_type
 
 
@@ -42,3 +46,19 @@ def test_agent_history_function_calls_parse_from_socket_union() -> None:
     assert function_call.client_side is True
     assert function_call.arguments == '{"city":"London"}'
     assert function_call.response == "sunny"
+
+
+def test_agent_function_call_cancelled_parses_from_socket_union() -> None:
+    parsed = construct_type(
+        type_=V1SocketClientResponse,
+        object_={
+            "type": "FunctionCallCancelled",
+            "functions": [{"id": "fc_123", "name": "lookup_weather"}],
+        },
+    )
+
+    assert isinstance(parsed, AgentV1FunctionCallCancelled)
+    assert parsed.type == "FunctionCallCancelled"
+    assert len(parsed.functions) == 1
+    assert parsed.functions[0].id == "fc_123"
+    assert parsed.functions[0].name == "lookup_weather"

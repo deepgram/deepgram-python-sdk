@@ -44,6 +44,18 @@ try:
 except ImportError:
     from websockets import WebSocketClientProtocol  # type: ignore
 
+
+def _sanitize_numeric_types(obj: typing.Any) -> typing.Any:
+    """Convert whole-number floats to integers for wire-compatible JSON."""
+    if isinstance(obj, dict):
+        return {key: _sanitize_numeric_types(value) for key, value in obj.items()}
+    if isinstance(obj, list):
+        return [_sanitize_numeric_types(item) for item in obj]
+    if isinstance(obj, float) and obj.is_integer():
+        return int(obj)
+    return obj
+
+
 _logger = logging.getLogger(__name__)
 V1SocketClientResponse = typing.Union[
     AgentV1ListenUpdated,
@@ -114,6 +126,8 @@ class AsyncV1SocketClient(EventEmitterMixin):
                 await self._emit_async(EventType.MESSAGE, parsed)
         except (websockets.WebSocketException, JSONDecodeError) as exc:
             await self._emit_async(EventType.ERROR, exc)
+        except Exception as exc:
+            await self._emit_async(EventType.ERROR, exc)
         finally:
             await self._emit_async(EventType.CLOSE, None)
 
@@ -166,12 +180,12 @@ class AsyncV1SocketClient(EventEmitterMixin):
         """
         await self._send_model(message)
 
-    async def send_keep_alive(self, message: AgentV1KeepAlive) -> None:
+    async def send_keep_alive(self, message: typing.Optional[AgentV1KeepAlive] = None) -> None:
         """
         Send a message to the websocket connection.
         The message will be sent as a AgentV1KeepAlive.
         """
-        await self._send_model(message)
+        await self._send_model(message or AgentV1KeepAlive(type="KeepAlive"))
 
     async def send_update_prompt(self, message: AgentV1UpdatePrompt) -> None:
         """
@@ -180,12 +194,12 @@ class AsyncV1SocketClient(EventEmitterMixin):
         """
         await self._send_model(message)
 
-    async def send_force_end_turn(self, message: AgentV1ForceEndTurn) -> None:
+    async def send_force_end_turn(self, message: typing.Optional[AgentV1ForceEndTurn] = None) -> None:
         """
         Send a message to the websocket connection.
         The message will be sent as a AgentV1ForceEndTurn.
         """
-        await self._send_model(message)
+        await self._send_model(message or AgentV1ForceEndTurn(type="ForceEndTurn"))
 
     async def send_media(self, message: bytes) -> None:
         """
@@ -220,7 +234,7 @@ class AsyncV1SocketClient(EventEmitterMixin):
         """
         Send a Pydantic model to the websocket connection.
         """
-        await self._send(data.dict())
+        await self._send(_sanitize_numeric_types(data.dict()))
 
 
 class V1SocketClient(EventEmitterMixin):
@@ -267,6 +281,8 @@ class V1SocketClient(EventEmitterMixin):
                         continue
                 self._emit(EventType.MESSAGE, parsed)
         except (websockets.WebSocketException, JSONDecodeError) as exc:
+            self._emit(EventType.ERROR, exc)
+        except Exception as exc:
             self._emit(EventType.ERROR, exc)
         finally:
             self._emit(EventType.CLOSE, None)
@@ -320,12 +336,12 @@ class V1SocketClient(EventEmitterMixin):
         """
         self._send_model(message)
 
-    def send_keep_alive(self, message: AgentV1KeepAlive) -> None:
+    def send_keep_alive(self, message: typing.Optional[AgentV1KeepAlive] = None) -> None:
         """
         Send a message to the websocket connection.
         The message will be sent as a AgentV1KeepAlive.
         """
-        self._send_model(message)
+        self._send_model(message or AgentV1KeepAlive(type="KeepAlive"))
 
     def send_update_prompt(self, message: AgentV1UpdatePrompt) -> None:
         """
@@ -334,12 +350,12 @@ class V1SocketClient(EventEmitterMixin):
         """
         self._send_model(message)
 
-    def send_force_end_turn(self, message: AgentV1ForceEndTurn) -> None:
+    def send_force_end_turn(self, message: typing.Optional[AgentV1ForceEndTurn] = None) -> None:
         """
         Send a message to the websocket connection.
         The message will be sent as a AgentV1ForceEndTurn.
         """
-        self._send_model(message)
+        self._send_model(message or AgentV1ForceEndTurn(type="ForceEndTurn"))
 
     def send_media(self, message: bytes) -> None:
         """
@@ -374,4 +390,4 @@ class V1SocketClient(EventEmitterMixin):
         """
         Send a Pydantic model to the websocket connection.
         """
-        self._send(data.dict())
+        self._send(_sanitize_numeric_types(data.dict()))
