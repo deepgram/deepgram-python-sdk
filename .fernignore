@@ -216,7 +216,6 @@ tests/custom/test_client_construction_and_helpers.py
 tests/custom/test_compat_aliases.py
 tests/custom/test_core_internals_branches.py
 tests/custom/test_core_utilities_coverage.py
-tests/custom/test_defer_until_eot.py
 tests/custom/test_eot_thresholds_feature.py
 tests/custom/test_http_endpoints_coverage.py
 tests/custom/test_http_retry_coverage.py

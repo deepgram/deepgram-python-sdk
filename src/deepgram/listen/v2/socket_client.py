@@ -3,9 +3,7 @@
 import json
 import logging
 import typing
-from json.decoder import JSONDecodeError
 
-import websockets
 import websockets.sync.connection as websockets_sync_connection
 from ...core.events import EventEmitterMixin, EventType
 from ...core.unchecked_base_model import construct_type
@@ -72,8 +70,6 @@ class AsyncV2SocketClient(EventEmitterMixin):
                         )
                         continue
                 await self._emit_async(EventType.MESSAGE, parsed)
-        except (websockets.WebSocketException, JSONDecodeError) as exc:
-            await self._emit_async(EventType.ERROR, exc)
         except Exception as exc:
             await self._emit_async(EventType.ERROR, exc)
         finally:
@@ -184,8 +180,6 @@ class V2SocketClient(EventEmitterMixin):
                         )
                         continue
                 self._emit(EventType.MESSAGE, parsed)
-        except (websockets.WebSocketException, JSONDecodeError) as exc:
-            self._emit(EventType.ERROR, exc)
         except Exception as exc:
             self._emit(EventType.ERROR, exc)
         finally:
