@@ -1,5 +1,12 @@
 # Changelog
 
+## [7.10.0](https://github.com/deepgram/deepgram-python-sdk/compare/v7.9.0...v7.10.0) (2026-09-17)
+
+
+### Features
+
+* **regen:** agent function cancellation and defer-until-EOT ([#790](https://github.com/deepgram/deepgram-python-sdk/issues/790)) ([7f5b642](https://github.com/deepgram/deepgram-python-sdk/commit/7f5b642c2caf0d6fee89621089db6d61e8b77e48))
+
 ## [7.9.0](https://github.com/deepgram/deepgram-python-sdk/compare/v7.8.1...v7.9.0) (2026-09-14)
 
 
