@@ -15,6 +15,7 @@ from deepgram.agent.v1.types import (
     AgentV1AgentThinking,
     AgentV1ConversationText,
     AgentV1Error,
+    AgentV1FunctionCallCancelled,
     AgentV1FunctionCallRequest,
     AgentV1InjectionRefused,
     AgentV1PromptUpdated,
@@ -32,6 +33,7 @@ from deepgram.agent.v1.types import (
     AgentV1Welcome,
 )
 from deepgram.types.think_settings_v1 import ThinkSettingsV1
+from deepgram.types.think_settings_v1functions_item import ThinkSettingsV1FunctionsItem
 from deepgram.types.speak_settings_v1 import SpeakSettingsV1
 from deepgram.types.speak_settings_v1provider import SpeakSettingsV1Provider_Deepgram
 from deepgram.types.think_settings_v1provider import ThinkSettingsV1Provider_OpenAi
@@ -48,6 +50,7 @@ AgentV1SocketClientResponse = Union[
     AgentV1UserStartedSpeaking,
     AgentV1AgentThinking,
     AgentV1FunctionCallRequest,
+    AgentV1FunctionCallCancelled,
     AgentV1AgentStartedSpeaking,
     AgentV1AgentAudioDone,
     AgentV1Error,
@@ -88,6 +91,14 @@ try:
                         temperature=0.7,
                     ),
                     prompt='Reply only and explicitly with "OK".',
+                    functions=[
+                        ThinkSettingsV1FunctionsItem(
+                            name="confirm_booking",
+                            description="Confirm a booking after the caller finishes speaking.",
+                            parameters={"type": "object", "properties": {}},
+                            defer_until_eot=True,
+                        )
+                    ],
                 ),
                 speak=[
                     SpeakSettingsV1(
@@ -132,6 +143,10 @@ try:
                     else:
                         print(f"Event body: {message}")
                 else:
+                    if isinstance(message, AgentV1FunctionCallCancelled):
+                        for function in message.functions:
+                            print(f"Function call cancelled: {function.name} ({function.id}); do not respond")
+                        return
                     print(f"Event body: {message}")
 
         print("Registering event handlers")

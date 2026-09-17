@@ -13,6 +13,7 @@ from .types.agent_v1agent_thinking import AgentV1AgentThinking
 from .types.agent_v1conversation_text import AgentV1ConversationText
 from .types.agent_v1error import AgentV1Error
 from .types.agent_v1force_end_turn import AgentV1ForceEndTurn
+from .types.agent_v1function_call_cancelled import AgentV1FunctionCallCancelled
 from .types.agent_v1function_call_request import AgentV1FunctionCallRequest
 from .types.agent_v1history import AgentV1History
 from .types.agent_v1inject_agent_message import AgentV1InjectAgentMessage
@@ -43,10 +44,7 @@ except ImportError:
 
 
 def _sanitize_numeric_types(obj: typing.Any) -> typing.Any:
-    """Convert whole-number floats to integers for wire-compatible JSON.
-
-    See: internal-api-specs/issues/205
-    """
+    """Convert whole-number floats to integers for wire-compatible JSON. See: internal-api-specs/issues/205."""
     if isinstance(obj, dict):
         return {key: _sanitize_numeric_types(value) for key, value in obj.items()}
     if isinstance(obj, list):
@@ -71,6 +69,7 @@ V1SocketClientResponse = typing.Union[
     AgentV1AgentThinking,
     AgentV1LatencyReport,
     AgentV1FunctionCallRequest,
+    AgentV1FunctionCallCancelled,
     AgentV1AgentStartedSpeaking,
     AgentV1AgentAudioDone,
     AgentV1Error,

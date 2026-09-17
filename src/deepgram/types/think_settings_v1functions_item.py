@@ -24,6 +24,11 @@ class ThinkSettingsV1FunctionsItem(UncheckedBaseModel):
     Function parameters
     """
 
+    defer_until_eot: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Hold this function call until the user's turn is confirmed instead of dispatching it speculatively. Set it to true for actions that cannot be undone. If the turn resumes, a deferred call is discarded before it runs. Defaults to false
+    """
+
     endpoint: typing.Optional[ThinkSettingsV1FunctionsItemEndpoint] = pydantic.Field(default=None)
     """
     The Function endpoint to call. if not passed, function is called client-side

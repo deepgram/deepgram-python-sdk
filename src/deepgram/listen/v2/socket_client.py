@@ -93,8 +93,8 @@ class AsyncV2SocketClient(EventEmitterMixin):
         """
         Send a message to the websocket connection.
         The message will be sent as a ListenV2ForceEndTurn.
-        Requires server-side enablement. On deployments without the feature, the
-        server returns UNPARSABLE_CLIENT_MESSAGE and closes the connection.
+        This requires server-side enablement. On deployments without the feature, the server returns
+        UNPARSABLE_CLIENT_MESSAGE and closes the connection.
         """
         await self._send_model(message or ListenV2ForceEndTurn(type="ForceEndTurn"))
 
@@ -203,8 +203,8 @@ class V2SocketClient(EventEmitterMixin):
         """
         Send a message to the websocket connection.
         The message will be sent as a ListenV2ForceEndTurn.
-        Requires server-side enablement. On deployments without the feature, the
-        server returns UNPARSABLE_CLIENT_MESSAGE and closes the connection.
+        This requires server-side enablement. On deployments without the feature, the server returns
+        UNPARSABLE_CLIENT_MESSAGE and closes the connection.
         """
         self._send_model(message or ListenV2ForceEndTurn(type="ForceEndTurn"))
 

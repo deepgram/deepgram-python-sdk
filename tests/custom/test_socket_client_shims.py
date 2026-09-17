@@ -29,15 +29,20 @@ from deepgram.agent.v1.types.agent_v1settings_agent_listen import AgentV1Setting
 from deepgram.agent.v1.types.agent_v1settings_agent_listen_provider import AgentV1SettingsAgentListenProvider_V1
 from deepgram.agent.v1.types.agent_v1settings_audio import AgentV1SettingsAudio
 from deepgram.agent.v1.types.agent_v1settings_audio_input import AgentV1SettingsAudioInput
+from deepgram.listen.v1.socket_client import AsyncV1SocketClient as AsyncListenV1SocketClient
+from deepgram.listen.v1.socket_client import V1SocketClient as ListenV1SocketClient
 from deepgram.listen.v2.socket_client import AsyncV2SocketClient, V2SocketClient
 from deepgram.listen.v2.types.listen_v2close_stream import ListenV2CloseStream
 from deepgram.listen.v2.types.listen_v2configure import ListenV2Configure
 from deepgram.listen.v2.types.listen_v2force_end_turn import ListenV2ForceEndTurn
+from deepgram.speak.v1.socket_client import AsyncV1SocketClient as AsyncSpeakV1SocketClient
+from deepgram.speak.v1.socket_client import V1SocketClient as SpeakV1SocketClient
 from deepgram.speak.v2.socket_client import V2SocketClient as SpeakV2SocketClient
 from deepgram.types.deepgram import Deepgram
 from deepgram.types.speak_settings_v1 import SpeakSettingsV1
 from deepgram.types.speak_settings_v1provider import SpeakSettingsV1Provider_Deepgram
 from deepgram.types.think_settings_v1 import ThinkSettingsV1
+from deepgram.types.think_settings_v1functions_item import ThinkSettingsV1FunctionsItem
 from deepgram.types.think_settings_v1provider import ThinkSettingsV1Provider_OpenAi
 
 
@@ -77,6 +82,7 @@ def _agent_settings_with_expressivity() -> AgentV1Settings:
             think=ThinkSettingsV1(
                 provider=ThinkSettingsV1Provider_OpenAi(type="open_ai", model="gpt-4o-mini"),
                 prompt="Be concise.",
+                functions=[ThinkSettingsV1FunctionsItem(name="transfer_call", defer_until_eot=True)],
             ),
             speak=SpeakSettingsV1(
                 provider=SpeakSettingsV1Provider_Deepgram(
@@ -116,6 +122,15 @@ class TestSanitizeNumericTypes:
         ws = _FakeWebSocket()
         V1SocketClient(websocket=ws)._send_model(_Stub())
         assert _sent_json(ws) == {"sample_rate": 16000}
+
+    async def test_wired_into_async_agent_send_model(self):
+        class _Stub:
+            def dict(self):
+                return {"nested": {"sample_rate": 16000.0}}
+
+        ws = _FakeAsyncWebSocket()
+        await AsyncV1SocketClient(websocket=ws)._send_model(_Stub())
+        assert _sent_json(ws) == {"nested": {"sample_rate": 16000}}
 
 
 class TestOptionalMessageControlSends:
@@ -178,6 +193,40 @@ class TestOptionalMessageControlSends:
         assert _sent_json(ws) == {"type": "ForceEndTurn"}
 
 
+@pytest.mark.parametrize(
+    ("socket_client", "method", "message_type"),
+    [
+        (ListenV1SocketClient, "send_finalize", "Finalize"),
+        (ListenV1SocketClient, "send_close_stream", "CloseStream"),
+        (ListenV1SocketClient, "send_keep_alive", "KeepAlive"),
+        (SpeakV1SocketClient, "send_flush", "Flush"),
+        (SpeakV1SocketClient, "send_clear", "Clear"),
+        (SpeakV1SocketClient, "send_close", "Close"),
+    ],
+)
+def test_v1_control_no_arg(socket_client, method, message_type):
+    ws = _FakeWebSocket()
+    getattr(socket_client(websocket=ws), method)()
+    assert _sent_json(ws)["type"] == message_type
+
+
+@pytest.mark.parametrize(
+    ("socket_client", "method", "message_type"),
+    [
+        (AsyncListenV1SocketClient, "send_finalize", "Finalize"),
+        (AsyncListenV1SocketClient, "send_close_stream", "CloseStream"),
+        (AsyncListenV1SocketClient, "send_keep_alive", "KeepAlive"),
+        (AsyncSpeakV1SocketClient, "send_flush", "Flush"),
+        (AsyncSpeakV1SocketClient, "send_clear", "Clear"),
+        (AsyncSpeakV1SocketClient, "send_close", "Close"),
+    ],
+)
+async def test_v1_control_async_no_arg(socket_client, method, message_type):
+    ws = _FakeAsyncWebSocket()
+    await getattr(socket_client(websocket=ws), method)()
+    assert _sent_json(ws)["type"] == message_type
+
+
 class TestAgentSettingsSerialization:
     @pytest.mark.parametrize("expressivity", [1.5, True, "2"])
     def test_expressivity_requires_a_plain_integer(self, expressivity):
@@ -195,11 +244,13 @@ class TestAgentSettingsSerialization:
         ws = _FakeWebSocket()
         V1SocketClient(websocket=ws).send_settings(_agent_settings_with_expressivity())
         assert _sent_json(ws)["agent"]["speak"]["provider"]["expressivity"] == 2
+        assert _sent_json(ws)["agent"]["think"]["functions"][0]["defer_until_eot"] is True
 
     async def test_async_send_settings_serializes_expressivity(self):
         ws = _FakeAsyncWebSocket()
         await AsyncV1SocketClient(websocket=ws).send_settings(_agent_settings_with_expressivity())
         assert _sent_json(ws)["agent"]["speak"]["provider"]["expressivity"] == 2
+        assert _sent_json(ws)["agent"]["think"]["functions"][0]["defer_until_eot"] is True
 
 
 class TestSendConfigureRawShim:
