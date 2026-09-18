@@ -91,7 +91,7 @@ with client.listen.v2.connect(
 
 **No `language` parameter** on v2 — language is implied by model (`flux-general-en`) or hinted via `language_hint` on multi.
 
-For application-controlled turns, use `eot_threshold="1.0"` with a sufficiently large `eot_timeout_ms`, then call `conn.send_force_end_turn()` for the active turn. ForceEndTurn requires deployment enablement; see `examples/16-transcription-force-end-turn.py`.
+For application-controlled turns, use `eot_threshold="1.0"` with a sufficiently large `eot_timeout_ms`, then call `conn.send_force_end_turn()` for the active turn. ForceEndTurn is available on Deepgram-hosted deployments, including EU and AU. Self-hosted availability depends on the deployed release; see `examples/16-transcription-force-end-turn.py`.
 
 ## Events (server → client)
 

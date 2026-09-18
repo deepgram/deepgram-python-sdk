@@ -21,9 +21,10 @@ This is useful when something outside the audio tells you the speaker is done, s
 push-to-talk button being released. The connection stays open after a forced end: the
 turn index advances and transcription continues.
 
-Note: ForceEndTurn requires server-side enablement and is not available on every
-deployment. Where it is not enabled the server replies UNPARSABLE_CLIENT_MESSAGE and
-closes the connection; this example reports that and exits.
+ForceEndTurn is available on Deepgram-hosted deployments, including EU and AU.
+Self-hosted availability depends on the deployed release. Unsupported deployments
+reply UNPARSABLE_CLIENT_MESSAGE and close the connection; this example reports that
+and exits.
 """
 
 import os
