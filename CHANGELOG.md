@@ -5,7 +5,8 @@
 
 ### Features
 
-* **regen:** agent function cancellation and defer-until-EOT ([#790](https://github.com/deepgram/deepgram-python-sdk/issues/790)) ([7f5b642](https://github.com/deepgram/deepgram-python-sdk/commit/7f5b642c2caf0d6fee89621089db6d61e8b77e48))
+* **Voice Agent:** Add typed `FunctionCallCancelled` WebSocket events. Events identify function calls that are no longer valid; do not send a `FunctionCallResponse` for the listed call IDs. ([#790](https://github.com/deepgram/deepgram-python-sdk/issues/790)) ([7f5b642](https://github.com/deepgram/deepgram-python-sdk/commit/7f5b642c2caf0d6fee89621089db6d61e8b77e48))
+* **Voice Agent:** Add the optional `defer_until_eot` function setting. When enabled, it holds a function call until the user's turn is confirmed and discards the deferred call if the turn resumes. Defaults to `false`. ([#790](https://github.com/deepgram/deepgram-python-sdk/issues/790)) ([7f5b642](https://github.com/deepgram/deepgram-python-sdk/commit/7f5b642c2caf0d6fee89621089db6d61e8b77e48))
 
 ## [7.9.0](https://github.com/deepgram/deepgram-python-sdk/compare/v7.8.1...v7.9.0) (2026-09-14)
 
