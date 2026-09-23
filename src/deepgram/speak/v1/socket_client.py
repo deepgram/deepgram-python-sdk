@@ -3,7 +3,9 @@
 import json
 import logging
 import typing
+from json.decoder import JSONDecodeError
 
+import websockets
 import websockets.sync.connection as websockets_sync_connection
 from ...core.events import EventEmitterMixin, EventType
 from ...core.unchecked_base_model import construct_type
@@ -68,7 +70,7 @@ class AsyncV1SocketClient(EventEmitterMixin):
                         )
                         continue
                 await self._emit_async(EventType.MESSAGE, parsed)
-        except Exception as exc:
+        except (websockets.WebSocketException, JSONDecodeError) as exc:
             await self._emit_async(EventType.ERROR, exc)
         finally:
             await self._emit_async(EventType.CLOSE, None)
@@ -80,26 +82,26 @@ class AsyncV1SocketClient(EventEmitterMixin):
         """
         await self._send_model(message)
 
-    async def send_flush(self, message: typing.Optional[SpeakV1Flush] = None) -> None:
+    async def send_flush(self, message: SpeakV1Flush) -> None:
         """
         Send a message to the websocket connection.
         The message will be sent as a SpeakV1Flush.
         """
-        await self._send_model(message or SpeakV1Flush(type="Flush"))
+        await self._send_model(message)
 
-    async def send_clear(self, message: typing.Optional[SpeakV1Clear] = None) -> None:
+    async def send_clear(self, message: SpeakV1Clear) -> None:
         """
         Send a message to the websocket connection.
         The message will be sent as a SpeakV1Clear.
         """
-        await self._send_model(message or SpeakV1Clear(type="Clear"))
+        await self._send_model(message)
 
-    async def send_close(self, message: typing.Optional[SpeakV1Close] = None) -> None:
+    async def send_close(self, message: SpeakV1Close) -> None:
         """
         Send a message to the websocket connection.
         The message will be sent as a SpeakV1Close.
         """
-        await self._send_model(message or SpeakV1Close(type="Close"))
+        await self._send_model(message)
 
     async def recv(self) -> V1SocketClientResponse:
         """
@@ -173,7 +175,7 @@ class V1SocketClient(EventEmitterMixin):
                         )
                         continue
                 self._emit(EventType.MESSAGE, parsed)
-        except Exception as exc:
+        except (websockets.WebSocketException, JSONDecodeError) as exc:
             self._emit(EventType.ERROR, exc)
         finally:
             self._emit(EventType.CLOSE, None)
@@ -185,26 +187,26 @@ class V1SocketClient(EventEmitterMixin):
         """
         self._send_model(message)
 
-    def send_flush(self, message: typing.Optional[SpeakV1Flush] = None) -> None:
+    def send_flush(self, message: SpeakV1Flush) -> None:
         """
         Send a message to the websocket connection.
         The message will be sent as a SpeakV1Flush.
         """
-        self._send_model(message or SpeakV1Flush(type="Flush"))
+        self._send_model(message)
 
-    def send_clear(self, message: typing.Optional[SpeakV1Clear] = None) -> None:
+    def send_clear(self, message: SpeakV1Clear) -> None:
         """
         Send a message to the websocket connection.
         The message will be sent as a SpeakV1Clear.
         """
-        self._send_model(message or SpeakV1Clear(type="Clear"))
+        self._send_model(message)
 
-    def send_close(self, message: typing.Optional[SpeakV1Close] = None) -> None:
+    def send_close(self, message: SpeakV1Close) -> None:
         """
         Send a message to the websocket connection.
         The message will be sent as a SpeakV1Close.
         """
-        self._send_model(message or SpeakV1Close(type="Close"))
+        self._send_model(message)
 
     def recv(self) -> V1SocketClientResponse:
         """

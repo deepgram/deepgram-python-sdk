@@ -28,15 +28,9 @@ class DeepgramListenProviderV2(UncheckedBaseModel):
     An array of one or more BCP-47 language codes to bias the model toward specific languages. Only supported when model is flux-general-multi. Without hints, the model auto-detects the spoken language. See the Language Prompting guide for details.
     """
 
-    language_hint: typing.Optional[typing.Union[str, typing.List[str]]] = pydantic.Field(default=None, exclude=True)
-    """
-    Deprecated. Use `language_hints`. Accepted for backward compatibility and
-    remapped before serialization so the singular field never reaches the API.
-    """
-
     eot_threshold: typing.Optional[float] = pydantic.Field(default=None)
     """
-    End-of-turn confidence required to finish a turn. Valid range: 0.5 - 1.0. Defaults to 0.7. Set to 1.0 to fully suppress confidence-based end-of-turn detection. `eot_timeout_ms` still ends idle turns; increase it for full manual turn control with the ForceEndTurn message.
+    End-of-turn confidence required to finish a turn. Valid range: 0.5 - 1.0. Defaults to 0.7. Set to 1.0 to fully suppress confidence-based end-of-turn detection. `eot_timeout_ms` still ends idle turns; increase it when using ForceEndTurn for full manual turn control.
     """
 
     eager_eot_threshold: typing.Optional[float] = pydantic.Field(default=None)
@@ -53,30 +47,6 @@ class DeepgramListenProviderV2(UncheckedBaseModel):
     """
     Prompt keyterm recognition to improve Keyword Recall Rate
     """
-
-    if IS_PYDANTIC_V2:
-
-        @pydantic.model_validator(mode="before")
-        @classmethod
-        def _migrate_language_hint(cls, values: typing.Any) -> typing.Any:
-            if not isinstance(values, dict) or "language_hint" not in values:
-                return values
-            values = dict(values)
-            hint = values.pop("language_hint")
-            if hint is not None and values.get("language_hints") is None:
-                values["language_hints"] = [hint] if isinstance(hint, str) else list(hint)
-            return values
-    else:
-
-        @pydantic.root_validator(pre=True)  # type: ignore[deprecated]
-        def _migrate_language_hint(cls, values: typing.Any) -> typing.Any:  # type: ignore[no-redef]
-            if not isinstance(values, dict) or "language_hint" not in values:
-                return values
-            values = dict(values)
-            hint = values.pop("language_hint")
-            if hint is not None and values.get("language_hints") is None:
-                values["language_hints"] = [hint] if isinstance(hint, str) else list(hint)
-            return values
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

@@ -4,7 +4,6 @@ import typing
 
 import typing_extensions
 from .agent_v1settings_agent import AgentV1SettingsAgentParams
-from .agent_v1settings_agent_context import AgentV1SettingsAgentContextParams
 from .agent_v1settings_audio import AgentV1SettingsAudioParams
 from .agent_v1settings_flags import AgentV1SettingsFlagsParams
 
@@ -28,4 +27,4 @@ class AgentV1SettingsParams(typing_extensions.TypedDict):
     """
 
     audio: AgentV1SettingsAudioParams
-    agent: typing.Union[AgentV1SettingsAgentParams, AgentV1SettingsAgentContextParams, str]
+    agent: AgentV1SettingsAgentParams
