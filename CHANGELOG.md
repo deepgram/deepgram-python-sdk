@@ -1,5 +1,12 @@
 # Changelog
 
+## [7.11.0](https://github.com/deepgram/deepgram-python-sdk/compare/v7.10.0...v7.11.0) (2026-09-23)
+
+
+### Features
+
+* **regen:** add Flux numerals configuration ([#794](https://github.com/deepgram/deepgram-python-sdk/issues/794)) ([c7c1b3f](https://github.com/deepgram/deepgram-python-sdk/commit/c7c1b3fac4be6e08bb43475d82545cbea5974602))
+
 ## [7.10.0](https://github.com/deepgram/deepgram-python-sdk/compare/v7.9.0...v7.10.0) (2026-09-17)
 
 
