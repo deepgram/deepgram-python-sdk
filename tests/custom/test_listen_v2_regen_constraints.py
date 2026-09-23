@@ -14,9 +14,11 @@ Coverage for V2 / Flux listen constraints introduced or corrected in the regen.
 
 import typing
 
+from deepgram import ListenV2ConfigureNumerals as RootListenV2ConfigureNumerals
 from deepgram.listen.v2.types.listen_v2close_stream import ListenV2CloseStream
 from deepgram.listen.v2.types.listen_v2close_stream_type import ListenV2CloseStreamType
 from deepgram.listen.v2.types.listen_v2turn_info_words_item import ListenV2TurnInfoWordsItem
+from deepgram.types import ListenV2ConfigureNumerals
 from deepgram.types.listen_v2profanity_filter import ListenV2ProfanityFilter
 
 
@@ -55,3 +57,9 @@ class TestProfanityFilterV2:
         # Union[Literal["true", "false"], Any] — assert the documented literals.
         literal = typing.get_args(ListenV2ProfanityFilter)[0]
         assert set(typing.get_args(literal)) == {"true", "false"}
+
+
+class TestConfigureNumeralsExport:
+    def test_runtime_configure_numerals_is_exported_from_both_package_barrels(self):
+        assert ListenV2ConfigureNumerals is bool
+        assert RootListenV2ConfigureNumerals is bool

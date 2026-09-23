@@ -22,6 +22,7 @@ from deepgram import DeepgramClient
 from deepgram.core.events import EventType
 from deepgram.listen.v2.types import (
     ListenV2CloseStream,
+    ListenV2Configure,
     ListenV2Connected,
     ListenV2FatalError,
     ListenV2TurnInfo,
@@ -35,8 +36,7 @@ try:
     with client.listen.v2.connect(
         model="flux-general-en",
         # Flux STT numerals: format spoken numbers as digits (e.g. "one twenty" -> "120").
-        # Connection-time only — it cannot be toggled mid-stream via Configure.
-        numerals="true",
+        numerals="false",
     ) as connection:
 
         def on_message(message: ListenV2SocketClientResponse) -> None:
@@ -61,6 +61,9 @@ try:
         connection.on(EventType.MESSAGE, on_message)
         connection.on(EventType.CLOSE, lambda _: print("Connection closed"))
         connection.on(EventType.ERROR, lambda error: print(f"Error: {type(error).__name__}: {error}"))
+
+        # Update formatting for turns transcribed after this Configure message.
+        connection.send_configure(ListenV2Configure(numerals=True))
 
         # Send audio in a background thread so start_listening can process responses
         def send_audio():

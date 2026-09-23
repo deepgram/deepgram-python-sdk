@@ -194,6 +194,7 @@ if typing.TYPE_CHECKING:
     from .listen_v1utterance_end_ms import ListenV1UtteranceEndMs
     from .listen_v1vad_events import ListenV1VadEvents
     from .listen_v1version import ListenV1Version
+    from .listen_v2configure_numerals import ListenV2ConfigureNumerals
     from .listen_v2eager_eot_threshold import ListenV2EagerEotThreshold
     from .listen_v2encoding import ListenV2Encoding
     from .listen_v2eot_threshold import ListenV2EotThreshold
@@ -458,6 +459,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ListenV1UtteranceEndMs": ".listen_v1utterance_end_ms",
     "ListenV1VadEvents": ".listen_v1vad_events",
     "ListenV1Version": ".listen_v1version",
+    "ListenV2ConfigureNumerals": ".listen_v2configure_numerals",
     "ListenV2EagerEotThreshold": ".listen_v2eager_eot_threshold",
     "ListenV2Encoding": ".listen_v2encoding",
     "ListenV2EotThreshold": ".listen_v2eot_threshold",
@@ -740,6 +742,7 @@ __all__ = [
     "ListenV1UtteranceEndMs",
     "ListenV1VadEvents",
     "ListenV1Version",
+    "ListenV2ConfigureNumerals",
     "ListenV2EagerEotThreshold",
     "ListenV2Encoding",
     "ListenV2EotThreshold",

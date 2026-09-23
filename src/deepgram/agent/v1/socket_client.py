@@ -53,7 +53,6 @@ def _sanitize_numeric_types(obj: typing.Any) -> typing.Any:
         return int(obj)
     return obj
 
-
 _logger = logging.getLogger(__name__)
 V1SocketClientResponse = typing.Union[
     AgentV1ListenUpdated,

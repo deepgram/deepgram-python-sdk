@@ -5,6 +5,7 @@ import typing
 import pydantic
 from ....core.pydantic_utilities import IS_PYDANTIC_V2
 from ....core.unchecked_base_model import UncheckedBaseModel
+from ....types.listen_v2configure_numerals import ListenV2ConfigureNumerals
 from ....types.listen_v2keyterm import ListenV2Keyterm
 from .listen_v2configure_thresholds import ListenV2ConfigureThresholds
 
@@ -28,6 +29,8 @@ class ListenV2Configure(UncheckedBaseModel):
     Only valid when the model is flux-general-multi. If this field is not supplied,
     the session will continue to use the currently configured value.
     """
+
+    numerals: typing.Optional[ListenV2ConfigureNumerals] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

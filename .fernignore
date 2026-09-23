@@ -33,14 +33,6 @@ src/deepgram/listen/v2/socket_client.py
 src/deepgram/speak/v1/socket_client.py
 src/deepgram/speak/v2/socket_client.py
 
-# The generated eot_threshold descriptions omit that eot_timeout_ms still ends
-# idle turns. The DeepgramListenProviderV2 model below shares this patch with
-# its language_hint compatibility shim. Remove these patches after the API
-# definition includes the timeout requirement and Fern regenerates them.
-# [temporarily frozen]
-src/deepgram/types/listen_v2eot_threshold.py
-src/deepgram/requests/deepgram_listen_provider_v2.py
-
 # Agent TTS provider expressivity must reject fractional values rather than
 # allowing Pydantic v1 to truncate them before the API sees the request.
 # [temporarily frozen — remove when Fern emits a strict integer]
@@ -131,11 +123,8 @@ src/deepgram/requests/deepgram_listen_provider_v2language_hint.py
 # deny_unknown_fields so the singular key is rejected on the wire). These three generated
 # models carry a hand-added model_validator(mode='before') / root_validator(pre=True) that
 # remaps a legacy `language_hint=` kwarg to `language_hints` and drops the dead singular
-# key. This DeepgramListenProviderV2 model also carries the EOT description correction:
-# eot_threshold=1.0 suppresses confidence-based detection only; eot_timeout_ms still ends
-# idle turns and must be increased for manual ForceEndTurn control. Remove that correction
-# when the API definition provides it; remove the shim and unfreeze when the singular alias
-# is intentionally retired in a future major release.
+# key. Remove and unfreeze these shims when the singular alias is intentionally retired in a
+# future major release.
 src/deepgram/types/deepgram_listen_provider_v2.py
 src/deepgram/agent/v1/types/agent_v1settings_agent_listen_provider.py
 src/deepgram/agent/v1/types/agent_v1settings_agent_context_listen_provider.py
@@ -157,10 +146,9 @@ src/deepgram/agent/v1/types/agent_v1update_listen_listen.py
 # resurrecting the invalid values. Frozen so Fern won't delete it again.
 src/deepgram/listen/v2/types/listen_v2close_stream_type.py
 
-# Package __init__.py files that carry hand-applied legacy alias re-exports for the
-# above shims. Fern would otherwise regenerate these and strip the legacy entries on
-# every regen. Frozen to preserve the public-import surface for renamed types/params.
-# Re-apply genuine new generator additions to these files manually after each regen.
+# Temporarily frozen generated package barrels that carry hand-applied legacy alias
+# re-exports. Before each regen, swap these originals to .bak paths so Fern can add new
+# exports; then restore the aliases alongside every genuine generated addition.
 src/deepgram/__init__.py
 src/deepgram/agent/__init__.py
 src/deepgram/agent/v1/__init__.py

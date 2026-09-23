@@ -48,15 +48,13 @@ class AgentV1UpdateListenListen(UncheckedBaseModel):
         @classmethod
         def _migrate_legacy_provider(cls, values: typing.Any) -> typing.Any:
             return _coerce_legacy_update_listen_provider(values)
+
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:
 
         @pydantic.root_validator(pre=True)  # type: ignore[deprecated]
         def _migrate_legacy_provider(cls, values: typing.Any) -> typing.Any:  # type: ignore[no-redef]
             return _coerce_legacy_update_listen_provider(values)
-
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
 
         class Config:
             frozen = True

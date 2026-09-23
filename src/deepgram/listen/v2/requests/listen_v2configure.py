@@ -4,6 +4,7 @@ import typing
 
 import typing_extensions
 from ....requests.listen_v2keyterm import ListenV2KeytermParams
+from ....types.listen_v2configure_numerals import ListenV2ConfigureNumerals
 from .listen_v2configure_thresholds import ListenV2ConfigureThresholdsParams
 
 
@@ -26,3 +27,5 @@ class ListenV2ConfigureParams(typing_extensions.TypedDict):
     Only valid when the model is flux-general-multi. If this field is not supplied,
     the session will continue to use the currently configured value.
     """
+
+    numerals: typing_extensions.NotRequired[ListenV2ConfigureNumerals]
