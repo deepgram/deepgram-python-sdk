@@ -7,8 +7,8 @@ no automated coverage of the ``/v2/listen`` handshake. Pins:
   * the connection targets the ``/v2/listen`` path, and
   * query parameters serialize correctly — in particular the ``numerals`` param
     added in the 2026-07-20 regen (docs deepgram-docs#1020) must reach the wire
-    as ``numerals=true``. ``numerals`` is a connection-time query param only (it
-    is not toggleable via the ``Configure`` control message).
+    as ``numerals=true``. The connection-time value is complemented by the
+    runtime ``Configure`` control-message coverage in ``test_socket_client_shims``.
 
 No network / WireMock: the public ``connect`` builds the URL and hands it to the
 ``websockets`` connect entrypoint, so we replace that entrypoint with a capture

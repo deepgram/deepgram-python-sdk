@@ -269,6 +269,11 @@ class TestSendConfigureRawShim:
         assert sent["type"] == "Configure"
         assert sent["language_hints"] == ["en"]
 
+    def test_typed_numerals_model_is_serialized_and_sent(self):
+        ws = _FakeWebSocket()
+        V2SocketClient(websocket=ws).send_configure(ListenV2Configure(numerals=True))
+        assert _sent_json(ws) == {"type": "Configure", "numerals": True}
+
     async def test_typed_model_is_serialized_and_sent_async(self):
         ws = _FakeAsyncWebSocket()
         await AsyncV2SocketClient(websocket=ws).send_configure(ListenV2Configure(language_hints=["en"]))
