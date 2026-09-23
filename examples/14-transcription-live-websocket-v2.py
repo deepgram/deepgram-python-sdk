@@ -35,7 +35,7 @@ try:
     with client.listen.v2.connect(
         model="flux-general-en",
         # Flux STT numerals: format spoken numbers as digits (e.g. "one twenty" -> "120").
-        # Connection-time only — it cannot be toggled mid-stream via Configure.
+        # Can also be changed mid-stream with send_configure(ListenV2Configure(numerals=...)).
         numerals="true",
     ) as connection:
 

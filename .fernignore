@@ -146,10 +146,9 @@ src/deepgram/agent/v1/types/agent_v1update_listen_listen.py
 # resurrecting the invalid values. Frozen so Fern won't delete it again.
 src/deepgram/listen/v2/types/listen_v2close_stream_type.py
 
-# Package __init__.py files that carry hand-applied legacy alias re-exports for the
-# above shims. Fern would otherwise regenerate these and strip the legacy entries on
-# every regen. Frozen to preserve the public-import surface for renamed types/params.
-# Re-apply genuine new generator additions to these files manually after each regen.
+# Temporarily frozen generated package barrels that carry hand-applied legacy alias
+# re-exports. Before each regen, swap these originals to .bak paths so Fern can add new
+# exports; then restore the aliases alongside every genuine generated addition.
 src/deepgram/__init__.py
 src/deepgram/agent/__init__.py
 src/deepgram/agent/v1/__init__.py
