@@ -1,0 +1,5 @@
+# Deprecated compatibility alias for pre-7.12 Topics params.
+
+from .shared_topics_segments_item_topics_item import SharedTopicsSegmentsItemTopicsItemParams
+
+SharedTopicsResultsTopicsSegmentsItemTopicsItemParams = SharedTopicsSegmentsItemTopicsItemParams

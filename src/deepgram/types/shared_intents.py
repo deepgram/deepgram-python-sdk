@@ -5,6 +5,8 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .shared_intents_results import SharedIntentsResults
+from .shared_intents_results_intents import SharedIntentsResultsIntents
 from .shared_intents_segments_item import SharedIntentsSegmentsItem
 
 
@@ -14,6 +16,11 @@ class SharedIntents(UncheckedBaseModel):
     """
 
     segments: typing.Optional[typing.List[SharedIntentsSegmentsItem]] = None
+
+    @property
+    def results(self) -> SharedIntentsResults:
+        """Deprecated facade for the pre-7.12 ``results.intents.segments`` path."""
+        return SharedIntentsResults(intents=SharedIntentsResultsIntents(segments=self.segments))
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

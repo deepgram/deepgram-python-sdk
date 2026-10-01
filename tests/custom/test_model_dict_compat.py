@@ -19,6 +19,7 @@ from deepgram.listen.v2.types.listen_v2configure_success_thresholds import Liste
 from deepgram.listen.v2.types.listen_v2connected import ListenV2Connected
 from deepgram.listen.v2.types.listen_v2fatal_error import ListenV2FatalError
 from deepgram.listen.v2.types.listen_v2turn_info import ListenV2TurnInfo
+from deepgram.listen.v2.types.listen_v2warning import ListenV2Warning
 from deepgram.types.get_model_v1response_metadata import GetModelV1ResponseMetadata
 
 TURN_INFO = {
@@ -81,6 +82,7 @@ def test_all_listen_v2_response_models_support_subscript_access() -> None:
     responses: typing.List[typing.Any] = [
         ListenV2Connected(type="Connected", request_id="request-id", sequence_id=0),
         ListenV2ConfigureFailure(type="ConfigureFailure", request_id="request-id", sequence_id=1),
+        ListenV2Warning(type="Warning", request_id="request-id", sequence_id=2, code="NOTICE", description="warning"),
         configure_success,
         ListenV2FatalError(type="Error", sequence_id=3, code="ERROR", description="failure"),
     ]
@@ -88,6 +90,29 @@ def test_all_listen_v2_response_models_support_subscript_access() -> None:
     for response in responses:
         assert response["type"] == response.type
     assert configure_success.thresholds["eot_threshold"] == 0.7
+
+
+def test_listen_v2_generated_warning_and_configure_fields_remain_typed_and_subscriptable() -> None:
+    warning = ListenV2Warning(type="Warning", request_id="request-id", sequence_id=3, code="NOTICE", description="warning")
+    failure = ListenV2ConfigureFailure(
+        type="ConfigureFailure",
+        request_id="request-id",
+        sequence_id=4,
+        code="INVALID_CONFIGURATION",
+        description="invalid setting",
+    )
+    success = ListenV2ConfigureSuccess(
+        type="ConfigureSuccess",
+        request_id="request-id",
+        thresholds=ListenV2ConfigureSuccessThresholds(eot_threshold=0.7),
+        keyterms=[],
+        numerals=True,
+        sequence_id=5,
+    )
+
+    assert warning["code"] == "NOTICE"
+    assert failure["description"] == "invalid setting"
+    assert success["numerals"] is True
 
 
 def test_unrelated_models_do_not_gain_subscript_access() -> None:

@@ -12,7 +12,7 @@ from typing import Tuple
 
 class TextBuilder:
     """
-    Fluent builder for constructing TTS text with pronunciation and pause controls.
+    Fluent builder for Flux TTS batch pronunciation and pause controls.
     
     Example:
         text = TextBuilder() \\
@@ -85,11 +85,12 @@ class TextBuilder:
         """
         Add a pause in milliseconds.
         Formats as: {pause:duration_ms}
-        Valid range: 500-5000ms in 100ms increments.
+        Valid range: 500-3000ms in 100ms increments. Flux batch accepts at most
+        eight pauses per request; WebSocket synthesis does not support pauses.
         Returns self for chaining.
 
         Args:
-            duration_ms: Pause duration in milliseconds (500-5000, increments of 100)
+            duration_ms: Pause duration in milliseconds (500-3000, increments of 100)
 
         Returns:
             Self for method chaining
@@ -103,8 +104,8 @@ class TextBuilder:
             raise ValueError(error_msg)
 
         # Check pause limit
-        if self._pause_count >= 50:
-            raise ValueError("Maximum 50 pauses per request exceeded")
+        if self._pause_count >= 8:
+            raise ValueError("Maximum 8 pauses per Flux batch request exceeded")
 
         # Format as JSON-style pause marker
         self._parts.append(f"{{pause:{duration_ms}}}")
@@ -273,7 +274,7 @@ def ssml_to_deepgram(ssml_text: str) -> str:
         is_valid, error_msg = validate_pause(duration_ms)
         if not is_valid:
             # Round to nearest valid value
-            duration_ms = max(500, min(5000, round(duration_ms / 100) * 100))
+            duration_ms = max(500, min(3000, round(duration_ms / 100) * 100))
 
         return f"{{pause:{duration_ms}}}"
 
@@ -316,7 +317,7 @@ def validate_ipa(ipa: str) -> Tuple[bool, str]:
 
 def validate_pause(duration_ms: int) -> Tuple[bool, str]:
     """
-    Validate pause duration (500-5000ms, 100ms increments).
+    Validate a Flux batch pause duration (500-3000ms, 100ms increments).
 
     Args:
         duration_ms: Pause duration in milliseconds
@@ -330,8 +331,8 @@ def validate_pause(duration_ms: int) -> Tuple[bool, str]:
     if duration_ms < 500:
         return False, "Pause duration must be at least 500ms"
 
-    if duration_ms > 5000:
-        return False, "Pause duration must not exceed 5000ms"
+    if duration_ms > 3000:
+        return False, "Pause duration must not exceed 3000ms"
 
     if duration_ms % 100 != 0:
         return False, "Pause duration must be in 100ms increments"

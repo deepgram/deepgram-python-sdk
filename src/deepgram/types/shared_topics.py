@@ -5,6 +5,8 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .shared_topics_results import SharedTopicsResults
+from .shared_topics_results_topics import SharedTopicsResultsTopics
 from .shared_topics_segments_item import SharedTopicsSegmentsItem
 
 
@@ -14,6 +16,11 @@ class SharedTopics(UncheckedBaseModel):
     """
 
     segments: typing.Optional[typing.List[SharedTopicsSegmentsItem]] = None
+
+    @property
+    def results(self) -> SharedTopicsResults:
+        """Deprecated facade for the pre-7.12 ``results.topics.segments`` path."""
+        return SharedTopicsResults(topics=SharedTopicsResultsTopics(segments=self.segments))
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

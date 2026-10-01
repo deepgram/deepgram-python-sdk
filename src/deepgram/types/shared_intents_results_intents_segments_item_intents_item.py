@@ -1,0 +1,5 @@
+# Deprecated compatibility alias for the pre-7.12 Intents response shape.
+
+from .shared_intents_segments_item_intents_item import SharedIntentsSegmentsItemIntentsItem
+
+SharedIntentsResultsIntentsSegmentsItemIntentsItem = SharedIntentsSegmentsItemIntentsItem

@@ -3,6 +3,7 @@ Tests for TextBuilder and TTS helper utilities
 """
 
 import pytest
+
 from deepgram.helpers import (
     TextBuilder,
     add_pronunciation,
@@ -102,15 +103,13 @@ class TestTextBuilder:
             builder.pronunciation("extra", "test")
     
     def test_pause_limit(self):
-        """Test pause count limit (50 max)"""
+        """Flux batch supports at most eight pauses."""
         builder = TextBuilder()
         
-        # Add 50 pauses (should work)
-        for i in range(50):
+        for i in range(8):
             builder.pause(500)
-        
-        # 51st should raise error
-        with pytest.raises(ValueError, match="Maximum 50 pauses"):
+
+        with pytest.raises(ValueError, match="Maximum 8 pauses"):
             builder.pause(500)
     
     def test_character_limit(self):
@@ -156,8 +155,8 @@ class TestTextBuilder:
             builder.pause(400)
         
         # Too long
-        with pytest.raises(ValueError, match="not exceed 5000ms"):
-            builder.pause(5001)
+        with pytest.raises(ValueError, match="not exceed 3000ms"):
+            builder.pause(3001)
         
         # Not in 100ms increments
         with pytest.raises(ValueError, match="100ms increments"):
@@ -173,8 +172,8 @@ class TestTextBuilder:
         
         # Maximum valid
         builder2 = TextBuilder()
-        result2 = builder2.pause(5000).build()
-        assert "{pause:5000}" in result2
+        result2 = builder2.pause(3000).build()
+        assert "{pause:3000}" in result2
 
 
 class TestAddPronunciation:
@@ -432,7 +431,7 @@ class TestValidatePause:
         assert is_valid is True
         
         # Maximum
-        is_valid, msg = validate_pause(5000)
+        is_valid, msg = validate_pause(3000)
         assert is_valid is True
         
         # Mid-range
@@ -447,9 +446,9 @@ class TestValidatePause:
     
     def test_too_long(self):
         """Test pause above maximum"""
-        is_valid, msg = validate_pause(5001)
+        is_valid, msg = validate_pause(3001)
         assert is_valid is False
-        assert "not exceed 5000ms" in msg
+        assert "not exceed 3000ms" in msg
     
     def test_invalid_increment(self):
         """Test pause not in 100ms increments"""
