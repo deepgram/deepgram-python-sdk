@@ -29,6 +29,10 @@ class DeepgramListenProviderV2(UncheckedBaseModel):
     """
 
     language_hint: typing.Optional[typing.Union[str, typing.List[str]]] = pydantic.Field(default=None, exclude=True)
+    """
+    Deprecated. Use `language_hints`. Accepted for backward compatibility and
+    remapped before serialization so the singular field never reaches the API.
+    """
 
     eot_threshold: typing.Optional[float] = pydantic.Field(default=None)
     """

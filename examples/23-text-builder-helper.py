@@ -3,7 +3,7 @@
 Example: TextBuilder with Flux batch REST TTS
 
 This example demonstrates using TextBuilder with English Flux batch REST
-synthesis for custom pronunciations and pauses.
+synthesis for custom pronunciations.
 """
 
 import os
@@ -28,7 +28,7 @@ def build_client(api_key: str) -> DeepgramClient:
 
 
 def example_basic_text_builder():
-    """Example 1: Basic TextBuilder usage with pronunciations and pauses"""
+    """Example 1: Basic TextBuilder usage with pronunciations"""
     print("Example 1: Basic TextBuilder Usage")
     print("-" * 50)
 

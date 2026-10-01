@@ -42,6 +42,18 @@ try:
 except ImportError:
     from websockets import WebSocketClientProtocol  # type: ignore
 
+
+def _sanitize_numeric_types(obj: typing.Any) -> typing.Any:
+    """Convert whole-number floats to integers for wire-compatible JSON. See: internal-api-specs/issues/205."""
+    if isinstance(obj, dict):
+        return {key: _sanitize_numeric_types(value) for key, value in obj.items()}
+    if isinstance(obj, list):
+        return [_sanitize_numeric_types(item) for item in obj]
+    if isinstance(obj, float) and obj.is_integer():
+        return int(obj)
+    return obj
+
+
 _logger = logging.getLogger(__name__)
 V1SocketClientResponse = typing.Union[
     AgentV1ListenUpdated,
@@ -373,11 +385,3 @@ class V1SocketClient(EventEmitterMixin):
         Send a Pydantic model to the websocket connection.
         """
         self._send(_sanitize_numeric_types(data.dict()))
-def _sanitize_numeric_types(obj: typing.Any) -> typing.Any:
-    if isinstance(obj, dict):
-        return {key: _sanitize_numeric_types(value) for key, value in obj.items()}
-    if isinstance(obj, list):
-        return [_sanitize_numeric_types(item) for item in obj]
-    if isinstance(obj, float) and obj.is_integer():
-        return int(obj)
-    return obj

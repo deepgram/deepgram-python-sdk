@@ -29,7 +29,7 @@ pip install deepgram-sdk
 ## Reference
 
 - **[API Reference](./reference.md)** - Complete reference for all SDK methods, parameters, and WebSocket connections
-- **[Flux TTS controls](./docs/FluxTtsControls.md)** - Batch and streaming pronunciation, pause, and speed behavior
+- **[Flux TTS controls](./docs/FluxTtsControls.md)** - Pronunciation across Flux batch, Flux WebSocket, and Aura-2; Flux batch-only pause and speed behavior
 
 ## Usage
 

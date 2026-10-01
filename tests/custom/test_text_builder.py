@@ -65,9 +65,17 @@ class TestTextBuilder:
             .build()
         )
         assert result == r"Hello\{pause:1000ms\}world"
-    
+
+    def test_build_rejects_mixed_pronunciation_and_pause_controls(self):
+        """Flux batch accepts each control independently, but not together."""
+        assert TextBuilder().pronunciation("Deepgram", "diːpɡræm").build()
+        assert TextBuilder().pause(500).build() == r"\{pause:500ms\}"
+
+        with pytest.raises(ValueError, match="Pronunciation and pause controls cannot be combined"):
+            TextBuilder().pronunciation("Deepgram", "diːpɡræm").pause(500).build()
+
     def test_complex_chain(self):
-        """Test complex chaining with all features"""
+        """Test complex chaining with multiple pronunciations"""
         builder = TextBuilder()
         result = (
             builder
@@ -76,7 +84,6 @@ class TestTextBuilder:
             .text(" twice daily with ")
             .pronunciation("dupilumab", "duːˈpɪljuːmæb")
             .text(" injections")
-            .pause(500)
             .text(" Do not exceed prescribed dosage.")
             .build()
         )
@@ -86,7 +93,6 @@ class TestTextBuilder:
         assert " twice daily with " in result
         assert '"word": "dupilumab"' in result
         assert " injections" in result
-        assert r"\{pause:500ms\}" in result
         assert " Do not exceed prescribed dosage." in result
     
     def test_pronunciation_limit(self):
@@ -361,13 +367,11 @@ class TestFromSsml:
         result = (
             builder
             .from_ssml(ssml)
-            .pause(500)
             .text(" Do not exceed dosage.")
             .build()
         )
         
         assert '"word": "medicine"' in result
-        assert r"\{pause:500ms\}" in result
         assert "Do not exceed dosage." in result
     
     def test_from_ssml_counts_pronunciations(self):
@@ -491,7 +495,6 @@ class TestIntegration:
             .text(" twice daily with ")
             .pronunciation("dupilumab", "duːˈpɪljuːmæb")
             .text(" injections")
-            .pause(500)
             .text(" Do not exceed prescribed dosage.")
             .build()
         )
@@ -504,14 +507,13 @@ class TestIntegration:
         assert '"word": "dupilumab"' in text
         assert '"pronounce": "duːˈpɪljuːmæb"' in text
         assert " injections" in text
-        assert r"\{pause:500ms\}" in text
         assert " Do not exceed prescribed dosage." in text
     
     def test_ssml_migration(self):
         """Test SSML to Deepgram migration workflow"""
         ssml = '''<speak>
             Take <phoneme alphabet="ipa" ph="ˌæzəˈθaɪəpriːn">azathioprine</phoneme>
-            <break time="500ms"/> Do not exceed dosage.
+            Do not exceed dosage.
         </speak>'''
         
         # Method 1: Direct conversion
@@ -522,15 +524,11 @@ class TestIntegration:
         
         # Both should produce similar results
         assert '"word": "azathioprine"' in text1
-        assert r"\{pause:500ms\}" in text1
         assert '"word": "azathioprine"' in text2
-        assert r"\{pause:500ms\}" in text2
     
     def test_builder_with_ssml_and_additions(self):
         """Test the mixed usage example from the spec"""
-        some_imported_ssml = '''<speak>
-            Take <phoneme alphabet="ipa" ph="test">medicine</phoneme>
-        </speak>'''
+        some_imported_ssml = "<speak>Take medicine.</speak>"
         
         text = (
             TextBuilder()
@@ -540,7 +538,7 @@ class TestIntegration:
             .build()
         )
         
-        assert '"word": "medicine"' in text
+        assert "Take medicine." in text
         assert r"\{pause:500ms\}" in text
         assert " Do not exceed prescribed dosage." in text
     

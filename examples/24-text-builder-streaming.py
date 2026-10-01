@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 """
-Example: Streaming TTS (WebSocket)
+Example: Streaming TTS (no Flux batch-only pauses)
 
 This example demonstrates streaming text-to-speech over WebSocket for
 real-time audio generation.
 
-Flux pause controls are batch-only. Do not use `TextBuilder` controls with the
-Flux WebSocket: a pause marker is rejected with `DATA-0002`.
+Flux pause controls are batch-only. Flux WebSocket supports pronunciation
+markers, but a pause marker is rejected with `DATA-0002`.
 """
 
 import os
@@ -74,7 +74,7 @@ def example_streaming():
             connection.on(EventType.CLOSE, lambda _: (print("✓ Connection closed"), closed_event.set()))
             connection.on(EventType.ERROR, lambda error: print(f"✗ Error: {error}"))
 
-            # Send plain text; Flux controls are batch-only.
+            # Send plain text for this Aura-2 streaming example.
             connection.send_text(SpeakV1Text(text=text))
 
             # Flush to ensure all text is processed

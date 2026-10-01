@@ -168,13 +168,16 @@ class TextBuilder:
             The complete formatted text ready for TTS
 
         Raises:
-            ValueError: If character limit exceeded
+            ValueError: If character limit is exceeded or incompatible controls are combined
         """
         result = "".join(self._parts)
 
         # Validate character count (2000 max, excluding control syntax)
         if self._char_count > 2000:
             raise ValueError(f"Text exceeds 2000 character limit (current: {self._char_count} characters)")
+
+        if self._pronunciation_count and self._pause_count:
+            raise ValueError("Pronunciation and pause controls cannot be combined in one Flux batch request")
 
         return result
 

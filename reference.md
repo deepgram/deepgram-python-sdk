@@ -5810,6 +5810,12 @@ asyncio.run(main())
 </dl>
 </details>
 
+## Speak V2 Audio
+
+`client.speak.v2.audio.generate(model=..., text=...)` synthesizes a complete Flux batch request and returns an iterator of audio bytes. `model` and `text` are required; optional audio settings include `encoding`, `sample_rate`, `container`, `bit_rate`, `expressivity`, `speed`, `tag`, `callback`, and `priority`.
+
+The `text` may include English Flux batch controls: escaped pronunciation markers (`\{"word": "...", "pronounce": "<IPA>"\}`) or pause markers (`\{pause:<N>ms\}` for 500-3000 ms in 100 ms increments, at most eight per request). Do not combine pronunciation and pause markers. See [Flux TTS Controls](./docs/FluxTtsControls.md).
+
 ## Speak V2 Connect
 
 <details><summary><code>client.speak.v2.<a href="src/deepgram/speak/v2/client.py">connect</a>(...)</code></summary>

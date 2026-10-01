@@ -85,11 +85,10 @@ def test_text_builder_fluent_build() -> None:
         TextBuilder()
         .text("Take ")
         .pronunciation("azathioprine", "ˌæzəˈθaɪəpriːn")
-        .pause(500)
         .text(" daily.")
         .build()
     )
-    assert "pronounce" in text and r"\{pause:500ms\}" in text
+    assert "pronounce" in text
 
 
 def test_text_builder_validation_errors() -> None:

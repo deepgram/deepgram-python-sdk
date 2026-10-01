@@ -77,7 +77,7 @@ In **sync** mode, `start_listening()` blocks — send all text + flush + close B
 
 ## TextBuilder helper (Flux batch controls)
 
-`deepgram.helpers.TextBuilder` is a hand-maintained helper (NOT Fern-generated) for English Flux batch requests. It is not for WebSocket turns: a pause marker is rejected with `DATA-0002`.
+`deepgram.helpers.TextBuilder` is a hand-maintained helper (NOT Fern-generated) for English Flux batch requests. Pronunciation controls apply to Flux batch, Flux WebSocket, and Aura-2 `/v1/speak`; pauses are Flux batch-only and a Flux WebSocket rejects them with `DATA-0002`.
 
 ```python
 from deepgram.helpers import TextBuilder
@@ -87,12 +87,11 @@ final_text = (
     .text("Hello,")
     .text(" this is built incrementally.")
     .pronunciation("Deepgram", "ˈdiːpɡɹæm")
-    .pause(500)
     .build()
 )
 ```
 
-The fluent API is `.text(...)` (append raw text), `.pronunciation(word, ipa)` (insert a `\{\"word\": \"...\", \"pronounce\": \"...\"\}` marker), `.pause(duration_ms)` (insert a `\{pause:<N>ms\}` marker), and `.build()` (return the batch request text). Pauses must be 500-3000 ms in 100 ms increments, with at most eight per request. There is no `.add(...)` method.
+The fluent API is `.text(...)` (append raw text), `.pronunciation(word, ipa)` (insert a `\{\"word\": \"...\", \"pronounce\": \"...\"\}` marker), `.pause(duration_ms)` (insert a `\{pause:<N>ms\}` marker), and `.build()` (return the batch request text). Pauses must be 500-3000 ms in 100 ms increments, with at most eight per request. Pronunciation and pause cannot be combined in one request; Flux rejects the combination with `CONTROL_COMBINATION_INVALID`. There is no `.add(...)` method.
 
 Use the output with `client.speak.v2.audio.generate(model="flux-alexis-en", text=final_text)`. See `docs/FluxTtsControls.md`, `examples/22-text-builder-demo.py`, and `examples/23-text-builder-helper.py`.
 

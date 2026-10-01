@@ -6,6 +6,7 @@ import pydantic
 
 
 def _coerce_query_value(value: Any) -> Any:
+    # urllib.parse.urlencode would otherwise turn bools into "True"/"False".
     if isinstance(value, bool):
         return "true" if value else "false"
     return value

@@ -4,7 +4,7 @@ This module contains custom helper utilities for working with Deepgram APIs that
 
 ## TextBuilder
 
-The `TextBuilder` class provides a fluent interface for constructing English Flux batch TTS text with pronunciation and pause controls. Do not use its controls with a Flux WebSocket request: pauses are rejected with `DATA-0002`.
+The `TextBuilder` class provides a fluent interface for constructing English Flux batch TTS text. Pronunciation controls also apply to Flux WebSocket and Aura-2 `/v1/speak`; pauses are Flux batch-only and are rejected by Flux WebSocket with `DATA-0002`.
 
 ### Quick Example
 

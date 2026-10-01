@@ -1,6 +1,6 @@
 # Flux TTS Controls
 
-Flux TTS supports inline pronunciation and pause controls for English batch REST synthesis.
+Pronunciation controls apply to Flux batch REST, Flux WebSocket, and Aura-2 `/v1/speak`. Pause controls apply to Flux batch REST only.
 
 ## Batch REST
 
@@ -18,4 +18,4 @@ Use `client.speak.v2.connect()` for streaming Flux synthesis. WebSocket turns su
 
 `SpeechMetadata.controls_applied` reports pronunciation, pause, and warning counters. `Warning` messages report the associated warning code and description. WebSocket pauses are unsupported, so `breaks_applied` is always zero.
 
-`TextBuilder` is intended for Flux batch requests. Do not use its pause output with the Flux WebSocket or assume these limits apply to non-Flux TTS endpoints.
+`TextBuilder` validates Flux batch constraints. Its pronunciation output is usable where pronunciation controls are supported, but do not use its pause output with the Flux WebSocket or assume Flux pause limits apply to non-Flux TTS endpoints.
