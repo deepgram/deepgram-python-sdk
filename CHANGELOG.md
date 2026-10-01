@@ -1,5 +1,13 @@
 # Changelog
 
+## [7.12.0](https://github.com/deepgram/deepgram-python-sdk/compare/v7.11.0...v7.12.0) (2026-10-01)
+
+
+### Features
+
+* **regen:** add Flux TTS Controls ([#797](https://github.com/deepgram/deepgram-python-sdk/issues/797)) ([d2b5514](https://github.com/deepgram/deepgram-python-sdk/commit/d2b5514eab37761332fcebed75ced20e54088337))
+* **textbuilder:** emit escaped Flux pause and pronunciation markers, ([d2b5514](https://github.com/deepgram/deepgram-python-sdk/commit/d2b5514eab37761332fcebed75ced20e54088337))
+
 ## [7.11.0](https://github.com/deepgram/deepgram-python-sdk/compare/v7.10.0...v7.11.0) (2026-09-23)
 
 
