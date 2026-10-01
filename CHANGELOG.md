@@ -5,8 +5,13 @@
 
 ### Features
 
-* **regen:** add Flux TTS Controls ([#797](https://github.com/deepgram/deepgram-python-sdk/issues/797)) ([d2b5514](https://github.com/deepgram/deepgram-python-sdk/commit/d2b5514eab37761332fcebed75ced20e54088337))
-* **textbuilder:** emit escaped Flux pause and pronunciation markers, ([d2b5514](https://github.com/deepgram/deepgram-python-sdk/commit/d2b5514eab37761332fcebed75ced20e54088337))
+* **Speak v2 (Flux TTS):** Add inline pause markers for batch requests and IPA pronunciation overrides for Flux batch, Flux WebSocket, and Aura-2 requests. Pronunciation is Early Access; pause markers are Flux batch-only. See [Speed, Pause, Pronunciation](https://developers.deepgram.com/docs/tts-voice-controls). ([#797](https://github.com/deepgram/deepgram-python-sdk/issues/797)) ([d2b5514](https://github.com/deepgram/deepgram-python-sdk/commit/d2b5514eab37761332fcebed75ced20e54088337))
+* **TextBuilder:** Emit escaped Flux pause and pronunciation markers. Validate 500-3000 ms pauses, eight-pause request limits, malformed markers, and unsupported pause-plus-pronunciation combinations locally with `ValueError` before sending a request.
+* **Listen v2 (Flux):** Add typed `Warning` responses while preserving dict-style response access during the 7.x transition.
+
+### Compatibility
+
+* **Topics and Intents:** `SharedTopics` and `SharedIntents` now type the direct `segments` response shape returned by the API. Deprecated `results` facades, legacy import paths, and legacy construction remain available in v7.
 
 ## [7.11.0](https://github.com/deepgram/deepgram-python-sdk/compare/v7.10.0...v7.11.0) (2026-09-23)
 
