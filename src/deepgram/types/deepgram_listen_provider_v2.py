@@ -66,6 +66,8 @@ class DeepgramListenProviderV2(UncheckedBaseModel):
             if hint is not None and values.get("language_hints") is None:
                 values["language_hints"] = [hint] if isinstance(hint, str) else list(hint)
             return values
+
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:
 
         @pydantic.root_validator(pre=True)  # type: ignore[deprecated]
@@ -77,10 +79,6 @@ class DeepgramListenProviderV2(UncheckedBaseModel):
             if hint is not None and values.get("language_hints") is None:
                 values["language_hints"] = [hint] if isinstance(hint, str) else list(hint)
             return values
-
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
 
         class Config:
             frozen = True

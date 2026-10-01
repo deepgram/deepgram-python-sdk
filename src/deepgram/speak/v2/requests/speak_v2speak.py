@@ -13,5 +13,5 @@ class SpeakV2SpeakParams(typing_extensions.TypedDict):
 
     text: str
     """
-    The input text to synthesize. Inline pause and pronunciation controls are not yet applied; they are stripped from the text before synthesis.
+    The input text to synthesize. May contain inline pronunciation controls (`\\{"word": "...", "pronounce": "<IPA>"\\}`), which are in Early Access. Inline pause controls are supported on the batch (REST) transport only; a pause marker sent over the WebSocket fails the connection with `DATA-0002`. Pronunciation cannot be combined with a `speed` other than `1.0`: text carrying a pronunciation control on a session opened with `speed`, or after a `Configure` that set it, also fails the connection with `DATA-0002`. See [Speed, Pause, Pronunciation](/docs/tts-voice-controls).
     """

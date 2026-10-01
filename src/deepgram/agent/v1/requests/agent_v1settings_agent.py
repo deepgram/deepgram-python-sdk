@@ -9,19 +9,8 @@ from .agent_v1settings_agent_think import AgentV1SettingsAgentThinkParams
 
 class AgentV1SettingsAgentParams(typing_extensions.TypedDict):
     language: typing_extensions.NotRequired[str]
-    """
-    Deprecated. Use `listen.provider.language` and `speak.provider.language` fields instead.
-    """
-
     context: typing_extensions.NotRequired[AgentV1SettingsAgentContextParams]
-    """
-    Conversation context including the history of messages and function calls
-    """
-
     listen: typing_extensions.NotRequired[AgentV1SettingsAgentListenParams]
     think: typing_extensions.NotRequired[AgentV1SettingsAgentThinkParams]
     speak: typing_extensions.NotRequired[AgentV1SettingsAgentSpeakParams]
     greeting: typing_extensions.NotRequired[str]
-    """
-    Optional message that agent will speak at the start
-    """

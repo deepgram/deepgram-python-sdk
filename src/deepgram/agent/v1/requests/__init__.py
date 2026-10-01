@@ -76,17 +76,6 @@ if typing.TYPE_CHECKING:
     from .function_call_history_message_function_calls_item import FunctionCallHistoryMessageFunctionCallsItemParams
     from .agent_v1history_content import AgentV1HistoryContentParams
     from .agent_v1history_function_calls import AgentV1HistoryFunctionCallsParams
-    from .agent_v1history_function_calls_function_calls_item import AgentV1HistoryFunctionCallsFunctionCallsItemParams
-    from .agent_v1settings_agent_context_context_messages_item_function_calls_function_calls_item import AgentV1SettingsAgentContextContextMessagesItemFunctionCallsFunctionCallsItemParams
-    from .agent_v1settings_agent_context_listen_provider_v1 import AgentV1SettingsAgentContextListenProviderV1Params
-    from .agent_v1settings_agent_context_listen_provider_v2 import AgentV1SettingsAgentContextListenProviderV2Params
-    from .agent_v1settings_agent_context_listen_provider_v2language_hint import AgentV1SettingsAgentContextListenProviderV2LanguageHintParams
-    from .agent_v1settings_agent_context_messages_item import AgentV1SettingsAgentContextMessagesItemParams
-    from .agent_v1settings_agent_context_messages_item_content import AgentV1SettingsAgentContextMessagesItemContentParams
-    from .agent_v1settings_agent_context_messages_item_function_calls import AgentV1SettingsAgentContextMessagesItemFunctionCallsParams
-    from .agent_v1settings_agent_context_messages_item_function_calls_function_calls_item import AgentV1SettingsAgentContextMessagesItemFunctionCallsFunctionCallsItemParams
-    from .agent_v1settings_agent_listen_provider_v1 import AgentV1SettingsAgentListenProviderV1Params
-    from .agent_v1settings_agent_listen_provider_v2 import AgentV1SettingsAgentListenProviderV2Params
 _dynamic_imports: typing.Dict[str, str] = {
     "AgentV1AgentAudioDoneParams": ".agent_v1agent_audio_done",
     "AgentV1AgentStartedSpeakingParams": ".agent_v1agent_started_speaking",

@@ -17,9 +17,6 @@ class AgentV1SettingsAgentContextParams(typing_extensions.TypedDict):
     """
 
     messages: typing_extensions.NotRequired[typing.Sequence[AgentV1SettingsAgentContextMessagesItemParams]]
-    """
-    Deprecated. Conversation history as a list of messages and function calls.
-    """
 
     context: typing_extensions.NotRequired[AgentV1SettingsAgentContextContextParams]
     """

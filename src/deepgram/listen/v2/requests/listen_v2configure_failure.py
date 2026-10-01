@@ -22,3 +22,13 @@ class ListenV2ConfigureFailureParams(typing_extensions.TypedDict):
     to the client.  This includes messages of other types, like
     `TurnInfo` messages.
     """
+
+    code: typing_extensions.NotRequired[str]
+    """
+    Failure code identifying the rejected configuration
+    """
+
+    description: typing_extensions.NotRequired[str]
+    """
+    A human-readable description of the configuration failure
+    """

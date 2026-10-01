@@ -25,6 +25,16 @@ class ListenV2ConfigureFailure(ListenV2ResponseDictCompatModel):
     `TurnInfo` messages.
     """
 
+    code: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Failure code identifying the rejected configuration
+    """
+
+    description: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    A human-readable description of the configuration failure
+    """
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:

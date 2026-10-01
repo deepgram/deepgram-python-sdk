@@ -4,7 +4,7 @@ This module contains custom helper utilities for working with Deepgram APIs that
 
 ## TextBuilder
 
-The `TextBuilder` class provides a fluent interface for constructing Text-to-Speech (TTS) text with pronunciation and pause controls.
+The `TextBuilder` class provides a fluent interface for constructing English Flux batch TTS text. Pronunciation controls also apply to Flux WebSocket and Aura-2 `/v1/speak`; pauses are Flux batch-only and are rejected by Flux WebSocket with `DATA-0002`.
 
 ### Quick Example
 
@@ -17,14 +17,13 @@ text = (
     TextBuilder()
     .text("Take ")
     .pronunciation("azathioprine", "ˌæzəˈθaɪəpriːn")
-    .pause(500)
     .text(" twice daily.")
     .build()
 )
 
-# Use with Deepgram TTS
+# Use with English Flux batch TTS
 client = DeepgramClient(api_key="YOUR_API_KEY")
-response = client.speak.v1.generate(text, model="aura-asteria-en")
+audio = client.speak.v2.audio.generate(model="flux-alexis-en", text=text)
 ```
 
 ### Available Functions
@@ -32,25 +31,25 @@ response = client.speak.v1.generate(text, model="aura-asteria-en")
 #### TextBuilder Class
 
 - `text(content: str)` - Add plain text
-- `pronunciation(word: str, ipa: str)` - Add word with IPA pronunciation
-- `pause(duration_ms: int)` - Add pause (500-5000ms, 100ms increments)
+- `pronunciation(word: str, ipa: str)` - Add an escaped `\{"word": "...", "pronounce": "..."\}` IPA pronunciation control
+- `pause(duration_ms: int)` - Add a batch-only `\{pause:<N>ms\}` pause (500-3000ms, 100ms increments; eight per request)
 - `from_ssml(ssml_text: str)` - Parse and convert SSML markup
 - `build()` - Return final formatted text
 
 #### Standalone Functions
 
-- `add_pronunciation(text, word, ipa)` - Replace word with pronunciation
-- `ssml_to_deepgram(ssml_text)` - Convert SSML to Deepgram format
+- `add_pronunciation(text, word, ipa)` - Replace a word with an escaped pronunciation control
+- `ssml_to_deepgram(ssml_text)` - Convert SSML to escaped Deepgram controls
 - `validate_ipa(ipa)` - Validate IPA pronunciation string
 - `validate_pause(duration_ms)` - Validate pause duration
 
 ### Documentation
 
-See [TextBuilder-Guide.md](../../../docs/TextBuilder-Guide.md) for comprehensive documentation.
+See [FluxTtsControls.md](../../../docs/FluxTtsControls.md) for control combinations, English-only batch support, and WebSocket restrictions.
 
 ### Examples
 
-See [examples/25-text-builder-helper.py](../../../examples/25-text-builder-helper.py) for usage examples.
+See [23-text-builder-helper.py](../../../examples/23-text-builder-helper.py) for a batch example and [the live controls check](../../../tests/manual/speak/v2/controls/main.py) for server validation.
 
 ## Future Helpers
 

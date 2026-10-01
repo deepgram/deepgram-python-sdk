@@ -4,6 +4,7 @@ import typing
 
 import pydantic
 from ....core.pydantic_utilities import IS_PYDANTIC_V2
+from ....types.listen_v2configure_numerals import ListenV2ConfigureNumerals
 from ....types.listen_v2keyterm import ListenV2Keyterm
 from ._dict_compat import ListenV2ResponseDictCompatModel
 from .listen_v2configure_success_thresholds import ListenV2ConfigureSuccessThresholds
@@ -30,6 +31,11 @@ class ListenV2ConfigureSuccess(ListenV2ResponseDictCompatModel):
     language_hints: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
     """
     The currently active language hints. Only applicable to the flux-general-multi model.
+    """
+
+    numerals: typing.Optional[ListenV2ConfigureNumerals] = pydantic.Field(default=None)
+    """
+    Whether numeral formatting is enabled for transcripts Flux STT sends after it processes the update.
     """
 
     sequence_id: int = pydantic.Field()

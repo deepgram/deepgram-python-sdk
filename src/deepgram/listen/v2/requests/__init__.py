@@ -17,6 +17,7 @@ if typing.TYPE_CHECKING:
     from .listen_v2force_end_turn import ListenV2ForceEndTurnParams
     from .listen_v2turn_info import ListenV2TurnInfoParams
     from .listen_v2turn_info_words_item import ListenV2TurnInfoWordsItemParams
+    from .listen_v2warning import ListenV2WarningParams
 _dynamic_imports: typing.Dict[str, str] = {
     "ListenV2CloseStreamParams": ".listen_v2close_stream",
     "ListenV2ConfigureFailureParams": ".listen_v2configure_failure",
@@ -29,6 +30,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ListenV2ForceEndTurnParams": ".listen_v2force_end_turn",
     "ListenV2TurnInfoParams": ".listen_v2turn_info",
     "ListenV2TurnInfoWordsItemParams": ".listen_v2turn_info_words_item",
+    "ListenV2WarningParams": ".listen_v2warning",
 }
 
 
@@ -65,4 +67,5 @@ __all__ = [
     "ListenV2ForceEndTurnParams",
     "ListenV2TurnInfoParams",
     "ListenV2TurnInfoWordsItemParams",
+    "ListenV2WarningParams",
 ]

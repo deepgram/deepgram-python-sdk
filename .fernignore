@@ -19,6 +19,36 @@ src/deepgram/_secure_logging.py
 # transition from raw dict responses to typed models. No Fern counterpart.
 src/deepgram/listen/v2/types/_dict_compat.py
 
+# Hand-written v7 compatibility wrappers for the pre-regen Topics and Intents
+# response and request paths. The generated response now exposes direct
+# ``segments``; these modules preserve the deprecated ``results.*.segments``
+# imports while the generated direct models provide runtime facades.
+src/deepgram/types/shared_topics_results.py
+src/deepgram/types/shared_topics_results_topics.py
+src/deepgram/types/shared_topics_results_topics_segments_item.py
+src/deepgram/types/shared_topics_results_topics_segments_item_topics_item.py
+src/deepgram/types/shared_intents_results.py
+src/deepgram/types/shared_intents_results_intents.py
+src/deepgram/types/shared_intents_results_intents_segments_item.py
+src/deepgram/types/shared_intents_results_intents_segments_item_intents_item.py
+src/deepgram/requests/shared_topics_results.py
+src/deepgram/requests/shared_topics_results_topics.py
+src/deepgram/requests/shared_topics_results_topics_segments_item.py
+src/deepgram/requests/shared_topics_results_topics_segments_item_topics_item.py
+src/deepgram/requests/shared_intents_results.py
+src/deepgram/requests/shared_intents_results_intents.py
+src/deepgram/requests/shared_intents_results_intents_segments_item.py
+src/deepgram/requests/shared_intents_results_intents_segments_item_intents_item.py
+
+# Generated v7 Topics and Intents compatibility surfaces. These direct models
+# and Params retain the deprecated ``results`` construction shape and normalize
+# it to generated ``segments`` while preserving the permanent wrappers above.
+# [temporarily frozen — remove in the next major after retiring ``results``]
+src/deepgram/types/shared_topics.py
+src/deepgram/types/shared_intents.py
+src/deepgram/requests/shared_topics.py
+src/deepgram/requests/shared_intents.py
+
 # WebSocket socket clients:
 # - except Exception broad catch (supports custom transports, generator narrows to WebSocketException)
 # - _sanitize_numeric_types in agent socket client (float→int for API)
@@ -181,6 +211,16 @@ src/deepgram/core/parse_error.py
 
 src/deepgram/core/query_encoder.py
 
+# The generated metadata fallback must match the published SDK version in source
+# checkouts and carries a release-please marker so it is updated on release.
+# [temporarily frozen — remove when Fern emits a release-managed fallback]
+src/deepgram/core/client_wrapper.py
+
+# Generated Speak V2 Warning files have a local whitespace cleanup.
+# [temporarily frozen — remove when Fern emits whitespace-clean docstrings]
+src/deepgram/speak/v2/types/speak_v2warning.py
+src/deepgram/speak/v2/requests/speak_v2warning.py
+
 # Read-side compatibility for the SDK 7.7 Listen V2 response retype. These
 # generated response models inherit the hand-written base above so callers can
 # temporarily use both attribute and read-only subscript access. Remove the custom
@@ -193,6 +233,7 @@ src/deepgram/listen/v2/types/listen_v2configure_success.py
 src/deepgram/listen/v2/types/listen_v2configure_success_thresholds.py
 src/deepgram/listen/v2/types/listen_v2configure_failure.py
 src/deepgram/listen/v2/types/listen_v2fatal_error.py
+src/deepgram/listen/v2/types/listen_v2warning.py
 
 # Hand-written custom tests
 tests/custom/test_api_error_redaction.py
@@ -223,6 +264,8 @@ tests/custom/test_speak_v2_interrupt_configure.py
 tests/custom/test_speak_v2_coverage.py
 tests/custom/test_speak_v2_socket.py
 tests/custom/test_text_builder.py
+tests/custom/test_flux_tts_controls.py
+tests/custom/test_topics_intents_v7_compat.py
 tests/custom/test_transport.py
 tests/custom/test_websocket_streaming_coverage.py
 tests/typecheck/compat_aliases.py

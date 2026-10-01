@@ -65,8 +65,9 @@ if typing.TYPE_CHECKING:
         ListenV2TurnInfoParams,
         ListenV2TurnInfoWordsItem,
         ListenV2TurnInfoWordsItemParams,
+        ListenV2Warning,
+        ListenV2WarningParams,
     )
-    from .v2 import ListenV2CloseStreamType
 _dynamic_imports: typing.Dict[str, str] = {
     "DiarizeModel": ".v1",
     "ListenV1CloseStream": ".v1",
@@ -124,6 +125,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ListenV2TurnInfoParams": ".v2",
     "ListenV2TurnInfoWordsItem": ".v2",
     "ListenV2TurnInfoWordsItemParams": ".v2",
+    "ListenV2Warning": ".v2",
+    "ListenV2WarningParams": ".v2",
     "v1": ".v1",
     "v2": ".v2",
 }
@@ -207,6 +210,8 @@ __all__ = [
     "ListenV2TurnInfoParams",
     "ListenV2TurnInfoWordsItem",
     "ListenV2TurnInfoWordsItemParams",
+    "ListenV2Warning",
+    "ListenV2WarningParams",
     "v1",
     "v2",
 ]

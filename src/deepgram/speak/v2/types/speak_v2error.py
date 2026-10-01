@@ -16,7 +16,7 @@ class SpeakV2Error(UncheckedBaseModel):
 
     code: SpeakV2ErrorCode = pydantic.Field()
     """
-    A code identifying the error, e.g. `MESSAGE-0000` or `NET-0000`.
+    A code identifying the error, e.g. `MESSAGE-0000` or `NET-0000`. `DATA-0002` covers invalid inline controls and speed, including an inline pause marker (pause is batch-only) and a pronunciation control combined with a `speed` other than `1.0`; `description` names the specific rule.
     """
 
     description: str = pydantic.Field()

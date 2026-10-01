@@ -3,6 +3,7 @@ Tests for TextBuilder and TTS helper utilities
 """
 
 import pytest
+
 from deepgram.helpers import (
     TextBuilder,
     add_pronunciation,
@@ -31,8 +32,7 @@ class TestTextBuilder:
         """Test adding pronunciation"""
         builder = TextBuilder()
         result = builder.pronunciation("azathioprine", "ˌæzəˈθaɪəpriːn").build()
-        assert '"word": "azathioprine"' in result
-        assert '"pronounce": "ˌæzəˈθaɪəpriːn"' in result
+        assert result == r'\{"word": "azathioprine", "pronounce": "ˌæzəˈθaɪəpriːn"\}'
     
     def test_text_with_pronunciation(self):
         """Test mixing text and pronunciation"""
@@ -52,7 +52,7 @@ class TestTextBuilder:
         """Test adding pause"""
         builder = TextBuilder()
         result = builder.pause(500).build()
-        assert result == "{pause:500}"
+        assert result == r"\{pause:500ms\}"
     
     def test_text_with_pause(self):
         """Test mixing text and pause"""
@@ -64,10 +64,18 @@ class TestTextBuilder:
             .text("world")
             .build()
         )
-        assert result == "Hello{pause:1000}world"
-    
+        assert result == r"Hello\{pause:1000ms\}world"
+
+    def test_build_rejects_mixed_pronunciation_and_pause_controls(self):
+        """Flux batch accepts each control independently, but not together."""
+        assert TextBuilder().pronunciation("Deepgram", "diːpɡræm").build()
+        assert TextBuilder().pause(500).build() == r"\{pause:500ms\}"
+
+        with pytest.raises(ValueError, match="Pronunciation and pause controls cannot be combined"):
+            TextBuilder().pronunciation("Deepgram", "diːpɡræm").pause(500).build()
+
     def test_complex_chain(self):
-        """Test complex chaining with all features"""
+        """Test complex chaining with multiple pronunciations"""
         builder = TextBuilder()
         result = (
             builder
@@ -76,7 +84,6 @@ class TestTextBuilder:
             .text(" twice daily with ")
             .pronunciation("dupilumab", "duːˈpɪljuːmæb")
             .text(" injections")
-            .pause(500)
             .text(" Do not exceed prescribed dosage.")
             .build()
         )
@@ -86,7 +93,6 @@ class TestTextBuilder:
         assert " twice daily with " in result
         assert '"word": "dupilumab"' in result
         assert " injections" in result
-        assert "{pause:500}" in result
         assert " Do not exceed prescribed dosage." in result
     
     def test_pronunciation_limit(self):
@@ -102,16 +108,27 @@ class TestTextBuilder:
             builder.pronunciation("extra", "test")
     
     def test_pause_limit(self):
-        """Test pause count limit (50 max)"""
+        """Flux batch supports at most eight pauses."""
         builder = TextBuilder()
         
-        # Add 50 pauses (should work)
-        for i in range(50):
+        for i in range(8):
             builder.pause(500)
-        
-        # 51st should raise error
-        with pytest.raises(ValueError, match="Maximum 50 pauses"):
+
+        with pytest.raises(ValueError, match="Maximum 8 pauses"):
             builder.pause(500)
+
+    def test_text_enforces_embedded_control_limits(self):
+        builder = TextBuilder().text(r"\{pause:500ms\}" * 8)
+        with pytest.raises(ValueError, match="Maximum 8 pauses"):
+            builder.text(r"\{pause:500ms\}")
+        with pytest.raises(ValueError, match="100ms increments"):
+            TextBuilder().text(r"\{pause:550ms\}")
+
+    def test_text_enforces_embedded_pronunciation_limit(self):
+        pronunciation = r'\{"word": "word", "pronounce": "test"\}'
+        builder = TextBuilder().text(pronunciation * 500)
+        with pytest.raises(ValueError, match="Maximum 500 pronunciations"):
+            builder.text(pronunciation)
     
     def test_character_limit(self):
         """Test character count validation (2000 max)"""
@@ -156,8 +173,8 @@ class TestTextBuilder:
             builder.pause(400)
         
         # Too long
-        with pytest.raises(ValueError, match="not exceed 5000ms"):
-            builder.pause(5001)
+        with pytest.raises(ValueError, match="not exceed 3000ms"):
+            builder.pause(3001)
         
         # Not in 100ms increments
         with pytest.raises(ValueError, match="100ms increments"):
@@ -169,12 +186,12 @@ class TestTextBuilder:
         
         # Minimum valid
         result1 = builder.pause(500).build()
-        assert "{pause:500}" in result1
+        assert r"\{pause:500ms\}" in result1
         
         # Maximum valid
         builder2 = TextBuilder()
-        result2 = builder2.pause(5000).build()
-        assert "{pause:5000}" in result2
+        result2 = builder2.pause(3000).build()
+        assert r"\{pause:3000ms\}" in result2
 
 
 class TestAddPronunciation:
@@ -185,10 +202,7 @@ class TestAddPronunciation:
         text = "Take azathioprine twice daily."
         result = add_pronunciation(text, "azathioprine", "ˌæzəˈθaɪəpriːn")
         
-        assert '"word": "azathioprine"' in result
-        assert '"pronounce": "ˌæzəˈθaɪəpriːn"' in result
-        assert "Take " in result
-        assert " twice daily." in result
+        assert result == r'Take \{"word": "azathioprine", "pronounce": "ˌæzəˈθaɪəpriːn"\} twice daily.'
     
     def test_multiple_replacements(self):
         """Test replacing multiple words"""
@@ -226,6 +240,11 @@ class TestAddPronunciation:
         # Text should be unchanged
         assert result == text
 
+    def test_rejects_existing_pause_control(self):
+        """Flux batch cannot combine a replacement pronunciation with a pause."""
+        with pytest.raises(ValueError, match="Pronunciation and pause controls cannot be combined"):
+            add_pronunciation(r"Take \{pause:500ms\} medicine", "medicine", "mɛdɪsɪn")
+
 
 class TestSsmlToDeepgram:
     """Tests for SSML conversion"""
@@ -235,8 +254,7 @@ class TestSsmlToDeepgram:
         ssml = '<phoneme alphabet="ipa" ph="ˌæzəˈθaɪəpriːn">azathioprine</phoneme>'
         result = ssml_to_deepgram(ssml)
 
-        assert '"word": "azathioprine"' in result
-        assert '"pronounce": "ˌæzəˈθaɪəpriːn"' in result
+        assert result == r'\{"word": "azathioprine", "pronounce": "ˌæzəˈθaɪəpriːn"\}'
 
     def test_phoneme_attribute_order_independent(self):
         """ph before alphabet must work too (SSML attribute order is not significant)"""
@@ -285,14 +303,14 @@ class TestSsmlToDeepgram:
         ssml = '<break time="500ms"/>'
         result = ssml_to_deepgram(ssml)
         
-        assert result == "{pause:500}"
+        assert result == r"\{pause:500ms\}"
     
     def test_break_seconds(self):
         """Test converting break tag (seconds)"""
         ssml = '<break time="0.5s"/>'
         result = ssml_to_deepgram(ssml)
         
-        assert result == "{pause:500}"
+        assert result == r"\{pause:500ms\}"
     
     def test_speak_wrapper(self):
         """Test handling <speak> wrapper tag"""
@@ -301,17 +319,14 @@ class TestSsmlToDeepgram:
         
         assert result == "Hello world"
     
-    def test_complex_ssml(self):
-        """Test complex SSML with multiple elements"""
+    def test_complex_ssml_rejects_mixed_controls(self):
+        """Flux batch cannot combine SSML phoneme and break controls."""
         ssml = '''<speak>
             Take <phoneme alphabet="ipa" ph="ˌæzəˈθaɪəpriːn">azathioprine</phoneme>
             <break time="500ms"/> Do not exceed dosage.
         </speak>'''
-        result = ssml_to_deepgram(ssml)
-        
-        assert '"word": "azathioprine"' in result
-        assert "{pause:500}" in result
-        assert "Do not exceed dosage." in result
+        with pytest.raises(ValueError, match="Pronunciation and pause controls cannot be combined"):
+            ssml_to_deepgram(ssml)
     
     def test_multiple_phonemes(self):
         """Test multiple phoneme tags"""
@@ -330,12 +345,10 @@ class TestSsmlToDeepgram:
         assert result == text
     
     def test_break_out_of_range(self):
-        """Test break with out-of-range duration (should round to valid)"""
+        """SSML breaks must meet the Flux batch duration contract."""
         ssml = '<break time="250ms"/>'
-        result = ssml_to_deepgram(ssml)
-        
-        # Should round to nearest valid value (500ms)
-        assert "{pause:" in result
+        with pytest.raises(ValueError, match="at least 500ms"):
+            ssml_to_deepgram(ssml)
 
 
 class TestFromSsml:
@@ -356,13 +369,11 @@ class TestFromSsml:
         result = (
             builder
             .from_ssml(ssml)
-            .pause(500)
             .text(" Do not exceed dosage.")
             .build()
         )
         
         assert '"word": "medicine"' in result
-        assert "{pause:500}" in result
         assert "Do not exceed dosage." in result
     
     def test_from_ssml_counts_pronunciations(self):
@@ -380,6 +391,16 @@ class TestFromSsml:
         # Should hit the limit
         with pytest.raises(ValueError, match="Maximum 500 pronunciations"):
             builder.pronunciation("extra", "test")
+
+    def test_from_ssml_enforces_pause_limit(self):
+        ssml = '<break time="500ms"/>' * 9
+        with pytest.raises(ValueError, match="Maximum 8 pauses"):
+            TextBuilder().from_ssml(ssml)
+
+    def test_from_ssml_enforces_pronunciation_limit(self):
+        ssml = "".join('<phoneme alphabet="ipa" ph="test">word</phoneme>' for _ in range(501))
+        with pytest.raises(ValueError, match="Maximum 500 pronunciations"):
+            TextBuilder().from_ssml(ssml)
 
 
 class TestValidateIpa:
@@ -432,7 +453,7 @@ class TestValidatePause:
         assert is_valid is True
         
         # Maximum
-        is_valid, msg = validate_pause(5000)
+        is_valid, msg = validate_pause(3000)
         assert is_valid is True
         
         # Mid-range
@@ -447,9 +468,9 @@ class TestValidatePause:
     
     def test_too_long(self):
         """Test pause above maximum"""
-        is_valid, msg = validate_pause(5001)
+        is_valid, msg = validate_pause(3001)
         assert is_valid is False
-        assert "not exceed 5000ms" in msg
+        assert "not exceed 3000ms" in msg
     
     def test_invalid_increment(self):
         """Test pause not in 100ms increments"""
@@ -476,7 +497,6 @@ class TestIntegration:
             .text(" twice daily with ")
             .pronunciation("dupilumab", "duːˈpɪljuːmæb")
             .text(" injections")
-            .pause(500)
             .text(" Do not exceed prescribed dosage.")
             .build()
         )
@@ -489,14 +509,13 @@ class TestIntegration:
         assert '"word": "dupilumab"' in text
         assert '"pronounce": "duːˈpɪljuːmæb"' in text
         assert " injections" in text
-        assert "{pause:500}" in text
         assert " Do not exceed prescribed dosage." in text
     
     def test_ssml_migration(self):
         """Test SSML to Deepgram migration workflow"""
         ssml = '''<speak>
             Take <phoneme alphabet="ipa" ph="ˌæzəˈθaɪəpriːn">azathioprine</phoneme>
-            <break time="500ms"/> Do not exceed dosage.
+            Do not exceed dosage.
         </speak>'''
         
         # Method 1: Direct conversion
@@ -507,15 +526,11 @@ class TestIntegration:
         
         # Both should produce similar results
         assert '"word": "azathioprine"' in text1
-        assert "{pause:500}" in text1
         assert '"word": "azathioprine"' in text2
-        assert "{pause:500}" in text2
     
     def test_builder_with_ssml_and_additions(self):
         """Test the mixed usage example from the spec"""
-        some_imported_ssml = '''<speak>
-            Take <phoneme alphabet="ipa" ph="test">medicine</phoneme>
-        </speak>'''
+        some_imported_ssml = "<speak>Take medicine.</speak>"
         
         text = (
             TextBuilder()
@@ -525,8 +540,8 @@ class TestIntegration:
             .build()
         )
         
-        assert '"word": "medicine"' in text
-        assert "{pause:500}" in text
+        assert "Take medicine." in text
+        assert r"\{pause:500ms\}" in text
         assert " Do not exceed prescribed dosage." in text
     
     def test_standalone_function_workflow(self):

@@ -33,7 +33,6 @@ def demo_basic_text_builder():
         .text(" twice daily with ")
         .pronunciation("dupilumab", "duːˈpɪljuːmæb")
         .text(" injections")
-        .pause(500)
         .text(" Do not exceed prescribed dosage.")
         .build()
     )
@@ -47,7 +46,6 @@ def demo_basic_text_builder():
         .text(" twice daily with ")
         .pronunciation("dupilumab", "duːˈpɪljuːmæb")
         .text(" injections")
-        .pause(500)
         .text(" Do not exceed prescribed dosage.")
         .build()
     )
@@ -76,10 +74,8 @@ def demo_ssml_conversion():
 
     ssml = """<speak>
     Welcome to your medication guide.
-    <break time="500ms"/>
     Take <phoneme alphabet="ipa" ph="ˌæzəˈθaɪəpriːn">azathioprine</phoneme>
     as prescribed.
-    <break time="1s"/>
     Contact your doctor if you experience side effects.
 </speak>"""
 
@@ -95,12 +91,11 @@ def demo_mixed_usage():
     """Demonstrate mixing SSML with builder methods"""
     print_section("4. Mixed SSML + Builder Methods")
 
-    ssml = '<speak>Take <phoneme alphabet="ipa" ph="test">medicine</phoneme> daily.</speak>'
+    ssml = '<speak>Take medicine daily.</speak>'
 
     text = (
         TextBuilder()
         .from_ssml(ssml)
-        .pause(500)
         .text(" Store at room temperature.")
         .pause(500)
         .text(" Keep out of reach of children.")
@@ -111,7 +106,6 @@ def demo_mixed_usage():
     print(f"  {ssml}")
 
     print("\nAdded via builder:")
-    print("  .pause(500)")
     print("  .text(' Store at room temperature.')")
     print("  .pause(500)")
     print("  .text(' Keep out of reach of children.')")
@@ -144,8 +138,8 @@ def demo_validation():
     is_valid, msg = validate_pause(500)
     print(f"  validate_pause(500): {is_valid}")
 
-    is_valid, msg = validate_pause(5000)
-    print(f"  validate_pause(5000): {is_valid}")
+    is_valid, msg = validate_pause(3000)
+    print(f"  validate_pause(3000): {is_valid}")
 
     # Invalid pauses
     is_valid, msg = validate_pause(400)
@@ -168,10 +162,10 @@ def demo_error_handling():
     except ValueError as e:
         print(f"  ✓ Caught expected error: {e}")
 
-    print("\n▸ Pause limit (50 max)")
+    print("\n▸ Flux batch pause limit (8 max)")
     try:
         builder = TextBuilder()
-        for i in range(51):
+        for i in range(9):
             builder.pause(500)
         builder.build()
     except ValueError as e:
@@ -202,9 +196,7 @@ def demo_real_world_examples():
         TextBuilder()
         .text("Prescription for ")
         .pronunciation("lisinopril", "laɪˈsɪnəprɪl")
-        .pause(500)
         .text(" Take one tablet daily for hypertension.")
-        .pause(500)
         .text(" Common side effects may include ")
         .pronunciation("hypotension", "ˌhaɪpoʊˈtɛnʃən")
         .text(" or dizziness.")
@@ -218,7 +210,6 @@ def demo_real_world_examples():
         .text("Insert the ")
         .pronunciation("cannula", "ˈkænjʊlə")
         .text(" at a forty-five degree angle.")
-        .pause(1000)
         .text(" Ensure the ")
         .pronunciation("catheter", "ˈkæθɪtər")
         .text(" is properly secured.")
@@ -233,7 +224,6 @@ def demo_real_world_examples():
         .pronunciation("mitochondrial", "ˌmaɪtəˈkɑːndriəl")
         .text(" function in ")
         .pronunciation("erythrocytes", "ɪˈrɪθrəsaɪts")
-        .pause(500)
         .text(" using advanced imaging.")
         .build()
     )
@@ -247,11 +237,11 @@ def demo_api_limits():
     print("\n  Limit Type                    Maximum      Unit")
     print("  " + "-" * 60)
     print("  Pronunciations per request    500          count")
-    print("  Pauses per request            50           count")
+    print("  Pauses per request            8            count (Flux batch only)")
     print("  Total characters              2000         characters*")
     print("  IPA string length             100          characters")
     print("  Pause duration (min)          500          milliseconds")
-    print("  Pause duration (max)          5000         milliseconds")
+    print("  Pause duration (max)          3000         milliseconds")
     print("  Pause increment               100          milliseconds")
     print("\n  * Character count excludes pronunciation IPA and control syntax")
 

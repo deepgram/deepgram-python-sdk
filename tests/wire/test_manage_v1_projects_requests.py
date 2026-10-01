@@ -14,7 +14,6 @@ def test_manage_v1_projects_requests_list_() -> None:
 
 
 def test_manage_v1_projects_requests_list_serializes_all_query_params() -> None:
-    """All optional request-list query parameters reach the wire."""
     test_id = "manage.v1.projects.requests.list_.query_params"
     client = get_client(test_id)
     client.manage.v1.projects.requests.list(

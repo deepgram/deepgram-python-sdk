@@ -6,7 +6,13 @@ from deepgram.agent.v1.requests import (
     ConversationHistoryMessageParams,
     FunctionCallHistoryMessageParams,
 )
-from deepgram.requests import CreateKeyV1RequestOneParams, CreateKeyV1RequestParams
+from deepgram.requests import (
+    CreateKeyV1RequestOneParams,
+    CreateKeyV1RequestParams,
+    SharedIntentsParams,
+    SharedTopicsParams,
+)
+from deepgram.types import SharedIntents, SharedTopics
 
 create_key_request: CreateKeyV1RequestOneParams = {"key": "value"}
 history_content: AgentV1HistoryContentParams = {
@@ -40,3 +46,9 @@ from deepgram.types.deepgram_listen_provider_v2 import DeepgramListenProviderV2
 _language_hint_str = DeepgramListenProviderV2(model="flux-general-multi", language_hint="en")
 _language_hint_list = DeepgramListenProviderV2(model="flux-general-multi", language_hint=["en", "de"])
 _language_hints_plural = DeepgramListenProviderV2(model="flux-general-multi", language_hints=["fr"])
+
+# Topics and Intents retain their pre-7.12 ``results`` construction and Params paths.
+legacy_topics: SharedTopicsParams = {"results": {"topics": {"segments": [{"text": "hello"}]}}}
+legacy_intents: SharedIntentsParams = {"results": {"intents": {"segments": [{"text": "hello"}]}}}
+assert_type(SharedTopics(results=legacy_topics["results"]), SharedTopics)
+assert_type(SharedIntents(results=legacy_intents["results"]), SharedIntents)

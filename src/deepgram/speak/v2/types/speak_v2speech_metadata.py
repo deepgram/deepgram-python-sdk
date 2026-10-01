@@ -36,7 +36,7 @@ class SpeakV2SpeechMetadata(UncheckedBaseModel):
 
     controls_applied: SpeakV2SpeechMetadataControlsApplied = pydantic.Field()
     """
-    Counts of the inline controls the server acted on during the turn. Inline pause and pronunciation controls are not applied at launch — support is coming soon — so every count is currently `0`.
+    Counts of the inline controls the server acted on during the turn. A pronunciation override that triggers an IPA warning is still applied best-effort and counted in `pronunciations_applied`; the warning is reported separately through a `Warning` and `pronunciation_warnings`.
     """
 
     if IS_PYDANTIC_V2:

@@ -12,7 +12,6 @@ def test_listen_v1_media_transcribe_url() -> None:
 
 
 def test_listen_v1_media_transcribe_url_serializes_all_query_params() -> None:
-    """All optional transcribe-url query parameters reach the wire."""
     test_id = "listen.v1.media.transcribe_url.query_params"
     client = get_client(test_id)
     client.listen.v1.media.transcribe_url(

@@ -15,6 +15,7 @@ from .types.listen_v2connected import ListenV2Connected
 from .types.listen_v2fatal_error import ListenV2FatalError
 from .types.listen_v2force_end_turn import ListenV2ForceEndTurn
 from .types.listen_v2turn_info import ListenV2TurnInfo
+from .types.listen_v2warning import ListenV2Warning
 
 try:
     from websockets.legacy.client import WebSocketClientProtocol  # type: ignore
@@ -23,7 +24,12 @@ except ImportError:
 
 _logger = logging.getLogger(__name__)
 V2SocketClientResponse = typing.Union[
-    ListenV2Connected, ListenV2TurnInfo, ListenV2ConfigureSuccess, ListenV2ConfigureFailure, ListenV2FatalError
+    ListenV2Connected,
+    ListenV2TurnInfo,
+    ListenV2ConfigureSuccess,
+    ListenV2ConfigureFailure,
+    ListenV2Warning,
+    ListenV2FatalError,
 ]
 
 
@@ -93,8 +99,6 @@ class AsyncV2SocketClient(EventEmitterMixin):
         """
         Send a message to the websocket connection.
         The message will be sent as a ListenV2ForceEndTurn.
-        This requires server-side enablement. On deployments without the feature, the server returns
-        UNPARSABLE_CLIENT_MESSAGE and closes the connection.
         """
         await self._send_model(message or ListenV2ForceEndTurn(type="ForceEndTurn"))
 
@@ -203,8 +207,6 @@ class V2SocketClient(EventEmitterMixin):
         """
         Send a message to the websocket connection.
         The message will be sent as a ListenV2ForceEndTurn.
-        This requires server-side enablement. On deployments without the feature, the server returns
-        UNPARSABLE_CLIENT_MESSAGE and closes the connection.
         """
         self._send_model(message or ListenV2ForceEndTurn(type="ForceEndTurn"))
 

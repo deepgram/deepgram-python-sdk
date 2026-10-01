@@ -4,6 +4,7 @@ import typing
 
 import typing_extensions
 from ....requests.listen_v2keyterm import ListenV2KeytermParams
+from ....types.listen_v2configure_numerals import ListenV2ConfigureNumerals
 from .listen_v2configure_success_thresholds import ListenV2ConfigureSuccessThresholdsParams
 
 
@@ -28,6 +29,11 @@ class ListenV2ConfigureSuccessParams(typing_extensions.TypedDict):
     language_hints: typing_extensions.NotRequired[typing.Sequence[str]]
     """
     The currently active language hints. Only applicable to the flux-general-multi model.
+    """
+
+    numerals: typing_extensions.NotRequired[ListenV2ConfigureNumerals]
+    """
+    Whether numeral formatting is enabled for transcripts Flux STT sends after it processes the update.
     """
 
     sequence_id: int

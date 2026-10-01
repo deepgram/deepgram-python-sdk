@@ -230,20 +230,14 @@ if typing.TYPE_CHECKING:
     from .read_v1response_results_summary_results import ReadV1ResponseResultsSummaryResults
     from .read_v1response_results_summary_results_summary import ReadV1ResponseResultsSummaryResultsSummary
     from .shared_intents import SharedIntents
-    from .shared_intents_results import SharedIntentsResults
-    from .shared_intents_results_intents import SharedIntentsResultsIntents
-    from .shared_intents_results_intents_segments_item import SharedIntentsResultsIntentsSegmentsItem
-    from .shared_intents_results_intents_segments_item_intents_item import (
-        SharedIntentsResultsIntentsSegmentsItemIntentsItem,
-    )
+    from .shared_intents_segments_item import SharedIntentsSegmentsItem
+    from .shared_intents_segments_item_intents_item import SharedIntentsSegmentsItemIntentsItem
     from .shared_sentiments import SharedSentiments
     from .shared_sentiments_average import SharedSentimentsAverage
     from .shared_sentiments_segments_item import SharedSentimentsSegmentsItem
     from .shared_topics import SharedTopics
-    from .shared_topics_results import SharedTopicsResults
-    from .shared_topics_results_topics import SharedTopicsResultsTopics
-    from .shared_topics_results_topics_segments_item import SharedTopicsResultsTopicsSegmentsItem
-    from .shared_topics_results_topics_segments_item_topics_item import SharedTopicsResultsTopicsSegmentsItemTopicsItem
+    from .shared_topics_segments_item import SharedTopicsSegmentsItem
+    from .shared_topics_segments_item_topics_item import SharedTopicsSegmentsItemTopicsItem
     from .speak_settings_v1 import SpeakSettingsV1
     from .speak_settings_v1endpoint import SpeakSettingsV1Endpoint
     from .speak_settings_v1provider import (
@@ -293,15 +287,6 @@ if typing.TYPE_CHECKING:
     from .usage_fields_v1response_models_item import UsageFieldsV1ResponseModelsItem
     from .usage_v1response import UsageV1Response
     from .usage_v1response_resolution import UsageV1ResponseResolution
-    from .anthropic_think_provider_model import AnthropicThinkProviderModel
-    from .cartesia_speak_provider_model_id import CartesiaSpeakProviderModelId
-    from .cartesia_speak_provider_voice import CartesiaSpeakProviderVoice
-    from .create_key_v1request_one import CreateKeyV1RequestOne
-    from .deepgram_listen_provider_v2language_hint import DeepgramListenProviderV2LanguageHint
-    from .deepgram_speak_provider_model import DeepgramSpeakProviderModel
-    from .google_think_provider_model import GoogleThinkProviderModel
-    from .google_think_provider_version import GoogleThinkProviderVersion
-    from .groq_think_provider_reasoning_mode import GroqThinkProviderReasoningMode
 _dynamic_imports: typing.Dict[str, str] = {
     "AgentConfigurationV1": ".agent_configuration_v1",
     "AgentThinkModelsV1Response": ".agent_think_models_v1response",
@@ -499,6 +484,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SharedIntentsResultsIntents": ".shared_intents_results_intents",
     "SharedIntentsResultsIntentsSegmentsItem": ".shared_intents_results_intents_segments_item",
     "SharedIntentsResultsIntentsSegmentsItemIntentsItem": ".shared_intents_results_intents_segments_item_intents_item",
+    "SharedIntentsSegmentsItem": ".shared_intents_segments_item",
+    "SharedIntentsSegmentsItemIntentsItem": ".shared_intents_segments_item_intents_item",
     "SharedSentiments": ".shared_sentiments",
     "SharedSentimentsAverage": ".shared_sentiments_average",
     "SharedSentimentsSegmentsItem": ".shared_sentiments_segments_item",
@@ -507,6 +494,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SharedTopicsResultsTopics": ".shared_topics_results_topics",
     "SharedTopicsResultsTopicsSegmentsItem": ".shared_topics_results_topics_segments_item",
     "SharedTopicsResultsTopicsSegmentsItemTopicsItem": ".shared_topics_results_topics_segments_item_topics_item",
+    "SharedTopicsSegmentsItem": ".shared_topics_segments_item",
+    "SharedTopicsSegmentsItemTopicsItem": ".shared_topics_segments_item_topics_item",
     "SpeakSettingsV1": ".speak_settings_v1",
     "SpeakSettingsV1Endpoint": ".speak_settings_v1endpoint",
     "SpeakSettingsV1Provider": ".speak_settings_v1provider",
@@ -782,6 +771,8 @@ __all__ = [
     "SharedIntentsResultsIntents",
     "SharedIntentsResultsIntentsSegmentsItem",
     "SharedIntentsResultsIntentsSegmentsItemIntentsItem",
+    "SharedIntentsSegmentsItem",
+    "SharedIntentsSegmentsItemIntentsItem",
     "SharedSentiments",
     "SharedSentimentsAverage",
     "SharedSentimentsSegmentsItem",
@@ -790,6 +781,8 @@ __all__ = [
     "SharedTopicsResultsTopics",
     "SharedTopicsResultsTopicsSegmentsItem",
     "SharedTopicsResultsTopicsSegmentsItemTopicsItem",
+    "SharedTopicsSegmentsItem",
+    "SharedTopicsSegmentsItemTopicsItem",
     "SpeakSettingsV1",
     "SpeakSettingsV1Endpoint",
     "SpeakSettingsV1Provider",

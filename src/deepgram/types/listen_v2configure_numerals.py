@@ -2,5 +2,5 @@
 
 ListenV2ConfigureNumerals = bool
 """
-Numerals converts numbers from written format to numerical format. Applies to turns transcribed after the update.
+Numerals converts numbers from written format to numerical format. Applies to transcripts Flux STT sends after it processes the update.
 """

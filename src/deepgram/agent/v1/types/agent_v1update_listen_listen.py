@@ -13,7 +13,6 @@ _V1_ONLY_KEYS = frozenset({"language", "smart_format"})
 
 
 def _coerce_legacy_update_listen_provider(values: typing.Any) -> typing.Any:
-    """Add the discriminator required by the versioned provider union."""
     if not isinstance(values, dict):
         return values
     provider = values.get("provider")

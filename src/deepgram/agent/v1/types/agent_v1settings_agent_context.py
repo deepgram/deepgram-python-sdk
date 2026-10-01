@@ -31,8 +31,6 @@ class AgentV1SettingsAgentContext(UncheckedBaseModel):
     Optional message that agent will speak at the start
     """
 
-    # Translate the pre-restructure top-level messages field to the current
-    # nested context.messages payload while retaining read-side access.
     if IS_PYDANTIC_V2:
 
         @pydantic.model_validator(mode="before")

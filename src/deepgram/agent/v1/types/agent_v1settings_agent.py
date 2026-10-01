@@ -9,8 +9,6 @@ from .agent_v1settings_agent_listen import AgentV1SettingsAgentListen
 
 
 class AgentV1SettingsAgent(AgentV1SettingsAgentContext):
-    # Keep the formerly callable public model name working with the schema's
-    # current nested context format.
     if IS_PYDANTIC_V2:
 
         @pydantic.model_validator(mode="before")
@@ -18,7 +16,6 @@ class AgentV1SettingsAgent(AgentV1SettingsAgentContext):
         def _migrate_legacy_nested_context(cls, values: typing.Any) -> typing.Any:
             if not isinstance(values, dict):
                 return values
-
             context = values.get("context")
             if isinstance(context, AgentV1SettingsAgentContext) and (
                 context.context is not None
@@ -30,7 +27,6 @@ class AgentV1SettingsAgent(AgentV1SettingsAgentContext):
             ):
                 values = dict(values)
                 values["context"] = context.context
-
             listen = values.get("listen")
             if isinstance(listen, AgentV1SettingsAgentListen):
                 values = dict(values)
@@ -42,7 +38,6 @@ class AgentV1SettingsAgent(AgentV1SettingsAgentContext):
         def _migrate_legacy_nested_context(cls, values: typing.Any) -> typing.Any:  # type: ignore[no-redef]
             if not isinstance(values, dict):
                 return values
-
             context = values.get("context")
             if isinstance(context, AgentV1SettingsAgentContext) and (
                 context.context is not None
@@ -54,7 +49,6 @@ class AgentV1SettingsAgent(AgentV1SettingsAgentContext):
             ):
                 values = dict(values)
                 values["context"] = context.context
-
             listen = values.get("listen")
             if isinstance(listen, AgentV1SettingsAgentListen):
                 values = dict(values)

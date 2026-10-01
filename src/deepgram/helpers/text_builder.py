@@ -9,10 +9,17 @@ import json
 import re
 from typing import Tuple
 
+PAUSE_PATTERN = re.escape(r"\{pause:") + r"(\d+)ms" + re.escape(r"\}")
+PRONUNCIATION_PATTERN = (
+    re.escape(r"\{")
+    + r'"word":\s*"(?:[^"\\]|\\.)*",\s*"pronounce":\s*"(?:[^"\\]|\\.)*"'
+    + re.escape(r"\}")
+)
+
 
 class TextBuilder:
     """
-    Fluent builder for constructing TTS text with pronunciation and pause controls.
+    Fluent builder for Flux TTS batch pronunciation and pause controls.
     
     Example:
         text = TextBuilder() \\
@@ -21,7 +28,6 @@ class TextBuilder:
             .text(" twice daily with ") \\
             .pronunciation("dupilumab", "duːˈpɪljuːmæb") \\
             .text(" injections") \\
-            .pause(500) \\
             .text(" Do not exceed prescribed dosage.") \\
             .build()
     """
@@ -44,14 +50,22 @@ class TextBuilder:
             Self for method chaining
         """
         if content:
+            pronunciation_count, pause_count = _control_counts(content)
+            _validate_pause_controls(content)
+            if self._pronunciation_count + pronunciation_count > 500:
+                raise ValueError("Maximum 500 pronunciations per request exceeded")
+            if self._pause_count + pause_count > 8:
+                raise ValueError("Maximum 8 pauses per Flux batch request exceeded")
             self._parts.append(content)
-            self._char_count += len(content)
+            self._pronunciation_count += pronunciation_count
+            self._pause_count += pause_count
+            self._char_count += len(_strip_controls(content))
         return self
 
     def pronunciation(self, word: str, ipa: str) -> "TextBuilder":
         """
         Add a word with custom pronunciation.
-        Formats as: {"word": "word", "pronounce":"ipa"}
+        Formats as: \\{\"word\": \"word\", \"pronounce\": \"ipa\"\\}
         Returns self for chaining.
 
         Args:
@@ -73,9 +87,7 @@ class TextBuilder:
         if self._pronunciation_count >= 500:
             raise ValueError("Maximum 500 pronunciations per request exceeded")
 
-        # Format as JSON (ensure proper escaping)
-        pronunciation_json = json.dumps({"word": word, "pronounce": ipa}, ensure_ascii=False)
-        self._parts.append(pronunciation_json)
+        self._parts.append(_pronunciation_control(word, ipa))
         self._pronunciation_count += 1
         self._char_count += len(word)  # Count original word, not IPA
 
@@ -84,12 +96,13 @@ class TextBuilder:
     def pause(self, duration_ms: int) -> "TextBuilder":
         """
         Add a pause in milliseconds.
-        Formats as: {pause:duration_ms}
-        Valid range: 500-5000ms in 100ms increments.
+        Formats as: \\{pause:<duration>ms\\}
+        Valid range: 500-3000ms in 100ms increments. Flux batch accepts at most
+        eight pauses per request; WebSocket synthesis does not support pauses.
         Returns self for chaining.
 
         Args:
-            duration_ms: Pause duration in milliseconds (500-5000, increments of 100)
+            duration_ms: Pause duration in milliseconds (500-3000, increments of 100)
 
         Returns:
             Self for method chaining
@@ -103,11 +116,10 @@ class TextBuilder:
             raise ValueError(error_msg)
 
         # Check pause limit
-        if self._pause_count >= 50:
-            raise ValueError("Maximum 50 pauses per request exceeded")
+        if self._pause_count >= 8:
+            raise ValueError("Maximum 8 pauses per Flux batch request exceeded")
 
-        # Format as JSON-style pause marker
-        self._parts.append(f"{{pause:{duration_ms}}}")
+        self._parts.append(f"\\{{pause:{duration_ms}ms\\}}")
         self._pause_count += 1
 
         return self
@@ -130,28 +142,23 @@ class TextBuilder:
         # Convert SSML to Deepgram format and append
         converted = ssml_to_deepgram(ssml_text)
         if converted:
+            pronunciation_count, pause_count = _control_counts(converted)
+            if self._pronunciation_count + pronunciation_count > 500:
+                raise ValueError("Maximum 500 pronunciations per request exceeded")
+            if self._pause_count + pause_count > 8:
+                raise ValueError("Maximum 8 pauses per Flux batch request exceeded")
             self._parts.append(converted)
-            # Update counters by parsing the converted text
             self._update_counts_from_text(converted)
 
         return self
 
     def _update_counts_from_text(self, text: str) -> None:
         """Update internal counters from parsed text."""
-        # Count pronunciations (JSON objects with "word" and "pronounce")
-        pronunciation_pattern = r'\{"word":\s*"[^"]*",\s*"pronounce":\s*"[^"]*"\}'
-        pronunciations = re.findall(pronunciation_pattern, text)
-        self._pronunciation_count += len(pronunciations)
+        pronunciation_count, pause_count = _control_counts(text)
+        self._pronunciation_count += pronunciation_count
+        self._pause_count += pause_count
 
-        # Count pauses
-        pause_pattern = r"\{pause:\d+\}"
-        pauses = re.findall(pause_pattern, text)
-        self._pause_count += len(pauses)
-
-        # Character count (approximate - remove control syntax)
-        clean_text = re.sub(pronunciation_pattern, "", text)
-        clean_text = re.sub(pause_pattern, "", clean_text)
-        self._char_count += len(clean_text)
+        self._char_count += len(_strip_controls(text))
 
     def build(self) -> str:
         """
@@ -161,13 +168,16 @@ class TextBuilder:
             The complete formatted text ready for TTS
 
         Raises:
-            ValueError: If character limit exceeded
+            ValueError: If character limit is exceeded or incompatible controls are combined
         """
         result = "".join(self._parts)
 
         # Validate character count (2000 max, excluding control syntax)
         if self._char_count > 2000:
             raise ValueError(f"Text exceeds 2000 character limit (current: {self._char_count} characters)")
+
+        if self._pronunciation_count and self._pause_count:
+            raise ValueError("Pronunciation and pause controls cannot be combined in one Flux batch request")
 
         return result
 
@@ -182,7 +192,10 @@ def add_pronunciation(text: str, word: str, ipa: str) -> str:
         ipa: IPA pronunciation string
 
     Returns:
-        Text with word replaced by {"word": "word", "pronounce":"ipa"}
+        Text with word replaced by \\{\"word\": \"word\", \"pronounce\": \"ipa\"\\}
+
+    Raises:
+        ValueError: If the resulting text combines pronunciation and pause controls
 
     Example:
         text = "Take azathioprine twice daily with dupilumab injections."
@@ -194,14 +207,38 @@ def add_pronunciation(text: str, word: str, ipa: str) -> str:
     if not is_valid:
         raise ValueError(error_msg)
 
-    # Create pronunciation JSON
-    pronunciation_json = json.dumps({"word": word, "pronounce": ipa}, ensure_ascii=False)
+    pronunciation_control = _pronunciation_control(word, ipa)
 
     # Replace word with pronunciation (case-sensitive, whole word only)
     pattern = r"\b" + re.escape(word) + r"\b"
-    result = re.sub(pattern, pronunciation_json, text, count=1)
+    result = re.sub(pattern, lambda _: pronunciation_control, text, count=1)
+    pronunciation_count, pause_count = _control_counts(result)
+    if pronunciation_count and pause_count:
+        raise ValueError("Pronunciation and pause controls cannot be combined in one Flux batch request")
 
     return result
+
+
+def _control_counts(text: str) -> Tuple[int, int]:
+    """Count inline controls emitted by this helper."""
+    return len(re.findall(PRONUNCIATION_PATTERN, text)), len(re.findall(PAUSE_PATTERN, text))
+
+
+def _validate_pause_controls(text: str) -> None:
+    for duration in re.findall(PAUSE_PATTERN, text):
+        is_valid, error_msg = validate_pause(int(duration))
+        if not is_valid:
+            raise ValueError(error_msg)
+
+
+def _strip_controls(text: str) -> str:
+    return re.sub(PAUSE_PATTERN, "", re.sub(PRONUNCIATION_PATTERN, "", text))
+
+
+def _pronunciation_control(word: str, ipa: str) -> str:
+    """Format an inline pronunciation control using Flux's escaped delimiters."""
+    pronunciation_json = json.dumps({"word": word, "pronounce": ipa}, ensure_ascii=False)
+    return "\\" + pronunciation_json[:-1] + r"\}"
 
 
 def ssml_to_deepgram(ssml_text: str) -> str:
@@ -219,10 +256,13 @@ def ssml_to_deepgram(ssml_text: str) -> str:
     Returns:
         Deepgram-formatted text
 
+    Raises:
+        ValueError: If the SSML combines pronunciation and pause controls
+
     Example:
         ssml = '''<speak>
             Take <phoneme alphabet="ipa" ph="ˌæzəˈθaɪəpriːn">azathioprine</phoneme>
-            <break time="500ms"/> Do not exceed dosage.
+            Do not exceed dosage.
         </speak>'''
         text = ssml_to_deepgram(ssml)
     """
@@ -252,7 +292,7 @@ def ssml_to_deepgram(ssml_text: str) -> str:
         if alphabet_match is None or ph_match is None:
             return word
         ipa = ph_match.group(2)
-        return json.dumps({"word": word, "pronounce": ipa}, ensure_ascii=False)
+        return _pronunciation_control(word, ipa)
 
     ssml_text = re.sub(phoneme_pattern, replace_phoneme, ssml_text)
 
@@ -263,26 +303,30 @@ def ssml_to_deepgram(ssml_text: str) -> str:
         value = float(match.group(1))
         unit = match.group(2)
 
-        # Convert to milliseconds
-        if unit == "s":
-            duration_ms = int(value * 1000)
-        else:
-            duration_ms = int(value)
-
-        # Validate
+        duration_ms = value * 1000 if unit == "s" else value
+        if not duration_ms.is_integer():
+            raise ValueError("Pause duration must be in 100ms increments")
+        duration_ms = int(duration_ms)
         is_valid, error_msg = validate_pause(duration_ms)
         if not is_valid:
-            # Round to nearest valid value
-            duration_ms = max(500, min(5000, round(duration_ms / 100) * 100))
+            raise ValueError(error_msg)
 
-        return f"{{pause:{duration_ms}}}"
+        return f"\\{{pause:{duration_ms}ms\\}}"
 
     ssml_text = re.sub(break_pattern, replace_break, ssml_text)
 
     # Remove any remaining XML tags
     ssml_text = re.sub(r"<[^>]+>", "", ssml_text)
 
-    return ssml_text.strip()
+    ssml_text = ssml_text.strip()
+    pronunciation_count, pause_count = _control_counts(ssml_text)
+    if pronunciation_count > 500:
+        raise ValueError("Maximum 500 pronunciations per request exceeded")
+    if pause_count > 8:
+        raise ValueError("Maximum 8 pauses per Flux batch request exceeded")
+    if pronunciation_count and pause_count:
+        raise ValueError("Pronunciation and pause controls cannot be combined in one Flux batch request")
+    return ssml_text
 
 
 def validate_ipa(ipa: str) -> Tuple[bool, str]:
@@ -316,7 +360,7 @@ def validate_ipa(ipa: str) -> Tuple[bool, str]:
 
 def validate_pause(duration_ms: int) -> Tuple[bool, str]:
     """
-    Validate pause duration (500-5000ms, 100ms increments).
+    Validate a Flux batch pause duration (500-3000ms, 100ms increments).
 
     Args:
         duration_ms: Pause duration in milliseconds
@@ -330,8 +374,8 @@ def validate_pause(duration_ms: int) -> Tuple[bool, str]:
     if duration_ms < 500:
         return False, "Pause duration must be at least 500ms"
 
-    if duration_ms > 5000:
-        return False, "Pause duration must not exceed 5000ms"
+    if duration_ms > 3000:
+        return False, "Pause duration must not exceed 3000ms"
 
     if duration_ms % 100 != 0:
         return False, "Pause duration must be in 100ms increments"

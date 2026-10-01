@@ -1,13 +1,12 @@
 #!/usr/bin/env python3
 """
-Example: TextBuilder with Streaming TTS (WebSocket)
+Example: Streaming TTS (no Flux batch-only pauses)
 
-This example demonstrates using TextBuilder with streaming text-to-speech
-over WebSocket for real-time audio generation.
+This example demonstrates streaming text-to-speech over WebSocket for
+real-time audio generation.
 
-The streaming API path shown here focuses on pronunciation controls. Inline
-pause tokens are omitted because the WebSocket endpoint may reject them with
-DATA-0002 policy violations.
+Flux pause controls are batch-only. Flux WebSocket supports pronunciation
+markers, but a pause marker is rejected with `DATA-0002`.
 """
 
 import os
@@ -15,29 +14,33 @@ import threading
 from typing import Union
 
 from deepgram import DeepgramClient
-from deepgram.helpers import TextBuilder
 from deepgram.core.events import EventType
+from deepgram.environment import DeepgramClientEnvironment
 from deepgram.speak.v1.types import SpeakV1Text
 
 SpeakV1SocketClientResponse = Union[str, bytes]
 
 
-def example_streaming_with_textbuilder():
-    """Stream TTS audio using TextBuilder for pronunciation control"""
-    print("Example: Streaming TTS with TextBuilder")
+def build_client(api_key: str) -> DeepgramClient:
+    """Use staging when DEEPGRAM_BASE_URL is set; otherwise use production."""
+    target = os.getenv("DEEPGRAM_BASE_URL")
+    if not target:
+        return DeepgramClient(api_key=api_key)
+
+    rest = target.rstrip("/").replace("wss://", "https://").replace("ws://", "http://")
+    websocket = rest.replace("https://", "wss://").replace("http://", "ws://")
+    return DeepgramClient(
+        api_key=api_key,
+        environment=DeepgramClientEnvironment(base=rest, production=websocket, agent=websocket, agent_rest=rest),
+    )
+
+
+def example_streaming():
+    """Stream TTS audio without Flux batch-only controls."""
+    print("Example: Streaming TTS")
     print("-" * 50)
 
-    # Build text with pronunciations and pauses
-    text = (
-        TextBuilder()
-        .text("Take ")
-        .pronunciation("azathioprine", "ˌæzəˈθaɪəpriːn")
-        .text(" twice daily with ")
-        .pronunciation("dupilumab", "duːˈpɪljuːmæb")
-        .text(" injections.")
-        .text(" Do not exceed prescribed dosage.")
-        .build()
-    )
+    text = "Take your medicine twice daily. Do not exceed the prescribed dosage."
 
     print(f"Generated text: {text}\n")
 
@@ -46,7 +49,7 @@ def example_streaming_with_textbuilder():
         print("ℹ Set DEEPGRAM_API_KEY to stream audio")
         return
 
-    client = DeepgramClient(api_key=api_key)
+    client = build_client(api_key)
 
     try:
         with client.speak.v1.connect(
@@ -71,7 +74,7 @@ def example_streaming_with_textbuilder():
             connection.on(EventType.CLOSE, lambda _: (print("✓ Connection closed"), closed_event.set()))
             connection.on(EventType.ERROR, lambda error: print(f"✗ Error: {error}"))
 
-            # Send the TextBuilder-generated text
+            # Send plain text for this Aura-2 streaming example.
             connection.send_text(SpeakV1Text(text=text))
 
             # Flush to ensure all text is processed
@@ -89,37 +92,21 @@ def example_streaming_with_textbuilder():
 
 
 def example_multiple_messages():
-    """Stream multiple TextBuilder messages sequentially"""
+    """Stream multiple plain-text messages sequentially."""
     print("\n\nExample: Multiple Messages with Streaming")
     print("-" * 50)
 
-    # Build multiple text segments
-    intro = TextBuilder().text("Welcome to your medication guide.").build()
-
-    instruction1 = (
-        TextBuilder()
-        .text("First, take ")
-        .pronunciation("methotrexate", "mɛθəˈtrɛkseɪt")
-        .text(" on Mondays.")
-        .build()
-    )
-
-    instruction2 = (
-        TextBuilder()
-        .text("Then, inject ")
-        .pronunciation("adalimumab", "ˌædəˈljuːməb")
-        .text(" on Fridays.")
-        .build()
-    )
-
-    closing = TextBuilder().text("Contact your doctor with any questions.").build()
+    intro = "Welcome to your medication guide."
+    instruction1 = "First, take your medicine on Mondays."
+    instruction2 = "Then, follow your injection schedule on Fridays."
+    closing = "Contact your doctor with any questions."
 
     api_key = os.getenv("DEEPGRAM_API_KEY")
     if not api_key:
         print("ℹ Set DEEPGRAM_API_KEY to stream audio")
         return
 
-    client = DeepgramClient(api_key=api_key)
+    client = build_client(api_key)
 
     try:
         with client.speak.v1.connect(
@@ -171,7 +158,7 @@ def main():
     if os.path.exists("streaming_multi.raw"):
         os.remove("streaming_multi.raw")
 
-    example_streaming_with_textbuilder()
+    example_streaming()
     example_multiple_messages()
 
     print("\n" + "=" * 50)

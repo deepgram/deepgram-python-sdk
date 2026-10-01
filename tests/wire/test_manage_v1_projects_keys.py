@@ -26,7 +26,6 @@ def test_manage_v1_projects_keys_create() -> None:
 
 
 def test_manage_v1_projects_keys_create_with_old_request_alias() -> None:
-    """Test create endpoint with the legacy request alias."""
     test_id = "manage.v1.projects.keys.create.compat"
     client = get_client(test_id)
     request: CreateKeyV1RequestOneParams = {"key": "value"}
