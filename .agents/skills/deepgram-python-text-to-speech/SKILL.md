@@ -148,7 +148,7 @@ WSS client messages: `SpeakV1Text`, `Flush`, `Clear`, `Close`.
 - `examples/21-text-to-speech-streaming.py` — WSS streaming
 - `examples/22-text-builder-demo.py` — TextBuilder (no API key)
 - `examples/23-text-builder-helper.py` — TextBuilder + REST
-- `examples/24-text-builder-streaming.py` — plain-text WSS; Flux controls are batch-only
+- `examples/24-text-builder-streaming.py` — plain-text WSS; Flux pause controls are batch-only
 - `tests/wire/test_speak_v1_audio.py` — REST wire test
 - `tests/manual/speak/v1/connect/main.py` — live WSS test
 
