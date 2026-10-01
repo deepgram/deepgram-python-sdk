@@ -18,8 +18,10 @@ class SharedIntents(UncheckedBaseModel):
     segments: typing.Optional[typing.List[SharedIntentsSegmentsItem]] = None
 
     @property
-    def results(self) -> SharedIntentsResults:
+    def results(self) -> typing.Optional[SharedIntentsResults]:
         """Deprecated facade for the pre-7.12 ``results.intents.segments`` path."""
+        if self.segments is None:
+            return None
         return SharedIntentsResults(intents=SharedIntentsResultsIntents(segments=self.segments))
 
     if IS_PYDANTIC_V2:

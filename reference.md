@@ -6071,7 +6071,7 @@ asyncio.run(main())
 <dl>
 <dd>
 
-**speed:** `typing.Optional[SpeakV2Speed]` — Speech-rate multiplier. `1.0` is the model's nominal rate; lower is slower. Accepted values run `0.5` to `1.5` in `0.05` increments. A value outside that range is rejected with `SPEED_OUT_OF_RANGE`; a value inside it but off the `0.05` increment with `SPEED_INCREMENT_INVALID`. Models and languages without runtime speed control reject any value with `SPEED_NOT_SUPPORTED`. A non-default speed cannot be combined with a pronunciation control in the same WebSocket session; that turn fails with `DATA-0002`. See [Flux TTS Controls](./docs/FluxTtsControls.md).
+**speed:** `typing.Optional[SpeakV2Speed]` — Speech-rate multiplier. `1.0` is the model's nominal rate; lower is slower. Accepted values run `0.5` to `1.5` in `0.05` increments. A value outside that range is rejected with `SPEED_OUT_OF_RANGE`; a value inside it but off the `0.05` increment with `SPEED_INCREMENT_INVALID`. Models and languages without runtime speed control reject any value with `SPEED_NOT_SUPPORTED`. A pronunciation control on a connection opened or configured with non-default speed fails with `DATA-0002`. A `Configure` speed change is rejected only while a buffered turn contains a pronunciation control; flush that turn first. See [Flux TTS Controls](./docs/FluxTtsControls.md).
 
 </dd>
 </dl>

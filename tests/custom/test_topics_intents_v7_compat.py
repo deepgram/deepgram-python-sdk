@@ -88,3 +88,10 @@ def test_legacy_topics_and_intents_types_and_params_are_importable() -> None:
     intent_segments: SharedIntentsResultsIntentsParams = {"segments": []}
     assert topics["topics"] == topic_segments
     assert intents["intents"] == intent_segments
+
+
+def test_empty_legacy_topics_and_intents_results_remain_none() -> None:
+    assert SharedTopics().results is None
+    assert SharedIntents().results is None
+    assert SharedTopics(results=None).results is None
+    assert SharedIntents(results=None).results is None

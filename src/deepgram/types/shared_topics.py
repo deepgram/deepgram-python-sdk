@@ -18,8 +18,10 @@ class SharedTopics(UncheckedBaseModel):
     segments: typing.Optional[typing.List[SharedTopicsSegmentsItem]] = None
 
     @property
-    def results(self) -> SharedTopicsResults:
+    def results(self) -> typing.Optional[SharedTopicsResults]:
         """Deprecated facade for the pre-7.12 ``results.topics.segments`` path."""
+        if self.segments is None:
+            return None
         return SharedTopicsResults(topics=SharedTopicsResultsTopics(segments=self.segments))
 
     if IS_PYDANTIC_V2:
