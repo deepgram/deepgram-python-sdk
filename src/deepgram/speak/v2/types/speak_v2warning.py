@@ -22,7 +22,7 @@ class SpeakV2Warning(UncheckedBaseModel):
     Pronunciation codes: `PRONUNCIATION_WARNINGS` (a pronunciation override contained invalid IPA; it is still applied best-effort and counted in `pronunciations_applied`), `PRONUNCIATION_TOO_LONG` (an IPA string exceeded the length limit), `PRONUNCIATIONS_LIMIT_EXCEEDED` (too many pronunciation controls in one turn).
 
     Pause codes (`BREAKS_LIMIT_EXCEEDED`, `BREAK_TOKENS_OUT_OF_RANGE`, `BREAK_TOKENS_WITH_INVALID_INCREMENTS`) are reserved and not emitted: inline pause controls are batch-only, and a pause marker on the WebSocket fails the connection instead.
-    
+
     Interrupt-scoped codes, each meaning the `Interrupt` was ignored: `NO_AUDIO_GENERATED` (the session has produced no audio yet, so there is nothing to interrupt), `INTERRUPT_IN_PROGRESS` (an earlier `Interrupt` is still being processed — at most one is handled at a time), `INVALID_INTERRUPT_OFFSET` (the `playback_offset` did not advance past the position a prior interrupt established).
     """
 
