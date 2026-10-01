@@ -3,6 +3,6 @@
 import typing_extensions
 
 
-class SharedTopicsResultsTopicsSegmentsItemTopicsItemParams(typing_extensions.TypedDict):
+class SharedTopicsSegmentsItemTopicsItemParams(typing_extensions.TypedDict):
     topic: typing_extensions.NotRequired[str]
     confidence_score: typing_extensions.NotRequired[float]

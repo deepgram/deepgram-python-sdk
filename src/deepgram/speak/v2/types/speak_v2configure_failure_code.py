@@ -3,5 +3,12 @@
 import typing
 
 SpeakV2ConfigureFailureCode = typing.Union[
-    typing.Literal["SPEED_OUT_OF_RANGE", "SPEED_INCREMENT_INVALID", "SPEED_NOT_SUPPORTED", "INTERNAL_ERROR"], typing.Any
+    typing.Literal[
+        "SPEED_OUT_OF_RANGE",
+        "SPEED_INCREMENT_INVALID",
+        "SPEED_NOT_SUPPORTED",
+        "CONTROL_COMBINATION_INVALID",
+        "INTERNAL_ERROR",
+    ],
+    typing.Any,
 ]

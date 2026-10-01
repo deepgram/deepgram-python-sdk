@@ -5,16 +5,11 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .shared_intents_results_intents_segments_item_intents_item import (
-    SharedIntentsResultsIntentsSegmentsItemIntentsItem,
-)
 
 
-class SharedIntentsResultsIntentsSegmentsItem(UncheckedBaseModel):
-    text: typing.Optional[str] = None
-    start_word: typing.Optional[float] = None
-    end_word: typing.Optional[float] = None
-    intents: typing.Optional[typing.List[SharedIntentsResultsIntentsSegmentsItemIntentsItem]] = None
+class SharedIntentsSegmentsItemIntentsItem(UncheckedBaseModel):
+    intent: typing.Optional[str] = None
+    confidence_score: typing.Optional[float] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

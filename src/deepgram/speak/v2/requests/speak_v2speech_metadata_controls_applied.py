@@ -5,20 +5,20 @@ import typing_extensions
 
 class SpeakV2SpeechMetadataControlsAppliedParams(typing_extensions.TypedDict):
     """
-    Counts of the inline controls the server acted on during the turn. Inline pause and pronunciation controls are not applied at launch — support is coming soon — so every count is currently `0`.
+    Counts of the inline controls the server acted on during the turn. A pronunciation override that triggers an IPA warning is still applied best-effort and counted in `pronunciations_applied`; the warning is reported separately through a `Warning` and `pronunciation_warnings`.
     """
 
     pronunciations_applied: int
     """
-    Pronunciation overrides successfully applied. Mirrors the Aura-2 `dg-pronunciations-applied` REST header. Currently always `0`.
+    Pronunciation overrides successfully applied. Mirrors the Aura-2 `dg-pronunciations-applied` REST header.
     """
 
     breaks_applied: int
     """
-    Pause (break) controls successfully applied. Mirrors the Aura-2 `dg-breaks-applied` REST header. Currently always `0`.
+    Pause (break) controls successfully applied. Mirrors the Aura-2 `dg-breaks-applied` REST header. Always `0` on the WebSocket, where inline pause controls are not supported.
     """
 
     pronunciation_warnings: int
     """
-    Pronunciation entries that triggered a warning (invalid IPA, word too long). Mirrors the Aura-2 `dg-pronunciation-warnings` REST header. Currently always `0`.
+    Pronunciation entries that triggered a warning (invalid IPA, word too long). On batch requests the corresponding `PRON-NNN` codes are returned in the `dg-warnings` response header.
     """

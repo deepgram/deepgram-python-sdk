@@ -5,8 +5,8 @@ import typing
 import typing_extensions
 
 
-class ListenV2ConfigureFailureParams(typing_extensions.TypedDict):
-    type: typing.Literal["ConfigureFailure"]
+class ListenV2WarningParams(typing_extensions.TypedDict):
+    type: typing.Literal["Warning"]
     """
     Message type identifier
     """
@@ -19,16 +19,16 @@ class ListenV2ConfigureFailureParams(typing_extensions.TypedDict):
     sequence_id: int
     """
     Starts at `0` and increments for each message the server sends
-    to the client.  This includes messages of other types, like
+    to the client. This includes messages of other types, like
     `TurnInfo` messages.
     """
 
-    code: typing_extensions.NotRequired[str]
+    code: str
     """
-    Failure code identifying the rejected configuration
+    Warning code identifying the condition, in `SCREAMING_SNAKE_CASE`
     """
 
-    description: typing_extensions.NotRequired[str]
+    description: str
     """
-    A human-readable description of the configuration failure
+    A human-readable description of the warning
     """

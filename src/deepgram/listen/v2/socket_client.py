@@ -3,7 +3,9 @@
 import json
 import logging
 import typing
+from json.decoder import JSONDecodeError
 
+import websockets
 import websockets.sync.connection as websockets_sync_connection
 from ...core.events import EventEmitterMixin, EventType
 from ...core.unchecked_base_model import construct_type
@@ -15,6 +17,7 @@ from .types.listen_v2connected import ListenV2Connected
 from .types.listen_v2fatal_error import ListenV2FatalError
 from .types.listen_v2force_end_turn import ListenV2ForceEndTurn
 from .types.listen_v2turn_info import ListenV2TurnInfo
+from .types.listen_v2warning import ListenV2Warning
 
 try:
     from websockets.legacy.client import WebSocketClientProtocol  # type: ignore
@@ -23,7 +26,12 @@ except ImportError:
 
 _logger = logging.getLogger(__name__)
 V2SocketClientResponse = typing.Union[
-    ListenV2Connected, ListenV2TurnInfo, ListenV2ConfigureSuccess, ListenV2ConfigureFailure, ListenV2FatalError
+    ListenV2Connected,
+    ListenV2TurnInfo,
+    ListenV2ConfigureSuccess,
+    ListenV2ConfigureFailure,
+    ListenV2Warning,
+    ListenV2FatalError,
 ]
 
 
@@ -70,7 +78,7 @@ class AsyncV2SocketClient(EventEmitterMixin):
                         )
                         continue
                 await self._emit_async(EventType.MESSAGE, parsed)
-        except Exception as exc:
+        except (websockets.WebSocketException, JSONDecodeError) as exc:
             await self._emit_async(EventType.ERROR, exc)
         finally:
             await self._emit_async(EventType.CLOSE, None)
@@ -82,31 +90,26 @@ class AsyncV2SocketClient(EventEmitterMixin):
         """
         await self._send(message)
 
-    async def send_close_stream(self, message: typing.Optional[ListenV2CloseStream] = None) -> None:
+    async def send_close_stream(self, message: ListenV2CloseStream) -> None:
         """
         Send a message to the websocket connection.
         The message will be sent as a ListenV2CloseStream.
         """
-        await self._send_model(message or ListenV2CloseStream(type="CloseStream"))
+        await self._send_model(message)
 
-    async def send_force_end_turn(self, message: typing.Optional[ListenV2ForceEndTurn] = None) -> None:
+    async def send_force_end_turn(self, message: ListenV2ForceEndTurn) -> None:
         """
         Send a message to the websocket connection.
         The message will be sent as a ListenV2ForceEndTurn.
-        This requires server-side enablement. On deployments without the feature, the server returns
-        UNPARSABLE_CLIENT_MESSAGE and closes the connection.
         """
-        await self._send_model(message or ListenV2ForceEndTurn(type="ForceEndTurn"))
+        await self._send_model(message)
 
-    async def send_configure(self, message: typing.Union[ListenV2Configure, typing.Dict[str, typing.Any]]) -> None:
+    async def send_configure(self, message: ListenV2Configure) -> None:
         """
         Send a message to the websocket connection.
         The message will be sent as a ListenV2Configure.
         """
-        if isinstance(message, dict):
-            await self._send(message)
-        else:
-            await self._send_model(message)
+        await self._send_model(message)
 
     async def recv(self) -> V2SocketClientResponse:
         """
@@ -180,7 +183,7 @@ class V2SocketClient(EventEmitterMixin):
                         )
                         continue
                 self._emit(EventType.MESSAGE, parsed)
-        except Exception as exc:
+        except (websockets.WebSocketException, JSONDecodeError) as exc:
             self._emit(EventType.ERROR, exc)
         finally:
             self._emit(EventType.CLOSE, None)
@@ -192,31 +195,26 @@ class V2SocketClient(EventEmitterMixin):
         """
         self._send(message)
 
-    def send_close_stream(self, message: typing.Optional[ListenV2CloseStream] = None) -> None:
+    def send_close_stream(self, message: ListenV2CloseStream) -> None:
         """
         Send a message to the websocket connection.
         The message will be sent as a ListenV2CloseStream.
         """
-        self._send_model(message or ListenV2CloseStream(type="CloseStream"))
+        self._send_model(message)
 
-    def send_force_end_turn(self, message: typing.Optional[ListenV2ForceEndTurn] = None) -> None:
+    def send_force_end_turn(self, message: ListenV2ForceEndTurn) -> None:
         """
         Send a message to the websocket connection.
         The message will be sent as a ListenV2ForceEndTurn.
-        This requires server-side enablement. On deployments without the feature, the server returns
-        UNPARSABLE_CLIENT_MESSAGE and closes the connection.
         """
-        self._send_model(message or ListenV2ForceEndTurn(type="ForceEndTurn"))
+        self._send_model(message)
 
-    def send_configure(self, message: typing.Union[ListenV2Configure, typing.Dict[str, typing.Any]]) -> None:
+    def send_configure(self, message: ListenV2Configure) -> None:
         """
         Send a message to the websocket connection.
         The message will be sent as a ListenV2Configure.
         """
-        if isinstance(message, dict):
-            self._send(message)
-        else:
-            self._send_model(message)
+        self._send_model(message)
 
     def recv(self) -> V2SocketClientResponse:
         """

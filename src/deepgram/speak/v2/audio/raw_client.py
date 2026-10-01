@@ -52,7 +52,7 @@ class RawAudioClient:
             Flux TTS model used to synthesize the submitted text, in the form `flux-{voice}-{language}` (for example, `flux-alexis-en`). Required; unlike the v1 (Aura) endpoint there is no default and only flux models are accepted. English-only at launch.
 
         text : str
-            The text content to be converted to speech. The server normalizes and preprocesses the text before synthesis. Inline pause and pronunciation controls are not yet applied; they are stripped from the text before synthesis.
+            The text content to be converted to speech. The server normalizes and preprocesses the text before synthesis. May contain inline pause controls (`\\{pause:500ms\\}`, 500-3000 ms in 100 ms steps, at most 8 per request) and inline pronunciation controls (`\\{"word": "...", "pronounce": "<IPA>"\\}`, Early Access). Pronunciation cannot be combined with pause or with a `speed` other than `1.0`, and `speed` is capped at `1.15` when a pause is present. See [Speed, Pause, Pronunciation](/docs/tts-voice-controls).
 
         callback : typing.Optional[str]
             URL to which we'll make the callback request
@@ -82,7 +82,7 @@ class RawAudioClient:
             Sample Rate specifies the sample rate for the output audio. Based on the encoding, different sample rates are supported. For some encodings, the sample rate is not configurable
 
         speed : typing.Optional[float]
-            Speaking rate multiplier that adjusts the pace of generated speech while preserving natural prosody and voice quality. Accepted values run `0.5` to `1.5` in `0.05` increments. Not yet supported in all languages.
+            Speaking rate multiplier that adjusts the pace of generated speech while preserving natural prosody and voice quality. Accepted values run `0.5` to `1.5` in `0.05` increments. Not yet supported in all languages. When the text contains an inline pause marker, speed is capped at `1.15` (`PAUSE_SPEED_CAP_EXCEEDED` above that). A value other than `1.0` cannot be combined with inline pronunciation controls (`CONTROL_COMBINATION_INVALID`).
 
         priority : typing.Optional[typing.Literal["low"]]
             Processing priority for asynchronous (callback) requests. The only supported value is low.
@@ -191,7 +191,7 @@ class AsyncRawAudioClient:
             Flux TTS model used to synthesize the submitted text, in the form `flux-{voice}-{language}` (for example, `flux-alexis-en`). Required; unlike the v1 (Aura) endpoint there is no default and only flux models are accepted. English-only at launch.
 
         text : str
-            The text content to be converted to speech. The server normalizes and preprocesses the text before synthesis. Inline pause and pronunciation controls are not yet applied; they are stripped from the text before synthesis.
+            The text content to be converted to speech. The server normalizes and preprocesses the text before synthesis. May contain inline pause controls (`\\{pause:500ms\\}`, 500-3000 ms in 100 ms steps, at most 8 per request) and inline pronunciation controls (`\\{"word": "...", "pronounce": "<IPA>"\\}`, Early Access). Pronunciation cannot be combined with pause or with a `speed` other than `1.0`, and `speed` is capped at `1.15` when a pause is present. See [Speed, Pause, Pronunciation](/docs/tts-voice-controls).
 
         callback : typing.Optional[str]
             URL to which we'll make the callback request
@@ -221,7 +221,7 @@ class AsyncRawAudioClient:
             Sample Rate specifies the sample rate for the output audio. Based on the encoding, different sample rates are supported. For some encodings, the sample rate is not configurable
 
         speed : typing.Optional[float]
-            Speaking rate multiplier that adjusts the pace of generated speech while preserving natural prosody and voice quality. Accepted values run `0.5` to `1.5` in `0.05` increments. Not yet supported in all languages.
+            Speaking rate multiplier that adjusts the pace of generated speech while preserving natural prosody and voice quality. Accepted values run `0.5` to `1.5` in `0.05` increments. Not yet supported in all languages. When the text contains an inline pause marker, speed is capped at `1.15` (`PAUSE_SPEED_CAP_EXCEEDED` above that). A value other than `1.0` cannot be combined with inline pronunciation controls (`CONTROL_COMBINATION_INVALID`).
 
         priority : typing.Optional[typing.Literal["low"]]
             Processing priority for asynchronous (callback) requests. The only supported value is low.

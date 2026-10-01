@@ -3,6 +3,6 @@
 import typing_extensions
 
 
-class SharedIntentsResultsIntentsSegmentsItemIntentsItemParams(typing_extensions.TypedDict):
+class SharedIntentsSegmentsItemIntentsItemParams(typing_extensions.TypedDict):
     intent: typing_extensions.NotRequired[str]
     confidence_score: typing_extensions.NotRequired[float]

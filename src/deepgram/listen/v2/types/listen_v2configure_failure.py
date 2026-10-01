@@ -4,10 +4,10 @@ import typing
 
 import pydantic
 from ....core.pydantic_utilities import IS_PYDANTIC_V2
-from ._dict_compat import ListenV2ResponseDictCompatModel
+from ....core.unchecked_base_model import UncheckedBaseModel
 
 
-class ListenV2ConfigureFailure(ListenV2ResponseDictCompatModel):
+class ListenV2ConfigureFailure(UncheckedBaseModel):
     type: typing.Literal["ConfigureFailure"] = pydantic.Field(default="ConfigureFailure")
     """
     Message type identifier
@@ -23,6 +23,16 @@ class ListenV2ConfigureFailure(ListenV2ResponseDictCompatModel):
     Starts at `0` and increments for each message the server sends
     to the client.  This includes messages of other types, like
     `TurnInfo` messages.
+    """
+
+    code: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Failure code identifying the rejected configuration
+    """
+
+    description: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    A human-readable description of the configuration failure
     """
 
     if IS_PYDANTIC_V2:

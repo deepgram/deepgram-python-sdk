@@ -5,23 +5,34 @@ import typing
 import pydantic
 from ....core.pydantic_utilities import IS_PYDANTIC_V2
 from ....core.unchecked_base_model import UncheckedBaseModel
-from .speak_v2error_code import SpeakV2ErrorCode
 
 
-class SpeakV2Error(UncheckedBaseModel):
-    type: typing.Literal["Error"] = pydantic.Field(default="Error")
+class ListenV2Warning(UncheckedBaseModel):
+    type: typing.Literal["Warning"] = pydantic.Field(default="Warning")
     """
     Message type identifier
     """
 
-    code: SpeakV2ErrorCode = pydantic.Field()
+    request_id: str = pydantic.Field()
     """
-    A code identifying the error, e.g. `MESSAGE-0000` or `NET-0000`. `DATA-0002` covers invalid inline controls and speed, including an inline pause marker (pause is batch-only) and a pronunciation control combined with a `speed` other than `1.0`; `description` names the specific rule.
+    The unique identifier of the request
+    """
+
+    sequence_id: int = pydantic.Field()
+    """
+    Starts at `0` and increments for each message the server sends
+    to the client. This includes messages of other types, like
+    `TurnInfo` messages.
+    """
+
+    code: str = pydantic.Field()
+    """
+    Warning code identifying the condition, in `SCREAMING_SNAKE_CASE`
     """
 
     description: str = pydantic.Field()
     """
-    Prose description of the error
+    A human-readable description of the warning
     """
 
     if IS_PYDANTIC_V2:

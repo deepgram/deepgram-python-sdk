@@ -5,7 +5,7 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .shared_topics_results import SharedTopicsResults
+from .shared_topics_segments_item import SharedTopicsSegmentsItem
 
 
 class SharedTopics(UncheckedBaseModel):
@@ -13,7 +13,7 @@ class SharedTopics(UncheckedBaseModel):
     Output whenever `topics=true` is used
     """
 
-    results: typing.Optional[SharedTopicsResults] = None
+    segments: typing.Optional[typing.List[SharedTopicsSegmentsItem]] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

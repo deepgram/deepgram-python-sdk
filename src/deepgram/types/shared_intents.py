@@ -5,7 +5,7 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
-from .shared_intents_results import SharedIntentsResults
+from .shared_intents_segments_item import SharedIntentsSegmentsItem
 
 
 class SharedIntents(UncheckedBaseModel):
@@ -13,7 +13,7 @@ class SharedIntents(UncheckedBaseModel):
     Output whenever `intents=true` is used
     """
 
-    results: typing.Optional[SharedIntentsResults] = None
+    segments: typing.Optional[typing.List[SharedIntentsSegmentsItem]] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
