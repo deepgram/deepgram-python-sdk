@@ -23,8 +23,36 @@ class SharedTopics(UncheckedBaseModel):
         return SharedTopicsResults(topics=SharedTopicsResultsTopics(segments=self.segments))
 
     if IS_PYDANTIC_V2:
+
+        @pydantic.model_validator(mode="before")
+        @classmethod
+        def _migrate_legacy_results(cls, values: typing.Any) -> typing.Any:
+            if not isinstance(values, dict) or "results" not in values:
+                return values
+            values = dict(values)
+            results = values.pop("results")
+            if "segments" in values:
+                return values
+            topics = results.get("topics") if isinstance(results, dict) else getattr(results, "topics", None)
+            if topics is not None:
+                values["segments"] = topics.get("segments") if isinstance(topics, dict) else topics.segments
+            return values
+
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:
+
+        @pydantic.root_validator(pre=True)  # type: ignore[deprecated]
+        def _migrate_legacy_results(cls, values: typing.Any) -> typing.Any:  # type: ignore[no-redef]
+            if not isinstance(values, dict) or "results" not in values:
+                return values
+            values = dict(values)
+            results = values.pop("results")
+            if "segments" in values:
+                return values
+            topics = results.get("topics") if isinstance(results, dict) else getattr(results, "topics", None)
+            if topics is not None:
+                values["segments"] = topics.get("segments") if isinstance(topics, dict) else topics.segments
+            return values
 
         class Config:
             frozen = True

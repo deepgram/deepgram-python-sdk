@@ -89,7 +89,7 @@ def test_text_builder_fluent_build() -> None:
         .text(" daily.")
         .build()
     )
-    assert "pronounce" in text and "{pause:500}" in text
+    assert "pronounce" in text and r"\{pause:500ms\}" in text
 
 
 def test_text_builder_validation_errors() -> None:
@@ -118,13 +118,12 @@ def test_add_pronunciation_and_ssml() -> None:
 
     ssml = '<speak>Take <phoneme alphabet="ipa" ph="ˌæz">azathioprine</phoneme> <break time="0.5s"/> now</speak>'
     converted = ssml_to_deepgram(ssml)
-    assert "pronounce" in converted and "{pause:500}" in converted
+    assert "pronounce" in converted and r"\{pause:500ms\}" in converted
 
-    # break in milliseconds + an out-of-range value that gets rounded to a valid one
-    rounded = ssml_to_deepgram('Wait <break time="123ms"/> here')
-    assert "{pause:" in rounded
+    with pytest.raises(ValueError, match="at least 500ms"):
+        ssml_to_deepgram('Wait <break time="123ms"/> here')
 
 
 def test_text_builder_from_ssml_updates_counts() -> None:
     builder = TextBuilder().from_ssml('Hi <break time="500ms"/> there')
-    assert "{pause:500}" in builder.build()
+    assert r"\{pause:500ms\}" in builder.build()

@@ -10,7 +10,7 @@ import os
 from deepgram import AsyncDeepgramClient
 from deepgram.core.api_error import ApiError
 from deepgram.environment import DeepgramClientEnvironment
-from deepgram.speak.v2.types import SpeakV2Speak
+from deepgram.speak.v2.types import SpeakV2Error, SpeakV2Speak
 
 
 def _environment() -> DeepgramClientEnvironment:
@@ -23,18 +23,20 @@ def _environment() -> DeepgramClientEnvironment:
 
 
 async def _batch(client: AsyncDeepgramClient) -> None:
-    async for _ in client.speak.v2.audio.generate(model="flux-alexis-en", text="Hello {pause:500}there."):
+    async for _ in client.speak.v2.audio.generate(model="flux-alexis-en", text=r"Hello \{pause:500ms\}there."):
         break
     async for _ in client.speak.v2.audio.generate(
-        model="flux-alexis-en", text='Hello {"word":"Deepgram","pronounce":"diːpɡræm"}.'
+        model="flux-alexis-en", text=r'Hello \{"word": "Deepgram", "pronounce": "diːpɡræm"\}.'
     ):
         break
     try:
         async for _ in client.speak.v2.audio.generate(
-            model="flux-alexis-en", text='{"word":"Deepgram","pronounce":"diːpɡræm"}', speed=1.1
+            model="flux-alexis-en", text=r'\{"word": "Deepgram", "pronounce": "diːpɡræm"\}', speed=1.1
         ):
             pass
     except ApiError as exc:
+        if exc.status_code != 400 or exc.body.get("err_code") != "CONTROL_COMBINATION_INVALID":
+            raise AssertionError(f"expected CONTROL_COMBINATION_INVALID, received {exc}") from exc
         print(f"Expected batch control rejection: {exc.status_code}")
     else:
         raise AssertionError("batch speed plus pronunciation should be rejected")
@@ -42,12 +44,22 @@ async def _batch(client: AsyncDeepgramClient) -> None:
 
 async def _streaming(client: AsyncDeepgramClient) -> None:
     async with client.speak.v2.connect(model="flux-alexis-en") as connection:
-        await connection.send_speak(SpeakV2Speak(text='{"word":"Deepgram","pronounce":"diːpɡræm"}'))
+        await connection.send_speak(SpeakV2Speak(text=r'\{"word": "Deepgram", "pronounce": "diːpɡræm"\}'))
         await connection.send_flush()
         while True:
             message = await asyncio.wait_for(connection.recv(), timeout=10)
             if getattr(message, "type", None) == "SpeechMetadata":
                 print(f"Streaming pronunciation controls: {message.controls_applied}")
+                break
+
+        await connection.send_speak(SpeakV2Speak(text=r"\{pause:500ms\}"))
+        await connection.send_flush()
+        while True:
+            message = await asyncio.wait_for(connection.recv(), timeout=10)
+            if isinstance(message, SpeakV2Error):
+                if message.code != "DATA-0002":
+                    raise AssertionError(f"expected DATA-0002 for a streaming pause, received {message.code}")
+                print("Streaming pauses rejected with DATA-0002")
                 return
 
 

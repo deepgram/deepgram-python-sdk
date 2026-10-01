@@ -32,8 +32,7 @@ class TestTextBuilder:
         """Test adding pronunciation"""
         builder = TextBuilder()
         result = builder.pronunciation("azathioprine", "ˌæzəˈθaɪəpriːn").build()
-        assert '"word": "azathioprine"' in result
-        assert '"pronounce": "ˌæzəˈθaɪəpriːn"' in result
+        assert result == r'\{"word": "azathioprine", "pronounce": "ˌæzəˈθaɪəpriːn"\}'
     
     def test_text_with_pronunciation(self):
         """Test mixing text and pronunciation"""
@@ -53,7 +52,7 @@ class TestTextBuilder:
         """Test adding pause"""
         builder = TextBuilder()
         result = builder.pause(500).build()
-        assert result == "{pause:500}"
+        assert result == r"\{pause:500ms\}"
     
     def test_text_with_pause(self):
         """Test mixing text and pause"""
@@ -65,7 +64,7 @@ class TestTextBuilder:
             .text("world")
             .build()
         )
-        assert result == "Hello{pause:1000}world"
+        assert result == r"Hello\{pause:1000ms\}world"
     
     def test_complex_chain(self):
         """Test complex chaining with all features"""
@@ -87,7 +86,7 @@ class TestTextBuilder:
         assert " twice daily with " in result
         assert '"word": "dupilumab"' in result
         assert " injections" in result
-        assert "{pause:500}" in result
+        assert r"\{pause:500ms\}" in result
         assert " Do not exceed prescribed dosage." in result
     
     def test_pronunciation_limit(self):
@@ -111,6 +110,19 @@ class TestTextBuilder:
 
         with pytest.raises(ValueError, match="Maximum 8 pauses"):
             builder.pause(500)
+
+    def test_text_enforces_embedded_control_limits(self):
+        builder = TextBuilder().text(r"\{pause:500ms\}" * 8)
+        with pytest.raises(ValueError, match="Maximum 8 pauses"):
+            builder.text(r"\{pause:500ms\}")
+        with pytest.raises(ValueError, match="100ms increments"):
+            TextBuilder().text(r"\{pause:550ms\}")
+
+    def test_text_enforces_embedded_pronunciation_limit(self):
+        pronunciation = r'\{"word": "word", "pronounce": "test"\}'
+        builder = TextBuilder().text(pronunciation * 500)
+        with pytest.raises(ValueError, match="Maximum 500 pronunciations"):
+            builder.text(pronunciation)
     
     def test_character_limit(self):
         """Test character count validation (2000 max)"""
@@ -168,12 +180,12 @@ class TestTextBuilder:
         
         # Minimum valid
         result1 = builder.pause(500).build()
-        assert "{pause:500}" in result1
+        assert r"\{pause:500ms\}" in result1
         
         # Maximum valid
         builder2 = TextBuilder()
         result2 = builder2.pause(3000).build()
-        assert "{pause:3000}" in result2
+        assert r"\{pause:3000ms\}" in result2
 
 
 class TestAddPronunciation:
@@ -184,10 +196,7 @@ class TestAddPronunciation:
         text = "Take azathioprine twice daily."
         result = add_pronunciation(text, "azathioprine", "ˌæzəˈθaɪəpriːn")
         
-        assert '"word": "azathioprine"' in result
-        assert '"pronounce": "ˌæzəˈθaɪəpriːn"' in result
-        assert "Take " in result
-        assert " twice daily." in result
+        assert result == r'Take \{"word": "azathioprine", "pronounce": "ˌæzəˈθaɪəpriːn"\} twice daily.'
     
     def test_multiple_replacements(self):
         """Test replacing multiple words"""
@@ -234,8 +243,7 @@ class TestSsmlToDeepgram:
         ssml = '<phoneme alphabet="ipa" ph="ˌæzəˈθaɪəpriːn">azathioprine</phoneme>'
         result = ssml_to_deepgram(ssml)
 
-        assert '"word": "azathioprine"' in result
-        assert '"pronounce": "ˌæzəˈθaɪəpriːn"' in result
+        assert result == r'\{"word": "azathioprine", "pronounce": "ˌæzəˈθaɪəpriːn"\}'
 
     def test_phoneme_attribute_order_independent(self):
         """ph before alphabet must work too (SSML attribute order is not significant)"""
@@ -284,14 +292,14 @@ class TestSsmlToDeepgram:
         ssml = '<break time="500ms"/>'
         result = ssml_to_deepgram(ssml)
         
-        assert result == "{pause:500}"
+        assert result == r"\{pause:500ms\}"
     
     def test_break_seconds(self):
         """Test converting break tag (seconds)"""
         ssml = '<break time="0.5s"/>'
         result = ssml_to_deepgram(ssml)
         
-        assert result == "{pause:500}"
+        assert result == r"\{pause:500ms\}"
     
     def test_speak_wrapper(self):
         """Test handling <speak> wrapper tag"""
@@ -309,7 +317,7 @@ class TestSsmlToDeepgram:
         result = ssml_to_deepgram(ssml)
         
         assert '"word": "azathioprine"' in result
-        assert "{pause:500}" in result
+        assert r"\{pause:500ms\}" in result
         assert "Do not exceed dosage." in result
     
     def test_multiple_phonemes(self):
@@ -329,12 +337,10 @@ class TestSsmlToDeepgram:
         assert result == text
     
     def test_break_out_of_range(self):
-        """Test break with out-of-range duration (should round to valid)"""
+        """SSML breaks must meet the Flux batch duration contract."""
         ssml = '<break time="250ms"/>'
-        result = ssml_to_deepgram(ssml)
-        
-        # Should round to nearest valid value (500ms)
-        assert "{pause:" in result
+        with pytest.raises(ValueError, match="at least 500ms"):
+            ssml_to_deepgram(ssml)
 
 
 class TestFromSsml:
@@ -361,7 +367,7 @@ class TestFromSsml:
         )
         
         assert '"word": "medicine"' in result
-        assert "{pause:500}" in result
+        assert r"\{pause:500ms\}" in result
         assert "Do not exceed dosage." in result
     
     def test_from_ssml_counts_pronunciations(self):
@@ -379,6 +385,16 @@ class TestFromSsml:
         # Should hit the limit
         with pytest.raises(ValueError, match="Maximum 500 pronunciations"):
             builder.pronunciation("extra", "test")
+
+    def test_from_ssml_enforces_pause_limit(self):
+        ssml = '<break time="500ms"/>' * 9
+        with pytest.raises(ValueError, match="Maximum 8 pauses"):
+            TextBuilder().from_ssml(ssml)
+
+    def test_from_ssml_enforces_pronunciation_limit(self):
+        ssml = "".join('<phoneme alphabet="ipa" ph="test">word</phoneme>' for _ in range(501))
+        with pytest.raises(ValueError, match="Maximum 500 pronunciations"):
+            TextBuilder().from_ssml(ssml)
 
 
 class TestValidateIpa:
@@ -488,7 +504,7 @@ class TestIntegration:
         assert '"word": "dupilumab"' in text
         assert '"pronounce": "duːˈpɪljuːmæb"' in text
         assert " injections" in text
-        assert "{pause:500}" in text
+        assert r"\{pause:500ms\}" in text
         assert " Do not exceed prescribed dosage." in text
     
     def test_ssml_migration(self):
@@ -506,9 +522,9 @@ class TestIntegration:
         
         # Both should produce similar results
         assert '"word": "azathioprine"' in text1
-        assert "{pause:500}" in text1
+        assert r"\{pause:500ms\}" in text1
         assert '"word": "azathioprine"' in text2
-        assert "{pause:500}" in text2
+        assert r"\{pause:500ms\}" in text2
     
     def test_builder_with_ssml_and_additions(self):
         """Test the mixed usage example from the spec"""
@@ -525,7 +541,7 @@ class TestIntegration:
         )
         
         assert '"word": "medicine"' in text
-        assert "{pause:500}" in text
+        assert r"\{pause:500ms\}" in text
         assert " Do not exceed prescribed dosage." in text
     
     def test_standalone_function_workflow(self):

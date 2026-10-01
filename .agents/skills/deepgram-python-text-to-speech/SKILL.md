@@ -75,9 +75,9 @@ with client.speak.v1.connect(
 
 In **sync** mode, `start_listening()` blocks — send all text + flush + close BEFORE calling it, OR run it in a thread. In **async** mode, run `start_listening()` as a task and send concurrently.
 
-## TextBuilder helper (incremental text assembly)
+## TextBuilder helper (Flux batch controls)
 
-`deepgram.helpers.TextBuilder` is a hand-maintained helper (NOT Fern-generated) that assembles text incrementally — useful when streaming LLM tokens into TTS.
+`deepgram.helpers.TextBuilder` is a hand-maintained helper (NOT Fern-generated) for English Flux batch requests. It is not for WebSocket turns: a pause marker is rejected with `DATA-0002`.
 
 ```python
 from deepgram.helpers import TextBuilder
@@ -87,14 +87,14 @@ final_text = (
     .text("Hello,")
     .text(" this is built incrementally.")
     .pronunciation("Deepgram", "ˈdiːpɡɹæm")
-    .pause(200)
+    .pause(500)
     .build()
 )
 ```
 
-The fluent API is `.text(...)` (append raw text), `.pronunciation(word, ipa)` (pin pronunciation), `.pause(duration_ms)` (insert a pause), and `.build()` (return the final SSML-ish string). There is no `.add(...)` method.
+The fluent API is `.text(...)` (append raw text), `.pronunciation(word, ipa)` (insert a `\\{\"word\": \"...\", \"pronounce\": \"...\"\\}` marker), `.pause(duration_ms)` (insert a `\\{pause:<N>ms\\}` marker), and `.build()` (return the batch request text). Pauses must be 500-3000 ms in 100 ms increments, with at most eight per request. There is no `.add(...)` method.
 
-See `examples/22-text-builder-demo.py`, `examples/23-text-builder-helper.py`, `examples/24-text-builder-streaming.py`.
+Use the output with `client.speak.v2.audio.generate(model="flux-alexis-en", text=final_text)`. See `docs/FluxTtsControls.md`, `examples/22-text-builder-demo.py`, and `examples/23-text-builder-helper.py`.
 
 ## Async equivalents
 
@@ -149,7 +149,7 @@ WSS client messages: `SpeakV1Text`, `Flush`, `Clear`, `Close`.
 - `examples/21-text-to-speech-streaming.py` — WSS streaming
 - `examples/22-text-builder-demo.py` — TextBuilder (no API key)
 - `examples/23-text-builder-helper.py` — TextBuilder + REST
-- `examples/24-text-builder-streaming.py` — TextBuilder + WSS
+- `examples/24-text-builder-streaming.py` — plain-text WSS; Flux controls are batch-only
 - `tests/wire/test_speak_v1_audio.py` — REST wire test
 - `tests/manual/speak/v1/connect/main.py` — live WSS test
 

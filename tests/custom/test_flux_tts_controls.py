@@ -3,10 +3,13 @@
 import json
 
 import httpx
+import pytest
 import respx
 
 from deepgram import DeepgramClient
+from deepgram.core.api_error import ApiError
 from deepgram.environment import DeepgramClientEnvironment
+from deepgram.helpers import TextBuilder
 from deepgram.speak.v2.socket_client import V2SocketClient
 from deepgram.speak.v2.types import SpeakV2ConfigureFailure, SpeakV2SpeechMetadata, SpeakV2Warning
 
@@ -29,20 +32,48 @@ def test_batch_raw_response_exposes_control_headers_and_serializes_controls() ->
         route = respx.post(f"https://{HOST}/v2/speak").mock(
             return_value=httpx.Response(
                 200,
-                headers={"dg-pronunciations-applied": "1", "dg-breaks-applied": "1", "dg-warnings": "PRON-001"},
+                headers={"dg-pronunciations-applied": "1", "dg-breaks-applied": "0", "dg-warnings": "PRON-001"},
                 content=b"audio",
             )
         )
+        text = TextBuilder().text("Hello ").pronunciation("Deepgram", "diːpɡræm").text(".").build()
         with DeepgramClient(environment=ENVIRONMENT, api_key="test").speak.v2.audio.with_raw_response.generate(
-            model="flux-alexis-en", text='Hello {"word":"Deepgram","pronounce":"diːpɡræm"}'
+            model="flux-alexis-en", text=text
         ) as response:
             assert b"".join(response.data) == b"audio"
             assert response.headers["dg-pronunciations-applied"] == "1"
-            assert response.headers["dg-breaks-applied"] == "1"
+            assert response.headers["dg-breaks-applied"] == "0"
             assert response.headers["dg-warnings"] == "PRON-001"
     assert json.loads(route.calls.last.request.content) == {
-        "text": 'Hello {"word":"Deepgram","pronounce":"diːpɡræm"}'
+        "text": r'Hello \{"word": "Deepgram", "pronounce": "diːpɡræm"\}.'
     }
+
+
+def test_batch_speed_with_pronunciation_raises_control_combination_error() -> None:
+    with respx.mock:
+        route = respx.post(f"https://{HOST}/v2/speak").mock(
+            return_value=httpx.Response(
+                400,
+                json={
+                    "err_code": "CONTROL_COMBINATION_INVALID",
+                    "err_msg": "pronunciation controls require speed 1.0",
+                },
+            )
+        )
+        text = TextBuilder().pronunciation("Deepgram", "diːpɡræm").build()
+        with pytest.raises(ApiError) as excinfo:
+            list(
+                DeepgramClient(environment=ENVIRONMENT, api_key="test").speak.v2.audio.generate(
+                    model="flux-alexis-en", text=text, speed=1.1
+                )
+            )
+
+    assert excinfo.value.status_code == 400
+    assert excinfo.value.body["err_code"] == "CONTROL_COMBINATION_INVALID"
+    assert json.loads(route.calls.last.request.content) == {
+        "text": r'\{"word": "Deepgram", "pronounce": "diːpɡræm"\}'
+    }
+    assert route.calls.last.request.url.params["speed"] == "1.1"
 
 
 def test_streaming_control_failure_warning_and_counters_parse() -> None:

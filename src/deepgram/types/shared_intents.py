@@ -23,8 +23,36 @@ class SharedIntents(UncheckedBaseModel):
         return SharedIntentsResults(intents=SharedIntentsResultsIntents(segments=self.segments))
 
     if IS_PYDANTIC_V2:
+
+        @pydantic.model_validator(mode="before")
+        @classmethod
+        def _migrate_legacy_results(cls, values: typing.Any) -> typing.Any:
+            if not isinstance(values, dict) or "results" not in values:
+                return values
+            values = dict(values)
+            results = values.pop("results")
+            if "segments" in values:
+                return values
+            intents = results.get("intents") if isinstance(results, dict) else getattr(results, "intents", None)
+            if intents is not None:
+                values["segments"] = intents.get("segments") if isinstance(intents, dict) else intents.segments
+            return values
+
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:
+
+        @pydantic.root_validator(pre=True)  # type: ignore[deprecated]
+        def _migrate_legacy_results(cls, values: typing.Any) -> typing.Any:  # type: ignore[no-redef]
+            if not isinstance(values, dict) or "results" not in values:
+                return values
+            values = dict(values)
+            results = values.pop("results")
+            if "segments" in values:
+                return values
+            intents = results.get("intents") if isinstance(results, dict) else getattr(results, "intents", None)
+            if intents is not None:
+                values["segments"] = intents.get("segments") if isinstance(intents, dict) else intents.segments
+            return values
 
         class Config:
             frozen = True

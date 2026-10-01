@@ -20,6 +20,10 @@
           "type": "json",
           "path": ".fern/metadata.json",
           "jsonpath": "$.sdkVersion"
+        },
+        {
+          "type": "generic",
+          "path": "src/deepgram/core/client_wrapper.py"
         }
       ]
     }

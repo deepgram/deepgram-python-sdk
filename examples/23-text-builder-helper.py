@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """
-Example: TextBuilder with REST API TTS
+Example: TextBuilder with Flux batch REST TTS
 
-This example demonstrates using TextBuilder with the REST API to generate
-complete audio files with custom pronunciations and pauses.
+This example demonstrates using TextBuilder with English Flux batch REST
+synthesis for custom pronunciations and pauses.
 """
 
 import os
@@ -17,16 +17,15 @@ def example_basic_text_builder():
     print("Example 1: Basic TextBuilder Usage")
     print("-" * 50)
 
-    # Build text with pronunciations
-    # Note: .pause() is supported in streaming (WebSocket) mode.
-    # For REST API, use plain text between pronunciations.
+    # Pronunciation controls are supported on complete Flux batch requests.
     text = (
         TextBuilder()
         .text("Take ")
         .pronunciation("azathioprine", "ˌæzəˈθaɪəpriːn")
         .text(" twice daily with ")
         .pronunciation("dupilumab", "duːˈpɪljuːmæb")
-        .text(" injections. Do not exceed prescribed dosage.")
+        .text(" injections.")
+        .text(" Do not exceed prescribed dosage.")
         .build()
     )
 
@@ -38,9 +37,9 @@ def example_basic_text_builder():
         client = DeepgramClient(api_key=api_key)
 
         # Generate speech with custom pronunciations
-        response = client.speak.v1.audio.generate(
+        response = client.speak.v2.audio.generate(
             text=text,
-            model="aura-2-asteria-en",
+            model="flux-alexis-en",
             encoding="linear16",
         )
 
@@ -72,9 +71,9 @@ def example_add_pronunciation_function():
     if api_key:
         client = DeepgramClient(api_key=api_key)
 
-        response = client.speak.v1.audio.generate(
+        response = client.speak.v2.audio.generate(
             text=text,
-            model="aura-2-asteria-en",
+            model="flux-alexis-en",
         )
 
         with open("output_example2.wav", "wb") as f:
@@ -108,9 +107,9 @@ def example_ssml_migration():
     if api_key:
         client = DeepgramClient(api_key=api_key)
 
-        response = client.speak.v1.audio.generate(
+        response = client.speak.v2.audio.generate(
             text=text,
-            model="aura-2-asteria-en",
+            model="flux-alexis-en",
         )
 
         with open("output_example3.wav", "wb") as f:
@@ -145,9 +144,9 @@ def example_mixed_ssml_and_builder():
     if api_key:
         client = DeepgramClient(api_key=api_key)
 
-        response = client.speak.v1.audio.generate(
+        response = client.speak.v2.audio.generate(
             text=text,
-            model="aura-2-asteria-en",
+            model="flux-alexis-en",
         )
 
         with open("output_example4.wav", "wb") as f:
@@ -186,9 +185,9 @@ def example_pharmacy_instructions():
     if api_key:
         client = DeepgramClient(api_key=api_key)
 
-        response = client.speak.v1.audio.generate(
+        response = client.speak.v2.audio.generate(
             text=text,
-            model="aura-2-asteria-en",
+            model="flux-alexis-en",
             encoding="linear16",
         )
 

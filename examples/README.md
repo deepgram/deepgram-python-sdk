@@ -27,7 +27,7 @@ This directory contains comprehensive examples demonstrating how to use the Deep
 - **21-text-to-speech-streaming.py** - Streaming TTS via WebSocket
 - **22-text-builder-demo.py** - TextBuilder demo (no API key required)
 - **23-text-builder-helper.py** - TextBuilder with REST API generation
-- **24-text-builder-streaming.py** - TextBuilder with streaming TTS (WebSocket)
+- **24-text-builder-streaming.py** - Streaming TTS via WebSocket (no Flux controls)
 - **25-text-to-speech-streaming-v2.py** - Streaming TTS via the Speak V2 (Flux) WebSocket
 
 ### 30-39: Voice Agent
