@@ -4,7 +4,7 @@ Flux controls are English-only at launch. Pronunciation controls apply to Flux b
 
 ## Batch REST
 
-Use `client.speak.v2.audio.generate()` for complete text. A pause is written as `\{pause:500ms\}` through `\{pause:3000ms\}` in 100 ms increments. A request accepts at most eight pauses. `TextBuilder` emits and validates this Flux batch syntax.
+Use `client.speak.v2.audio.generate()` for complete text. A pause is written as `\{pause:500ms\}` through `\{pause:3000ms\}` in 100 ms increments. A request accepts at most eight pauses. `TextBuilder` emits and validates this Flux batch syntax; its `from_ssml()` converter raises `ValueError` for out-of-range breaks, and its helpers reject mixed pronunciation and pause controls before sending a request.
 
 Pronunciation uses `\{"word": "...", "pronounce": "<IPA>"\}` and is Early Access. A pronunciation cannot be combined with any pause or with `speed` other than `1.0`. When a pause is present, `speed` cannot exceed `1.15`. Invalid combinations return a batch error, including `CONTROL_COMBINATION_INVALID` or `PAUSE_SPEED_CAP_EXCEEDED`.
 
