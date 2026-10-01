@@ -31,8 +31,8 @@ audio = client.speak.v2.audio.generate(model="flux-alexis-en", text=text)
 #### TextBuilder Class
 
 - `text(content: str)` - Add plain text
-- `pronunciation(word: str, ipa: str)` - Add an escaped `\\{\"word\": \"...\", \"pronounce\": \"...\"\\}` IPA pronunciation control
-- `pause(duration_ms: int)` - Add a batch-only `\\{pause:<N>ms\\}` pause (500-3000ms, 100ms increments; eight per request)
+- `pronunciation(word: str, ipa: str)` - Add an escaped `\{"word": "...", "pronounce": "..."\}` IPA pronunciation control
+- `pause(duration_ms: int)` - Add a batch-only `\{pause:<N>ms\}` pause (500-3000ms, 100ms increments; eight per request)
 - `from_ssml(ssml_text: str)` - Parse and convert SSML markup
 - `build()` - Return final formatted text
 

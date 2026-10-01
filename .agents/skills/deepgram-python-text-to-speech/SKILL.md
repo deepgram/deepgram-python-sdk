@@ -92,7 +92,7 @@ final_text = (
 )
 ```
 
-The fluent API is `.text(...)` (append raw text), `.pronunciation(word, ipa)` (insert a `\\{\"word\": \"...\", \"pronounce\": \"...\"\\}` marker), `.pause(duration_ms)` (insert a `\\{pause:<N>ms\\}` marker), and `.build()` (return the batch request text). Pauses must be 500-3000 ms in 100 ms increments, with at most eight per request. There is no `.add(...)` method.
+The fluent API is `.text(...)` (append raw text), `.pronunciation(word, ipa)` (insert a `\{\"word\": \"...\", \"pronounce\": \"...\"\}` marker), `.pause(duration_ms)` (insert a `\{pause:<N>ms\}` marker), and `.build()` (return the batch request text). Pauses must be 500-3000 ms in 100 ms increments, with at most eight per request. There is no `.add(...)` method.
 
 Use the output with `client.speak.v2.audio.generate(model="flux-alexis-en", text=final_text)`. See `docs/FluxTtsControls.md`, `examples/22-text-builder-demo.py`, and `examples/23-text-builder-helper.py`.
 

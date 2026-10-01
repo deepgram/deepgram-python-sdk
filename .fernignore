@@ -233,6 +233,7 @@ src/deepgram/listen/v2/types/listen_v2configure_success.py
 src/deepgram/listen/v2/types/listen_v2configure_success_thresholds.py
 src/deepgram/listen/v2/types/listen_v2configure_failure.py
 src/deepgram/listen/v2/types/listen_v2fatal_error.py
+src/deepgram/listen/v2/types/listen_v2warning.py
 
 # Hand-written custom tests
 tests/custom/test_api_error_redaction.py
