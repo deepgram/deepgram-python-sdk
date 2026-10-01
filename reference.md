@@ -5992,6 +5992,7 @@ asyncio.run(main())
 **`send_speak(message: SpeakV2Speak)`** — Send text to be converted to speech
 
 - `connection.send_speak(SpeakV2Speak(text="Hello, world!"))`
+- `SpeakV2Speak.text` supports Early Access pronunciation controls. Pause markers are batch-only; sending `\{pause:500ms\}` over the WebSocket emits `DATA-0002` and closes the connection. A pronunciation control with a non-default speed has the same result. See [Flux TTS Controls](./docs/FluxTtsControls.md).
 
 </dd>
 </dl>
@@ -6021,7 +6022,7 @@ asyncio.run(main())
 
 **`send_configure(message: SpeakV2Configure)`** — Change the speech rate mid-stream
 
-- `connection.send_configure(SpeakV2Configure(speed=1.05))` — Acknowledged by a `SpeakV2ConfigureSuccess` echoing what was applied, or a `SpeakV2ConfigureFailure` carrying a typed code such as `SPEED_OUT_OF_RANGE`
+- `connection.send_configure(SpeakV2Configure(speed=1.05))` — Acknowledged by a `SpeakV2ConfigureSuccess` echoing what was applied, or a `SpeakV2ConfigureFailure` carrying a typed code such as `SPEED_OUT_OF_RANGE`. Changing speed while a buffered turn contains a pronunciation control returns `CONTROL_COMBINATION_INVALID`; flush that turn first.
 
 </dd>
 </dl>
@@ -6070,7 +6071,7 @@ asyncio.run(main())
 <dl>
 <dd>
 
-**speed:** `typing.Optional[SpeakV2Speed]` — Speech-rate multiplier. `1.0` is the model's nominal rate; lower is slower. Accepted values run `0.5` to `1.5` in `0.05` increments. A value outside that range is rejected with `SPEED_OUT_OF_RANGE`; a value inside it but off the `0.05` increment with `SPEED_INCREMENT_INVALID`. Models and languages without runtime speed control reject any value with `SPEED_NOT_SUPPORTED`.
+**speed:** `typing.Optional[SpeakV2Speed]` — Speech-rate multiplier. `1.0` is the model's nominal rate; lower is slower. Accepted values run `0.5` to `1.5` in `0.05` increments. A value outside that range is rejected with `SPEED_OUT_OF_RANGE`; a value inside it but off the `0.05` increment with `SPEED_INCREMENT_INVALID`. Models and languages without runtime speed control reject any value with `SPEED_NOT_SUPPORTED`. A non-default speed cannot be combined with a pronunciation control in the same WebSocket session; that turn fails with `DATA-0002`. See [Flux TTS Controls](./docs/FluxTtsControls.md).
 
 </dd>
 </dl>
