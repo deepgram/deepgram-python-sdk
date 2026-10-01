@@ -240,6 +240,11 @@ class TestAddPronunciation:
         # Text should be unchanged
         assert result == text
 
+    def test_rejects_existing_pause_control(self):
+        """Flux batch cannot combine a replacement pronunciation with a pause."""
+        with pytest.raises(ValueError, match="Pronunciation and pause controls cannot be combined"):
+            add_pronunciation(r"Take \{pause:500ms\} medicine", "medicine", "mɛdɪsɪn")
+
 
 class TestSsmlToDeepgram:
     """Tests for SSML conversion"""

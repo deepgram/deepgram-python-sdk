@@ -194,6 +194,9 @@ def add_pronunciation(text: str, word: str, ipa: str) -> str:
     Returns:
         Text with word replaced by \\{\"word\": \"word\", \"pronounce\": \"ipa\"\\}
 
+    Raises:
+        ValueError: If the resulting text combines pronunciation and pause controls
+
     Example:
         text = "Take azathioprine twice daily with dupilumab injections."
         text = add_pronunciation(text, "azathioprine", "ˌæzəˈθaɪəpriːn")
@@ -209,6 +212,9 @@ def add_pronunciation(text: str, word: str, ipa: str) -> str:
     # Replace word with pronunciation (case-sensitive, whole word only)
     pattern = r"\b" + re.escape(word) + r"\b"
     result = re.sub(pattern, lambda _: pronunciation_control, text, count=1)
+    pronunciation_count, pause_count = _control_counts(result)
+    if pronunciation_count and pause_count:
+        raise ValueError("Pronunciation and pause controls cannot be combined in one Flux batch request")
 
     return result
 

@@ -1,6 +1,6 @@
 # Flux TTS Controls
 
-Pronunciation controls apply to Flux batch REST, Flux WebSocket, and Aura-2 `/v1/speak`. Pause controls apply to Flux batch REST only.
+Flux controls are English-only at launch. Pronunciation controls apply to Flux batch REST, Flux WebSocket, and Aura-2 `/v1/speak`. Pause controls apply to Flux batch REST only.
 
 ## Batch REST
 
