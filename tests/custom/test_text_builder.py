@@ -314,17 +314,14 @@ class TestSsmlToDeepgram:
         
         assert result == "Hello world"
     
-    def test_complex_ssml(self):
-        """Test complex SSML with multiple elements"""
+    def test_complex_ssml_rejects_mixed_controls(self):
+        """Flux batch cannot combine SSML phoneme and break controls."""
         ssml = '''<speak>
             Take <phoneme alphabet="ipa" ph="ˌæzəˈθaɪəpriːn">azathioprine</phoneme>
             <break time="500ms"/> Do not exceed dosage.
         </speak>'''
-        result = ssml_to_deepgram(ssml)
-        
-        assert '"word": "azathioprine"' in result
-        assert r"\{pause:500ms\}" in result
-        assert "Do not exceed dosage." in result
+        with pytest.raises(ValueError, match="Pronunciation and pause controls cannot be combined"):
+            ssml_to_deepgram(ssml)
     
     def test_multiple_phonemes(self):
         """Test multiple phoneme tags"""

@@ -116,8 +116,8 @@ def test_add_pronunciation_and_ssml() -> None:
         add_pronunciation("x", "x", 'bad"ipa')
 
     ssml = '<speak>Take <phoneme alphabet="ipa" ph="ˌæz">azathioprine</phoneme> <break time="0.5s"/> now</speak>'
-    converted = ssml_to_deepgram(ssml)
-    assert "pronounce" in converted and r"\{pause:500ms\}" in converted
+    with pytest.raises(ValueError, match="Pronunciation and pause controls cannot be combined"):
+        ssml_to_deepgram(ssml)
 
     with pytest.raises(ValueError, match="at least 500ms"):
         ssml_to_deepgram('Wait <break time="123ms"/> here')

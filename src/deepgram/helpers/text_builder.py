@@ -250,10 +250,13 @@ def ssml_to_deepgram(ssml_text: str) -> str:
     Returns:
         Deepgram-formatted text
 
+    Raises:
+        ValueError: If the SSML combines pronunciation and pause controls
+
     Example:
         ssml = '''<speak>
             Take <phoneme alphabet="ipa" ph="ˌæzəˈθaɪəpriːn">azathioprine</phoneme>
-            <break time="500ms"/> Do not exceed dosage.
+            Do not exceed dosage.
         </speak>'''
         text = ssml_to_deepgram(ssml)
     """
@@ -315,6 +318,8 @@ def ssml_to_deepgram(ssml_text: str) -> str:
         raise ValueError("Maximum 500 pronunciations per request exceeded")
     if pause_count > 8:
         raise ValueError("Maximum 8 pauses per Flux batch request exceeded")
+    if pronunciation_count and pause_count:
+        raise ValueError("Pronunciation and pause controls cannot be combined in one Flux batch request")
     return ssml_text
 
 
