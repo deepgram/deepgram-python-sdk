@@ -9,7 +9,22 @@ synthesis for custom pronunciations and pauses.
 import os
 
 from deepgram import DeepgramClient
+from deepgram.environment import DeepgramClientEnvironment
 from deepgram.helpers import TextBuilder, add_pronunciation, ssml_to_deepgram
+
+
+def build_client(api_key: str) -> DeepgramClient:
+    """Use staging when DEEPGRAM_BASE_URL is set; otherwise use production."""
+    target = os.getenv("DEEPGRAM_BASE_URL")
+    if not target:
+        return DeepgramClient(api_key=api_key)
+
+    rest = target.rstrip("/").replace("wss://", "https://").replace("ws://", "http://")
+    websocket = rest.replace("https://", "wss://").replace("http://", "ws://")
+    return DeepgramClient(
+        api_key=api_key,
+        environment=DeepgramClientEnvironment(base=rest, production=websocket, agent=websocket, agent_rest=rest),
+    )
 
 
 def example_basic_text_builder():
@@ -34,7 +49,7 @@ def example_basic_text_builder():
     # Use with Deepgram client
     api_key = os.getenv("DEEPGRAM_API_KEY")
     if api_key:
-        client = DeepgramClient(api_key=api_key)
+        client = build_client(api_key)
 
         # Generate speech with custom pronunciations
         response = client.speak.v2.audio.generate(
@@ -69,7 +84,7 @@ def example_add_pronunciation_function():
 
     api_key = os.getenv("DEEPGRAM_API_KEY")
     if api_key:
-        client = DeepgramClient(api_key=api_key)
+        client = build_client(api_key)
 
         response = client.speak.v2.audio.generate(
             text=text,
@@ -105,7 +120,7 @@ def example_ssml_migration():
 
     api_key = os.getenv("DEEPGRAM_API_KEY")
     if api_key:
-        client = DeepgramClient(api_key=api_key)
+        client = build_client(api_key)
 
         response = client.speak.v2.audio.generate(
             text=text,
@@ -142,7 +157,7 @@ def example_mixed_ssml_and_builder():
 
     api_key = os.getenv("DEEPGRAM_API_KEY")
     if api_key:
-        client = DeepgramClient(api_key=api_key)
+        client = build_client(api_key)
 
         response = client.speak.v2.audio.generate(
             text=text,
@@ -183,7 +198,7 @@ def example_pharmacy_instructions():
 
     api_key = os.getenv("DEEPGRAM_API_KEY")
     if api_key:
-        client = DeepgramClient(api_key=api_key)
+        client = build_client(api_key)
 
         response = client.speak.v2.audio.generate(
             text=text,

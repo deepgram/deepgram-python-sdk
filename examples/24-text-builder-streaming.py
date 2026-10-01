@@ -15,9 +15,24 @@ from typing import Union
 
 from deepgram import DeepgramClient
 from deepgram.core.events import EventType
+from deepgram.environment import DeepgramClientEnvironment
 from deepgram.speak.v1.types import SpeakV1Text
 
 SpeakV1SocketClientResponse = Union[str, bytes]
+
+
+def build_client(api_key: str) -> DeepgramClient:
+    """Use staging when DEEPGRAM_BASE_URL is set; otherwise use production."""
+    target = os.getenv("DEEPGRAM_BASE_URL")
+    if not target:
+        return DeepgramClient(api_key=api_key)
+
+    rest = target.rstrip("/").replace("wss://", "https://").replace("ws://", "http://")
+    websocket = rest.replace("https://", "wss://").replace("http://", "ws://")
+    return DeepgramClient(
+        api_key=api_key,
+        environment=DeepgramClientEnvironment(base=rest, production=websocket, agent=websocket, agent_rest=rest),
+    )
 
 
 def example_streaming():
@@ -34,7 +49,7 @@ def example_streaming():
         print("ℹ Set DEEPGRAM_API_KEY to stream audio")
         return
 
-    client = DeepgramClient(api_key=api_key)
+    client = build_client(api_key)
 
     try:
         with client.speak.v1.connect(
@@ -91,7 +106,7 @@ def example_multiple_messages():
         print("ℹ Set DEEPGRAM_API_KEY to stream audio")
         return
 
-    client = DeepgramClient(api_key=api_key)
+    client = build_client(api_key)
 
     try:
         with client.speak.v1.connect(
