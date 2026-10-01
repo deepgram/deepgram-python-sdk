@@ -6,7 +6,7 @@
 ### Features
 
 * **Speak v2 (Flux TTS):** Add inline pause markers for batch requests and IPA pronunciation overrides for Flux batch, Flux WebSocket, and Aura-2 requests. Pronunciation is Early Access; pause markers are Flux batch-only. See [Speed, Pause, Pronunciation](https://developers.deepgram.com/docs/tts-voice-controls). ([#797](https://github.com/deepgram/deepgram-python-sdk/issues/797)) ([d2b5514](https://github.com/deepgram/deepgram-python-sdk/commit/d2b5514eab37761332fcebed75ced20e54088337))
-* **TextBuilder:** Emit escaped Flux pause and pronunciation markers. Validate 500-3000 ms pauses, eight-pause request limits, malformed markers, and unsupported pause-plus-pronunciation combinations locally with `ValueError` before sending a request.
+* **TextBuilder:** Emit the Flux marker syntax the API accepts: pauses as `\{pause:500ms\}` and pronunciations as `\{"word": "...", "pronounce": "<IPA>"\}`. The 7.11.0 markers (`{pause:500}` and the unescaped pronunciation form) are rejected by `/v2/speak` with `BREAK_SYNTAX_INVALID` or ignored, so upgrade to use TextBuilder with Flux TTS. Limits now match Flux batch: pauses 500-3000 ms in 100 ms steps (was 500-5000) and at most 8 per request (was 50). `pause()`, `from_ssml()`, and `build()` raise `ValueError` for out-of-range or off-grid durations (previously rounded), for malformed markers, and for pause-plus-pronunciation combinations, instead of sending a request the API would reject.
 * **Listen v2 (Flux):** Add typed `Warning` responses while preserving dict-style response access during the 7.x transition.
 
 ### Compatibility
