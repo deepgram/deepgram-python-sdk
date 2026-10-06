@@ -31,6 +31,29 @@ from deepgram.types.think_settings_v1provider import ThinkSettingsV1Provider_Ope
 load_dotenv()
 
 AUDIO_PATH = Path(__file__).parent / "fixtures" / "audio.wav"
+FORCE_END_TURN_REJECTION_GRACE_SECONDS = 0.5
+
+
+def wait_for_force_end_turn_outcome(
+    agent_finished: threading.Event,
+    force_end_turn_rejected: threading.Event,
+    *,
+    timeout_seconds: float,
+) -> bool:
+    """Return whether ForceEndTurn completed without a queued rejection."""
+    deadline = time.monotonic() + timeout_seconds
+    while True:
+        if force_end_turn_rejected.is_set():
+            return False
+
+        remaining = deadline - time.monotonic()
+        if remaining <= 0:
+            raise TimeoutError("Timed out waiting for the agent response")
+        if agent_finished.wait(min(0.1, remaining)):
+            # AgentAudioDone can precede FORCE_END_TURN_UNSUPPORTED in the socket reader.
+            return not force_end_turn_rejected.wait(
+                min(FORCE_END_TURN_REJECTION_GRACE_SECONDS, remaining)
+            )
 
 
 def main() -> None:
@@ -94,14 +117,11 @@ def main() -> None:
 
         print("Sending ForceEndTurn")
         agent.send_force_end_turn()
-        deadline = time.monotonic() + 15
-        while not agent_finished.wait(0.1):
-            if force_end_turn_rejected.is_set():
-                raise RuntimeError(f"ForceEndTurn failed: {force_end_turn_error}")
-            if time.monotonic() >= deadline:
-                raise TimeoutError("Timed out waiting for the agent response")
-        # The server can reject ForceEndTurn after AgentAudioDone arrives, so check once more.
-        if force_end_turn_rejected.is_set():
+        if not wait_for_force_end_turn_outcome(
+            agent_finished,
+            force_end_turn_rejected,
+            timeout_seconds=15,
+        ):
             raise RuntimeError(f"ForceEndTurn failed: {force_end_turn_error}")
 
 
