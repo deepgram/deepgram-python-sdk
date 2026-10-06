@@ -23,8 +23,13 @@ turn index advances and transcription continues.
 
 ForceEndTurn is available on Deepgram-hosted deployments, including EU and AU. On
 self-hosted deployments, it requires the 2026-09-15 release or later with
-listen_v2_force_end_turn = true under [features]. Unsupported deployments reply
-UNPARSABLE_CLIENT_MESSAGE and close the connection; this example reports that and exits.
+the following [features] settings:
+
+    listen_v2 = true
+    listen_v2_force_end_turn = true
+
+Unsupported deployments reply UNPARSABLE_CLIENT_MESSAGE and close the connection; this
+example reports that and exits.
 """
 
 import os
@@ -150,7 +155,7 @@ try:
     if feature_disabled.is_set():
         print("\nForceEndTurn is not enabled on this deployment.")
         print("Self-hosted deployments need the 2026-09-15 release or later with")
-        print("listen_v2_force_end_turn = true under [features].")
+        print("listen_v2 = true and listen_v2_force_end_turn = true under [features].")
 
 except Exception as e:
     print(f"Error: {type(e).__name__}: {e}")
