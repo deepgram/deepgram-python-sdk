@@ -149,7 +149,8 @@ try:
     # before it could print anything.
     if feature_disabled.is_set():
         print("\nForceEndTurn is not enabled on this deployment.")
-        print("Set DEEPGRAM_BASE_URL to a deployment that has the feature.")
+        print("Self-hosted deployments need the 2026-09-15 release or later with")
+        print("listen_v2_force_end_turn = true under [features].")
 
 except Exception as e:
     print(f"Error: {type(e).__name__}: {e}")
