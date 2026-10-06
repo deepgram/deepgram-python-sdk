@@ -7,6 +7,17 @@ from pathlib import Path
 EXAMPLE_PATH = Path(__file__).parents[2] / "examples" / "32-voice-agent-force-end-turn.py"
 
 
+class RejectionDuringGraceWait(threading.Event):
+    def __init__(self):
+        super().__init__()
+        self.wait_calls = 0
+
+    def wait(self, _timeout):
+        self.wait_calls += 1
+        self.set()
+        return True
+
+
 def load_example(monkeypatch):
     dotenv = types.ModuleType("dotenv")
     dotenv.load_dotenv = lambda: None
@@ -23,16 +34,12 @@ def load_example(monkeypatch):
 def test_agent_audio_done_waits_for_late_force_end_turn_rejection(monkeypatch):
     example = load_example(monkeypatch)
     agent_finished = threading.Event()
-    force_end_turn_rejected = threading.Event()
+    force_end_turn_rejected = RejectionDuringGraceWait()
     agent_finished.set()
 
-    rejection = threading.Timer(0.01, force_end_turn_rejected.set)
-    rejection.start()
-    try:
-        assert not example.wait_for_force_end_turn_outcome(
-            agent_finished,
-            force_end_turn_rejected,
-            timeout_seconds=1,
-        )
-    finally:
-        rejection.join()
+    assert not example.wait_for_force_end_turn_outcome(
+        agent_finished,
+        force_end_turn_rejected,
+        timeout_seconds=1,
+    )
+    assert force_end_turn_rejected.wait_calls == 1

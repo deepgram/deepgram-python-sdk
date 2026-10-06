@@ -23,9 +23,13 @@ what the server does with it. This script covers the rest, in four steps:
 
 ForceEndTurn is available on Deepgram-hosted deployments, including EU and AU. On
 self-hosted deployments, it requires the 2026-09-15 release or later with
-listen_v2_force_end_turn = true under [features]. Unsupported deployments reply
-UNPARSABLE_CLIENT_MESSAGE ("not enabled on this deployment") and close the connection;
-this script reports SKIP rather than failing.
+the following [features] settings:
+
+    listen_v2 = true
+    listen_v2_force_end_turn = true
+
+Unsupported deployments reply UNPARSABLE_CLIENT_MESSAGE ("not enabled on this deployment")
+and close the connection; this script reports SKIP rather than failing.
 
 Requires DEEPGRAM_API_KEY. Run with:
 
@@ -175,7 +179,7 @@ def main() -> None:
         print("  SKIP: ForceEndTurn is not enabled on this deployment")
         print(f"        ({errors[0]})")
         print("        Self-hosted deployments need the 2026-09-15 release or later with")
-        print("        listen_v2_force_end_turn = true under [features].")
+        print("        listen_v2 = true and listen_v2_force_end_turn = true under [features].")
         return
     if errors:
         raise AssertionError(errors[0])
