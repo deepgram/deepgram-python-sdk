@@ -5,8 +5,10 @@ needs its own live check — the sync script next door cannot cover this path. T
 step 1 of `main.py`: force an in-progress turn to end and confirm the resulting EndOfTurn
 reports trigger="manual". See `main.py` for the full end-of-turn control matrix.
 
-ForceEndTurn is gated per deployment; where it is not enabled this reports SKIP rather
-than failing. Point it at a deployment that has the feature with DEEPGRAM_BASE_URL.
+ForceEndTurn is available on Deepgram-hosted deployments, including EU and AU. On
+self-hosted deployments, it requires the 2026-09-15 release or later with
+`listen_v2 = true` and `listen_v2_force_end_turn = true` under [features]. Unsupported
+deployments report SKIP.
 
 Requires DEEPGRAM_API_KEY. Run with:
 
@@ -114,7 +116,8 @@ async def main() -> None:
     if gated:
         print("  SKIP: ForceEndTurn is not enabled on this deployment")
         print(f"        ({errors[0]})")
-        print("        Set DEEPGRAM_BASE_URL to a deployment that has the feature.")
+        print("        Self-hosted deployments need the 2026-09-15 release or later with")
+        print("        listen_v2 = true and listen_v2_force_end_turn = true under [features].")
         return
     if errors:
         print(f"  FAIL: {errors[0]}")

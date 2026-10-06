@@ -31,11 +31,36 @@ from deepgram.types.think_settings_v1provider import ThinkSettingsV1Provider_Ope
 load_dotenv()
 
 AUDIO_PATH = Path(__file__).parent / "fixtures" / "audio.wav"
+FORCE_END_TURN_REJECTION_GRACE_SECONDS = 0.5
+
+
+def wait_for_force_end_turn_outcome(
+    agent_finished: threading.Event,
+    force_end_turn_rejected: threading.Event,
+    *,
+    timeout_seconds: float,
+) -> bool:
+    """Return whether ForceEndTurn completed without a queued rejection."""
+    deadline = time.monotonic() + timeout_seconds
+    while True:
+        if force_end_turn_rejected.is_set():
+            return False
+
+        remaining = deadline - time.monotonic()
+        if remaining <= 0:
+            raise TimeoutError("Timed out waiting for the agent response")
+        if agent_finished.wait(min(0.1, remaining)):
+            # AgentAudioDone can precede FORCE_END_TURN_UNSUPPORTED in the socket reader.
+            return not force_end_turn_rejected.wait(
+                min(FORCE_END_TURN_REJECTION_GRACE_SECONDS, remaining)
+            )
 
 
 def main() -> None:
     user_started = threading.Event()
     agent_finished = threading.Event()
+    force_end_turn_rejected = threading.Event()
+    force_end_turn_error: str | None = None
 
     settings = AgentV1Settings(
         audio=AgentV1SettingsAudio(input=AgentV1SettingsAudioInput(encoding="linear16", sample_rate=44100)),
@@ -56,6 +81,7 @@ def main() -> None:
     with DeepgramClient().agent.v1.connect() as agent:
 
         def on_message(message: object) -> None:
+            nonlocal force_end_turn_error
             message_type = getattr(message, "type", None)
             if message_type == "UserStartedSpeaking":
                 user_started.set()
@@ -67,6 +93,9 @@ def main() -> None:
                 print("AgentAudioDone received")
             elif message_type in {"Warning", "Error"}:
                 print(f"{message_type}: {message.code} - {message.description}")
+                if message.code == "FORCE_END_TURN_UNSUPPORTED":
+                    force_end_turn_error = f"{message.code}: {message.description}"
+                    force_end_turn_rejected.set()
 
         agent.on(EventType.MESSAGE, on_message)
         agent.on(EventType.ERROR, lambda error: print(f"Connection error: {error}"))
@@ -88,8 +117,12 @@ def main() -> None:
 
         print("Sending ForceEndTurn")
         agent.send_force_end_turn()
-        if not agent_finished.wait(15):
-            raise TimeoutError("Timed out waiting for the agent response")
+        if not wait_for_force_end_turn_outcome(
+            agent_finished,
+            force_end_turn_rejected,
+            timeout_seconds=15,
+        ):
+            raise RuntimeError(f"ForceEndTurn failed: {force_end_turn_error}")
 
 
 if __name__ == "__main__":

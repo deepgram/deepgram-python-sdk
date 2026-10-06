@@ -65,7 +65,7 @@ src/deepgram/speak/v2/socket_client.py
 
 # Agent TTS provider expressivity must reject fractional values rather than
 # allowing Pydantic v1 to truncate them before the API sees the request.
-# [temporarily frozen — remove when Fern emits a strict integer]
+# [temporarily frozen — remove when Pydantic v1 support is dropped]
 src/deepgram/types/speak_settings_v1provider.py
 src/deepgram/types/deepgram.py
 
@@ -268,6 +268,7 @@ tests/custom/test_flux_tts_controls.py
 tests/custom/test_topics_intents_v7_compat.py
 tests/custom/test_transport.py
 tests/custom/test_websocket_streaming_coverage.py
+tests/custom/test_voice_agent_force_end_turn_example.py
 tests/typecheck/compat_aliases.py
 
 # Wire test with restored compatibility coverage for legacy create-key request alias

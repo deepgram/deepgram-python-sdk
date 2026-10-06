@@ -21,10 +21,15 @@ what the server does with it. This script covers the rest, in four steps:
        ForceEndTurn becomes the only way to close a turn. This is the combination to
        reach for when the application owns turn boundaries.
 
-ForceEndTurn is gated per deployment. Where it is not enabled the server replies
-UNPARSABLE_CLIENT_MESSAGE ("not enabled on this deployment") and closes the connection;
-this script reports SKIP rather than failing. Point it at a deployment that has the
-feature with DEEPGRAM_BASE_URL.
+ForceEndTurn is available on Deepgram-hosted deployments, including EU and AU. On
+self-hosted deployments, it requires the 2026-09-15 release or later with
+the following [features] settings:
+
+    listen_v2 = true
+    listen_v2_force_end_turn = true
+
+Unsupported deployments reply UNPARSABLE_CLIENT_MESSAGE ("not enabled on this deployment")
+and close the connection; this script reports SKIP rather than failing.
 
 Requires DEEPGRAM_API_KEY. Run with:
 
@@ -173,7 +178,8 @@ def main() -> None:
     if gated:
         print("  SKIP: ForceEndTurn is not enabled on this deployment")
         print(f"        ({errors[0]})")
-        print("        Set DEEPGRAM_BASE_URL to a deployment that has the feature.")
+        print("        Self-hosted deployments need the 2026-09-15 release or later with")
+        print("        listen_v2 = true and listen_v2_force_end_turn = true under [features].")
         return
     if errors:
         raise AssertionError(errors[0])
