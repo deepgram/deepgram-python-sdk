@@ -7,26 +7,13 @@ from ....core.pydantic_utilities import IS_PYDANTIC_V2
 from ....core.unchecked_base_model import UncheckedBaseModel
 
 
-class ListenV2TurnInfoWordsItem(UncheckedBaseModel):
-    word: str = pydantic.Field()
+class AgentV1CustomFromThinkProvider(UncheckedBaseModel):
+    type: typing.Literal["__customFromThinkProvider"] = pydantic.Field(default="__customFromThinkProvider")
     """
-    The individual punctuated, properly-cased word from the transcript
-    """
-
-    confidence: float = pydantic.Field()
-    """
-    Confidence that this word was transcribed correctly
+    Message type identifier for a custom payload returned by the think provider
     """
 
-    start: typing.Optional[float] = pydantic.Field(default=None)
-    """
-    The start time of the word
-    """
-
-    end: typing.Optional[float] = pydantic.Field(default=None)
-    """
-    The end time of the word
-    """
+    content: typing.Any
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

@@ -2,8 +2,6 @@
 
 from typing import Any, Dict, Optional
 
-from .._secure_logging import redact_sensitive_headers
-
 
 class ApiError(Exception):
     headers: Optional[Dict[str, str]]
@@ -17,7 +15,7 @@ class ApiError(Exception):
         status_code: Optional[int] = None,
         body: Any = None,
     ) -> None:
-        self.headers = redact_sensitive_headers(headers)
+        self.headers = headers
         self.status_code = status_code
         self.body = body
 

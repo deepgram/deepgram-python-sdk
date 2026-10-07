@@ -21,8 +21,8 @@
       "skip_validation": true
     }
   },
-  "originGitCommit": "e252995bcdb25f3e12d46ae342a2b93d0c1085f9",
+  "originGitCommit": "9dcbd3d5e8d36420319e1b33988613ad2cb2be10",
   "originGitCommitIsDirty": true,
   "invokedBy": "manual",
-  "sdkVersion": "7.12.0"
+  "sdkVersion": "7.12.1"
 }
