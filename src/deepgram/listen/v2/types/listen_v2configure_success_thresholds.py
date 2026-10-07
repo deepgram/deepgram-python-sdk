@@ -4,13 +4,13 @@ import typing
 
 import pydantic
 from ....core.pydantic_utilities import IS_PYDANTIC_V2
-from ....core.unchecked_base_model import UncheckedBaseModel
 from ....types.listen_v2eager_eot_threshold import ListenV2EagerEotThreshold
 from ....types.listen_v2eot_threshold import ListenV2EotThreshold
 from ....types.listen_v2eot_timeout_ms import ListenV2EotTimeoutMs
+from ._dict_compat import ListenV2ResponseDictCompatModel
 
 
-class ListenV2ConfigureSuccessThresholds(UncheckedBaseModel):
+class ListenV2ConfigureSuccessThresholds(ListenV2ResponseDictCompatModel):
     """
     Updates each parameter, if it is supplied. If a particular threshold parameter
     is not supplied, the configuration continues using the currently configured value.

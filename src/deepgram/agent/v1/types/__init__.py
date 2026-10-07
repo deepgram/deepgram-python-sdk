@@ -11,9 +11,9 @@ if typing.TYPE_CHECKING:
     from .agent_v1agent_thinking import AgentV1AgentThinking
     from .agent_v1conversation_text import AgentV1ConversationText
     from .agent_v1conversation_text_role import AgentV1ConversationTextRole
+    from .agent_v1error import AgentV1Error
     from .agent_v1custom_from_think_provider import AgentV1CustomFromThinkProvider
     from .agent_v1custom_to_think_provider import AgentV1CustomToThinkProvider
-    from .agent_v1error import AgentV1Error
     from .agent_v1force_end_turn import AgentV1ForceEndTurn
     from .agent_v1function_call_cancelled import AgentV1FunctionCallCancelled
     from .agent_v1function_call_cancelled_functions_item import AgentV1FunctionCallCancelledFunctionsItem
@@ -86,9 +86,9 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AgentV1AgentThinking": ".agent_v1agent_thinking",
     "AgentV1ConversationText": ".agent_v1conversation_text",
     "AgentV1ConversationTextRole": ".agent_v1conversation_text_role",
+    "AgentV1Error": ".agent_v1error",
     "AgentV1CustomFromThinkProvider": ".agent_v1custom_from_think_provider",
     "AgentV1CustomToThinkProvider": ".agent_v1custom_to_think_provider",
-    "AgentV1Error": ".agent_v1error",
     "AgentV1ForceEndTurn": ".agent_v1force_end_turn",
     "AgentV1FunctionCallCancelled": ".agent_v1function_call_cancelled",
     "AgentV1FunctionCallCancelledFunctionsItem": ".agent_v1function_call_cancelled_functions_item",
@@ -149,6 +149,22 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ConversationHistoryMessageRole": ".conversation_history_message_role",
     "FunctionCallHistoryMessage": ".function_call_history_message",
     "FunctionCallHistoryMessageFunctionCallsItem": ".function_call_history_message_function_calls_item",
+    "AgentV1HistoryContent": ".agent_v1history_content",
+    "AgentV1HistoryContentRole": ".agent_v1history_content_role",
+    "AgentV1HistoryFunctionCalls": ".agent_v1history_function_calls",
+    "AgentV1HistoryFunctionCallsFunctionCallsItem": ".agent_v1history_function_calls_function_calls_item",
+    "AgentV1SettingsAgentContextContextMessagesItemContentRole": ".agent_v1settings_agent_context_context_messages_item_content_role",
+    "AgentV1SettingsAgentContextContextMessagesItemFunctionCallsFunctionCallsItem": ".agent_v1settings_agent_context_context_messages_item_function_calls_function_calls_item",
+    "AgentV1SettingsAgentContextListenProviderV1": ".agent_v1settings_agent_context_listen_provider_v1",
+    "AgentV1SettingsAgentContextListenProviderV2": ".agent_v1settings_agent_context_listen_provider_v2",
+    "AgentV1SettingsAgentContextListenProviderV2LanguageHint": ".agent_v1settings_agent_context_listen_provider_v2language_hint",
+    "AgentV1SettingsAgentContextMessagesItem": ".agent_v1settings_agent_context_messages_item",
+    "AgentV1SettingsAgentContextMessagesItemContent": ".agent_v1settings_agent_context_messages_item_content",
+    "AgentV1SettingsAgentContextMessagesItemContentRole": ".agent_v1settings_agent_context_messages_item_content_role",
+    "AgentV1SettingsAgentContextMessagesItemFunctionCalls": ".agent_v1settings_agent_context_messages_item_function_calls",
+    "AgentV1SettingsAgentContextMessagesItemFunctionCallsFunctionCallsItem": ".agent_v1settings_agent_context_messages_item_function_calls_function_calls_item",
+    "AgentV1SettingsAgentListenProviderV1": ".agent_v1settings_agent_listen_provider_v1",
+    "AgentV1SettingsAgentListenProviderV2": ".agent_v1settings_agent_listen_provider_v2",
 }
 
 
@@ -179,9 +195,9 @@ __all__ = [
     "AgentV1AgentThinking",
     "AgentV1ConversationText",
     "AgentV1ConversationTextRole",
+    "AgentV1Error",
     "AgentV1CustomFromThinkProvider",
     "AgentV1CustomToThinkProvider",
-    "AgentV1Error",
     "AgentV1ForceEndTurn",
     "AgentV1FunctionCallCancelled",
     "AgentV1FunctionCallCancelledFunctionsItem",
@@ -242,4 +258,20 @@ __all__ = [
     "ConversationHistoryMessageRole",
     "FunctionCallHistoryMessage",
     "FunctionCallHistoryMessageFunctionCallsItem",
+    "AgentV1HistoryContent",
+    "AgentV1HistoryContentRole",
+    "AgentV1HistoryFunctionCalls",
+    "AgentV1HistoryFunctionCallsFunctionCallsItem",
+    "AgentV1SettingsAgentContextContextMessagesItemContentRole",
+    "AgentV1SettingsAgentContextContextMessagesItemFunctionCallsFunctionCallsItem",
+    "AgentV1SettingsAgentContextListenProviderV1",
+    "AgentV1SettingsAgentContextListenProviderV2",
+    "AgentV1SettingsAgentContextListenProviderV2LanguageHint",
+    "AgentV1SettingsAgentContextMessagesItem",
+    "AgentV1SettingsAgentContextMessagesItemContent",
+    "AgentV1SettingsAgentContextMessagesItemContentRole",
+    "AgentV1SettingsAgentContextMessagesItemFunctionCalls",
+    "AgentV1SettingsAgentContextMessagesItemFunctionCallsFunctionCallsItem",
+    "AgentV1SettingsAgentListenProviderV1",
+    "AgentV1SettingsAgentListenProviderV2",
 ]
