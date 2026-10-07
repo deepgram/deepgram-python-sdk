@@ -242,6 +242,7 @@ tests/custom/test_agent_update_listen.py
 tests/custom/test_api_key_env_resolution.py
 tests/custom/test_client.py
 tests/custom/test_client_construction_and_helpers.py
+tests/custom/test_agent_custom_think_provider.py
 tests/custom/test_compat_aliases.py
 tests/custom/test_core_internals_branches.py
 tests/custom/test_core_utilities_coverage.py
@@ -251,6 +252,7 @@ tests/custom/test_http_retry_coverage.py
 tests/custom/test_language_hint_compat.py
 tests/custom/test_language_hints_feature.py
 tests/custom/test_latency_report_stt_compat.py
+tests/custom/test_listen_v1_configure.py
 tests/custom/test_listen_v2_connect_wire.py
 tests/custom/test_listen_v2_regen_constraints.py
 tests/custom/test_logging_and_retry_branches.py
