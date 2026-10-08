@@ -1,5 +1,12 @@
 # Changelog
 
+## [7.13.0](https://github.com/deepgram/deepgram-python-sdk/compare/v7.12.0...v7.13.0) (2026-10-08)
+
+
+### Features
+
+* **regen:** add listen v1 configure and agent custom think provider messages ([#799](https://github.com/deepgram/deepgram-python-sdk/issues/799)) ([dce6960](https://github.com/deepgram/deepgram-python-sdk/commit/dce69606070462e6d4f38cb0bb71b7f7d1425ba0))
+
 ## [7.12.0](https://github.com/deepgram/deepgram-python-sdk/compare/v7.11.0...v7.12.0) (2026-10-01)
 
 
