@@ -40,7 +40,8 @@ def on_message(message: ListenV1SocketClientResponse) -> None:
     if isinstance(message, ListenV1Results):
         transcript = message.channel.alternatives[0].transcript if message.channel.alternatives else ""
         if transcript:
-            print(f"Transcript: {transcript}")
+            label = "Final" if message.is_final else "Interim"
+            print(f"{label}: {transcript}")
         if message.is_final:
             final_result_received.set()
     elif isinstance(message, ListenV1Error):
@@ -50,7 +51,9 @@ def on_message(message: ListenV1SocketClientResponse) -> None:
 
 
 try:
-    with client.listen.v1.connect(model="nova-3", encoding="linear16", sample_rate=44100) as connection:
+    with client.listen.v1.connect(
+        model="nova-3", encoding="linear16", sample_rate=44100, interim_results=True
+    ) as connection:
         connection.on(EventType.MESSAGE, on_message)
         connection.on(EventType.ERROR, lambda error: print(f"Connection error: {type(error).__name__}"))
         threading.Thread(target=connection.start_listening, daemon=True).start()
