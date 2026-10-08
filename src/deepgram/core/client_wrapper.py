@@ -37,7 +37,7 @@ class BaseClientWrapper:
         try:
             _sdk_version = _fern_importlib_metadata.version("deepgram-sdk")
         except _fern_importlib_metadata.PackageNotFoundError:
-            _sdk_version = "7.12.0"  # x-release-please-version
+            _sdk_version = "7.12.1"  # x-release-please-version
 
         headers: typing.Dict[str, str] = {
             "User-Agent": "deepgram-sdk/" + _sdk_version,

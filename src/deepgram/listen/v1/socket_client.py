@@ -8,6 +8,8 @@ import websockets.sync.connection as websockets_sync_connection
 from ...core.events import EventEmitterMixin, EventType
 from ...core.unchecked_base_model import construct_type
 from .types.listen_v1close_stream import ListenV1CloseStream
+from .types.listen_v1configure import ListenV1Configure
+from .types.listen_v1error import ListenV1Error
 from .types.listen_v1finalize import ListenV1Finalize
 from .types.listen_v1keep_alive import ListenV1KeepAlive
 from .types.listen_v1metadata import ListenV1Metadata
@@ -21,7 +23,9 @@ except ImportError:
     from websockets import WebSocketClientProtocol  # type: ignore
 
 _logger = logging.getLogger(__name__)
-V1SocketClientResponse = typing.Union[ListenV1Results, ListenV1Metadata, ListenV1UtteranceEnd, ListenV1SpeechStarted]
+V1SocketClientResponse = typing.Union[
+    ListenV1Results, ListenV1Metadata, ListenV1UtteranceEnd, ListenV1SpeechStarted, ListenV1Error
+]
 
 
 class AsyncV1SocketClient(EventEmitterMixin):
@@ -99,6 +103,13 @@ class AsyncV1SocketClient(EventEmitterMixin):
         The message will be sent as a ListenV1KeepAlive.
         """
         await self._send_model(message or ListenV1KeepAlive(type="KeepAlive"))
+
+    async def send_configure(self, message: ListenV1Configure) -> None:
+        """
+        Send a message to the websocket connection.
+        The message will be sent as a ListenV1Configure.
+        """
+        await self._send_model(message)
 
     async def recv(self) -> V1SocketClientResponse:
         """
@@ -204,6 +215,13 @@ class V1SocketClient(EventEmitterMixin):
         The message will be sent as a ListenV1KeepAlive.
         """
         self._send_model(message or ListenV1KeepAlive(type="KeepAlive"))
+
+    def send_configure(self, message: ListenV1Configure) -> None:
+        """
+        Send a message to the websocket connection.
+        The message will be sent as a ListenV1Configure.
+        """
+        self._send_model(message)
 
     def recv(self) -> V1SocketClientResponse:
         """

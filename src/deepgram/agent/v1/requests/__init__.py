@@ -11,6 +11,8 @@ if typing.TYPE_CHECKING:
     from .agent_v1agent_thinking import AgentV1AgentThinkingParams
     from .agent_v1conversation_text import AgentV1ConversationTextParams
     from .agent_v1error import AgentV1ErrorParams
+    from .agent_v1custom_from_think_provider import AgentV1CustomFromThinkProviderParams
+    from .agent_v1custom_to_think_provider import AgentV1CustomToThinkProviderParams
     from .agent_v1force_end_turn import AgentV1ForceEndTurnParams
     from .agent_v1function_call_cancelled import AgentV1FunctionCallCancelledParams
     from .agent_v1function_call_cancelled_functions_item import AgentV1FunctionCallCancelledFunctionsItemParams
@@ -82,6 +84,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AgentV1AgentThinkingParams": ".agent_v1agent_thinking",
     "AgentV1ConversationTextParams": ".agent_v1conversation_text",
     "AgentV1ErrorParams": ".agent_v1error",
+    "AgentV1CustomFromThinkProviderParams": ".agent_v1custom_from_think_provider",
+    "AgentV1CustomToThinkProviderParams": ".agent_v1custom_to_think_provider",
     "AgentV1ForceEndTurnParams": ".agent_v1force_end_turn",
     "AgentV1FunctionCallCancelledFunctionsItemParams": ".agent_v1function_call_cancelled_functions_item",
     "AgentV1FunctionCallCancelledParams": ".agent_v1function_call_cancelled",
@@ -180,6 +184,8 @@ __all__ = [
     "AgentV1AgentThinkingParams",
     "AgentV1ConversationTextParams",
     "AgentV1ErrorParams",
+    "AgentV1CustomFromThinkProviderParams",
+    "AgentV1CustomToThinkProviderParams",
     "AgentV1ForceEndTurnParams",
     "AgentV1FunctionCallCancelledFunctionsItemParams",
     "AgentV1FunctionCallCancelledParams",

@@ -20,6 +20,7 @@ This directory contains comprehensive examples demonstrating how to use the Deep
 - **16-transcription-force-end-turn.py** - Manual turn-ending control (Listen V2 / Flux)
 - **17-transcription-live-reconnect.py** - Production-grade reconnection: backoff with jitter, close-code handling, audio buffering across gaps, clean shutdown
 - **18-transcription-live-microphone.py** - Microphone transcription with the optional sounddevice dependency
+- **19-transcription-live-reconfigure.py** - Update Nova-3 keyterms and formatting features during a Listen V1 stream
 
 ### 20-29: Text-to-Speech (Speak)
 

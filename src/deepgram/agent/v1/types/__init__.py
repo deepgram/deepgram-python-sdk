@@ -12,6 +12,8 @@ if typing.TYPE_CHECKING:
     from .agent_v1conversation_text import AgentV1ConversationText
     from .agent_v1conversation_text_role import AgentV1ConversationTextRole
     from .agent_v1error import AgentV1Error
+    from .agent_v1custom_from_think_provider import AgentV1CustomFromThinkProvider
+    from .agent_v1custom_to_think_provider import AgentV1CustomToThinkProvider
     from .agent_v1force_end_turn import AgentV1ForceEndTurn
     from .agent_v1function_call_cancelled import AgentV1FunctionCallCancelled
     from .agent_v1function_call_cancelled_functions_item import AgentV1FunctionCallCancelledFunctionsItem
@@ -85,6 +87,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AgentV1ConversationText": ".agent_v1conversation_text",
     "AgentV1ConversationTextRole": ".agent_v1conversation_text_role",
     "AgentV1Error": ".agent_v1error",
+    "AgentV1CustomFromThinkProvider": ".agent_v1custom_from_think_provider",
+    "AgentV1CustomToThinkProvider": ".agent_v1custom_to_think_provider",
     "AgentV1ForceEndTurn": ".agent_v1force_end_turn",
     "AgentV1FunctionCallCancelled": ".agent_v1function_call_cancelled",
     "AgentV1FunctionCallCancelledFunctionsItem": ".agent_v1function_call_cancelled_functions_item",
@@ -192,6 +196,8 @@ __all__ = [
     "AgentV1ConversationText",
     "AgentV1ConversationTextRole",
     "AgentV1Error",
+    "AgentV1CustomFromThinkProvider",
+    "AgentV1CustomToThinkProvider",
     "AgentV1ForceEndTurn",
     "AgentV1FunctionCallCancelled",
     "AgentV1FunctionCallCancelledFunctionsItem",

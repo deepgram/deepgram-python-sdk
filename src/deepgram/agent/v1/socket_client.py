@@ -11,6 +11,8 @@ from .types.agent_v1agent_audio_done import AgentV1AgentAudioDone
 from .types.agent_v1agent_started_speaking import AgentV1AgentStartedSpeaking
 from .types.agent_v1agent_thinking import AgentV1AgentThinking
 from .types.agent_v1conversation_text import AgentV1ConversationText
+from .types.agent_v1custom_from_think_provider import AgentV1CustomFromThinkProvider
+from .types.agent_v1custom_to_think_provider import AgentV1CustomToThinkProvider
 from .types.agent_v1error import AgentV1Error
 from .types.agent_v1force_end_turn import AgentV1ForceEndTurn
 from .types.agent_v1function_call_cancelled import AgentV1FunctionCallCancelled
@@ -72,6 +74,7 @@ V1SocketClientResponse = typing.Union[
     AgentV1FunctionCallCancelled,
     AgentV1AgentStartedSpeaking,
     AgentV1AgentAudioDone,
+    AgentV1CustomFromThinkProvider,
     AgentV1Error,
     AgentV1Warning,
     AgentV1History,
@@ -196,6 +199,13 @@ class AsyncV1SocketClient(EventEmitterMixin):
         The message will be sent as a AgentV1ForceEndTurn.
         """
         await self._send_model(message or AgentV1ForceEndTurn(type="ForceEndTurn"))
+
+    async def send_custom_to_think_provider(self, message: AgentV1CustomToThinkProvider) -> None:
+        """
+        Send a message to the websocket connection.
+        The message will be sent as a AgentV1CustomToThinkProvider.
+        """
+        await self._send_model(message)
 
     async def send_media(self, message: bytes) -> None:
         """
@@ -350,6 +360,13 @@ class V1SocketClient(EventEmitterMixin):
         The message will be sent as a AgentV1ForceEndTurn.
         """
         self._send_model(message or AgentV1ForceEndTurn(type="ForceEndTurn"))
+
+    def send_custom_to_think_provider(self, message: AgentV1CustomToThinkProvider) -> None:
+        """
+        Send a message to the websocket connection.
+        The message will be sent as a AgentV1CustomToThinkProvider.
+        """
+        self._send_model(message)
 
     def send_media(self, message: bytes) -> None:
         """

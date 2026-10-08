@@ -7,6 +7,8 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from .listen_v1close_stream import ListenV1CloseStreamParams
+    from .listen_v1configure import ListenV1ConfigureParams
+    from .listen_v1error import ListenV1ErrorParams
     from .listen_v1finalize import ListenV1FinalizeParams
     from .listen_v1keep_alive import ListenV1KeepAliveParams
     from .listen_v1metadata import ListenV1MetadataParams
@@ -24,6 +26,8 @@ if typing.TYPE_CHECKING:
     from .listen_v1utterance_end import ListenV1UtteranceEndParams
 _dynamic_imports: typing.Dict[str, str] = {
     "ListenV1CloseStreamParams": ".listen_v1close_stream",
+    "ListenV1ConfigureParams": ".listen_v1configure",
+    "ListenV1ErrorParams": ".listen_v1error",
     "ListenV1FinalizeParams": ".listen_v1finalize",
     "ListenV1KeepAliveParams": ".listen_v1keep_alive",
     "ListenV1MetadataParams": ".listen_v1metadata",
@@ -63,6 +67,8 @@ def __dir__():
 
 __all__ = [
     "ListenV1CloseStreamParams",
+    "ListenV1ConfigureParams",
+    "ListenV1ErrorParams",
     "ListenV1FinalizeParams",
     "ListenV1KeepAliveParams",
     "ListenV1MetadataParams",

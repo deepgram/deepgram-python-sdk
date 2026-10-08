@@ -4841,13 +4841,15 @@ from typing import Union
 from deepgram import DeepgramClient
 from deepgram.core.events import EventType
 from deepgram.listen.v1.types import (
+    ListenV1Configure,
+    ListenV1Error,
     ListenV1Results,
     ListenV1Metadata,
     ListenV1UtteranceEnd,
     ListenV1SpeechStarted,
 )
 
-ListenV1Response = Union[ListenV1Results, ListenV1Metadata, ListenV1UtteranceEnd, ListenV1SpeechStarted]
+ListenV1Response = Union[ListenV1Error, ListenV1Results, ListenV1Metadata, ListenV1UtteranceEnd, ListenV1SpeechStarted]
 
 client = DeepgramClient(
     api_key="YOUR_API_KEY",
@@ -4871,6 +4873,7 @@ with client.listen.v1.connect(model="nova-3") as connection:
 
     # Send control messages
     connection.send_keep_alive()
+    connection.send_configure(ListenV1Configure(keyterms=["Deepgram"], features={"numerals": True}))
     connection.send_finalize()
     connection.send_close_stream()
 
@@ -4896,13 +4899,15 @@ from typing import Union
 from deepgram import AsyncDeepgramClient
 from deepgram.core.events import EventType
 from deepgram.listen.v1.types import (
+    ListenV1Configure,
+    ListenV1Error,
     ListenV1Results,
     ListenV1Metadata,
     ListenV1UtteranceEnd,
     ListenV1SpeechStarted,
 )
 
-ListenV1Response = Union[ListenV1Results, ListenV1Metadata, ListenV1UtteranceEnd, ListenV1SpeechStarted]
+ListenV1Response = Union[ListenV1Error, ListenV1Results, ListenV1Metadata, ListenV1UtteranceEnd, ListenV1SpeechStarted]
 
 client = AsyncDeepgramClient(
     api_key="YOUR_API_KEY",
@@ -4927,6 +4932,7 @@ async def main():
 
         # Send control messages
         await connection.send_keep_alive()
+        await connection.send_configure(ListenV1Configure(keyterms=["Deepgram"], features={"numerals": True}))
         await connection.send_finalize()
         await connection.send_close_stream()
 
@@ -4970,6 +4976,17 @@ asyncio.run(main())
 **`send_finalize()`** — Finalize the transcription
 
 - `connection.send_finalize()`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**`send_configure(message: ListenV1Configure)`** — Update keyterms or formatting features during an active stream
+
+- `connection.send_configure(ListenV1Configure(keyterms=["Deepgram"], features={"numerals": True}))`
+- Keyterms require a Nova-3 model. The server returns a typed `ListenV1Error` with `variant="InvalidConfigureMessage"` when it rejects an update; send an empty `keyterms` list to clear all keyterms. Keep each `keyterms` list under the 500-token keyterm limit. An over-limit update currently stops transcription without an `Error`, after which the server closes the stream; check the list size before sending. Only `features.numerals` is supported.
 
 </dd>
 </dl>
@@ -6484,6 +6501,17 @@ asyncio.run(main())
 **`send_function_call_response(message: AgentV1SendFunctionCallResponse)`** — Send the result of a function call back to the agent
 
 - `AgentV1SendFunctionCallResponse(name="...", content="...")` — Provide function execution results
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**`send_custom_to_think_provider(message: AgentV1CustomToThinkProvider)`** — Send an application-defined payload to a configured custom Think provider
+
+- `agent.send_custom_to_think_provider(AgentV1CustomToThinkProvider(content={"event": "ready"}))`
+- **Experimental.** This requires a `wss://` custom Think endpoint in `agent.think.endpoint.url`; managed providers do not consume these payloads. The configured provider can return `AgentV1CustomFromThinkProvider(content=...)` on the response stream.
 
 </dd>
 </dl>
