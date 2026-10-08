@@ -4986,7 +4986,7 @@ asyncio.run(main())
 **`send_configure(message: ListenV1Configure)`** — Update keyterms or formatting features during an active stream
 
 - `connection.send_configure(ListenV1Configure(keyterms=["Deepgram"], features={"numerals": True}))`
-- Keyterms require a Nova-3 model. The server returns a typed `ListenV1Error` with `variant="InvalidConfigureMessage"` when it rejects an update; send an empty `keyterms` list to clear all keyterms.
+- Keyterms require a Nova-3 model. The server returns a typed `ListenV1Error` with `variant="InvalidConfigureMessage"` when it rejects an update; send an empty `keyterms` list to clear all keyterms. Keep each `keyterms` list under the 500-token keyterm limit. An over-limit update currently stops transcription without an `Error`, after which the server closes the stream; check the list size before sending. Only `features.numerals` is supported.
 
 </dd>
 </dl>
@@ -6196,8 +6196,6 @@ from deepgram.agent.v1.types import (
     AgentV1FunctionCallCancelled,
     AgentV1AgentStartedSpeaking,
     AgentV1AgentAudioDone,
-    AgentV1CustomFromThinkProvider,
-    AgentV1CustomToThinkProvider,
     AgentV1Error,
     AgentV1Warning,
 )
@@ -6307,8 +6305,6 @@ from deepgram.agent.v1.types import (
     AgentV1FunctionCallCancelled,
     AgentV1AgentStartedSpeaking,
     AgentV1AgentAudioDone,
-    AgentV1CustomFromThinkProvider,
-    AgentV1CustomToThinkProvider,
     AgentV1Error,
     AgentV1Warning,
 )
@@ -6515,7 +6511,7 @@ asyncio.run(main())
 **`send_custom_to_think_provider(message: AgentV1CustomToThinkProvider)`** — Send an application-defined payload to a configured custom Think provider
 
 - `agent.send_custom_to_think_provider(AgentV1CustomToThinkProvider(content={"event": "ready"}))`
-- The configured provider can return `AgentV1CustomFromThinkProvider(content=...)` on the response stream. This requires a custom Think endpoint configured in the agent settings; managed providers do not consume these payloads.
+- **Experimental.** This requires a `wss://` custom Think endpoint in `agent.think.endpoint.url`; managed providers do not consume these payloads. The configured provider can return `AgentV1CustomFromThinkProvider(content=...)` on the response stream.
 
 </dd>
 </dl>
