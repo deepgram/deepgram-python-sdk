@@ -1,5 +1,13 @@
 # Changelog
 
+## [7.13.0](https://github.com/deepgram/deepgram-python-sdk/compare/v7.12.0...v7.13.0) (2026-10-08)
+
+
+### Features
+
+* **Listen V1:** Reconfigure an active Nova-3 stream without reconnecting with `connection.send_configure(ListenV1Configure(...))`, including keyterms and the numerals formatting feature. Server-side Configure rejections arrive as typed `ListenV1Error` responses; send an empty keyterms list to clear all active keyterms. ([#799](https://github.com/deepgram/deepgram-python-sdk/issues/799)) ([dce6960](https://github.com/deepgram/deepgram-python-sdk/commit/dce69606070462e6d4f38cb0bb71b7f7d1425ba0))
+* **Voice Agent:** Exchange custom Think-provider payloads with `send_custom_to_think_provider(AgentV1CustomToThinkProvider(...))` and `AgentV1CustomFromThinkProvider` responses. This experimental capability requires a configured custom Think-provider WebSocket endpoint; payloads preserve nested JSON values. ([#799](https://github.com/deepgram/deepgram-python-sdk/issues/799)) ([dce6960](https://github.com/deepgram/deepgram-python-sdk/commit/dce69606070462e6d4f38cb0bb71b7f7d1425ba0))
+
 ## [7.12.0](https://github.com/deepgram/deepgram-python-sdk/compare/v7.11.0...v7.12.0) (2026-10-01)
 
 
