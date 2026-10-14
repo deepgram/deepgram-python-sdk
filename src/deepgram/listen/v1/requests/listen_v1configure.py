@@ -19,9 +19,8 @@ class ListenV1ConfigureParams(typing_extensions.TypedDict):
     the field, or set it to `null`, to keep the current keyterms.
     
     Each entry is a plain term or phrase with no weights or intensifiers. The 500-token keyterm limit that
-    applies to the `keyterm` query parameter also applies to each update. An over-limit update currently stops
-    transcription without an `Error`; after about 30 seconds, the server closes the stream with `1011`
-    (`NET-0000`). Keep each list under the limit and check its size before sending.
+    applies to the `keyterm` query parameter also applies to each update. Keep each list under the limit: the
+    server does not yet report over-limit updates consistently, so don't rely on an `Error` to catch one.
     """
 
     features: typing_extensions.NotRequired[typing.Dict[str, bool]]
