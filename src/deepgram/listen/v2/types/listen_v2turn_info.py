@@ -4,12 +4,12 @@ import typing
 
 import pydantic
 from ....core.pydantic_utilities import IS_PYDANTIC_V2
-from ....core.unchecked_base_model import UncheckedBaseModel
+from ._dict_compat import ListenV2ResponseDictCompatModel
 from .listen_v2turn_info_event import ListenV2TurnInfoEvent
 from .listen_v2turn_info_words_item import ListenV2TurnInfoWordsItem
 
 
-class ListenV2TurnInfo(UncheckedBaseModel):
+class ListenV2TurnInfo(ListenV2ResponseDictCompatModel):
     """
     Describes the current turn and latest state of the turn
     """
