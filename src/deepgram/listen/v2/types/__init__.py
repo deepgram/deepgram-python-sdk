@@ -21,7 +21,6 @@ if typing.TYPE_CHECKING:
     from .listen_v2warning import ListenV2Warning
 _dynamic_imports: typing.Dict[str, str] = {
     "ListenV2CloseStream": ".listen_v2close_stream",
-    "ListenV2CloseStreamType": ".listen_v2close_stream_type",
     "ListenV2Configure": ".listen_v2configure",
     "ListenV2ConfigureFailure": ".listen_v2configure_failure",
     "ListenV2ConfigureSuccess": ".listen_v2configure_success",
@@ -60,7 +59,6 @@ def __dir__():
 
 __all__ = [
     "ListenV2CloseStream",
-    "ListenV2CloseStreamType",
     "ListenV2Configure",
     "ListenV2ConfigureFailure",
     "ListenV2ConfigureSuccess",

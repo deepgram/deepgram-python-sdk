@@ -3,6 +3,3 @@
 __pycache__/
 dist/
 poetry.toml
-.coverage
-htmlcov/
-coverage.xml
