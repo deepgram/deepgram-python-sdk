@@ -21,8 +21,8 @@ class ListenV1Configure(UncheckedBaseModel):
     the field, or set it to `null`, to keep the current keyterms.
     
     Each entry is a plain term or phrase with no weights or intensifiers. The 500-token keyterm limit that
-    applies to the `keyterm` query parameter also applies to each update. An over-limit update returns an
-    `Error`, and the stream keeps its previous keyterms.
+    applies to the `keyterm` query parameter also applies to each update. Keep each list under the limit: the
+    server does not yet report over-limit updates consistently, so don't rely on an `Error` to catch one.
     """
 
     features: typing.Optional[typing.Dict[str, bool]] = pydantic.Field(default=None)

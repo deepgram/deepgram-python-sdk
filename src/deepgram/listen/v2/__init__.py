@@ -38,7 +38,6 @@ if typing.TYPE_CHECKING:
 _dynamic_imports: typing.Dict[str, str] = {
     "ListenV2CloseStream": ".types",
     "ListenV2CloseStreamParams": ".requests",
-    "ListenV2CloseStreamType": ".types",
     "ListenV2Configure": ".types",
     "ListenV2ConfigureFailure": ".types",
     "ListenV2ConfigureFailureParams": ".requests",
@@ -63,6 +62,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ListenV2Warning": ".types",
     "ListenV2WarningParams": ".requests",
 }
+
+_dynamic_imports["ListenV2CloseStreamType"] = ".types"
 
 
 def __getattr__(attr_name: str) -> typing.Any:
@@ -89,7 +90,6 @@ def __dir__():
 __all__ = [
     "ListenV2CloseStream",
     "ListenV2CloseStreamParams",
-    "ListenV2CloseStreamType",
     "ListenV2Configure",
     "ListenV2ConfigureFailure",
     "ListenV2ConfigureFailureParams",
@@ -114,3 +114,5 @@ __all__ = [
     "ListenV2Warning",
     "ListenV2WarningParams",
 ]
+
+__all__.append("ListenV2CloseStreamType")

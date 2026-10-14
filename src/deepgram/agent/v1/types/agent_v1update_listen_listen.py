@@ -42,7 +42,6 @@ class AgentV1UpdateListenListen(UncheckedBaseModel):
     provider: AgentV1UpdateListenListenProvider
 
     if IS_PYDANTIC_V2:
-
         @pydantic.model_validator(mode="before")
         @classmethod
         def _migrate_legacy_provider(cls, values: typing.Any) -> typing.Any:

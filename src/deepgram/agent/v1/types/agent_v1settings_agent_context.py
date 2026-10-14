@@ -32,7 +32,6 @@ class AgentV1SettingsAgentContext(UncheckedBaseModel):
     """
 
     if IS_PYDANTIC_V2:
-
         @pydantic.model_validator(mode="before")
         @classmethod
         def _migrate_legacy_messages_to_context(cls, values: typing.Any) -> typing.Any:
