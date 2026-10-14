@@ -210,6 +210,10 @@ src/deepgram/listen/v2/types/__init__.py
 src/deepgram/core/api_error.py
 src/deepgram/core/parse_error.py
 
+# Pydantic 2.14+ requires explicit generic annotations for these adapters or
+# mypy rejects the generated module with var-annotated errors.
+src/deepgram/core/pydantic_utilities.py
+
 src/deepgram/core/query_encoder.py
 
 # The generated metadata fallback must match the published SDK version in source
