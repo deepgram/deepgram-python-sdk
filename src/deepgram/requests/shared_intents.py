@@ -3,6 +3,7 @@
 import typing
 
 import typing_extensions
+from .shared_intents_results import SharedIntentsResultsParams
 from .shared_intents_segments_item import SharedIntentsSegmentsItemParams
 
 
@@ -12,3 +13,4 @@ class SharedIntentsParams(typing_extensions.TypedDict):
     """
 
     segments: typing_extensions.NotRequired[typing.Sequence[SharedIntentsSegmentsItemParams]]
+    results: typing_extensions.NotRequired[SharedIntentsResultsParams]
