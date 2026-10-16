@@ -52,9 +52,7 @@ def wait_for_force_end_turn_outcome(
             raise TimeoutError("Timed out waiting for the agent response")
         if agent_finished.wait(min(0.1, remaining)):
             # AgentAudioDone can precede FORCE_END_TURN_UNSUPPORTED in the socket reader.
-            return not force_end_turn_rejected.wait(
-                min(FORCE_END_TURN_REJECTION_GRACE_SECONDS, remaining)
-            )
+            return not force_end_turn_rejected.wait(min(FORCE_END_TURN_REJECTION_GRACE_SECONDS, remaining))
 
 
 def main() -> None:
@@ -63,6 +61,7 @@ def main() -> None:
     force_end_turn_rejected = threading.Event()
     force_end_turn_error: str | None = None
     force_end_turn_failed = False
+    timeout_error: TimeoutError | None = None
 
     settings = AgentV1Settings(
         audio=AgentV1SettingsAudio(input=AgentV1SettingsAudioInput(encoding="linear16", sample_rate=44100)),
@@ -114,17 +113,24 @@ def main() -> None:
             if user_started.is_set():
                 break
 
+        # Errors are raised after the connection closes, so the close does not
+        # report a spurious connection error on top of them.
         if not user_started.is_set():
-            raise TimeoutError("Timed out waiting for UserStartedSpeaking")
+            timeout_error = TimeoutError("Timed out waiting for UserStartedSpeaking")
+        else:
+            print("Sending ForceEndTurn")
+            agent.send_force_end_turn()
+            try:
+                force_end_turn_failed = not wait_for_force_end_turn_outcome(
+                    agent_finished,
+                    force_end_turn_rejected,
+                    timeout_seconds=15,
+                )
+            except TimeoutError as error:
+                timeout_error = error
 
-        print("Sending ForceEndTurn")
-        agent.send_force_end_turn()
-        force_end_turn_failed = not wait_for_force_end_turn_outcome(
-            agent_finished,
-            force_end_turn_rejected,
-            timeout_seconds=15,
-        )
-
+    if timeout_error is not None:
+        raise timeout_error
     if force_end_turn_failed:
         raise RuntimeError(f"ForceEndTurn failed: {force_end_turn_error}")
 
