@@ -122,7 +122,7 @@ try:
                 try:
                     connection.send_media(audio[i : i + chunk_size])
                 except Exception:
-                    # A gated deployment closes the socket rather than ignoring the
+                    # An unsupported deployment closes the socket rather than ignoring the
                     # message, so later sends fail. Stop streaming.
                     break
                 time.sleep(0.1)
@@ -149,7 +149,7 @@ try:
         # This blocks until the connection closes
         connection.start_listening()
 
-    # Reported here rather than in the sender thread: on a gated deployment the server
+    # Reported here rather than in the sender thread: on an unsupported deployment the server
     # closes the connection, start_listening() returns, and the daemon thread is killed
     # before it could print anything.
     if feature_disabled.is_set():
