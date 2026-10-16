@@ -56,8 +56,8 @@ ListenV2SocketClientResponse = Union[ListenV2Connected, ListenV2TurnInfo, Listen
 
 
 def _client_environment() -> DeepgramClientEnvironment:
-    """Because ForceEndTurn is gated, this example accepts DEEPGRAM_BASE_URL=wss://<host>
-    so it can be pointed at a deployment that has the feature. Defaults to production."""
+    """Accept DEEPGRAM_BASE_URL=wss://<host> to target a regional or self-hosted deployment.
+    Defaults to production."""
     base = os.environ.get("DEEPGRAM_BASE_URL")
     if not base:
         return DeepgramClientEnvironment.PRODUCTION
