@@ -5431,7 +5431,7 @@ asyncio.run(main())
 **`send_force_end_turn()`** — Force the current turn to end immediately
 
 - `connection.send_force_end_turn()` — The resulting `EndOfTurn` event reports `trigger="manual"` (turns ended by end-of-turn detection report `"model"`, and turns ended by `eot_timeout_ms` report `"timeout"`)
-- Requires server-side enablement; deployments without the feature reject the message and close the connection
+- Available on Deepgram-hosted deployments (including EU and AU). Self-hosted deployments need the 2026-09-15 release or later with the ForceEndTurn feature enabled; unsupported deployments reply UNPARSABLE_CLIENT_MESSAGE and close the connection
 
 </dd>
 </dl>
