@@ -6438,6 +6438,18 @@ asyncio.run(main())
 <dl>
 <dd>
 
+**`send_raw(message: dict[str, typing.Any] | str)`** — Send an unvalidated JSON control frame for protocol-transparent bridges
+
+- `agent.send_raw({"type": "KeepAlive"})` — Forward a control frame as-is
+- Dictionaries are JSON-serialized without model validation; serialized JSON strings are sent unchanged.
+- Values are sent as given (no float-to-int conversion). Prefer the typed `send_*` method when one exists; the server answers an unknown `type` with an `Error` (`UNPARSABLE_CLIENT_MESSAGE`).
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **`send_keep_alive()`** — Keep the connection alive
 
 - `agent.send_keep_alive()`
