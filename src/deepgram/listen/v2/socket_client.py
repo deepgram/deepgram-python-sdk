@@ -30,7 +30,19 @@ V2SocketClientResponse = typing.Union[
     ListenV2ConfigureFailure,
     ListenV2Warning,
     ListenV2FatalError,
+    typing.Dict[str, typing.Any],
 ]
+
+
+def _parse_v2_socket_response(json_data: typing.Any) -> V2SocketClientResponse:
+    response = construct_type(type_=V2SocketClientResponse, object_=json_data)  # type: ignore
+    if response is None:
+        if not isinstance(json_data, dict):
+            raise ValueError("Unknown Listen V2 responses must be JSON objects.")
+        response = json_data
+    if isinstance(response, dict):
+        _logger.warning("Received an unrecognized Listen V2 response; returning raw JSON.")
+    return response
 
 
 class AsyncV2SocketClient(EventEmitterMixin):
@@ -44,7 +56,7 @@ class AsyncV2SocketClient(EventEmitterMixin):
                 yield message
             else:
                 try:
-                    yield construct_type(type_=V2SocketClientResponse, object_=json.loads(message))  # type: ignore
+                    yield _parse_v2_socket_response(json.loads(message))
                 except Exception:
                     _logger.warning(
                         "Skipping unknown WebSocket message; update your SDK version to support new message types."
@@ -60,6 +72,8 @@ class AsyncV2SocketClient(EventEmitterMixin):
         - EventType.MESSAGE for each message received
         - EventType.ERROR if an error occurs
         - EventType.CLOSE when connection is closed
+
+        Unknown response types are emitted as their raw JSON objects.
         """
         await self._emit_async(EventType.OPEN, None)
         try:
@@ -69,7 +83,7 @@ class AsyncV2SocketClient(EventEmitterMixin):
                 else:
                     json_data = json.loads(raw_message)
                     try:
-                        parsed = construct_type(type_=V2SocketClientResponse, object_=json_data)  # type: ignore
+                        parsed = _parse_v2_socket_response(json_data)
                     except Exception:
                         _logger.warning(
                             "Skipping unknown WebSocket message; update your SDK version to support new message types."
@@ -114,14 +128,15 @@ class AsyncV2SocketClient(EventEmitterMixin):
 
     async def recv(self) -> V2SocketClientResponse:
         """
-        Receive a message from the websocket connection.
+        Receive a message from the websocket connection. Unknown response
+        types are returned as their raw JSON objects.
         """
         data = await self._websocket.recv()
         if isinstance(data, bytes):
             return data  # type: ignore
         json_data = json.loads(data)
         try:
-            return construct_type(type_=V2SocketClientResponse, object_=json_data)  # type: ignore
+            return _parse_v2_socket_response(json_data)
         except Exception:
             _logger.warning("Skipping unknown WebSocket message; update your SDK version to support new message types.")
             return json_data  # type: ignore
@@ -152,7 +167,7 @@ class V2SocketClient(EventEmitterMixin):
                 yield message
             else:
                 try:
-                    yield construct_type(type_=V2SocketClientResponse, object_=json.loads(message))  # type: ignore
+                    yield _parse_v2_socket_response(json.loads(message))
                 except Exception:
                     _logger.warning(
                         "Skipping unknown WebSocket message; update your SDK version to support new message types."
@@ -168,6 +183,8 @@ class V2SocketClient(EventEmitterMixin):
         - EventType.MESSAGE for each message received
         - EventType.ERROR if an error occurs
         - EventType.CLOSE when connection is closed
+
+        Unknown response types are emitted as their raw JSON objects.
         """
         self._emit(EventType.OPEN, None)
         try:
@@ -177,7 +194,7 @@ class V2SocketClient(EventEmitterMixin):
                 else:
                     json_data = json.loads(raw_message)
                     try:
-                        parsed = construct_type(type_=V2SocketClientResponse, object_=json_data)  # type: ignore
+                        parsed = _parse_v2_socket_response(json_data)
                     except Exception:
                         _logger.warning(
                             "Skipping unknown WebSocket message; update your SDK version to support new message types."
@@ -222,14 +239,15 @@ class V2SocketClient(EventEmitterMixin):
 
     def recv(self) -> V2SocketClientResponse:
         """
-        Receive a message from the websocket connection.
+        Receive a message from the websocket connection. Unknown response
+        types are returned as their raw JSON objects.
         """
         data = self._websocket.recv()
         if isinstance(data, bytes):
             return data  # type: ignore
         json_data = json.loads(data)
         try:
-            return construct_type(type_=V2SocketClientResponse, object_=json_data)  # type: ignore
+            return _parse_v2_socket_response(json_data)
         except Exception:
             _logger.warning("Skipping unknown WebSocket message; update your SDK version to support new message types.")
             return json_data  # type: ignore
