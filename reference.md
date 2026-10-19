@@ -4964,8 +4964,10 @@ async def main():
         # Send control messages
         await connection.send_keep_alive()
         await connection.send_configure(ListenV1Configure(keyterms=["Deepgram"], features={"numerals": True}))
-        if not await asyncio.wait_for(configure_response.wait(), timeout=5):
-            raise TimeoutError("The server did not acknowledge the Configure message within 5 seconds")
+        try:
+            await asyncio.wait_for(configure_response.wait(), timeout=5)
+        except asyncio.TimeoutError:
+            raise TimeoutError("The server did not acknowledge the Configure message within 5 seconds") from None
         if not configure_applied.is_set():
             raise RuntimeError("The server rejected the Configure message")
         await connection.send_finalize()
