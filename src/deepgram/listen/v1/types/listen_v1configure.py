@@ -16,13 +16,13 @@ class ListenV1Configure(UncheckedBaseModel):
     keyterms: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
     """
     Replaces the stream's keyterms. Compatible with all Nova-3 models, monolingual and multilingual; on other
-    models the server returns an `Error` with code `KeytermsNotSupported`. Each array replaces the entire list,
-    including keyterms set with the `keyterm` query parameter. Send an empty array to clear all keyterms. Omit
-    the field, or set it to `null`, to keep the current keyterms.
+    models the server returns a `ConfigureFailure` with code `CONFIGURE_KEYTERMS_NOT_SUPPORTED`. Each array
+    replaces the entire list, including keyterms set with the `keyterm` query parameter. Send an empty array to
+    clear all keyterms. Omit the field, or set it to `null`, to keep the current keyterms.
     
     Each entry is a plain term or phrase with no weights or intensifiers. The 500-token keyterm limit that
-    applies to the `keyterm` query parameter also applies to each update. An over-limit update returns an
-    `Error`, and the stream keeps its previous keyterms.
+    applies to the `keyterm` query parameter also applies to each update. An over-limit update returns a
+    `ConfigureFailure` with code `CONFIGURE_KEYTERM_LIMIT_EXCEEDED`.
     """
 
     features: typing.Optional[typing.Dict[str, bool]] = pydantic.Field(default=None)

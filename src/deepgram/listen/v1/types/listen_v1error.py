@@ -16,7 +16,6 @@ class ListenV1Error(UncheckedBaseModel):
     variant: str = pydantic.Field()
     """
     The error category. `SchemaError` means the server could not parse a client text message.
-    `InvalidConfigureMessage` means the server rejected a `Configure` message.
     """
 
     description: str = pydantic.Field()
@@ -26,8 +25,8 @@ class ListenV1Error(UncheckedBaseModel):
 
     code: typing.Optional[str] = pydantic.Field(default=None)
     """
-    Identifies the reason for an `InvalidConfigureMessage` error, for example `KeytermsNotSupported`
-    when `keyterms` are sent on a model other than Nova-3.
+    Deprecated. Present only on legacy error frames; use `ConfigureFailure.code` for `Configure`
+    rejections.
     """
 
     message: typing.Optional[str] = pydantic.Field(default=None)
