@@ -4986,7 +4986,7 @@ asyncio.run(main())
 **`send_configure(message: ListenV1Configure)`** — Update keyterms or formatting features during an active stream
 
 - `connection.send_configure(ListenV1Configure(keyterms=["Deepgram"], features={"numerals": True}))`
-- Keyterms require a Nova-3 model. The server returns a typed `ListenV1Error` with `variant="InvalidConfigureMessage"` when it rejects an update; send an empty `keyterms` list to clear all keyterms. Keep each `keyterms` list under the 500-token keyterm limit. An over-limit update currently stops transcription without an `Error`, after which the server closes the stream; check the list size before sending. Only `features.numerals` is supported.
+- Every Configure update receives a typed `ListenV1ConfigureSuccess` or `ListenV1ConfigureFailure`; rejected updates keep the previous configuration. Wait for that response before sending another Configure message. Keyterms require a Nova-3 model; unsupported models return `CONFIGURE_KEYTERMS_NOT_SUPPORTED`. Send an empty `keyterms` list to clear all keyterms. Keep each list under the 500-token keyterm limit; over-limit updates return `CONFIGURE_KEYTERM_LIMIT_EXCEEDED`. Only `features.numerals` is supported.
 
 </dd>
 </dl>

@@ -9,6 +9,8 @@ from ...core.events import EventEmitterMixin, EventType
 from ...core.unchecked_base_model import construct_type
 from .types.listen_v1close_stream import ListenV1CloseStream
 from .types.listen_v1configure import ListenV1Configure
+from .types.listen_v1configure_failure import ListenV1ConfigureFailure
+from .types.listen_v1configure_success import ListenV1ConfigureSuccess
 from .types.listen_v1error import ListenV1Error
 from .types.listen_v1finalize import ListenV1Finalize
 from .types.listen_v1keep_alive import ListenV1KeepAlive
@@ -24,7 +26,13 @@ except ImportError:
 
 _logger = logging.getLogger(__name__)
 V1SocketClientResponse = typing.Union[
-    ListenV1Results, ListenV1Metadata, ListenV1UtteranceEnd, ListenV1SpeechStarted, ListenV1Error
+    ListenV1Results,
+    ListenV1Metadata,
+    ListenV1UtteranceEnd,
+    ListenV1SpeechStarted,
+    ListenV1ConfigureSuccess,
+    ListenV1ConfigureFailure,
+    ListenV1Error,
 ]
 
 

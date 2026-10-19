@@ -10,6 +10,8 @@ if typing.TYPE_CHECKING:
     from .listen_v1close_stream import ListenV1CloseStream
     from .listen_v1close_stream_type import ListenV1CloseStreamType
     from .listen_v1configure import ListenV1Configure
+    from .listen_v1configure_failure import ListenV1ConfigureFailure
+    from .listen_v1configure_success import ListenV1ConfigureSuccess
     from .listen_v1error import ListenV1Error
     from .listen_v1finalize import ListenV1Finalize
     from .listen_v1finalize_type import ListenV1FinalizeType
@@ -31,6 +33,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ListenV1CloseStream": ".listen_v1close_stream",
     "ListenV1CloseStreamType": ".listen_v1close_stream_type",
     "ListenV1Configure": ".listen_v1configure",
+    "ListenV1ConfigureFailure": ".listen_v1configure_failure",
+    "ListenV1ConfigureSuccess": ".listen_v1configure_success",
     "ListenV1Error": ".listen_v1error",
     "ListenV1Finalize": ".listen_v1finalize",
     "ListenV1FinalizeType": ".listen_v1finalize_type",
@@ -76,6 +80,8 @@ __all__ = [
     "ListenV1CloseStream",
     "ListenV1CloseStreamType",
     "ListenV1Configure",
+    "ListenV1ConfigureFailure",
+    "ListenV1ConfigureSuccess",
     "ListenV1Error",
     "ListenV1Finalize",
     "ListenV1FinalizeType",
