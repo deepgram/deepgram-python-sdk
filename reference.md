@@ -4836,6 +4836,7 @@ Transcribe audio and video using Deepgram's speech-to-text WebSocket
 <dd>
 
 ```python
+import threading
 from typing import Union
 
 from deepgram import DeepgramClient
@@ -4857,12 +4858,18 @@ client = DeepgramClient(
     api_key="YOUR_API_KEY",
 )
 
+configure_response = threading.Event()
+configure_applied = threading.Event()
+
 with client.listen.v1.connect(model="nova-3") as connection:
     def on_message(message: ListenV1Response) -> None:
         if isinstance(message, ListenV1ConfigureSuccess):
             print(f"Configure applied: {message.keyterms or []}")
+            configure_applied.set()
+            configure_response.set()
         elif isinstance(message, ListenV1ConfigureFailure):
             print(f"Configure rejected ({message.code}): {message.description}")
+            configure_response.set()
         else:
             msg_type = getattr(message, "type", "Unknown")
             print(f"Received {msg_type} event")
@@ -4872,8 +4879,8 @@ with client.listen.v1.connect(model="nova-3") as connection:
     connection.on(EventType.CLOSE, lambda _: print("Connection closed"))
     connection.on(EventType.ERROR, lambda error: print(f"Caught: {error}"))
 
-    # Start listening
-    connection.start_listening()
+    listener = threading.Thread(target=connection.start_listening, daemon=True)
+    listener.start()
 
     # Send audio data (raw bytes)
     connection.send_media(audio_bytes)
@@ -4881,8 +4888,13 @@ with client.listen.v1.connect(model="nova-3") as connection:
     # Send control messages
     connection.send_keep_alive()
     connection.send_configure(ListenV1Configure(keyterms=["Deepgram"], features={"numerals": True}))
+    if not configure_response.wait(5):
+        raise TimeoutError("The server did not acknowledge the Configure message within 5 seconds")
+    if not configure_applied.is_set():
+        raise RuntimeError("The server rejected the Configure message")
     connection.send_finalize()
     connection.send_close_stream()
+    listener.join()
 
 ```
 
@@ -4924,11 +4936,17 @@ client = AsyncDeepgramClient(
 
 async def main():
     async with client.listen.v1.connect(model="nova-3") as connection:
+        configure_response = asyncio.Event()
+        configure_applied = asyncio.Event()
+
         def on_message(message: ListenV1Response) -> None:
             if isinstance(message, ListenV1ConfigureSuccess):
                 print(f"Configure applied: {message.keyterms or []}")
+                configure_applied.set()
+                configure_response.set()
             elif isinstance(message, ListenV1ConfigureFailure):
                 print(f"Configure rejected ({message.code}): {message.description}")
+                configure_response.set()
             else:
                 msg_type = getattr(message, "type", "Unknown")
                 print(f"Received {msg_type} event")
@@ -4938,8 +4956,7 @@ async def main():
         connection.on(EventType.CLOSE, lambda _: print("Connection closed"))
         connection.on(EventType.ERROR, lambda error: print(f"Caught: {error}"))
 
-        # Start listening
-        await connection.start_listening()
+        listener = asyncio.create_task(connection.start_listening())
 
         # Send audio data (raw bytes)
         await connection.send_media(audio_bytes)
@@ -4947,8 +4964,13 @@ async def main():
         # Send control messages
         await connection.send_keep_alive()
         await connection.send_configure(ListenV1Configure(keyterms=["Deepgram"], features={"numerals": True}))
+        if not await asyncio.wait_for(configure_response.wait(), timeout=5):
+            raise TimeoutError("The server did not acknowledge the Configure message within 5 seconds")
+        if not configure_applied.is_set():
+            raise RuntimeError("The server rejected the Configure message")
         await connection.send_finalize()
         await connection.send_close_stream()
+        await listener
 
 asyncio.run(main())
 
