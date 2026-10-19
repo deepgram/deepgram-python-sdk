@@ -16,6 +16,8 @@ from deepgram import DeepgramClient
 from deepgram.core.events import EventType
 from deepgram.listen.v1.types import (
     ListenV1Configure,
+    ListenV1ConfigureFailure,
+    ListenV1ConfigureSuccess,
     ListenV1Error,
     ListenV1Metadata,
     ListenV1Results,
@@ -25,6 +27,8 @@ from deepgram.listen.v1.types import (
 
 ListenV1SocketClientResponse = Union[
     ListenV1Error,
+    ListenV1ConfigureFailure,
+    ListenV1ConfigureSuccess,
     ListenV1Metadata,
     ListenV1Results,
     ListenV1SpeechStarted,
@@ -34,6 +38,8 @@ ListenV1SocketClientResponse = Union[
 client = DeepgramClient(api_key=os.environ.get("DEEPGRAM_API_KEY"))
 audio_path = Path(__file__).parent / "fixtures" / "audio.wav"
 final_result_received = threading.Event()
+configure_response_received = threading.Event()
+configure_applied = threading.Event()
 
 
 def on_message(message: ListenV1SocketClientResponse) -> None:
@@ -44,8 +50,15 @@ def on_message(message: ListenV1SocketClientResponse) -> None:
             print(f"{label}: {transcript}")
         if message.is_final:
             final_result_received.set()
+    elif isinstance(message, ListenV1ConfigureSuccess):
+        print(f"Configure applied: {message.keyterms or []}")
+        configure_applied.set()
+        configure_response_received.set()
+    elif isinstance(message, ListenV1ConfigureFailure):
+        print(f"Configure rejected ({message.code}): {message.description}")
+        configure_response_received.set()
     elif isinstance(message, ListenV1Error):
-        print(f"Configure error ({message.variant}/{message.code}): {message.description}")
+        print(f"Server error ({message.variant}/{message.code}): {message.description}")
     elif isinstance(message, ListenV1Metadata):
         print("Stream completed")
 
@@ -70,6 +83,10 @@ try:
             time.sleep(0.1)
             if not configured and offset + chunk_size >= reconfigure_after_bytes:
                 connection.send_configure(ListenV1Configure(keyterms=["Deepgram"], features={"numerals": True}))
+                if not configure_response_received.wait(5):
+                    raise TimeoutError("The server did not acknowledge the Configure message within 5 seconds")
+                if not configure_applied.is_set():
+                    raise RuntimeError("The server rejected the Configure message")
                 configured = True
 
         connection.send_finalize()

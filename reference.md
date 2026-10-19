@@ -4842,6 +4842,8 @@ from deepgram import DeepgramClient
 from deepgram.core.events import EventType
 from deepgram.listen.v1.types import (
     ListenV1Configure,
+    ListenV1ConfigureFailure,
+    ListenV1ConfigureSuccess,
     ListenV1Error,
     ListenV1Results,
     ListenV1Metadata,
@@ -4849,7 +4851,7 @@ from deepgram.listen.v1.types import (
     ListenV1SpeechStarted,
 )
 
-ListenV1Response = Union[ListenV1Error, ListenV1Results, ListenV1Metadata, ListenV1UtteranceEnd, ListenV1SpeechStarted]
+ListenV1Response = Union[ListenV1Error, ListenV1ConfigureFailure, ListenV1ConfigureSuccess, ListenV1Results, ListenV1Metadata, ListenV1UtteranceEnd, ListenV1SpeechStarted]
 
 client = DeepgramClient(
     api_key="YOUR_API_KEY",
@@ -4857,8 +4859,13 @@ client = DeepgramClient(
 
 with client.listen.v1.connect(model="nova-3") as connection:
     def on_message(message: ListenV1Response) -> None:
-        msg_type = getattr(message, "type", "Unknown")
-        print(f"Received {msg_type} event")
+        if isinstance(message, ListenV1ConfigureSuccess):
+            print(f"Configure applied: {message.keyterms or []}")
+        elif isinstance(message, ListenV1ConfigureFailure):
+            print(f"Configure rejected ({message.code}): {message.description}")
+        else:
+            msg_type = getattr(message, "type", "Unknown")
+            print(f"Received {msg_type} event")
 
     connection.on(EventType.OPEN, lambda _: print("Connection opened"))
     connection.on(EventType.MESSAGE, on_message)
@@ -4900,6 +4907,8 @@ from deepgram import AsyncDeepgramClient
 from deepgram.core.events import EventType
 from deepgram.listen.v1.types import (
     ListenV1Configure,
+    ListenV1ConfigureFailure,
+    ListenV1ConfigureSuccess,
     ListenV1Error,
     ListenV1Results,
     ListenV1Metadata,
@@ -4907,7 +4916,7 @@ from deepgram.listen.v1.types import (
     ListenV1SpeechStarted,
 )
 
-ListenV1Response = Union[ListenV1Error, ListenV1Results, ListenV1Metadata, ListenV1UtteranceEnd, ListenV1SpeechStarted]
+ListenV1Response = Union[ListenV1Error, ListenV1ConfigureFailure, ListenV1ConfigureSuccess, ListenV1Results, ListenV1Metadata, ListenV1UtteranceEnd, ListenV1SpeechStarted]
 
 client = AsyncDeepgramClient(
     api_key="YOUR_API_KEY",
@@ -4916,8 +4925,13 @@ client = AsyncDeepgramClient(
 async def main():
     async with client.listen.v1.connect(model="nova-3") as connection:
         def on_message(message: ListenV1Response) -> None:
-            msg_type = getattr(message, "type", "Unknown")
-            print(f"Received {msg_type} event")
+            if isinstance(message, ListenV1ConfigureSuccess):
+                print(f"Configure applied: {message.keyterms or []}")
+            elif isinstance(message, ListenV1ConfigureFailure):
+                print(f"Configure rejected ({message.code}): {message.description}")
+            else:
+                msg_type = getattr(message, "type", "Unknown")
+                print(f"Received {msg_type} event")
 
         connection.on(EventType.OPEN, lambda _: print("Connection opened"))
         connection.on(EventType.MESSAGE, on_message)
