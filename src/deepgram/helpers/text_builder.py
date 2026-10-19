@@ -232,7 +232,15 @@ def _validate_pause_controls(text: str) -> None:
 
 
 def _strip_controls(text: str) -> str:
-    return re.sub(PAUSE_PATTERN, "", re.sub(PRONUNCIATION_PATTERN, "", text))
+    def spoken_word(match: re.Match) -> str:
+        # Remove the escaped control delimiters, retaining the word's decoded
+        # JSON value so SSML/inline input counts like pronunciation().
+        try:
+            return json.loads(match.group(0)[1:-2] + "}")["word"]
+        except (ValueError, KeyError):
+            return ""
+
+    return re.sub(PAUSE_PATTERN, "", re.sub(PRONUNCIATION_PATTERN, spoken_word, text))
 
 
 def _pronunciation_control(word: str, ipa: str) -> str:

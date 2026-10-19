@@ -266,6 +266,7 @@ tests/custom/test_speak_v2_interrupt_configure.py
 tests/custom/test_speak_v2_coverage.py
 tests/custom/test_speak_v2_socket.py
 tests/custom/test_text_builder.py
+tests/custom/test_text_builder_character_count.py
 tests/custom/test_flux_tts_controls.py
 tests/custom/test_topics_intents_v7_compat.py
 tests/custom/test_transport.py
