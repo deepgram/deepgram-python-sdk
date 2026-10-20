@@ -1,5 +1,18 @@
 # Changelog
 
+## [7.14.0](https://github.com/deepgram/deepgram-python-sdk/compare/v7.13.0...v7.14.0) (2026-10-20)
+
+
+### Features
+
+* **agent:** add raw control sender ([#789](https://github.com/deepgram/deepgram-python-sdk/issues/789)) ([cab8402](https://github.com/deepgram/deepgram-python-sdk/commit/cab8402a864239f84d4a520b4a24f8f510bbf135))
+* **regen:** add Listen V1 ConfigureSuccess and ConfigureFailure replies ([#803](https://github.com/deepgram/deepgram-python-sdk/issues/803)) ([a5638e1](https://github.com/deepgram/deepgram-python-sdk/commit/a5638e1fd2f12422a75f141592293aa22e6bb6b0))
+
+
+### Bug Fixes
+
+* clarify ForceEndTurn deployment behavior ([#788](https://github.com/deepgram/deepgram-python-sdk/issues/788)) ([1495ad1](https://github.com/deepgram/deepgram-python-sdk/commit/1495ad1035768c99f72f7867bdc4ea7077de5530))
+
 ## [7.13.0](https://github.com/deepgram/deepgram-python-sdk/compare/v7.12.0...v7.13.0) (2026-10-08)
 
 
