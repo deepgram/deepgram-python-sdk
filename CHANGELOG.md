@@ -1,5 +1,18 @@
 # Changelog
 
+## [7.14.0](https://github.com/deepgram/deepgram-python-sdk/compare/v7.13.0...v7.14.0) (2026-10-20)
+
+
+### Features
+
+* **Voice Agent:** Send protocol-transparent control frames with sync or async `connection.send_raw(...)`. Dictionary payloads are serialized without model validation; pre-serialized JSON strings are sent unchanged. ([#789](https://github.com/deepgram/deepgram-python-sdk/issues/789))
+* **Listen V1:** Receive typed `ListenV1ConfigureSuccess` and `ListenV1ConfigureFailure` responses after `connection.send_configure(ListenV1Configure(...))`, including failure codes for unsupported or over-limit keyterms. ([#803](https://github.com/deepgram/deepgram-python-sdk/issues/803))
+
+
+### Bug Fixes
+
+* **Voice Agent:** Clarify ForceEndTurn availability for hosted and self-hosted deployments. The example now reports `FORCE_END_TURN_UNSUPPORTED` and waits for the final outcome before closing the connection. ([#788](https://github.com/deepgram/deepgram-python-sdk/issues/788))
+
 ## [7.13.0](https://github.com/deepgram/deepgram-python-sdk/compare/v7.12.0...v7.13.0) (2026-10-08)
 
 
