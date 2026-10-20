@@ -5,13 +5,13 @@
 
 ### Features
 
-* **agent:** add raw control sender ([#789](https://github.com/deepgram/deepgram-python-sdk/issues/789)) ([cab8402](https://github.com/deepgram/deepgram-python-sdk/commit/cab8402a864239f84d4a520b4a24f8f510bbf135))
-* **regen:** add Listen V1 ConfigureSuccess and ConfigureFailure replies ([#803](https://github.com/deepgram/deepgram-python-sdk/issues/803)) ([a5638e1](https://github.com/deepgram/deepgram-python-sdk/commit/a5638e1fd2f12422a75f141592293aa22e6bb6b0))
+* **Voice Agent:** Send protocol-transparent control frames with sync or async `connection.send_raw(...)`. Dictionary payloads are serialized without model validation; pre-serialized JSON strings are sent unchanged. ([#789](https://github.com/deepgram/deepgram-python-sdk/issues/789))
+* **Listen V1:** Receive typed `ListenV1ConfigureSuccess` and `ListenV1ConfigureFailure` responses after `connection.send_configure(ListenV1Configure(...))`, including failure codes for unsupported or over-limit keyterms. ([#803](https://github.com/deepgram/deepgram-python-sdk/issues/803))
 
 
 ### Bug Fixes
 
-* clarify ForceEndTurn deployment behavior ([#788](https://github.com/deepgram/deepgram-python-sdk/issues/788)) ([1495ad1](https://github.com/deepgram/deepgram-python-sdk/commit/1495ad1035768c99f72f7867bdc4ea7077de5530))
+* **Voice Agent:** Clarify ForceEndTurn availability for hosted and self-hosted deployments. The example now reports `FORCE_END_TURN_UNSUPPORTED` and waits for the final outcome before closing the connection. ([#788](https://github.com/deepgram/deepgram-python-sdk/issues/788))
 
 ## [7.13.0](https://github.com/deepgram/deepgram-python-sdk/compare/v7.12.0...v7.13.0) (2026-10-08)
 
