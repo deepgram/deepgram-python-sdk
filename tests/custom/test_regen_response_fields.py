@@ -18,6 +18,12 @@ optional fields are omitted.
 """
 
 from deepgram.listen.v1.types.listen_v1results import ListenV1Results
+from deepgram.listen.v1.types.listen_v1results_channel_alternatives_item import (
+    ListenV1ResultsChannelAlternativesItem,
+)
+from deepgram.listen.v1.types.listen_v1results_channel_alternatives_item_words_item import (
+    ListenV1ResultsChannelAlternativesItemWordsItem,
+)
 from deepgram.listen.v1.types.listen_v1results_metadata import ListenV1ResultsMetadata
 from deepgram.listen.v1.types.listen_v1results_metadata_diarize_info import (
     ListenV1ResultsMetadataDiarizeInfo,
@@ -28,8 +34,15 @@ from deepgram.types.listen_v1response_metadata import ListenV1ResponseMetadata
 from deepgram.types.listen_v1response_metadata_diarize_info import (
     ListenV1ResponseMetadataDiarizeInfo,
 )
+from deepgram.types.listen_v1response_results_channels_item_alternatives_item import (
+    ListenV1ResponseResultsChannelsItemAlternativesItem,
+)
 from deepgram.types.listen_v1response_results_channels_item_alternatives_item_words_item import (
     ListenV1ResponseResultsChannelsItemAlternativesItemWordsItem,
+)
+from deepgram.types.listen_v1response_results_utterances_item import ListenV1ResponseResultsUtterancesItem
+from deepgram.types.listen_v1response_results_utterances_item_words_item import (
+    ListenV1ResponseResultsUtterancesItemWordsItem,
 )
 
 # Observed live: metadata.diarize_info on a diarize=true pre-recorded request.
@@ -144,6 +157,13 @@ PRERECORDED_MULTILINGUAL_RESPONSE = {
 }
 
 
+def _declared_fields(model: type) -> set[str]:
+    fields = getattr(model, "model_fields", None)
+    if fields is None:
+        fields = model.__fields__
+    return set(fields)
+
+
 class TestListenV1DiarizeInfo:
     def test_response_metadata_parses_diarize_info(self) -> None:
         md = ListenV1ResponseMetadata.model_validate(RESPONSE_METADATA)
@@ -192,6 +212,18 @@ class TestListenV1WordSpeakerFields:
 
 
 class TestListenV1MultilingualFields:
+    def test_multilingual_fields_are_declared(self) -> None:
+        assert {"languages", "languages_hinted"}.issubset(
+            _declared_fields(ListenV1ResultsChannelAlternativesItem)
+        )
+        assert "language" in _declared_fields(ListenV1ResultsChannelAlternativesItemWordsItem)
+        assert {"languages", "languages_hinted"}.issubset(
+            _declared_fields(ListenV1ResponseResultsChannelsItemAlternativesItem)
+        )
+        assert "language" in _declared_fields(ListenV1ResponseResultsChannelsItemAlternativesItemWordsItem)
+        assert "languages" in _declared_fields(ListenV1ResponseResultsUtterancesItem)
+        assert "language" in _declared_fields(ListenV1ResponseResultsUtterancesItemWordsItem)
+
     def test_streaming_result_parses_languages_and_word_languages(self) -> None:
         result = ListenV1Results.model_validate(STREAMING_MULTILINGUAL_RESULT)
         alternative = result.channel.alternatives[0]

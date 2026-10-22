@@ -15,6 +15,7 @@ from deepgram.agent.v1.types import (
     AgentV1SettingsAudio,
     AgentV1SettingsAudioInput,
     AgentV1ThinkConversationalUpdated,
+    AgentV1UpdateThinkConversational,
 )
 from deepgram.types import (
     DeepgramThinkConversationalProviderV1,
@@ -63,15 +64,7 @@ def _settings(*, legacy: bool) -> AgentV1Settings:
             )
         ],
     )
-    think_conversational = ThinkConversationalSettingsV1(
-        provider=DeepgramThinkConversationalProviderV1(
-            agent_backchannel_sensitivity=0.35,
-            presence_check_max_count=2,
-            presence_check_interval_ms=5000,
-            frustration_max_count=3,
-            restricted_terms=["competitor name"],
-        )
-    )
+    think_conversational = _conversational_settings()
     context = AgentV1SettingsAgentContextContext(messages=[])
     agent: AgentV1SettingsAgent | AgentV1SettingsAgentContext
     if legacy:
@@ -89,6 +82,18 @@ def _settings(*, legacy: bool) -> AgentV1Settings:
     return AgentV1Settings(
         audio=AgentV1SettingsAudio(input=AgentV1SettingsAudioInput(encoding="linear16", sample_rate=24000)),
         agent=agent,
+    )
+
+
+def _conversational_settings() -> ThinkConversationalSettingsV1:
+    return ThinkConversationalSettingsV1(
+        provider=DeepgramThinkConversationalProviderV1(
+            agent_backchannel_sensitivity=0.35,
+            presence_check_max_count=2,
+            presence_check_interval_ms=5000,
+            frustration_max_count=3,
+            restricted_terms=["competitor name"],
+        )
     )
 
 
@@ -130,6 +135,39 @@ async def test_async_settings_serializes_conversational_mode() -> None:
     await AsyncV1SocketClient(websocket=cast(Any, websocket)).send_settings(_settings(legacy=False))
 
     _assert_settings_payload(json.loads(websocket.sent[0]))
+
+
+def _assert_update_payload(payload: dict[str, Any]) -> None:
+    assert payload["type"] == "UpdateThink_Conversational"
+    assert payload["think_conversational"]["provider"] == {
+        "type": "deepgram",
+        "version": "v1",
+        "agent_backchannel_sensitivity": 0.35,
+        "presence_check_max_count": 2,
+        "presence_check_interval_ms": 5000,
+        "frustration_max_count": 3,
+        "restricted_terms": ["competitor name"],
+    }
+
+
+def test_sync_update_think_conversational_serializes_control_frame() -> None:
+    websocket = _FakeWebSocket()
+
+    V1SocketClient(websocket=cast(Any, websocket)).send_update_think_conversational(
+        AgentV1UpdateThinkConversational(think_conversational=_conversational_settings())
+    )
+
+    _assert_update_payload(json.loads(websocket.sent[0]))
+
+
+async def test_async_update_think_conversational_serializes_control_frame() -> None:
+    websocket = _FakeAsyncWebSocket()
+
+    await AsyncV1SocketClient(websocket=cast(Any, websocket)).send_update_think_conversational(
+        AgentV1UpdateThinkConversational(think_conversational=_conversational_settings())
+    )
+
+    _assert_update_payload(json.loads(websocket.sent[0]))
 
 
 @pytest.mark.parametrize("behavior", [None, "default", "queue", "interrupt"])
