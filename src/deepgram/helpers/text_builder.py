@@ -297,11 +297,17 @@ def ssml_to_deepgram(ssml_text: str) -> str:
     ssml_text = re.sub(phoneme_pattern, replace_phoneme, ssml_text)
 
     # Handle <break> tags
-    break_pattern = r'<break\s+time=["\'](\d+(?:\.\d+)?)(ms|s)["\']\s*/>'
+    break_pattern = r"<break\s+([^<>]*?)\s*/>"
 
     def replace_break(match):
-        value = float(match.group(1))
-        unit = match.group(2)
+        time_match = re.search(
+            r"(?:^|\s)time\s*=\s*([\"'])(\d+(?:\.\d+)?)(ms|s)\1(?=\s|$)",
+            match.group(1),
+        )
+        if time_match is None:
+            return match.group(0)
+        value = float(time_match.group(2))
+        unit = time_match.group(3)
 
         duration_ms = value * 1000 if unit == "s" else value
         if not duration_ms.is_integer():
