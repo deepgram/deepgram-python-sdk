@@ -18,7 +18,9 @@ try:
     response = client.listen.v1.media.transcribe_url(
         url="https://dpgr.am/spacewalk.wav",
         model="nova-3",
-        language="en-US",
+        language="multi",
+        # Requires Nova-3 multilingual language hints, which are rolling out server-side.
+        language_hint=["en"],
         # Advanced options
         smart_format=True,
         punctuate=True,
@@ -39,13 +41,20 @@ try:
             transcript = alternative.transcript
             print(f"Transcript: {transcript}")
 
+            if alternative.languages is not None:
+                print(f"Detected languages: {', '.join(alternative.languages)}")
+            if alternative.languages_hinted is not None:
+                print(f"Applied language hints: {', '.join(alternative.languages_hinted)}")
+
             # Show speaker diarization if available
             if alternative.words:
                 print("\nSpeaker diarization:")
                 for word in alternative.words:
                     speaker = getattr(word, "speaker", None)
+                    language = getattr(word, "language", None)
                     if speaker is not None:
-                        print(f"  Speaker {speaker}: {word.word}")
+                        language_label = f" ({language})" if language is not None else ""
+                        print(f"  Speaker {speaker}{language_label}: {word.word}")
 
     # For async version:
     # from deepgram import AsyncDeepgramClient
