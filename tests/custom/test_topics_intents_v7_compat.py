@@ -12,6 +12,7 @@ from deepgram.requests import (
     SharedTopicsParams,
     SharedTopicsResultsParams,
     SharedTopicsResultsTopicsParams,
+    SharedTopicsResultsTopicsSegmentsItemTopicsItemParams,
 )
 from deepgram.types import (
     SharedIntents,
@@ -85,8 +86,10 @@ def test_legacy_topics_and_intents_types_and_params_are_importable() -> None:
     topics: SharedTopicsResultsParams = {"topics": {"segments": []}}
     intents: SharedIntentsResultsParams = {"intents": {"segments": []}}
     topic_segments: SharedTopicsResultsTopicsParams = {"segments": []}
+    topic_item: SharedTopicsResultsTopicsSegmentsItemTopicsItemParams = {"topic": "greeting"}
     intent_segments: SharedIntentsResultsIntentsParams = {"segments": []}
     assert topics["topics"] == topic_segments
+    assert topic_item["topic"] == "greeting"
     assert intents["intents"] == intent_segments
 
 

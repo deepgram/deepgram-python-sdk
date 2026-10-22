@@ -394,7 +394,7 @@ _dynamic_imports.update(
         "SharedTopicsResultsParams": ".shared_topics_results",
         "SharedTopicsResultsTopicsParams": ".shared_topics_results_topics",
         "SharedTopicsResultsTopicsSegmentsItemParams": ".shared_topics_results_topics_segments_item",
-        "SharedTopicsResultsTopicsSegmentsItemTopicsItemParams": ".shared_topics_results_topics_segments_item",
+        "SharedTopicsResultsTopicsSegmentsItemTopicsItemParams": ".shared_topics_results_topics_segments_item_topics_item",
         "CartesiaSpeakProviderVoiceParams": ".cartesia_speak_provider_voice",
         "CreateKeyV1RequestOneParams": ".create_key_v1request_one",
         "DeepgramListenProviderV2LanguageHintParams": ".deepgram_listen_provider_v2language_hint",
