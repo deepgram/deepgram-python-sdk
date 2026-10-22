@@ -5,9 +5,9 @@ import typing
 import pydantic
 from ....core.pydantic_utilities import IS_PYDANTIC_V2
 from ....core.unchecked_base_model import UncheckedBaseModel
+from ....types.think_conversational_settings_v1 import ThinkConversationalSettingsV1
 from .agent_v1settings_agent_context_context import AgentV1SettingsAgentContextContext
 from .agent_v1settings_agent_context_listen import AgentV1SettingsAgentContextListen
-from .agent_v1settings_agent_context_messages_item import AgentV1SettingsAgentContextMessagesItem
 from .agent_v1settings_agent_context_speak import AgentV1SettingsAgentContextSpeak
 from .agent_v1settings_agent_context_think import AgentV1SettingsAgentContextThink
 
@@ -24,33 +24,17 @@ class AgentV1SettingsAgentContext(UncheckedBaseModel):
     """
 
     listen: typing.Optional[AgentV1SettingsAgentContextListen] = None
-    think: typing.Optional[AgentV1SettingsAgentContextThink] = None
+    think: typing.Optional[AgentV1SettingsAgentContextThink] = pydantic.Field(default=None)
+    """
+    Your reasoning LLM. Under Conversational Mode this is the reasoning half of the pair, running alongside the Conversational LLM configured in `think_conversational`
+    """
+
+    think_conversational: typing.Optional[ThinkConversationalSettingsV1] = None
     speak: typing.Optional[AgentV1SettingsAgentContextSpeak] = None
     greeting: typing.Optional[str] = pydantic.Field(default=None)
     """
     Optional message that agent will speak at the start
     """
-
-    if IS_PYDANTIC_V2:
-        @pydantic.model_validator(mode="before")
-        @classmethod
-        def _migrate_legacy_messages_to_context(cls, values: typing.Any) -> typing.Any:
-            if isinstance(values, dict) and "messages" in values and "context" not in values:
-                values = dict(values)
-                values["context"] = {"messages": values.pop("messages")}
-            return values
-    else:
-
-        @pydantic.root_validator(pre=True)  # type: ignore[deprecated]
-        def _migrate_legacy_messages_to_context(cls, values: typing.Any) -> typing.Any:  # type: ignore[no-redef]
-            if isinstance(values, dict) and "messages" in values and "context" not in values:
-                values = dict(values)
-                values["context"] = {"messages": values.pop("messages")}
-            return values
-
-    @property
-    def messages(self) -> typing.Optional[typing.List[AgentV1SettingsAgentContextMessagesItem]]:
-        return None if self.context is None else self.context.messages
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

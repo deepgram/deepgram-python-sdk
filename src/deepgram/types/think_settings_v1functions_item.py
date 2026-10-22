@@ -29,6 +29,21 @@ class ThinkSettingsV1FunctionsItem(UncheckedBaseModel):
     Hold this function call until the user's turn is confirmed instead of dispatching it speculatively. Set it to true for actions that cannot be undone. If the turn resumes, a deferred call is discarded before it runs. Defaults to false
     """
 
+    initial_agent_filler: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Requires `agent.think_conversational`. Speak one short filler line after the function is dispatched and the user's turn is confirmed, if the function response has not yet arrived. Skipped when the reasoning LLM already announced the call in the same response
+    """
+
+    agent_filler_max_count: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Requires `agent.think_conversational`. Number of additional filler lines the agent may speak while this function call is outstanding. Set to 0 to disable additional filler
+    """
+
+    agent_filler_interval_ms: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Requires `agent.think_conversational`. Silence in milliseconds, counted from when the agent last stopped speaking, before each additional filler line. Ignored when `agent_filler_max_count` is 0, which is also the only case in which a value outside the 1000 to 60000 range is accepted. Setting any filler field without `agent.think_conversational`, or an out-of-range interval while `agent_filler_max_count` is greater than 0, returns an `INVALID_SETTINGS` error and closes the session
+    """
+
     endpoint: typing.Optional[ThinkSettingsV1FunctionsItemEndpoint] = pydantic.Field(default=None)
     """
     The Function endpoint to call. if not passed, function is called client-side

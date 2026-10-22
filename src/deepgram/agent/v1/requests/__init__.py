@@ -14,12 +14,14 @@ if typing.TYPE_CHECKING:
     from .agent_v1custom_to_think_provider import AgentV1CustomToThinkProviderParams
     from .agent_v1error import AgentV1ErrorParams
     from .agent_v1force_end_turn import AgentV1ForceEndTurnParams
+    from .agent_v1frustration_detected import AgentV1FrustrationDetectedParams
     from .agent_v1function_call_cancelled import AgentV1FunctionCallCancelledParams
     from .agent_v1function_call_cancelled_functions_item import AgentV1FunctionCallCancelledFunctionsItemParams
     from .agent_v1function_call_request import AgentV1FunctionCallRequestParams
     from .agent_v1function_call_request_functions_item import AgentV1FunctionCallRequestFunctionsItemParams
     from .agent_v1history import AgentV1HistoryParams
     from .agent_v1inject_agent_message import AgentV1InjectAgentMessageParams
+    from .agent_v1inject_dynamic_agent_message import AgentV1InjectDynamicAgentMessageParams
     from .agent_v1inject_user_message import AgentV1InjectUserMessageParams
     from .agent_v1injection_refused import AgentV1InjectionRefusedParams
     from .agent_v1keep_alive import AgentV1KeepAliveParams
@@ -57,6 +59,7 @@ if typing.TYPE_CHECKING:
     from .agent_v1settings_audio_output import AgentV1SettingsAudioOutputParams
     from .agent_v1settings_flags import AgentV1SettingsFlagsParams
     from .agent_v1speak_updated import AgentV1SpeakUpdatedParams
+    from .agent_v1think_conversational_updated import AgentV1ThinkConversationalUpdatedParams
     from .agent_v1think_updated import AgentV1ThinkUpdatedParams
     from .agent_v1update_listen import AgentV1UpdateListenParams
     from .agent_v1update_listen_listen import AgentV1UpdateListenListenParams
@@ -69,6 +72,7 @@ if typing.TYPE_CHECKING:
     from .agent_v1update_speak import AgentV1UpdateSpeakParams
     from .agent_v1update_speak_speak import AgentV1UpdateSpeakSpeakParams
     from .agent_v1update_think import AgentV1UpdateThinkParams
+    from .agent_v1update_think_conversational import AgentV1UpdateThinkConversationalParams
     from .agent_v1update_think_think import AgentV1UpdateThinkThinkParams
     from .agent_v1user_started_speaking import AgentV1UserStartedSpeakingParams
     from .agent_v1warning import AgentV1WarningParams
@@ -76,8 +80,6 @@ if typing.TYPE_CHECKING:
     from .conversation_history_message import ConversationHistoryMessageParams
     from .function_call_history_message import FunctionCallHistoryMessageParams
     from .function_call_history_message_function_calls_item import FunctionCallHistoryMessageFunctionCallsItemParams
-    from .agent_v1history_content import AgentV1HistoryContentParams  # noqa: F401
-    from .agent_v1history_function_calls import AgentV1HistoryFunctionCallsParams  # noqa: F401
 _dynamic_imports: typing.Dict[str, str] = {
     "AgentV1AgentAudioDoneParams": ".agent_v1agent_audio_done",
     "AgentV1AgentStartedSpeakingParams": ".agent_v1agent_started_speaking",
@@ -87,12 +89,14 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AgentV1CustomToThinkProviderParams": ".agent_v1custom_to_think_provider",
     "AgentV1ErrorParams": ".agent_v1error",
     "AgentV1ForceEndTurnParams": ".agent_v1force_end_turn",
+    "AgentV1FrustrationDetectedParams": ".agent_v1frustration_detected",
     "AgentV1FunctionCallCancelledFunctionsItemParams": ".agent_v1function_call_cancelled_functions_item",
     "AgentV1FunctionCallCancelledParams": ".agent_v1function_call_cancelled",
     "AgentV1FunctionCallRequestFunctionsItemParams": ".agent_v1function_call_request_functions_item",
     "AgentV1FunctionCallRequestParams": ".agent_v1function_call_request",
     "AgentV1HistoryParams": ".agent_v1history",
     "AgentV1InjectAgentMessageParams": ".agent_v1inject_agent_message",
+    "AgentV1InjectDynamicAgentMessageParams": ".agent_v1inject_dynamic_agent_message",
     "AgentV1InjectUserMessageParams": ".agent_v1inject_user_message",
     "AgentV1InjectionRefusedParams": ".agent_v1injection_refused",
     "AgentV1KeepAliveParams": ".agent_v1keep_alive",
@@ -124,6 +128,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AgentV1SettingsFlagsParams": ".agent_v1settings_flags",
     "AgentV1SettingsParams": ".agent_v1settings",
     "AgentV1SpeakUpdatedParams": ".agent_v1speak_updated",
+    "AgentV1ThinkConversationalUpdatedParams": ".agent_v1think_conversational_updated",
     "AgentV1ThinkUpdatedParams": ".agent_v1think_updated",
     "AgentV1UpdateListenListenParams": ".agent_v1update_listen_listen",
     "AgentV1UpdateListenListenProviderParams": ".agent_v1update_listen_listen_provider",
@@ -133,6 +138,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AgentV1UpdatePromptParams": ".agent_v1update_prompt",
     "AgentV1UpdateSpeakParams": ".agent_v1update_speak",
     "AgentV1UpdateSpeakSpeakParams": ".agent_v1update_speak_speak",
+    "AgentV1UpdateThinkConversationalParams": ".agent_v1update_think_conversational",
     "AgentV1UpdateThinkParams": ".agent_v1update_think",
     "AgentV1UpdateThinkThinkParams": ".agent_v1update_think_think",
     "AgentV1UserStartedSpeakingParams": ".agent_v1user_started_speaking",
@@ -142,24 +148,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "FunctionCallHistoryMessageFunctionCallsItemParams": ".function_call_history_message_function_calls_item",
     "FunctionCallHistoryMessageParams": ".function_call_history_message",
 }
-
-_dynamic_imports.update(
-    {
-        "AgentV1HistoryContentParams": ".agent_v1history_content",
-        "AgentV1HistoryFunctionCallsParams": ".agent_v1history_function_calls",
-        "AgentV1HistoryFunctionCallsFunctionCallsItemParams": ".agent_v1history_function_calls_function_calls_item",
-        "AgentV1SettingsAgentContextContextMessagesItemFunctionCallsFunctionCallsItemParams": ".agent_v1settings_agent_context_context_messages_item_function_calls_function_calls_item",
-        "AgentV1SettingsAgentContextListenProviderV1Params": ".agent_v1settings_agent_context_listen_provider_v1",
-        "AgentV1SettingsAgentContextListenProviderV2Params": ".agent_v1settings_agent_context_listen_provider_v2",
-        "AgentV1SettingsAgentContextListenProviderV2LanguageHintParams": ".agent_v1settings_agent_context_listen_provider_v2language_hint",
-        "AgentV1SettingsAgentContextMessagesItemParams": ".agent_v1settings_agent_context_messages_item",
-        "AgentV1SettingsAgentContextMessagesItemContentParams": ".agent_v1settings_agent_context_messages_item_content",
-        "AgentV1SettingsAgentContextMessagesItemFunctionCallsParams": ".agent_v1settings_agent_context_messages_item_function_calls",
-        "AgentV1SettingsAgentContextMessagesItemFunctionCallsFunctionCallsItemParams": ".agent_v1settings_agent_context_messages_item_function_calls_function_calls_item",
-        "AgentV1SettingsAgentListenProviderV1Params": ".agent_v1settings_agent_listen_provider_v1",
-        "AgentV1SettingsAgentListenProviderV2Params": ".agent_v1settings_agent_listen_provider_v2",
-    }
-)
 
 
 def __getattr__(attr_name: str) -> typing.Any:
@@ -192,12 +180,14 @@ __all__ = [
     "AgentV1CustomToThinkProviderParams",
     "AgentV1ErrorParams",
     "AgentV1ForceEndTurnParams",
+    "AgentV1FrustrationDetectedParams",
     "AgentV1FunctionCallCancelledFunctionsItemParams",
     "AgentV1FunctionCallCancelledParams",
     "AgentV1FunctionCallRequestFunctionsItemParams",
     "AgentV1FunctionCallRequestParams",
     "AgentV1HistoryParams",
     "AgentV1InjectAgentMessageParams",
+    "AgentV1InjectDynamicAgentMessageParams",
     "AgentV1InjectUserMessageParams",
     "AgentV1InjectionRefusedParams",
     "AgentV1KeepAliveParams",
@@ -229,6 +219,7 @@ __all__ = [
     "AgentV1SettingsFlagsParams",
     "AgentV1SettingsParams",
     "AgentV1SpeakUpdatedParams",
+    "AgentV1ThinkConversationalUpdatedParams",
     "AgentV1ThinkUpdatedParams",
     "AgentV1UpdateListenListenParams",
     "AgentV1UpdateListenListenProviderParams",
@@ -238,6 +229,7 @@ __all__ = [
     "AgentV1UpdatePromptParams",
     "AgentV1UpdateSpeakParams",
     "AgentV1UpdateSpeakSpeakParams",
+    "AgentV1UpdateThinkConversationalParams",
     "AgentV1UpdateThinkParams",
     "AgentV1UpdateThinkThinkParams",
     "AgentV1UserStartedSpeakingParams",
@@ -247,21 +239,3 @@ __all__ = [
     "FunctionCallHistoryMessageFunctionCallsItemParams",
     "FunctionCallHistoryMessageParams",
 ]
-
-__all__.extend(
-    [
-        "AgentV1HistoryContentParams",
-        "AgentV1HistoryFunctionCallsParams",
-        "AgentV1HistoryFunctionCallsFunctionCallsItemParams",
-        "AgentV1SettingsAgentContextContextMessagesItemFunctionCallsFunctionCallsItemParams",
-        "AgentV1SettingsAgentContextListenProviderV1Params",
-        "AgentV1SettingsAgentContextListenProviderV2Params",
-        "AgentV1SettingsAgentContextListenProviderV2LanguageHintParams",
-        "AgentV1SettingsAgentContextMessagesItemParams",
-        "AgentV1SettingsAgentContextMessagesItemContentParams",
-        "AgentV1SettingsAgentContextMessagesItemFunctionCallsParams",
-        "AgentV1SettingsAgentContextMessagesItemFunctionCallsFunctionCallsItemParams",
-        "AgentV1SettingsAgentListenProviderV1Params",
-        "AgentV1SettingsAgentListenProviderV2Params",
-    ]
-)

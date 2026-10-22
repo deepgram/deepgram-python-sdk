@@ -3,6 +3,7 @@
 import typing
 
 import typing_extensions
+from ..types.agent_v1conversation_text_conversational_behavior import AgentV1ConversationTextConversationalBehavior
 from ..types.agent_v1conversation_text_role import AgentV1ConversationTextRole
 
 
@@ -20,6 +21,11 @@ class AgentV1ConversationTextParams(typing_extensions.TypedDict):
     content: str
     """
     The actual statement that was spoken
+    """
+
+    conversational_behavior: typing_extensions.NotRequired[AgentV1ConversationTextConversationalBehavior]
+    """
+    Annotates what kind of utterance the message represents: `default` (a standard turn), `backchannel` (a short acknowledgement while the user held the floor), `presence_check` (a prompt after extended silence), or `filler` (a line covering a wait on a function call or a dynamic InjectAgentMessage). Always sent; it is `default` for every message while Conversational Mode is off
     """
 
     languages_hinted: typing_extensions.NotRequired[typing.Sequence[str]]

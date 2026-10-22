@@ -25,6 +25,16 @@ from .listen_v1response_results_channels_item_alternatives_item_words_item impor
 class ListenV1ResponseResultsChannelsItemAlternativesItem(UncheckedBaseModel):
     transcript: typing.Optional[str] = None
     confidence: typing.Optional[float] = None
+    languages: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
+    """
+    [BCP-47](https://tools.ietf.org/html/bcp47) language tags of the languages detected in the transcript, sorted by word count in descending order. Only present when `language=multi`. Can be absent on audio that switches languages.
+    """
+
+    languages_hinted: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
+    """
+    The `language_hint` values for the request, normalized: codes are returned in canonical form (`ES` → `es`, `zh-hk` → `zh-HK`), and a regional code the model has no tag for is returned as its base language (`en-GB` → `en`). Returned on every Nova-3 multilingual response (`model=nova-3&language=multi`); an empty array when no `language_hint` was sent.
+    """
+
     words: typing.Optional[typing.List[ListenV1ResponseResultsChannelsItemAlternativesItemWordsItem]] = None
     paragraphs: typing.Optional[ListenV1ResponseResultsChannelsItemAlternativesItemParagraphs] = None
     entities: typing.Optional[typing.List[ListenV1ResponseResultsChannelsItemAlternativesItemEntitiesItem]] = None

@@ -60,6 +60,7 @@ class MediaClient:
         keyterm: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         keywords: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         language: typing.Optional[str] = None,
+        language_hint: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         measurements: typing.Optional[bool] = None,
         model: typing.Optional[MediaTranscribeRequestModel] = None,
         multichannel: typing.Optional[bool] = None,
@@ -154,6 +155,9 @@ class MediaClient:
         language : typing.Optional[str]
             The [BCP-47 language tag](https://tools.ietf.org/html/bcp47) that hints at the primary spoken language. Depending on the Model and API endpoint you choose only certain languages are available
 
+        language_hint : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Biases language detection toward one or more languages on Nova-3 multilingual (`model=nova-3&language=multi`); ignored with any other `language`. Repeat the parameter to pass several codes, for example `language_hint=en&language_hint=es`. A code that is not in the [Nova-3 multilingual list](/docs/models-languages-overview#nova-3) fails the request with HTTP 400. See [Nova-3 Language Prompting](/docs/nova-3-language-prompting).
+
         measurements : typing.Optional[bool]
             Spoken measurements will be converted to their corresponding abbreviations
 
@@ -242,6 +246,7 @@ class MediaClient:
             keyterm=keyterm,
             keywords=keywords,
             language=language,
+            language_hint=language_hint,
             measurements=measurements,
             model=model,
             multichannel=multichannel,
@@ -287,6 +292,7 @@ class MediaClient:
         keyterm: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         keywords: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         language: typing.Optional[str] = None,
+        language_hint: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         measurements: typing.Optional[bool] = None,
         model: typing.Optional[MediaTranscribeRequestModel] = None,
         multichannel: typing.Optional[bool] = None,
@@ -381,6 +387,9 @@ class MediaClient:
         language : typing.Optional[str]
             The [BCP-47 language tag](https://tools.ietf.org/html/bcp47) that hints at the primary spoken language. Depending on the Model and API endpoint you choose only certain languages are available
 
+        language_hint : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Biases language detection toward one or more languages on Nova-3 multilingual (`model=nova-3&language=multi`); ignored with any other `language`. Repeat the parameter to pass several codes, for example `language_hint=en&language_hint=es`. A code that is not in the [Nova-3 multilingual list](/docs/models-languages-overview#nova-3) fails the request with HTTP 400. See [Nova-3 Language Prompting](/docs/nova-3-language-prompting).
+
         measurements : typing.Optional[bool]
             Spoken measurements will be converted to their corresponding abbreviations
 
@@ -467,6 +476,7 @@ class MediaClient:
             keyterm=keyterm,
             keywords=keywords,
             language=language,
+            language_hint=language_hint,
             measurements=measurements,
             model=model,
             multichannel=multichannel,
@@ -528,6 +538,7 @@ class AsyncMediaClient:
         keyterm: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         keywords: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         language: typing.Optional[str] = None,
+        language_hint: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         measurements: typing.Optional[bool] = None,
         model: typing.Optional[MediaTranscribeRequestModel] = None,
         multichannel: typing.Optional[bool] = None,
@@ -621,6 +632,9 @@ class AsyncMediaClient:
 
         language : typing.Optional[str]
             The [BCP-47 language tag](https://tools.ietf.org/html/bcp47) that hints at the primary spoken language. Depending on the Model and API endpoint you choose only certain languages are available
+
+        language_hint : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Biases language detection toward one or more languages on Nova-3 multilingual (`model=nova-3&language=multi`); ignored with any other `language`. Repeat the parameter to pass several codes, for example `language_hint=en&language_hint=es`. A code that is not in the [Nova-3 multilingual list](/docs/models-languages-overview#nova-3) fails the request with HTTP 400. See [Nova-3 Language Prompting](/docs/nova-3-language-prompting).
 
         measurements : typing.Optional[bool]
             Spoken measurements will be converted to their corresponding abbreviations
@@ -718,6 +732,7 @@ class AsyncMediaClient:
             keyterm=keyterm,
             keywords=keywords,
             language=language,
+            language_hint=language_hint,
             measurements=measurements,
             model=model,
             multichannel=multichannel,
@@ -763,6 +778,7 @@ class AsyncMediaClient:
         keyterm: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         keywords: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         language: typing.Optional[str] = None,
+        language_hint: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         measurements: typing.Optional[bool] = None,
         model: typing.Optional[MediaTranscribeRequestModel] = None,
         multichannel: typing.Optional[bool] = None,
@@ -856,6 +872,9 @@ class AsyncMediaClient:
 
         language : typing.Optional[str]
             The [BCP-47 language tag](https://tools.ietf.org/html/bcp47) that hints at the primary spoken language. Depending on the Model and API endpoint you choose only certain languages are available
+
+        language_hint : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Biases language detection toward one or more languages on Nova-3 multilingual (`model=nova-3&language=multi`); ignored with any other `language`. Repeat the parameter to pass several codes, for example `language_hint=en&language_hint=es`. A code that is not in the [Nova-3 multilingual list](/docs/models-languages-overview#nova-3) fails the request with HTTP 400. See [Nova-3 Language Prompting](/docs/nova-3-language-prompting).
 
         measurements : typing.Optional[bool]
             Spoken measurements will be converted to their corresponding abbreviations
@@ -951,6 +970,7 @@ class AsyncMediaClient:
             keyterm=keyterm,
             keywords=keywords,
             language=language,
+            language_hint=language_hint,
             measurements=measurements,
             model=model,
             multichannel=multichannel,

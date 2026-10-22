@@ -51,6 +51,7 @@ if typing.TYPE_CHECKING:
     from .deepgram_listen_provider_v1 import DeepgramListenProviderV1
     from .deepgram_listen_provider_v2 import DeepgramListenProviderV2
     from .deepgram_model import DeepgramModel
+    from .deepgram_think_conversational_provider_v1 import DeepgramThinkConversationalProviderV1
     from .delete_agent_configuration_v1response import DeleteAgentConfigurationV1Response
     from .delete_agent_variable_v1response import DeleteAgentVariableV1Response
     from .delete_project_invite_v1response import DeleteProjectInviteV1Response
@@ -136,6 +137,7 @@ if typing.TYPE_CHECKING:
     from .listen_v1keyterm import ListenV1Keyterm
     from .listen_v1keywords import ListenV1Keywords
     from .listen_v1language import ListenV1Language
+    from .listen_v1language_hint import ListenV1LanguageHint
     from .listen_v1mip_opt_out import ListenV1MipOptOut
     from .listen_v1model import ListenV1Model
     from .listen_v1multichannel import ListenV1Multichannel
@@ -264,6 +266,7 @@ if typing.TYPE_CHECKING:
     from .speak_v2speed import SpeakV2Speed
     from .speak_v2speed_value import SpeakV2SpeedValue
     from .speak_v2tag import SpeakV2Tag
+    from .think_conversational_settings_v1 import ThinkConversationalSettingsV1
     from .think_settings_v1 import ThinkSettingsV1
     from .think_settings_v1context_length import ThinkSettingsV1ContextLength
     from .think_settings_v1endpoint import ThinkSettingsV1Endpoint
@@ -329,6 +332,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "DeepgramListenProviderV1": ".deepgram_listen_provider_v1",
     "DeepgramListenProviderV2": ".deepgram_listen_provider_v2",
     "DeepgramModel": ".deepgram_model",
+    "DeepgramThinkConversationalProviderV1": ".deepgram_think_conversational_provider_v1",
     "DeleteAgentConfigurationV1Response": ".delete_agent_configuration_v1response",
     "DeleteAgentVariableV1Response": ".delete_agent_variable_v1response",
     "DeleteProjectInviteV1Response": ".delete_project_invite_v1response",
@@ -404,6 +408,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ListenV1Keyterm": ".listen_v1keyterm",
     "ListenV1Keywords": ".listen_v1keywords",
     "ListenV1Language": ".listen_v1language",
+    "ListenV1LanguageHint": ".listen_v1language_hint",
     "ListenV1MipOptOut": ".listen_v1mip_opt_out",
     "ListenV1Model": ".listen_v1model",
     "ListenV1Multichannel": ".listen_v1multichannel",
@@ -512,6 +517,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SpeakV2Speed": ".speak_v2speed",
     "SpeakV2SpeedValue": ".speak_v2speed_value",
     "SpeakV2Tag": ".speak_v2tag",
+    "ThinkConversationalSettingsV1": ".think_conversational_settings_v1",
     "ThinkSettingsV1": ".think_settings_v1",
     "ThinkSettingsV1ContextLength": ".think_settings_v1context_length",
     "ThinkSettingsV1Endpoint": ".think_settings_v1endpoint",
@@ -534,28 +540,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "UsageV1Response": ".usage_v1response",
     "UsageV1ResponseResolution": ".usage_v1response_resolution",
 }
-
-_dynamic_imports.update(
-    {
-        "SharedIntentsResults": ".shared_intents_results",
-        "SharedIntentsResultsIntents": ".shared_intents_results_intents",
-        "SharedIntentsResultsIntentsSegmentsItem": ".shared_intents_results_intents_segments_item",
-        "SharedIntentsResultsIntentsSegmentsItemIntentsItem": ".shared_intents_results_intents_segments_item_intents_item",
-        "SharedTopicsResults": ".shared_topics_results",
-        "SharedTopicsResultsTopics": ".shared_topics_results_topics",
-        "SharedTopicsResultsTopicsSegmentsItem": ".shared_topics_results_topics_segments_item",
-        "SharedTopicsResultsTopicsSegmentsItemTopicsItem": ".shared_topics_results_topics_segments_item_topics_item",
-        "AnthropicThinkProviderModel": ".anthropic_think_provider_model",
-        "CartesiaSpeakProviderModelId": ".cartesia_speak_provider_model_id",
-        "CartesiaSpeakProviderVoice": ".cartesia_speak_provider_voice",
-        "CreateKeyV1RequestOne": ".create_key_v1request_one",
-        "DeepgramListenProviderV2LanguageHint": ".deepgram_listen_provider_v2language_hint",
-        "DeepgramSpeakProviderModel": ".deepgram_speak_provider_model",
-        "GoogleThinkProviderModel": ".google_think_provider_model",
-        "GoogleThinkProviderVersion": ".google_think_provider_version",
-        "GroqThinkProviderReasoningMode": ".groq_think_provider_reasoning_mode",
-    }
-)
 
 
 def __getattr__(attr_name: str) -> typing.Any:
@@ -621,6 +605,7 @@ __all__ = [
     "DeepgramListenProviderV1",
     "DeepgramListenProviderV2",
     "DeepgramModel",
+    "DeepgramThinkConversationalProviderV1",
     "DeleteAgentConfigurationV1Response",
     "DeleteAgentVariableV1Response",
     "DeleteProjectInviteV1Response",
@@ -696,6 +681,7 @@ __all__ = [
     "ListenV1Keyterm",
     "ListenV1Keywords",
     "ListenV1Language",
+    "ListenV1LanguageHint",
     "ListenV1MipOptOut",
     "ListenV1Model",
     "ListenV1Multichannel",
@@ -804,6 +790,7 @@ __all__ = [
     "SpeakV2Speed",
     "SpeakV2SpeedValue",
     "SpeakV2Tag",
+    "ThinkConversationalSettingsV1",
     "ThinkSettingsV1",
     "ThinkSettingsV1ContextLength",
     "ThinkSettingsV1Endpoint",
@@ -826,25 +813,3 @@ __all__ = [
     "UsageV1Response",
     "UsageV1ResponseResolution",
 ]
-
-__all__.extend(
-    [
-        "SharedIntentsResults",
-        "SharedIntentsResultsIntents",
-        "SharedIntentsResultsIntentsSegmentsItem",
-        "SharedIntentsResultsIntentsSegmentsItemIntentsItem",
-        "SharedTopicsResults",
-        "SharedTopicsResultsTopics",
-        "SharedTopicsResultsTopicsSegmentsItem",
-        "SharedTopicsResultsTopicsSegmentsItemTopicsItem",
-        "AnthropicThinkProviderModel",
-        "CartesiaSpeakProviderModelId",
-        "CartesiaSpeakProviderVoice",
-        "CreateKeyV1RequestOne",
-        "DeepgramListenProviderV2LanguageHint",
-        "DeepgramSpeakProviderModel",
-        "GoogleThinkProviderModel",
-        "GoogleThinkProviderVersion",
-        "GroqThinkProviderReasoningMode",
-    ]
-)

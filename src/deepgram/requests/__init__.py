@@ -40,6 +40,7 @@ if typing.TYPE_CHECKING:
     from .deepgram import DeepgramParams
     from .deepgram_listen_provider_v1 import DeepgramListenProviderV1Params
     from .deepgram_listen_provider_v2 import DeepgramListenProviderV2Params
+    from .deepgram_think_conversational_provider_v1 import DeepgramThinkConversationalProviderV1Params
     from .delete_project_invite_v1response import DeleteProjectInviteV1ResponseParams
     from .delete_project_key_v1response import DeleteProjectKeyV1ResponseParams
     from .delete_project_member_v1response import DeleteProjectMemberV1ResponseParams
@@ -104,6 +105,7 @@ if typing.TYPE_CHECKING:
     from .list_projects_v1response import ListProjectsV1ResponseParams
     from .list_projects_v1response_projects_item import ListProjectsV1ResponseProjectsItemParams
     from .listen_v1accepted_response import ListenV1AcceptedResponseParams
+    from .listen_v1language_hint import ListenV1LanguageHintParams
     from .listen_v1response import ListenV1ResponseParams
     from .listen_v1response_metadata import ListenV1ResponseMetadataParams
     from .listen_v1response_metadata_diarize_info import ListenV1ResponseMetadataDiarizeInfoParams
@@ -187,6 +189,7 @@ if typing.TYPE_CHECKING:
         SpeakSettingsV1Provider_OpenAiParams,
     )
     from .speak_v2accepted_response import SpeakV2AcceptedResponseParams
+    from .think_conversational_settings_v1 import ThinkConversationalSettingsV1Params
     from .think_settings_v1 import ThinkSettingsV1Params
     from .think_settings_v1context_length import ThinkSettingsV1ContextLengthParams
     from .think_settings_v1endpoint import ThinkSettingsV1EndpointParams
@@ -241,6 +244,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "DeepgramListenProviderV1Params": ".deepgram_listen_provider_v1",
     "DeepgramListenProviderV2Params": ".deepgram_listen_provider_v2",
     "DeepgramParams": ".deepgram",
+    "DeepgramThinkConversationalProviderV1Params": ".deepgram_think_conversational_provider_v1",
     "DeleteProjectInviteV1ResponseParams": ".delete_project_invite_v1response",
     "DeleteProjectKeyV1ResponseParams": ".delete_project_key_v1response",
     "DeleteProjectMemberV1ResponseParams": ".delete_project_member_v1response",
@@ -295,6 +299,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ListProjectsV1ResponseParams": ".list_projects_v1response",
     "ListProjectsV1ResponseProjectsItemParams": ".list_projects_v1response_projects_item",
     "ListenV1AcceptedResponseParams": ".listen_v1accepted_response",
+    "ListenV1LanguageHintParams": ".listen_v1language_hint",
     "ListenV1ResponseMetadataDiarizeInfoParams": ".listen_v1response_metadata_diarize_info",
     "ListenV1ResponseMetadataIntentsInfoParams": ".listen_v1response_metadata_intents_info",
     "ListenV1ResponseMetadataParams": ".listen_v1response_metadata",
@@ -356,6 +361,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SpeakSettingsV1Provider_ElevenLabsParams": ".speak_settings_v1provider",
     "SpeakSettingsV1Provider_OpenAiParams": ".speak_settings_v1provider",
     "SpeakV2AcceptedResponseParams": ".speak_v2accepted_response",
+    "ThinkConversationalSettingsV1Params": ".think_conversational_settings_v1",
     "ThinkSettingsV1ContextLengthParams": ".think_settings_v1context_length",
     "ThinkSettingsV1EndpointParams": ".think_settings_v1endpoint",
     "ThinkSettingsV1FunctionsItemEndpointParams": ".think_settings_v1functions_item_endpoint",
@@ -378,22 +384,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "UsageV1ResponseParams": ".usage_v1response",
     "UsageV1ResponseResolutionParams": ".usage_v1response_resolution",
 }
-
-_dynamic_imports.update(
-    {
-        "SharedIntentsResultsParams": ".shared_intents_results",
-        "SharedIntentsResultsIntentsParams": ".shared_intents_results_intents",
-        "SharedIntentsResultsIntentsSegmentsItemParams": ".shared_intents_results_intents_segments_item",
-        "SharedIntentsResultsIntentsSegmentsItemIntentsItemParams": ".shared_intents_results_intents_segments_item_intents_item",
-        "SharedTopicsResultsParams": ".shared_topics_results",
-        "SharedTopicsResultsTopicsParams": ".shared_topics_results_topics",
-        "SharedTopicsResultsTopicsSegmentsItemParams": ".shared_topics_results_topics_segments_item",
-        "SharedTopicsResultsTopicsSegmentsItemTopicsItemParams": ".shared_topics_results_topics_segments_item_topics_item",
-        "CartesiaSpeakProviderVoiceParams": ".cartesia_speak_provider_voice",
-        "CreateKeyV1RequestOneParams": ".create_key_v1request_one",
-        "DeepgramListenProviderV2LanguageHintParams": ".deepgram_listen_provider_v2language_hint",
-    }
-)
 
 
 def __getattr__(attr_name: str) -> typing.Any:
@@ -448,6 +438,7 @@ __all__ = [
     "DeepgramListenProviderV1Params",
     "DeepgramListenProviderV2Params",
     "DeepgramParams",
+    "DeepgramThinkConversationalProviderV1Params",
     "DeleteProjectInviteV1ResponseParams",
     "DeleteProjectKeyV1ResponseParams",
     "DeleteProjectMemberV1ResponseParams",
@@ -502,6 +493,7 @@ __all__ = [
     "ListProjectsV1ResponseParams",
     "ListProjectsV1ResponseProjectsItemParams",
     "ListenV1AcceptedResponseParams",
+    "ListenV1LanguageHintParams",
     "ListenV1ResponseMetadataDiarizeInfoParams",
     "ListenV1ResponseMetadataIntentsInfoParams",
     "ListenV1ResponseMetadataParams",
@@ -563,6 +555,7 @@ __all__ = [
     "SpeakSettingsV1Provider_ElevenLabsParams",
     "SpeakSettingsV1Provider_OpenAiParams",
     "SpeakV2AcceptedResponseParams",
+    "ThinkConversationalSettingsV1Params",
     "ThinkSettingsV1ContextLengthParams",
     "ThinkSettingsV1EndpointParams",
     "ThinkSettingsV1FunctionsItemEndpointParams",
@@ -585,19 +578,3 @@ __all__ = [
     "UsageV1ResponseParams",
     "UsageV1ResponseResolutionParams",
 ]
-
-__all__.extend(
-    [
-        "SharedIntentsResultsParams",
-        "SharedIntentsResultsIntentsParams",
-        "SharedIntentsResultsIntentsSegmentsItemParams",
-        "SharedIntentsResultsIntentsSegmentsItemIntentsItemParams",
-        "SharedTopicsResultsParams",
-        "SharedTopicsResultsTopicsParams",
-        "SharedTopicsResultsTopicsSegmentsItemParams",
-        "SharedTopicsResultsTopicsSegmentsItemTopicsItemParams",
-        "CartesiaSpeakProviderVoiceParams",
-        "CreateKeyV1RequestOneParams",
-        "DeepgramListenProviderV2LanguageHintParams",
-    ]
-)

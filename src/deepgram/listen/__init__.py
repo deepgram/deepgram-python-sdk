@@ -14,6 +14,7 @@ if typing.TYPE_CHECKING:
         ListenV1CloseStreamType,
         ListenV1Configure,
         ListenV1ConfigureFailure,
+        ListenV1ConfigureFailureCode,
         ListenV1ConfigureFailureParams,
         ListenV1ConfigureParams,
         ListenV1ConfigureSuccess,
@@ -83,6 +84,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ListenV1CloseStreamType": ".v1",
     "ListenV1Configure": ".v1",
     "ListenV1ConfigureFailure": ".v1",
+    "ListenV1ConfigureFailureCode": ".v1",
     "ListenV1ConfigureFailureParams": ".v1",
     "ListenV1ConfigureParams": ".v1",
     "ListenV1ConfigureSuccess": ".v1",
@@ -146,8 +148,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "v2": ".v2",
 }
 
-_dynamic_imports["ListenV2CloseStreamType"] = ".v2"
-
 
 def __getattr__(attr_name: str) -> typing.Any:
     module_name = _dynamic_imports.get(attr_name)
@@ -177,6 +177,7 @@ __all__ = [
     "ListenV1CloseStreamType",
     "ListenV1Configure",
     "ListenV1ConfigureFailure",
+    "ListenV1ConfigureFailureCode",
     "ListenV1ConfigureFailureParams",
     "ListenV1ConfigureParams",
     "ListenV1ConfigureSuccess",
@@ -239,5 +240,3 @@ __all__ = [
     "v1",
     "v2",
 ]
-
-__all__.append("ListenV2CloseStreamType")
