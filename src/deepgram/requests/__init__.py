@@ -385,6 +385,22 @@ _dynamic_imports: typing.Dict[str, str] = {
     "UsageV1ResponseResolutionParams": ".usage_v1response_resolution",
 }
 
+_dynamic_imports.update(
+    {
+        "SharedIntentsResultsParams": ".shared_intents_results",
+        "SharedIntentsResultsIntentsParams": ".shared_intents_results_intents",
+        "SharedIntentsResultsIntentsSegmentsItemParams": ".shared_intents_results_intents_segments_item",
+        "SharedIntentsResultsIntentsSegmentsItemIntentsItemParams": ".shared_intents_results_intents_segments_item_intents_item",
+        "SharedTopicsResultsParams": ".shared_topics_results",
+        "SharedTopicsResultsTopicsParams": ".shared_topics_results_topics",
+        "SharedTopicsResultsTopicsSegmentsItemParams": ".shared_topics_results_topics_segments_item",
+        "SharedTopicsResultsTopicsSegmentsItemTopicsItemParams": ".shared_topics_results_topics_segments_item",
+        "CartesiaSpeakProviderVoiceParams": ".cartesia_speak_provider_voice",
+        "CreateKeyV1RequestOneParams": ".create_key_v1request_one",
+        "DeepgramListenProviderV2LanguageHintParams": ".deepgram_listen_provider_v2language_hint",
+    }
+)
+
 
 def __getattr__(attr_name: str) -> typing.Any:
     module_name = _dynamic_imports.get(attr_name)
@@ -578,3 +594,19 @@ __all__ = [
     "UsageV1ResponseParams",
     "UsageV1ResponseResolutionParams",
 ]
+
+__all__.extend(
+    [
+        "SharedIntentsResultsParams",
+        "SharedIntentsResultsIntentsParams",
+        "SharedIntentsResultsIntentsSegmentsItemParams",
+        "SharedIntentsResultsIntentsSegmentsItemIntentsItemParams",
+        "SharedTopicsResultsParams",
+        "SharedTopicsResultsTopicsParams",
+        "SharedTopicsResultsTopicsSegmentsItemParams",
+        "SharedTopicsResultsTopicsSegmentsItemTopicsItemParams",
+        "CartesiaSpeakProviderVoiceParams",
+        "CreateKeyV1RequestOneParams",
+        "DeepgramListenProviderV2LanguageHintParams",
+    ]
+)
