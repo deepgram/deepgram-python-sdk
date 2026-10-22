@@ -18,11 +18,11 @@ try:
     response = client.listen.v1.media.transcribe_url(
         url="https://dpgr.am/spacewalk.wav",
         model="nova-3",
+        language="en-US",
         # Advanced options
         smart_format=True,
         punctuate=True,
         diarize=True,
-        language="en-US",
         # Additional options
         # paragraphs=True,
         # utterances=True,
@@ -35,13 +35,14 @@ try:
     if response.results and response.results.channels:
         channel = response.results.channels[0]
         if channel.alternatives:
-            transcript = channel.alternatives[0].transcript
+            alternative = channel.alternatives[0]
+            transcript = alternative.transcript
             print(f"Transcript: {transcript}")
 
             # Show speaker diarization if available
-            if channel.alternatives[0].words:
+            if alternative.words:
                 print("\nSpeaker diarization:")
-                for word in channel.alternatives[0].words:
+                for word in alternative.words:
                     speaker = getattr(word, "speaker", None)
                     if speaker is not None:
                         print(f"  Speaker {speaker}: {word.word}")

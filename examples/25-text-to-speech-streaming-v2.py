@@ -20,6 +20,7 @@ SpeakV2SocketClientResponse = Union[str, bytes]
 
 client = DeepgramClient()
 
+# Alternate French pair: model="flux-camille-fr", text="Bonjour, ceci est un exemple de synthese vocale."
 try:
     with client.speak.v2.connect(model="flux-alexis-en", encoding="linear16", sample_rate="24000") as connection:
 

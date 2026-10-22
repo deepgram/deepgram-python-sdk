@@ -7,8 +7,8 @@ Requires `DEEPGRAM_API_KEY`. Run with:
 
 The generated speed documentation permits values from 0.5 through 1.5 in 0.05
 increments. This matrix verifies speed at connection time, during a streaming
-session, and through batch synthesis for two voices. It covers representative
-valid values plus invalid out-of-range and off-increment values.
+session, and through batch synthesis for English and French voices. It covers
+representative valid values plus invalid out-of-range and off-increment values.
 """
 
 import asyncio
@@ -27,7 +27,11 @@ from deepgram.speak.v2.types import (
 
 ACCEPTED_SPEEDS = (0.5, 0.85, 1.15, 1.5)
 REJECTED_SPEEDS = ((0.45, "SPEED_OUT_OF_RANGE"), (1.55, "SPEED_OUT_OF_RANGE"), (1.03, "SPEED_INCREMENT_INVALID"))
-MODELS = ("flux-alexis-en", "flux-rufus-en")
+MODEL_TEXT_PAIRS = (
+    ("flux-alexis-en", "Testing the Flux speed boundary matrix."),
+    ("flux-rufus-en", "Testing the Flux speed boundary matrix."),
+    ("flux-camille-fr", "Bonjour, ceci est un test de la matrice de vitesse Flux."),
+)
 
 
 def _client_environment() -> DeepgramClientEnvironment:
@@ -62,13 +66,13 @@ async def _connect_with_speed(client: AsyncDeepgramClient, model: str, speed: fl
         pass
 
 
-async def _generate_audio(client: AsyncDeepgramClient, model: str, speed: float) -> bytes:
+async def _generate_audio(client: AsyncDeepgramClient, model: str, text: str, speed: float) -> bytes:
     return b"".join(
         [
             chunk
             async for chunk in client.speak.v2.audio.generate(
                 model=model,
-                text="Testing the Flux speed boundary matrix.",
+                text=text,
                 speed=speed,
             )
         ]
@@ -84,9 +88,9 @@ async def _expect_connect_rejection(client: AsyncDeepgramClient, model: str, spe
     raise AssertionError(f"connect speed={speed} should be rejected")
 
 
-async def _expect_batch_rejection(client: AsyncDeepgramClient, model: str, speed: float) -> None:
+async def _expect_batch_rejection(client: AsyncDeepgramClient, model: str, text: str, speed: float) -> None:
     try:
-        await _generate_audio(client, model, speed)
+        await _generate_audio(client, model, text, speed)
     except ApiError as exc:
         assert exc.status_code == 400, f"batch speed={speed} returned status={exc.status_code}"
         return
@@ -103,14 +107,14 @@ async def main() -> None:
     print(f"Testing {environment.production}/v2/speak")
     client = AsyncDeepgramClient(environment=environment)
 
-    for model in MODELS:
+    for model, text in MODEL_TEXT_PAIRS:
         print(f"Testing model={model}")
         for speed in ACCEPTED_SPEEDS:
             response = await _configure_speed(client, model, speed)
             assert isinstance(response, SpeakV2ConfigureSuccess), f"speed={speed} should be accepted: {response}"
             assert response.applied.speed == speed, f"speed={speed} was applied as {response.applied.speed}"
             await _connect_with_speed(client, model, speed)
-            assert await _generate_audio(client, model, speed), f"batch speed={speed} returned no audio"
+            assert await _generate_audio(client, model, text, speed), f"batch speed={speed} returned no audio"
             print(f"  PASS: speed={speed} accepted by configure, connect, and batch")
         for speed, expected_code in REJECTED_SPEEDS:
             response = await _configure_speed(client, model, speed)
@@ -119,7 +123,7 @@ async def main() -> None:
             assert response.field == "speed", f"speed={speed} failure named field={response.field!r}"
             assert response.value == speed, f"speed={speed} failure echoed value={response.value}"
             await _expect_connect_rejection(client, model, speed)
-            await _expect_batch_rejection(client, model, speed)
+            await _expect_batch_rejection(client, model, text, speed)
             print(f"  PASS: speed={speed} rejected by configure, connect, and batch")
 
     print("Speed boundary matrix completed.")

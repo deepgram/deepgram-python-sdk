@@ -25,6 +25,7 @@ wire tests, so a regen would not reproduce this coverage.
 """
 
 import json
+import typing
 from unittest.mock import patch
 
 import httpx
@@ -561,3 +562,20 @@ class TestSpeakV2SpeedTypeIsFloat:
 
         # connect-time speed and mid-stream Configure speed must agree.
         assert SpeakV2Speed is SpeakV2SpeedValue
+
+
+class TestDeepgramModelLiterals:
+    def test_flux_multilingual_model_literals_are_preserved(self) -> None:
+        from deepgram.types import DeepgramModel
+
+        literal, fallback = typing.get_args(DeepgramModel)
+        # The Any fallback intentionally permits future server-side models. Inspect
+        # the Literal branch directly so it still guards the generated catalog.
+        assert fallback is typing.Any
+        assert typing.get_origin(literal) is typing.Literal
+        assert {
+            "flux-afsana-bn",
+            "flux-haoran-zh",
+            "flux-camille-fr",
+            "flux-anjali-hi",
+        } <= set(typing.get_args(literal))

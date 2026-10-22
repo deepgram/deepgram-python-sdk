@@ -8,18 +8,22 @@ are the same guard for this cycle's new fields:
 
   - ListenV1Response/ResultsMetadata.diarize_info  (model_uuid, arch)
   - words item .speaker / .speaker_confidence
-  - ListenV2TurnInfo.trigger
+   - ListenV2TurnInfo.trigger
+   - Listen V1 Nova-3 multilingual language result fields
 
-Fixtures are real payloads captured from the live API (POST /v1/listen with
-diarize=true), except TurnInfo.trigger: those cases pin the client-side contract,
-and the "absent" case verifies backward compatibility when the field is omitted.
+The diarize fixtures are real payloads captured from the live API (POST /v1/listen
+with diarize=true). The multilingual fixtures represent the streaming and
+pre-recorded response shapes; the absent cases verify backward compatibility when
+optional fields are omitted.
 """
 
+from deepgram.listen.v1.types.listen_v1results import ListenV1Results
 from deepgram.listen.v1.types.listen_v1results_metadata import ListenV1ResultsMetadata
 from deepgram.listen.v1.types.listen_v1results_metadata_diarize_info import (
     ListenV1ResultsMetadataDiarizeInfo,
 )
 from deepgram.listen.v2.types.listen_v2turn_info import ListenV2TurnInfo
+from deepgram.types.listen_v1response import ListenV1Response
 from deepgram.types.listen_v1response_metadata import ListenV1ResponseMetadata
 from deepgram.types.listen_v1response_metadata_diarize_info import (
     ListenV1ResponseMetadataDiarizeInfo,
@@ -69,6 +73,76 @@ WORD = {
     "punctuated_word": "Yeah.",
 }
 
+STREAMING_MULTILINGUAL_RESULT = {
+    "type": "Results",
+    "channel_index": [0, 1],
+    "duration": 1.2,
+    "start": 0.0,
+    "is_final": True,
+    "speech_final": True,
+    "channel": {
+        "alternatives": [
+            {
+                "transcript": "hello hola",
+                "confidence": 0.99,
+                "languages": ["en", "es"],
+                "languages_hinted": ["en", "es"],
+                "words": [
+                    {"word": "hello", "start": 0.0, "end": 0.4, "confidence": 0.99, "language": "en"},
+                    {"word": "hola", "start": 0.5, "end": 0.9, "confidence": 0.99, "language": "es"},
+                ],
+            }
+        ]
+    },
+    "metadata": RESULTS_METADATA,
+}
+
+PRERECORDED_MULTILINGUAL_RESPONSE = {
+    "metadata": RESPONSE_METADATA,
+    "results": {
+        "channels": [
+            {
+                "alternatives": [
+                    {
+                        "transcript": "hello hola",
+                        "confidence": 0.99,
+                        "languages": ["en", "es"],
+                        "languages_hinted": ["en", "es"],
+                        "words": [
+                            {
+                                "word": "hello",
+                                "start": 0.0,
+                                "end": 0.4,
+                                "confidence": 0.99,
+                                "language": "en",
+                            }
+                        ],
+                    }
+                ]
+            }
+        ],
+        "utterances": [
+            {
+                "start": 0.0,
+                "end": 0.9,
+                "confidence": 0.99,
+                "channel": 0,
+                "transcript": "hello hola",
+                "languages": ["en", "es"],
+                "words": [
+                    {
+                        "word": "hola",
+                        "start": 0.5,
+                        "end": 0.9,
+                        "confidence": 0.99,
+                        "language": "es",
+                    }
+                ],
+            }
+        ],
+    },
+}
+
 
 class TestListenV1DiarizeInfo:
     def test_response_metadata_parses_diarize_info(self) -> None:
@@ -115,6 +189,65 @@ class TestListenV1WordSpeakerFields:
         )
         assert word.speaker == 0
         assert word.speaker_confidence == 0.0
+
+
+class TestListenV1MultilingualFields:
+    def test_streaming_result_parses_languages_and_word_languages(self) -> None:
+        result = ListenV1Results.model_validate(STREAMING_MULTILINGUAL_RESULT)
+        alternative = result.channel.alternatives[0]
+
+        assert alternative.languages == ["en", "es"]
+        assert alternative.languages_hinted == ["en", "es"]
+        assert [word.language for word in alternative.words] == ["en", "es"]
+
+    def test_prerecorded_response_parses_alternative_and_utterance_languages(self) -> None:
+        response = ListenV1Response.model_validate(PRERECORDED_MULTILINGUAL_RESPONSE)
+        alternative = response.results.channels[0].alternatives[0]
+        utterance = response.results.utterances[0]
+
+        assert alternative.languages == ["en", "es"]
+        assert alternative.languages_hinted == ["en", "es"]
+        assert alternative.words[0].language == "en"
+        assert utterance.languages == ["en", "es"]
+        assert utterance.words[0].language == "es"
+
+    def test_multilingual_fields_remain_optional_when_omitted(self) -> None:
+        stream = ListenV1Results.model_validate(
+            {
+                **STREAMING_MULTILINGUAL_RESULT,
+                "channel": {
+                    "alternatives": [
+                        {
+                            "transcript": "hello",
+                            "confidence": 0.99,
+                            "words": [
+                                {"word": "hello", "start": 0.0, "end": 0.4, "confidence": 0.99}
+                            ],
+                        }
+                    ]
+                },
+            }
+        )
+        prerecorded = ListenV1Response.model_validate(
+            {
+                **PRERECORDED_MULTILINGUAL_RESPONSE,
+                "results": {
+                    "channels": [{"alternatives": [{"transcript": "hello", "confidence": 0.99}]}],
+                    "utterances": [{"transcript": "hello", "words": [{"word": "hello"}]}],
+                },
+            }
+        )
+
+        stream_alternative = stream.channel.alternatives[0]
+        prerecorded_alternative = prerecorded.results.channels[0].alternatives[0]
+        utterance = prerecorded.results.utterances[0]
+        assert stream_alternative.languages is None
+        assert stream_alternative.languages_hinted is None
+        assert stream_alternative.words[0].language is None
+        assert prerecorded_alternative.languages is None
+        assert prerecorded_alternative.languages_hinted is None
+        assert utterance.languages is None
+        assert utterance.words[0].language is None
 
 
 class TestListenV2TurnInfoTrigger:
