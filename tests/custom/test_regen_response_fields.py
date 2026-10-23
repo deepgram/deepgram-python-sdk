@@ -9,20 +9,30 @@ are the same guard for this cycle's new fields:
   - ListenV1Response/ResultsMetadata.diarize_info  (model_uuid, arch)
   - words item .speaker / .speaker_confidence
   - ListenV2TurnInfo.trigger
+  - Listen V1 Nova-3 multilingual alternatives .languages / .languages_hinted
 
 Fixtures are real payloads captured from the live API (POST /v1/listen with
 diarize=true), except TurnInfo.trigger: those cases pin the client-side contract,
 and the "absent" case verifies backward compatibility when the field is omitted.
 """
 
+from deepgram.core.pydantic_utilities import IS_PYDANTIC_V2
+from deepgram.listen.v1.types.listen_v1results import ListenV1Results
+from deepgram.listen.v1.types.listen_v1results_channel_alternatives_item import (
+    ListenV1ResultsChannelAlternativesItem,
+)
 from deepgram.listen.v1.types.listen_v1results_metadata import ListenV1ResultsMetadata
 from deepgram.listen.v1.types.listen_v1results_metadata_diarize_info import (
     ListenV1ResultsMetadataDiarizeInfo,
 )
 from deepgram.listen.v2.types.listen_v2turn_info import ListenV2TurnInfo
+from deepgram.types.listen_v1response import ListenV1Response
 from deepgram.types.listen_v1response_metadata import ListenV1ResponseMetadata
 from deepgram.types.listen_v1response_metadata_diarize_info import (
     ListenV1ResponseMetadataDiarizeInfo,
+)
+from deepgram.types.listen_v1response_results_channels_item_alternatives_item import (
+    ListenV1ResponseResultsChannelsItemAlternativesItem,
 )
 from deepgram.types.listen_v1response_results_channels_item_alternatives_item_words_item import (
     ListenV1ResponseResultsChannelsItemAlternativesItemWordsItem,
@@ -68,6 +78,19 @@ WORD = {
     "speaker_confidence": 1.0,
     "punctuated_word": "Yeah.",
 }
+
+MULTILINGUAL_ALTERNATIVE = {
+    "transcript": "Hola world",
+    "confidence": 0.99,
+    "languages": ["es", "en"],
+    "languages_hinted": ["en"],
+    "words": [],
+}
+
+
+def _declared_fields(model_cls):
+    """The model's declared field names on either supported Pydantic major version."""
+    return set(model_cls.model_fields if IS_PYDANTIC_V2 else model_cls.__fields__)
 
 
 class TestListenV1DiarizeInfo:
@@ -115,6 +138,54 @@ class TestListenV1WordSpeakerFields:
         )
         assert word.speaker == 0
         assert word.speaker_confidence == 0.0
+
+
+class TestListenV1MultilingualAlternativeFields:
+    def test_multilingual_fields_are_declared(self) -> None:
+        # These models allow extras, so attribute access alone would not catch a
+        # future specification removal.
+        expected = {"languages", "languages_hinted"}
+        assert expected <= _declared_fields(ListenV1ResultsChannelAlternativesItem)
+        assert expected <= _declared_fields(ListenV1ResponseResultsChannelsItemAlternativesItem)
+
+    def test_streaming_results_parse_multilingual_fields(self) -> None:
+        result = ListenV1Results.model_validate(
+            {
+                "type": "Results",
+                "channel_index": [0],
+                "duration": 1.0,
+                "start": 0.0,
+                "is_final": True,
+                "channel": {"alternatives": [MULTILINGUAL_ALTERNATIVE]},
+                "metadata": RESULTS_METADATA,
+            }
+        )
+
+        alternative = result.channel.alternatives[0]
+        assert alternative.languages == ["es", "en"]
+        assert alternative.languages_hinted == ["en"]
+
+    def test_prerecorded_response_parses_multilingual_fields(self) -> None:
+        response = ListenV1Response.model_validate(
+            {
+                "metadata": RESPONSE_METADATA,
+                "results": {"channels": [{"alternatives": [MULTILINGUAL_ALTERNATIVE]}]},
+            }
+        )
+
+        alternative = response.results.channels[0].alternatives[0]
+        assert alternative.languages == ["es", "en"]
+        assert alternative.languages_hinted == ["en"]
+
+    def test_multilingual_fields_remain_optional_when_absent(self) -> None:
+        absent = {k: v for k, v in MULTILINGUAL_ALTERNATIVE.items() if k not in {"languages", "languages_hinted"}}
+        streaming = ListenV1ResultsChannelAlternativesItem.model_validate(absent)
+        prerecorded = ListenV1ResponseResultsChannelsItemAlternativesItem.model_validate(absent)
+
+        assert streaming.languages is None
+        assert streaming.languages_hinted is None
+        assert prerecorded.languages is None
+        assert prerecorded.languages_hinted is None
 
 
 class TestListenV2TurnInfoTrigger:

@@ -17,6 +17,7 @@ wire tests, so they are driven here directly:
 """
 
 import typing
+import urllib.parse
 
 import httpx
 import pytest
@@ -251,6 +252,56 @@ async def test_connect_and_socket_client_async(
         pass
 
     assert created and any(ws.sent for ws in created)
+
+
+def test_listen_v1_connect_serializes_repeated_language_hints_sync(monkeypatch: pytest.MonkeyPatch) -> None:
+    captured_urls: typing.List[str] = []
+
+    def _connect(url: str, *_a: typing.Any, **_k: typing.Any) -> _FakeSyncConnectCM:
+        captured_urls.append(url)
+        return _FakeSyncConnectCM(_FakeSyncWS())
+
+    monkeypatch.setattr(websockets_sync_client, "connect", _connect)
+
+    with _sync_client().listen.v1.connect(
+        model="nova-3",
+        language="multi",
+        language_hint=["en", "es"],
+    ):
+        pass
+
+    parsed = urllib.parse.urlsplit(captured_urls[0])
+    query = urllib.parse.parse_qs(parsed.query)
+    assert parsed.path == "/v1/listen"
+    assert query["model"] == ["nova-3"]
+    assert query["language"] == ["multi"]
+    assert query["language_hint"] == ["en", "es"]
+
+
+async def test_listen_v1_connect_serializes_repeated_language_hints_async(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    captured_urls: typing.List[str] = []
+
+    def _connect(url: str, *_a: typing.Any, **_k: typing.Any) -> _FakeAsyncConnectCM:
+        captured_urls.append(url)
+        return _FakeAsyncConnectCM(_FakeAsyncWS())
+
+    monkeypatch.setattr("deepgram.listen.v1.client.websockets_client_connect", _connect)
+
+    async with _async_client().listen.v1.connect(
+        model="nova-3",
+        language="multi",
+        language_hint=["en", "es"],
+    ):
+        pass
+
+    parsed = urllib.parse.urlsplit(captured_urls[0])
+    query = urllib.parse.parse_qs(parsed.query)
+    assert parsed.path == "/v1/listen"
+    assert query["model"] == ["nova-3"]
+    assert query["language"] == ["multi"]
+    assert query["language_hint"] == ["en", "es"]
 
 
 @pytest.mark.parametrize("status", [401, 500])
