@@ -123,6 +123,7 @@ if typing.TYPE_CHECKING:
         ListenV1Keyterm,
         ListenV1Keywords,
         ListenV1Language,
+        ListenV1LanguageHint,
         ListenV1MipOptOut,
         ListenV1Model,
         ListenV1Multichannel,
@@ -343,6 +344,7 @@ if typing.TYPE_CHECKING:
         ListProjectsV1ResponseParams,
         ListProjectsV1ResponseProjectsItemParams,
         ListenV1AcceptedResponseParams,
+        ListenV1LanguageHintParams,
         ListenV1ResponseMetadataDiarizeInfoParams,
         ListenV1ResponseMetadataIntentsInfoParams,
         ListenV1ResponseMetadataParams,
@@ -634,6 +636,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ListenV1Keyterm": ".types",
     "ListenV1Keywords": ".types",
     "ListenV1Language": ".types",
+    "ListenV1LanguageHint": ".types",
+    "ListenV1LanguageHintParams": ".requests",
     "ListenV1MipOptOut": ".types",
     "ListenV1Model": ".types",
     "ListenV1Multichannel": ".types",
@@ -855,38 +859,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "speak": ".speak",
     "voice_agent": ".voice_agent",
 }
-
-_dynamic_imports.update(
-    {
-        "SharedIntentsResults": ".types",
-        "SharedIntentsResultsIntents": ".types",
-        "SharedIntentsResultsIntentsParams": ".requests",
-        "SharedIntentsResultsIntentsSegmentsItem": ".types",
-        "SharedIntentsResultsIntentsSegmentsItemIntentsItem": ".types",
-        "SharedIntentsResultsIntentsSegmentsItemIntentsItemParams": ".requests",
-        "SharedIntentsResultsIntentsSegmentsItemParams": ".requests",
-        "SharedIntentsResultsParams": ".requests",
-        "SharedTopicsResults": ".types",
-        "SharedTopicsResultsParams": ".requests",
-        "SharedTopicsResultsTopics": ".types",
-        "SharedTopicsResultsTopicsParams": ".requests",
-        "SharedTopicsResultsTopicsSegmentsItem": ".types",
-        "SharedTopicsResultsTopicsSegmentsItemParams": ".requests",
-        "SharedTopicsResultsTopicsSegmentsItemTopicsItem": ".types",
-        "SharedTopicsResultsTopicsSegmentsItemTopicsItemParams": ".requests",
-        "AnthropicThinkProviderModel": ".types",
-        "CartesiaSpeakProviderModelId": ".types",
-        "CartesiaSpeakProviderVoice": ".types",
-        "CartesiaSpeakProviderVoiceParams": ".requests",
-        "CreateKeyV1RequestOne": ".types",
-        "DeepgramListenProviderV2LanguageHint": ".types",
-        "DeepgramListenProviderV2LanguageHintParams": ".requests",
-        "DeepgramSpeakProviderModel": ".types",
-        "GoogleThinkProviderModel": ".types",
-        "GoogleThinkProviderVersion": ".types",
-        "GroqThinkProviderReasoningMode": ".types",
-    }
-)
 
 
 def __getattr__(attr_name: str) -> typing.Any:
@@ -1117,6 +1089,8 @@ __all__ = [
     "ListenV1Keyterm",
     "ListenV1Keywords",
     "ListenV1Language",
+    "ListenV1LanguageHint",
+    "ListenV1LanguageHintParams",
     "ListenV1MipOptOut",
     "ListenV1Model",
     "ListenV1Multichannel",
@@ -1338,35 +1312,3 @@ __all__ = [
     "speak",
     "voice_agent",
 ]
-
-__all__.extend(
-    [
-        "SharedIntentsResults",
-        "SharedIntentsResultsIntents",
-        "SharedIntentsResultsIntentsParams",
-        "SharedIntentsResultsIntentsSegmentsItem",
-        "SharedIntentsResultsIntentsSegmentsItemIntentsItem",
-        "SharedIntentsResultsIntentsSegmentsItemIntentsItemParams",
-        "SharedIntentsResultsIntentsSegmentsItemParams",
-        "SharedIntentsResultsParams",
-        "SharedTopicsResults",
-        "SharedTopicsResultsParams",
-        "SharedTopicsResultsTopics",
-        "SharedTopicsResultsTopicsParams",
-        "SharedTopicsResultsTopicsSegmentsItem",
-        "SharedTopicsResultsTopicsSegmentsItemParams",
-        "SharedTopicsResultsTopicsSegmentsItemTopicsItem",
-        "SharedTopicsResultsTopicsSegmentsItemTopicsItemParams",
-        "AnthropicThinkProviderModel",
-        "CartesiaSpeakProviderModelId",
-        "CartesiaSpeakProviderVoice",
-        "CartesiaSpeakProviderVoiceParams",
-        "CreateKeyV1RequestOne",
-        "DeepgramListenProviderV2LanguageHint",
-        "DeepgramListenProviderV2LanguageHintParams",
-        "DeepgramSpeakProviderModel",
-        "GoogleThinkProviderModel",
-        "GoogleThinkProviderVersion",
-        "GroqThinkProviderReasoningMode",
-    ]
-)

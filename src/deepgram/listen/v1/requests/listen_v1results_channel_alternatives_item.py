@@ -18,4 +18,13 @@ class ListenV1ResultsChannelAlternativesItemParams(typing_extensions.TypedDict):
     """
 
     languages: typing_extensions.NotRequired[typing.Sequence[str]]
+    """
+    [BCP-47](https://tools.ietf.org/html/bcp47) language tags of the languages detected in the transcript, sorted by word count in descending order. Only present when `language=multi`. Can be absent on audio that switches languages.
+    """
+
+    languages_hinted: typing_extensions.NotRequired[typing.Sequence[str]]
+    """
+    The `language_hint` values set at connection time, normalized: codes are returned in canonical form (`ES` → `es`, `zh-hk` → `zh-HK`), and a regional code the model has no tag for is returned as its base language (`en-GB` → `en`). Present on interim and final results of every Nova-3 multilingual stream (`model=nova-3&language=multi`); an empty array when no `language_hint` was sent.
+    """
+
     words: typing.Sequence[ListenV1ResultsChannelAlternativesItemWordsItemParams]

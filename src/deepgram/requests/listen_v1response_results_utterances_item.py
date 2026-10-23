@@ -12,6 +12,11 @@ class ListenV1ResponseResultsUtterancesItemParams(typing_extensions.TypedDict):
     confidence: typing_extensions.NotRequired[float]
     channel: typing_extensions.NotRequired[int]
     transcript: typing_extensions.NotRequired[str]
+    languages: typing_extensions.NotRequired[typing.Sequence[str]]
+    """
+    [BCP-47](https://tools.ietf.org/html/bcp47) language tags of the languages detected in the utterance, sorted by word count in descending order. Only present when `language=multi`.
+    """
+
     words: typing_extensions.NotRequired[typing.Sequence[ListenV1ResponseResultsUtterancesItemWordsItemParams]]
     speaker: typing_extensions.NotRequired[int]
     id: typing_extensions.NotRequired[str]

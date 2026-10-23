@@ -151,27 +151,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "FunctionCallHistoryMessageFunctionCallsItem": ".function_call_history_message_function_calls_item",
 }
 
-_dynamic_imports.update(
-    {
-        "AgentV1HistoryContent": ".agent_v1history_content",
-        "AgentV1HistoryContentRole": ".agent_v1history_content_role",
-        "AgentV1HistoryFunctionCalls": ".agent_v1history_function_calls",
-        "AgentV1HistoryFunctionCallsFunctionCallsItem": ".agent_v1history_function_calls_function_calls_item",
-        "AgentV1SettingsAgentContextContextMessagesItemContentRole": ".agent_v1settings_agent_context_context_messages_item_content_role",
-        "AgentV1SettingsAgentContextContextMessagesItemFunctionCallsFunctionCallsItem": ".agent_v1settings_agent_context_context_messages_item_function_calls_function_calls_item",
-        "AgentV1SettingsAgentContextListenProviderV1": ".agent_v1settings_agent_context_listen_provider_v1",
-        "AgentV1SettingsAgentContextListenProviderV2": ".agent_v1settings_agent_context_listen_provider_v2",
-        "AgentV1SettingsAgentContextListenProviderV2LanguageHint": ".agent_v1settings_agent_context_listen_provider_v2language_hint",
-        "AgentV1SettingsAgentContextMessagesItem": ".agent_v1settings_agent_context_messages_item",
-        "AgentV1SettingsAgentContextMessagesItemContent": ".agent_v1settings_agent_context_messages_item_content",
-        "AgentV1SettingsAgentContextMessagesItemContentRole": ".agent_v1settings_agent_context_messages_item_content_role",
-        "AgentV1SettingsAgentContextMessagesItemFunctionCalls": ".agent_v1settings_agent_context_messages_item_function_calls",
-        "AgentV1SettingsAgentContextMessagesItemFunctionCallsFunctionCallsItem": ".agent_v1settings_agent_context_messages_item_function_calls_function_calls_item",
-        "AgentV1SettingsAgentListenProviderV1": ".agent_v1settings_agent_listen_provider_v1",
-        "AgentV1SettingsAgentListenProviderV2": ".agent_v1settings_agent_listen_provider_v2",
-    }
-)
-
 
 def __getattr__(attr_name: str) -> typing.Any:
     module_name = _dynamic_imports.get(attr_name)
@@ -264,24 +243,3 @@ __all__ = [
     "FunctionCallHistoryMessage",
     "FunctionCallHistoryMessageFunctionCallsItem",
 ]
-
-__all__.extend(
-    [
-        "AgentV1HistoryContent",
-        "AgentV1HistoryContentRole",
-        "AgentV1HistoryFunctionCalls",
-        "AgentV1HistoryFunctionCallsFunctionCallsItem",
-        "AgentV1SettingsAgentContextContextMessagesItemContentRole",
-        "AgentV1SettingsAgentContextContextMessagesItemFunctionCallsFunctionCallsItem",
-        "AgentV1SettingsAgentContextListenProviderV1",
-        "AgentV1SettingsAgentContextListenProviderV2",
-        "AgentV1SettingsAgentContextListenProviderV2LanguageHint",
-        "AgentV1SettingsAgentContextMessagesItem",
-        "AgentV1SettingsAgentContextMessagesItemContent",
-        "AgentV1SettingsAgentContextMessagesItemContentRole",
-        "AgentV1SettingsAgentContextMessagesItemFunctionCalls",
-        "AgentV1SettingsAgentContextMessagesItemFunctionCallsFunctionCallsItem",
-        "AgentV1SettingsAgentListenProviderV1",
-        "AgentV1SettingsAgentListenProviderV2",
-    ]
-)

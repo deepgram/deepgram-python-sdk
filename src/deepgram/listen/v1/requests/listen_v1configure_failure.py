@@ -3,6 +3,7 @@
 import typing
 
 import typing_extensions
+from ..types.listen_v1configure_failure_code import ListenV1ConfigureFailureCode
 
 
 class ListenV1ConfigureFailureParams(typing_extensions.TypedDict):
@@ -16,10 +17,10 @@ class ListenV1ConfigureFailureParams(typing_extensions.TypedDict):
     The unique identifier of the request
     """
 
-    code: str
+    code: ListenV1ConfigureFailureCode
     """
     Identifies why the `Configure` was rejected.
-
+    
     - `CONFIGURE_KEYTERMS_NOT_SUPPORTED`: the stream's model does not support mid-stream keyterm updates. Only
       Nova-3 models do.
     - `CONFIGURE_KEYTERM_LIMIT_EXCEEDED`: the keyterms exceed the 500-token keyterm limit.

@@ -5,6 +5,7 @@ import typing
 import pydantic
 from ....core.pydantic_utilities import IS_PYDANTIC_V2
 from ....core.unchecked_base_model import UncheckedBaseModel
+from .listen_v1configure_failure_code import ListenV1ConfigureFailureCode
 
 
 class ListenV1ConfigureFailure(UncheckedBaseModel):
@@ -18,10 +19,10 @@ class ListenV1ConfigureFailure(UncheckedBaseModel):
     The unique identifier of the request
     """
 
-    code: str = pydantic.Field()
+    code: ListenV1ConfigureFailureCode = pydantic.Field()
     """
     Identifies why the `Configure` was rejected.
-
+    
     - `CONFIGURE_KEYTERMS_NOT_SUPPORTED`: the stream's model does not support mid-stream keyterm updates. Only
       Nova-3 models do.
     - `CONFIGURE_KEYTERM_LIMIT_EXCEEDED`: the keyterms exceed the 500-token keyterm limit.

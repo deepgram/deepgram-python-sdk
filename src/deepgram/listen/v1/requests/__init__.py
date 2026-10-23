@@ -28,8 +28,8 @@ if typing.TYPE_CHECKING:
     from .listen_v1utterance_end import ListenV1UtteranceEndParams
 _dynamic_imports: typing.Dict[str, str] = {
     "ListenV1CloseStreamParams": ".listen_v1close_stream",
-    "ListenV1ConfigureParams": ".listen_v1configure",
     "ListenV1ConfigureFailureParams": ".listen_v1configure_failure",
+    "ListenV1ConfigureParams": ".listen_v1configure",
     "ListenV1ConfigureSuccessParams": ".listen_v1configure_success",
     "ListenV1ErrorParams": ".listen_v1error",
     "ListenV1FinalizeParams": ".listen_v1finalize",
@@ -71,8 +71,8 @@ def __dir__():
 
 __all__ = [
     "ListenV1CloseStreamParams",
-    "ListenV1ConfigureParams",
     "ListenV1ConfigureFailureParams",
+    "ListenV1ConfigureParams",
     "ListenV1ConfigureSuccessParams",
     "ListenV1ErrorParams",
     "ListenV1FinalizeParams",

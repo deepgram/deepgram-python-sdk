@@ -3,7 +3,9 @@
 import json
 import logging
 import typing
+from json.decoder import JSONDecodeError
 
+import websockets
 import websockets.sync.connection as websockets_sync_connection
 from ...core.events import EventEmitterMixin, EventType
 from ...core.unchecked_base_model import construct_type
@@ -43,17 +45,6 @@ try:
     from websockets.legacy.client import WebSocketClientProtocol  # type: ignore
 except ImportError:
     from websockets import WebSocketClientProtocol  # type: ignore
-
-def _sanitize_numeric_types(obj: typing.Any) -> typing.Any:
-    """Convert whole-number floats to integers for wire-compatible JSON. See: internal-api-specs/issues/205."""
-    if isinstance(obj, dict):
-        return {key: _sanitize_numeric_types(value) for key, value in obj.items()}
-    if isinstance(obj, list):
-        return [_sanitize_numeric_types(item) for item in obj]
-    if isinstance(obj, float) and obj.is_integer():
-        return int(obj)
-    return obj
-
 
 _logger = logging.getLogger(__name__)
 V1SocketClientResponse = typing.Union[
@@ -124,7 +115,7 @@ class AsyncV1SocketClient(EventEmitterMixin):
                         )
                         continue
                 await self._emit_async(EventType.MESSAGE, parsed)
-        except Exception as exc:
+        except (websockets.WebSocketException, JSONDecodeError) as exc:
             await self._emit_async(EventType.ERROR, exc)
         finally:
             await self._emit_async(EventType.CLOSE, None)
@@ -178,12 +169,12 @@ class AsyncV1SocketClient(EventEmitterMixin):
         """
         await self._send_model(message)
 
-    async def send_keep_alive(self, message: typing.Optional[AgentV1KeepAlive] = None) -> None:
+    async def send_keep_alive(self, message: AgentV1KeepAlive) -> None:
         """
         Send a message to the websocket connection.
         The message will be sent as a AgentV1KeepAlive.
         """
-        await self._send_model(message or AgentV1KeepAlive(type="KeepAlive"))
+        await self._send_model(message)
 
     async def send_update_prompt(self, message: AgentV1UpdatePrompt) -> None:
         """
@@ -192,12 +183,12 @@ class AsyncV1SocketClient(EventEmitterMixin):
         """
         await self._send_model(message)
 
-    async def send_force_end_turn(self, message: typing.Optional[AgentV1ForceEndTurn] = None) -> None:
+    async def send_force_end_turn(self, message: AgentV1ForceEndTurn) -> None:
         """
         Send a message to the websocket connection.
         The message will be sent as a AgentV1ForceEndTurn.
         """
-        await self._send_model(message or AgentV1ForceEndTurn(type="ForceEndTurn"))
+        await self._send_model(message)
 
     async def send_custom_to_think_provider(self, message: AgentV1CustomToThinkProvider) -> None:
         """
@@ -205,18 +196,6 @@ class AsyncV1SocketClient(EventEmitterMixin):
         The message will be sent as a AgentV1CustomToThinkProvider.
         """
         await self._send_model(message)
-
-    async def send_raw(self, message: typing.Union[typing.Dict[str, typing.Any], str]) -> None:
-        """Send a JSON control frame without model validation.
-
-        Dictionaries are serialized to JSON. Serialized JSON strings are sent
-        unchanged, allowing protocol-transparent bridges to forward unknown
-        control frames.
-
-        Values are sent as given; whole-number floats are not converted to
-        integers, so pass ints where the API expects them.
-        """
-        await self._send(message)
 
     async def send_media(self, message: bytes) -> None:
         """
@@ -251,7 +230,7 @@ class AsyncV1SocketClient(EventEmitterMixin):
         """
         Send a Pydantic model to the websocket connection.
         """
-        await self._send(_sanitize_numeric_types(data.dict()))
+        await self._send(data.dict())
 
 
 class V1SocketClient(EventEmitterMixin):
@@ -297,7 +276,7 @@ class V1SocketClient(EventEmitterMixin):
                         )
                         continue
                 self._emit(EventType.MESSAGE, parsed)
-        except Exception as exc:
+        except (websockets.WebSocketException, JSONDecodeError) as exc:
             self._emit(EventType.ERROR, exc)
         finally:
             self._emit(EventType.CLOSE, None)
@@ -351,12 +330,12 @@ class V1SocketClient(EventEmitterMixin):
         """
         self._send_model(message)
 
-    def send_keep_alive(self, message: typing.Optional[AgentV1KeepAlive] = None) -> None:
+    def send_keep_alive(self, message: AgentV1KeepAlive) -> None:
         """
         Send a message to the websocket connection.
         The message will be sent as a AgentV1KeepAlive.
         """
-        self._send_model(message or AgentV1KeepAlive(type="KeepAlive"))
+        self._send_model(message)
 
     def send_update_prompt(self, message: AgentV1UpdatePrompt) -> None:
         """
@@ -365,12 +344,12 @@ class V1SocketClient(EventEmitterMixin):
         """
         self._send_model(message)
 
-    def send_force_end_turn(self, message: typing.Optional[AgentV1ForceEndTurn] = None) -> None:
+    def send_force_end_turn(self, message: AgentV1ForceEndTurn) -> None:
         """
         Send a message to the websocket connection.
         The message will be sent as a AgentV1ForceEndTurn.
         """
-        self._send_model(message or AgentV1ForceEndTurn(type="ForceEndTurn"))
+        self._send_model(message)
 
     def send_custom_to_think_provider(self, message: AgentV1CustomToThinkProvider) -> None:
         """
@@ -378,18 +357,6 @@ class V1SocketClient(EventEmitterMixin):
         The message will be sent as a AgentV1CustomToThinkProvider.
         """
         self._send_model(message)
-
-    def send_raw(self, message: typing.Union[typing.Dict[str, typing.Any], str]) -> None:
-        """Send a JSON control frame without model validation.
-
-        Dictionaries are serialized to JSON. Serialized JSON strings are sent
-        unchanged, allowing protocol-transparent bridges to forward unknown
-        control frames.
-
-        Values are sent as given; whole-number floats are not converted to
-        integers, so pass ints where the API expects them.
-        """
-        self._send(message)
 
     def send_media(self, message: bytes) -> None:
         """
@@ -424,4 +391,4 @@ class V1SocketClient(EventEmitterMixin):
         """
         Send a Pydantic model to the websocket connection.
         """
-        self._send(_sanitize_numeric_types(data.dict()))
+        self._send(data.dict())

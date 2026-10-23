@@ -104,6 +104,7 @@ if typing.TYPE_CHECKING:
     from .list_projects_v1response import ListProjectsV1ResponseParams
     from .list_projects_v1response_projects_item import ListProjectsV1ResponseProjectsItemParams
     from .listen_v1accepted_response import ListenV1AcceptedResponseParams
+    from .listen_v1language_hint import ListenV1LanguageHintParams
     from .listen_v1response import ListenV1ResponseParams
     from .listen_v1response_metadata import ListenV1ResponseMetadataParams
     from .listen_v1response_metadata_diarize_info import ListenV1ResponseMetadataDiarizeInfoParams
@@ -295,6 +296,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ListProjectsV1ResponseParams": ".list_projects_v1response",
     "ListProjectsV1ResponseProjectsItemParams": ".list_projects_v1response_projects_item",
     "ListenV1AcceptedResponseParams": ".listen_v1accepted_response",
+    "ListenV1LanguageHintParams": ".listen_v1language_hint",
     "ListenV1ResponseMetadataDiarizeInfoParams": ".listen_v1response_metadata_diarize_info",
     "ListenV1ResponseMetadataIntentsInfoParams": ".listen_v1response_metadata_intents_info",
     "ListenV1ResponseMetadataParams": ".listen_v1response_metadata",
@@ -378,22 +380,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "UsageV1ResponseParams": ".usage_v1response",
     "UsageV1ResponseResolutionParams": ".usage_v1response_resolution",
 }
-
-_dynamic_imports.update(
-    {
-        "SharedIntentsResultsParams": ".shared_intents_results",
-        "SharedIntentsResultsIntentsParams": ".shared_intents_results_intents",
-        "SharedIntentsResultsIntentsSegmentsItemParams": ".shared_intents_results_intents_segments_item",
-        "SharedIntentsResultsIntentsSegmentsItemIntentsItemParams": ".shared_intents_results_intents_segments_item_intents_item",
-        "SharedTopicsResultsParams": ".shared_topics_results",
-        "SharedTopicsResultsTopicsParams": ".shared_topics_results_topics",
-        "SharedTopicsResultsTopicsSegmentsItemParams": ".shared_topics_results_topics_segments_item",
-        "SharedTopicsResultsTopicsSegmentsItemTopicsItemParams": ".shared_topics_results_topics_segments_item_topics_item",
-        "CartesiaSpeakProviderVoiceParams": ".cartesia_speak_provider_voice",
-        "CreateKeyV1RequestOneParams": ".create_key_v1request_one",
-        "DeepgramListenProviderV2LanguageHintParams": ".deepgram_listen_provider_v2language_hint",
-    }
-)
 
 
 def __getattr__(attr_name: str) -> typing.Any:
@@ -502,6 +488,7 @@ __all__ = [
     "ListProjectsV1ResponseParams",
     "ListProjectsV1ResponseProjectsItemParams",
     "ListenV1AcceptedResponseParams",
+    "ListenV1LanguageHintParams",
     "ListenV1ResponseMetadataDiarizeInfoParams",
     "ListenV1ResponseMetadataIntentsInfoParams",
     "ListenV1ResponseMetadataParams",
@@ -585,19 +572,3 @@ __all__ = [
     "UsageV1ResponseParams",
     "UsageV1ResponseResolutionParams",
 ]
-
-__all__.extend(
-    [
-        "SharedIntentsResultsParams",
-        "SharedIntentsResultsIntentsParams",
-        "SharedIntentsResultsIntentsSegmentsItemParams",
-        "SharedIntentsResultsIntentsSegmentsItemIntentsItemParams",
-        "SharedTopicsResultsParams",
-        "SharedTopicsResultsTopicsParams",
-        "SharedTopicsResultsTopicsSegmentsItemParams",
-        "SharedTopicsResultsTopicsSegmentsItemTopicsItemParams",
-        "CartesiaSpeakProviderVoiceParams",
-        "CreateKeyV1RequestOneParams",
-        "DeepgramListenProviderV2LanguageHintParams",
-    ]
-)
