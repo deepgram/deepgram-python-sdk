@@ -19,6 +19,7 @@ try:
         url="https://dpgr.am/spacewalk.wav",
         model="nova-3",
         # Nova-3 multilingual production rollout is expected later today.
+        # Wait for the rollout to reach your project before enabling these options.
         language="multi",
         language_hint=["en"],
         # Advanced options
@@ -40,12 +41,13 @@ try:
             transcript = channel.alternatives[0].transcript
             print(f"Transcript: {transcript}")
 
-            # Multilingual fields are optional when language detection has no result.
+            # Detected languages can be absent when detection has no result.
             detected_languages = getattr(channel.alternatives[0], "languages", None)
             hinted_languages = getattr(channel.alternatives[0], "languages_hinted", None)
-            if detected_languages:
+            if detected_languages is not None:
                 print(f"Detected languages: {', '.join(detected_languages)}")
-            if hinted_languages:
+            # Nova-3 multilingual returns [] when no language hint was sent.
+            if hinted_languages is not None:
                 print(f"Language hints used: {', '.join(hinted_languages)}")
 
             # Show speaker diarization if available

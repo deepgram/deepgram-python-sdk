@@ -9,7 +9,7 @@ are the same guard for this cycle's new fields:
   - ListenV1Response/ResultsMetadata.diarize_info  (model_uuid, arch)
   - words item .speaker / .speaker_confidence
   - ListenV2TurnInfo.trigger
-  - Listen V1 Nova-3 multilingual alternatives .languages / .languages_hinted
+  - Listen V1 Nova-3 multilingual alternative/utterance language fields
 
 Fixtures are real payloads captured from the live API (POST /v1/listen with
 diarize=true), except TurnInfo.trigger: those cases pin the client-side contract,
@@ -20,6 +20,9 @@ from deepgram.core.pydantic_utilities import IS_PYDANTIC_V2
 from deepgram.listen.v1.types.listen_v1results import ListenV1Results
 from deepgram.listen.v1.types.listen_v1results_channel_alternatives_item import (
     ListenV1ResultsChannelAlternativesItem,
+)
+from deepgram.listen.v1.types.listen_v1results_channel_alternatives_item_words_item import (
+    ListenV1ResultsChannelAlternativesItemWordsItem,
 )
 from deepgram.listen.v1.types.listen_v1results_metadata import ListenV1ResultsMetadata
 from deepgram.listen.v1.types.listen_v1results_metadata_diarize_info import (
@@ -36,6 +39,10 @@ from deepgram.types.listen_v1response_results_channels_item_alternatives_item im
 )
 from deepgram.types.listen_v1response_results_channels_item_alternatives_item_words_item import (
     ListenV1ResponseResultsChannelsItemAlternativesItemWordsItem,
+)
+from deepgram.types.listen_v1response_results_utterances_item import ListenV1ResponseResultsUtterancesItem
+from deepgram.types.listen_v1response_results_utterances_item_words_item import (
+    ListenV1ResponseResultsUtterancesItemWordsItem,
 )
 
 # Observed live: metadata.diarize_info on a diarize=true pre-recorded request.
@@ -79,12 +86,24 @@ WORD = {
     "punctuated_word": "Yeah.",
 }
 
+MULTILINGUAL_WORD = {**WORD, "language": "es"}
+
 MULTILINGUAL_ALTERNATIVE = {
     "transcript": "Hola world",
     "confidence": 0.99,
     "languages": ["es", "en"],
     "languages_hinted": ["en"],
-    "words": [],
+    "words": [MULTILINGUAL_WORD],
+}
+
+MULTILINGUAL_UTTERANCE = {
+    "start": 0.0,
+    "end": 1.0,
+    "confidence": 0.99,
+    "channel": 0,
+    "transcript": "Hola world",
+    "languages": ["es", "en"],
+    "words": [MULTILINGUAL_WORD],
 }
 
 
@@ -144,9 +163,13 @@ class TestListenV1MultilingualAlternativeFields:
     def test_multilingual_fields_are_declared(self) -> None:
         # These models allow extras, so attribute access alone would not catch a
         # future specification removal.
-        expected = {"languages", "languages_hinted"}
-        assert expected <= _declared_fields(ListenV1ResultsChannelAlternativesItem)
-        assert expected <= _declared_fields(ListenV1ResponseResultsChannelsItemAlternativesItem)
+        alternative_fields = {"languages", "languages_hinted"}
+        assert alternative_fields <= _declared_fields(ListenV1ResultsChannelAlternativesItem)
+        assert alternative_fields <= _declared_fields(ListenV1ResponseResultsChannelsItemAlternativesItem)
+        assert {"language"} <= _declared_fields(ListenV1ResultsChannelAlternativesItemWordsItem)
+        assert {"language"} <= _declared_fields(ListenV1ResponseResultsChannelsItemAlternativesItemWordsItem)
+        assert {"languages"} <= _declared_fields(ListenV1ResponseResultsUtterancesItem)
+        assert {"language"} <= _declared_fields(ListenV1ResponseResultsUtterancesItemWordsItem)
 
     def test_streaming_results_parse_multilingual_fields(self) -> None:
         result = ListenV1Results.model_validate(
@@ -164,6 +187,7 @@ class TestListenV1MultilingualAlternativeFields:
         alternative = result.channel.alternatives[0]
         assert alternative.languages == ["es", "en"]
         assert alternative.languages_hinted == ["en"]
+        assert alternative.words[0].language == "es"
 
     def test_prerecorded_response_parses_multilingual_fields(self) -> None:
         response = ListenV1Response.model_validate(
@@ -176,6 +200,28 @@ class TestListenV1MultilingualAlternativeFields:
         alternative = response.results.channels[0].alternatives[0]
         assert alternative.languages == ["es", "en"]
         assert alternative.languages_hinted == ["en"]
+        assert alternative.words[0].language == "es"
+
+    def test_prerecorded_response_parses_multilingual_utterance_fields(self) -> None:
+        response = ListenV1Response.model_validate(
+            {
+                "metadata": RESPONSE_METADATA,
+                "results": {"channels": [], "utterances": [MULTILINGUAL_UTTERANCE]},
+            }
+        )
+
+        utterance = response.results.utterances[0]
+        assert utterance.languages == ["es", "en"]
+        assert utterance.words[0].language == "es"
+
+    def test_languages_hinted_is_empty_without_a_hint(self) -> None:
+        """Nova-3 multilingual returns an empty list, rather than omitting the field."""
+        no_hint = {**MULTILINGUAL_ALTERNATIVE, "languages_hinted": []}
+        streaming = ListenV1ResultsChannelAlternativesItem.model_validate(no_hint)
+        prerecorded = ListenV1ResponseResultsChannelsItemAlternativesItem.model_validate(no_hint)
+
+        assert streaming.languages_hinted == []
+        assert prerecorded.languages_hinted == []
 
     def test_multilingual_fields_remain_optional_when_absent(self) -> None:
         absent = {k: v for k, v in MULTILINGUAL_ALTERNATIVE.items() if k not in {"languages", "languages_hinted"}}

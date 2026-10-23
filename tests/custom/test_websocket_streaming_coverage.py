@@ -254,7 +254,18 @@ async def test_connect_and_socket_client_async(
     assert created and any(ws.sent for ws in created)
 
 
-def test_listen_v1_connect_serializes_repeated_language_hints_sync(monkeypatch: pytest.MonkeyPatch) -> None:
+@pytest.mark.parametrize(
+    "language_hint,expected_hints",
+    [("en", ["en"]), (("en", "es"), ["en", "es"])],
+    ids=["scalar", "sequence"],
+)
+@pytest.mark.parametrize("raw", [False, True], ids=["public", "raw"])
+def test_listen_v1_connect_serializes_language_hints_sync(
+    monkeypatch: pytest.MonkeyPatch,
+    language_hint: typing.Union[str, typing.Sequence[str]],
+    expected_hints: typing.List[str],
+    raw: bool,
+) -> None:
     captured_urls: typing.List[str] = []
 
     def _connect(url: str, *_a: typing.Any, **_k: typing.Any) -> _FakeSyncConnectCM:
@@ -263,10 +274,12 @@ def test_listen_v1_connect_serializes_repeated_language_hints_sync(monkeypatch: 
 
     monkeypatch.setattr(websockets_sync_client, "connect", _connect)
 
-    with _sync_client().listen.v1.connect(
+    client = _sync_client()
+    listen = client.listen.v1.with_raw_response if raw else client.listen.v1
+    with listen.connect(
         model="nova-3",
         language="multi",
-        language_hint=["en", "es"],
+        language_hint=language_hint,
     ):
         pass
 
@@ -275,11 +288,20 @@ def test_listen_v1_connect_serializes_repeated_language_hints_sync(monkeypatch: 
     assert parsed.path == "/v1/listen"
     assert query["model"] == ["nova-3"]
     assert query["language"] == ["multi"]
-    assert query["language_hint"] == ["en", "es"]
+    assert query["language_hint"] == expected_hints
 
 
-async def test_listen_v1_connect_serializes_repeated_language_hints_async(
+@pytest.mark.parametrize(
+    "language_hint,expected_hints",
+    [("en", ["en"]), (("en", "es"), ["en", "es"])],
+    ids=["scalar", "sequence"],
+)
+@pytest.mark.parametrize("raw", [False, True], ids=["public", "raw"])
+async def test_listen_v1_connect_serializes_language_hints_async(
     monkeypatch: pytest.MonkeyPatch,
+    language_hint: typing.Union[str, typing.Sequence[str]],
+    expected_hints: typing.List[str],
+    raw: bool,
 ) -> None:
     captured_urls: typing.List[str] = []
 
@@ -287,12 +309,15 @@ async def test_listen_v1_connect_serializes_repeated_language_hints_async(
         captured_urls.append(url)
         return _FakeAsyncConnectCM(_FakeAsyncWS())
 
-    monkeypatch.setattr("deepgram.listen.v1.client.websockets_client_connect", _connect)
+    for module in _async_connect_modules("listen.v1"):
+        monkeypatch.setattr(f"{module}.websockets_client_connect", _connect)
 
-    async with _async_client().listen.v1.connect(
+    client = _async_client()
+    listen = client.listen.v1.with_raw_response if raw else client.listen.v1
+    async with listen.connect(
         model="nova-3",
         language="multi",
-        language_hint=["en", "es"],
+        language_hint=language_hint,
     ):
         pass
 
@@ -301,7 +326,7 @@ async def test_listen_v1_connect_serializes_repeated_language_hints_async(
     assert parsed.path == "/v1/listen"
     assert query["model"] == ["nova-3"]
     assert query["language"] == ["multi"]
-    assert query["language_hint"] == ["en", "es"]
+    assert query["language_hint"] == expected_hints
 
 
 @pytest.mark.parametrize("status", [401, 500])
