@@ -5,7 +5,7 @@
 
 ### Features
 
-* **regen:** add nova-3 multilingual Listen V1 support ([#813](https://github.com/deepgram/deepgram-python-sdk/issues/813)) ([b474446](https://github.com/deepgram/deepgram-python-sdk/commit/b474446abaf57323e30e8db834535fbcdc047386))
+* **Listen V1 / Nova-3 multilingual:** Add optional `language_hint` support for synchronous and asynchronous URL/file transcription and WebSocket connections. Pass one BCP-47 hint as a string or several as a list; hints bias detection when `model="nova-3"` and `language="multi"`. Transcription alternatives now expose typed `languages` and normalized `languages_hinted` fields, with per-word and utterance language metadata. ([#813](https://github.com/deepgram/deepgram-python-sdk/issues/813)) ([b474446](https://github.com/deepgram/deepgram-python-sdk/commit/b474446abaf57323e30e8db834535fbcdc047386))
 
 ## [7.14.0](https://github.com/deepgram/deepgram-python-sdk/compare/v7.13.0...v7.14.0) (2026-10-20)
 
