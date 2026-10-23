@@ -2,6 +2,8 @@
 
 from typing import Any, Dict, Optional
 
+from .._secure_logging import redact_sensitive_headers
+
 
 class ParsingError(Exception):
     """
@@ -23,7 +25,7 @@ class ParsingError(Exception):
         body: Any = None,
         cause: Optional[Exception] = None,
     ) -> None:
-        self.headers = headers
+        self.headers = redact_sensitive_headers(headers)
         self.status_code = status_code
         self.body = body
         self.cause = cause
