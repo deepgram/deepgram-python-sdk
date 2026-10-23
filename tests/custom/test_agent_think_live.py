@@ -16,6 +16,9 @@ from deepgram.agent.v1.types.agent_v1update_think_live import AgentV1UpdateThink
 from deepgram.core.unchecked_base_model import construct_type
 from deepgram.types.deepgram_think_live_provider_v1 import DeepgramThinkLiveProviderV1
 from deepgram.types.think_live_settings_v1 import ThinkLiveSettingsV1
+from deepgram.types.think_settings_v1 import ThinkSettingsV1
+from deepgram.types.think_settings_v1functions_item import ThinkSettingsV1FunctionsItem
+from deepgram.types.think_settings_v1provider import ThinkSettingsV1Provider_OpenAi
 
 
 class _FakeWebSocket:
@@ -38,6 +41,8 @@ def _think_live_settings() -> ThinkLiveSettingsV1:
     return ThinkLiveSettingsV1(
         provider=DeepgramThinkLiveProviderV1(
             agent_backchannel_sensitivity=0.4,
+            presence_check_max_count=3,
+            presence_check_interval_ms=5000,
             frustration_max_count=2,
             restricted_terms=["forbidden phrase"],
         )
@@ -48,6 +53,18 @@ def _settings_with_think_live() -> AgentV1Settings:
     return AgentV1Settings(
         audio=AgentV1SettingsAudio(input=AgentV1SettingsAudioInput(encoding="linear16", sample_rate=24000)),
         agent=AgentV1SettingsAgent(
+            think=ThinkSettingsV1(
+                provider=ThinkSettingsV1Provider_OpenAi(type="open_ai", model="gpt-4o-mini"),
+                functions=[
+                    ThinkSettingsV1FunctionsItem(
+                        name="lookup_order",
+                        defer_until_eot=True,
+                        initial_agent_filler=True,
+                        agent_filler_max_count=2,
+                        agent_filler_interval_ms=3000,
+                    )
+                ]
+            ),
             think_live=_think_live_settings(),
             messages=[{"type": "History", "role": "user", "content": "Hello"}],
         ),
@@ -68,16 +85,40 @@ def test_sync_think_live_settings_and_update_serialize() -> None:
         "type": "deepgram",
         "version": "v1",
         "agent_backchannel_sensitivity": 0.4,
+        "presence_check_max_count": 3,
+        "presence_check_interval_ms": 5000,
         "frustration_max_count": 2,
         "restricted_terms": ["forbidden phrase"],
     }
+    assert settings["agent"]["think"]["functions"] == [
+        {
+            "name": "lookup_order",
+            "defer_until_eot": True,
+            "initial_agent_filler": True,
+            "agent_filler_max_count": 2,
+            "agent_filler_interval_ms": 3000,
+        }
+    ]
     assert settings["agent"]["context"]["messages"][0]["content"] == "Hello"
 
     update_websocket = _FakeWebSocket()
     V1SocketClient(websocket=cast(Any, update_websocket)).send_update_think_live(
         AgentV1UpdateThinkLive(think_live=_think_live_settings())
     )
-    assert _sent_json(update_websocket)["type"] == "UpdateThink_Live"
+    assert _sent_json(update_websocket) == {
+        "type": "UpdateThink_Live",
+        "think_live": {
+            "provider": {
+                "type": "deepgram",
+                "version": "v1",
+                "agent_backchannel_sensitivity": 0.4,
+                "presence_check_max_count": 3,
+                "presence_check_interval_ms": 5000,
+                "frustration_max_count": 2,
+                "restricted_terms": ["forbidden phrase"],
+            }
+        },
+    }
 
 
 async def test_async_think_live_settings_and_update_serialize() -> None:
@@ -86,23 +127,67 @@ async def test_async_think_live_settings_and_update_serialize() -> None:
     await client.send_settings(_settings_with_think_live())
 
     settings = _sent_json(settings_websocket)
-    assert settings["agent"]["think_live"]["provider"]["frustration_max_count"] == 2
+    assert settings["agent"]["think_live"]["provider"] == {
+        "type": "deepgram",
+        "version": "v1",
+        "agent_backchannel_sensitivity": 0.4,
+        "presence_check_max_count": 3,
+        "presence_check_interval_ms": 5000,
+        "frustration_max_count": 2,
+        "restricted_terms": ["forbidden phrase"],
+    }
+    assert settings["agent"]["think"]["functions"] == [
+        {
+            "name": "lookup_order",
+            "defer_until_eot": True,
+            "initial_agent_filler": True,
+            "agent_filler_max_count": 2,
+            "agent_filler_interval_ms": 3000,
+        }
+    ]
 
     update_websocket = _FakeAsyncWebSocket()
     await AsyncV1SocketClient(websocket=cast(Any, update_websocket)).send_update_think_live(
         AgentV1UpdateThinkLive(think_live=_think_live_settings())
     )
-    assert _sent_json(update_websocket)["type"] == "UpdateThink_Live"
+    assert _sent_json(update_websocket) == {
+        "type": "UpdateThink_Live",
+        "think_live": {
+            "provider": {
+                "type": "deepgram",
+                "version": "v1",
+                "agent_backchannel_sensitivity": 0.4,
+                "presence_check_max_count": 3,
+                "presence_check_interval_ms": 5000,
+                "frustration_max_count": 2,
+                "restricted_terms": ["forbidden phrase"],
+            }
+        },
+    }
 
 
-@pytest.mark.parametrize("behavior", ["default", "queue", "interrupt"])
-def test_dynamic_injection_behaviors_serialize(behavior: str) -> None:
+@pytest.mark.parametrize("behavior", [None, "default", "queue", "interrupt"])
+def test_sync_dynamic_injection_behaviors_serialize(behavior: str | None) -> None:
     websocket = _FakeWebSocket()
-    V1SocketClient(websocket=cast(Any, websocket)).send_inject_dynamic_agent_message(
-        AgentV1InjectDynamicAgentMessage(behavior=behavior)
-    )
+    message = AgentV1InjectDynamicAgentMessage() if behavior is None else AgentV1InjectDynamicAgentMessage(behavior=behavior)
+    V1SocketClient(websocket=cast(Any, websocket)).send_inject_dynamic_agent_message(message)
 
-    assert _sent_json(websocket) == {"type": "InjectAgentMessage", "is_dynamic": True, "behavior": behavior}
+    expected = {"type": "InjectAgentMessage", "is_dynamic": True}
+    if behavior is not None:
+        expected["behavior"] = behavior
+    assert _sent_json(websocket) == expected
+
+
+@pytest.mark.parametrize("behavior", [None, "default", "queue", "interrupt"])
+async def test_async_dynamic_injection_behaviors_serialize(behavior: str | None) -> None:
+    websocket = _FakeAsyncWebSocket()
+    message = AgentV1InjectDynamicAgentMessage() if behavior is None else AgentV1InjectDynamicAgentMessage(behavior=behavior)
+    await AsyncV1SocketClient(websocket=cast(Any, websocket)).send_inject_dynamic_agent_message(message)
+
+    expected = {"type": "InjectAgentMessage", "is_dynamic": True}
+    if behavior is not None:
+        expected["behavior"] = behavior
+    assert _sent_json(websocket) == expected
 
 
 @pytest.mark.parametrize(
@@ -110,26 +195,31 @@ def test_dynamic_injection_behaviors_serialize(behavior: str) -> None:
     [
         ({"type": "ThinkLiveUpdated"}, AgentV1ThinkLiveUpdated),
         ({"type": "FrustrationDetected", "count": 2, "escalated": True}, AgentV1FrustrationDetected),
-        (
-            {
-                "type": "ConversationText",
-                "role": "assistant",
-                "content": "I am still here.",
-                "conversational_behavior": "presence_check",
-            },
-            AgentV1ConversationText,
-        ),
     ],
 )
 def test_think_live_response_events_parse(payload: dict[str, Any], expected_type: type[Any]) -> None:
     parsed = construct_type(type_=cast(Any, V1SocketClientResponse), object_=payload)
 
     assert isinstance(parsed, expected_type)
-    if isinstance(parsed, AgentV1ConversationText):
-        assert parsed.conversational_behavior == "presence_check"
     if isinstance(parsed, AgentV1FrustrationDetected):
         assert parsed.count == 2
         assert parsed.escalated is True
+
+
+@pytest.mark.parametrize("behavior", ["default", "backchannel", "presence_check", "filler"])
+def test_conversation_text_conversational_behaviors_parse(behavior: str) -> None:
+    parsed = construct_type(
+        type_=cast(Any, V1SocketClientResponse),
+        object_={
+            "type": "ConversationText",
+            "role": "assistant",
+            "content": "I am still here.",
+            "conversational_behavior": behavior,
+        },
+    )
+
+    assert isinstance(parsed, AgentV1ConversationText)
+    assert parsed.conversational_behavior == behavior
 
 
 def test_legacy_messages_and_think_live_coexist_without_unwrapping() -> None:
