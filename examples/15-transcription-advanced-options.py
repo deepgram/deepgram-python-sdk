@@ -18,8 +18,10 @@ try:
     response = client.listen.v1.media.transcribe_url(
         url="https://dpgr.am/spacewalk.wav",
         model="nova-3",
-        # Nova-3 multilingual production rollout is expected later today.
-        # Wait for the rollout to reach your project before enabling these options.
+        # Nova-3 multilingual: language_hint biases detection toward the languages
+        # you expect. It does not restrict the transcript to them, and it applies
+        # only with language="multi". For a single known language, use e.g.
+        # language="en-US" and omit language_hint.
         language="multi",
         language_hint=["en"],
         # Advanced options
@@ -41,14 +43,13 @@ try:
             transcript = channel.alternatives[0].transcript
             print(f"Transcript: {transcript}")
 
-            # Detected languages can be absent when detection has no result.
-            detected_languages = getattr(channel.alternatives[0], "languages", None)
-            hinted_languages = getattr(channel.alternatives[0], "languages_hinted", None)
-            if detected_languages is not None:
-                print(f"Detected languages: {', '.join(detected_languages)}")
+            # Only present with language="multi"; languages can be absent on
+            # audio that switches languages.
+            if channel.alternatives[0].languages is not None:
+                print(f"Detected languages: {', '.join(channel.alternatives[0].languages)}")
             # Nova-3 multilingual returns [] when no language hint was sent.
-            if hinted_languages is not None:
-                print(f"Language hints used: {', '.join(hinted_languages)}")
+            if channel.alternatives[0].languages_hinted is not None:
+                print(f"Language hints used: {', '.join(channel.alternatives[0].languages_hinted)}")
 
             # Show speaker diarization if available
             if channel.alternatives[0].words:
