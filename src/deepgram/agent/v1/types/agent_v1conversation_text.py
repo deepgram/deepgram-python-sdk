@@ -5,6 +5,7 @@ import typing
 import pydantic
 from ....core.pydantic_utilities import IS_PYDANTIC_V2
 from ....core.unchecked_base_model import UncheckedBaseModel
+from .agent_v1conversation_text_conversational_behavior import AgentV1ConversationTextConversationalBehavior
 from .agent_v1conversation_text_role import AgentV1ConversationTextRole
 
 
@@ -22,6 +23,13 @@ class AgentV1ConversationText(UncheckedBaseModel):
     content: str = pydantic.Field()
     """
     The actual statement that was spoken
+    """
+
+    conversational_behavior: typing.Optional[AgentV1ConversationTextConversationalBehavior] = pydantic.Field(
+        default=None
+    )
+    """
+    Annotates what kind of utterance the message represents: `default` (a standard turn), `backchannel` (a short acknowledgement while the user held the floor), `presence_check` (a prompt after extended silence), or `filler` (a line covering a wait on a function call or a dynamic InjectAgentMessage). Always sent; it is `default` for every message while Think Live is off
     """
 
     languages_hinted: typing.Optional[typing.List[str]] = pydantic.Field(default=None)

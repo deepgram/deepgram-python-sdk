@@ -3,7 +3,9 @@
 import json
 import logging
 import typing
+from json.decoder import JSONDecodeError
 
+import websockets
 import websockets.sync.connection as websockets_sync_connection
 from ...core.events import EventEmitterMixin, EventType
 from ...core.unchecked_base_model import construct_type
@@ -15,10 +17,12 @@ from .types.agent_v1custom_from_think_provider import AgentV1CustomFromThinkProv
 from .types.agent_v1custom_to_think_provider import AgentV1CustomToThinkProvider
 from .types.agent_v1error import AgentV1Error
 from .types.agent_v1force_end_turn import AgentV1ForceEndTurn
+from .types.agent_v1frustration_detected import AgentV1FrustrationDetected
 from .types.agent_v1function_call_cancelled import AgentV1FunctionCallCancelled
 from .types.agent_v1function_call_request import AgentV1FunctionCallRequest
 from .types.agent_v1history import AgentV1History
 from .types.agent_v1inject_agent_message import AgentV1InjectAgentMessage
+from .types.agent_v1inject_dynamic_agent_message import AgentV1InjectDynamicAgentMessage
 from .types.agent_v1inject_user_message import AgentV1InjectUserMessage
 from .types.agent_v1injection_refused import AgentV1InjectionRefused
 from .types.agent_v1keep_alive import AgentV1KeepAlive
@@ -30,11 +34,13 @@ from .types.agent_v1send_function_call_response import AgentV1SendFunctionCallRe
 from .types.agent_v1settings import AgentV1Settings
 from .types.agent_v1settings_applied import AgentV1SettingsApplied
 from .types.agent_v1speak_updated import AgentV1SpeakUpdated
+from .types.agent_v1think_live_updated import AgentV1ThinkLiveUpdated
 from .types.agent_v1think_updated import AgentV1ThinkUpdated
 from .types.agent_v1update_listen import AgentV1UpdateListen
 from .types.agent_v1update_prompt import AgentV1UpdatePrompt
 from .types.agent_v1update_speak import AgentV1UpdateSpeak
 from .types.agent_v1update_think import AgentV1UpdateThink
+from .types.agent_v1update_think_live import AgentV1UpdateThinkLive
 from .types.agent_v1user_started_speaking import AgentV1UserStartedSpeaking
 from .types.agent_v1warning import AgentV1Warning
 from .types.agent_v1welcome import AgentV1Welcome
@@ -44,22 +50,12 @@ try:
 except ImportError:
     from websockets import WebSocketClientProtocol  # type: ignore
 
-
-def _sanitize_numeric_types(obj: typing.Any) -> typing.Any:
-    """Convert whole-number floats to integers for wire-compatible JSON. See: internal-api-specs/issues/205."""
-    if isinstance(obj, dict):
-        return {key: _sanitize_numeric_types(value) for key, value in obj.items()}
-    if isinstance(obj, list):
-        return [_sanitize_numeric_types(item) for item in obj]
-    if isinstance(obj, float) and obj.is_integer():
-        return int(obj)
-    return obj
-
-
 _logger = logging.getLogger(__name__)
 V1SocketClientResponse = typing.Union[
     AgentV1ListenUpdated,
     AgentV1ThinkUpdated,
+    AgentV1ThinkLiveUpdated,
+    AgentV1FrustrationDetected,
     AgentV1ReceiveFunctionCallResponse,
     AgentV1PromptUpdated,
     AgentV1SpeakUpdated,
@@ -125,7 +121,7 @@ class AsyncV1SocketClient(EventEmitterMixin):
                         )
                         continue
                 await self._emit_async(EventType.MESSAGE, parsed)
-        except Exception as exc:
+        except (websockets.WebSocketException, JSONDecodeError) as exc:
             await self._emit_async(EventType.ERROR, exc)
         finally:
             await self._emit_async(EventType.CLOSE, None)
@@ -151,6 +147,13 @@ class AsyncV1SocketClient(EventEmitterMixin):
         """
         await self._send_model(message)
 
+    async def send_update_think_live(self, message: AgentV1UpdateThinkLive) -> None:
+        """
+        Send a message to the websocket connection.
+        The message will be sent as a AgentV1UpdateThinkLive.
+        """
+        await self._send_model(message)
+
     async def send_update_speak(self, message: AgentV1UpdateSpeak) -> None:
         """
         Send a message to the websocket connection.
@@ -172,6 +175,13 @@ class AsyncV1SocketClient(EventEmitterMixin):
         """
         await self._send_model(message)
 
+    async def send_inject_dynamic_agent_message(self, message: AgentV1InjectDynamicAgentMessage) -> None:
+        """
+        Send a message to the websocket connection.
+        The message will be sent as a AgentV1InjectDynamicAgentMessage.
+        """
+        await self._send_model(message)
+
     async def send_function_call_response(self, message: AgentV1SendFunctionCallResponse) -> None:
         """
         Send a message to the websocket connection.
@@ -179,12 +189,12 @@ class AsyncV1SocketClient(EventEmitterMixin):
         """
         await self._send_model(message)
 
-    async def send_keep_alive(self, message: typing.Optional[AgentV1KeepAlive] = None) -> None:
+    async def send_keep_alive(self, message: AgentV1KeepAlive) -> None:
         """
         Send a message to the websocket connection.
         The message will be sent as a AgentV1KeepAlive.
         """
-        await self._send_model(message or AgentV1KeepAlive(type="KeepAlive"))
+        await self._send_model(message)
 
     async def send_update_prompt(self, message: AgentV1UpdatePrompt) -> None:
         """
@@ -193,12 +203,12 @@ class AsyncV1SocketClient(EventEmitterMixin):
         """
         await self._send_model(message)
 
-    async def send_force_end_turn(self, message: typing.Optional[AgentV1ForceEndTurn] = None) -> None:
+    async def send_force_end_turn(self, message: AgentV1ForceEndTurn) -> None:
         """
         Send a message to the websocket connection.
         The message will be sent as a AgentV1ForceEndTurn.
         """
-        await self._send_model(message or AgentV1ForceEndTurn(type="ForceEndTurn"))
+        await self._send_model(message)
 
     async def send_custom_to_think_provider(self, message: AgentV1CustomToThinkProvider) -> None:
         """
@@ -206,18 +216,6 @@ class AsyncV1SocketClient(EventEmitterMixin):
         The message will be sent as a AgentV1CustomToThinkProvider.
         """
         await self._send_model(message)
-
-    async def send_raw(self, message: typing.Union[typing.Dict[str, typing.Any], str]) -> None:
-        """Send a JSON control frame without model validation.
-
-        Dictionaries are serialized to JSON. Serialized JSON strings are sent
-        unchanged, allowing protocol-transparent bridges to forward unknown
-        control frames.
-
-        Values are sent as given; whole-number floats are not converted to
-        integers, so pass ints where the API expects them.
-        """
-        await self._send(message)
 
     async def send_media(self, message: bytes) -> None:
         """
@@ -252,7 +250,7 @@ class AsyncV1SocketClient(EventEmitterMixin):
         """
         Send a Pydantic model to the websocket connection.
         """
-        await self._send(_sanitize_numeric_types(data.dict()))
+        await self._send(data.dict())
 
 
 class V1SocketClient(EventEmitterMixin):
@@ -298,7 +296,7 @@ class V1SocketClient(EventEmitterMixin):
                         )
                         continue
                 self._emit(EventType.MESSAGE, parsed)
-        except Exception as exc:
+        except (websockets.WebSocketException, JSONDecodeError) as exc:
             self._emit(EventType.ERROR, exc)
         finally:
             self._emit(EventType.CLOSE, None)
@@ -324,6 +322,13 @@ class V1SocketClient(EventEmitterMixin):
         """
         self._send_model(message)
 
+    def send_update_think_live(self, message: AgentV1UpdateThinkLive) -> None:
+        """
+        Send a message to the websocket connection.
+        The message will be sent as a AgentV1UpdateThinkLive.
+        """
+        self._send_model(message)
+
     def send_update_speak(self, message: AgentV1UpdateSpeak) -> None:
         """
         Send a message to the websocket connection.
@@ -345,6 +350,13 @@ class V1SocketClient(EventEmitterMixin):
         """
         self._send_model(message)
 
+    def send_inject_dynamic_agent_message(self, message: AgentV1InjectDynamicAgentMessage) -> None:
+        """
+        Send a message to the websocket connection.
+        The message will be sent as a AgentV1InjectDynamicAgentMessage.
+        """
+        self._send_model(message)
+
     def send_function_call_response(self, message: AgentV1SendFunctionCallResponse) -> None:
         """
         Send a message to the websocket connection.
@@ -352,12 +364,12 @@ class V1SocketClient(EventEmitterMixin):
         """
         self._send_model(message)
 
-    def send_keep_alive(self, message: typing.Optional[AgentV1KeepAlive] = None) -> None:
+    def send_keep_alive(self, message: AgentV1KeepAlive) -> None:
         """
         Send a message to the websocket connection.
         The message will be sent as a AgentV1KeepAlive.
         """
-        self._send_model(message or AgentV1KeepAlive(type="KeepAlive"))
+        self._send_model(message)
 
     def send_update_prompt(self, message: AgentV1UpdatePrompt) -> None:
         """
@@ -366,12 +378,12 @@ class V1SocketClient(EventEmitterMixin):
         """
         self._send_model(message)
 
-    def send_force_end_turn(self, message: typing.Optional[AgentV1ForceEndTurn] = None) -> None:
+    def send_force_end_turn(self, message: AgentV1ForceEndTurn) -> None:
         """
         Send a message to the websocket connection.
         The message will be sent as a AgentV1ForceEndTurn.
         """
-        self._send_model(message or AgentV1ForceEndTurn(type="ForceEndTurn"))
+        self._send_model(message)
 
     def send_custom_to_think_provider(self, message: AgentV1CustomToThinkProvider) -> None:
         """
@@ -379,18 +391,6 @@ class V1SocketClient(EventEmitterMixin):
         The message will be sent as a AgentV1CustomToThinkProvider.
         """
         self._send_model(message)
-
-    def send_raw(self, message: typing.Union[typing.Dict[str, typing.Any], str]) -> None:
-        """Send a JSON control frame without model validation.
-
-        Dictionaries are serialized to JSON. Serialized JSON strings are sent
-        unchanged, allowing protocol-transparent bridges to forward unknown
-        control frames.
-
-        Values are sent as given; whole-number floats are not converted to
-        integers, so pass ints where the API expects them.
-        """
-        self._send(message)
 
     def send_media(self, message: bytes) -> None:
         """
@@ -425,4 +425,4 @@ class V1SocketClient(EventEmitterMixin):
         """
         Send a Pydantic model to the websocket connection.
         """
-        self._send(_sanitize_numeric_types(data.dict()))
+        self._send(data.dict())

@@ -22,7 +22,7 @@ class ListenV1ConfigureFailure(UncheckedBaseModel):
     code: ListenV1ConfigureFailureCode = pydantic.Field()
     """
     Identifies why the `Configure` was rejected.
-
+    
     - `CONFIGURE_KEYTERMS_NOT_SUPPORTED`: the stream's model does not support mid-stream keyterm updates. Only
       Nova-3 models do.
     - `CONFIGURE_KEYTERM_LIMIT_EXCEEDED`: the keyterms exceed the 500-token keyterm limit.
