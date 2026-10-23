@@ -1,5 +1,12 @@
 # Changelog
 
+## [7.15.0](https://github.com/deepgram/deepgram-python-sdk/compare/v7.14.0...v7.15.0) (2026-10-23)
+
+
+### Features
+
+* **regen:** add nova-3 multilingual Listen V1 support ([#813](https://github.com/deepgram/deepgram-python-sdk/issues/813)) ([b474446](https://github.com/deepgram/deepgram-python-sdk/commit/b474446abaf57323e30e8db834535fbcdc047386))
+
 ## [7.14.0](https://github.com/deepgram/deepgram-python-sdk/compare/v7.13.0...v7.14.0) (2026-10-20)
 
 
