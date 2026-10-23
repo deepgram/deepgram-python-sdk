@@ -26,12 +26,12 @@ except ImportError:
 
 _logger = logging.getLogger(__name__)
 V1SocketClientResponse = typing.Union[
+    ListenV1ConfigureSuccess,
+    ListenV1ConfigureFailure,
     ListenV1Results,
     ListenV1Metadata,
     ListenV1UtteranceEnd,
     ListenV1SpeechStarted,
-    ListenV1ConfigureSuccess,
-    ListenV1ConfigureFailure,
     ListenV1Error,
 ]
 

@@ -11,7 +11,9 @@ from ...core.jsonable_encoder import jsonable_encoder
 from ...core.query_encoder import encode_query
 from ...core.remove_none_from_dict import remove_none_from_dict
 from ...core.request_options import RequestOptions
+from ...core.serialization import convert_and_respect_annotation_metadata
 from ...core.websocket_compat import InvalidWebSocketStatus, get_status_code
+from ...requests.listen_v1language_hint import ListenV1LanguageHintParams
 from ...types.listen_v1callback import ListenV1Callback
 from ...types.listen_v1callback_method import ListenV1CallbackMethod
 from ...types.listen_v1channels import ListenV1Channels
@@ -71,6 +73,7 @@ class RawV1Client:
         keyterm: typing.Optional[ListenV1Keyterm] = None,
         keywords: typing.Optional[ListenV1Keywords] = None,
         language: typing.Optional[ListenV1Language] = None,
+        language_hint: typing.Optional[ListenV1LanguageHintParams] = None,
         mip_opt_out: typing.Optional[ListenV1MipOptOut] = None,
         model: ListenV1Model,
         multichannel: typing.Optional[ListenV1Multichannel] = None,
@@ -123,6 +126,8 @@ class RawV1Client:
         keywords : typing.Optional[ListenV1Keywords]
 
         language : typing.Optional[ListenV1Language]
+
+        language_hint : typing.Optional[ListenV1LanguageHintParams]
 
         mip_opt_out : typing.Optional[ListenV1MipOptOut]
 
@@ -186,6 +191,13 @@ class RawV1Client:
                         "keyterm": keyterm,
                         "keywords": keywords,
                         "language": language,
+                        "language_hint": convert_and_respect_annotation_metadata(
+                            object_=convert_and_respect_annotation_metadata(
+                                object_=language_hint, annotation=ListenV1LanguageHintParams, direction="write"
+                            ),
+                            annotation=ListenV1LanguageHintParams,
+                            direction="write",
+                        ),
                         "mip_opt_out": mip_opt_out,
                         "model": model,
                         "multichannel": multichannel,
@@ -257,6 +269,7 @@ class AsyncRawV1Client:
         keyterm: typing.Optional[ListenV1Keyterm] = None,
         keywords: typing.Optional[ListenV1Keywords] = None,
         language: typing.Optional[ListenV1Language] = None,
+        language_hint: typing.Optional[ListenV1LanguageHintParams] = None,
         mip_opt_out: typing.Optional[ListenV1MipOptOut] = None,
         model: ListenV1Model,
         multichannel: typing.Optional[ListenV1Multichannel] = None,
@@ -309,6 +322,8 @@ class AsyncRawV1Client:
         keywords : typing.Optional[ListenV1Keywords]
 
         language : typing.Optional[ListenV1Language]
+
+        language_hint : typing.Optional[ListenV1LanguageHintParams]
 
         mip_opt_out : typing.Optional[ListenV1MipOptOut]
 
@@ -372,6 +387,13 @@ class AsyncRawV1Client:
                         "keyterm": keyterm,
                         "keywords": keywords,
                         "language": language,
+                        "language_hint": convert_and_respect_annotation_metadata(
+                            object_=convert_and_respect_annotation_metadata(
+                                object_=language_hint, annotation=ListenV1LanguageHintParams, direction="write"
+                            ),
+                            annotation=ListenV1LanguageHintParams,
+                            direction="write",
+                        ),
                         "mip_opt_out": mip_opt_out,
                         "model": model,
                         "multichannel": multichannel,

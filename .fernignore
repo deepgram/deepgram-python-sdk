@@ -64,22 +64,6 @@ src/deepgram/listen/v2/socket_client.py
 src/deepgram/speak/v1/socket_client.py
 src/deepgram/speak/v2/socket_client.py
 
-# Listen V1 Configure acknowledgements landed in deepgram-docs#1284 after this
-# regeneration's source commit. These generated models, Params, and barrels are
-# hand-applied until the next regeneration consumes that merged source.
-# [temporarily frozen — remove after regenerating from deepgram-docs#1284]
-src/deepgram/listen/v1/types/listen_v1configure.py
-src/deepgram/listen/v1/types/listen_v1configure_success.py
-src/deepgram/listen/v1/types/listen_v1configure_failure.py
-src/deepgram/listen/v1/types/listen_v1error.py
-src/deepgram/listen/v1/types/__init__.py
-src/deepgram/listen/v1/requests/listen_v1configure.py
-src/deepgram/listen/v1/requests/listen_v1configure_success.py
-src/deepgram/listen/v1/requests/listen_v1configure_failure.py
-src/deepgram/listen/v1/requests/listen_v1error.py
-src/deepgram/listen/v1/requests/__init__.py
-src/deepgram/listen/v1/__init__.py
-
 # Agent TTS provider expressivity must reject fractional values rather than
 # allowing Pydantic v1 to truncate them before the API sees the request.
 # [temporarily frozen — remove when Pydantic v1 support is dropped]

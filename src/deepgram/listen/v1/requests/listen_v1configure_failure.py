@@ -3,6 +3,7 @@
 import typing
 
 import typing_extensions
+from ..types.listen_v1configure_failure_code import ListenV1ConfigureFailureCode
 
 
 class ListenV1ConfigureFailureParams(typing_extensions.TypedDict):
@@ -16,7 +17,7 @@ class ListenV1ConfigureFailureParams(typing_extensions.TypedDict):
     The unique identifier of the request
     """
 
-    code: str
+    code: ListenV1ConfigureFailureCode
     """
     Identifies why the `Configure` was rejected.
 

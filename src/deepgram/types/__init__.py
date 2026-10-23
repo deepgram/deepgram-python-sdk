@@ -136,6 +136,7 @@ if typing.TYPE_CHECKING:
     from .listen_v1keyterm import ListenV1Keyterm
     from .listen_v1keywords import ListenV1Keywords
     from .listen_v1language import ListenV1Language
+    from .listen_v1language_hint import ListenV1LanguageHint
     from .listen_v1mip_opt_out import ListenV1MipOptOut
     from .listen_v1model import ListenV1Model
     from .listen_v1multichannel import ListenV1Multichannel
@@ -404,6 +405,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ListenV1Keyterm": ".listen_v1keyterm",
     "ListenV1Keywords": ".listen_v1keywords",
     "ListenV1Language": ".listen_v1language",
+    "ListenV1LanguageHint": ".listen_v1language_hint",
     "ListenV1MipOptOut": ".listen_v1mip_opt_out",
     "ListenV1Model": ".listen_v1model",
     "ListenV1Multichannel": ".listen_v1multichannel",
@@ -696,6 +698,7 @@ __all__ = [
     "ListenV1Keyterm",
     "ListenV1Keywords",
     "ListenV1Language",
+    "ListenV1LanguageHint",
     "ListenV1MipOptOut",
     "ListenV1Model",
     "ListenV1Multichannel",

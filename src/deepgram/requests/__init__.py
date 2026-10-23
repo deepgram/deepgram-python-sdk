@@ -104,6 +104,7 @@ if typing.TYPE_CHECKING:
     from .list_projects_v1response import ListProjectsV1ResponseParams
     from .list_projects_v1response_projects_item import ListProjectsV1ResponseProjectsItemParams
     from .listen_v1accepted_response import ListenV1AcceptedResponseParams
+    from .listen_v1language_hint import ListenV1LanguageHintParams
     from .listen_v1response import ListenV1ResponseParams
     from .listen_v1response_metadata import ListenV1ResponseMetadataParams
     from .listen_v1response_metadata_diarize_info import ListenV1ResponseMetadataDiarizeInfoParams
@@ -295,6 +296,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ListProjectsV1ResponseParams": ".list_projects_v1response",
     "ListProjectsV1ResponseProjectsItemParams": ".list_projects_v1response_projects_item",
     "ListenV1AcceptedResponseParams": ".listen_v1accepted_response",
+    "ListenV1LanguageHintParams": ".listen_v1language_hint",
     "ListenV1ResponseMetadataDiarizeInfoParams": ".listen_v1response_metadata_diarize_info",
     "ListenV1ResponseMetadataIntentsInfoParams": ".listen_v1response_metadata_intents_info",
     "ListenV1ResponseMetadataParams": ".listen_v1response_metadata",
@@ -502,6 +504,7 @@ __all__ = [
     "ListProjectsV1ResponseParams",
     "ListProjectsV1ResponseProjectsItemParams",
     "ListenV1AcceptedResponseParams",
+    "ListenV1LanguageHintParams",
     "ListenV1ResponseMetadataDiarizeInfoParams",
     "ListenV1ResponseMetadataIntentsInfoParams",
     "ListenV1ResponseMetadataParams",
