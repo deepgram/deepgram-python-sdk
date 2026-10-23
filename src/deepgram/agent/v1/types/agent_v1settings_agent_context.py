@@ -5,6 +5,7 @@ import typing
 import pydantic
 from ....core.pydantic_utilities import IS_PYDANTIC_V2
 from ....core.unchecked_base_model import UncheckedBaseModel
+from ....types.think_live_settings_v1 import ThinkLiveSettingsV1
 from .agent_v1settings_agent_context_context import AgentV1SettingsAgentContextContext
 from .agent_v1settings_agent_context_listen import AgentV1SettingsAgentContextListen
 from .agent_v1settings_agent_context_messages_item import AgentV1SettingsAgentContextMessagesItem
@@ -24,7 +25,12 @@ class AgentV1SettingsAgentContext(UncheckedBaseModel):
     """
 
     listen: typing.Optional[AgentV1SettingsAgentContextListen] = None
-    think: typing.Optional[AgentV1SettingsAgentContextThink] = None
+    think: typing.Optional[AgentV1SettingsAgentContextThink] = pydantic.Field(default=None)
+    """
+    Your reasoning LLM. With Think Live on, this is the reasoning half of the pair, running alongside the Think Live model configured in `think_live`
+    """
+
+    think_live: typing.Optional[ThinkLiveSettingsV1] = None
     speak: typing.Optional[AgentV1SettingsAgentContextSpeak] = None
     greeting: typing.Optional[str] = pydantic.Field(default=None)
     """
@@ -39,6 +45,8 @@ class AgentV1SettingsAgentContext(UncheckedBaseModel):
                 values = dict(values)
                 values["context"] = {"messages": values.pop("messages")}
             return values
+
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:
 
         @pydantic.root_validator(pre=True)  # type: ignore[deprecated]
@@ -48,15 +56,11 @@ class AgentV1SettingsAgentContext(UncheckedBaseModel):
                 values["context"] = {"messages": values.pop("messages")}
             return values
 
-    @property
-    def messages(self) -> typing.Optional[typing.List[AgentV1SettingsAgentContextMessagesItem]]:
-        return None if self.context is None else self.context.messages
-
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
         class Config:
             frozen = True
             smart_union = True
             extra = pydantic.Extra.allow
+
+    @property
+    def messages(self) -> typing.Optional[typing.List[AgentV1SettingsAgentContextMessagesItem]]:
+        return None if self.context is None else self.context.messages

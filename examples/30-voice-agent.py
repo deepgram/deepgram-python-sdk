@@ -84,6 +84,9 @@ try:
                     role = getattr(message, "role", "unknown")
                     content = getattr(message, "content", "")
                     print(f"[{role}] {content}")
+                    conversational_behavior = getattr(message, "conversational_behavior", None)
+                    if conversational_behavior is not None:
+                        print(f"  conversational_behavior: {conversational_behavior}")
                     if role == "assistant":
                         assistant_response_event.set()
                 elif msg_type == "UserStartedSpeaking":

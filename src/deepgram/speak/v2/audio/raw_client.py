@@ -49,10 +49,10 @@ class RawAudioClient:
         Parameters
         ----------
         model : str
-            Flux TTS model used to synthesize the submitted text, in the form `flux-{voice}-{language}` (for example, `flux-alexis-en`). Required; unlike the v1 (Aura) endpoint there is no default and only flux models are accepted. English-only at launch.
+            Flux TTS model used to synthesize the submitted text, in the form `flux-{voice}-{language}` (for example, `flux-alexis-en`). Required; unlike the v1 (Aura) endpoint there is no default and only flux models are accepted.
 
         text : str
-            The text content to be converted to speech. The server normalizes and preprocesses the text before synthesis. May contain inline pause controls (`\\{pause:500ms\\}`, 500-3000 ms in 100 ms steps, at most 8 per request) and inline pronunciation controls (`\\{"word": "...", "pronounce": "<IPA>"\\}`, Early Access). Pronunciation cannot be combined with pause or with a `speed` other than `1.0`, and `speed` is capped at `1.15` when a pause is present. See [Speed, Pause, Pronunciation](/docs/tts-voice-controls).
+            The text content to be converted to speech. For English, German, Dutch, French, Hindi, Italian, Japanese, Portuguese, Russian and Spanish, the server normalizes the text (numbers, dates, abbreviations) before synthesis; the other languages are in Early Access without text normalization, so write numbers and dates out in words. May contain inline pause controls (`\\{pause:500ms\\}`, 500-3000 ms in 100 ms steps, at most 8 per request) and inline pronunciation controls (`\\{"word": "...", "pronounce": "<IPA>"\\}`, Early Access). Pronunciation cannot be combined with pause or with a `speed` other than `1.0`, and `speed` is capped at `1.15` when a pause is present. See [Speed, Pause, Pronunciation](/docs/tts-voice-controls).
 
         callback : typing.Optional[str]
             URL to which we'll make the callback request
@@ -188,10 +188,10 @@ class AsyncRawAudioClient:
         Parameters
         ----------
         model : str
-            Flux TTS model used to synthesize the submitted text, in the form `flux-{voice}-{language}` (for example, `flux-alexis-en`). Required; unlike the v1 (Aura) endpoint there is no default and only flux models are accepted. English-only at launch.
+            Flux TTS model used to synthesize the submitted text, in the form `flux-{voice}-{language}` (for example, `flux-alexis-en`). Required; unlike the v1 (Aura) endpoint there is no default and only flux models are accepted.
 
         text : str
-            The text content to be converted to speech. The server normalizes and preprocesses the text before synthesis. May contain inline pause controls (`\\{pause:500ms\\}`, 500-3000 ms in 100 ms steps, at most 8 per request) and inline pronunciation controls (`\\{"word": "...", "pronounce": "<IPA>"\\}`, Early Access). Pronunciation cannot be combined with pause or with a `speed` other than `1.0`, and `speed` is capped at `1.15` when a pause is present. See [Speed, Pause, Pronunciation](/docs/tts-voice-controls).
+            The text content to be converted to speech. For English, German, Dutch, French, Hindi, Italian, Japanese, Portuguese, Russian and Spanish, the server normalizes the text (numbers, dates, abbreviations) before synthesis; the other languages are in Early Access without text normalization, so write numbers and dates out in words. May contain inline pause controls (`\\{pause:500ms\\}`, 500-3000 ms in 100 ms steps, at most 8 per request) and inline pronunciation controls (`\\{"word": "...", "pronounce": "<IPA>"\\}`, Early Access). Pronunciation cannot be combined with pause or with a `speed` other than `1.0`, and `speed` is capped at `1.15` when a pause is present. See [Speed, Pause, Pronunciation](/docs/tts-voice-controls).
 
         callback : typing.Optional[str]
             URL to which we'll make the callback request
