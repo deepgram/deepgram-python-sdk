@@ -9,6 +9,7 @@ from deepgram.agent.v1.types.agent_v1frustration_detected import AgentV1Frustrat
 from deepgram.agent.v1.types.agent_v1inject_dynamic_agent_message import AgentV1InjectDynamicAgentMessage
 from deepgram.agent.v1.types.agent_v1settings import AgentV1Settings
 from deepgram.agent.v1.types.agent_v1settings_agent import AgentV1SettingsAgent
+from deepgram.agent.v1.types.agent_v1settings_applied import AgentV1SettingsApplied
 from deepgram.agent.v1.types.agent_v1settings_audio import AgentV1SettingsAudio
 from deepgram.agent.v1.types.agent_v1settings_audio_input import AgentV1SettingsAudioInput
 from deepgram.agent.v1.types.agent_v1think_live_updated import AgentV1ThinkLiveUpdated
@@ -193,6 +194,7 @@ async def test_async_dynamic_injection_behaviors_serialize(behavior: str | None)
 @pytest.mark.parametrize(
     ("payload", "expected_type"),
     [
+        ({"type": "SettingsApplied"}, AgentV1SettingsApplied),
         ({"type": "ThinkLiveUpdated"}, AgentV1ThinkLiveUpdated),
         ({"type": "FrustrationDetected", "count": 2, "escalated": True}, AgentV1FrustrationDetected),
     ],

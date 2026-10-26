@@ -36,6 +36,7 @@ This directory contains comprehensive examples demonstrating how to use the Deep
 - **30-voice-agent.py** - Voice Agent configuration and usage
 - **31-voice-agent-session-recording.py** - Record selected Voice Agent events as JSON
 - **32-voice-agent-force-end-turn.py** - End an active Voice Agent Flux turn with ForceEndTurn
+- **33-voice-agent-think-live.py** - Configure Think Live, update it in-session, and observe dynamic Agent events
 
 ### 40-49: Text Intelligence (Read)
 

@@ -52,6 +52,7 @@ def think_live_settings() -> ThinkLiveSettingsV1:
 try:
     with client.agent.v1.connect() as agent:
         settings_applied = threading.Event()
+        think_live_updated = threading.Event()
         assistant_response = threading.Event()
 
         settings = AgentV1Settings(
@@ -84,6 +85,7 @@ try:
                 settings_applied.set()
             elif msg_type == "ThinkLiveUpdated":
                 print("Received ThinkLiveUpdated event")
+                think_live_updated.set()
             elif msg_type == "FrustrationDetected":
                 print(
                     "Received FrustrationDetected event "
@@ -96,7 +98,7 @@ try:
                 conversational_behavior = getattr(message, "conversational_behavior", None)
                 if conversational_behavior is not None:
                     print(f"  conversational_behavior: {conversational_behavior}")
-                if role == "assistant":
+                if role == "assistant" and conversational_behavior in (None, "default"):
                     assistant_response.set()
             elif msg_type == "Error":
                 print("Agent reported an error")
@@ -117,6 +119,9 @@ try:
 
         # This update demonstrates the ThinkLiveUpdated event without changing behavior.
         agent.send_update_think_live(AgentV1UpdateThinkLive(think_live=think_live_settings()))
+        if not think_live_updated.wait(10):
+            raise TimeoutError("Timed out waiting for Think Live update to apply")
+
         agent.send_inject_user_message(AgentV1InjectUserMessage(content=USER_MESSAGE))
         agent.send_inject_dynamic_agent_message(AgentV1InjectDynamicAgentMessage(behavior="queue"))
 
