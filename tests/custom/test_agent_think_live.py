@@ -224,6 +224,17 @@ def test_conversation_text_conversational_behaviors_parse(behavior: str) -> None
     assert parsed.conversational_behavior == behavior
 
 
+def test_conversation_text_without_behavior_defaults_for_legacy_responses() -> None:
+    parsed = construct_type(
+        type_=cast(Any, V1SocketClientResponse),
+        object_={"type": "ConversationText", "role": "assistant", "content": "I am still here."},
+    )
+
+    assert isinstance(parsed, AgentV1ConversationText)
+    assert parsed.conversational_behavior == "default"
+    assert parsed.dict()["conversational_behavior"] == "default"
+
+
 def test_legacy_messages_and_think_live_coexist_without_unwrapping() -> None:
     agent = AgentV1SettingsAgent(
         messages=[{"type": "History", "role": "assistant", "content": "Welcome"}],

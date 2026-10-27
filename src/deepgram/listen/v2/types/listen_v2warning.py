@@ -4,10 +4,10 @@ import typing
 
 import pydantic
 from ....core.pydantic_utilities import IS_PYDANTIC_V2
-from ....core.unchecked_base_model import UncheckedBaseModel
+from ._dict_compat import ListenV2ResponseDictCompatModel
 
 
-class ListenV2Warning(UncheckedBaseModel):
+class ListenV2Warning(ListenV2ResponseDictCompatModel):
     type: typing.Literal["Warning"] = pydantic.Field(default="Warning")
     """
     Message type identifier
