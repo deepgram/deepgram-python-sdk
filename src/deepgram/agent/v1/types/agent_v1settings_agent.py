@@ -21,6 +21,7 @@ class AgentV1SettingsAgent(AgentV1SettingsAgentContext):
                 and context.language is None
                 and context.listen is None
                 and context.think is None
+                and context.think_live is None
                 and context.speak is None
                 and context.greeting is None
             ):
@@ -42,6 +43,7 @@ class AgentV1SettingsAgent(AgentV1SettingsAgentContext):
                 and context.language is None
                 and context.listen is None
                 and context.think is None
+                and context.think_live is None
                 and context.speak is None
                 and context.greeting is None
             ):

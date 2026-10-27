@@ -48,6 +48,7 @@ if typing.TYPE_CHECKING:
         DeepgramListenProviderV1,
         DeepgramListenProviderV2,
         DeepgramModel,
+        DeepgramThinkLiveProviderV1,
         DeleteAgentConfigurationV1Response,
         DeleteAgentVariableV1Response,
         DeleteProjectInviteV1Response,
@@ -232,6 +233,7 @@ if typing.TYPE_CHECKING:
         SpeakV2Speed,
         SpeakV2SpeedValue,
         SpeakV2Tag,
+        ThinkLiveSettingsV1,
         ThinkSettingsV1,
         ThinkSettingsV1ContextLength,
         ThinkSettingsV1Endpoint,
@@ -290,6 +292,7 @@ if typing.TYPE_CHECKING:
         DeepgramListenProviderV1Params,
         DeepgramListenProviderV2Params,
         DeepgramParams,
+        DeepgramThinkLiveProviderV1Params,
         DeleteProjectInviteV1ResponseParams,
         DeleteProjectKeyV1ResponseParams,
         DeleteProjectMemberV1ResponseParams,
@@ -406,6 +409,7 @@ if typing.TYPE_CHECKING:
         SpeakSettingsV1Provider_ElevenLabsParams,
         SpeakSettingsV1Provider_OpenAiParams,
         SpeakV2AcceptedResponseParams,
+        ThinkLiveSettingsV1Params,
         ThinkSettingsV1ContextLengthParams,
         ThinkSettingsV1EndpointParams,
         ThinkSettingsV1FunctionsItemEndpointParams,
@@ -505,6 +509,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "DeepgramListenProviderV2Params": ".requests",
     "DeepgramModel": ".types",
     "DeepgramParams": ".requests",
+    "DeepgramThinkLiveProviderV1": ".types",
+    "DeepgramThinkLiveProviderV1Params": ".requests",
     "DefaultAioHttpClient": "._default_clients",
     "DefaultAsyncHttpxClient": "._default_clients",
     "DeleteAgentConfigurationV1Response": ".types",
@@ -807,6 +813,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SpeakV2Speed": ".types",
     "SpeakV2SpeedValue": ".types",
     "SpeakV2Tag": ".types",
+    "ThinkLiveSettingsV1": ".types",
+    "ThinkLiveSettingsV1Params": ".requests",
     "ThinkSettingsV1": ".types",
     "ThinkSettingsV1ContextLength": ".types",
     "ThinkSettingsV1ContextLengthParams": ".requests",
@@ -891,7 +899,6 @@ _dynamic_imports.update(
         "GroqThinkProviderReasoningMode": ".types",
     }
 )
-
 
 def __getattr__(attr_name: str) -> typing.Any:
     module_name = _dynamic_imports.get(attr_name)
@@ -990,6 +997,8 @@ __all__ = [
     "DeepgramListenProviderV2Params",
     "DeepgramModel",
     "DeepgramParams",
+    "DeepgramThinkLiveProviderV1",
+    "DeepgramThinkLiveProviderV1Params",
     "DefaultAioHttpClient",
     "DefaultAsyncHttpxClient",
     "DeleteAgentConfigurationV1Response",
@@ -1292,6 +1301,8 @@ __all__ = [
     "SpeakV2Speed",
     "SpeakV2SpeedValue",
     "SpeakV2Tag",
+    "ThinkLiveSettingsV1",
+    "ThinkLiveSettingsV1Params",
     "ThinkSettingsV1",
     "ThinkSettingsV1ContextLength",
     "ThinkSettingsV1ContextLengthParams",
@@ -1344,6 +1355,7 @@ __all__ = [
     "speak",
     "voice_agent",
 ]
+
 
 __all__.extend(
     [

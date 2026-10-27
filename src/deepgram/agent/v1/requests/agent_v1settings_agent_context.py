@@ -3,6 +3,7 @@
 import typing
 
 import typing_extensions
+from ....requests.think_live_settings_v1 import ThinkLiveSettingsV1Params
 from .agent_v1settings_agent_context_context import AgentV1SettingsAgentContextContextParams
 from .agent_v1settings_agent_context_listen import AgentV1SettingsAgentContextListenParams
 from .agent_v1settings_agent_context_messages_item import AgentV1SettingsAgentContextMessagesItemParams
@@ -17,7 +18,6 @@ class AgentV1SettingsAgentContextParams(typing_extensions.TypedDict):
     """
 
     messages: typing_extensions.NotRequired[typing.Sequence[AgentV1SettingsAgentContextMessagesItemParams]]
-
     context: typing_extensions.NotRequired[AgentV1SettingsAgentContextContextParams]
     """
     Conversation context including the history of messages and function calls
@@ -25,6 +25,11 @@ class AgentV1SettingsAgentContextParams(typing_extensions.TypedDict):
 
     listen: typing_extensions.NotRequired[AgentV1SettingsAgentContextListenParams]
     think: typing_extensions.NotRequired[AgentV1SettingsAgentContextThinkParams]
+    """
+    Your reasoning LLM. With Think Live on, this is the reasoning half of the pair, running alongside the Think Live model configured in `think_live`
+    """
+
+    think_live: typing_extensions.NotRequired[ThinkLiveSettingsV1Params]
     speak: typing_extensions.NotRequired[AgentV1SettingsAgentContextSpeakParams]
     greeting: typing_extensions.NotRequired[str]
     """

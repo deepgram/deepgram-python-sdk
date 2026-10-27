@@ -1,5 +1,15 @@
+from typing import Literal
+
 from typing_extensions import assert_type  # 3.10-compatible backport (typing.assert_type is 3.11+)
 
+from deepgram import (
+    DeepgramThinkLiveProviderV1,
+    DeepgramThinkLiveProviderV1Params,
+    ThinkLiveSettingsV1,
+    ThinkLiveSettingsV1Params,
+    ThinkSettingsV1FunctionsItem,
+    ThinkSettingsV1FunctionsItemParams,
+)
 from deepgram import (
     ListenV1LanguageHint as RootListenV1LanguageHint,
 )
@@ -9,8 +19,18 @@ from deepgram import (
 from deepgram.agent.v1.requests import (
     AgentV1HistoryContentParams,
     AgentV1HistoryFunctionCallsParams,
+    AgentV1InjectDynamicAgentMessageParams,
+    AgentV1ThinkLiveUpdatedParams,
+    AgentV1UpdateThinkLiveParams,
     ConversationHistoryMessageParams,
     FunctionCallHistoryMessageParams,
+)
+from deepgram.agent.v1.types import (
+    AgentV1ConversationTextConversationalBehavior,
+    AgentV1InjectDynamicAgentMessage,
+    AgentV1InjectDynamicAgentMessageBehavior,
+    AgentV1ThinkLiveUpdated,
+    AgentV1UpdateThinkLive,
 )
 from deepgram.listen import ListenV1ConfigureFailureCode as RootListenV1ConfigureFailureCode
 from deepgram.listen.v1 import ListenV1ConfigureFailureCode as V1ListenV1ConfigureFailureCode
@@ -23,7 +43,29 @@ from deepgram.requests import (
     SharedIntentsParams,
     SharedTopicsParams,
 )
-from deepgram.types import ListenV1LanguageHint, SharedIntents, SharedTopics
+from deepgram.requests import (
+    DeepgramThinkLiveProviderV1Params as RequestsDeepgramThinkLiveProviderV1Params,
+)
+from deepgram.requests import (
+    ThinkLiveSettingsV1Params as RequestsThinkLiveSettingsV1Params,
+)
+from deepgram.requests import (
+    ThinkSettingsV1FunctionsItemParams as RequestsThinkSettingsV1FunctionsItemParams,
+)
+from deepgram.types import (
+    DeepgramThinkLiveProviderV1 as TypesDeepgramThinkLiveProviderV1,
+)
+from deepgram.types import (
+    ListenV1LanguageHint,
+    SharedIntents,
+    SharedTopics,
+)
+from deepgram.types import (
+    ThinkLiveSettingsV1 as TypesThinkLiveSettingsV1,
+)
+from deepgram.types import (
+    ThinkSettingsV1FunctionsItem as TypesThinkSettingsV1FunctionsItem,
+)
 
 create_key_request: CreateKeyV1RequestOneParams = {"key": "value"}
 history_content: AgentV1HistoryContentParams = {
@@ -47,6 +89,57 @@ history_function_calls: AgentV1HistoryFunctionCallsParams = {
 assert_type(create_key_request, CreateKeyV1RequestParams)
 assert_type(history_content, ConversationHistoryMessageParams)
 assert_type(history_function_calls, FunctionCallHistoryMessageParams)
+
+# Think Live models, params, and Agent V1 controls are all part of the public
+# barrels. These assignments cover presence checks, function filler controls,
+# dynamic injection behavior, updates, and response events.
+think_live_provider_params: DeepgramThinkLiveProviderV1Params = {
+    "type": "deepgram",
+    "version": "v1",
+    "presence_check_max_count": 3,
+    "presence_check_interval_ms": 5000,
+}
+think_live_settings_params: ThinkLiveSettingsV1Params = {"provider": think_live_provider_params}
+filler_function_params: ThinkSettingsV1FunctionsItemParams = {
+    "defer_until_eot": True,
+    "initial_agent_filler": True,
+    "agent_filler_max_count": 2,
+    "agent_filler_interval_ms": 3000,
+}
+dynamic_behavior: AgentV1InjectDynamicAgentMessageBehavior = "queue"
+conversation_behavior: AgentV1ConversationTextConversationalBehavior = "filler"
+dynamic_injection_params: AgentV1InjectDynamicAgentMessageParams = {
+    "type": "InjectAgentMessage",
+    "is_dynamic": True,
+    "behavior": dynamic_behavior,
+}
+think_live_update_params: AgentV1UpdateThinkLiveParams = {
+    "type": "UpdateThink_Live",
+    "think_live": think_live_settings_params,
+}
+think_live_updated_params: AgentV1ThinkLiveUpdatedParams = {"type": "ThinkLiveUpdated"}
+
+think_live_provider = DeepgramThinkLiveProviderV1(presence_check_max_count=3, presence_check_interval_ms=5000)
+think_live_settings = ThinkLiveSettingsV1(provider=think_live_provider)
+filler_function = ThinkSettingsV1FunctionsItem(
+    defer_until_eot=True,
+    initial_agent_filler=True,
+    agent_filler_max_count=2,
+    agent_filler_interval_ms=3000,
+)
+dynamic_injection = AgentV1InjectDynamicAgentMessage(behavior=dynamic_behavior)
+think_live_update = AgentV1UpdateThinkLive(think_live=think_live_settings)
+think_live_updated = AgentV1ThinkLiveUpdated()
+
+assert_type(think_live_provider, TypesDeepgramThinkLiveProviderV1)
+assert_type(think_live_settings, TypesThinkLiveSettingsV1)
+assert_type(filler_function, TypesThinkSettingsV1FunctionsItem)
+assert_type(dynamic_injection.behavior, AgentV1InjectDynamicAgentMessageBehavior | None)
+assert_type(think_live_update.think_live, ThinkLiveSettingsV1)
+assert_type(think_live_updated.type, Literal["ThinkLiveUpdated"])
+assert_type(think_live_provider_params, RequestsDeepgramThinkLiveProviderV1Params)
+assert_type(think_live_settings_params, RequestsThinkLiveSettingsV1Params)
+assert_type(filler_function_params, RequestsThinkSettingsV1FunctionsItemParams)
 
 # language_hint backward-compat: the deprecated singular kwarg (str or list) must
 # keep type-checking on the V2 listen provider, alongside the canonical plural.
