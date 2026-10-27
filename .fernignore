@@ -51,10 +51,11 @@ src/deepgram/requests/shared_intents.py
 
 # Agent Think Live ConversationText gained a required wire field in 2026-10.
 # The runtime model defaults missing legacy response payloads to `default`, while
-# the generated request TypedDict stays required and continues to enforce the
-# current wire contract.
+# the request TypedDict accepts the pre-2026-10 shape for existing typed callers.
+# SDK-created runtime models still serialize the current wire-required field.
 # [temporarily frozen — remove after legacy server payloads are retired]
 src/deepgram/agent/v1/types/agent_v1conversation_text.py
+src/deepgram/agent/v1/requests/agent_v1conversation_text.py
 
 # WebSocket socket clients:
 # - except Exception broad catch (supports custom transports, generator narrows to WebSocketException)
