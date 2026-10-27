@@ -27,7 +27,7 @@ class AgentV1ConversationText(UncheckedBaseModel):
 
     conversational_behavior: AgentV1ConversationTextConversationalBehavior = pydantic.Field(default="default")
     """
-    Annotates what kind of utterance the message represents: `default` (a standard turn), `backchannel` (a short acknowledgement while the user held the floor), `presence_check` (a prompt after extended silence), or `filler` (a line covering a wait on a function call or a dynamic InjectAgentMessage). Defaults to `default` for backwards compatibility with older server payloads that omit it.
+    Annotates what kind of utterance the message represents: `default` (a standard turn), `backchannel` (a short acknowledgement while the user held the floor), `presence_check` (a prompt after extended silence), or `filler` (a line covering a wait on a function call or a dynamic InjectAgentMessage). Always sent; it is `default` for every message while Think Live is off. Defaults to `default` when an older or self-hosted server omits it.
     """
 
     languages_hinted: typing.Optional[typing.List[str]] = pydantic.Field(default=None)

@@ -22,7 +22,7 @@
     }
   },
   "originGitCommit": "7d90d34144ca944bba2a570780fad2d53fdc5c4d",
-  "originGitCommitIsDirty": true,
+  "originGitCommitIsDirty": false,
   "invokedBy": "manual",
   "sdkVersion": "7.15.0"
 }
