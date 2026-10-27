@@ -1,5 +1,17 @@
 # Changelog
 
+## [7.16.0](https://github.com/deepgram/deepgram-python-sdk/compare/v7.15.0...v7.16.0) (2026-10-27)
+
+
+### Features
+
+* **regen:** add think live and flux tts support ([#815](https://github.com/deepgram/deepgram-python-sdk/issues/815)) ([0a97e3a](https://github.com/deepgram/deepgram-python-sdk/commit/0a97e3a89af7235be710e0df2e18f60a4b0e28da))
+
+
+### Bug Fixes
+
+* **agent:** default Think Live ConversationText behavior ([#819](https://github.com/deepgram/deepgram-python-sdk/issues/819)) ([cd8ba29](https://github.com/deepgram/deepgram-python-sdk/commit/cd8ba297947767f41b13c8289657490c0058c7ac))
+
 ## [7.15.0](https://github.com/deepgram/deepgram-python-sdk/compare/v7.14.0...v7.15.0) (2026-10-23)
 
 
