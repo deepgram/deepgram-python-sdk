@@ -17,6 +17,7 @@ from deepgram import (
     ListenV1LanguageHintParams as RootListenV1LanguageHintParams,
 )
 from deepgram.agent.v1.requests import (
+    AgentV1ConversationTextParams,
     AgentV1HistoryContentParams,
     AgentV1HistoryFunctionCallsParams,
     AgentV1InjectDynamicAgentMessageParams,
@@ -118,6 +119,11 @@ think_live_update_params: AgentV1UpdateThinkLiveParams = {
     "think_live": think_live_settings_params,
 }
 think_live_updated_params: AgentV1ThinkLiveUpdatedParams = {"type": "ThinkLiveUpdated"}
+legacy_conversation_text_params: AgentV1ConversationTextParams = {
+    "type": "ConversationText",
+    "role": "assistant",
+    "content": "I am still here.",
+}
 
 think_live_provider = DeepgramThinkLiveProviderV1(presence_check_max_count=3, presence_check_interval_ms=5000)
 think_live_settings = ThinkLiveSettingsV1(provider=think_live_provider)
