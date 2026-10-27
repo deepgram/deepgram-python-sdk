@@ -229,10 +229,14 @@ src/deepgram/core/query_encoder.py
 # [temporarily frozen — remove when Fern emits a release-managed fallback]
 src/deepgram/core/client_wrapper.py
 
-# Generated Speak V2 Warning files have a local whitespace cleanup.
+# Generated docstrings have a local whitespace cleanup.
 # [temporarily frozen — remove when Fern emits whitespace-clean docstrings]
 src/deepgram/speak/v2/types/speak_v2warning.py
 src/deepgram/speak/v2/requests/speak_v2warning.py
+src/deepgram/agent/v1/types/agent_v1inject_dynamic_agent_message.py
+src/deepgram/agent/v1/requests/agent_v1inject_dynamic_agent_message.py
+src/deepgram/listen/v1/types/listen_v1configure_failure.py
+src/deepgram/listen/v1/requests/listen_v1configure_failure.py
 
 # Read-side compatibility for the SDK 7.7 Listen V2 response retype. These
 # generated response models inherit the hand-written base above so callers can
