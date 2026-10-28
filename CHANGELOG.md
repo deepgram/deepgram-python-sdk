@@ -5,12 +5,13 @@
 
 ### Features
 
-* **regen:** add think live and flux tts support ([#815](https://github.com/deepgram/deepgram-python-sdk/issues/815)) ([0a97e3a](https://github.com/deepgram/deepgram-python-sdk/commit/0a97e3a89af7235be710e0df2e18f60a4b0e28da))
+* **Voice Agent (Think Live):** Configure `agent.think_live` with the Deepgram provider for backchanneling, presence checks, and frustration detection. Update it mid-session with `connection.send_update_think_live(...)`, receive `ThinkLiveUpdated` and `FrustrationDetected`, and use `connection.send_inject_dynamic_agent_message(...)` for generated filler lines with `default`, `queue`, or `interrupt` behavior. `ConversationText` now identifies turns as `default`, `backchannel`, `presence_check`, or `filler`; function settings add deferred-call filler controls. ([#815](https://github.com/deepgram/deepgram-python-sdk/issues/815)) ([0a97e3a](https://github.com/deepgram/deepgram-python-sdk/commit/0a97e3a89af7235be710e0df2e18f60a4b0e28da))
+* **Flux TTS:** Add multilingual model availability. English, German, Dutch, French, Hindi, Italian, Japanese, Portuguese, Russian, and Spanish support text normalization; other languages are Early Access without text normalization, so write numbers and dates as words. ([#815](https://github.com/deepgram/deepgram-python-sdk/issues/815)) ([0a97e3a](https://github.com/deepgram/deepgram-python-sdk/commit/0a97e3a89af7235be710e0df2e18f60a4b0e28da))
 
 
 ### Bug Fixes
 
-* **agent:** default Think Live ConversationText behavior ([#819](https://github.com/deepgram/deepgram-python-sdk/issues/819)) ([cd8ba29](https://github.com/deepgram/deepgram-python-sdk/commit/cd8ba297947767f41b13c8289657490c0058c7ac))
+* **Voice Agent:** Default omitted `ConversationText.conversational_behavior` to `default` for legacy and self-hosted response payloads, while preserving the current server contract that always sends the field. ([#819](https://github.com/deepgram/deepgram-python-sdk/issues/819)) ([cd8ba29](https://github.com/deepgram/deepgram-python-sdk/commit/cd8ba297947767f41b13c8289657490c0058c7ac))
 
 ## [7.15.0](https://github.com/deepgram/deepgram-python-sdk/compare/v7.14.0...v7.15.0) (2026-10-23)
 
