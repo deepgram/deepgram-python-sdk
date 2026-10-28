@@ -65,6 +65,11 @@ src/deepgram/agent/v1/requests/agent_v1conversation_text.py
 # - agent/v1 send_raw: public raw-control sender for protocol-transparent bridges
 # - listen/v2 send_configure: runtime tolerance for a raw dict alongside the
 #   generated ListenV2Configure model
+# - listen/v1 + listen/v2: Dict[str, Any] fallback member at the end of the
+#   response union plus _parse_v{1,2}_socket_response, so a message type this
+#   SDK version does not model surfaces as raw JSON instead of a bare None
+#   (construct_type returns None rather than raising, so the generated
+#   except Exception guard never fires). A JSON null frame raises instead.
 # [temporarily frozen — manual patches listed above]
 src/deepgram/agent/v1/socket_client.py
 src/deepgram/listen/v1/socket_client.py
