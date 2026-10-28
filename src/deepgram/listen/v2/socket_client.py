@@ -35,14 +35,24 @@ V2SocketClientResponse = typing.Union[
 
 
 def _parse_v2_socket_response(json_data: typing.Any) -> V2SocketClientResponse:
+    """Decode a JSON frame, falling back to the raw object for unknown types.
+
+    ``construct_type`` returns ``None`` -- it does not raise -- when no member of
+    the response union matches, so a message type this SDK version does not know
+    about would otherwise surface as a bare ``None``. Returning the raw JSON
+    object keeps the frame readable by callers.
+    """
     response = construct_type(type_=V2SocketClientResponse, object_=json_data)  # type: ignore
     if response is None:
-        if not isinstance(json_data, dict):
-            raise ValueError("Unknown Listen V2 responses must be JSON objects.")
-        response = json_data
+        # A bare JSON ``null`` frame: nothing to hand back, so let the caller's
+        # guard skip it rather than emitting the ``None`` this patch exists to avoid.
+        raise ValueError("Listen V2 websocket frames must not be JSON null.")
     if isinstance(response, dict):
-        _logger.warning("Received an unrecognized Listen V2 response; returning raw JSON.")
-    return response
+        _logger.warning(
+            "Received an unrecognized Listen V2 response; returning raw JSON. "
+            "Update your SDK version to support new message types."
+        )
+    return response  # type: ignore
 
 
 class AsyncV2SocketClient(EventEmitterMixin):
