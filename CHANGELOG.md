@@ -1,5 +1,18 @@
 # Changelog
 
+## [7.16.0](https://github.com/deepgram/deepgram-python-sdk/compare/v7.15.0...v7.16.0) (2026-10-27)
+
+
+### Features
+
+* **Voice Agent Think Live:** Configure `agent.think_live` with the Deepgram v1 provider; update it during a session with `connection.send_update_think_live(...)`; and receive `ThinkLiveUpdated` and `FrustrationDetected` events. Use `connection.send_inject_dynamic_agent_message(...)` to request a Think Live-generated filler line. `ConversationText` now reports `conversational_behavior` (`default`, `backchannel`, `presence_check`, or `filler`); the service always sends it, while older or self-hosted payloads default to `default` in the Python model. ([#815](https://github.com/deepgram/deepgram-python-sdk/issues/815)) ([0a97e3a](https://github.com/deepgram/deepgram-python-sdk/commit/0a97e3a89af7235be710e0df2e18f60a4b0e28da))
+* **Flux TTS:** Flux models now support 41 languages and 230 voices. Continue to pass the model as `flux-{voice}-{language}`; text normalization is available for English, German, Dutch, French, Hindi, Italian, Japanese, Portuguese, Russian, and Spanish. ([#815](https://github.com/deepgram/deepgram-python-sdk/issues/815)) ([0a97e3a](https://github.com/deepgram/deepgram-python-sdk/commit/0a97e3a89af7235be710e0df2e18f60a4b0e28da))
+
+
+### Bug Fixes
+
+* **Agent:** Document `ConversationText.conversational_behavior` as always sent, while retaining the `default` fallback for self-hosted and mocked payload compatibility. ([#819](https://github.com/deepgram/deepgram-python-sdk/issues/819)) ([cd8ba29](https://github.com/deepgram/deepgram-python-sdk/commit/cd8ba297947767f41b13c8289657490c0058c7ac))
+
 ## [7.15.0](https://github.com/deepgram/deepgram-python-sdk/compare/v7.14.0...v7.15.0) (2026-10-23)
 
 
