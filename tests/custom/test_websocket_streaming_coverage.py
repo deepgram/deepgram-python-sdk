@@ -17,6 +17,7 @@ wire tests, so they are driven here directly:
 """
 
 import typing
+import urllib.parse
 
 import httpx
 import pytest
@@ -251,6 +252,81 @@ async def test_connect_and_socket_client_async(
         pass
 
     assert created and any(ws.sent for ws in created)
+
+
+@pytest.mark.parametrize(
+    "language_hint,expected_hints",
+    [("en", ["en"]), (("en", "es"), ["en", "es"])],
+    ids=["scalar", "sequence"],
+)
+@pytest.mark.parametrize("raw", [False, True], ids=["public", "raw"])
+def test_listen_v1_connect_serializes_language_hints_sync(
+    monkeypatch: pytest.MonkeyPatch,
+    language_hint: typing.Union[str, typing.Sequence[str]],
+    expected_hints: typing.List[str],
+    raw: bool,
+) -> None:
+    captured_urls: typing.List[str] = []
+
+    def _connect(url: str, *_a: typing.Any, **_k: typing.Any) -> _FakeSyncConnectCM:
+        captured_urls.append(url)
+        return _FakeSyncConnectCM(_FakeSyncWS())
+
+    monkeypatch.setattr(websockets_sync_client, "connect", _connect)
+
+    client = _sync_client()
+    listen = client.listen.v1.with_raw_response if raw else client.listen.v1
+    with listen.connect(
+        model="nova-3",
+        language="multi",
+        language_hint=language_hint,
+    ):
+        pass
+
+    parsed = urllib.parse.urlsplit(captured_urls[0])
+    query = urllib.parse.parse_qs(parsed.query)
+    assert parsed.path == "/v1/listen"
+    assert query["model"] == ["nova-3"]
+    assert query["language"] == ["multi"]
+    assert query["language_hint"] == expected_hints
+
+
+@pytest.mark.parametrize(
+    "language_hint,expected_hints",
+    [("en", ["en"]), (("en", "es"), ["en", "es"])],
+    ids=["scalar", "sequence"],
+)
+@pytest.mark.parametrize("raw", [False, True], ids=["public", "raw"])
+async def test_listen_v1_connect_serializes_language_hints_async(
+    monkeypatch: pytest.MonkeyPatch,
+    language_hint: typing.Union[str, typing.Sequence[str]],
+    expected_hints: typing.List[str],
+    raw: bool,
+) -> None:
+    captured_urls: typing.List[str] = []
+
+    def _connect(url: str, *_a: typing.Any, **_k: typing.Any) -> _FakeAsyncConnectCM:
+        captured_urls.append(url)
+        return _FakeAsyncConnectCM(_FakeAsyncWS())
+
+    for module in _async_connect_modules("listen.v1"):
+        monkeypatch.setattr(f"{module}.websockets_client_connect", _connect)
+
+    client = _async_client()
+    listen = client.listen.v1.with_raw_response if raw else client.listen.v1
+    async with listen.connect(
+        model="nova-3",
+        language="multi",
+        language_hint=language_hint,
+    ):
+        pass
+
+    parsed = urllib.parse.urlsplit(captured_urls[0])
+    query = urllib.parse.parse_qs(parsed.query)
+    assert parsed.path == "/v1/listen"
+    assert query["model"] == ["nova-3"]
+    assert query["language"] == ["multi"]
+    assert query["language_hint"] == expected_hints
 
 
 @pytest.mark.parametrize("status", [401, 500])

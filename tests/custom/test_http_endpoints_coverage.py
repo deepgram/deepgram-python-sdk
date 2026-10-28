@@ -14,6 +14,7 @@ have their own dedicated tests.
 """
 
 import typing
+import urllib.parse
 
 import httpx
 import pytest
@@ -174,6 +175,70 @@ def test_with_raw_response_returns_http_response_sync() -> None:
         respx.route(host=HOST).mock(return_value=httpx.Response(200, json={}))
         raw = _sync_client().manage.v1.projects.with_raw_response.list()
         assert raw.data is not None
+
+
+@pytest.mark.parametrize("method", ["transcribe_url", "transcribe_file"])
+@pytest.mark.parametrize("raw", [False, True], ids=["public", "raw"])
+@pytest.mark.parametrize(
+    "language_hint,expected_hints",
+    [("en", ["en"]), (("en", "es"), ["en", "es"])],
+    ids=["scalar", "sequence"],
+)
+def test_listen_v1_media_serializes_language_hints_sync(
+    method: str,
+    raw: bool,
+    language_hint: typing.Union[str, typing.Sequence[str]],
+    expected_hints: typing.List[str],
+) -> None:
+    with respx.mock:
+        route = respx.route(host=HOST).mock(return_value=httpx.Response(200, json={}))
+        media = _sync_client().listen.v1.media.with_raw_response if raw else _sync_client().listen.v1.media
+        kwargs: typing.Dict[str, typing.Any] = {
+            "model": "nova-3",
+            "language": "multi",
+            "language_hint": language_hint,
+        }
+        if method == "transcribe_url":
+            kwargs["url"] = "https://example.com/a.wav"
+        else:
+            kwargs["request"] = b"audio-bytes"
+
+        getattr(media, method)(**kwargs)
+
+        query = urllib.parse.parse_qs(urllib.parse.urlsplit(str(route.calls.last.request.url)).query)
+        assert query["language_hint"] == expected_hints
+
+
+@pytest.mark.parametrize("method", ["transcribe_url", "transcribe_file"])
+@pytest.mark.parametrize("raw", [False, True], ids=["public", "raw"])
+@pytest.mark.parametrize(
+    "language_hint,expected_hints",
+    [("en", ["en"]), (("en", "es"), ["en", "es"])],
+    ids=["scalar", "sequence"],
+)
+async def test_listen_v1_media_serializes_language_hints_async(
+    method: str,
+    raw: bool,
+    language_hint: typing.Union[str, typing.Sequence[str]],
+    expected_hints: typing.List[str],
+) -> None:
+    with respx.mock:
+        route = respx.route(host=HOST).mock(return_value=httpx.Response(200, json={}))
+        media = _async_client().listen.v1.media.with_raw_response if raw else _async_client().listen.v1.media
+        kwargs: typing.Dict[str, typing.Any] = {
+            "model": "nova-3",
+            "language": "multi",
+            "language_hint": language_hint,
+        }
+        if method == "transcribe_url":
+            kwargs["url"] = "https://example.com/a.wav"
+        else:
+            kwargs["request"] = b"audio-bytes"
+
+        await getattr(media, method)(**kwargs)
+
+        query = urllib.parse.parse_qs(urllib.parse.urlsplit(str(route.calls.last.request.url)).query)
+        assert query["language_hint"] == expected_hints
 
 
 def _walk_subclients(obj: typing.Any, depth: int = 0, seen: typing.Optional[set] = None) -> int:

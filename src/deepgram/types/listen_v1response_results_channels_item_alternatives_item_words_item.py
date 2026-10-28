@@ -12,6 +12,11 @@ class ListenV1ResponseResultsChannelsItemAlternativesItemWordsItem(UncheckedBase
     start: typing.Optional[float] = None
     end: typing.Optional[float] = None
     confidence: typing.Optional[float] = None
+    language: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    [BCP-47](https://tools.ietf.org/html/bcp47) language tag of the word's detected language. Only present when `language=multi`. Can be absent on audio that switches languages.
+    """
+
     speaker: typing.Optional[int] = pydantic.Field(default=None)
     """
     The speaker of the word, present when diarization is enabled

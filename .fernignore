@@ -49,11 +49,20 @@ src/deepgram/types/shared_intents.py
 src/deepgram/requests/shared_topics.py
 src/deepgram/requests/shared_intents.py
 
+# Agent Think Live ConversationText gained a required wire field in 2026-10.
+# The runtime model defaults missing legacy response payloads to `default`, while
+# the request TypedDict accepts the pre-2026-10 shape for existing typed callers.
+# SDK-created runtime models still serialize the current wire-required field.
+# [temporarily frozen — remove after legacy server payloads are retired]
+src/deepgram/agent/v1/types/agent_v1conversation_text.py
+src/deepgram/agent/v1/requests/agent_v1conversation_text.py
+
 # WebSocket socket clients:
 # - except Exception broad catch (supports custom transports, generator narrows to WebSocketException)
 # - _sanitize_numeric_types in agent socket client (float→int for API)
 # - optional message param on control send_ methods (send_keep_alive, send_close_stream, etc.)
 #   so users don't need to instantiate the type themselves for no-payload control messages
+# - agent/v1 send_raw: public raw-control sender for protocol-transparent bridges
 # - listen/v2 send_configure: runtime tolerance for a raw dict alongside the
 #   generated ListenV2Configure model
 # [temporarily frozen — manual patches listed above]
@@ -65,7 +74,7 @@ src/deepgram/speak/v2/socket_client.py
 
 # Agent TTS provider expressivity must reject fractional values rather than
 # allowing Pydantic v1 to truncate them before the API sees the request.
-# [temporarily frozen — remove when Fern emits a strict integer]
+# [temporarily frozen — remove when Pydantic v1 support is dropped]
 src/deepgram/types/speak_settings_v1provider.py
 src/deepgram/types/deepgram.py
 
@@ -209,6 +218,10 @@ src/deepgram/listen/v2/types/__init__.py
 src/deepgram/core/api_error.py
 src/deepgram/core/parse_error.py
 
+# Pydantic 2.14+ requires explicit generic annotations for these adapters or
+# mypy rejects the generated module with var-annotated errors.
+src/deepgram/core/pydantic_utilities.py
+
 src/deepgram/core/query_encoder.py
 
 # The generated metadata fallback must match the published SDK version in source
@@ -216,10 +229,14 @@ src/deepgram/core/query_encoder.py
 # [temporarily frozen — remove when Fern emits a release-managed fallback]
 src/deepgram/core/client_wrapper.py
 
-# Generated Speak V2 Warning files have a local whitespace cleanup.
+# Generated docstrings have a local whitespace cleanup.
 # [temporarily frozen — remove when Fern emits whitespace-clean docstrings]
 src/deepgram/speak/v2/types/speak_v2warning.py
 src/deepgram/speak/v2/requests/speak_v2warning.py
+src/deepgram/agent/v1/types/agent_v1inject_dynamic_agent_message.py
+src/deepgram/agent/v1/requests/agent_v1inject_dynamic_agent_message.py
+src/deepgram/listen/v1/types/listen_v1configure_failure.py
+src/deepgram/listen/v1/requests/listen_v1configure_failure.py
 
 # Read-side compatibility for the SDK 7.7 Listen V2 response retype. These
 # generated response models inherit the hand-written base above so callers can
@@ -238,6 +255,7 @@ src/deepgram/listen/v2/types/listen_v2warning.py
 # Hand-written custom tests
 tests/custom/test_agent_custom_think_provider.py
 tests/custom/test_agent_history.py
+tests/custom/test_agent_think_live.py
 tests/custom/test_agent_update_listen.py
 tests/custom/test_api_error_redaction.py
 tests/custom/test_api_key_env_resolution.py
@@ -270,6 +288,7 @@ tests/custom/test_flux_tts_controls.py
 tests/custom/test_topics_intents_v7_compat.py
 tests/custom/test_transport.py
 tests/custom/test_websocket_streaming_coverage.py
+tests/custom/test_voice_agent_force_end_turn_example.py
 tests/typecheck/compat_aliases.py
 
 # Wire test with restored compatibility coverage for legacy create-key request alias

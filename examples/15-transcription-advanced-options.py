@@ -18,11 +18,16 @@ try:
     response = client.listen.v1.media.transcribe_url(
         url="https://dpgr.am/spacewalk.wav",
         model="nova-3",
+        # Nova-3 multilingual: language_hint biases detection toward the languages
+        # you expect. It does not restrict the transcript to them, and it applies
+        # only with language="multi". For a single known language, use e.g.
+        # language="en-US" and omit language_hint.
+        language="multi",
+        language_hint=["en"],
         # Advanced options
         smart_format=True,
         punctuate=True,
         diarize=True,
-        language="en-US",
         # Additional options
         # paragraphs=True,
         # utterances=True,
@@ -37,6 +42,14 @@ try:
         if channel.alternatives:
             transcript = channel.alternatives[0].transcript
             print(f"Transcript: {transcript}")
+
+            # Only present with language="multi"; languages can be absent on
+            # audio that switches languages.
+            if channel.alternatives[0].languages is not None:
+                print(f"Detected languages: {', '.join(channel.alternatives[0].languages)}")
+            # Nova-3 multilingual returns [] when no language hint was sent.
+            if channel.alternatives[0].languages_hinted is not None:
+                print(f"Language hints used: {', '.join(channel.alternatives[0].languages_hinted)}")
 
             # Show speaker diarization if available
             if channel.alternatives[0].words:

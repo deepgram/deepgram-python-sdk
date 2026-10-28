@@ -26,7 +26,7 @@ class ListenV1ResultsChannelAlternativesItemWordsItemParams(typing_extensions.Ty
 
     language: typing_extensions.NotRequired[str]
     """
-    The language of the word
+    [BCP-47](https://tools.ietf.org/html/bcp47) language tag of the word's detected language. Only present when `language=multi`. Can be absent on audio that switches languages.
     """
 
     punctuated_word: typing_extensions.NotRequired[str]

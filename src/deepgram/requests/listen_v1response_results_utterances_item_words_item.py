@@ -8,6 +8,11 @@ class ListenV1ResponseResultsUtterancesItemWordsItemParams(typing_extensions.Typ
     start: typing_extensions.NotRequired[float]
     end: typing_extensions.NotRequired[float]
     confidence: typing_extensions.NotRequired[float]
+    language: typing_extensions.NotRequired[str]
+    """
+    [BCP-47](https://tools.ietf.org/html/bcp47) language tag of the word's detected language. Only present when `language=multi`. Can be absent on audio that switches languages.
+    """
+
     speaker: typing_extensions.NotRequired[int]
     speaker_confidence: typing_extensions.NotRequired[float]
     punctuated_word: typing_extensions.NotRequired[str]

@@ -10,7 +10,6 @@ from .agent_v1settings_agent_listen import AgentV1SettingsAgentListen
 
 class AgentV1SettingsAgent(AgentV1SettingsAgentContext):
     if IS_PYDANTIC_V2:
-
         @pydantic.model_validator(mode="before")
         @classmethod
         def _migrate_legacy_nested_context(cls, values: typing.Any) -> typing.Any:
@@ -22,6 +21,7 @@ class AgentV1SettingsAgent(AgentV1SettingsAgentContext):
                 and context.language is None
                 and context.listen is None
                 and context.think is None
+                and context.think_live is None
                 and context.speak is None
                 and context.greeting is None
             ):
@@ -33,7 +33,6 @@ class AgentV1SettingsAgent(AgentV1SettingsAgentContext):
                 values["listen"] = listen.dict()
             return values
     else:
-
         @pydantic.root_validator(pre=True)  # type: ignore[deprecated]
         def _migrate_legacy_nested_context(cls, values: typing.Any) -> typing.Any:  # type: ignore[no-redef]
             if not isinstance(values, dict):
@@ -44,6 +43,7 @@ class AgentV1SettingsAgent(AgentV1SettingsAgentContext):
                 and context.language is None
                 and context.listen is None
                 and context.think is None
+                and context.think_live is None
                 and context.speak is None
                 and context.greeting is None
             ):

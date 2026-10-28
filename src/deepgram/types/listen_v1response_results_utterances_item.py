@@ -14,6 +14,11 @@ class ListenV1ResponseResultsUtterancesItem(UncheckedBaseModel):
     confidence: typing.Optional[float] = None
     channel: typing.Optional[int] = None
     transcript: typing.Optional[str] = None
+    languages: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
+    """
+    [BCP-47](https://tools.ietf.org/html/bcp47) language tags of the languages detected in the utterance, sorted by word count in descending order. Only present when `language=multi`.
+    """
+
     words: typing.Optional[typing.List[ListenV1ResponseResultsUtterancesItemWordsItem]] = None
     speaker: typing.Optional[int] = None
     id: typing.Optional[str] = None

@@ -27,6 +27,21 @@ class ThinkSettingsV1FunctionsItemParams(typing_extensions.TypedDict):
     Hold this function call until the user's turn is confirmed instead of dispatching it speculatively. Set it to true for actions that cannot be undone. If the turn resumes, a deferred call is discarded before it runs. Defaults to false
     """
 
+    initial_agent_filler: typing_extensions.NotRequired[bool]
+    """
+    Requires `agent.think_live`. Speak one short filler line after the function is dispatched and the user's turn is confirmed, if the function response has not yet arrived. Skipped when the reasoning LLM already announced the call in the same response
+    """
+
+    agent_filler_max_count: typing_extensions.NotRequired[int]
+    """
+    Requires `agent.think_live`. Number of additional filler lines the agent may speak while this function call is outstanding. Set to 0 to disable additional filler
+    """
+
+    agent_filler_interval_ms: typing_extensions.NotRequired[int]
+    """
+    Requires `agent.think_live`. Silence in milliseconds, counted from when the agent last stopped speaking, before each additional filler line. Ignored when `agent_filler_max_count` is 0, which is also the only case in which a value outside the 1000 to 60000 range is accepted. Setting any filler field without `agent.think_live`, or an out-of-range interval while `agent_filler_max_count` is greater than 0, returns an `INVALID_SETTINGS` error and closes the session
+    """
+
     endpoint: typing_extensions.NotRequired[ThinkSettingsV1FunctionsItemEndpointParams]
     """
     The Function endpoint to call. if not passed, function is called client-side

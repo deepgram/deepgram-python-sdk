@@ -14,7 +14,6 @@ class ListenV1ErrorParams(typing_extensions.TypedDict):
     variant: str
     """
     The error category. `SchemaError` means the server could not parse a client text message.
-    `InvalidConfigureMessage` means the server rejected a `Configure` message.
     """
 
     description: str
@@ -24,8 +23,8 @@ class ListenV1ErrorParams(typing_extensions.TypedDict):
 
     code: typing_extensions.NotRequired[str]
     """
-    Identifies the reason for an `InvalidConfigureMessage` error, for example `KeytermsNotSupported`
-    when `keyterms` are sent on a model other than Nova-3.
+    Deprecated. Present only on legacy error frames; use `ConfigureFailure.code` for `Configure`
+    rejections.
     """
 
     message: typing_extensions.NotRequired[str]

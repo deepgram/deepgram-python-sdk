@@ -30,7 +30,7 @@ class ListenV1ResultsChannelAlternativesItemWordsItem(UncheckedBaseModel):
 
     language: typing.Optional[str] = pydantic.Field(default=None)
     """
-    The language of the word
+    [BCP-47](https://tools.ietf.org/html/bcp47) language tag of the word's detected language. Only present when `language=multi`. Can be absent on audio that switches languages.
     """
 
     punctuated_word: typing.Optional[str] = pydantic.Field(default=None)

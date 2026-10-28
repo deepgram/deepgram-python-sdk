@@ -21,9 +21,15 @@ This is useful when something outside the audio tells you the speaker is done, s
 push-to-talk button being released. The connection stays open after a forced end: the
 turn index advances and transcription continues.
 
-Note: ForceEndTurn requires server-side enablement and is not available on every
-deployment. Where it is not enabled the server replies UNPARSABLE_CLIENT_MESSAGE and
-closes the connection; this example reports that and exits.
+ForceEndTurn is available on Deepgram-hosted deployments, including EU and AU. On
+self-hosted deployments, it requires the 2026-09-15 release or later with
+the following [features] settings:
+
+    listen_v2 = true
+    listen_v2_force_end_turn = true
+
+Unsupported deployments reply UNPARSABLE_CLIENT_MESSAGE and close the connection; this
+example reports that and exits.
 """
 
 import os
@@ -50,8 +56,8 @@ ListenV2SocketClientResponse = Union[ListenV2Connected, ListenV2TurnInfo, Listen
 
 
 def _client_environment() -> DeepgramClientEnvironment:
-    """Because ForceEndTurn is gated, this example accepts DEEPGRAM_BASE_URL=wss://<host>
-    so it can be pointed at a deployment that has the feature. Defaults to production."""
+    """Accept DEEPGRAM_BASE_URL=wss://<host> to target a regional or self-hosted deployment.
+    Defaults to production."""
     base = os.environ.get("DEEPGRAM_BASE_URL")
     if not base:
         return DeepgramClientEnvironment.PRODUCTION
@@ -116,7 +122,7 @@ try:
                 try:
                     connection.send_media(audio[i : i + chunk_size])
                 except Exception:
-                    # A gated deployment closes the socket rather than ignoring the
+                    # An unsupported deployment closes the socket rather than ignoring the
                     # message, so later sends fail. Stop streaming.
                     break
                 time.sleep(0.1)
@@ -143,12 +149,13 @@ try:
         # This blocks until the connection closes
         connection.start_listening()
 
-    # Reported here rather than in the sender thread: on a gated deployment the server
+    # Reported here rather than in the sender thread: on an unsupported deployment the server
     # closes the connection, start_listening() returns, and the daemon thread is killed
     # before it could print anything.
     if feature_disabled.is_set():
         print("\nForceEndTurn is not enabled on this deployment.")
-        print("Set DEEPGRAM_BASE_URL to a deployment that has the feature.")
+        print("Self-hosted deployments need the 2026-09-15 release or later with")
+        print("listen_v2 = true and listen_v2_force_end_turn = true under [features].")
 
 except Exception as e:
     print(f"Error: {type(e).__name__}: {e}")
