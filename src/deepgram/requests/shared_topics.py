@@ -3,6 +3,7 @@
 import typing
 
 import typing_extensions
+from .shared_topics_results import SharedTopicsResultsParams
 from .shared_topics_segments_item import SharedTopicsSegmentsItemParams
 
 
@@ -12,3 +13,4 @@ class SharedTopicsParams(typing_extensions.TypedDict):
     """
 
     segments: typing_extensions.NotRequired[typing.Sequence[SharedTopicsSegmentsItemParams]]
+    results: typing_extensions.NotRequired[SharedTopicsResultsParams]
