@@ -24,6 +24,7 @@ client = DeepgramClient()
 
 settings = AgentV1Settings(
     audio=AgentV1SettingsAudio(input=AgentV1SettingsAudioInput(encoding="linear16", sample_rate=24000)),
+    # think-fast requires MIP participation; phonellm supports opting out.
     mip_opt_out=True,
     agent=AgentV1SettingsAgent(
         listen=AgentV1SettingsAgentListen(
