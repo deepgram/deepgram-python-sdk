@@ -19,7 +19,7 @@ from deepgram.types.deepgram_think_live_provider_v1 import DeepgramThinkLiveProv
 from deepgram.types.think_live_settings_v1 import ThinkLiveSettingsV1
 from deepgram.types.think_settings_v1 import ThinkSettingsV1
 from deepgram.types.think_settings_v1functions_item import ThinkSettingsV1FunctionsItem
-from deepgram.types.think_settings_v1provider import ThinkSettingsV1Provider_OpenAi
+from deepgram.types.think_settings_v1provider import ThinkSettingsV1Provider_Deepgram, ThinkSettingsV1Provider_OpenAi
 
 
 class _FakeWebSocket:
@@ -68,6 +68,24 @@ def _settings_with_think_live() -> AgentV1Settings:
             ),
             think_live=_think_live_settings(),
             messages=[{"type": "History", "role": "user", "content": "Hello"}],
+        ),
+    )
+
+
+def _settings_with_deepgram_think() -> AgentV1Settings:
+    return AgentV1Settings(
+        audio=AgentV1SettingsAudio(input=AgentV1SettingsAudioInput(encoding="linear16", sample_rate=24000)),
+        agent=AgentV1SettingsAgent(
+            think=ThinkSettingsV1(
+                provider=ThinkSettingsV1Provider_Deepgram(
+                    type="deepgram",
+                    version="v1",
+                    model="phonellm-mini-alpha-2-fp8",
+                    temperature=0.2,
+                    reasoning_mode="none",
+                    voice_prompt_opt_out=True,
+                )
+            )
         ),
     )
 
@@ -165,6 +183,53 @@ async def test_async_think_live_settings_and_update_serialize() -> None:
             }
         },
     }
+
+
+def test_sync_deepgram_think_settings_serialize() -> None:
+    websocket = _FakeWebSocket()
+    V1SocketClient(websocket=cast(Any, websocket)).send_settings(_settings_with_deepgram_think())
+
+    assert _sent_json(websocket)["agent"]["think"]["provider"] == {
+        "type": "deepgram",
+        "version": "v1",
+        "model": "phonellm-mini-alpha-2-fp8",
+        "temperature": 0.2,
+        "reasoning_mode": "none",
+        "voice_prompt_opt_out": True,
+    }
+
+
+async def test_async_deepgram_think_settings_serialize() -> None:
+    websocket = _FakeAsyncWebSocket()
+    await AsyncV1SocketClient(websocket=cast(Any, websocket)).send_settings(_settings_with_deepgram_think())
+
+    assert _sent_json(websocket)["agent"]["think"]["provider"] == {
+        "type": "deepgram",
+        "version": "v1",
+        "model": "phonellm-mini-alpha-2-fp8",
+        "temperature": 0.2,
+        "reasoning_mode": "none",
+        "voice_prompt_opt_out": True,
+    }
+
+
+def test_deepgram_think_provider_uses_the_deepgram_union_variant() -> None:
+    settings = construct_type(
+        type_=ThinkSettingsV1,
+        object_={
+            "provider": {
+                "type": "deepgram",
+                "model": "think-fast",
+                "temperature": 1.0,
+                "voice_prompt_opt_out": False,
+            }
+        },
+    )
+
+    assert isinstance(settings.provider, ThinkSettingsV1Provider_Deepgram)
+    assert settings.provider.model == "think-fast"
+    assert settings.provider.temperature == 1.0
+    assert settings.provider.voice_prompt_opt_out is False
 
 
 @pytest.mark.parametrize("behavior", [None, "default", "queue", "interrupt"])
