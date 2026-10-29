@@ -199,6 +199,7 @@ if typing.TYPE_CHECKING:
         ThinkSettingsV1ProviderParams,
         ThinkSettingsV1Provider_AnthropicParams,
         ThinkSettingsV1Provider_AwsBedrockParams,
+        ThinkSettingsV1Provider_DeepgramParams,
         ThinkSettingsV1Provider_GoogleParams,
         ThinkSettingsV1Provider_GroqParams,
         ThinkSettingsV1Provider_OpenAiParams,
@@ -370,6 +371,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ThinkSettingsV1ProviderParams": ".think_settings_v1provider",
     "ThinkSettingsV1Provider_AnthropicParams": ".think_settings_v1provider",
     "ThinkSettingsV1Provider_AwsBedrockParams": ".think_settings_v1provider",
+    "ThinkSettingsV1Provider_DeepgramParams": ".think_settings_v1provider",
     "ThinkSettingsV1Provider_GoogleParams": ".think_settings_v1provider",
     "ThinkSettingsV1Provider_GroqParams": ".think_settings_v1provider",
     "ThinkSettingsV1Provider_OpenAiParams": ".think_settings_v1provider",
@@ -385,21 +387,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "UsageV1ResponseResolutionParams": ".usage_v1response_resolution",
 }
 
-_dynamic_imports.update(
-    {
-        "SharedIntentsResultsParams": ".shared_intents_results",
-        "SharedIntentsResultsIntentsParams": ".shared_intents_results_intents",
-        "SharedIntentsResultsIntentsSegmentsItemParams": ".shared_intents_results_intents_segments_item",
-        "SharedIntentsResultsIntentsSegmentsItemIntentsItemParams": ".shared_intents_results_intents_segments_item_intents_item",
-        "SharedTopicsResultsParams": ".shared_topics_results",
-        "SharedTopicsResultsTopicsParams": ".shared_topics_results_topics",
-        "SharedTopicsResultsTopicsSegmentsItemParams": ".shared_topics_results_topics_segments_item",
-        "SharedTopicsResultsTopicsSegmentsItemTopicsItemParams": ".shared_topics_results_topics_segments_item_topics_item",
-        "CartesiaSpeakProviderVoiceParams": ".cartesia_speak_provider_voice",
-        "CreateKeyV1RequestOneParams": ".create_key_v1request_one",
-        "DeepgramListenProviderV2LanguageHintParams": ".deepgram_listen_provider_v2language_hint",
-    }
-)
 
 def __getattr__(attr_name: str) -> typing.Any:
     module_name = _dynamic_imports.get(attr_name)
@@ -579,6 +566,7 @@ __all__ = [
     "ThinkSettingsV1ProviderParams",
     "ThinkSettingsV1Provider_AnthropicParams",
     "ThinkSettingsV1Provider_AwsBedrockParams",
+    "ThinkSettingsV1Provider_DeepgramParams",
     "ThinkSettingsV1Provider_GoogleParams",
     "ThinkSettingsV1Provider_GroqParams",
     "ThinkSettingsV1Provider_OpenAiParams",
@@ -593,20 +581,3 @@ __all__ = [
     "UsageV1ResponseParams",
     "UsageV1ResponseResolutionParams",
 ]
-
-
-__all__.extend(
-    [
-        "SharedIntentsResultsParams",
-        "SharedIntentsResultsIntentsParams",
-        "SharedIntentsResultsIntentsSegmentsItemParams",
-        "SharedIntentsResultsIntentsSegmentsItemIntentsItemParams",
-        "SharedTopicsResultsParams",
-        "SharedTopicsResultsTopicsParams",
-        "SharedTopicsResultsTopicsSegmentsItemParams",
-        "SharedTopicsResultsTopicsSegmentsItemTopicsItemParams",
-        "CartesiaSpeakProviderVoiceParams",
-        "CreateKeyV1RequestOneParams",
-        "DeepgramListenProviderV2LanguageHintParams",
-    ]
-)

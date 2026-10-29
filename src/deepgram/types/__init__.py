@@ -51,6 +51,7 @@ if typing.TYPE_CHECKING:
     from .deepgram_listen_provider_v1 import DeepgramListenProviderV1
     from .deepgram_listen_provider_v2 import DeepgramListenProviderV2
     from .deepgram_model import DeepgramModel
+    from .deepgram_reasoning_mode import DeepgramReasoningMode
     from .deepgram_think_live_provider_v1 import DeepgramThinkLiveProviderV1
     from .delete_agent_configuration_v1response import DeleteAgentConfigurationV1Response
     from .delete_agent_variable_v1response import DeleteAgentVariableV1Response
@@ -276,6 +277,7 @@ if typing.TYPE_CHECKING:
         ThinkSettingsV1Provider,
         ThinkSettingsV1Provider_Anthropic,
         ThinkSettingsV1Provider_AwsBedrock,
+        ThinkSettingsV1Provider_Deepgram,
         ThinkSettingsV1Provider_Google,
         ThinkSettingsV1Provider_Groq,
         ThinkSettingsV1Provider_OpenAi,
@@ -332,6 +334,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "DeepgramListenProviderV1": ".deepgram_listen_provider_v1",
     "DeepgramListenProviderV2": ".deepgram_listen_provider_v2",
     "DeepgramModel": ".deepgram_model",
+    "DeepgramReasoningMode": ".deepgram_reasoning_mode",
     "DeepgramThinkLiveProviderV1": ".deepgram_think_live_provider_v1",
     "DeleteAgentConfigurationV1Response": ".delete_agent_configuration_v1response",
     "DeleteAgentVariableV1Response": ".delete_agent_variable_v1response",
@@ -526,6 +529,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ThinkSettingsV1Provider": ".think_settings_v1provider",
     "ThinkSettingsV1Provider_Anthropic": ".think_settings_v1provider",
     "ThinkSettingsV1Provider_AwsBedrock": ".think_settings_v1provider",
+    "ThinkSettingsV1Provider_Deepgram": ".think_settings_v1provider",
     "ThinkSettingsV1Provider_Google": ".think_settings_v1provider",
     "ThinkSettingsV1Provider_Groq": ".think_settings_v1provider",
     "ThinkSettingsV1Provider_OpenAi": ".think_settings_v1provider",
@@ -541,27 +545,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "UsageV1ResponseResolution": ".usage_v1response_resolution",
 }
 
-_dynamic_imports.update(
-    {
-        "SharedIntentsResults": ".shared_intents_results",
-        "SharedIntentsResultsIntents": ".shared_intents_results_intents",
-        "SharedIntentsResultsIntentsSegmentsItem": ".shared_intents_results_intents_segments_item",
-        "SharedIntentsResultsIntentsSegmentsItemIntentsItem": ".shared_intents_results_intents_segments_item_intents_item",
-        "SharedTopicsResults": ".shared_topics_results",
-        "SharedTopicsResultsTopics": ".shared_topics_results_topics",
-        "SharedTopicsResultsTopicsSegmentsItem": ".shared_topics_results_topics_segments_item",
-        "SharedTopicsResultsTopicsSegmentsItemTopicsItem": ".shared_topics_results_topics_segments_item_topics_item",
-        "AnthropicThinkProviderModel": ".anthropic_think_provider_model",
-        "CartesiaSpeakProviderModelId": ".cartesia_speak_provider_model_id",
-        "CartesiaSpeakProviderVoice": ".cartesia_speak_provider_voice",
-        "CreateKeyV1RequestOne": ".create_key_v1request_one",
-        "DeepgramListenProviderV2LanguageHint": ".deepgram_listen_provider_v2language_hint",
-        "DeepgramSpeakProviderModel": ".deepgram_speak_provider_model",
-        "GoogleThinkProviderModel": ".google_think_provider_model",
-        "GoogleThinkProviderVersion": ".google_think_provider_version",
-        "GroqThinkProviderReasoningMode": ".groq_think_provider_reasoning_mode",
-    }
-)
 
 def __getattr__(attr_name: str) -> typing.Any:
     module_name = _dynamic_imports.get(attr_name)
@@ -626,6 +609,7 @@ __all__ = [
     "DeepgramListenProviderV1",
     "DeepgramListenProviderV2",
     "DeepgramModel",
+    "DeepgramReasoningMode",
     "DeepgramThinkLiveProviderV1",
     "DeleteAgentConfigurationV1Response",
     "DeleteAgentVariableV1Response",
@@ -820,6 +804,7 @@ __all__ = [
     "ThinkSettingsV1Provider",
     "ThinkSettingsV1Provider_Anthropic",
     "ThinkSettingsV1Provider_AwsBedrock",
+    "ThinkSettingsV1Provider_Deepgram",
     "ThinkSettingsV1Provider_Google",
     "ThinkSettingsV1Provider_Groq",
     "ThinkSettingsV1Provider_OpenAi",
@@ -834,26 +819,3 @@ __all__ = [
     "UsageV1Response",
     "UsageV1ResponseResolution",
 ]
-
-
-__all__.extend(
-    [
-        "SharedIntentsResults",
-        "SharedIntentsResultsIntents",
-        "SharedIntentsResultsIntentsSegmentsItem",
-        "SharedIntentsResultsIntentsSegmentsItemIntentsItem",
-        "SharedTopicsResults",
-        "SharedTopicsResultsTopics",
-        "SharedTopicsResultsTopicsSegmentsItem",
-        "SharedTopicsResultsTopicsSegmentsItemTopicsItem",
-        "AnthropicThinkProviderModel",
-        "CartesiaSpeakProviderModelId",
-        "CartesiaSpeakProviderVoice",
-        "CreateKeyV1RequestOne",
-        "DeepgramListenProviderV2LanguageHint",
-        "DeepgramSpeakProviderModel",
-        "GoogleThinkProviderModel",
-        "GoogleThinkProviderVersion",
-        "GroqThinkProviderReasoningMode",
-    ]
-)
