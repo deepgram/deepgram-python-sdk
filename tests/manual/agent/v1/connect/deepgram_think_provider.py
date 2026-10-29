@@ -13,7 +13,7 @@ from deepgram.agent.v1.types import (
     AgentV1Settings,
     AgentV1SettingsAgent,
     AgentV1SettingsAgentListen,
-    AgentV1SettingsAgentListenProvider_V1,
+    AgentV1SettingsAgentListenProvider_V2,
     AgentV1SettingsAudio,
     AgentV1SettingsAudioInput,
 )
@@ -33,7 +33,7 @@ settings = AgentV1Settings(
     mip_opt_out=True,
     agent=AgentV1SettingsAgent(
         listen=AgentV1SettingsAgentListen(
-            provider=AgentV1SettingsAgentListenProvider_V1(type="deepgram", model="nova-3")
+            provider=AgentV1SettingsAgentListenProvider_V2(type="deepgram", model="flux-general-en")
         ),
         think=ThinkSettingsV1(
             provider=ThinkSettingsV1Provider_Deepgram(
