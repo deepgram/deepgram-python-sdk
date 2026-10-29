@@ -140,7 +140,7 @@ deepgram_reasoning_mode: DeepgramReasoningMode = "none"
 deepgram_think_provider_params: ThinkSettingsV1Provider_DeepgramParams = {
     "type": "deepgram",
     "version": "v1",
-    "model": "phonellm-mini-alpha-2-fp8",
+    "model": "think-fast",
     "temperature": 0.2,
     "reasoning_mode": deepgram_reasoning_mode,
     "voice_prompt_opt_out": True,

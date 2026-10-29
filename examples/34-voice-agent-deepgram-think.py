@@ -37,7 +37,6 @@ settings = AgentV1Settings(
                 model="phonellm-mini-alpha-2-fp8",
                 temperature=0.2,
                 reasoning_mode="none",
-                voice_prompt_opt_out=True,
             ),
             prompt="You are helpful and concise.",
         ),

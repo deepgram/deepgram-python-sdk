@@ -83,7 +83,6 @@ def _settings_with_deepgram_think() -> AgentV1Settings:
                     model="phonellm-mini-alpha-2-fp8",
                     temperature=0.2,
                     reasoning_mode="none",
-                    voice_prompt_opt_out=True,
                 )
             )
         ),
@@ -195,7 +194,6 @@ def test_sync_deepgram_think_settings_serialize() -> None:
         "model": "phonellm-mini-alpha-2-fp8",
         "temperature": 0.2,
         "reasoning_mode": "none",
-        "voice_prompt_opt_out": True,
     }
 
 
@@ -209,7 +207,6 @@ async def test_async_deepgram_think_settings_serialize() -> None:
         "model": "phonellm-mini-alpha-2-fp8",
         "temperature": 0.2,
         "reasoning_mode": "none",
-        "voice_prompt_opt_out": True,
     }
 
 
@@ -221,7 +218,7 @@ def test_deepgram_think_provider_uses_the_deepgram_union_variant() -> None:
                 "type": "deepgram",
                 "model": "think-fast",
                 "temperature": 1.0,
-                "voice_prompt_opt_out": False,
+                "voice_prompt_opt_out": True,
             }
         },
     )
@@ -229,7 +226,7 @@ def test_deepgram_think_provider_uses_the_deepgram_union_variant() -> None:
     assert isinstance(settings.provider, ThinkSettingsV1Provider_Deepgram)
     assert settings.provider.model == "think-fast"
     assert settings.provider.temperature == 1.0
-    assert settings.provider.voice_prompt_opt_out is False
+    assert settings.provider.voice_prompt_opt_out is True
 
 
 @pytest.mark.parametrize("behavior", [None, "default", "queue", "interrupt"])
