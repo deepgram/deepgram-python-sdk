@@ -3,7 +3,7 @@ from typing import Literal
 from typing_extensions import assert_type  # 3.10-compatible backport (typing.assert_type is 3.11+)
 
 from deepgram import (
-    DeepgramReasoningMode,
+    DeepgramThinkProviderReasoningMode,
     DeepgramThinkLiveProviderV1,
     DeepgramThinkLiveProviderV1Params,
     ThinkLiveSettingsV1,
@@ -136,7 +136,7 @@ legacy_conversation_text_params: AgentV1ConversationTextParams = {
 
 think_live_provider = DeepgramThinkLiveProviderV1(presence_check_max_count=3, presence_check_interval_ms=5000)
 think_live_settings = ThinkLiveSettingsV1(provider=think_live_provider)
-deepgram_reasoning_mode: DeepgramReasoningMode = "none"
+deepgram_reasoning_mode: DeepgramThinkProviderReasoningMode = "none"
 deepgram_think_provider_params: ThinkSettingsV1Provider_DeepgramParams = {
     "type": "deepgram",
     "version": "v1",
