@@ -239,7 +239,9 @@ def test_direct_deepgram_think_provider_serializes() -> None:
         voice_prompt_opt_out=True,
     )
 
-    assert json.loads(provider.json()) == {
+    # The sockets send data.dict(), so assert on that path. Under pydantic v1,
+    # .json() uses exclude_unset and drops the defaulted type discriminator.
+    assert provider.dict() == {
         "type": "deepgram",
         "model": "think-fast",
         "version": "v1",
