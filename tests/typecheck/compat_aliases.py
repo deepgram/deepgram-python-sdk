@@ -3,12 +3,15 @@ from typing import Literal
 from typing_extensions import assert_type  # 3.10-compatible backport (typing.assert_type is 3.11+)
 
 from deepgram import (
+    DeepgramReasoningMode,
     DeepgramThinkLiveProviderV1,
     DeepgramThinkLiveProviderV1Params,
     ThinkLiveSettingsV1,
     ThinkLiveSettingsV1Params,
     ThinkSettingsV1FunctionsItem,
     ThinkSettingsV1FunctionsItemParams,
+    ThinkSettingsV1Provider_Deepgram,
+    ThinkSettingsV1Provider_DeepgramParams,
 )
 from deepgram import (
     ListenV1LanguageHint as RootListenV1LanguageHint,
@@ -53,6 +56,9 @@ from deepgram.requests import (
 from deepgram.requests import (
     ThinkSettingsV1FunctionsItemParams as RequestsThinkSettingsV1FunctionsItemParams,
 )
+from deepgram.requests import (
+    ThinkSettingsV1Provider_DeepgramParams as RequestsThinkSettingsV1Provider_DeepgramParams,
+)
 from deepgram.types import (
     DeepgramThinkLiveProviderV1 as TypesDeepgramThinkLiveProviderV1,
 )
@@ -66,6 +72,9 @@ from deepgram.types import (
 )
 from deepgram.types import (
     ThinkSettingsV1FunctionsItem as TypesThinkSettingsV1FunctionsItem,
+)
+from deepgram.types import (
+    ThinkSettingsV1Provider_Deepgram as TypesThinkSettingsV1Provider_Deepgram,
 )
 
 create_key_request: CreateKeyV1RequestOneParams = {"key": "value"}
@@ -127,6 +136,16 @@ legacy_conversation_text_params: AgentV1ConversationTextParams = {
 
 think_live_provider = DeepgramThinkLiveProviderV1(presence_check_max_count=3, presence_check_interval_ms=5000)
 think_live_settings = ThinkLiveSettingsV1(provider=think_live_provider)
+deepgram_reasoning_mode: DeepgramReasoningMode = "none"
+deepgram_think_provider_params: ThinkSettingsV1Provider_DeepgramParams = {
+    "type": "deepgram",
+    "version": "v1",
+    "model": "think-fast",
+    "temperature": 0.2,
+    "reasoning_mode": deepgram_reasoning_mode,
+    "voice_prompt_opt_out": True,
+}
+deepgram_think_provider = ThinkSettingsV1Provider_Deepgram(**deepgram_think_provider_params)
 filler_function = ThinkSettingsV1FunctionsItem(
     defer_until_eot=True,
     initial_agent_filler=True,
@@ -146,6 +165,8 @@ assert_type(think_live_updated.type, Literal["ThinkLiveUpdated"])
 assert_type(think_live_provider_params, RequestsDeepgramThinkLiveProviderV1Params)
 assert_type(think_live_settings_params, RequestsThinkLiveSettingsV1Params)
 assert_type(filler_function_params, RequestsThinkSettingsV1FunctionsItemParams)
+assert_type(deepgram_think_provider_params, RequestsThinkSettingsV1Provider_DeepgramParams)
+assert_type(deepgram_think_provider, TypesThinkSettingsV1Provider_Deepgram)
 
 # language_hint backward-compat: the deprecated singular kwarg (str or list) must
 # keep type-checking on the V2 listen provider, alongside the canonical plural.
