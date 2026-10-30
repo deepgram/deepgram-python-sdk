@@ -3,6 +3,7 @@ from typing import Any, cast
 
 import pytest
 
+from deepgram import DeepgramThinkProvider
 from deepgram.agent.v1.socket_client import AsyncV1SocketClient, V1SocketClient, V1SocketClientResponse
 from deepgram.agent.v1.types.agent_v1conversation_text import AgentV1ConversationText
 from deepgram.agent.v1.types.agent_v1frustration_detected import AgentV1FrustrationDetected
@@ -227,6 +228,25 @@ def test_deepgram_think_provider_uses_the_deepgram_union_variant() -> None:
     assert settings.provider.model == "think-fast"
     assert settings.provider.temperature == 1.0
     assert settings.provider.voice_prompt_opt_out is True
+
+
+def test_direct_deepgram_think_provider_serializes() -> None:
+    provider = DeepgramThinkProvider(
+        model="think-fast",
+        version="v1",
+        temperature=0.2,
+        reasoning_mode="minimal",
+        voice_prompt_opt_out=True,
+    )
+
+    assert json.loads(provider.json()) == {
+        "type": "deepgram",
+        "model": "think-fast",
+        "version": "v1",
+        "temperature": 0.2,
+        "reasoning_mode": "minimal",
+        "voice_prompt_opt_out": True,
+    }
 
 
 @pytest.mark.parametrize("behavior", [None, "default", "queue", "interrupt"])
