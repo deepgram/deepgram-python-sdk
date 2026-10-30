@@ -1,5 +1,12 @@
 # Changelog
 
+## [7.17.0](https://github.com/deepgram/deepgram-python-sdk/compare/v7.16.0...v7.17.0) (2026-10-30)
+
+
+### Features
+
+* **agent:** add Deepgram Think provider ([#821](https://github.com/deepgram/deepgram-python-sdk/issues/821)) ([5c7f319](https://github.com/deepgram/deepgram-python-sdk/commit/5c7f31961ec49b7cad6c81eef3113264680b260c))
+
 ## [7.16.0](https://github.com/deepgram/deepgram-python-sdk/compare/v7.15.0...v7.16.0) (2026-10-27)
 
 
