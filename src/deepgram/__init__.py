@@ -880,6 +880,38 @@ _dynamic_imports: typing.Dict[str, str] = {
     "voice_agent": ".voice_agent",
 }
 
+_dynamic_imports.update(
+    {
+        "SharedIntentsResults": ".types",
+        "SharedIntentsResultsIntents": ".types",
+        "SharedIntentsResultsIntentsParams": ".requests",
+        "SharedIntentsResultsIntentsSegmentsItem": ".types",
+        "SharedIntentsResultsIntentsSegmentsItemIntentsItem": ".types",
+        "SharedIntentsResultsIntentsSegmentsItemIntentsItemParams": ".requests",
+        "SharedIntentsResultsIntentsSegmentsItemParams": ".requests",
+        "SharedIntentsResultsParams": ".requests",
+        "SharedTopicsResults": ".types",
+        "SharedTopicsResultsParams": ".requests",
+        "SharedTopicsResultsTopics": ".types",
+        "SharedTopicsResultsTopicsParams": ".requests",
+        "SharedTopicsResultsTopicsSegmentsItem": ".types",
+        "SharedTopicsResultsTopicsSegmentsItemParams": ".requests",
+        "SharedTopicsResultsTopicsSegmentsItemTopicsItem": ".types",
+        "SharedTopicsResultsTopicsSegmentsItemTopicsItemParams": ".requests",
+        "AnthropicThinkProviderModel": ".types",
+        "CartesiaSpeakProviderModelId": ".types",
+        "CartesiaSpeakProviderVoice": ".types",
+        "CartesiaSpeakProviderVoiceParams": ".requests",
+        "CreateKeyV1RequestOne": ".types",
+        "DeepgramListenProviderV2LanguageHint": ".types",
+        "DeepgramListenProviderV2LanguageHintParams": ".requests",
+        "DeepgramSpeakProviderModel": ".types",
+        "GoogleThinkProviderModel": ".types",
+        "GoogleThinkProviderVersion": ".types",
+        "GroqThinkProviderReasoningMode": ".types",
+    }
+)
+
 
 def __getattr__(attr_name: str) -> typing.Any:
     module_name = _dynamic_imports.get(attr_name)
@@ -1342,3 +1374,36 @@ __all__ = [
     "speak",
     "voice_agent",
 ]
+
+
+__all__.extend(
+    [
+        "SharedIntentsResults",
+        "SharedIntentsResultsIntents",
+        "SharedIntentsResultsIntentsParams",
+        "SharedIntentsResultsIntentsSegmentsItem",
+        "SharedIntentsResultsIntentsSegmentsItemIntentsItem",
+        "SharedIntentsResultsIntentsSegmentsItemIntentsItemParams",
+        "SharedIntentsResultsIntentsSegmentsItemParams",
+        "SharedIntentsResultsParams",
+        "SharedTopicsResults",
+        "SharedTopicsResultsParams",
+        "SharedTopicsResultsTopics",
+        "SharedTopicsResultsTopicsParams",
+        "SharedTopicsResultsTopicsSegmentsItem",
+        "SharedTopicsResultsTopicsSegmentsItemParams",
+        "SharedTopicsResultsTopicsSegmentsItemTopicsItem",
+        "SharedTopicsResultsTopicsSegmentsItemTopicsItemParams",
+        "AnthropicThinkProviderModel",
+        "CartesiaSpeakProviderModelId",
+        "CartesiaSpeakProviderVoice",
+        "CartesiaSpeakProviderVoiceParams",
+        "CreateKeyV1RequestOne",
+        "DeepgramListenProviderV2LanguageHint",
+        "DeepgramListenProviderV2LanguageHintParams",
+        "DeepgramSpeakProviderModel",
+        "GoogleThinkProviderModel",
+        "GoogleThinkProviderVersion",
+        "GroqThinkProviderReasoningMode",
+    ]
+)
