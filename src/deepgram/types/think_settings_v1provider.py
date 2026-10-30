@@ -11,7 +11,8 @@ from ..core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
 from .anthropic_model import AnthropicModel
 from .aws_bedrock_think_provider_credentials import AwsBedrockThinkProviderCredentials
 from .aws_bedrock_think_provider_model import AwsBedrockThinkProviderModel
-from .deepgram_reasoning_mode import DeepgramReasoningMode
+from .deepgram_think_provider_model import DeepgramThinkProviderModel
+from .deepgram_think_provider_reasoning_mode import DeepgramThinkProviderReasoningMode
 from .google_model import GoogleModel
 from .google_version import GoogleVersion
 from .groq_reasoning_mode import GroqReasoningMode
@@ -103,10 +104,10 @@ class ThinkSettingsV1Provider_Groq(UncheckedBaseModel):
 
 class ThinkSettingsV1Provider_Deepgram(UncheckedBaseModel):
     type: typing.Literal["deepgram"] = "deepgram"
+    model: DeepgramThinkProviderModel
     version: typing.Optional[typing.Literal["v1"]] = None
-    model: typing.Union[typing.Literal["think-fast", "phonellm-mini-alpha-2-fp8"], typing.Any]
     temperature: typing.Optional[float] = None
-    reasoning_mode: typing.Optional[DeepgramReasoningMode] = None
+    reasoning_mode: typing.Optional[DeepgramThinkProviderReasoningMode] = None
     voice_prompt_opt_out: typing.Optional[bool] = None
 
     if IS_PYDANTIC_V2:

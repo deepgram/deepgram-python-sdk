@@ -48,8 +48,10 @@ if typing.TYPE_CHECKING:
         DeepgramListenProviderV1,
         DeepgramListenProviderV2,
         DeepgramModel,
-        DeepgramReasoningMode,
         DeepgramThinkLiveProviderV1,
+        DeepgramThinkProvider,
+        DeepgramThinkProviderModel,
+        DeepgramThinkProviderReasoningMode,
         DeleteAgentConfigurationV1Response,
         DeleteAgentVariableV1Response,
         DeleteProjectInviteV1Response,
@@ -295,6 +297,7 @@ if typing.TYPE_CHECKING:
         DeepgramListenProviderV2Params,
         DeepgramParams,
         DeepgramThinkLiveProviderV1Params,
+        DeepgramThinkProviderParams,
         DeleteProjectInviteV1ResponseParams,
         DeleteProjectKeyV1ResponseParams,
         DeleteProjectMemberV1ResponseParams,
@@ -512,9 +515,12 @@ _dynamic_imports: typing.Dict[str, str] = {
     "DeepgramListenProviderV2Params": ".requests",
     "DeepgramModel": ".types",
     "DeepgramParams": ".requests",
-    "DeepgramReasoningMode": ".types",
     "DeepgramThinkLiveProviderV1": ".types",
     "DeepgramThinkLiveProviderV1Params": ".requests",
+    "DeepgramThinkProvider": ".types",
+    "DeepgramThinkProviderModel": ".types",
+    "DeepgramThinkProviderParams": ".requests",
+    "DeepgramThinkProviderReasoningMode": ".types",
     "DefaultAioHttpClient": "._default_clients",
     "DefaultAsyncHttpxClient": "._default_clients",
     "DeleteAgentConfigurationV1Response": ".types",
@@ -906,6 +912,7 @@ _dynamic_imports.update(
     }
 )
 
+
 def __getattr__(attr_name: str) -> typing.Any:
     module_name = _dynamic_imports.get(attr_name)
     if module_name is None:
@@ -1003,9 +1010,12 @@ __all__ = [
     "DeepgramListenProviderV2Params",
     "DeepgramModel",
     "DeepgramParams",
-    "DeepgramReasoningMode",
     "DeepgramThinkLiveProviderV1",
     "DeepgramThinkLiveProviderV1Params",
+    "DeepgramThinkProvider",
+    "DeepgramThinkProviderModel",
+    "DeepgramThinkProviderParams",
+    "DeepgramThinkProviderReasoningMode",
     "DefaultAioHttpClient",
     "DefaultAsyncHttpxClient",
     "DeleteAgentConfigurationV1Response",

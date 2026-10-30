@@ -57,14 +57,6 @@ src/deepgram/requests/shared_intents.py
 src/deepgram/agent/v1/types/agent_v1conversation_text.py
 src/deepgram/agent/v1/requests/agent_v1conversation_text.py
 
-# Deepgram Think shares the title "Deepgram" with the Speak provider in the
-# AsyncAPI overrides. Fern therefore emits the Speak model and its speed /
-# expressivity controls here instead of the Think contract. Preserve the actual
-# Think models and temperature / reasoning_mode / voice_prompt_opt_out fields.
-# [temporarily frozen — remove after Fern disambiguates the provider titles]
-src/deepgram/types/think_settings_v1provider.py
-src/deepgram/requests/think_settings_v1provider.py
-
 # WebSocket socket clients:
 # - except Exception broad catch (supports custom transports, generator narrows to WebSocketException)
 # - _sanitize_numeric_types in agent socket client (float→int for API)
