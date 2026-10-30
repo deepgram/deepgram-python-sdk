@@ -41,6 +41,7 @@ if typing.TYPE_CHECKING:
     from .deepgram_listen_provider_v1 import DeepgramListenProviderV1Params
     from .deepgram_listen_provider_v2 import DeepgramListenProviderV2Params
     from .deepgram_think_live_provider_v1 import DeepgramThinkLiveProviderV1Params
+    from .deepgram_think_provider import DeepgramThinkProviderParams
     from .delete_project_invite_v1response import DeleteProjectInviteV1ResponseParams
     from .delete_project_key_v1response import DeleteProjectKeyV1ResponseParams
     from .delete_project_member_v1response import DeleteProjectMemberV1ResponseParams
@@ -246,6 +247,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "DeepgramListenProviderV2Params": ".deepgram_listen_provider_v2",
     "DeepgramParams": ".deepgram",
     "DeepgramThinkLiveProviderV1Params": ".deepgram_think_live_provider_v1",
+    "DeepgramThinkProviderParams": ".deepgram_think_provider",
     "DeleteProjectInviteV1ResponseParams": ".delete_project_invite_v1response",
     "DeleteProjectKeyV1ResponseParams": ".delete_project_key_v1response",
     "DeleteProjectMemberV1ResponseParams": ".delete_project_member_v1response",
@@ -387,21 +389,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "UsageV1ResponseResolutionParams": ".usage_v1response_resolution",
 }
 
-_dynamic_imports.update(
-    {
-        "SharedIntentsResultsParams": ".shared_intents_results",
-        "SharedIntentsResultsIntentsParams": ".shared_intents_results_intents",
-        "SharedIntentsResultsIntentsSegmentsItemParams": ".shared_intents_results_intents_segments_item",
-        "SharedIntentsResultsIntentsSegmentsItemIntentsItemParams": ".shared_intents_results_intents_segments_item_intents_item",
-        "SharedTopicsResultsParams": ".shared_topics_results",
-        "SharedTopicsResultsTopicsParams": ".shared_topics_results_topics",
-        "SharedTopicsResultsTopicsSegmentsItemParams": ".shared_topics_results_topics_segments_item",
-        "SharedTopicsResultsTopicsSegmentsItemTopicsItemParams": ".shared_topics_results_topics_segments_item_topics_item",
-        "CartesiaSpeakProviderVoiceParams": ".cartesia_speak_provider_voice",
-        "CreateKeyV1RequestOneParams": ".create_key_v1request_one",
-        "DeepgramListenProviderV2LanguageHintParams": ".deepgram_listen_provider_v2language_hint",
-    }
-)
 
 def __getattr__(attr_name: str) -> typing.Any:
     module_name = _dynamic_imports.get(attr_name)
@@ -456,6 +443,7 @@ __all__ = [
     "DeepgramListenProviderV2Params",
     "DeepgramParams",
     "DeepgramThinkLiveProviderV1Params",
+    "DeepgramThinkProviderParams",
     "DeleteProjectInviteV1ResponseParams",
     "DeleteProjectKeyV1ResponseParams",
     "DeleteProjectMemberV1ResponseParams",
@@ -596,20 +584,3 @@ __all__ = [
     "UsageV1ResponseParams",
     "UsageV1ResponseResolutionParams",
 ]
-
-
-__all__.extend(
-    [
-        "SharedIntentsResultsParams",
-        "SharedIntentsResultsIntentsParams",
-        "SharedIntentsResultsIntentsSegmentsItemParams",
-        "SharedIntentsResultsIntentsSegmentsItemIntentsItemParams",
-        "SharedTopicsResultsParams",
-        "SharedTopicsResultsTopicsParams",
-        "SharedTopicsResultsTopicsSegmentsItemParams",
-        "SharedTopicsResultsTopicsSegmentsItemTopicsItemParams",
-        "CartesiaSpeakProviderVoiceParams",
-        "CreateKeyV1RequestOneParams",
-        "DeepgramListenProviderV2LanguageHintParams",
-    ]
-)

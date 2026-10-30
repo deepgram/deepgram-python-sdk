@@ -7,7 +7,8 @@ import typing
 import typing_extensions
 from ..types.anthropic_model import AnthropicModel
 from ..types.aws_bedrock_think_provider_model import AwsBedrockThinkProviderModel
-from ..types.deepgram_reasoning_mode import DeepgramReasoningMode
+from ..types.deepgram_think_provider_model import DeepgramThinkProviderModel
+from ..types.deepgram_think_provider_reasoning_mode import DeepgramThinkProviderReasoningMode
 from ..types.google_model import GoogleModel
 from ..types.google_version import GoogleVersion
 from ..types.groq_reasoning_mode import GroqReasoningMode
@@ -55,10 +56,10 @@ class ThinkSettingsV1Provider_GroqParams(typing_extensions.TypedDict):
 
 class ThinkSettingsV1Provider_DeepgramParams(typing_extensions.TypedDict):
     type: typing.Literal["deepgram"]
+    model: DeepgramThinkProviderModel
     version: typing_extensions.NotRequired[typing.Literal["v1"]]
-    model: typing.Union[typing.Literal["think-fast", "phonellm-mini-alpha-2-fp8"], typing.Any]
     temperature: typing_extensions.NotRequired[float]
-    reasoning_mode: typing_extensions.NotRequired[DeepgramReasoningMode]
+    reasoning_mode: typing_extensions.NotRequired[DeepgramThinkProviderReasoningMode]
     voice_prompt_opt_out: typing_extensions.NotRequired[bool]
 
 
