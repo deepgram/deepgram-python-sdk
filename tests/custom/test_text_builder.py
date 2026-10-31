@@ -554,3 +554,19 @@ class TestIntegration:
         assert '"pronounce": "ˌæzəˈθaɪəpriːn"' in text
         assert '"word": "dupilumab"' in text
         assert '"pronounce": "duːˈpɪljuːmæb"' in text
+
+
+@pytest.mark.parametrize(
+    "markup",
+    [
+        '<break time = "500ms"/>',
+        "<break time='0.5s' strength='medium'/>",
+        '<break strength="medium" time="500ms"/>',
+        '<break\nstrength="medium"\ntime = "0.5s" />',
+    ],
+)
+def test_ssml_break_time_accepts_attribute_spacing_and_order(markup):
+    ssml = f"<speak>Hello{markup}world</speak>"
+
+    assert ssml_to_deepgram(ssml) == r"Hello\{pause:500ms\}world"
+    assert TextBuilder().from_ssml(ssml).build() == r"Hello\{pause:500ms\}world"
