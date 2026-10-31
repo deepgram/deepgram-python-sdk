@@ -283,6 +283,7 @@ tests/custom/test_listen_v2_connect_wire.py
 tests/custom/test_listen_v2_regen_constraints.py
 tests/custom/test_logging_and_retry_branches.py
 tests/custom/test_model_dict_compat.py
+tests/custom/test_pronunciation_token_boundaries.py
 tests/custom/test_query_encoder.py
 tests/custom/test_regen_response_fields.py
 tests/custom/test_secure_logging.py

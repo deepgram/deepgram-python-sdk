@@ -186,6 +186,9 @@ def add_pronunciation(text: str, word: str, ipa: str) -> str:
     """
     Replace word in text with pronunciation control.
 
+    Terms may include punctuation, such as C++ or C#, but do not match
+    inside longer alphanumeric tokens.
+
     Args:
         text: Source text containing the word
         word: Word to replace
@@ -210,7 +213,7 @@ def add_pronunciation(text: str, word: str, ipa: str) -> str:
     pronunciation_control = _pronunciation_control(word, ipa)
 
     # Replace word with pronunciation (case-sensitive, whole word only)
-    pattern = r"\b" + re.escape(word) + r"\b"
+    pattern = r"(?<!\w)" + re.escape(word) + r"(?!\w)"
     result = re.sub(pattern, lambda _: pronunciation_control, text, count=1)
     pronunciation_count, pause_count = _control_counts(result)
     if pronunciation_count and pause_count:
