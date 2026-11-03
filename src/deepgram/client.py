@@ -99,11 +99,11 @@ class DeepgramClient(BaseClient):
         # Use provided session_id or generate one
         final_session_id = session_id if session_id is not None else str(uuid.uuid4())
 
-        # Ensure headers object exists for pass-through custom headers
-        headers: Optional[Dict[str, str]] = kwargs.get("headers")
-        if headers is None:
-            headers = {}
-            kwargs["headers"] = headers
+        # Copy pass-through custom headers so the session header below does not
+        # mutate the caller's dict (a dict shared by several clients would
+        # otherwise make every client send the last client's session id).
+        headers: Dict[str, str] = dict(kwargs.get("headers") or {})
+        kwargs["headers"] = headers
 
         # Ensure every request has a session identifier header
         headers["x-deepgram-session-id"] = final_session_id
@@ -183,11 +183,11 @@ class AsyncDeepgramClient(AsyncBaseClient):
         # Use provided session_id or generate one
         final_session_id = session_id if session_id is not None else str(uuid.uuid4())
 
-        # Ensure headers object exists for pass-through custom headers
-        headers: Optional[Dict[str, str]] = kwargs.get("headers")
-        if headers is None:
-            headers = {}
-            kwargs["headers"] = headers
+        # Copy pass-through custom headers so the session header below does not
+        # mutate the caller's dict (a dict shared by several clients would
+        # otherwise make every client send the last client's session id).
+        headers: Dict[str, str] = dict(kwargs.get("headers") or {})
+        kwargs["headers"] = headers
 
         # Ensure every request has a session identifier header
         headers["x-deepgram-session-id"] = final_session_id
