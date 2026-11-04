@@ -5,8 +5,7 @@
 
 ### Features
 
-* **agent:** add Deepgram Think provider ([#821](https://github.com/deepgram/deepgram-python-sdk/issues/821)) ([5c7f319](https://github.com/deepgram/deepgram-python-sdk/commit/5c7f31961ec49b7cad6c81eef3113264680b260c))
-* **regen:** add deepgram think provider types ([#823](https://github.com/deepgram/deepgram-python-sdk/issues/823)) ([3280a4a](https://github.com/deepgram/deepgram-python-sdk/commit/3280a4af212e98433d7a2f85a1f1c141242493c1))
+* **Voice Agent:** Use Deepgram-hosted language models in the Think stage with `ThinkSettingsV1Provider_Deepgram`. Select `think-fast` (requires Model Improvement Program participation) or `phonellm-mini-alpha-2-fp8` (for sessions using `mip_opt_out=True`). The provider supports `temperature`, `reasoning_mode`, and `voice_prompt_opt_out`; use `reasoning_mode="none"` or omit it with phonellm to prevent reasoning text from being spoken. Early Access. ([#821](https://github.com/deepgram/deepgram-python-sdk/issues/821)) ([5c7f319](https://github.com/deepgram/deepgram-python-sdk/commit/5c7f31961ec49b7cad6c81eef3113264680b260c)) ([#823](https://github.com/deepgram/deepgram-python-sdk/issues/823)) ([3280a4a](https://github.com/deepgram/deepgram-python-sdk/commit/3280a4af212e98433d7a2f85a1f1c141242493c1))
 
 ## [7.16.0](https://github.com/deepgram/deepgram-python-sdk/compare/v7.15.0...v7.16.0) (2026-10-27)
 
