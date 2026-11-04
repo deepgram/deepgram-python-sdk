@@ -260,7 +260,6 @@ __all__ = [
     "FunctionCallHistoryMessageParams",
 ]
 
-
 __all__.extend(
     [
         "AgentV1HistoryContentParams",

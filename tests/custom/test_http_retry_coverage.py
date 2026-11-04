@@ -8,6 +8,7 @@ are patched out so the suite stays fast.
 """
 
 import typing
+from unittest.mock import AsyncMock, MagicMock
 
 import httpx
 import pytest
@@ -89,6 +90,21 @@ def test_no_retries_when_max_retries_zero_sync() -> None:
             _sync_client().manage.v1.projects.list(request_options={"max_retries": 0})
 
 
+def test_remote_protocol_error_does_not_retry_by_default_sync(monkeypatch: pytest.MonkeyPatch) -> None:
+    sleep = MagicMock()
+    monkeypatch.setattr(http_client_module.time, "sleep", sleep)
+
+    with respx.mock:
+        route = respx.route(host=HOST)
+        route.side_effect = httpx.RemoteProtocolError("incomplete response")
+
+        with pytest.raises(httpx.RemoteProtocolError):
+            _sync_client().manage.v1.projects.list(request_options={"max_retries": 2})
+
+    assert route.call_count == 1
+    sleep.assert_not_called()
+
+
 async def test_retry_then_exhaust_async() -> None:
     with respx.mock:
         respx.route(host=HOST).mock(return_value=httpx.Response(500, headers={"retry-after": "1"}, json={}))
@@ -108,3 +124,18 @@ async def test_retry_on_connect_error_async() -> None:
         route = respx.route(host=HOST)
         route.side_effect = [httpx.ConnectError("boom"), httpx.Response(200, json={})]
         assert await _async_client().manage.v1.projects.list(request_options={"max_retries": 2}) is not None
+
+
+async def test_remote_protocol_error_does_not_retry_by_default_async(monkeypatch: pytest.MonkeyPatch) -> None:
+    sleep = AsyncMock()
+    monkeypatch.setattr(http_client_module.asyncio, "sleep", sleep)
+
+    with respx.mock:
+        route = respx.route(host=HOST)
+        route.side_effect = httpx.RemoteProtocolError("incomplete response")
+
+        with pytest.raises(httpx.RemoteProtocolError):
+            await _async_client().manage.v1.projects.list(request_options={"max_retries": 2})
+
+    assert route.call_count == 1
+    sleep.assert_not_awaited()

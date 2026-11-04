@@ -601,7 +601,6 @@ __all__ = [
     "UsageV1ResponseResolutionParams",
 ]
 
-
 __all__.extend(
     [
         "SharedIntentsResultsParams",

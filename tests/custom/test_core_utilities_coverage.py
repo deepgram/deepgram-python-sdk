@@ -339,6 +339,10 @@ def test_construct_type_model_and_unions() -> None:
     again = construct_type(type_=undiscriminated, object_={"type": "cat", "meow": "m"})
     assert isinstance(again, Cat)
 
+    # Future server variants must remain observable rather than decoding to None.
+    unknown = {"type": "future-animal", "details": {"source": "server"}}
+    assert construct_type(type_=undiscriminated, object_=unknown) == unknown
+
     # plain scalar union
     assert construct_type(type_=typing.Union[int, str], object_="hello") == "hello"
 
