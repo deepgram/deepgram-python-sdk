@@ -222,10 +222,6 @@ src/deepgram/core/parse_error.py
 
 src/deepgram/core/query_encoder.py
 
-# Retries preserve optional-body omission, so a retry cannot turn an absent body
-# into `{}` with a Content-Type header. Remove when Fern forwards optional_body.
-src/deepgram/core/http_client.py
-
 # The generated metadata fallback must match the published SDK version in source
 # checkouts and carries a release-please marker so it is updated on release.
 # [temporarily frozen — remove when Fern emits a release-managed fallback]

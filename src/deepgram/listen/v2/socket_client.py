@@ -30,6 +30,7 @@ V2SocketClientResponse = typing.Union[
     ListenV2ConfigureFailure,
     ListenV2Warning,
     ListenV2FatalError,
+    typing.Dict[str, typing.Any],
 ]
 
 

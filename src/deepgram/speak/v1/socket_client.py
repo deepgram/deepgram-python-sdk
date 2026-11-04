@@ -22,7 +22,9 @@ except ImportError:
     from websockets import WebSocketClientProtocol  # type: ignore
 
 _logger = logging.getLogger(__name__)
-V1SocketClientResponse = typing.Union[bytes, SpeakV1Metadata, SpeakV1Flushed, SpeakV1Cleared, SpeakV1Warning]
+V1SocketClientResponse = typing.Union[
+    bytes, SpeakV1Metadata, SpeakV1Flushed, SpeakV1Cleared, SpeakV1Warning, typing.Dict[str, typing.Any]
+]
 
 
 class AsyncV1SocketClient(EventEmitterMixin):

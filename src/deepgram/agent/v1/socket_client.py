@@ -84,6 +84,7 @@ V1SocketClientResponse = typing.Union[
     AgentV1Warning,
     AgentV1History,
     bytes,
+    typing.Dict[str, typing.Any],
 ]
 
 

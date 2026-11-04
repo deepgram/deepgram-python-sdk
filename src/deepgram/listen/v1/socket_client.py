@@ -33,6 +33,7 @@ V1SocketClientResponse = typing.Union[
     ListenV1UtteranceEnd,
     ListenV1SpeechStarted,
     ListenV1Error,
+    typing.Dict[str, typing.Any],
 ]
 
 

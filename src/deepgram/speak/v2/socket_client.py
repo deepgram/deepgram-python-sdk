@@ -41,6 +41,7 @@ V2SocketClientResponse = typing.Union[
     SpeakV2ConfigureFailure,
     SpeakV2Warning,
     SpeakV2Error,
+    typing.Dict[str, typing.Any],
 ]
 
 
