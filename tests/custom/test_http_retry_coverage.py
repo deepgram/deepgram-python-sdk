@@ -8,6 +8,7 @@ are patched out so the suite stays fast.
 """
 
 import typing
+from unittest.mock import AsyncMock, MagicMock
 
 import httpx
 import pytest
@@ -42,6 +43,30 @@ def _sync_client() -> DeepgramClient:
 
 def _async_client() -> AsyncDeepgramClient:
     return AsyncDeepgramClient(environment=_environment(), api_key="test_api_key", httpx_client=httpx.AsyncClient())
+
+
+class _Response:
+    status_code = 200
+    headers: typing.Dict[str, str] = {}
+
+
+def _sync_http_client(client: typing.Any) -> http_client_module.HttpClient:
+    return http_client_module.HttpClient(
+        httpx_client=client,
+        base_timeout=lambda: None,
+        base_headers=lambda: {},
+        base_url=lambda: BASE,
+    )
+
+
+def _async_http_client(client: typing.Any) -> http_client_module.AsyncHttpClient:
+    return http_client_module.AsyncHttpClient(
+        httpx_client=client,
+        base_timeout=lambda: None,
+        base_headers=lambda: {},
+        base_url=lambda: BASE,
+        async_base_headers=None,
+    )
 
 
 @pytest.mark.parametrize(
@@ -89,6 +114,26 @@ def test_no_retries_when_max_retries_zero_sync() -> None:
             _sync_client().manage.v1.projects.list(request_options={"max_retries": 0})
 
 
+@pytest.mark.parametrize("first_attempt", [httpx.Response(500), httpx.ConnectError("boom")])
+def test_sync_retry_preserves_omitted_optional_body(first_attempt: typing.Any) -> None:
+    client = MagicMock()
+    client.request.side_effect = [first_attempt, _Response()]
+    omit = typing.cast(typing.Any, ...)
+
+    _sync_http_client(client).request(
+        path="/test",
+        method="POST",
+        json={"value": omit},
+        omit=omit,
+        optional_body=True,
+        request_options={"max_retries": 1},
+    )
+
+    retry = client.request.call_args_list[1].kwargs
+    assert retry["json"] is None
+    assert "content-type" not in {name.lower() for name in retry["headers"]}
+
+
 async def test_retry_then_exhaust_async() -> None:
     with respx.mock:
         respx.route(host=HOST).mock(return_value=httpx.Response(500, headers={"retry-after": "1"}, json={}))
@@ -108,3 +153,23 @@ async def test_retry_on_connect_error_async() -> None:
         route = respx.route(host=HOST)
         route.side_effect = [httpx.ConnectError("boom"), httpx.Response(200, json={})]
         assert await _async_client().manage.v1.projects.list(request_options={"max_retries": 2}) is not None
+
+
+@pytest.mark.parametrize("first_attempt", [httpx.Response(500), httpx.ConnectError("boom")])
+async def test_async_retry_preserves_omitted_optional_body(first_attempt: typing.Any) -> None:
+    client = MagicMock()
+    client.request = AsyncMock(side_effect=[first_attempt, _Response()])
+    omit = typing.cast(typing.Any, ...)
+
+    await _async_http_client(client).request(
+        path="/test",
+        method="POST",
+        json={"value": omit},
+        omit=omit,
+        optional_body=True,
+        request_options={"max_retries": 1},
+    )
+
+    retry = client.request.call_args_list[1].kwargs
+    assert retry["json"] is None
+    assert "content-type" not in {name.lower() for name in retry["headers"]}

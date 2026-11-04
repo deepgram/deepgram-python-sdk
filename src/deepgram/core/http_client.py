@@ -509,6 +509,7 @@ class HttpClient:
                     request_options=request_options,
                     retries=retries + 1,
                     omit=omit,
+                    optional_body=optional_body,
                     force_multipart=force_multipart,
                 )
             raise
@@ -529,6 +530,7 @@ class HttpClient:
                     request_options=request_options,
                     retries=retries + 1,
                     omit=omit,
+                    optional_body=optional_body,
                     force_multipart=force_multipart,
                 )
 
@@ -824,6 +826,7 @@ class AsyncHttpClient:
                     request_options=request_options,
                     retries=retries + 1,
                     omit=omit,
+                    optional_body=optional_body,
                     force_multipart=force_multipart,
                 )
             raise
@@ -844,6 +847,7 @@ class AsyncHttpClient:
                     request_options=request_options,
                     retries=retries + 1,
                     omit=omit,
+                    optional_body=optional_body,
                     force_multipart=force_multipart,
                 )
 
