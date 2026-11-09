@@ -242,13 +242,18 @@ assert_type(SharedIntents(results=legacy_intents["results"]), SharedIntents)
 # Forward-compatible websocket payloads are raw dictionaries when the server
 # sends a message type newer than this SDK.
 unknown_socket_payload: Dict[str, Any] = {"type": "FutureMessage"}
+binary_socket_payload: bytes = b"audio-frame"
 agent_socket_response: AgentV1SocketClientResponse = unknown_socket_payload
 listen_v1_socket_response: ListenV1SocketClientResponse = unknown_socket_payload
 listen_v2_socket_response: V2SocketClientResponse = unknown_socket_payload
+listen_v1_binary_response: ListenV1SocketClientResponse = binary_socket_payload
+listen_v2_binary_response: V2SocketClientResponse = binary_socket_payload
 speak_v1_socket_response: SpeakV1SocketClientResponse = unknown_socket_payload
 speak_v2_socket_response: SpeakV2SocketClientResponse = unknown_socket_payload
 assert_type(agent_socket_response, AgentV1SocketClientResponse)
 assert_type(listen_v1_socket_response, ListenV1SocketClientResponse)
 assert_type(listen_v2_socket_response, V2SocketClientResponse)
+assert_type(listen_v1_binary_response, ListenV1SocketClientResponse)
+assert_type(listen_v2_binary_response, V2SocketClientResponse)
 assert_type(speak_v1_socket_response, SpeakV1SocketClientResponse)
 assert_type(speak_v2_socket_response, SpeakV2SocketClientResponse)
