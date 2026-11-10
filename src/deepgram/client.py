@@ -29,6 +29,7 @@ from typing import Any, Callable, Dict, Optional
 
 from ._secure_logging import install_websocket_log_redaction
 from .base_client import AsyncBaseClient, BaseClient
+from .core.api_error import ApiError
 from .transport import install_transport
 
 from deepgram.core.client_wrapper import BaseClientWrapper
@@ -115,6 +116,12 @@ class DeepgramClient(BaseClient):
             # Set a placeholder api_key if none provided (base client requires it)
             if kwargs.get("api_key") is None:
                 kwargs["api_key"] = "token"
+        elif "api_key" in kwargs and kwargs["api_key"] is None:
+            # Fern now resolves None to DEEPGRAM_API_KEY in BaseClient. Preserve
+            # the SDK contract that an explicit None disables ambient lookup.
+            raise ApiError(
+                body="The client must be instantiated by either passing in api_key or setting DEEPGRAM_API_KEY"
+            )
         elif "api_key" not in kwargs:
             # The generated base client takes os.getenv("DEEPGRAM_API_KEY") as a default
             # argument, so it is read once at import. Re-read it here so a key set after
@@ -199,6 +206,12 @@ class AsyncDeepgramClient(AsyncBaseClient):
             # Set a placeholder api_key if none provided (base client requires it)
             if kwargs.get("api_key") is None:
                 kwargs["api_key"] = "token"
+        elif "api_key" in kwargs and kwargs["api_key"] is None:
+            # Fern now resolves None to DEEPGRAM_API_KEY in AsyncBaseClient.
+            # Preserve the SDK contract that explicit None disables ambient lookup.
+            raise ApiError(
+                body="The client must be instantiated by either passing in api_key or setting DEEPGRAM_API_KEY"
+            )
         elif "api_key" not in kwargs:
             # The generated base client takes os.getenv("DEEPGRAM_API_KEY") as a default
             # argument, so it is read once at import. Re-read it here so a key set after

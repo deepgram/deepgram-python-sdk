@@ -26,6 +26,7 @@ except ImportError:
 
 _logger = logging.getLogger(__name__)
 V1SocketClientResponse = typing.Union[
+    bytes,
     ListenV1ConfigureSuccess,
     ListenV1ConfigureFailure,
     ListenV1Results,
@@ -33,6 +34,7 @@ V1SocketClientResponse = typing.Union[
     ListenV1UtteranceEnd,
     ListenV1SpeechStarted,
     ListenV1Error,
+    typing.Dict[str, typing.Any],
 ]
 
 
@@ -41,7 +43,7 @@ class AsyncV1SocketClient(EventEmitterMixin):
         super().__init__()
         self._websocket = websocket
 
-    async def __aiter__(self):
+    async def __aiter__(self) -> typing.AsyncIterator[V1SocketClientResponse]:
         async for message in self._websocket:
             if isinstance(message, bytes):
                 yield message
@@ -125,7 +127,7 @@ class AsyncV1SocketClient(EventEmitterMixin):
         """
         data = await self._websocket.recv()
         if isinstance(data, bytes):
-            return data  # type: ignore
+            return data
         json_data = json.loads(data)
         try:
             return construct_type(type_=V1SocketClientResponse, object_=json_data)  # type: ignore
@@ -153,7 +155,7 @@ class V1SocketClient(EventEmitterMixin):
         super().__init__()
         self._websocket = websocket
 
-    def __iter__(self):
+    def __iter__(self) -> typing.Iterator[V1SocketClientResponse]:
         for message in self._websocket:
             if isinstance(message, bytes):
                 yield message
@@ -237,7 +239,7 @@ class V1SocketClient(EventEmitterMixin):
         """
         data = self._websocket.recv()
         if isinstance(data, bytes):
-            return data  # type: ignore
+            return data
         json_data = json.loads(data)
         try:
             return construct_type(type_=V1SocketClientResponse, object_=json_data)  # type: ignore

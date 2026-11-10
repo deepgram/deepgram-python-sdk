@@ -75,7 +75,7 @@ class BaseClient:
         self,
         *,
         environment: DeepgramClientEnvironment = DeepgramClientEnvironment.PRODUCTION,
-        api_key: typing.Optional[str] = os.getenv("DEEPGRAM_API_KEY"),
+        api_key: typing.Optional[str] = None,
         headers: typing.Optional[typing.Dict[str, str]] = None,
         timeout: typing.Optional[float] = None,
         max_retries: typing.Optional[int] = None,
@@ -87,6 +87,7 @@ class BaseClient:
     ):
         _defaulted_timeout = timeout if timeout is not None else 60 if httpx_client is None else None
         _defaulted_max_retries = max_retries if max_retries is not None else 2
+        api_key = api_key if api_key is not None else os.getenv("DEEPGRAM_API_KEY")
         if api_key is None:
             raise ApiError(
                 body="The client must be instantiated be either passing in api_key or setting DEEPGRAM_API_KEY"
@@ -251,7 +252,7 @@ class AsyncBaseClient:
         self,
         *,
         environment: DeepgramClientEnvironment = DeepgramClientEnvironment.PRODUCTION,
-        api_key: typing.Optional[str] = os.getenv("DEEPGRAM_API_KEY"),
+        api_key: typing.Optional[str] = None,
         headers: typing.Optional[typing.Dict[str, str]] = None,
         timeout: typing.Optional[float] = None,
         max_retries: typing.Optional[int] = None,
@@ -263,6 +264,7 @@ class AsyncBaseClient:
     ):
         _defaulted_timeout = timeout if timeout is not None else 60 if httpx_client is None else None
         _defaulted_max_retries = max_retries if max_retries is not None else 2
+        api_key = api_key if api_key is not None else os.getenv("DEEPGRAM_API_KEY")
         if api_key is None:
             raise ApiError(
                 body="The client must be instantiated be either passing in api_key or setting DEEPGRAM_API_KEY"

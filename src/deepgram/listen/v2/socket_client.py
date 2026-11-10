@@ -24,12 +24,14 @@ except ImportError:
 
 _logger = logging.getLogger(__name__)
 V2SocketClientResponse = typing.Union[
+    bytes,
     ListenV2Connected,
     ListenV2TurnInfo,
     ListenV2ConfigureSuccess,
     ListenV2ConfigureFailure,
     ListenV2Warning,
     ListenV2FatalError,
+    typing.Dict[str, typing.Any],
 ]
 
 
@@ -38,7 +40,7 @@ class AsyncV2SocketClient(EventEmitterMixin):
         super().__init__()
         self._websocket = websocket
 
-    async def __aiter__(self):
+    async def __aiter__(self) -> typing.AsyncIterator[V2SocketClientResponse]:
         async for message in self._websocket:
             if isinstance(message, bytes):
                 yield message
@@ -118,7 +120,7 @@ class AsyncV2SocketClient(EventEmitterMixin):
         """
         data = await self._websocket.recv()
         if isinstance(data, bytes):
-            return data  # type: ignore
+            return data
         json_data = json.loads(data)
         try:
             return construct_type(type_=V2SocketClientResponse, object_=json_data)  # type: ignore
@@ -146,7 +148,7 @@ class V2SocketClient(EventEmitterMixin):
         super().__init__()
         self._websocket = websocket
 
-    def __iter__(self):
+    def __iter__(self) -> typing.Iterator[V2SocketClientResponse]:
         for message in self._websocket:
             if isinstance(message, bytes):
                 yield message
@@ -226,7 +228,7 @@ class V2SocketClient(EventEmitterMixin):
         """
         data = self._websocket.recv()
         if isinstance(data, bytes):
-            return data  # type: ignore
+            return data
         json_data = json.loads(data)
         try:
             return construct_type(type_=V2SocketClientResponse, object_=json_data)  # type: ignore

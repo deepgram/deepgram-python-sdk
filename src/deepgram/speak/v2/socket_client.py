@@ -41,6 +41,7 @@ V2SocketClientResponse = typing.Union[
     SpeakV2ConfigureFailure,
     SpeakV2Warning,
     SpeakV2Error,
+    typing.Dict[str, typing.Any],
 ]
 
 
@@ -49,10 +50,10 @@ class AsyncV2SocketClient(EventEmitterMixin):
         super().__init__()
         self._websocket = websocket
 
-    async def __aiter__(self):
+    async def __aiter__(self) -> typing.AsyncIterator[V2SocketClientResponse]:
         async for message in self._websocket:
             if isinstance(message, bytes):
-                yield message
+                yield message  # type: ignore
             else:
                 try:
                     yield construct_type(type_=V2SocketClientResponse, object_=json.loads(message))  # type: ignore
@@ -161,10 +162,10 @@ class V2SocketClient(EventEmitterMixin):
         super().__init__()
         self._websocket = websocket
 
-    def __iter__(self):
+    def __iter__(self) -> typing.Iterator[V2SocketClientResponse]:
         for message in self._websocket:
             if isinstance(message, bytes):
-                yield message
+                yield message  # type: ignore
             else:
                 try:
                     yield construct_type(type_=V2SocketClientResponse, object_=json.loads(message))  # type: ignore

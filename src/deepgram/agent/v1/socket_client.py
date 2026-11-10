@@ -48,7 +48,6 @@ try:
 except ImportError:
     from websockets import WebSocketClientProtocol  # type: ignore
 
-
 def _sanitize_numeric_types(obj: typing.Any) -> typing.Any:
     """Convert whole-number floats to integers for wire-compatible JSON."""
     if isinstance(obj, dict):
@@ -85,6 +84,7 @@ V1SocketClientResponse = typing.Union[
     AgentV1Warning,
     AgentV1History,
     bytes,
+    typing.Dict[str, typing.Any],
 ]
 
 
@@ -93,10 +93,10 @@ class AsyncV1SocketClient(EventEmitterMixin):
         super().__init__()
         self._websocket = websocket
 
-    async def __aiter__(self):
+    async def __aiter__(self) -> typing.AsyncIterator[V1SocketClientResponse]:
         async for message in self._websocket:
             if isinstance(message, bytes):
-                yield message
+                yield message  # type: ignore
             else:
                 try:
                     yield construct_type(type_=V1SocketClientResponse, object_=json.loads(message))  # type: ignore
@@ -272,10 +272,10 @@ class V1SocketClient(EventEmitterMixin):
         super().__init__()
         self._websocket = websocket
 
-    def __iter__(self):
+    def __iter__(self) -> typing.Iterator[V1SocketClientResponse]:
         for message in self._websocket:
             if isinstance(message, bytes):
-                yield message
+                yield message  # type: ignore
             else:
                 try:
                     yield construct_type(type_=V1SocketClientResponse, object_=json.loads(message))  # type: ignore

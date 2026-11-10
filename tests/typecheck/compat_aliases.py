@@ -1,4 +1,4 @@
-from typing import Literal
+from typing import Any, Dict, Literal
 
 from typing_extensions import assert_type  # 3.10-compatible backport (typing.assert_type is 3.11+)
 
@@ -31,6 +31,7 @@ from deepgram.agent.v1.requests import (
     ConversationHistoryMessageParams,
     FunctionCallHistoryMessageParams,
 )
+from deepgram.agent.v1.socket_client import V1SocketClientResponse as AgentV1SocketClientResponse
 from deepgram.agent.v1.types import (
     AgentV1ConversationTextConversationalBehavior,
     AgentV1InjectDynamicAgentMessage,
@@ -41,7 +42,9 @@ from deepgram.agent.v1.types import (
 from deepgram.listen import ListenV1ConfigureFailureCode as RootListenV1ConfigureFailureCode
 from deepgram.listen.v1 import ListenV1ConfigureFailureCode as V1ListenV1ConfigureFailureCode
 from deepgram.listen.v1.requests import ListenV1ConfigureFailureParams
+from deepgram.listen.v1.socket_client import V1SocketClientResponse as ListenV1SocketClientResponse
 from deepgram.listen.v1.types import ListenV1ConfigureFailure, ListenV1ConfigureFailureCode
+from deepgram.listen.v2.socket_client import V2SocketClientResponse
 from deepgram.requests import (
     CreateKeyV1RequestOneParams,
     CreateKeyV1RequestParams,
@@ -64,6 +67,8 @@ from deepgram.requests import (
 from deepgram.requests import (
     ThinkSettingsV1Provider_DeepgramParams as RequestsThinkSettingsV1Provider_DeepgramParams,
 )
+from deepgram.speak.v1.socket_client import V1SocketClientResponse as SpeakV1SocketClientResponse
+from deepgram.speak.v2.socket_client import V2SocketClientResponse as SpeakV2SocketClientResponse
 from deepgram.types import (
     DeepgramThinkLiveProviderV1 as TypesDeepgramThinkLiveProviderV1,
 )
@@ -233,3 +238,22 @@ legacy_topics: SharedTopicsParams = {"results": {"topics": {"segments": [{"text"
 legacy_intents: SharedIntentsParams = {"results": {"intents": {"segments": [{"text": "hello"}]}}}
 assert_type(SharedTopics(results=legacy_topics["results"]), SharedTopics)
 assert_type(SharedIntents(results=legacy_intents["results"]), SharedIntents)
+
+# Forward-compatible websocket payloads are raw dictionaries when the server
+# sends a message type newer than this SDK.
+unknown_socket_payload: Dict[str, Any] = {"type": "FutureMessage"}
+binary_socket_payload: bytes = b"audio-frame"
+agent_socket_response: AgentV1SocketClientResponse = unknown_socket_payload
+listen_v1_socket_response: ListenV1SocketClientResponse = unknown_socket_payload
+listen_v2_socket_response: V2SocketClientResponse = unknown_socket_payload
+listen_v1_binary_response: ListenV1SocketClientResponse = binary_socket_payload
+listen_v2_binary_response: V2SocketClientResponse = binary_socket_payload
+speak_v1_socket_response: SpeakV1SocketClientResponse = unknown_socket_payload
+speak_v2_socket_response: SpeakV2SocketClientResponse = unknown_socket_payload
+assert_type(agent_socket_response, AgentV1SocketClientResponse)
+assert_type(listen_v1_socket_response, ListenV1SocketClientResponse)
+assert_type(listen_v2_socket_response, V2SocketClientResponse)
+assert_type(listen_v1_binary_response, ListenV1SocketClientResponse)
+assert_type(listen_v2_binary_response, V2SocketClientResponse)
+assert_type(speak_v1_socket_response, SpeakV1SocketClientResponse)
+assert_type(speak_v2_socket_response, SpeakV2SocketClientResponse)
