@@ -1,5 +1,12 @@
 # Changelog
 
+## [7.18.0](https://github.com/deepgram/deepgram-python-sdk/compare/v7.17.0...v7.18.0) (2026-11-10)
+
+
+### Features
+
+* **core:** expose response metadata and socket payload types ([#826](https://github.com/deepgram/deepgram-python-sdk/issues/826)) ([3b3679c](https://github.com/deepgram/deepgram-python-sdk/commit/3b3679c5061c25a154561c63680adb668996f451))
+
 ## [7.17.0](https://github.com/deepgram/deepgram-python-sdk/compare/v7.16.0...v7.17.0) (2026-11-02)
 
 
