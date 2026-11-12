@@ -23,6 +23,7 @@ import urllib.parse
 from unittest.mock import patch
 
 import deepgram.speak.v2.client as speak_v2_client
+import deepgram.speak.v2.raw_client as speak_v2_raw_client
 from deepgram import AsyncDeepgramClient, DeepgramClient
 
 
@@ -95,3 +96,29 @@ async def test_async_connect_targets_v2_speak_and_serializes_query():
     assert query["model"] == ["flux-alexis-en"]
     assert query["normalize_volume"] == ["false"]
     assert query["mip_opt_out"] == ["true"]
+
+
+def test_sync_raw_connect_serializes_normalize_volume():
+    capture = _CaptureConnect()
+    with patch.object(speak_v2_raw_client.websockets_sync_client, "connect", capture):
+        with DeepgramClient(api_key="test_api_key").speak.v2.with_raw_response.connect(
+            model="flux-alexis-en",
+            normalize_volume="true",
+        ):
+            pass
+
+    _, query = _path_and_query(capture.url)
+    assert query["normalize_volume"] == ["true"]
+
+
+async def test_async_raw_connect_serializes_normalize_volume():
+    capture = _CaptureConnect()
+    with patch.object(speak_v2_raw_client, "websockets_client_connect", capture):
+        async with AsyncDeepgramClient(api_key="test_api_key").speak.v2.with_raw_response.connect(
+            model="flux-alexis-en",
+            normalize_volume="false",
+        ):
+            pass
+
+    _, query = _path_and_query(capture.url)
+    assert query["normalize_volume"] == ["false"]
