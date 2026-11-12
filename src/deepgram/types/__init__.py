@@ -148,6 +148,7 @@ if typing.TYPE_CHECKING:
     from .listen_v1profanity_filter import ListenV1ProfanityFilter
     from .listen_v1punctuate import ListenV1Punctuate
     from .listen_v1redact import ListenV1Redact
+    from .listen_v1redact_usage import ListenV1RedactUsage
     from .listen_v1replace import ListenV1Replace
     from .listen_v1request_file import ListenV1RequestFile
     from .listen_v1response import ListenV1Response
@@ -200,6 +201,7 @@ if typing.TYPE_CHECKING:
     from .listen_v1vad_events import ListenV1VadEvents
     from .listen_v1version import ListenV1Version
     from .listen_v2configure_numerals import ListenV2ConfigureNumerals
+    from .listen_v2configure_redact_usage import ListenV2ConfigureRedactUsage
     from .listen_v2eager_eot_threshold import ListenV2EagerEotThreshold
     from .listen_v2encoding import ListenV2Encoding
     from .listen_v2eot_threshold import ListenV2EotThreshold
@@ -211,6 +213,7 @@ if typing.TYPE_CHECKING:
     from .listen_v2numerals import ListenV2Numerals
     from .listen_v2profanity_filter import ListenV2ProfanityFilter
     from .listen_v2redact import ListenV2Redact
+    from .listen_v2redact_usage import ListenV2RedactUsage
     from .listen_v2sample_rate import ListenV2SampleRate
     from .listen_v2tag import ListenV2Tag
     from .open_ai_speak_provider import OpenAiSpeakProvider
@@ -264,6 +267,7 @@ if typing.TYPE_CHECKING:
     from .speak_v2expressivity import SpeakV2Expressivity
     from .speak_v2mip_opt_out import SpeakV2MipOptOut
     from .speak_v2model import SpeakV2Model
+    from .speak_v2normalize_volume import SpeakV2NormalizeVolume
     from .speak_v2response import SpeakV2Response
     from .speak_v2sample_rate import SpeakV2SampleRate
     from .speak_v2speed import SpeakV2Speed
@@ -423,6 +427,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ListenV1ProfanityFilter": ".listen_v1profanity_filter",
     "ListenV1Punctuate": ".listen_v1punctuate",
     "ListenV1Redact": ".listen_v1redact",
+    "ListenV1RedactUsage": ".listen_v1redact_usage",
     "ListenV1Replace": ".listen_v1replace",
     "ListenV1RequestFile": ".listen_v1request_file",
     "ListenV1Response": ".listen_v1response",
@@ -457,6 +462,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ListenV1VadEvents": ".listen_v1vad_events",
     "ListenV1Version": ".listen_v1version",
     "ListenV2ConfigureNumerals": ".listen_v2configure_numerals",
+    "ListenV2ConfigureRedactUsage": ".listen_v2configure_redact_usage",
     "ListenV2EagerEotThreshold": ".listen_v2eager_eot_threshold",
     "ListenV2Encoding": ".listen_v2encoding",
     "ListenV2EotThreshold": ".listen_v2eot_threshold",
@@ -468,6 +474,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ListenV2Numerals": ".listen_v2numerals",
     "ListenV2ProfanityFilter": ".listen_v2profanity_filter",
     "ListenV2Redact": ".listen_v2redact",
+    "ListenV2RedactUsage": ".listen_v2redact_usage",
     "ListenV2SampleRate": ".listen_v2sample_rate",
     "ListenV2Tag": ".listen_v2tag",
     "OpenAiSpeakProvider": ".open_ai_speak_provider",
@@ -519,6 +526,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SpeakV2Expressivity": ".speak_v2expressivity",
     "SpeakV2MipOptOut": ".speak_v2mip_opt_out",
     "SpeakV2Model": ".speak_v2model",
+    "SpeakV2NormalizeVolume": ".speak_v2normalize_volume",
     "SpeakV2Response": ".speak_v2response",
     "SpeakV2SampleRate": ".speak_v2sample_rate",
     "SpeakV2Speed": ".speak_v2speed",
@@ -548,28 +556,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "UsageV1Response": ".usage_v1response",
     "UsageV1ResponseResolution": ".usage_v1response_resolution",
 }
-
-_dynamic_imports.update(
-    {
-        "SharedIntentsResults": ".shared_intents_results",
-        "SharedIntentsResultsIntents": ".shared_intents_results_intents",
-        "SharedIntentsResultsIntentsSegmentsItem": ".shared_intents_results_intents_segments_item",
-        "SharedIntentsResultsIntentsSegmentsItemIntentsItem": ".shared_intents_results_intents_segments_item_intents_item",
-        "SharedTopicsResults": ".shared_topics_results",
-        "SharedTopicsResultsTopics": ".shared_topics_results_topics",
-        "SharedTopicsResultsTopicsSegmentsItem": ".shared_topics_results_topics_segments_item",
-        "SharedTopicsResultsTopicsSegmentsItemTopicsItem": ".shared_topics_results_topics_segments_item_topics_item",
-        "AnthropicThinkProviderModel": ".anthropic_think_provider_model",
-        "CartesiaSpeakProviderModelId": ".cartesia_speak_provider_model_id",
-        "CartesiaSpeakProviderVoice": ".cartesia_speak_provider_voice",
-        "CreateKeyV1RequestOne": ".create_key_v1request_one",
-        "DeepgramListenProviderV2LanguageHint": ".deepgram_listen_provider_v2language_hint",
-        "DeepgramSpeakProviderModel": ".deepgram_speak_provider_model",
-        "GoogleThinkProviderModel": ".google_think_provider_model",
-        "GoogleThinkProviderVersion": ".google_think_provider_version",
-        "GroqThinkProviderReasoningMode": ".groq_think_provider_reasoning_mode",
-    }
-)
 
 
 def __getattr__(attr_name: str) -> typing.Any:
@@ -722,6 +708,7 @@ __all__ = [
     "ListenV1ProfanityFilter",
     "ListenV1Punctuate",
     "ListenV1Redact",
+    "ListenV1RedactUsage",
     "ListenV1Replace",
     "ListenV1RequestFile",
     "ListenV1Response",
@@ -756,6 +743,7 @@ __all__ = [
     "ListenV1VadEvents",
     "ListenV1Version",
     "ListenV2ConfigureNumerals",
+    "ListenV2ConfigureRedactUsage",
     "ListenV2EagerEotThreshold",
     "ListenV2Encoding",
     "ListenV2EotThreshold",
@@ -767,6 +755,7 @@ __all__ = [
     "ListenV2Numerals",
     "ListenV2ProfanityFilter",
     "ListenV2Redact",
+    "ListenV2RedactUsage",
     "ListenV2SampleRate",
     "ListenV2Tag",
     "OpenAiSpeakProvider",
@@ -818,6 +807,7 @@ __all__ = [
     "SpeakV2Expressivity",
     "SpeakV2MipOptOut",
     "SpeakV2Model",
+    "SpeakV2NormalizeVolume",
     "SpeakV2Response",
     "SpeakV2SampleRate",
     "SpeakV2Speed",
@@ -847,25 +837,3 @@ __all__ = [
     "UsageV1Response",
     "UsageV1ResponseResolution",
 ]
-
-__all__.extend(
-    [
-        "SharedIntentsResults",
-        "SharedIntentsResultsIntents",
-        "SharedIntentsResultsIntentsSegmentsItem",
-        "SharedIntentsResultsIntentsSegmentsItemIntentsItem",
-        "SharedTopicsResults",
-        "SharedTopicsResultsTopics",
-        "SharedTopicsResultsTopicsSegmentsItem",
-        "SharedTopicsResultsTopicsSegmentsItemTopicsItem",
-        "AnthropicThinkProviderModel",
-        "CartesiaSpeakProviderModelId",
-        "CartesiaSpeakProviderVoice",
-        "CreateKeyV1RequestOne",
-        "DeepgramListenProviderV2LanguageHint",
-        "DeepgramSpeakProviderModel",
-        "GoogleThinkProviderModel",
-        "GoogleThinkProviderVersion",
-        "GroqThinkProviderReasoningMode",
-    ]
-)

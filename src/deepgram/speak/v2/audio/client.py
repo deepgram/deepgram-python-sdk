@@ -41,6 +41,7 @@ class AudioClient:
         container: typing.Optional[AudioGenerateRequestContainer] = None,
         encoding: typing.Optional[AudioGenerateRequestEncoding] = None,
         expressivity: typing.Optional[int] = None,
+        normalize_volume: typing.Optional[bool] = None,
         sample_rate: typing.Optional[int] = None,
         speed: typing.Optional[float] = None,
         priority: typing.Optional[typing.Literal["low"]] = None,
@@ -80,6 +81,9 @@ class AudioClient:
 
         expressivity : typing.Optional[int]
             Expressive range of the generated speech, on a calm-to-animated axis. Accepted values: `-2`, `-1`, `0`, `1`, `2`. `0` (the default) is the voice's tuned delivery and the production-validated setting, with `-2` the calm end of the range and `2` the animated end. Supported on all Flux voices; applies to the whole request. Beta: behavior may change in future model versions, and non-default values increase the risk of hallucinations and pronunciation errors; audition before shipping. An invalid value is rejected with a `400` — `EXPRESSIVITY_OUT_OF_RANGE` for a value outside the range, `EXPRESSIVITY_INCREMENT_INVALID` for a fractional value. See [Expressivity](/docs/tts-expressivity).
+
+        normalize_volume : typing.Optional[bool]
+            Normalizes the loudness of the generated speech to a consistent level across voices and requests. On by default; set to `false` to opt out. Peak limiting is applied either way.
 
         sample_rate : typing.Optional[int]
             Sample Rate specifies the sample rate for the output audio. Based on the encoding, different sample rates are supported. For some encodings, the sample rate is not configurable
@@ -121,6 +125,7 @@ class AudioClient:
             container=container,
             encoding=encoding,
             expressivity=expressivity,
+            normalize_volume=normalize_volume,
             sample_rate=sample_rate,
             speed=speed,
             priority=priority,
@@ -157,6 +162,7 @@ class AsyncAudioClient:
         container: typing.Optional[AudioGenerateRequestContainer] = None,
         encoding: typing.Optional[AudioGenerateRequestEncoding] = None,
         expressivity: typing.Optional[int] = None,
+        normalize_volume: typing.Optional[bool] = None,
         sample_rate: typing.Optional[int] = None,
         speed: typing.Optional[float] = None,
         priority: typing.Optional[typing.Literal["low"]] = None,
@@ -196,6 +202,9 @@ class AsyncAudioClient:
 
         expressivity : typing.Optional[int]
             Expressive range of the generated speech, on a calm-to-animated axis. Accepted values: `-2`, `-1`, `0`, `1`, `2`. `0` (the default) is the voice's tuned delivery and the production-validated setting, with `-2` the calm end of the range and `2` the animated end. Supported on all Flux voices; applies to the whole request. Beta: behavior may change in future model versions, and non-default values increase the risk of hallucinations and pronunciation errors; audition before shipping. An invalid value is rejected with a `400` — `EXPRESSIVITY_OUT_OF_RANGE` for a value outside the range, `EXPRESSIVITY_INCREMENT_INVALID` for a fractional value. See [Expressivity](/docs/tts-expressivity).
+
+        normalize_volume : typing.Optional[bool]
+            Normalizes the loudness of the generated speech to a consistent level across voices and requests. On by default; set to `false` to opt out. Peak limiting is applied either way.
 
         sample_rate : typing.Optional[int]
             Sample Rate specifies the sample rate for the output audio. Based on the encoding, different sample rates are supported. For some encodings, the sample rate is not configurable
@@ -245,6 +254,7 @@ class AsyncAudioClient:
             container=container,
             encoding=encoding,
             expressivity=expressivity,
+            normalize_volume=normalize_volume,
             sample_rate=sample_rate,
             speed=speed,
             priority=priority,
