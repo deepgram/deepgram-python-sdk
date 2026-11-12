@@ -38,6 +38,11 @@ class ListenV2ConfigureSuccess(ListenV2ResponseDictCompatModel):
     Whether numeral formatting is enabled for transcripts Flux STT sends after it processes the update.
     """
 
+    redact_usage: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Whether usage redaction is on for this connection.
+    """
+
     sequence_id: int = pydantic.Field()
     """
     Starts at `0` and increments for each message the server sends

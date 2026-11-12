@@ -23,6 +23,7 @@ import urllib.parse
 from unittest.mock import patch
 
 import deepgram.speak.v2.client as speak_v2_client
+import deepgram.speak.v2.raw_client as speak_v2_raw_client
 from deepgram import AsyncDeepgramClient, DeepgramClient
 
 
@@ -65,6 +66,7 @@ def test_sync_connect_targets_v2_speak_and_serializes_query():
             model="flux-alexis-en",
             encoding="linear16",
             sample_rate="24000",
+            normalize_volume="true",
             mip_opt_out=True,
         ):
             pass
@@ -74,6 +76,7 @@ def test_sync_connect_targets_v2_speak_and_serializes_query():
     assert query["model"] == ["flux-alexis-en"]
     assert query["encoding"] == ["linear16"]
     assert query["sample_rate"] == ["24000"]
+    assert query["normalize_volume"] == ["true"]
     # The load-bearing assertion: Python True must serialize as "true", not "True".
     assert query["mip_opt_out"] == ["true"]
 
@@ -83,6 +86,7 @@ async def test_async_connect_targets_v2_speak_and_serializes_query():
     with patch.object(speak_v2_client, "websockets_client_connect", capture):
         async with AsyncDeepgramClient(api_key="test_api_key").speak.v2.connect(
             model="flux-alexis-en",
+            normalize_volume="false",
             mip_opt_out=True,
         ):
             pass
@@ -90,4 +94,33 @@ async def test_async_connect_targets_v2_speak_and_serializes_query():
     path, query = _path_and_query(capture.url)
     assert path == "/v2/speak"
     assert query["model"] == ["flux-alexis-en"]
+    assert query["normalize_volume"] == ["false"]
     assert query["mip_opt_out"] == ["true"]
+
+
+def test_sync_raw_connect_serializes_normalize_volume():
+    capture = _CaptureConnect()
+    with patch.object(speak_v2_raw_client.websockets_sync_client, "connect", capture):
+        with DeepgramClient(api_key="test_api_key").speak.v2.with_raw_response.connect(
+            model="flux-alexis-en",
+            normalize_volume="true",
+        ):
+            pass
+
+    path, query = _path_and_query(capture.url)
+    assert path == "/v2/speak"
+    assert query["normalize_volume"] == ["true"]
+
+
+async def test_async_raw_connect_serializes_normalize_volume():
+    capture = _CaptureConnect()
+    with patch.object(speak_v2_raw_client, "websockets_client_connect", capture):
+        async with AsyncDeepgramClient(api_key="test_api_key").speak.v2.with_raw_response.connect(
+            model="flux-alexis-en",
+            normalize_volume="false",
+        ):
+            pass
+
+    path, query = _path_and_query(capture.url)
+    assert path == "/v2/speak"
+    assert query["normalize_volume"] == ["false"]

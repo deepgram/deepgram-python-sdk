@@ -36,6 +36,7 @@ from ...types.listen_v1numerals import ListenV1Numerals
 from ...types.listen_v1profanity_filter import ListenV1ProfanityFilter
 from ...types.listen_v1punctuate import ListenV1Punctuate
 from ...types.listen_v1redact import ListenV1Redact
+from ...types.listen_v1redact_usage import ListenV1RedactUsage
 from ...types.listen_v1replace import ListenV1Replace
 from ...types.listen_v1sample_rate import ListenV1SampleRate
 from ...types.listen_v1search import ListenV1Search
@@ -100,6 +101,7 @@ class V1Client:
         profanity_filter: typing.Optional[ListenV1ProfanityFilter] = None,
         punctuate: typing.Optional[ListenV1Punctuate] = None,
         redact: typing.Optional[ListenV1Redact] = None,
+        redact_usage: typing.Optional[ListenV1RedactUsage] = None,
         replace: typing.Optional[ListenV1Replace] = None,
         sample_rate: typing.Optional[ListenV1SampleRate] = None,
         search: typing.Optional[ListenV1Search] = None,
@@ -163,6 +165,8 @@ class V1Client:
 
         redact : typing.Optional[ListenV1Redact]
 
+        redact_usage : typing.Optional[ListenV1RedactUsage]
+
         replace : typing.Optional[ListenV1Replace]
 
         sample_rate : typing.Optional[ListenV1SampleRate]
@@ -224,6 +228,7 @@ class V1Client:
                         "profanity_filter": profanity_filter,
                         "punctuate": punctuate,
                         "redact": redact,
+                        "redact_usage": redact_usage,
                         "replace": replace,
                         "sample_rate": sample_rate,
                         "search": search,
@@ -317,6 +322,7 @@ class AsyncV1Client:
         profanity_filter: typing.Optional[ListenV1ProfanityFilter] = None,
         punctuate: typing.Optional[ListenV1Punctuate] = None,
         redact: typing.Optional[ListenV1Redact] = None,
+        redact_usage: typing.Optional[ListenV1RedactUsage] = None,
         replace: typing.Optional[ListenV1Replace] = None,
         sample_rate: typing.Optional[ListenV1SampleRate] = None,
         search: typing.Optional[ListenV1Search] = None,
@@ -380,6 +386,8 @@ class AsyncV1Client:
 
         redact : typing.Optional[ListenV1Redact]
 
+        redact_usage : typing.Optional[ListenV1RedactUsage]
+
         replace : typing.Optional[ListenV1Replace]
 
         sample_rate : typing.Optional[ListenV1SampleRate]
@@ -441,6 +449,7 @@ class AsyncV1Client:
                         "profanity_filter": profanity_filter,
                         "punctuate": punctuate,
                         "redact": redact,
+                        "redact_usage": redact_usage,
                         "replace": replace,
                         "sample_rate": sample_rate,
                         "search": search,

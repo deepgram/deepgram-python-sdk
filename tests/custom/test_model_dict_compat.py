@@ -47,6 +47,26 @@ class _FakeAsyncWebSocket:
         return json.dumps(TURN_INFO)
 
 
+CONFIGURE_SUCCESS = {
+    "type": "ConfigureSuccess",
+    "request_id": "request-id",
+    "thresholds": {},
+    "keyterms": [],
+    "redact_usage": True,
+    "sequence_id": 5,
+}
+
+
+class _ConfigureSuccessWebSocket:
+    def recv(self) -> str:
+        return json.dumps(CONFIGURE_SUCCESS)
+
+
+class _AsyncConfigureSuccessWebSocket:
+    async def recv(self) -> str:
+        return json.dumps(CONFIGURE_SUCCESS)
+
+
 def _assert_attribute_and_subscript_access(message: object) -> None:
     assert isinstance(message, ListenV2TurnInfo)
 
@@ -69,6 +89,20 @@ def test_sync_listen_v2_response_supports_both_access_styles() -> None:
 async def test_async_listen_v2_response_supports_both_access_styles() -> None:
     message = await AsyncV2SocketClient(websocket=typing.cast(typing.Any, _FakeAsyncWebSocket())).recv()
     _assert_attribute_and_subscript_access(message)
+
+
+def test_sync_configure_success_parses_redact_usage() -> None:
+    message = V2SocketClient(websocket=typing.cast(typing.Any, _ConfigureSuccessWebSocket())).recv()
+    assert isinstance(message, ListenV2ConfigureSuccess)
+    assert message.redact_usage is True
+    assert message["redact_usage"] is True
+
+
+async def test_async_configure_success_parses_redact_usage() -> None:
+    message = await AsyncV2SocketClient(websocket=typing.cast(typing.Any, _AsyncConfigureSuccessWebSocket())).recv()
+    assert isinstance(message, ListenV2ConfigureSuccess)
+    assert message.redact_usage is True
+    assert message["redact_usage"] is True
 
 
 def test_all_listen_v2_response_models_support_subscript_access() -> None:
@@ -107,12 +141,14 @@ def test_listen_v2_generated_warning_and_configure_fields_remain_typed_and_subsc
         thresholds=ListenV2ConfigureSuccessThresholds(eot_threshold=0.7),
         keyterms=[],
         numerals=True,
+        redact_usage=True,
         sequence_id=5,
     )
 
     assert warning["code"] == "NOTICE"
     assert failure["description"] == "invalid setting"
     assert success["numerals"] is True
+    assert success["redact_usage"] is True
 
 
 def test_unrelated_models_do_not_gain_subscript_access() -> None:

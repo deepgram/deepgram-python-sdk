@@ -36,6 +36,11 @@ class ListenV2ConfigureSuccessParams(typing_extensions.TypedDict):
     Whether numeral formatting is enabled for transcripts Flux STT sends after it processes the update.
     """
 
+    redact_usage: typing_extensions.NotRequired[bool]
+    """
+    Whether usage redaction is on for this connection.
+    """
+
     sequence_id: int
     """
     Starts at `0` and increments for each message the server sends

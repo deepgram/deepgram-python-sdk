@@ -40,6 +40,7 @@ class AgentV1SettingsAgentListenProvider_V2(UncheckedBaseModel):
     keyterms: typing.Optional[typing.List[str]] = None
 
     if IS_PYDANTIC_V2:
+
         @pydantic.model_validator(mode="before")
         @classmethod
         def _migrate_language_hint(cls, values: typing.Any) -> typing.Any:

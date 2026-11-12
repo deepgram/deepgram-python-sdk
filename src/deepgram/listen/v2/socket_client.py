@@ -43,7 +43,7 @@ class AsyncV2SocketClient(EventEmitterMixin):
     async def __aiter__(self) -> typing.AsyncIterator[V2SocketClientResponse]:
         async for message in self._websocket:
             if isinstance(message, bytes):
-                yield message
+                yield message  # type: ignore
             else:
                 try:
                     yield construct_type(type_=V2SocketClientResponse, object_=json.loads(message))  # type: ignore
@@ -120,7 +120,7 @@ class AsyncV2SocketClient(EventEmitterMixin):
         """
         data = await self._websocket.recv()
         if isinstance(data, bytes):
-            return data
+            return data  # type: ignore
         json_data = json.loads(data)
         try:
             return construct_type(type_=V2SocketClientResponse, object_=json_data)  # type: ignore
@@ -151,7 +151,7 @@ class V2SocketClient(EventEmitterMixin):
     def __iter__(self) -> typing.Iterator[V2SocketClientResponse]:
         for message in self._websocket:
             if isinstance(message, bytes):
-                yield message
+                yield message  # type: ignore
             else:
                 try:
                     yield construct_type(type_=V2SocketClientResponse, object_=json.loads(message))  # type: ignore
@@ -228,7 +228,7 @@ class V2SocketClient(EventEmitterMixin):
         """
         data = self._websocket.recv()
         if isinstance(data, bytes):
-            return data
+            return data  # type: ignore
         json_data = json.loads(data)
         try:
             return construct_type(type_=V2SocketClientResponse, object_=json_data)  # type: ignore

@@ -48,6 +48,7 @@ try:
 except ImportError:
     from websockets import WebSocketClientProtocol  # type: ignore
 
+
 def _sanitize_numeric_types(obj: typing.Any) -> typing.Any:
     """Convert whole-number floats to integers for wire-compatible JSON."""
     if isinstance(obj, dict):

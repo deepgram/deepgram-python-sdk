@@ -64,6 +64,7 @@ class RawMediaClient:
         profanity_filter: typing.Optional[bool] = None,
         punctuate: typing.Optional[bool] = None,
         redact: typing.Optional[str] = None,
+        redact_usage: typing.Optional[bool] = None,
         replace: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         search: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         smart_format: typing.Optional[bool] = None,
@@ -177,6 +178,9 @@ class RawMediaClient:
         redact : typing.Optional[str]
             Redaction removes sensitive information from your transcripts
 
+        redact_usage : typing.Optional[bool]
+            Replaces the values of user-supplied text parameters (`keyterm`, `keywords`, `replace`, `search`, `extra`, `custom_topic`, and `custom_intent`) with `[REDACTED]` in this request's usage records. Does not affect transcription, the response, `tag`, or `callback`. Independent of `mip_opt_out`. https://developers.deepgram.com/docs/redact-usage
+
         replace : typing.Optional[typing.Union[str, typing.Sequence[str]]]
             Search for terms or phrases in submitted audio and replaces them
 
@@ -242,6 +246,7 @@ class RawMediaClient:
                 "profanity_filter": profanity_filter,
                 "punctuate": punctuate,
                 "redact": redact,
+                "redact_usage": redact_usage,
                 "replace": replace,
                 "search": search,
                 "smart_format": smart_format,
@@ -324,6 +329,7 @@ class RawMediaClient:
         profanity_filter: typing.Optional[bool] = None,
         punctuate: typing.Optional[bool] = None,
         redact: typing.Optional[str] = None,
+        redact_usage: typing.Optional[bool] = None,
         replace: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         search: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         smart_format: typing.Optional[bool] = None,
@@ -437,6 +443,9 @@ class RawMediaClient:
         redact : typing.Optional[str]
             Redaction removes sensitive information from your transcripts
 
+        redact_usage : typing.Optional[bool]
+            Replaces the values of user-supplied text parameters (`keyterm`, `keywords`, `replace`, `search`, `extra`, `custom_topic`, and `custom_intent`) with `[REDACTED]` in this request's usage records. Does not affect transcription, the response, `tag`, or `callback`. Independent of `mip_opt_out`. https://developers.deepgram.com/docs/redact-usage
+
         replace : typing.Optional[typing.Union[str, typing.Sequence[str]]]
             Search for terms or phrases in submitted audio and replaces them
 
@@ -502,6 +511,7 @@ class RawMediaClient:
                 "profanity_filter": profanity_filter,
                 "punctuate": punctuate,
                 "redact": redact,
+                "redact_usage": redact_usage,
                 "replace": replace,
                 "search": search,
                 "smart_format": smart_format,
@@ -587,6 +597,7 @@ class AsyncRawMediaClient:
         profanity_filter: typing.Optional[bool] = None,
         punctuate: typing.Optional[bool] = None,
         redact: typing.Optional[str] = None,
+        redact_usage: typing.Optional[bool] = None,
         replace: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         search: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         smart_format: typing.Optional[bool] = None,
@@ -700,6 +711,9 @@ class AsyncRawMediaClient:
         redact : typing.Optional[str]
             Redaction removes sensitive information from your transcripts
 
+        redact_usage : typing.Optional[bool]
+            Replaces the values of user-supplied text parameters (`keyterm`, `keywords`, `replace`, `search`, `extra`, `custom_topic`, and `custom_intent`) with `[REDACTED]` in this request's usage records. Does not affect transcription, the response, `tag`, or `callback`. Independent of `mip_opt_out`. https://developers.deepgram.com/docs/redact-usage
+
         replace : typing.Optional[typing.Union[str, typing.Sequence[str]]]
             Search for terms or phrases in submitted audio and replaces them
 
@@ -765,6 +779,7 @@ class AsyncRawMediaClient:
                 "profanity_filter": profanity_filter,
                 "punctuate": punctuate,
                 "redact": redact,
+                "redact_usage": redact_usage,
                 "replace": replace,
                 "search": search,
                 "smart_format": smart_format,
@@ -847,6 +862,7 @@ class AsyncRawMediaClient:
         profanity_filter: typing.Optional[bool] = None,
         punctuate: typing.Optional[bool] = None,
         redact: typing.Optional[str] = None,
+        redact_usage: typing.Optional[bool] = None,
         replace: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         search: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         smart_format: typing.Optional[bool] = None,
@@ -960,6 +976,9 @@ class AsyncRawMediaClient:
         redact : typing.Optional[str]
             Redaction removes sensitive information from your transcripts
 
+        redact_usage : typing.Optional[bool]
+            Replaces the values of user-supplied text parameters (`keyterm`, `keywords`, `replace`, `search`, `extra`, `custom_topic`, and `custom_intent`) with `[REDACTED]` in this request's usage records. Does not affect transcription, the response, `tag`, or `callback`. Independent of `mip_opt_out`. https://developers.deepgram.com/docs/redact-usage
+
         replace : typing.Optional[typing.Union[str, typing.Sequence[str]]]
             Search for terms or phrases in submitted audio and replaces them
 
@@ -1025,6 +1044,7 @@ class AsyncRawMediaClient:
                 "profanity_filter": profanity_filter,
                 "punctuate": punctuate,
                 "redact": redact,
+                "redact_usage": redact_usage,
                 "replace": replace,
                 "search": search,
                 "smart_format": smart_format,

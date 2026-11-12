@@ -25,6 +25,7 @@ class SharedTopics(UncheckedBaseModel):
         return SharedTopicsResults(topics=SharedTopicsResultsTopics(segments=self.segments))
 
     if IS_PYDANTIC_V2:
+
         @pydantic.model_validator(mode="before")
         @classmethod
         def _migrate_legacy_results(cls, values: typing.Any) -> typing.Any:

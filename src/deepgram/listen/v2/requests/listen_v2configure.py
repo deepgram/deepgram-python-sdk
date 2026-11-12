@@ -5,6 +5,7 @@ import typing
 import typing_extensions
 from ....requests.listen_v2keyterm import ListenV2KeytermParams
 from ....types.listen_v2configure_numerals import ListenV2ConfigureNumerals
+from ....types.listen_v2configure_redact_usage import ListenV2ConfigureRedactUsage
 from .listen_v2configure_thresholds import ListenV2ConfigureThresholdsParams
 
 
@@ -29,3 +30,4 @@ class ListenV2ConfigureParams(typing_extensions.TypedDict):
     """
 
     numerals: typing_extensions.NotRequired[ListenV2ConfigureNumerals]
+    redact_usage: typing_extensions.NotRequired[ListenV2ConfigureRedactUsage]

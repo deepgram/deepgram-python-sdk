@@ -23,6 +23,7 @@ import urllib.parse
 from unittest.mock import patch
 
 import deepgram.listen.v2.client as listen_v2_client
+import deepgram.listen.v2.raw_client as listen_v2_raw_client
 from deepgram import AsyncDeepgramClient, DeepgramClient
 
 
@@ -82,11 +83,13 @@ def test_sync_connect_serializes_redact():
         with DeepgramClient(api_key="test_api_key").listen.v2.connect(
             model="flux-general-en",
             redact="aggressive_numbers",
+            redact_usage="true",
         ):
             pass
 
     _, query = _path_and_query(capture.url)
     assert query["redact"] == ["aggressive_numbers"]
+    assert query["redact_usage"] == ["true"]
 
 
 async def test_async_connect_serializes_redact():
@@ -95,11 +98,41 @@ async def test_async_connect_serializes_redact():
         async with AsyncDeepgramClient(api_key="test_api_key").listen.v2.connect(
             model="flux-general-en",
             redact="numbers",
+            redact_usage="false",
         ):
             pass
 
     _, query = _path_and_query(capture.url)
     assert query["redact"] == ["numbers"]
+    assert query["redact_usage"] == ["false"]
+
+
+def test_sync_raw_connect_serializes_redact_usage():
+    capture = _CaptureConnect()
+    with patch.object(listen_v2_raw_client.websockets_sync_client, "connect", capture):
+        with DeepgramClient(api_key="test_api_key").listen.v2.with_raw_response.connect(
+            model="flux-general-en",
+            redact_usage="true",
+        ):
+            pass
+
+    path, query = _path_and_query(capture.url)
+    assert path == "/v2/listen"
+    assert query["redact_usage"] == ["true"]
+
+
+async def test_async_raw_connect_serializes_redact_usage():
+    capture = _CaptureConnect()
+    with patch.object(listen_v2_raw_client, "websockets_client_connect", capture):
+        async with AsyncDeepgramClient(api_key="test_api_key").listen.v2.with_raw_response.connect(
+            model="flux-general-en",
+            redact_usage="false",
+        ):
+            pass
+
+    path, query = _path_and_query(capture.url)
+    assert path == "/v2/listen"
+    assert query["redact_usage"] == ["false"]
 
 
 def test_sync_connect_omits_numerals_when_absent():
