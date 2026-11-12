@@ -241,6 +241,44 @@ async def test_listen_v1_media_serializes_language_hints_async(
         assert query["language_hint"] == expected_hints
 
 
+@pytest.mark.parametrize("method", ["transcribe_url", "transcribe_file"])
+@pytest.mark.parametrize("raw", [False, True], ids=["public", "raw"])
+def test_listen_v1_media_serializes_redact_usage_sync(method: str, raw: bool) -> None:
+    with respx.mock:
+        route = respx.post(f"{BASE}/v1/listen").mock(return_value=httpx.Response(200, json={}))
+        media = _sync_client().listen.v1.media.with_raw_response if raw else _sync_client().listen.v1.media
+        kwargs: typing.Dict[str, typing.Any] = {"redact_usage": True}
+        kwargs["url" if method == "transcribe_url" else "request"] = (
+            "https://example.com/a.wav" if method == "transcribe_url" else b"audio-bytes"
+        )
+
+        getattr(media, method)(**kwargs)
+
+        assert route.called
+        assert route.calls.last.request.method == "POST"
+        assert route.calls.last.request.url.path == "/v1/listen"
+        assert route.calls.last.request.url.params["redact_usage"] == "true"
+
+
+@pytest.mark.parametrize("method", ["transcribe_url", "transcribe_file"])
+@pytest.mark.parametrize("raw", [False, True], ids=["public", "raw"])
+async def test_listen_v1_media_serializes_redact_usage_async(method: str, raw: bool) -> None:
+    with respx.mock:
+        route = respx.post(f"{BASE}/v1/listen").mock(return_value=httpx.Response(200, json={}))
+        media = _async_client().listen.v1.media.with_raw_response if raw else _async_client().listen.v1.media
+        kwargs: typing.Dict[str, typing.Any] = {"redact_usage": True}
+        kwargs["url" if method == "transcribe_url" else "request"] = (
+            "https://example.com/a.wav" if method == "transcribe_url" else b"audio-bytes"
+        )
+
+        await getattr(media, method)(**kwargs)
+
+        assert route.called
+        assert route.calls.last.request.method == "POST"
+        assert route.calls.last.request.url.path == "/v1/listen"
+        assert route.calls.last.request.url.params["redact_usage"] == "true"
+
+
 def _walk_subclients(obj: typing.Any, depth: int = 0, seen: typing.Optional[set] = None) -> int:
     """Touch every nested sub-client property to cover their lazy-init accessors."""
     seen = seen if seen is not None else set()

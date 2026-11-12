@@ -116,7 +116,8 @@ def test_sync_raw_connect_serializes_redact_usage():
         ):
             pass
 
-    _, query = _path_and_query(capture.url)
+    path, query = _path_and_query(capture.url)
+    assert path == "/v2/listen"
     assert query["redact_usage"] == ["true"]
 
 
@@ -129,7 +130,8 @@ async def test_async_raw_connect_serializes_redact_usage():
         ):
             pass
 
-    _, query = _path_and_query(capture.url)
+    path, query = _path_and_query(capture.url)
+    assert path == "/v2/listen"
     assert query["redact_usage"] == ["false"]
 
 

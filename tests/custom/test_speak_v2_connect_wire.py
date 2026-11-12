@@ -107,7 +107,8 @@ def test_sync_raw_connect_serializes_normalize_volume():
         ):
             pass
 
-    _, query = _path_and_query(capture.url)
+    path, query = _path_and_query(capture.url)
+    assert path == "/v2/speak"
     assert query["normalize_volume"] == ["true"]
 
 
@@ -120,5 +121,6 @@ async def test_async_raw_connect_serializes_normalize_volume():
         ):
             pass
 
-    _, query = _path_and_query(capture.url)
+    path, query = _path_and_query(capture.url)
+    assert path == "/v2/speak"
     assert query["normalize_volume"] == ["false"]

@@ -124,6 +124,26 @@ class TestAudioGenerateSuccess:
         assert route.calls.last.request.url.params["expressivity"] == "2"
         assert route.calls.last.request.url.params["normalize_volume"] == "false"
 
+    def test_raw_sync_serializes_normalize_volume(self) -> None:
+        with respx.mock:
+            route = respx.post(f"{BASE}/v2/speak").mock(return_value=httpx.Response(200, content=b"audio-bytes"))
+            with _sync_client().speak.v2.audio.with_raw_response.generate(
+                model="flux-alexis-en", text="hello", normalize_volume=True
+            ) as response:
+                assert b"".join(response.data) == b"audio-bytes"
+
+        assert route.calls.last.request.url.params["normalize_volume"] == "true"
+
+    async def test_raw_async_serializes_normalize_volume(self) -> None:
+        with respx.mock:
+            route = respx.post(f"{BASE}/v2/speak").mock(return_value=httpx.Response(200, content=b"audio-bytes"))
+            async with _async_client().speak.v2.audio.with_raw_response.generate(
+                model="flux-alexis-en", text="hello", normalize_volume=False
+            ) as response:
+                assert b"".join([chunk async for chunk in response.data]) == b"audio-bytes"
+
+        assert route.calls.last.request.url.params["normalize_volume"] == "false"
+
     def test_with_raw_response_accessor(self) -> None:
         assert isinstance(
             _sync_client().speak.v2.audio.with_raw_response,

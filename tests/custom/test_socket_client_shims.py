@@ -298,12 +298,22 @@ class TestSendConfigureRawShim:
         V2SocketClient(websocket=ws).send_configure(ListenV2Configure(numerals=True))
         assert _sent_json(ws) == {"type": "Configure", "numerals": True}
 
+    def test_typed_redact_usage_model_is_serialized_and_sent(self):
+        ws = _FakeWebSocket()
+        V2SocketClient(websocket=ws).send_configure(ListenV2Configure(redact_usage="true"))
+        assert _sent_json(ws) == {"type": "Configure", "redact_usage": True}
+
     async def test_typed_model_is_serialized_and_sent_async(self):
         ws = _FakeAsyncWebSocket()
         await AsyncV2SocketClient(websocket=ws).send_configure(ListenV2Configure(language_hints=["en"]))
         sent = _sent_json(ws)
         assert sent["type"] == "Configure"
         assert sent["language_hints"] == ["en"]
+
+    async def test_typed_redact_usage_model_is_serialized_and_sent_async(self):
+        ws = _FakeAsyncWebSocket()
+        await AsyncV2SocketClient(websocket=ws).send_configure(ListenV2Configure(redact_usage="false"))
+        assert _sent_json(ws) == {"type": "Configure", "redact_usage": False}
 
     async def test_passthrough_dict_is_sent_verbatim_async(self):
         ws = _FakeAsyncWebSocket()

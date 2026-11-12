@@ -159,7 +159,9 @@ def test_listen_v1_connect_serializes_redact_usage(monkeypatch: pytest.MonkeyPat
     with _sync_client().listen.v1.with_raw_response.connect(model="nova-3", redact_usage="true"):
         pass
 
+    assert len(captured_urls) == 2
     for url in captured_urls:
+        assert urllib.parse.urlsplit(url).path == "/v1/listen"
         query = urllib.parse.parse_qs(urllib.parse.urlsplit(url).query)
         assert query["redact_usage"] == ["true"]
 
@@ -178,7 +180,9 @@ async def test_async_listen_v1_connect_serializes_redact_usage(monkeypatch: pyte
     async with _async_client().listen.v1.with_raw_response.connect(model="nova-3", redact_usage="false"):
         pass
 
+    assert len(captured_urls) == 2
     for url in captured_urls:
+        assert urllib.parse.urlsplit(url).path == "/v1/listen"
         query = urllib.parse.parse_qs(urllib.parse.urlsplit(url).query)
         assert query["redact_usage"] == ["false"]
 
