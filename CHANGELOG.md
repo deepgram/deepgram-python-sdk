@@ -1,5 +1,12 @@
 # Changelog
 
+## [7.18.0](https://github.com/deepgram/deepgram-python-sdk/compare/v7.17.0...v7.18.0) (2026-11-10)
+
+
+### Features
+
+* **core:** Preserve unknown Agent V1, Listen V1/V2, and Speak V2 WebSocket messages as raw dictionary payloads instead of dropping them; Listen V1/V2 binary frames are now typed. Responses from `with_raw_response()` expose the underlying `httpx.Response` as `.response`. To avoid replaying a request the server may already have applied, `httpx.RemoteProtocolError` is no longer retried by default; opt in for safe requests with `request_options={"retry_remote_protocol_errors": True}`. ([#826](https://github.com/deepgram/deepgram-python-sdk/issues/826)) ([3b3679c](https://github.com/deepgram/deepgram-python-sdk/commit/3b3679c5061c25a154561c63680adb668996f451))
+
 ## [7.17.0](https://github.com/deepgram/deepgram-python-sdk/compare/v7.16.0...v7.17.0) (2026-11-02)
 
 
