@@ -24,6 +24,7 @@ import pytest
 import respx
 import websockets.sync.client as websockets_sync_client
 
+import deepgram.listen.v1.client as listen_v1_client
 from deepgram import AsyncDeepgramClient, DeepgramClient
 from deepgram.core.api_error import ApiError
 from deepgram.core.events import EventType
@@ -142,6 +143,36 @@ WS_ENDPOINTS = [
     ("listen.v2", {"model": "flux-general-en"}),
 ]
 _WS_IDS = [e[0] for e in WS_ENDPOINTS]
+
+
+def test_listen_v1_connect_serializes_redact_usage(monkeypatch: pytest.MonkeyPatch) -> None:
+    captured_urls: typing.List[str] = []
+
+    def _connect(url: str, **_kwargs: typing.Any) -> _FakeSyncConnectCM:
+        captured_urls.append(url)
+        return _FakeSyncConnectCM(_FakeSyncWS())
+
+    monkeypatch.setattr(websockets_sync_client, "connect", _connect)
+    with _sync_client().listen.v1.connect(model="nova-3", redact_usage="true"):
+        pass
+
+    query = urllib.parse.parse_qs(urllib.parse.urlsplit(captured_urls[0]).query)
+    assert query["redact_usage"] == ["true"]
+
+
+async def test_async_listen_v1_connect_serializes_redact_usage(monkeypatch: pytest.MonkeyPatch) -> None:
+    captured_urls: typing.List[str] = []
+
+    def _connect(url: str, **_kwargs: typing.Any) -> _FakeAsyncConnectCM:
+        captured_urls.append(url)
+        return _FakeAsyncConnectCM(_FakeAsyncWS())
+
+    monkeypatch.setattr(listen_v1_client, "websockets_client_connect", _connect)
+    async with _async_client().listen.v1.connect(model="nova-3", redact_usage="false"):
+        pass
+
+    query = urllib.parse.parse_qs(urllib.parse.urlsplit(captured_urls[0]).query)
+    assert query["redact_usage"] == ["false"]
 
 
 def _async_connect_modules(leaf: str) -> typing.List[str]:

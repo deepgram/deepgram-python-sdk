@@ -82,11 +82,13 @@ def test_sync_connect_serializes_redact():
         with DeepgramClient(api_key="test_api_key").listen.v2.connect(
             model="flux-general-en",
             redact="aggressive_numbers",
+            redact_usage="true",
         ):
             pass
 
     _, query = _path_and_query(capture.url)
     assert query["redact"] == ["aggressive_numbers"]
+    assert query["redact_usage"] == ["true"]
 
 
 async def test_async_connect_serializes_redact():
@@ -95,11 +97,13 @@ async def test_async_connect_serializes_redact():
         async with AsyncDeepgramClient(api_key="test_api_key").listen.v2.connect(
             model="flux-general-en",
             redact="numbers",
+            redact_usage="false",
         ):
             pass
 
     _, query = _path_and_query(capture.url)
     assert query["redact"] == ["numbers"]
+    assert query["redact_usage"] == ["false"]
 
 
 def test_sync_connect_omits_numerals_when_absent():

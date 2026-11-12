@@ -107,12 +107,14 @@ def test_listen_v2_generated_warning_and_configure_fields_remain_typed_and_subsc
         thresholds=ListenV2ConfigureSuccessThresholds(eot_threshold=0.7),
         keyterms=[],
         numerals=True,
+        redact_usage=True,
         sequence_id=5,
     )
 
     assert warning["code"] == "NOTICE"
     assert failure["description"] == "invalid setting"
     assert success["numerals"] is True
+    assert success["redact_usage"] is True
 
 
 def test_unrelated_models_do_not_gain_subscript_access() -> None:
