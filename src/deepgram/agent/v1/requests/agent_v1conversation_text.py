@@ -23,7 +23,7 @@ class AgentV1ConversationTextParams(typing_extensions.TypedDict):
     The actual statement that was spoken
     """
 
-    conversational_behavior: AgentV1ConversationTextConversationalBehavior
+    conversational_behavior: typing_extensions.NotRequired[AgentV1ConversationTextConversationalBehavior]
     """
     Annotates what kind of utterance the message represents: `default` (a standard turn), `backchannel` (a short acknowledgement while the user held the floor), `presence_check` (a prompt after extended silence), or `filler` (a line covering a wait on a function call or a dynamic InjectAgentMessage). Always sent; it is `default` for every message while Think Live is off
     """

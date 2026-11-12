@@ -35,6 +35,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ListenV2Warning": ".listen_v2warning",
 }
 
+_dynamic_imports["ListenV2CloseStreamType"] = ".listen_v2close_stream_type"
+
 
 def __getattr__(attr_name: str) -> typing.Any:
     module_name = _dynamic_imports.get(attr_name)
@@ -72,3 +74,5 @@ __all__ = [
     "ListenV2TurnInfoWordsItem",
     "ListenV2Warning",
 ]
+
+__all__.append("ListenV2CloseStreamType")
