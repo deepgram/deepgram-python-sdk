@@ -101,25 +101,29 @@ class TestAudioGenerateSuccess:
 
     def test_sync_serializes_speed_and_expressivity(self) -> None:
         with respx.mock:
-            route = respx.route(host=HOST).mock(return_value=httpx.Response(200, content=b"audio-bytes"))
+            route = respx.post(f"{BASE}/v2/speak").mock(return_value=httpx.Response(200, content=b"audio-bytes"))
             list(
                 _sync_client().speak.v2.audio.generate(
                     model="flux-alexis-en", text="hello", speed=1.05, expressivity=2, normalize_volume=True
                 )
             )
         assert route.called
+        assert route.calls.last.request.method == "POST"
+        assert route.calls.last.request.url.path == "/v2/speak"
         assert route.calls.last.request.url.params["speed"] == "1.05"
         assert route.calls.last.request.url.params["expressivity"] == "2"
         assert route.calls.last.request.url.params["normalize_volume"] == "true"
 
     async def test_async_serializes_speed_and_expressivity(self) -> None:
         with respx.mock:
-            route = respx.route(host=HOST).mock(return_value=httpx.Response(200, content=b"audio-bytes"))
+            route = respx.post(f"{BASE}/v2/speak").mock(return_value=httpx.Response(200, content=b"audio-bytes"))
             async for _ in _async_client().speak.v2.audio.generate(
                 model="flux-alexis-en", text="hello", speed=1.05, expressivity=2, normalize_volume=False
             ):
                 pass
         assert route.called
+        assert route.calls.last.request.method == "POST"
+        assert route.calls.last.request.url.path == "/v2/speak"
         assert route.calls.last.request.url.params["speed"] == "1.05"
         assert route.calls.last.request.url.params["expressivity"] == "2"
         assert route.calls.last.request.url.params["normalize_volume"] == "false"
