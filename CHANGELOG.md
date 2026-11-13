@@ -1,5 +1,13 @@
 # Changelog
 
+## [7.19.0](https://github.com/deepgram/deepgram-python-sdk/compare/v7.18.0...v7.19.0) (2026-11-12)
+
+
+### Features
+
+* **Listen:** Add the optional `redact_usage` control to Listen V1 and V2 clients. Active Flux sessions can update it through `ListenV2Configure`, and `ListenV2ConfigureSuccess` reports the active setting. ([#828](https://github.com/deepgram/deepgram-python-sdk/issues/828)) ([0487431](https://github.com/deepgram/deepgram-python-sdk/commit/04874317a54cf3d9e27ec08e6067648463e85efc))
+* **Flux TTS:** Add the `normalize_volume` control for batch and WebSocket synthesis. Expand the typed Flux voice catalog with new multilingual voices, including support for Deepgram Agent TTS providers. ([#828](https://github.com/deepgram/deepgram-python-sdk/issues/828)) ([0487431](https://github.com/deepgram/deepgram-python-sdk/commit/04874317a54cf3d9e27ec08e6067648463e85efc))
+
 ## [7.18.0](https://github.com/deepgram/deepgram-python-sdk/compare/v7.17.0...v7.18.0) (2026-11-10)
 
 
