@@ -63,6 +63,19 @@ def test_client_generates_session_id_and_opts_out_of_redaction(client_cls: typin
 
 
 @pytest.mark.parametrize("client_cls", [DeepgramClient, AsyncDeepgramClient])
+def test_clients_sharing_a_headers_dict_keep_their_own_session_id(client_cls: typing.Any) -> None:
+    shared_headers = {"X-Custom": "value"}
+    first = client_cls(environment=_environment(), api_key="k", headers=shared_headers)
+    second = client_cls(environment=_environment(), api_key="k", headers=shared_headers)
+
+    for client in (first, second):
+        sent = client._client_wrapper.get_headers()
+        assert sent["x-deepgram-session-id"] == client.session_id
+        assert sent["X-Custom"] == "value"
+    assert shared_headers == {"X-Custom": "value"}
+
+
+@pytest.mark.parametrize("client_cls", [DeepgramClient, AsyncDeepgramClient])
 def test_client_with_transport_factory_disables_reconnect(client_cls: typing.Any) -> None:
     from deepgram.transport import restore_transport
 
