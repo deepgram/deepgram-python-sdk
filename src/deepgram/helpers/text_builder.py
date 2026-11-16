@@ -15,6 +15,9 @@ PRONUNCIATION_PATTERN = (
     + r'"word":\s*"(?:[^"\\]|\\.)*",\s*"pronounce":\s*"(?:[^"\\]|\\.)*"'
     + re.escape(r"\}")
 )
+_CONTROL_PATTERN = PRONUNCIATION_PATTERN + "|" + PAUSE_PATTERN
+_XML_ENTITY_PATTERN = r"&(?:#x([0-9a-fA-F]+)|#([0-9]+)|(amp|lt|gt|quot|apos));"
+_XML_ENTITIES = {"amp": "&", "lt": "<", "gt": ">", "quot": '"', "apos": "'"}
 
 
 class TextBuilder:
@@ -249,6 +252,7 @@ def ssml_to_deepgram(ssml_text: str) -> str:
     - <phoneme alphabet="ipa" ph="...">word</phoneme>
     - <break time="500ms"/> or <break time="0.5s"/>
     - Strips <speak> wrapper tags
+    - Decodes XML entities such as &amp; and &#39;
 
     Args:
         ssml_text: SSML-formatted text
@@ -290,9 +294,10 @@ def ssml_to_deepgram(ssml_text: str) -> str:
         alphabet_match = re.search(r'(?:^|\s)alphabet\s*=\s*(["\'])ipa\1(?=\s|$)', attributes)
         ph_match = re.search(r'(?:^|\s)ph\s*=\s*(["\'])(.*?)\1(?=\s|$)', attributes)
         if alphabet_match is None or ph_match is None:
+            # Left as text; entities are decoded with the rest of the text below.
             return word
-        ipa = ph_match.group(2)
-        return _pronunciation_control(word, ipa)
+        ipa = _unescape_xml(ph_match.group(2))
+        return _pronunciation_control(_unescape_xml(word), ipa)
 
     ssml_text = re.sub(phoneme_pattern, replace_phoneme, ssml_text)
 
@@ -318,6 +323,10 @@ def ssml_to_deepgram(ssml_text: str) -> str:
     # Remove any remaining XML tags
     ssml_text = re.sub(r"<[^>]+>", "", ssml_text)
 
+    # Decode XML entities (&amp;, &apos;, &#39;, ...) in the remaining text. Inline
+    # controls are skipped because their word and IPA were decoded above.
+    ssml_text = _unescape_xml_outside_controls(ssml_text)
+
     ssml_text = ssml_text.strip()
     pronunciation_count, pause_count = _control_counts(ssml_text)
     if pronunciation_count > 500:
@@ -327,6 +336,33 @@ def ssml_to_deepgram(ssml_text: str) -> str:
     if pronunciation_count and pause_count:
         raise ValueError("Pronunciation and pause controls cannot be combined in one Flux batch request")
     return ssml_text
+
+
+def _unescape_xml(text: str) -> str:
+    """Decode the predefined XML entities and numeric character references."""
+
+    def replace_entity(match):
+        hex_code, decimal_code, name = match.groups()
+        if name:
+            return _XML_ENTITIES[name]
+        try:
+            return chr(int(hex_code, 16) if hex_code else int(decimal_code))
+        except (ValueError, OverflowError):
+            return match.group(0)
+
+    return re.sub(_XML_ENTITY_PATTERN, replace_entity, text)
+
+
+def _unescape_xml_outside_controls(text: str) -> str:
+    """Decode XML entities in plain text while leaving inline controls unchanged."""
+    parts = []
+    position = 0
+    for match in re.finditer(_CONTROL_PATTERN, text):
+        parts.append(_unescape_xml(text[position : match.start()]))
+        parts.append(match.group(0))
+        position = match.end()
+    parts.append(_unescape_xml(text[position:]))
+    return "".join(parts)
 
 
 def validate_ipa(ipa: str) -> Tuple[bool, str]:

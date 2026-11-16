@@ -319,6 +319,34 @@ class TestSsmlToDeepgram:
         
         assert result == "Hello world"
     
+    def test_decodes_xml_entities_in_text(self):
+        """Escaped characters in SSML text must reach the output as plain characters"""
+        ssml = "<speak>AT&amp;T says it&apos;s 3 &lt; 5 &#38; &#x22;ok&quot;</speak>"
+        result = ssml_to_deepgram(ssml)
+
+        assert result == 'AT&T says it\'s 3 < 5 & "ok"'
+
+    def test_decodes_xml_entities_in_phoneme(self):
+        """Escaped characters in the phoneme word and ph attribute must be decoded"""
+        ssml = '<phoneme alphabet="ipa" ph="&#x2C8;e&#618; ti&#720; &#601;nd ti&#720;">AT&amp;T</phoneme>'
+        result = ssml_to_deepgram(ssml)
+
+        assert result == r'\{"word": "AT&T", "pronounce": "ˈeɪ tiː ənd tiː"\}'
+
+    def test_escaped_markup_stays_text(self):
+        """Escaped markup is text, not an SSML element"""
+        ssml = "<speak>Use &lt;break time=&quot;500ms&quot;/&gt; here</speak>"
+        result = ssml_to_deepgram(ssml)
+
+        assert result == 'Use <break time="500ms"/> here'
+
+    def test_decodes_entities_once_in_unsupported_phoneme(self):
+        """A phoneme without an IPA alphabet keeps its word as text, decoded once"""
+        ssml = '<speak><phoneme ph="x">&amp;lt;b&amp;gt;</phoneme></speak>'
+        result = ssml_to_deepgram(ssml)
+
+        assert result == "&lt;b&gt;"
+
     def test_complex_ssml_rejects_mixed_controls(self):
         """Flux batch cannot combine SSML phoneme and break controls."""
         ssml = '''<speak>
