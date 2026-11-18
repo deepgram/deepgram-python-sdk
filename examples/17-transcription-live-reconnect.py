@@ -284,9 +284,9 @@ class ResilientTranscriber:
                 try:
                     outcome, detail = self._run_session()
                 except (ApiError, InvalidStatus) as err:
-                    # A rejected handshake surfaces as ApiError, or as the
-                    # websockets library's InvalidStatus depending on the
-                    # installed websockets version.
+                    # A rejected handshake raises ApiError. Older SDK releases
+                    # raised the websockets library's InvalidStatus from the
+                    # sync client, so that is caught here as well.
                     status = err.status_code if isinstance(err, ApiError) else err.response.status_code
                     if status in (401, 403):
                         # Bad credentials never fix themselves — do not retry.
