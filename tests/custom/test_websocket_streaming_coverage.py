@@ -124,8 +124,10 @@ class _FakeAsyncConnectCM:
         return False
 
 
-def _make_invalid_status(code: int) -> InvalidWebSocketStatus:
-    exc = InvalidWebSocketStatus.__new__(InvalidWebSocketStatus)
+def _make_invalid_status(code: int) -> Exception:
+    # InvalidWebSocketStatus is a tuple of the websockets handshake-rejection classes.
+    exc_class = InvalidWebSocketStatus[0]
+    exc = exc_class.__new__(exc_class)
     # Support both websockets layouts: legacy reads exc.status_code, newer reads
     # exc.response.status_code.
     exc.status_code = code  # type: ignore[attr-defined]
