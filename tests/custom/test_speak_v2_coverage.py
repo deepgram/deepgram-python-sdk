@@ -262,9 +262,11 @@ class _RaisingConnect:
 
 
 def _invalid_status_exc():
-    # Build an InvalidWebSocketStatus without invoking its version-specific
-    # constructor; connect() reads the code via get_status_code, which we patch.
-    return speak_v2_client.InvalidWebSocketStatus.__new__(speak_v2_client.InvalidWebSocketStatus)
+    # InvalidWebSocketStatus is a tuple of the websockets handshake-rejection
+    # classes. Build one without invoking its version-specific constructor;
+    # connect() reads the code via get_status_code, which we patch.
+    exc_class = speak_v2_client.InvalidWebSocketStatus[0]
+    return exc_class.__new__(exc_class)
 
 
 class TestConnectHeaders:
@@ -376,9 +378,7 @@ class TestRawConnect:
 
     @pytest.mark.parametrize("status,needle", [(401, "invalid credentials"), (503, "Unexpected error")])
     def test_sync_raw_connect_handshake_failure(self, status: int, needle: str) -> None:
-        raising = _RaisingConnect(
-            speak_v2_raw_client.InvalidWebSocketStatus.__new__(speak_v2_raw_client.InvalidWebSocketStatus)
-        )
+        raising = _RaisingConnect(_invalid_status_exc())
         with (
             patch.object(speak_v2_raw_client.websockets_sync_client, "connect", raising),
             patch.object(speak_v2_raw_client, "get_status_code", lambda exc: status),
@@ -391,9 +391,7 @@ class TestRawConnect:
 
     @pytest.mark.parametrize("status,needle", [(401, "invalid credentials"), (503, "Unexpected error")])
     async def test_async_raw_connect_handshake_failure(self, status: int, needle: str) -> None:
-        raising = _RaisingConnect(
-            speak_v2_raw_client.InvalidWebSocketStatus.__new__(speak_v2_raw_client.InvalidWebSocketStatus)
-        )
+        raising = _RaisingConnect(_invalid_status_exc())
         with (
             patch.object(speak_v2_raw_client, "websockets_client_connect", raising),
             patch.object(speak_v2_raw_client, "get_status_code", lambda exc: status),
