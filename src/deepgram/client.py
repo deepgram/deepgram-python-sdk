@@ -6,6 +6,10 @@ Adds support for:
   - If `access_token` is provided, it takes precedence and sets `Authorization: bearer <token>`
   - When `access_token` is used, `api_key` is forced to "token" to satisfy the generator,
     but the Authorization header is overridden for all HTTP and WebSocket requests.
+- `auth=False` for self-hosted or local Deepgram servers that don't require authentication:
+  - No API key is needed, and no Authorization header is sent on HTTP or WebSocket requests.
+  - When no key is available and the environment is not a Deepgram host, the missing-key
+    error suggests `auth=False`.
 - `session_id` as a header sent with every request and websocket connection:
   - If `session_id` is provided, it will be used; otherwise, a UUID is auto-generated
   - The session_id is sent as the `x-deepgram-session-id` header
@@ -24,6 +28,7 @@ Adds support for:
 
 import os
 import types
+import urllib.parse
 import uuid
 from typing import Any, Callable, Dict, Optional
 
@@ -57,6 +62,85 @@ def _apply_bearer_authorization_override(client_wrapper: BaseClientWrapper, bear
         client_wrapper.httpx_client.base_headers = client_wrapper.get_headers
 
 
+def _apply_no_authorization_override(client_wrapper: BaseClientWrapper) -> None:
+    """Drop the Authorization header from every HTTP and WebSocket request (``auth=False``)."""
+    original_get_headers = client_wrapper.get_headers
+
+    def _get_headers_without_auth(_self: Any) -> Dict[str, str]:
+        headers = original_get_headers()
+        headers.pop("Authorization", None)
+        return headers
+
+    client_wrapper.get_headers = types.MethodType(_get_headers_without_auth, client_wrapper)  # type: ignore[method-assign]
+
+    if hasattr(client_wrapper, "httpx_client") and hasattr(client_wrapper.httpx_client, "base_headers"):
+        client_wrapper.httpx_client.base_headers = client_wrapper.get_headers
+
+
+_MISSING_KEY_MESSAGE = "The client must be instantiated by either passing in api_key or setting DEEPGRAM_API_KEY"
+_SELF_HOSTED_NO_AUTH_HINT = (
+    "If you are connecting to a self-hosted or local Deepgram server that does not require "
+    "authentication, pass auth=False when initializing the client."
+)
+
+
+def _is_deepgram_hosted(environment: Any) -> bool:
+    """Whether the environment's REST base is Deepgram's hosted API.
+
+    Unknown or unparseable environments count as hosted, so the standard missing-key message is
+    kept unless the host is clearly somewhere else.
+    """
+    base = getattr(environment, "base", None)
+    if not isinstance(base, str) or not base:
+        return True
+    try:
+        host = (urllib.parse.urlparse(base).hostname or "").lower()
+    except ValueError:
+        return True
+    if not host:
+        return True
+    return host == "deepgram.com" or host.endswith(".deepgram.com")
+
+
+def _missing_key_error(environment: Any) -> ApiError:
+    body = _MISSING_KEY_MESSAGE
+    if not _is_deepgram_hosted(environment):
+        body = f"{body}. {_SELF_HOSTED_NO_AUTH_HINT}"
+    return ApiError(body=body)
+
+
+def _resolve_credentials(kwargs: Dict[str, Any], access_token: Optional[str], auth: Any) -> None:
+    """Fill ``kwargs["api_key"]`` for the generated base client, or raise if no credential is available.
+
+    Shared by the sync and async clients. The generated base client requires an api_key, so
+    ``access_token`` and ``auth=False`` set a placeholder; the Authorization header is then
+    replaced (Bearer) or removed after construction.
+    """
+    if auth is not None and auth is not False:
+        raise ValueError("auth only accepts False, to disable authentication for self-hosted servers")
+
+    environment = kwargs.get("environment")
+    if auth is False:
+        if access_token is not None or kwargs.get("api_key") is not None:
+            raise ValueError("auth=False cannot be combined with api_key or access_token")
+        kwargs["api_key"] = ""
+    elif access_token is not None:
+        # access_token takes precedence over api_key; the header becomes Bearer after construction.
+        if kwargs.get("api_key") is None:
+            kwargs["api_key"] = "token"
+    elif "api_key" in kwargs and kwargs["api_key"] is None:
+        # Fern now resolves None to DEEPGRAM_API_KEY in the base client. Preserve the SDK
+        # contract that an explicit None disables ambient lookup.
+        raise _missing_key_error(environment)
+    elif "api_key" not in kwargs:
+        # The generated base client takes os.getenv("DEEPGRAM_API_KEY") as a default argument, so
+        # it is read once at import. Re-read it here so a key set after import (load_dotenv below
+        # the imports) is still picked up.
+        kwargs["api_key"] = os.getenv("DEEPGRAM_API_KEY")
+        if kwargs["api_key"] is None:
+            raise _missing_key_error(environment)
+
+
 class DeepgramClient(BaseClient):
     """
     Custom Deepgram client that extends the generated BaseClient.
@@ -65,6 +149,8 @@ class DeepgramClient(BaseClient):
     - `session_id`: Optional session identifier. If not provided, a UUID is auto-generated.
                      Sent as `x-deepgram-session-id` header in all requests and websocket connections.
     - `access_token`: Alternative to `api_key`. If provided, uses Bearer token authentication.
+    - `auth`: Pass ``False`` for a self-hosted or local Deepgram server that doesn't require
+              authentication. No API key is needed and no Authorization header is sent.
     - `transport_factory`: Custom sync WebSocket transport factory. A callable
                            ``factory(url, headers) -> transport`` whose return value must support
                            ``send()``, ``recv()``, iteration, and ``close()``.
@@ -83,6 +169,7 @@ class DeepgramClient(BaseClient):
 
     def __init__(self, *args, **kwargs) -> None:
         access_token: Optional[str] = kwargs.pop("access_token", None)
+        auth: Any = kwargs.pop("auth", None)
         session_id: Optional[str] = kwargs.pop("session_id", None)
         transport_factory: Optional[Callable] = kwargs.pop("transport_factory", None)
         reconnect: bool = bool(kwargs.pop("reconnect", True))
@@ -109,31 +196,17 @@ class DeepgramClient(BaseClient):
         # Ensure every request has a session identifier header
         headers["x-deepgram-session-id"] = final_session_id
 
-        # Handle access_token: if provided, it takes precedence over api_key
-        # The base client requires api_key, so we set a placeholder if needed
-        # The Authorization header will be overridden to use Bearer token
-        if access_token is not None:
-            # Set a placeholder api_key if none provided (base client requires it)
-            if kwargs.get("api_key") is None:
-                kwargs["api_key"] = "token"
-        elif "api_key" in kwargs and kwargs["api_key"] is None:
-            # Fern now resolves None to DEEPGRAM_API_KEY in BaseClient. Preserve
-            # the SDK contract that an explicit None disables ambient lookup.
-            raise ApiError(
-                body="The client must be instantiated by either passing in api_key or setting DEEPGRAM_API_KEY"
-            )
-        elif "api_key" not in kwargs:
-            # The generated base client takes os.getenv("DEEPGRAM_API_KEY") as a default
-            # argument, so it is read once at import. Re-read it here so a key set after
-            # import (load_dotenv below the imports) is still picked up.
-            kwargs["api_key"] = os.getenv("DEEPGRAM_API_KEY")
+        _resolve_credentials(kwargs, access_token, auth)
 
         super().__init__(*args, **kwargs)
         self.session_id = final_session_id
 
-        # Override Authorization header to use Bearer token if access_token was provided
+        # Override Authorization header to use Bearer token if access_token was provided,
+        # or drop it entirely for auth=False
         if access_token is not None:
             _apply_bearer_authorization_override(self._client_wrapper, access_token)
+        elif auth is False:
+            _apply_no_authorization_override(self._client_wrapper)
 
         # Install custom WebSocket transport if provided. Auto-disable
         # `reconnect`: a custom transport owns its retry lifecycle, so flip
@@ -155,6 +228,8 @@ class AsyncDeepgramClient(AsyncBaseClient):
     - `session_id`: Optional session identifier. If not provided, a UUID is auto-generated.
                      Sent as `x-deepgram-session-id` header in all requests and websocket connections.
     - `access_token`: Alternative to `api_key`. If provided, uses Bearer token authentication.
+    - `auth`: Pass ``False`` for a self-hosted or local Deepgram server that doesn't require
+              authentication. No API key is needed and no Authorization header is sent.
     - `transport_factory`: Custom async WebSocket transport factory. A callable
                            ``factory(url, headers) -> transport`` whose return value must support
                            ``send()``, ``recv()``, async iteration, and ``close()``.
@@ -173,6 +248,7 @@ class AsyncDeepgramClient(AsyncBaseClient):
 
     def __init__(self, *args, **kwargs) -> None:
         access_token: Optional[str] = kwargs.pop("access_token", None)
+        auth: Any = kwargs.pop("auth", None)
         session_id: Optional[str] = kwargs.pop("session_id", None)
         transport_factory: Optional[Callable] = kwargs.pop("transport_factory", None)
         reconnect: bool = bool(kwargs.pop("reconnect", True))
@@ -199,31 +275,17 @@ class AsyncDeepgramClient(AsyncBaseClient):
         # Ensure every request has a session identifier header
         headers["x-deepgram-session-id"] = final_session_id
 
-        # Handle access_token: if provided, it takes precedence over api_key
-        # The base client requires api_key, so we set a placeholder if needed
-        # The Authorization header will be overridden to use Bearer token
-        if access_token is not None:
-            # Set a placeholder api_key if none provided (base client requires it)
-            if kwargs.get("api_key") is None:
-                kwargs["api_key"] = "token"
-        elif "api_key" in kwargs and kwargs["api_key"] is None:
-            # Fern now resolves None to DEEPGRAM_API_KEY in AsyncBaseClient.
-            # Preserve the SDK contract that explicit None disables ambient lookup.
-            raise ApiError(
-                body="The client must be instantiated by either passing in api_key or setting DEEPGRAM_API_KEY"
-            )
-        elif "api_key" not in kwargs:
-            # The generated base client takes os.getenv("DEEPGRAM_API_KEY") as a default
-            # argument, so it is read once at import. Re-read it here so a key set after
-            # import (load_dotenv below the imports) is still picked up.
-            kwargs["api_key"] = os.getenv("DEEPGRAM_API_KEY")
+        _resolve_credentials(kwargs, access_token, auth)
 
         super().__init__(*args, **kwargs)
         self.session_id = final_session_id
 
-        # Override Authorization header to use Bearer token if access_token was provided
+        # Override Authorization header to use Bearer token if access_token was provided,
+        # or drop it entirely for auth=False
         if access_token is not None:
             _apply_bearer_authorization_override(self._client_wrapper, access_token)
+        elif auth is False:
+            _apply_no_authorization_override(self._client_wrapper)
 
         # Install custom WebSocket transport if provided. Auto-disable
         # `reconnect`: a custom transport owns its retry lifecycle, so flip
