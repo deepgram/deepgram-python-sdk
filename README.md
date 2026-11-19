@@ -231,6 +231,27 @@ The SDK automatically discovers credentials from these environment variables:
 
 **Precedence:** Explicit parameters > Environment variables
 
+### Self-Hosted and Local Servers Without Authentication
+
+A self-hosted or local Deepgram server may not require request authentication. Point the client at it with a custom environment and pass `auth=False` so the SDK doesn't ask for an API key:
+
+```python
+from deepgram import DeepgramClient
+from deepgram.environment import DeepgramClientEnvironment
+
+client = DeepgramClient(
+    environment=DeepgramClientEnvironment(
+        base="http://127.0.0.1:8000",
+        production="ws://127.0.0.1:8000",
+        agent="ws://127.0.0.1:8000",
+        agent_rest="http://127.0.0.1:8000",
+    ),
+    auth=False,
+)
+```
+
+With `auth=False` no `Authorization` header is sent on HTTP requests or WebSocket connections, and `DEEPGRAM_API_KEY` is ignored. It can't be combined with `api_key` or `access_token`; if your server does require a key, pass `api_key` as usual.
+
 ## Async Client
 
 The SDK provides full async/await support for non-blocking operations:
