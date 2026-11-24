@@ -192,6 +192,14 @@ def _without_authorization(headers: typing.Dict[str, typing.Any]) -> typing.Dict
     return {key: value for key, value in headers.items() if key.lower() != "authorization"}
 
 
+def _disable_httpx_authentication(client: typing.Union[httpx.Client, httpx.AsyncClient]) -> None:
+    """Remove authentication configured directly on a caller-provided HTTPX client."""
+    for key in list(client.headers):
+        if key.lower() == "authorization":
+            del client.headers[key]
+    client.auth = None
+
+
 def _redact_headers(headers: typing.Dict[str, str]) -> typing.Dict[str, str]:
     return {
         k: ("[REDACTED]" if k.lower() in _SENSITIVE_HEADERS or k.lower() in _AUTH_HEADERS else v)
@@ -376,6 +384,10 @@ class HttpClient:
         self.logger = create_logger(logging_config)
         self.auth_disabled = False
 
+    def disable_authentication(self) -> None:
+        self.auth_disabled = True
+        _disable_httpx_authentication(self.httpx_client)
+
     def get_base_url(self, maybe_base_url: typing.Optional[str]) -> str:
         base_url = maybe_base_url
         if self.base_url is not None and base_url is None:
@@ -465,6 +477,7 @@ class HttpClient:
         )
         if self.auth_disabled:
             _request_headers = _without_authorization(_request_headers)
+            _disable_httpx_authentication(self.httpx_client)
         _request_headers = drop_content_type_without_body(
             _request_headers, json_body=json_body, data_body=data_body, optional_body=optional_body
         )
@@ -641,6 +654,7 @@ class HttpClient:
         )
         if self.auth_disabled:
             _request_headers = _without_authorization(_request_headers)
+            _disable_httpx_authentication(self.httpx_client)
         _request_headers = drop_content_type_without_body(
             _request_headers, json_body=json_body, data_body=data_body, optional_body=optional_body
         )
@@ -687,6 +701,10 @@ class AsyncHttpClient:
         self.httpx_client = httpx_client
         self.logger = create_logger(logging_config)
         self.auth_disabled = False
+
+    def disable_authentication(self) -> None:
+        self.auth_disabled = True
+        _disable_httpx_authentication(self.httpx_client)
 
     async def _get_headers(self) -> typing.Dict[str, str]:
         if self.async_base_headers is not None:
@@ -785,6 +803,7 @@ class AsyncHttpClient:
         )
         if self.auth_disabled:
             _request_headers = _without_authorization(_request_headers)
+            _disable_httpx_authentication(self.httpx_client)
         _request_headers = drop_content_type_without_body(
             _request_headers, json_body=json_body, data_body=data_body, optional_body=optional_body
         )
@@ -964,6 +983,7 @@ class AsyncHttpClient:
         )
         if self.auth_disabled:
             _request_headers = _without_authorization(_request_headers)
+            _disable_httpx_authentication(self.httpx_client)
         _request_headers = drop_content_type_without_body(
             _request_headers, json_body=json_body, data_body=data_body, optional_body=optional_body
         )

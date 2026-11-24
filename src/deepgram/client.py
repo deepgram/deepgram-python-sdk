@@ -95,7 +95,7 @@ def _apply_no_authorization_override(client_wrapper: BaseClientWrapper) -> None:
         # HTTP clients merge endpoint and request-option headers after
         # ``base_headers``. Mark this client so the final merged map also drops
         # Authorization before the request is sent.
-        client_wrapper.httpx_client.auth_disabled = True  # type: ignore[attr-defined]
+        client_wrapper.httpx_client.disable_authentication()  # type: ignore[attr-defined]
 
 
 _MISSING_KEY_MESSAGE = "The client must be instantiated by either passing in api_key or setting DEEPGRAM_API_KEY"
