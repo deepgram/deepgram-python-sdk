@@ -141,6 +141,26 @@ def test_auth_false_removes_authorization_from_a_supplied_httpx_client() -> None
     assert httpx_client.auth is None
 
 
+def test_auth_false_removes_authorization_from_a_supplied_httpx_client_on_streams() -> None:
+    seen: typing.List[httpx.Request] = []
+    httpx_client = httpx.Client(
+        headers={"Authorization": "Token httpx-client"},
+        auth=("username", "password"),
+        transport=_capturing_transport(seen),
+    )
+    client = DeepgramClient(environment=LOCAL, auth=False, httpx_client=httpx_client)
+
+    list(
+        client.speak.v1.audio.generate(
+            text="test",
+            request_options={"additional_headers": {"authorization": "Token request-header"}},
+        )
+    )
+
+    _assert_no_authorization(seen[0].headers)
+    assert httpx_client.auth is None
+
+
 async def test_async_auth_false_sends_no_authorization_over_http() -> None:
     seen: typing.List[httpx.Request] = []
     client = AsyncDeepgramClient(
@@ -165,6 +185,25 @@ async def test_async_auth_false_removes_authorization_from_a_supplied_httpx_clie
     )
     client = AsyncDeepgramClient(environment=LOCAL, auth=False, httpx_client=httpx_client)
     await client.manage.v1.models.list()
+
+    _assert_no_authorization(seen[0].headers)
+    assert httpx_client.auth is None
+
+
+async def test_async_auth_false_removes_authorization_from_a_supplied_httpx_client_on_streams() -> None:
+    seen: typing.List[httpx.Request] = []
+    httpx_client = httpx.AsyncClient(
+        headers={"Authorization": "Token httpx-client"},
+        auth=("username", "password"),
+        transport=_capturing_transport(seen),
+    )
+    client = AsyncDeepgramClient(environment=LOCAL, auth=False, httpx_client=httpx_client)
+
+    async for _ in client.speak.v1.audio.generate(
+        text="test",
+        request_options={"additional_headers": {"authorization": "Token request-header"}},
+    ):
+        pass
 
     _assert_no_authorization(seen[0].headers)
     assert httpx_client.auth is None
