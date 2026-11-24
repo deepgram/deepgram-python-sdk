@@ -87,18 +87,19 @@ _SELF_HOSTED_NO_AUTH_HINT = (
 def _is_deepgram_hosted(environment: Any) -> bool:
     """Whether the environment's REST base is Deepgram's hosted API.
 
-    Unknown or unparseable environments count as hosted, so the standard missing-key message is
-    kept unless the host is clearly somewhere else.
+    Only an unset environment counts as hosted, because the client then uses
+    ``DeepgramClientEnvironment.PRODUCTION``. A base that can't be parsed or has no host (for
+    example ``"127.0.0.1:8000"``, with the scheme left off) can never be Deepgram's host.
     """
-    base = getattr(environment, "base", None)
-    if not isinstance(base, str) or not base:
+    if environment is None:
         return True
+    base = getattr(environment, "base", None)
+    if not isinstance(base, str):
+        return False
     try:
         host = (urllib.parse.urlparse(base).hostname or "").lower()
     except ValueError:
-        return True
-    if not host:
-        return True
+        return False
     return host == "deepgram.com" or host.endswith(".deepgram.com")
 
 

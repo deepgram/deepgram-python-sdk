@@ -197,3 +197,17 @@ def test_a_look_alike_host_is_not_treated_as_deepgram() -> None:
         agent_rest="https://notdeepgram.com",
     )
     assert "auth=False" in _missing_key_body(environment=lookalike)
+
+
+def test_a_base_without_a_scheme_gets_the_hint() -> None:
+    # An easy mistake with a local server: "127.0.0.1:8000" parses with no host, and a base with
+    # no host can never be Deepgram's.
+    schemeless = DeepgramClientEnvironment(
+        base="127.0.0.1:8000",
+        production="127.0.0.1:8000",
+        agent="127.0.0.1:8000",
+        agent_rest="127.0.0.1:8000",
+    )
+    body = _missing_key_body(environment=schemeless)
+    assert body.startswith(MISSING_KEY)
+    assert "auth=False" in body
