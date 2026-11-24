@@ -40,6 +40,22 @@ from .transport import install_transport
 from deepgram.core.client_wrapper import BaseClientWrapper
 
 
+class _NoAuthorizationHeaders(Dict[str, str]):
+    """A header map that permanently drops case-insensitive Authorization keys."""
+
+    def __init__(self, headers: Dict[str, str]) -> None:
+        super().__init__()
+        self.update(headers)
+
+    def __setitem__(self, key: str, value: str) -> None:
+        if key.lower() != "authorization":
+            super().__setitem__(key, value)
+
+    def update(self, *args: Any, **kwargs: str) -> None:
+        for key, value in dict(*args, **kwargs).items():
+            self[key] = value
+
+
 def _apply_bearer_authorization_override(client_wrapper: BaseClientWrapper, bearer_token: str) -> None:
     """Override header providers to always use a Bearer authorization token.
 
@@ -67,14 +83,19 @@ def _apply_no_authorization_override(client_wrapper: BaseClientWrapper) -> None:
     original_get_headers = client_wrapper.get_headers
 
     def _get_headers_without_auth(_self: Any) -> Dict[str, str]:
-        headers = original_get_headers()
-        headers.pop("Authorization", None)
-        return headers
+        # Generated WebSocket clients append their per-call ``authorization`` and
+        # ``additional_headers`` after invoking this provider. Return a mapping
+        # that keeps suppressing the header through those later mutations.
+        return _NoAuthorizationHeaders(original_get_headers())
 
     client_wrapper.get_headers = types.MethodType(_get_headers_without_auth, client_wrapper)  # type: ignore[method-assign]
 
     if hasattr(client_wrapper, "httpx_client") and hasattr(client_wrapper.httpx_client, "base_headers"):
         client_wrapper.httpx_client.base_headers = client_wrapper.get_headers
+        # HTTP clients merge endpoint and request-option headers after
+        # ``base_headers``. Mark this client so the final merged map also drops
+        # Authorization before the request is sent.
+        client_wrapper.httpx_client.auth_disabled = True  # type: ignore[attr-defined]
 
 
 _MISSING_KEY_MESSAGE = "The client must be instantiated by either passing in api_key or setting DEEPGRAM_API_KEY"

@@ -20,9 +20,11 @@ import httpx
 import pytest
 
 import deepgram.listen.v2.client as listen_v2_client
+import deepgram.listen.v2.raw_client as listen_v2_raw_client
 from deepgram import AsyncDeepgramClient, DeepgramClient
 from deepgram.core.api_error import ApiError
 from deepgram.environment import DeepgramClientEnvironment
+from deepgram.transport import restore_transport
 
 LOCAL = DeepgramClientEnvironment(
     base="http://127.0.0.1:8000",
@@ -63,12 +65,21 @@ class _CaptureConnect:
         return False
 
 
+class _CloseOnlyTransport:
+    def close(self) -> None:
+        pass
+
+
 def _capturing_transport(seen: typing.List[httpx.Request]) -> httpx.MockTransport:
     def handler(request: httpx.Request) -> httpx.Response:
         seen.append(request)
         return httpx.Response(200, json={})
 
     return httpx.MockTransport(handler)
+
+
+def _assert_no_authorization(headers: typing.Mapping[str, str]) -> None:
+    assert all(key.lower() != "authorization" for key in headers)
 
 
 # --------------------------------------------------------------------------- construction
@@ -105,40 +116,85 @@ def test_auth_accepts_only_false(value: typing.Any) -> None:
 def test_auth_false_sends_no_authorization_over_http() -> None:
     seen: typing.List[httpx.Request] = []
     client = DeepgramClient(
-        environment=LOCAL, auth=False, httpx_client=httpx.Client(transport=_capturing_transport(seen))
+        environment=LOCAL,
+        auth=False,
+        headers={"authorization": "Token client-header"},
+        httpx_client=httpx.Client(transport=_capturing_transport(seen)),
     )
-    client.manage.v1.models.list()
+    client.manage.v1.models.list(request_options={"additional_headers": {"Authorization": "Token request-header"}})
     assert len(seen) == 1
     assert str(seen[0].url).startswith("http://127.0.0.1:8000/v1/models")
-    assert "authorization" not in seen[0].headers
+    _assert_no_authorization(seen[0].headers)
 
 
 async def test_async_auth_false_sends_no_authorization_over_http() -> None:
     seen: typing.List[httpx.Request] = []
     client = AsyncDeepgramClient(
-        environment=LOCAL, auth=False, httpx_client=httpx.AsyncClient(transport=_capturing_transport(seen))
+        environment=LOCAL,
+        auth=False,
+        headers={"authorization": "Token client-header"},
+        httpx_client=httpx.AsyncClient(transport=_capturing_transport(seen)),
     )
-    await client.manage.v1.models.list()
+    await client.manage.v1.models.list(
+        request_options={"additional_headers": {"Authorization": "Token request-header"}}
+    )
     assert len(seen) == 1
-    assert "authorization" not in seen[0].headers
+    _assert_no_authorization(seen[0].headers)
 
 
 def test_auth_false_sends_no_authorization_on_websocket_handshake() -> None:
     capture = _CaptureConnect()
     with patch.object(listen_v2_client.websockets_sync_client, "connect", capture):
-        with DeepgramClient(environment=LOCAL, auth=False).listen.v2.connect(model="flux-general-en"):
+        with DeepgramClient(
+            environment=LOCAL, auth=False, headers={"authorization": "Token client-header"}
+        ).listen.v2.connect(
+            model="flux-general-en",
+            authorization="Token connect-argument",
+            request_options={"additional_headers": {"Authorization": "Token request-header"}},
+        ):
             pass
     assert capture.url is not None and capture.url.startswith("ws://127.0.0.1:8000/v2/listen")
-    assert "Authorization" not in capture.headers
+    _assert_no_authorization(capture.headers)
     assert "x-deepgram-session-id" in capture.headers
 
 
 async def test_async_auth_false_sends_no_authorization_on_websocket_handshake() -> None:
     capture = _CaptureConnect()
-    with patch.object(listen_v2_client, "websockets_client_connect", capture):
-        async with AsyncDeepgramClient(environment=LOCAL, auth=False).listen.v2.connect(model="flux-general-en"):
+    with patch.object(listen_v2_raw_client, "websockets_client_connect", capture):
+        async with AsyncDeepgramClient(
+            environment=LOCAL, auth=False, headers={"authorization": "Token client-header"}
+        ).listen.v2.with_raw_response.connect(
+            model="flux-general-en",
+            authorization="Token connect-argument",
+            request_options={"additional_headers": {"Authorization": "Token request-header"}},
+        ):
             pass
-    assert "Authorization" not in capture.headers
+    _assert_no_authorization(capture.headers)
+
+
+def test_auth_false_sends_no_authorization_to_a_custom_websocket_transport() -> None:
+    captured: typing.Dict[str, str] = {}
+
+    def factory(_url: str, headers: typing.Dict[str, str]) -> _CloseOnlyTransport:
+        captured.update(headers)
+        return _CloseOnlyTransport()
+
+    try:
+        with DeepgramClient(
+            environment=LOCAL,
+            auth=False,
+            headers={"authorization": "Token client-header"},
+            transport_factory=factory,
+        ).listen.v2.connect(
+            model="flux-general-en",
+            authorization="Token connect-argument",
+            request_options={"additional_headers": {"Authorization": "Token request-header"}},
+        ):
+            pass
+    finally:
+        restore_transport()
+
+    _assert_no_authorization(captured)
 
 
 def test_a_key_is_still_sent_to_a_self_hosted_server() -> None:
