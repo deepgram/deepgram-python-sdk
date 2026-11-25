@@ -189,6 +189,28 @@ def test_auth_false_sends_no_authorization_over_http() -> None:
     _assert_no_authorization(seen[0].headers)
 
 
+def test_auth_false_matches_origin_with_uppercase_scheme_and_default_port() -> None:
+    # httpx keeps an explicit default port when the scheme is uppercase, so the hook
+    # must normalize the request URL the same way it normalizes the environment.
+    seen: typing.List[httpx.Request] = []
+    environment = DeepgramClientEnvironment(
+        base="HTTP://localhost:80",
+        production="ws://localhost:80",
+        agent="ws://localhost:80",
+        agent_rest="HTTP://localhost:80",
+    )
+    client = DeepgramClient(
+        environment=environment,
+        auth=False,
+        httpx_client=httpx.Client(
+            headers={"Authorization": "Token httpx-client"}, transport=_capturing_transport(seen)
+        ),
+    )
+    client.manage.v1.models.list(request_options={"additional_headers": {"Authorization": "Token request-header"}})
+    assert len(seen) == 1
+    _assert_no_authorization(seen[0].headers)
+
+
 def test_auth_false_only_strips_authorization_from_its_own_httpx_requests() -> None:
     seen: typing.List[httpx.Request] = []
     httpx_client = httpx.Client(

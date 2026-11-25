@@ -105,7 +105,9 @@ def _environment_origins(environment: Any) -> set[tuple[str, str, Optional[int]]
 def _remove_authorization_from_request(
     request: httpx.Request, target_origins: set[tuple[str, str, Optional[int]]], session_id: str
 ) -> None:
-    request_origin = (request.url.scheme, request.url.host, request.url.port)
+    # Normalize the request URL with the same helper used for the environment so an
+    # explicit default port survives httpx's scheme-case-sensitive port handling.
+    request_origin = _origin(str(request.url))
     if request_origin not in target_origins or request.headers.get("x-deepgram-session-id") != session_id:
         return
 
