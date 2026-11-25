@@ -32,6 +32,7 @@ import urllib.parse
 import uuid
 from typing import Any, Callable, Dict, Optional
 
+import httpx
 from ._secure_logging import install_websocket_log_redaction
 from .base_client import AsyncBaseClient, BaseClient
 from .core.api_error import ApiError
@@ -78,7 +79,60 @@ def _apply_bearer_authorization_override(client_wrapper: BaseClientWrapper, bear
         client_wrapper.httpx_client.base_headers = client_wrapper.get_headers
 
 
-def _apply_no_authorization_override(client_wrapper: BaseClientWrapper) -> None:
+def _origin(url: str) -> Optional[tuple[str, str, Optional[int]]]:
+    try:
+        parsed = urllib.parse.urlparse(url)
+        if parsed.scheme not in ("http", "https") or parsed.hostname is None:
+            return None
+        scheme = parsed.scheme.lower()
+        port = parsed.port
+        if (scheme == "http" and port == 80) or (scheme == "https" and port == 443):
+            port = None
+        return scheme, parsed.hostname.lower(), port
+    except ValueError:
+        return None
+
+
+def _environment_origins(environment: Any) -> set[tuple[str, str, Optional[int]]]:
+    return {
+        origin
+        for name in ("base", "agent_rest")
+        if isinstance(url := getattr(environment, name, None), str)
+        if (origin := _origin(url)) is not None
+    }
+
+
+def _remove_authorization_from_request(
+    request: httpx.Request, target_origins: set[tuple[str, str, Optional[int]]], session_id: str
+) -> None:
+    request_origin = (request.url.scheme, request.url.host, request.url.port)
+    if request_origin not in target_origins or request.headers.get("x-deepgram-session-id") != session_id:
+        return
+
+    for header in list(request.headers):
+        if header.lower() == "authorization":
+            del request.headers[header]
+
+
+def _install_no_authorization_request_hook(
+    httpx_client: Any, target_origins: set[tuple[str, str, Optional[int]]], session_id: str
+) -> None:
+    """Strip Authorization only from this client's requests to its Deepgram origins."""
+
+    def sync_request_hook(request: httpx.Request) -> None:
+        _remove_authorization_from_request(request, target_origins, session_id)
+
+    if isinstance(httpx_client, httpx.AsyncClient):
+
+        async def async_request_hook(request: httpx.Request) -> None:
+            _remove_authorization_from_request(request, target_origins, session_id)
+
+        httpx_client.event_hooks.setdefault("request", []).append(async_request_hook)
+    else:
+        httpx_client.event_hooks.setdefault("request", []).append(sync_request_hook)
+
+
+def _apply_no_authorization_override(client_wrapper: BaseClientWrapper, session_id: str) -> None:
     """Drop the Authorization header from every HTTP and WebSocket request (``auth=False``)."""
     original_get_headers = client_wrapper.get_headers
 
@@ -92,10 +146,11 @@ def _apply_no_authorization_override(client_wrapper: BaseClientWrapper) -> None:
 
     if hasattr(client_wrapper, "httpx_client") and hasattr(client_wrapper.httpx_client, "base_headers"):
         client_wrapper.httpx_client.base_headers = client_wrapper.get_headers
-        # HTTP clients merge endpoint and request-option headers after
-        # ``base_headers``. Mark this client so the final merged map also drops
-        # Authorization before the request is sent.
-        client_wrapper.httpx_client.disable_authentication()  # type: ignore[attr-defined]
+        _install_no_authorization_request_hook(
+            client_wrapper.httpx_client.httpx_client,
+            _environment_origins(client_wrapper.get_environment()),
+            session_id,
+        )
 
 
 _MISSING_KEY_MESSAGE = "The client must be instantiated by either passing in api_key or setting DEEPGRAM_API_KEY"
@@ -139,7 +194,10 @@ def _resolve_credentials(kwargs: Dict[str, Any], access_token: Optional[str], au
     replaced (Bearer) or removed after construction.
     """
     if auth is not None and auth is not False:
-        raise ValueError("auth only accepts False, to disable authentication for self-hosted servers")
+        raise ValueError(
+            "auth only accepts False, which disables authentication for self-hosted servers. "
+            "To authenticate, omit auth and pass api_key or access_token."
+        )
 
     environment = kwargs.get("environment")
     if auth is False:
@@ -228,7 +286,7 @@ class DeepgramClient(BaseClient):
         if access_token is not None:
             _apply_bearer_authorization_override(self._client_wrapper, access_token)
         elif auth is False:
-            _apply_no_authorization_override(self._client_wrapper)
+            _apply_no_authorization_override(self._client_wrapper, final_session_id)
 
         # Install custom WebSocket transport if provided. Auto-disable
         # `reconnect`: a custom transport owns its retry lifecycle, so flip
@@ -307,7 +365,7 @@ class AsyncDeepgramClient(AsyncBaseClient):
         if access_token is not None:
             _apply_bearer_authorization_override(self._client_wrapper, access_token)
         elif auth is False:
-            _apply_no_authorization_override(self._client_wrapper)
+            _apply_no_authorization_override(self._client_wrapper, final_session_id)
 
         # Install custom WebSocket transport if provided. Auto-disable
         # `reconnect`: a custom transport owns its retry lifecycle, so flip

@@ -231,7 +231,7 @@ The SDK automatically discovers credentials from these environment variables:
 
 **Precedence:** Explicit parameters > Environment variables
 
-### Self-Hosted and Local Servers Without Authentication
+### Self-Hosted Servers Without Authentication
 
 A self-hosted or local Deepgram server may not require request authentication. Point the client at it with a custom environment and pass `auth=False` so the SDK doesn't ask for an API key:
 
@@ -251,6 +251,8 @@ client = DeepgramClient(
 ```
 
 With `auth=False` no `Authorization` header is sent on HTTP requests or WebSocket connections, and `DEEPGRAM_API_KEY` is ignored. It can't be combined with `api_key` or `access_token`; if your server does require a key, pass `api_key` as usual.
+
+If you pass your own `httpx_client` with `auth=False`, the SDK removes authentication only from its requests to the configured Deepgram server. Other requests made with that client keep their `Authorization` header and `auth` setting.
 
 ## Async Client
 

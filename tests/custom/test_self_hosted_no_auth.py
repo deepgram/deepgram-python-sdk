@@ -19,8 +19,16 @@ from unittest.mock import patch
 import httpx
 import pytest
 
+import deepgram.agent.v1.client as agent_v1_client
+import deepgram.agent.v1.raw_client as agent_v1_raw_client
+import deepgram.listen.v1.client as listen_v1_client
+import deepgram.listen.v1.raw_client as listen_v1_raw_client
 import deepgram.listen.v2.client as listen_v2_client
 import deepgram.listen.v2.raw_client as listen_v2_raw_client
+import deepgram.speak.v1.client as speak_v1_client
+import deepgram.speak.v1.raw_client as speak_v1_raw_client
+import deepgram.speak.v2.client as speak_v2_client
+import deepgram.speak.v2.raw_client as speak_v2_raw_client
 from deepgram import AsyncDeepgramClient, DeepgramClient
 from deepgram.core.api_error import ApiError
 from deepgram.environment import DeepgramClientEnvironment
@@ -82,6 +90,60 @@ def _assert_no_authorization(headers: typing.Mapping[str, str]) -> None:
     assert all(key.lower() != "authorization" for key in headers)
 
 
+def _connection_options(model: typing.Optional[str] = None) -> typing.Dict[str, typing.Any]:
+    options: typing.Dict[str, typing.Any] = {
+        "authorization": "Token connect-argument",
+        "request_options": {"additional_headers": {"Authorization": "Token request-header"}},
+    }
+    if model is not None:
+        options["model"] = model
+    return options
+
+
+_WEBSOCKET_CASES = [
+    (
+        "listen v1",
+        listen_v1_client,
+        listen_v1_raw_client,
+        lambda client: client.listen.v1.connect(**_connection_options("nova-3")),
+        lambda client: client.listen.v1.with_raw_response.connect(**_connection_options("nova-3")),
+        "/v1/listen",
+    ),
+    (
+        "listen v2",
+        listen_v2_client,
+        listen_v2_raw_client,
+        lambda client: client.listen.v2.connect(**_connection_options("flux-general-en")),
+        lambda client: client.listen.v2.with_raw_response.connect(**_connection_options("flux-general-en")),
+        "/v2/listen",
+    ),
+    (
+        "speak v1",
+        speak_v1_client,
+        speak_v1_raw_client,
+        lambda client: client.speak.v1.connect(**_connection_options("aura-2-thalia-en")),
+        lambda client: client.speak.v1.with_raw_response.connect(**_connection_options("aura-2-thalia-en")),
+        "/v1/speak",
+    ),
+    (
+        "speak v2",
+        speak_v2_client,
+        speak_v2_raw_client,
+        lambda client: client.speak.v2.connect(**_connection_options("aura-2-thalia-en")),
+        lambda client: client.speak.v2.with_raw_response.connect(**_connection_options("aura-2-thalia-en")),
+        "/v2/speak",
+    ),
+    (
+        "agent v1",
+        agent_v1_client,
+        agent_v1_raw_client,
+        lambda client: client.agent.v1.connect(**_connection_options()),
+        lambda client: client.agent.v1.with_raw_response.connect(**_connection_options()),
+        "/v1/agent/converse",
+    ),
+]
+
+
 # --------------------------------------------------------------------------- construction
 
 
@@ -127,7 +189,7 @@ def test_auth_false_sends_no_authorization_over_http() -> None:
     _assert_no_authorization(seen[0].headers)
 
 
-def test_auth_false_removes_authorization_from_a_supplied_httpx_client() -> None:
+def test_auth_false_only_strips_authorization_from_its_own_httpx_requests() -> None:
     seen: typing.List[httpx.Request] = []
     httpx_client = httpx.Client(
         headers={"Authorization": "Token httpx-client"},
@@ -138,10 +200,13 @@ def test_auth_false_removes_authorization_from_a_supplied_httpx_client() -> None
     client.manage.v1.models.list()
 
     _assert_no_authorization(seen[0].headers)
-    assert httpx_client.auth is None
+    assert httpx_client.auth is not None
+
+    httpx_client.get("http://127.0.0.1:8000/not-an-sdk-request")
+    assert "authorization" in seen[1].headers
 
 
-def test_auth_false_removes_authorization_from_a_supplied_httpx_client_on_streams() -> None:
+def test_auth_false_only_strips_authorization_from_its_own_httpx_streams() -> None:
     seen: typing.List[httpx.Request] = []
     httpx_client = httpx.Client(
         headers={"Authorization": "Token httpx-client"},
@@ -158,7 +223,7 @@ def test_auth_false_removes_authorization_from_a_supplied_httpx_client_on_stream
     )
 
     _assert_no_authorization(seen[0].headers)
-    assert httpx_client.auth is None
+    assert httpx_client.auth is not None
 
 
 async def test_async_auth_false_sends_no_authorization_over_http() -> None:
@@ -176,7 +241,7 @@ async def test_async_auth_false_sends_no_authorization_over_http() -> None:
     _assert_no_authorization(seen[0].headers)
 
 
-async def test_async_auth_false_removes_authorization_from_a_supplied_httpx_client() -> None:
+async def test_async_auth_false_only_strips_authorization_from_its_own_httpx_requests() -> None:
     seen: typing.List[httpx.Request] = []
     httpx_client = httpx.AsyncClient(
         headers={"Authorization": "Token httpx-client"},
@@ -187,10 +252,13 @@ async def test_async_auth_false_removes_authorization_from_a_supplied_httpx_clie
     await client.manage.v1.models.list()
 
     _assert_no_authorization(seen[0].headers)
-    assert httpx_client.auth is None
+    assert httpx_client.auth is not None
+
+    await httpx_client.get("http://127.0.0.1:8000/not-an-sdk-request")
+    assert "authorization" in seen[1].headers
 
 
-async def test_async_auth_false_removes_authorization_from_a_supplied_httpx_client_on_streams() -> None:
+async def test_async_auth_false_only_strips_authorization_from_its_own_httpx_streams() -> None:
     seen: typing.List[httpx.Request] = []
     httpx_client = httpx.AsyncClient(
         headers={"Authorization": "Token httpx-client"},
@@ -206,34 +274,46 @@ async def test_async_auth_false_removes_authorization_from_a_supplied_httpx_clie
         pass
 
     _assert_no_authorization(seen[0].headers)
-    assert httpx_client.auth is None
+    assert httpx_client.auth is not None
 
 
-def test_auth_false_sends_no_authorization_on_websocket_handshake() -> None:
+@pytest.mark.parametrize(
+    "_name,client_module,_raw_client_module,connect,_raw_connect,path",
+    _WEBSOCKET_CASES,
+)
+def test_auth_false_sends_no_authorization_on_websocket_handshakes(
+    _name: str,
+    client_module: typing.Any,
+    _raw_client_module: typing.Any,
+    connect: typing.Callable[[DeepgramClient], typing.ContextManager[typing.Any]],
+    _raw_connect: typing.Callable[[DeepgramClient], typing.ContextManager[typing.Any]],
+    path: str,
+) -> None:
     capture = _CaptureConnect()
-    with patch.object(listen_v2_client.websockets_sync_client, "connect", capture):
-        with DeepgramClient(
-            environment=LOCAL, auth=False, headers={"authorization": "Token client-header"}
-        ).listen.v2.connect(
-            model="flux-general-en",
-            authorization="Token connect-argument",
-            request_options={"additional_headers": {"Authorization": "Token request-header"}},
-        ):
+    with patch.object(client_module.websockets_sync_client, "connect", capture):
+        with connect(DeepgramClient(environment=LOCAL, auth=False, headers={"authorization": "Token client-header"})):
             pass
-    assert capture.url is not None and capture.url.startswith("ws://127.0.0.1:8000/v2/listen")
+    assert capture.url is not None and capture.url.startswith(f"ws://127.0.0.1:8000{path}")
     _assert_no_authorization(capture.headers)
     assert "x-deepgram-session-id" in capture.headers
 
 
-async def test_async_auth_false_sends_no_authorization_on_websocket_handshake() -> None:
+@pytest.mark.parametrize(
+    "_name,_client_module,raw_client_module,_connect,raw_connect,_path",
+    _WEBSOCKET_CASES,
+)
+async def test_async_auth_false_sends_no_authorization_on_websocket_handshakes(
+    _name: str,
+    _client_module: typing.Any,
+    raw_client_module: typing.Any,
+    _connect: typing.Callable[[AsyncDeepgramClient], typing.AsyncContextManager[typing.Any]],
+    raw_connect: typing.Callable[[AsyncDeepgramClient], typing.AsyncContextManager[typing.Any]],
+    _path: str,
+) -> None:
     capture = _CaptureConnect()
-    with patch.object(listen_v2_raw_client, "websockets_client_connect", capture):
-        async with AsyncDeepgramClient(
-            environment=LOCAL, auth=False, headers={"authorization": "Token client-header"}
-        ).listen.v2.with_raw_response.connect(
-            model="flux-general-en",
-            authorization="Token connect-argument",
-            request_options={"additional_headers": {"Authorization": "Token request-header"}},
+    with patch.object(raw_client_module, "websockets_client_connect", capture):
+        async with raw_connect(
+            AsyncDeepgramClient(environment=LOCAL, auth=False, headers={"authorization": "Token client-header"})
         ):
             pass
     _assert_no_authorization(capture.headers)

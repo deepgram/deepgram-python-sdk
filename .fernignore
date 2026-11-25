@@ -10,11 +10,6 @@
 # This file is manually maintained and should not be regenerated
 src/deepgram/client.py
 
-# ``auth=False`` needs an HTTP final-header filter because generated endpoint
-# and request-option headers are merged after the custom client's base headers.
-# [temporarily frozen — remove when Fern exposes a no-auth client mode]
-src/deepgram/core/http_client.py
-
 # Hand-written security utility: installs a logging.Filter on the third-party
 # `websockets` client/server loggers that masks the Authorization header (API
 # key / access token) in DEBUG handshake logs. No Fern-generated counterpart.
